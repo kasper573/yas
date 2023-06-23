@@ -1,0 +1,45 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Yas UI" />
+
+# Welcome to Yas UI Docs
+
+The UI docs is a [Storybook](https://storybook.js.org/) that showcase,
+document and test all the components provided by the [@yas/ui](https://github.com/YasAB/@yas/turbo/tree/main/packages/@yas/ui) package.
+
+## Getting started
+
+- Add the library to your project by adding `"@yas/ui": "workspace:*"` to your `package.json` dependencies.
+- Call the CSS reset function in your app's entry point:
+
+```typescript
+import { resetStyles } from "@yas/ui";
+
+resetStyles();
+```
+
+- Import and use components:
+
+```tsx
+import { Button } from "@yas/ui";
+
+function MyApp() {
+  return <Button>Click me</Button>;
+}
+```
+
+- Style components using the `styled` function:
+
+```tsx
+import { styled, Button } from "@yas/ui";
+
+const StyledButton = styled(Button, {
+  backgroundColor: "red",
+  color: "white",
+});
+
+const YourThing = styled("div", {
+  backgroundColor: "blue",
+  color: "pink",
+});
+```

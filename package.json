@@ -1,0 +1,28 @@
+{
+  "name": "yas",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch"
+  },
+  "devDependencies": {
+    "eslint-config-yas": "workspace:*",
+    "prettier": "latest",
+    "turbo": "^1.10.5"
+  },
+  "engines": {
+    "node": "^18.16.0"
+  },
+  "packageManager": "pnpm@8.6.3"
+}

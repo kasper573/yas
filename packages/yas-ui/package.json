@@ -1,0 +1,60 @@
+{
+  "name": "@yas/ui",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "storybook build -o dist",
+    "dev": "storybook dev -p 6006 --no-open",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "pnpm test:components && pnpm test:unit",
+    "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
+    "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
+    "test:components:watch": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 \"test-storybook --watch\"",
+    "test:unit": "jest",
+    "test:unit:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/node"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.23",
+    "@storybook/addon-interactions": "^7.0.23",
+    "@storybook/addon-links": "^7.0.23",
+    "@storybook/blocks": "^7.0.23",
+    "@storybook/jest": "0.1.0",
+    "@storybook/react": "^7.0.23",
+    "@storybook/react-vite": "^7.0.23",
+    "@storybook/test-runner": "0.11.0",
+    "@storybook/testing-library": "0.2.0",
+    "@types/jest": "^29.4.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "concurrently": "^8.0.1",
+    "eslint": "^8.35.0",
+    "eslint-config-yas": "workspace:*",
+    "eslint-plugin-storybook": "^0.6.12",
+    "jest": "^29.5.0",
+    "prop-types": "15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "start-server-and-test": "^2.0.0",
+    "storybook": "^7.0.23",
+    "typescript": "^4.9.5",
+    "@yas/build-tools": "workspace:*",
+    "@yas/jest": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "vite": "^4.1.4"
+  },
+  "dependencies": {
+    "@stitches/react": "^1.2.8"
+  }
+}
