@@ -1,7 +1,7 @@
 import { createServer } from "./server";
 import { env } from "./env";
 
-// This is the entrypoint for the server.
+// The entrypoint for the server.
 
 switch (env.runtime.type) {
   case "vercel-serverless-function":
