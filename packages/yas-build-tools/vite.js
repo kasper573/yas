@@ -1,5 +1,6 @@
 const path = require("path");
 const react = require("@vitejs/plugin-react");
+const { default: env } = require("vite-plugin-environment");
 const { visualizer } = require("rollup-plugin-visualizer");
 const { expand } = require("dotenv-expand");
 const { defineConfig } = require("vite");
@@ -14,12 +15,12 @@ function createYasViteConfig({ analyze = process.env.ANALYZE } = {}) {
   expand({ parsed: process.env });
 
   return defineConfig({
-    envPrefix: "PUBLIC_",
     envDir: path.resolve(__dirname, "../../"),
     plugins: [
       react(),
       checker({ typescript: true }),
       determineVisualizerPlugin(analyze),
+      env("all"),
     ].filter(Boolean),
   });
 }
