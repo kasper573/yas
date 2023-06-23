@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "build": "validate-env && pnpm typecheck && tsup",
+    "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "tsnd src/index.ts",
     "lint": "eslint .",
