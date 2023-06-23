@@ -2,8 +2,7 @@ import * as path from "path";
 import { z } from "zod";
 import { config } from "dotenv-flow";
 import { expand } from "dotenv-expand";
-import { mode } from "@yas/zod";
-import { morganFormat } from "./zod/morganFormat";
+import { mode, numeric } from "@yas/zod";
 
 // Since this is a node app we must manually load and expand the .env files
 // This ensures maximum compatibility, i.e. works with the local express server,
@@ -18,11 +17,19 @@ expand(
 const schema = z.object({
   mode: mode.default("development"),
   trpcPath: z.string().default("/trpc"),
-  logFormat: morganFormat.default("combined"),
+  logFormat: z.enum(["tiny", "short", "dev", "combined"]).default("combined"),
+  runtime: z.discriminatedUnion("type", [
+    z.object({ type: z.literal("vercel-serverless-function") }),
+    z.object({ type: z.literal("long-running-server"), port: numeric }),
+  ]),
 });
 
 export const env = schema.parse({
   mode: process.env.NODE_ENV,
   trpcPath: process.env.TRPC_PATH,
   logFormat: process.env.LOG_FORMAT,
+  runtime:
+    process.env.SERVE_ON_PORT !== undefined
+      ? { type: "long-running-server", port: process.env.SERVE_ON_PORT }
+      : { type: "vercel-serverless-function" },
 });

@@ -13,7 +13,7 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "tsnd src/entrypoints/dev.ts 1234",
+    "dev": "tsnd src/index.ts",
     "lint": "eslint .",
     "test": "jest --detectOpenHandles"
   },
