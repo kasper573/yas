@@ -2,9 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "env": ["ANALYZE"],
+      "env": ["PUBLIC_*"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**"]
     },
     "lint": {},
     "lint:fix": {
