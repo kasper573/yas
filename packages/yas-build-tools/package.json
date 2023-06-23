@@ -3,11 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "bin": {
+    "validate-env": "./validateEnv.js"
+  },
   "devDependencies": {
     "@vitejs/plugin-react": "^3.1.0",
+    "@yas/tsconfig": "workspace:*",
+    "@yas/zod": "workspace:*",
     "dotenv-expand": "^10.0.0",
     "rollup-plugin-visualizer": "^5.9.0",
     "vite": "^4.1.4",
-    "vite-plugin-checker": "^0.5.6"
+    "vite-plugin-checker": "^0.5.6",
+    "vite-plugin-environment": "^1.1.3",
+    "tsx": "^3.12.7"
   }
 }

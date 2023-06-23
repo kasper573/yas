@@ -7,6 +7,6 @@ const schema = z.object({
 });
 
 export const env = schema.parse({
-  mode: import.meta.env.MODE,
-  apiUrl: import.meta.env.PUBLIC_API_URL,
+  mode: process.env.MODE,
+  apiUrl: process.env.API_URL,
 });

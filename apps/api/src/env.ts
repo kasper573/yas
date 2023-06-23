@@ -1,18 +1,6 @@
-import * as path from "path";
+import "@yas/build-tools/dotenv";
 import { z } from "zod";
-import { config } from "dotenv-flow";
-import { expand } from "dotenv-expand";
 import { mode, numeric } from "@yas/zod";
-
-// Since this is a node app we must manually load and expand the .env files
-// This ensures maximum compatibility, i.e. works with the local express server,
-// and the default vercel serverless architecture.
-expand(
-  config({
-    path: path.resolve(__dirname, "../../.."),
-    default_node_env: "development",
-  })
-);
 
 const schema = z.object({
   mode: mode.default("development"),

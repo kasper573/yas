@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "build": "pnpm typecheck && tsup",
+    "build": "validate-env && pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "tsnd src/index.ts",
     "lint": "eslint .",
@@ -36,6 +36,7 @@
     "@types/morgan": "^1.9.4",
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
+    "@yas/build-tools": "workspace:*",
     "cors": "^2.8.5",
     "eslint": "^8.35.0",
     "eslint-config-yas": "workspace:*",
