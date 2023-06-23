@@ -52,7 +52,7 @@
     "@yas/build-tools": "workspace:*",
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "vite": "^4.1.4"
+    "vite": "^4.3.9"
   },
   "dependencies": {
     "@stitches/react": "^1.2.8"
