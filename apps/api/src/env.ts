@@ -17,6 +17,10 @@ expand(
 const schema = z.object({
   mode: mode.default("development"),
   trpcPath: z.string().default("/trpc"),
+  corsOrigin: z
+    .array(z.string().url())
+    .optional()
+    .transform((v) => (v?.length === 0 ? undefined : v)),
   logFormat: z.enum(["tiny", "short", "dev", "combined"]).default("combined"),
   runtime: z.discriminatedUnion("type", [
     z.object({ type: z.literal("vercel-serverless-function") }),
@@ -26,6 +30,7 @@ const schema = z.object({
 
 export const env = schema.parse({
   mode: process.env.NODE_ENV,
+  corsOrigin: (process.env.CORS_ORIGIN ?? "").split(",").filter(Boolean),
   trpcPath: process.env.TRPC_PATH,
   logFormat: process.env.LOG_FORMAT,
   runtime:
