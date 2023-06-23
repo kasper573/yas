@@ -6,6 +6,6 @@ export function createExampleRouter() {
     hello: t.procedure
       .input(z.string())
       .output(z.string())
-      .query(({ input }) => `${input} world master`),
+      .query(({ input }) => `${input} world`),
   });
 }
