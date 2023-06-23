@@ -8,7 +8,7 @@ import { createApiRouter } from "./router";
 
 export function createServer() {
   const app = express();
-  app.use(cors({ origin: env.corsOrigin ?? true }));
+  app.use(cors({ origin: env.corsOrigin }));
   app.use(
     env.trpcPath,
     trpcExpress.createExpressMiddleware({
