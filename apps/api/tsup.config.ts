@@ -2,13 +2,11 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   outDir: "api", // Output to Vercel's /api folder
+  outExtension: () => ({ js: `.js` }),
   entryPoints: {
     index: "src/entrypoints/prod.ts",
   },
-  splitting: false,
-  sourcemap: false,
+  format: "esm",
   clean: true,
-  minify: true,
-  dts: false,
   noExternal: [/^@yas\//],
 });
