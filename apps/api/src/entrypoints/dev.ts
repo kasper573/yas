@@ -1,8 +1,8 @@
 import morgan from "morgan";
 import express from "express";
 import cors from "cors";
-import { env } from "../src/env";
-import { createServer } from "../src/server";
+import { env } from "../env";
+import { createServer } from "../server";
 
 function main() {
   const port = process.argv[2];
