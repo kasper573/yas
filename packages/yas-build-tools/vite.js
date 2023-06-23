@@ -5,17 +5,20 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const { expand } = require("dotenv-expand");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
+const { config } = require("dotenv-flow");
 
 // NOTE This is a JS file because it was much simpler than configuring
 // Vite & node to load non-prebuilt ESM files via the workspace:* monorepo directive.
 
 function createYasViteConfig({ analyze = process.env.ANALYZE } = {}) {
-  // Vite's built-in expansion only uses locally defined env vars.
-  // We want to be able to use all env vars, so we use dotenv-expand manually.
-  expand({ parsed: process.env });
+  expand(
+    config({
+      path: path.resolve(__dirname, "../.."),
+      default_node_env: "development",
+    })
+  );
 
   return defineConfig({
-    envDir: path.resolve(__dirname, "../../"),
     plugins: [
       react(),
       checker({ typescript: true }),
