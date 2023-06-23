@@ -8,8 +8,8 @@ const schema = z.object({
   corsOrigin: z.string().transform((exp) => new RegExp(exp)),
   logFormat: z.enum(["tiny", "short", "dev", "combined"]).default("combined"),
   runtime: z.discriminatedUnion("type", [
-    z.object({ type: z.literal("vercel-serverless-function") }),
-    z.object({ type: z.literal("long-running-server"), port: numeric }),
+    z.object({ type: z.literal("lambda") }),
+    z.object({ type: z.literal("server"), port: numeric }),
   ]),
 });
 
@@ -20,6 +20,6 @@ export const env = schema.parse({
   logFormat: process.env.LOG_FORMAT,
   runtime:
     process.env.SERVE_ON_PORT !== undefined
-      ? { type: "long-running-server", port: process.env.SERVE_ON_PORT }
-      : { type: "vercel-serverless-function" },
+      ? { type: "server", port: process.env.SERVE_ON_PORT }
+      : { type: "lambda" },
 });
