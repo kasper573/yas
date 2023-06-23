@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "validate-env": "./validateEnv.js"
+    "validate-env": "./validateEnv.ts"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^3.1.0",

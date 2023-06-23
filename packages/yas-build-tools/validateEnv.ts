@@ -1,3 +1,5 @@
+#!/usr/bin/env tsx
+
 import "./dotenv";
 import * as path from "path";
 import { ZodError } from "@yas/zod";
