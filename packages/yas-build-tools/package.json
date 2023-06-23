@@ -7,7 +7,7 @@
     "validate-env": "./validateEnv.ts"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react": "^4.0.1",
     "@yas/tsconfig": "workspace:*",
     "@yas/zod": "workspace:*",
     "dotenv-expand": "^10.0.0",

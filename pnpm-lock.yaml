@@ -197,8 +197,8 @@ importers:
   packages/yas-build-tools:
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: ^3.1.0
-        version: 3.1.0(vite@4.1.4)
+        specifier: ^4.0.1
+        version: 4.0.1(vite@4.1.4)
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
@@ -5781,6 +5781,21 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.5)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.5)
       magic-string: 0.27.0
+      react-refresh: 0.14.0
+      vite: 4.1.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@vitejs/plugin-react@4.0.1(vite@4.1.4):
+    resolution: {integrity: sha512-g25lL98essfeSj43HJ0o4DMp0325XK0ITkxpgChzJU/CyemgyChtlxfnRbjfwxDGCTRxTiXtQAsdebQXKMRSOA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.2.0
+    dependencies:
+      '@babel/core': 7.22.5
+      '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.5)
+      '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.5)
       react-refresh: 0.14.0
       vite: 4.1.4
     transitivePeerDependencies:
