@@ -9,7 +9,7 @@ export function Home() {
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>
-      <Text paragraph>Mode: {env.mode}</Text>
+      <Text paragraph>Mode: "{env.mode}"</Text>
       <Text paragraph>{response}</Text>
     </>
   );
