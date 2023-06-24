@@ -70,6 +70,10 @@ describe("ComponentStore", () => {
     expect(() => store.spawnInstance("a", "1", {})).toThrow();
   });
 
+  it("throws error if trying to remove an instance of a non-existent component", () => {
+    expect(() => store.removeInstance("a", "1")).toThrow();
+  });
+
   describe("can resolve instance", () => {
     it("immediately", () => {
       store.upsertComponent("a", { component: jest.fn() });
