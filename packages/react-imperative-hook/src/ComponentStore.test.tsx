@@ -1,4 +1,5 @@
 import { ComponentStore } from "./ComponentStore";
+import { deferPromise } from "./deferPromise";
 
 describe("ComponentStore", () => {
   let store: ComponentStore;
@@ -65,6 +66,10 @@ describe("ComponentStore", () => {
     expect(store.state["a"]).toBeDefined();
   });
 
+  it("throws error if trying to spawn an instance of a non-existent component", () => {
+    expect(() => store.spawnInstance("a", "1", {})).toThrow();
+  });
+
   describe("can resolve instance", () => {
     it("immediately", () => {
       store.upsertComponent("a", { component: jest.fn() });
@@ -93,9 +98,3 @@ describe("ComponentStore", () => {
     });
   });
 });
-
-function deferPromise<T = void>() {
-  let resolve: (value: T) => void = undefined as never;
-  const promise = new Promise<T>((res) => (resolve = res));
-  return { promise, resolve };
-}

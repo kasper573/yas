@@ -4,6 +4,7 @@ import type {
   MakeOptionalIfEmptyObject,
   PartialByKeys,
 } from "./utilityTypes";
+import { deferPromise } from "./deferPromise";
 
 export class ComponentStore {
   constructor(private store = new Store<ComponentStoreState>({})) {
@@ -50,30 +51,32 @@ export class ComponentStore {
     instanceId: InstanceId,
     props: Props
   ) {
-    return new Promise<Resolution>((resolve) => {
-      this.store.mutate((state) => {
-        state[componentId].instances[instanceId] = {
-          state: { type: "pending" },
-          props,
-          resolve: (value, removeDelay) => {
-            this.store.mutate((components) => {
-              components[componentId].instances[instanceId].state = {
-                type: "resolved",
-                value,
-              };
-              if (removeDelay) {
-                removeDelay.then(() =>
-                  this.removeInstance(componentId, instanceId)
-                );
-              } else {
-                this.removeInstance(componentId, instanceId);
-              }
-            });
-            resolve(value);
-          },
-        };
-      });
+    const instanceCompletion = deferPromise<Resolution>();
+
+    this.store.mutate((state) => {
+      state[componentId].instances[instanceId] = {
+        state: { type: "pending" },
+        props,
+        resolve: (value, removeDelay) => {
+          this.store.mutate((components) => {
+            components[componentId].instances[instanceId].state = {
+              type: "resolved",
+              value,
+            };
+            if (removeDelay) {
+              removeDelay.then(() =>
+                this.removeInstance(componentId, instanceId)
+              );
+            } else {
+              this.removeInstance(componentId, instanceId);
+            }
+          });
+          instanceCompletion.resolve(value);
+        },
+      };
     });
+
+    return instanceCompletion.promise;
   }
 }
 
