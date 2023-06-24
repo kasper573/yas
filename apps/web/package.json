@@ -24,7 +24,8 @@
     "@yas/ui": "workspace:*",
     "@yas/zod": "workspace:*",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-imperative-hook": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",

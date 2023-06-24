@@ -19,7 +19,7 @@
   "devDependencies": {
     "eslint-config-yas": "workspace:*",
     "prettier": "latest",
-    "turbo": "^1.10.5"
+    "turbo": "1.8.3"
   },
   "engines": {
     "node": "^18.16.0"

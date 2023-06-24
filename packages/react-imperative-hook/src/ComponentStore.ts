@@ -77,14 +77,6 @@ export class ComponentStore {
   }
 }
 
-export type ImperativeInterfaceFor<
-  ResolutionValue,
-  AdditionalComponentProps,
-  DefaultProps extends Partial<AdditionalComponentProps>
-> = (
-  props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>
-) => Promise<ResolutionValue>;
-
 export type ComponentStoreState = Record<ComponentId, ComponentEntry>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

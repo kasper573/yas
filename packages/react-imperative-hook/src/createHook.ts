@@ -3,12 +3,11 @@ import { useContext, useEffect, useId, useMemo, useRef } from "react";
 import type {
   ComponentStore,
   ImperativeComponentProps,
-  ImperativeInterfaceFor,
   InstanceId,
   ResolvingComponentProps,
 } from "./ComponentStore";
 import type { AnyComponent } from "./utilityTypes";
-import type { ComponentId } from "./ComponentStore";
+import type { ComponentId, InstanceProps } from "./ComponentStore";
 
 export function createHook(context: Context<ComponentStore>) {
   return function useImperativeComponent<
@@ -54,3 +53,11 @@ export function createHook(context: Context<ComponentStore>) {
 
 let instanceIdCounter = 0;
 const nextInstanceId = (): InstanceId => (++instanceIdCounter).toString();
+
+export type ImperativeInterfaceFor<
+  ResolutionValue,
+  AdditionalComponentProps,
+  DefaultProps extends Partial<AdditionalComponentProps>
+> = (
+  props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>
+) => Promise<ResolutionValue>;
