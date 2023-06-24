@@ -2,7 +2,8 @@ import type { ImperativeComponentProps } from "react-imperative-hook";
 import { createImperative } from "react-imperative-hook";
 
 export const {
-  use: useModal,
+  useInstanceSpawner: useModal,
+  useComponentSpawner: useModals,
   Context: ModalContext,
   Outlet: ModalOutlet,
 } = createImperative((components) => (

@@ -9,15 +9,15 @@ import type {
 import type { AnyComponent } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ComponentStore";
 
-export function createHook(context: Context<ComponentStore>) {
-  return function useImperativeComponent<
+export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
+  return function useInstanceSpawner<
     Component extends AnyComponent,
     DefaultProps extends Partial<ComponentProps<Component>>
   >(
     component: Component,
     defaultProps?: DefaultProps,
     fixedId?: ComponentId
-  ): ImperativeInterfaceFor<
+  ): InstanceSpawner<
     ComponentProps<Component> extends ResolvingComponentProps<infer R>
       ? R
       : never,
@@ -54,7 +54,7 @@ export function createHook(context: Context<ComponentStore>) {
 let instanceIdCounter = 0;
 const nextInstanceId = (): InstanceId => (++instanceIdCounter).toString();
 
-export type ImperativeInterfaceFor<
+type InstanceSpawner<
   ResolutionValue,
   AdditionalComponentProps,
   DefaultProps extends Partial<AdditionalComponentProps>

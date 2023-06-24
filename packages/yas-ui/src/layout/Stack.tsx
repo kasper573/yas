@@ -9,10 +9,10 @@ export interface StackProps extends ComponentPropsWithoutRef<typeof Flex> {
 }
 
 export const Stack = forwardRef<ElementRef<typeof Flex>, StackProps>(
-  ({ gap = "1", ...props }, ref) => (
+  ({ gap = "1", css, ...props }, ref) => (
     <Flex
       {...props}
-      css={{ gap: gap !== undefined ? theme.space[gap] : undefined }}
+      css={{ gap: gap !== undefined ? theme.space[gap] : undefined, ...css }}
       ref={ref}
     />
   )
