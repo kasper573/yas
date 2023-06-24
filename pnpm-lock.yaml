@@ -194,6 +194,21 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
 
+  packages/react-imperative-hook:
+    devDependencies:
+      '@yas/jest':
+        specifier: workspace:*
+        version: link:../yas-jest
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
+      jest:
+        specifier: ^29.5.0
+        version: 29.5.0(@types/node@20.3.1)
+
   packages/yas-build-tools:
     devDependencies:
       '@vitejs/plugin-react':
@@ -8423,6 +8438,10 @@ packages:
   /ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
+    dev: true
+
+  /immer@10.0.2:
+    resolution: {integrity: sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==}
     dev: true
 
   /import-fresh@3.3.0:

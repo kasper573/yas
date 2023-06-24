@@ -1,0 +1,30 @@
+{
+  "name": "react-imperative-hook",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit --project tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/node"
+  },
+  "devDependencies": {
+    "@yas/tsconfig": "workspace:*",
+    "@yas/jest": "workspace:*",
+    "jest": "^29.5.0",
+    "immer": "^10.0.2"
+  }
+}
