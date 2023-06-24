@@ -54,6 +54,11 @@ export class ComponentStore {
     const instanceCompletion = deferPromise<Resolution>();
 
     this.store.mutate((state) => {
+      if (state[componentId].instances[instanceId]) {
+        throw new Error(
+          `Instance ${instanceId} of component ${componentId} already exists`
+        );
+      }
       state[componentId].instances[instanceId] = {
         state: { type: "pending" },
         props,
