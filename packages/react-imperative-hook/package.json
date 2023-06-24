@@ -21,10 +21,13 @@
   "jest": {
     "preset": "@yas/jest/presets/node"
   },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "immer": "^10.0.2"
+  },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
     "@yas/jest": "workspace:*",
-    "jest": "^29.5.0",
-    "immer": "^10.0.2"
+    "jest": "^29.5.0"
   }
 }
