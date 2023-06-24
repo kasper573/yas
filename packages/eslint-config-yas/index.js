@@ -107,6 +107,10 @@ function rulesForBanningEnvUsage(message) {
         selector: `MemberExpression[object.type="process"][property.name="env"]`,
         message,
       },
+      {
+        selector: `MemberExpression[object.name="process"][property.name="env"]`,
+        message,
+      },
     ],
   };
 }
