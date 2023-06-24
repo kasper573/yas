@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useMemo } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ModalOutlet } from "@yas/hooks";
 import { createQueryClient, createTRPCClient, trpc } from "./trpc";
 import { Home } from "./pages/Home";
-import { ModalOutlet } from "./hooks/useModal";
 
 export function App() {
   const queryClient = useMemo(createQueryClient, []);

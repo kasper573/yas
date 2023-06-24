@@ -105,6 +105,9 @@ importers:
       '@yas/api':
         specifier: workspace:*
         version: link:../api
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../../packages/yas-hooks
       '@yas/ui':
         specifier: workspace:*
         version: link:../../packages/yas-ui
@@ -117,9 +120,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-imperative-hook:
-        specifier: workspace:*
-        version: link:../../packages/react-imperative-hook
     devDependencies:
       '@types/jest':
         specifier: ^29.4.0
@@ -229,6 +229,16 @@ importers:
       vite-plugin-checker:
         specifier: ^0.5.6
         version: 0.5.6(vite@4.3.9)
+
+  packages/yas-hooks:
+    dependencies:
+      react-imperative-hook:
+        specifier: workspace:*
+        version: link:../react-imperative-hook
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
 
   packages/yas-jest:
     devDependencies:

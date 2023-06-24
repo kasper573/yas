@@ -15,7 +15,7 @@ export const {
               key={`${componentId}-${instanceId}`}
               {...defaultProps}
               {...props}
-              open={state.type === "pending"}
+              state={state}
               resolve={resolve}
             />
           )
@@ -24,9 +24,4 @@ export const {
   </>
 ));
 
-export type ModalProps<Output = void> = Omit<
-  ImperativeComponentProps<Output>,
-  "state"
-> & {
-  open: boolean;
-};
+export type ModalProps<Output = void> = ImperativeComponentProps<Output>;
