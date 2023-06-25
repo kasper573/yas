@@ -48,7 +48,6 @@
     "react-dom": "^18.2.0",
     "start-server-and-test": "^2.0.0",
     "storybook": "^7.0.23",
-    "typescript": "^4.9.5",
     "@yas/build-tools": "workspace:*",
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
