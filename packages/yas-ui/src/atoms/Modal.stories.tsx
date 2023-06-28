@@ -99,7 +99,7 @@ function Dialog({
 }
 
 function withSetup(Content: ComponentType) {
-  return function Render() {
+  return function ModalApp() {
     const store = useMemo(() => new ComponentStore(), []);
     return (
       <ModalContext.Provider value={store}>
