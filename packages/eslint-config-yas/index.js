@@ -68,7 +68,7 @@ module.exports = {
       },
     },
     {
-      files: ["*.test.ts"],
+      files: ["*.test.ts", "*.stories.tsx"],
       rules: {
         // Tests are allowed to use non-null assertions since failures in tests are acceptable
         "@typescript-eslint/no-non-null-assertion": "off",

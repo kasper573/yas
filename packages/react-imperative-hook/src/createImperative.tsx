@@ -6,12 +6,12 @@ import { createInstanceSpawnerHook } from "./createInstanceSpawnerHook";
 import { createComponentSpawnerHook } from "./createComponentSpawnerHook";
 
 export function createImperative(renderer?: OutletRenderer) {
-  const context = createContext(new ComponentStore());
+  const Context = createContext(new ComponentStore());
 
   return {
-    Outlet: () => <ComponentOutlet context={context} renderer={renderer} />,
-    context,
-    useInstanceSpawner: createInstanceSpawnerHook(context),
-    useComponentSpawner: createComponentSpawnerHook(context),
+    Outlet: () => <ComponentOutlet context={Context} renderer={renderer} />,
+    Context,
+    useInstanceSpawner: createInstanceSpawnerHook(Context),
+    useComponentSpawner: createComponentSpawnerHook(Context),
   };
 }
