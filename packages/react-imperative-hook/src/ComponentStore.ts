@@ -29,6 +29,9 @@ export class ComponentStore {
 
   markComponentForRemoval(id: ComponentId) {
     return this.store.mutate((components) => {
+      if (!components[id]) {
+        throw new Error(`Component ${id} does not exist`);
+      }
       components[id].markedForRemoval = true;
     });
   }
@@ -36,6 +39,9 @@ export class ComponentStore {
   removeInstance(componentId: ComponentId, instanceId: InstanceId) {
     return this.store.mutate((components) => {
       const component = components[componentId];
+      if (!component) {
+        throw new Error(`Component ${componentId} does not exist`);
+      }
       delete component.instances[instanceId];
       if (
         component.markedForRemoval &&
@@ -54,12 +60,18 @@ export class ComponentStore {
     const instanceCompletion = deferPromise<Resolution>();
 
     this.store.mutate((state) => {
-      if (state[componentId].instances[instanceId]) {
+      const component = state[componentId];
+      if (!component) {
+        throw new Error(`Component ${componentId} does not exist`);
+      }
+
+      if (component.instances[instanceId]) {
         throw new Error(
           `Instance ${instanceId} of component ${componentId} already exists`
         );
       }
-      state[componentId].instances[instanceId] = {
+
+      component.instances[instanceId] = {
         state: { type: "pending" },
         props,
         resolve: (value, removeDelay) => {
