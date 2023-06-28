@@ -46,7 +46,7 @@ export const PredefinedDialogWithCustomMessage: Story = {
   render: withSetup(() => {
     const alert = useModal(Dialog, { message: "Default message" });
     return (
-      <button onClick={() => alert({ message: "Custom Message" })}>
+      <button onClick={() => alert({ message: "Custom message" })}>
         Open dialog
       </button>
     );
