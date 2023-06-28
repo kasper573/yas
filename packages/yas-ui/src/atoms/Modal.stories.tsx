@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentType, ReactNode } from "react";
-import * as React from "react";
 import { within } from "@storybook/testing-library";
 import { useMemo } from "react";
 import { ComponentStore } from "react-imperative-hook";
