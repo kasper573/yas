@@ -11,30 +11,30 @@ import type { GeneralHookOptions } from "../constants";
 import type { ImperativeComponentProps } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
 import type { HookTestFactory } from "./setup";
-import {
-  setupImperative,
-  defineSimpleTestForBothHooks,
-  defineTestForBothHooks,
-} from "./setup";
+import { setupImperative, defineTestForBothHooks } from "./setup";
 
 describe("can display", () => {
   describe("built-in message", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
-      render(({ spawn }) => (
-        <button onClick={() => spawn()}>Open dialog</button>
-      ));
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
+      render(() => {
+        const spawn = useHook();
+        return <button onClick={() => spawn()}>Open dialog</button>;
+      });
       userEvent.click(screen.getByText("Open dialog"));
       const dialog = await screen.findByRole("dialog");
       await within(dialog).findByText("Built-in message");
     }));
 
   describe("custom message", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
-      render(({ spawn }) => (
-        <button onClick={() => spawn({ message: "Custom message" })}>
-          Open dialog
-        </button>
-      ));
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
+      render(() => {
+        const spawn = useHook();
+        return (
+          <button onClick={() => spawn({ message: "Custom message" })}>
+            Open dialog
+          </button>
+        );
+      });
       userEvent.click(screen.getByText("Open dialog"));
       const dialog = await screen.findByRole("dialog");
       await within(dialog).findByText("Custom message");
@@ -111,23 +111,27 @@ describe("removeOnUnmount", () => {
 
 describe("can resolve instance", () => {
   describe("immediately", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
-      render(({ spawn }) => (
-        <button onClick={() => spawn()}>Open dialog</button>
-      ));
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
+      render(() => {
+        const spawn = useHook();
+        return <button onClick={() => spawn()}>Open dialog</button>;
+      });
       userEvent.click(screen.getByText("Open dialog"));
       userEvent.click(screen.getByRole("button", { name: "OK" }));
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
 
   describe("delayed", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
       const delay = deferPromise();
-      render(({ spawn }) => (
-        <button onClick={() => spawn({ removeDelay: delay.promise })}>
-          Open dialog
-        </button>
-      ));
+      render(() => {
+        const spawn = useHook();
+        return (
+          <button onClick={() => spawn({ removeDelay: delay.promise })}>
+            Open dialog
+          </button>
+        );
+      });
       userEvent.click(screen.getByText("Open dialog"));
       userEvent.click(screen.getByRole("button", { name: "OK" }));
       expect(screen.queryByRole("dialog")).not.toBeNull();
@@ -139,9 +143,10 @@ describe("can resolve instance", () => {
     }));
 
   describe("with value", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
       let promise: Promise<unknown> | undefined;
-      render(({ spawn }) => {
+      render(() => {
+        const spawn = useHook();
         return (
           <button onClick={() => (promise = spawn({ resolution: "foo" }))}>
             Open dialog
@@ -155,13 +160,16 @@ describe("can resolve instance", () => {
     }));
 
   describe("and select the correct one when there are multiple instances", () =>
-    defineSimpleTestForBothHooks(Dialog, async (render) => {
-      render(({ spawn }) => (
-        <>
-          <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
-          <button onClick={() => spawn({ name: "bar" })}>Spawn bar</button>
-        </>
-      ));
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
+      render(() => {
+        const spawn = useHook();
+        return (
+          <>
+            <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
+            <button onClick={() => spawn({ name: "bar" })}>Spawn bar</button>
+          </>
+        );
+      });
       userEvent.click(screen.getByText("Spawn foo"));
       userEvent.click(screen.getByText("Spawn bar"));
       const fooDialog = await screen.findByRole("dialog", { name: "foo" });

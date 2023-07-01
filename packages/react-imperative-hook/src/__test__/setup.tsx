@@ -6,23 +6,6 @@ import { createImperative } from "../createImperative";
 import { ComponentStore } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
 
-export type SimpleHookTestFactory<T extends AnyComponent> = (
-  render: (
-    Content: ComponentType<{
-      spawn: InstanceSpawnerFor<T>;
-    }>
-  ) => ReturnType<typeof renderReact>
-) => void;
-
-export function defineSimpleTestForBothHooks<T extends AnyComponent>(
-  component: T,
-  defineTest: SimpleHookTestFactory<T>
-) {
-  return defineTestForBothHooks(component, (useHook, render) =>
-    defineTest((Content) => render(() => <Content spawn={useHook()} />))
-  );
-}
-
 export type HookTestFactory<T extends AnyComponent> = (
   useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<T>,
   render: (Content: ComponentType) => ReturnType<typeof renderReact>
