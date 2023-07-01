@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useState } from "react";
 import {
   act,
@@ -7,7 +8,8 @@ import {
 } from "@testing-library/react";
 import { deferPromise } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
-import { Dialog } from "./Dialog";
+import type { ImperativeComponentProps } from "../ComponentStore";
+import type { AnyComponent } from "../utilityTypes";
 import type { HookTestFactory } from "./setup";
 import {
   setupImperative,
@@ -17,7 +19,7 @@ import {
 
 describe("can display", () => {
   describe("built-in message", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn()}>Open dialog</button>
       ));
@@ -27,7 +29,7 @@ describe("can display", () => {
     }));
 
   describe("custom message", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn({ message: "Custom message" })}>
           Open dialog
@@ -72,14 +74,14 @@ describe("can display", () => {
 });
 
 describe("removeOnUnmount", () => {
-  const setupUnmountTest = (
-    useHook: Parameters<HookTestFactory>[0],
-    render: Parameters<HookTestFactory>[1],
+  const setupUnmountTest = <T extends AnyComponent>(
+    useHook: Parameters<HookTestFactory<T>>[0],
+    render: Parameters<HookTestFactory<T>>[1],
     hookOptions?: GeneralHookOptions
   ) => {
     function Source() {
       const spawn = useHook(hookOptions);
-      return <button onClick={() => spawn()}>Open dialog</button>;
+      return <button onClick={() => spawn({} as never)}>Open dialog</button>;
     }
     render(() => {
       const [visible, setVisible] = useState(true);
@@ -95,13 +97,13 @@ describe("removeOnUnmount", () => {
   };
 
   describe("is disabled by default", () =>
-    defineTestForBothHooks(async (useHook, render) => {
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
       setupUnmountTest(useHook, render);
       await screen.findByRole("dialog");
     }));
 
   describe("can be opt-in enabled", () =>
-    defineTestForBothHooks(async (useHook, render) => {
+    defineTestForBothHooks(Dialog, async (useHook, render) => {
       setupUnmountTest(useHook, render, { removeOnUnmount: true });
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
@@ -109,7 +111,7 @@ describe("removeOnUnmount", () => {
 
 describe("can resolve instance", () => {
   describe("immediately", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn()}>Open dialog</button>
       ));
@@ -119,7 +121,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("delayed", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       const delay = deferPromise();
       render(({ spawn }) => (
         <button onClick={() => spawn({ removeDelay: delay.promise })}>
@@ -137,7 +139,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("with value", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       let promise: Promise<unknown> | undefined;
       render(({ spawn }) => {
         return (
@@ -153,7 +155,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("when there are multiple instances", () =>
-    defineSimpleTestForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(Dialog, async (render) => {
       render(({ spawn }) => (
         <>
           <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
@@ -168,3 +170,26 @@ describe("can resolve instance", () => {
       expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
     }));
 });
+
+function Dialog({
+  state,
+  message = "Built-in message",
+  name,
+  resolve,
+  resolution,
+  removeDelay,
+}: ModalProps<unknown> & {
+  message?: ReactNode;
+  name?: string;
+  resolution?: unknown;
+  removeDelay?: Promise<unknown>;
+}) {
+  return (
+    <div role="dialog" aria-label={name} className={state.type}>
+      <p>{message}</p>
+      <button onClick={() => resolve(resolution, removeDelay)}>OK</button>
+    </div>
+  );
+}
+
+type ModalProps<Output = void> = ImperativeComponentProps<Output>;

@@ -4,42 +4,46 @@ import type { InstanceSpawnerFor } from "../createInstanceSpawnerHook";
 import type { GeneralHookOptions } from "../constants";
 import { createImperative } from "../createImperative";
 import { ComponentStore } from "../ComponentStore";
-import { Dialog } from "./Dialog";
+import type { AnyComponent } from "../utilityTypes";
 
-export type SimpleHookTestFactory = (
+export type SimpleHookTestFactory<T extends AnyComponent> = (
   render: (
     Content: ComponentType<{
-      spawn: InstanceSpawnerFor<typeof Dialog>;
+      spawn: InstanceSpawnerFor<T>;
     }>
   ) => ReturnType<typeof renderReact>
 ) => void;
 
-export function defineSimpleTestForBothHooks(
-  defineTest: SimpleHookTestFactory
+export function defineSimpleTestForBothHooks<T extends AnyComponent>(
+  component: T,
+  defineTest: SimpleHookTestFactory<T>
 ) {
-  return defineTestForBothHooks((useHook, render) =>
+  return defineTestForBothHooks(component, (useHook, render) =>
     defineTest((Content) => render(() => <Content spawn={useHook()} />))
   );
 }
 
-export type HookTestFactory = (
-  useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<typeof Dialog>,
+export type HookTestFactory<T extends AnyComponent> = (
+  useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<T>,
   render: (Content: ComponentType) => ReturnType<typeof renderReact>
 ) => void;
 
-export function defineTestForBothHooks(defineTest: HookTestFactory) {
+export function defineTestForBothHooks<T extends AnyComponent>(
+  component: T,
+  defineTest: HookTestFactory<T>
+) {
   const { imp, render } = setupImperative();
 
   test("useInstanceSpawner", () =>
     defineTest(
-      (options) => imp.useInstanceSpawner(Dialog, {}, options),
+      (options) => imp.useInstanceSpawner(component, {}, options),
       render
     ));
 
   test("useComponentSpawner", () =>
     defineTest((options) => {
       const spawnModal = imp.useComponentSpawner(options);
-      return (props) => spawnModal(Dialog, props);
+      return (props) => spawnModal(component, props as never);
     }, render));
 }
 
