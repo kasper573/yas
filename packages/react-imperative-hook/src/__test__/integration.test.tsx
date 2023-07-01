@@ -72,7 +72,7 @@ describe("can display", () => {
   });
 });
 
-it("persist dialog after source component unmounts by default", async () => {
+it("persists dialog after source component unmounts by default", async () => {
   function Source() {
     const alert = useModal(Dialog);
     return <button onClick={() => alert()}>Open dialog</button>;
@@ -110,16 +110,37 @@ it("can opt-in to remove dialog when source component unmounts", async () => {
   expect(screen.queryByRole("dialog")).toBeNull();
 });
 
+describe("can resolve instance", () => {
+  it("when there are multiple instances", async () => {
+    setup(() => {
+      const spawn = useModal(Dialog);
+      return (
+        <>
+          <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
+          <button onClick={() => spawn({ name: "bar" })}>Spawn bar</button>
+        </>
+      );
+    });
+    userEvent.click(screen.getByText("Spawn foo"));
+    userEvent.click(screen.getByText("Spawn bar"));
+    const fooDialog = await screen.findByRole("dialog", { name: "foo" });
+    userEvent.click(within(fooDialog).getByRole("button", { name: "OK" }));
+    const remainingDialog = await screen.findByRole("dialog");
+    expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
+  });
+});
+
 function Dialog({
   state,
   message = "Built-in message",
+  name,
   resolve,
-}: ModalProps & { message?: ReactNode }) {
+}: ModalProps & { message?: ReactNode; name?: string }) {
   if (state.type !== "pending") {
     return null;
   }
   return (
-    <div role="dialog">
+    <div role="dialog" aria-label={name}>
       <p>{message}</p>
       <button onClick={() => resolve()}>OK</button>
     </div>
