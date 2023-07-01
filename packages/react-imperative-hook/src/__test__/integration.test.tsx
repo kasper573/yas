@@ -129,11 +129,29 @@ it("can opt-in to remove dialog when source component unmounts", async () => {
 });
 
 describe("can resolve instance", () => {
-  it("immediately", () => {});
+  it("immediately", () => {
+    setup(() => {
+      const alert = useModal(Dialog);
+      return <button onClick={() => alert()}>Open dialog</button>;
+    });
+    userEvent.click(screen.getByText("Open dialog"));
+    userEvent.click(screen.getByRole("button", { name: "OK" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
 
   it("delayed", async () => {});
 
-  it("with value", async () => {});
+  it("with value", async () => {
+    let promise: Promise<unknown> | undefined;
+    setup(() => {
+      const alert = useModal(Dialog<string>, { resolution: "foo" });
+      return <button onClick={() => (promise = alert())}>Open dialog</button>;
+    });
+    userEvent.click(screen.getByText("Open dialog"));
+    userEvent.click(screen.getByRole("button", { name: "OK" }));
+    const value = await promise;
+    expect(value).toBe("foo");
+  });
 
   it("when there are multiple instances", async () => {
     setup(() => {
@@ -154,19 +172,24 @@ describe("can resolve instance", () => {
   });
 });
 
-function Dialog({
+function Dialog<T>({
   state,
   message = "Built-in message",
   name,
   resolve,
-}: ModalProps & { message?: ReactNode; name?: string }) {
+  resolution,
+}: ModalProps<T | undefined> & {
+  message?: ReactNode;
+  name?: string;
+  resolution?: T;
+}) {
   if (state.type !== "pending") {
     return null;
   }
   return (
     <div role="dialog" aria-label={name}>
       <p>{message}</p>
-      <button onClick={() => resolve()}>OK</button>
+      <button onClick={() => resolve(resolution)}>OK</button>
     </div>
   );
 }
