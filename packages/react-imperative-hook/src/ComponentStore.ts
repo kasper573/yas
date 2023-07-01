@@ -42,10 +42,7 @@ export class ComponentStore {
         throw new Error(`Component ${componentId} does not exist`);
       }
       delete component.instances[instanceId];
-      if (
-        component.markedForRemoval &&
-        !Object.keys(component.instances).length
-      ) {
+      if (!Object.keys(component.instances).length) {
         delete components[componentId];
       }
     });
@@ -119,7 +116,6 @@ export interface ComponentEntry {
   component: AnyComponent;
   defaultProps?: Record<string, unknown>;
   instances: Record<InstanceId, InstanceEntry>;
-  markedForRemoval?: boolean;
 }
 
 export type InstanceId = string;
