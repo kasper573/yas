@@ -6,9 +6,9 @@ import {
   fireEvent as userEvent,
 } from "@testing-library/react";
 import { useState } from "react";
-import { createImperative } from "./createImperative";
-import type { ImperativeComponentProps } from "./index";
-import { ComponentStore } from "./index";
+import { createImperative } from "../createImperative";
+import type { ImperativeComponentProps } from "../index";
+import { ComponentStore } from "../index";
 
 describe("can display", () => {
   test("predefined dialog with built-in message", async () => {
