@@ -71,6 +71,25 @@ describe("can display", () => {
     userEvent.click(screen.getByText("Update message"));
     await screen.findByText("Custom message");
   });
+
+  describe("multiple in sequence", () =>
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
+      let name: string;
+      render(() => {
+        const spawn = useHook();
+        return <button onClick={() => spawn({ name })}>Open dialog</button>;
+      });
+
+      async function openAndResolveDialog(newName: string) {
+        name = newName;
+        userEvent.click(screen.getByText("Open dialog"));
+        const dialog = await screen.findByRole("dialog", { name });
+        userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
+      }
+
+      await openAndResolveDialog("first");
+      await openAndResolveDialog("second");
+    }));
 });
 
 describe("removeOnUnmount", () => {

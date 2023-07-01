@@ -35,6 +35,14 @@ export class ComponentStore {
     });
   }
 
+  markComponentsForRemoval(ids: ComponentId[]) {
+    return this.store.mutate((components) => {
+      for (const id of ids) {
+        components[id].shouldBeRemovedWhenEmpty = true;
+      }
+    });
+  }
+
   removeInstance(componentId: ComponentId, instanceId: InstanceId) {
     return this.store.mutate((components) => {
       const component = components[componentId];
@@ -42,8 +50,9 @@ export class ComponentStore {
         throw new Error(`Component ${componentId} does not exist`);
       }
       delete component.instances[instanceId];
-      if (!Object.keys(component.instances).length) {
-        delete components[componentId];
+      const hasInstances = Object.keys(component.instances).length > 0;
+      if (component.shouldBeRemovedWhenEmpty && !hasInstances) {
+        this.removeComponents([componentId]);
       }
     });
   }
@@ -116,6 +125,7 @@ export interface ComponentEntry {
   component: AnyComponent;
   defaultProps?: Record<string, unknown>;
   instances: Record<InstanceId, InstanceEntry>;
+  shouldBeRemovedWhenEmpty?: boolean;
 }
 
 export type InstanceId = string;

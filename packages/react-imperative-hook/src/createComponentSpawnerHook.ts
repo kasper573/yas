@@ -25,6 +25,8 @@ export function createComponentSpawnerHook(context: Context<ComponentStore>) {
         const { store, removeOnUnmount } = latest.current;
         if (removeOnUnmount) {
           store.removeComponents(componentIds.current);
+        } else {
+          store.markComponentsForRemoval(componentIds.current);
         }
       },
       []
