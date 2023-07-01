@@ -45,7 +45,23 @@ describe("can display", () => {
     await within(dialog).findByText("Custom message");
   });
 
-  test("updates of default props of a predefined dialog", () => {});
+  test("updates of default props of a predefined dialog", async () => {
+    setup(() => {
+      const [message, setMessage] = useState("Default message");
+      const alert = useModal(Dialog, { message });
+      return (
+        <>
+          <button onClick={() => alert()}>Open dialog</button>
+          <button onClick={() => setMessage("Custom message")}>
+            Update message
+          </button>
+        </>
+      );
+    });
+    userEvent.click(screen.getByText("Open dialog"));
+    userEvent.click(screen.getByText("Update message"));
+    await screen.findByText("Custom message");
+  });
 
   test("inline dialog with built-in message", async () => {
     setup(() => {
