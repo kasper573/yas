@@ -8,6 +8,7 @@ import type {
 } from "./ComponentStore";
 import type { AnyComponent } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ComponentStore";
+import type { GeneralHookOptions } from "./constants";
 import { removeOnUnmountDefault } from "./constants";
 
 export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
@@ -20,7 +21,7 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
     {
       fixedId,
       removeOnUnmount = removeOnUnmountDefault,
-    }: { fixedId?: ComponentId; removeOnUnmount?: boolean } = {}
+    }: { fixedId?: ComponentId } & GeneralHookOptions = {}
   ): InstanceSpawnerFor<Component, DefaultProps> {
     const autoId = useId();
     const id = fixedId ?? autoId;

@@ -11,6 +11,7 @@ import { createImperative } from "../createImperative";
 import type { ImperativeComponentProps, InstanceSpawnerFor } from "../index";
 import { ComponentStore } from "../index";
 import { deferPromise } from "../deferPromise";
+import type { GeneralHookOptions } from "../constants";
 
 describe("can display", () => {
   describe("built-in message", () =>
@@ -69,35 +70,37 @@ describe("can display", () => {
 });
 
 describe("removeOnUnmount", () => {
-  const defineUnmountTestCase =
-    (hookOptions?: HookOptions): HookTestFactory =>
-    (render) => {
-      render(({ spawn }) => {
-        function Source() {
-          return <button onClick={() => spawn()}>Open dialog</button>;
-        }
-
-        const [visible, setVisible] = useState(true);
-        return (
-          <>
-            {visible && <Source />}
-            <button onClick={() => setVisible(false)}>Unmount</button>
-          </>
-        );
-      }, hookOptions);
-      userEvent.click(screen.getByText("Open dialog"));
-      userEvent.click(screen.getByText("Unmount"));
-    };
+  const setupUnmountTest = (
+    useHook: Parameters<HookTestFactoryImpl>[0],
+    render: Parameters<HookTestFactoryImpl>[1],
+    hookOptions?: GeneralHookOptions
+  ) => {
+    function Source() {
+      const spawn = useHook(hookOptions);
+      return <button onClick={() => spawn()}>Open dialog</button>;
+    }
+    render(() => {
+      const [visible, setVisible] = useState(true);
+      return (
+        <>
+          {visible ? <Source /> : undefined}
+          <button onClick={() => setVisible(false)}>Unmount</button>
+        </>
+      );
+    });
+    userEvent.click(screen.getByText("Open dialog"));
+    userEvent.click(screen.getByText("Unmount"));
+  };
 
   describe("is disabled by default", () =>
-    testsForBothHooks(async (render) => {
-      defineUnmountTestCase()(render);
+    testsForBothHooksImpl(async (useHook, render) => {
+      setupUnmountTest(useHook, render);
       await screen.findByRole("dialog");
     }));
 
   describe("can be opt-in enabled", () =>
-    testsForBothHooks(async (render) => {
-      defineUnmountTestCase({ removeOnUnmount: true })(render);
+    testsForBothHooksImpl(async (useHook, render) => {
+      setupUnmountTest(useHook, render, { removeOnUnmount: true });
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
 });
@@ -185,33 +188,39 @@ function Dialog({
   );
 }
 
-type HookOptions = { removeOnUnmount?: boolean };
 type HookTestFactory = (
   render: (
     Content: ComponentType<{
       spawn: InstanceSpawnerFor<typeof Dialog>;
-    }>,
-    hookOptions?: HookOptions
+    }>
   ) => ReturnType<typeof renderReact>
 ) => void;
 
 function testsForBothHooks(createTest: HookTestFactory) {
+  return testsForBothHooksImpl((useHook, render) =>
+    createTest((Content) => render(() => <Content spawn={useHook()} />))
+  );
+}
+
+type HookTestFactoryImpl = (
+  useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<typeof Dialog>,
+  render: (Content: ComponentType) => ReturnType<typeof renderReact>
+) => void;
+
+function testsForBothHooksImpl(createTest: HookTestFactoryImpl) {
   const { imp, render } = setupImperative();
 
   test("useInstanceSpawner", () =>
-    createTest((Content, hookOptions) =>
-      render(() => (
-        <Content spawn={imp.useInstanceSpawner(Dialog, {}, hookOptions)} />
-      ))
+    createTest(
+      (options) => imp.useInstanceSpawner(Dialog, {}, options),
+      render
     ));
 
   test("useComponentSpawner", () =>
-    createTest((Content, hookOptions) =>
-      render(() => {
-        const spawnModal = imp.useComponentSpawner(hookOptions);
-        return <Content spawn={(props) => spawnModal(Dialog, props)} />;
-      })
-    ));
+    createTest((options) => {
+      const spawnModal = imp.useComponentSpawner(options);
+      return (props) => spawnModal(Dialog, props);
+    }, render));
 }
 
 function setupImperative() {

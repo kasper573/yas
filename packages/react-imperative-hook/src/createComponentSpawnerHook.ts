@@ -7,12 +7,13 @@ import type {
 } from "./ComponentStore";
 import type { AnyComponent } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ComponentStore";
+import type { GeneralHookOptions } from "./constants";
 import { removeOnUnmountDefault } from "./constants";
 
 export function createComponentSpawnerHook(context: Context<ComponentStore>) {
   return function useComponentSpawner({
     removeOnUnmount = removeOnUnmountDefault,
-  } = {}) {
+  }: GeneralHookOptions = {}) {
     const store = useContext(context);
     const componentIds = useRef<ComponentId[]>([]);
     const current = { store, removeOnUnmount };
