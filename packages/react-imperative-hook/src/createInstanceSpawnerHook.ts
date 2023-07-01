@@ -8,6 +8,7 @@ import type {
 } from "./ComponentStore";
 import type { AnyComponent } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ComponentStore";
+import { removeOnUnmountDefault } from "./constants";
 
 export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
   return function useInstanceSpawner<
@@ -16,7 +17,10 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
   >(
     component: Component,
     defaultProps?: DefaultProps,
-    fixedId?: ComponentId
+    {
+      fixedId,
+      removeOnUnmount = removeOnUnmountDefault,
+    }: { fixedId?: ComponentId; removeOnUnmount?: boolean } = {}
   ): InstanceSpawner<
     ComponentProps<Component> extends ResolvingComponentProps<infer R>
       ? R
@@ -27,7 +31,7 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
     const autoId = useId();
     const id = fixedId ?? autoId;
     const store = useContext(context);
-    const current = { id, store };
+    const current = { id, store, removeOnUnmount };
     const latest = useRef(current);
     latest.current = current;
 
@@ -38,8 +42,10 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
 
     useEffect(
       () => () => {
-        const { id, store } = latest.current;
-        store.markComponentForRemoval(id);
+        const { id, store, removeOnUnmount } = latest.current;
+        if (removeOnUnmount) {
+          store.removeComponent(id);
+        }
       },
       []
     );

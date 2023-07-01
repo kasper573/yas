@@ -27,12 +27,9 @@ export class ComponentStore {
     });
   }
 
-  markComponentForRemoval(id: ComponentId) {
+  removeComponent(id: ComponentId) {
     return this.store.mutate((components) => {
-      if (!components[id]) {
-        throw new Error(`Component ${id} does not exist`);
-      }
-      components[id].markedForRemoval = true;
+      delete components[id];
     });
   }
 

@@ -48,15 +48,6 @@ describe("ComponentStore", () => {
     expect(store.state["a"]).toBeDefined();
   });
 
-  it("removes a marked component after removing its last instance", () => {
-    store.upsertComponent("a", { component: jest.fn() });
-    store.markComponentForRemoval("a");
-    store.spawnInstance("a", "1", {});
-    store.removeInstance("a", "1");
-
-    expect(store.state["a"]).toBeUndefined();
-  });
-
   it("retains a marked component when removing only one of its two instances", () => {
     store.upsertComponent("a", { component: jest.fn() });
     store.spawnInstance("a", "1", {});

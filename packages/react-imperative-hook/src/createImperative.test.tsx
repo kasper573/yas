@@ -91,6 +91,25 @@ it("persist dialog after source component unmounts by default", async () => {
   await screen.findByRole("dialog");
 });
 
+it("can opt-in to remove dialog when source component unmounts", async () => {
+  function Source() {
+    const alert = useModal(Dialog, {}, { removeOnUnmount: true });
+    return <button onClick={() => alert()}>Open dialog</button>;
+  }
+  setup(() => {
+    const [visible, setVisible] = useState(true);
+    return (
+      <>
+        {visible && <Source />}
+        <button onClick={() => setVisible(false)}>Unmount</button>
+      </>
+    );
+  });
+  userEvent.click(screen.getByText("Open dialog"));
+  userEvent.click(screen.getByText("Unmount"));
+  expect(screen.queryByRole("dialog")).toBeNull();
+});
+
 function Dialog({
   state,
   message = "Built-in message",
