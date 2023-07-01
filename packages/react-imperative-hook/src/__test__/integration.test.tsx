@@ -45,6 +45,8 @@ describe("can display", () => {
     await within(dialog).findByText("Custom message");
   });
 
+  test("updates of default props of a predefined dialog", () => {});
+
   test("inline dialog with built-in message", async () => {
     setup(() => {
       const showModal = useModals();
@@ -111,6 +113,12 @@ it("can opt-in to remove dialog when source component unmounts", async () => {
 });
 
 describe("can resolve instance", () => {
+  it("immediately", () => {});
+
+  it("delayed", async () => {});
+
+  it("with value", async () => {});
+
   it("when there are multiple instances", async () => {
     setup(() => {
       const spawn = useModal(Dialog);
