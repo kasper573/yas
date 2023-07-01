@@ -38,7 +38,7 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
       () => () => {
         const { id, store, removeOnUnmount } = latest.current;
         if (removeOnUnmount) {
-          store.removeComponent(id);
+          store.removeComponents([id]);
         }
       },
       []

@@ -27,9 +27,11 @@ export class ComponentStore {
     });
   }
 
-  removeComponent(id: ComponentId) {
+  removeComponents(ids: ComponentId[]) {
     return this.store.mutate((components) => {
-      delete components[id];
+      for (const id of ids) {
+        delete components[id];
+      }
     });
   }
 

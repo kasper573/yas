@@ -2,7 +2,7 @@ import type { ComponentType, ReactNode } from "react";
 import {
   screen,
   within,
-  render,
+  render as renderReact,
   fireEvent as userEvent,
   act,
 } from "@testing-library/react";
@@ -13,19 +13,34 @@ import { ComponentStore } from "../index";
 import { deferPromise } from "../deferPromise";
 
 describe("can display", () => {
-  test("predefined dialog with built-in message", async () => {
-    setup(() => {
-      const alert = useModal(Dialog);
-      return <button onClick={() => alert()}>Open dialog</button>;
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    const dialog = await screen.findByRole("dialog");
-    await within(dialog).findByText("Built-in message");
-  });
+  describe("built-in message", () =>
+    testsForBothHooks(async (render) => {
+      render(({ spawn }) => (
+        <button onClick={() => spawn()}>Open dialog</button>
+      ));
+      userEvent.click(screen.getByText("Open dialog"));
+      const dialog = await screen.findByRole("dialog");
+      await within(dialog).findByText("Built-in message");
+    }));
+
+  describe("custom message", () =>
+    testsForBothHooks(async (render) => {
+      render(({ spawn }) => (
+        <button onClick={() => spawn({ message: "Custom message" })}>
+          Open dialog
+        </button>
+      ));
+      userEvent.click(screen.getByText("Open dialog"));
+      const dialog = await screen.findByRole("dialog");
+      await within(dialog).findByText("Custom message");
+    }));
 
   test("predefined dialog with default message", async () => {
-    setup(() => {
-      const alert = useModal(Dialog, { message: "Default message" });
+    const { render, imp } = setupImperative();
+    render(() => {
+      const alert = imp.useInstanceSpawner(Dialog, {
+        message: "Default message",
+      });
       return <button onClick={() => alert()}>Open dialog</button>;
     });
     userEvent.click(screen.getByText("Open dialog"));
@@ -33,24 +48,11 @@ describe("can display", () => {
     await within(dialog).findByText("Default message");
   });
 
-  test("predefined dialog with custom message", async () => {
-    setup(() => {
-      const alert = useModal(Dialog, { message: "Default message" });
-      return (
-        <button onClick={() => alert({ message: "Custom message" })}>
-          Open dialog
-        </button>
-      );
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    const dialog = await screen.findByRole("dialog");
-    await within(dialog).findByText("Custom message");
-  });
-
   test("updates of default props of a predefined dialog", async () => {
-    setup(() => {
+    const { render, imp } = setupImperative();
+    render(() => {
       const [message, setMessage] = useState("Default message");
-      const alert = useModal(Dialog, { message });
+      const alert = imp.useInstanceSpawner(Dialog, { message });
       return (
         <>
           <button onClick={() => alert()}>Open dialog</button>
@@ -64,114 +66,90 @@ describe("can display", () => {
     userEvent.click(screen.getByText("Update message"));
     await screen.findByText("Custom message");
   });
-
-  test("inline dialog with built-in message", async () => {
-    setup(() => {
-      const showModal = useModals();
-      return <button onClick={() => showModal(Dialog)}>Open dialog</button>;
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    const dialog = await screen.findByRole("dialog");
-    await within(dialog).findByText("Built-in message");
-  });
-
-  test("inline dialog with custom message", async () => {
-    setup(() => {
-      const showModal = useModals();
-      return (
-        <button
-          onClick={() => showModal(Dialog, { message: "Custom message" })}
-        >
-          Open dialog
-        </button>
-      );
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    const dialog = await screen.findByRole("dialog");
-    await within(dialog).findByText("Custom message");
-  });
 });
 
-it("persists dialog after source component unmounts by default", async () => {
-  function Source() {
-    const alert = useModal(Dialog);
-    return <button onClick={() => alert()}>Open dialog</button>;
-  }
-  setup(() => {
-    const [visible, setVisible] = useState(true);
-    return (
-      <>
-        {visible && <Source />}
-        <button onClick={() => setVisible(false)}>Unmount</button>
-      </>
-    );
-  });
-  userEvent.click(screen.getByText("Open dialog"));
-  userEvent.click(screen.getByText("Unmount"));
-  await screen.findByRole("dialog");
-});
+describe("removeOnUnmount", () => {
+  const defineUnmountTestCase =
+    (hookOptions?: HookOptions): HookTestFactory =>
+    (render) => {
+      render(({ spawn }) => {
+        function Source() {
+          return <button onClick={() => spawn()}>Open dialog</button>;
+        }
 
-it("can opt-in to remove dialog when source component unmounts", async () => {
-  function Source() {
-    const alert = useModal(Dialog, {}, { removeOnUnmount: true });
-    return <button onClick={() => alert()}>Open dialog</button>;
-  }
-  setup(() => {
-    const [visible, setVisible] = useState(true);
-    return (
-      <>
-        {visible && <Source />}
-        <button onClick={() => setVisible(false)}>Unmount</button>
-      </>
-    );
-  });
-  userEvent.click(screen.getByText("Open dialog"));
-  userEvent.click(screen.getByText("Unmount"));
-  expect(screen.queryByRole("dialog")).toBeNull();
+        const [visible, setVisible] = useState(true);
+        return (
+          <>
+            {visible && <Source />}
+            <button onClick={() => setVisible(false)}>Unmount</button>
+          </>
+        );
+      }, hookOptions);
+      userEvent.click(screen.getByText("Open dialog"));
+      userEvent.click(screen.getByText("Unmount"));
+    };
+
+  describe("is disabled by default", () =>
+    testsForBothHooks(async (render) => {
+      defineUnmountTestCase()(render);
+      await screen.findByRole("dialog");
+    }));
+
+  describe("can be opt-in enabled", () =>
+    testsForBothHooks(async (render) => {
+      defineUnmountTestCase({ removeOnUnmount: true })(render);
+      expect(screen.queryByRole("dialog")).toBeNull();
+    }));
 });
 
 describe("can resolve instance", () => {
-  it("immediately", () => {
-    setup(() => {
-      const alert = useModal(Dialog);
-      return <button onClick={() => alert()}>Open dialog</button>;
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    userEvent.click(screen.getByRole("button", { name: "OK" }));
-    expect(screen.queryByRole("dialog")).toBeNull();
-  });
+  describe("immediately", () =>
+    testsForBothHooks(async (render) => {
+      render(({ spawn }) => (
+        <button onClick={() => spawn()}>Open dialog</button>
+      ));
+      userEvent.click(screen.getByText("Open dialog"));
+      userEvent.click(screen.getByRole("button", { name: "OK" }));
+      expect(screen.queryByRole("dialog")).toBeNull();
+    }));
 
-  it("delayed", async () => {
-    const delay = deferPromise();
-    setup(() => {
-      const alert = useModal(Dialog, { removeDelay: delay.promise });
-      return <button onClick={() => alert()}>Open dialog</button>;
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    userEvent.click(screen.getByRole("button", { name: "OK" }));
-    expect(screen.queryByRole("dialog")).not.toBeNull();
-    await act(async () => {
-      delay.resolve();
-      await delay.promise;
-    });
-    expect(screen.queryByRole("dialog")).toBeNull();
-  });
+  describe("delayed", () =>
+    testsForBothHooks(async (render) => {
+      const delay = deferPromise();
+      render(({ spawn }) => (
+        <button onClick={() => spawn({ removeDelay: delay.promise })}>
+          Open dialog
+        </button>
+      ));
+      userEvent.click(screen.getByText("Open dialog"));
+      userEvent.click(screen.getByRole("button", { name: "OK" }));
+      expect(screen.queryByRole("dialog")).not.toBeNull();
+      await act(async () => {
+        delay.resolve();
+        await delay.promise;
+      });
+      expect(screen.queryByRole("dialog")).toBeNull();
+    }));
 
-  it("with value", async () => {
-    let promise: Promise<unknown> | undefined;
-    setup(() => {
-      const alert = useModal(Dialog, { resolution: "foo" });
-      return <button onClick={() => (promise = alert())}>Open dialog</button>;
-    });
-    userEvent.click(screen.getByText("Open dialog"));
-    userEvent.click(screen.getByRole("button", { name: "OK" }));
-    const value = await promise;
-    expect(value).toBe("foo");
-  });
+  describe("with value", () =>
+    testsForBothHooks(async (render) => {
+      let promise: Promise<unknown> | undefined;
+      render(({ spawn }) => {
+        return (
+          <button onClick={() => (promise = spawn({ resolution: "foo" }))}>
+            Open dialog
+          </button>
+        );
+      });
+      userEvent.click(screen.getByText("Open dialog"));
+      userEvent.click(screen.getByRole("button", { name: "OK" }));
+      const value = await promise;
+      expect(value).toBe("foo");
+    }));
 
-  describe("when there are multiple instances", () => {
-    testsForBothHooks(async (setup) => {
-      setup(({ spawn }) => (
+  describe("when there are multiple instances", () =>
+    testsForBothHooks(async (render) => {
+      render(({ spawn }) => (
         <>
           <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
           <button onClick={() => spawn({ name: "bar" })}>Spawn bar</button>
@@ -183,8 +161,7 @@ describe("can resolve instance", () => {
       userEvent.click(within(fooDialog).getByRole("button", { name: "OK" }));
       const remainingDialog = await screen.findByRole("dialog");
       expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
-    });
-  });
+    }));
 });
 
 function Dialog({
@@ -208,50 +185,52 @@ function Dialog({
   );
 }
 
-function testsForBothHooks(
-  createTest: (
-    setup: (
-      Content: ComponentType<{
-        spawn: InstanceSpawnerFor<typeof Dialog>;
-      }>
-    ) => ReturnType<typeof render>
-  ) => void
-) {
-  test("useModal", () =>
-    createTest((Content) =>
-      setup(() => {
-        const spawn = useModal(Dialog);
-        return <Content spawn={spawn} />;
-      })
+type HookOptions = { removeOnUnmount?: boolean };
+type HookTestFactory = (
+  render: (
+    Content: ComponentType<{
+      spawn: InstanceSpawnerFor<typeof Dialog>;
+    }>,
+    hookOptions?: HookOptions
+  ) => ReturnType<typeof renderReact>
+) => void;
+
+function testsForBothHooks(createTest: HookTestFactory) {
+  const { imp, render } = setupImperative();
+
+  test("useInstanceSpawner", () =>
+    createTest((Content, hookOptions) =>
+      render(() => (
+        <Content spawn={imp.useInstanceSpawner(Dialog, {}, hookOptions)} />
+      ))
     ));
 
-  test("useModals", () =>
-    createTest((Content) =>
-      setup(() => {
-        const spawnModal = useModals();
+  test("useComponentSpawner", () =>
+    createTest((Content, hookOptions) =>
+      render(() => {
+        const spawnModal = imp.useComponentSpawner(hookOptions);
         return <Content spawn={(props) => spawnModal(Dialog, props)} />;
       })
     ));
 }
 
-function setup(Content: ComponentType) {
-  const store = new ComponentStore();
-  function Wrapper({ children }: { children?: ReactNode }) {
-    return (
-      <ModalContext.Provider value={store}>
-        {children}
-        <ModalOutlet />
-      </ModalContext.Provider>
-    );
-  }
-  return render(<Content />, { wrapper: Wrapper });
-}
+function setupImperative() {
+  const imp = createImperative();
 
-const {
-  useInstanceSpawner: useModal,
-  useComponentSpawner: useModals,
-  Context: ModalContext,
-  Outlet: ModalOutlet,
-} = createImperative();
+  function render(Content: ComponentType) {
+    const store = new ComponentStore();
+    function Wrapper({ children }: { children?: ReactNode }) {
+      return (
+        <imp.Context.Provider value={store}>
+          {children}
+          <imp.Outlet />
+        </imp.Context.Provider>
+      );
+    }
+    return renderReact(<Content />, { wrapper: Wrapper });
+  }
+
+  return { imp, render };
+}
 
 type ModalProps<Output = void> = ImperativeComponentProps<Output>;
