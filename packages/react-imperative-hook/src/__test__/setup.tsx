@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 import { render as renderReact } from "@testing-library/react";
+import { useMemo } from "react";
 import type { InstanceSpawnerFor } from "../createInstanceSpawnerHook";
 import type { GeneralHookOptions } from "../constants";
 import { createImperative } from "../createImperative";
@@ -30,13 +31,11 @@ export function defineAbstractHookTest<T extends AnyComponent>(
     }, render));
 }
 
-export function setupImperative() {
+export function setupImperative(createStore = () => new ComponentStore()) {
   const imp = createImperative();
-
   function render(Content: ComponentType) {
-    const store = new ComponentStore();
-
     function Wrapper({ children }: { children?: ReactNode }) {
+      const store = useMemo(createStore, []);
       return (
         <imp.Context.Provider value={store}>
           {children}

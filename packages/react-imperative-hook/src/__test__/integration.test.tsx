@@ -10,6 +10,7 @@ import { deferPromise } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
 import type { ImperativeComponentProps } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
+import { ComponentStore } from "../ComponentStore";
 import type { AbstractHookTestFactory } from "./setup";
 import { setupImperative, defineAbstractHookTest } from "./setup";
 
@@ -90,6 +91,37 @@ describe("can display", () => {
       await openAndResolveDialog("first");
       await openAndResolveDialog("second");
     }));
+});
+
+test("can spawn an instance temporarily for a removed component", async () => {
+  const store = new ComponentStore();
+  const { render, imp } = setupImperative(() => store);
+
+  let spawn: () => void;
+  function Source() {
+    spawn = imp.useInstanceSpawner(Dialog, {}, { removeOnUnmount: true });
+    return <button onClick={() => spawn()}>Spawn</button>;
+  }
+
+  render(() => {
+    const [mounted, setMounted] = useState(true);
+    return (
+      <>
+        {mounted ? <Source /> : undefined}
+        <button onClick={() => setMounted(false)}>Unmount</button>
+      </>
+    );
+  });
+
+  userEvent.click(screen.getByText("Unmount"));
+
+  act(() => {
+    spawn();
+  });
+  const dialog = await screen.findByRole("dialog");
+
+  userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
+  expect(store.state).toEqual({});
 });
 
 describe("removeOnUnmount", () => {

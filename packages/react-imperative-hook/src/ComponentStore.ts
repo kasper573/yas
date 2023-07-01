@@ -100,6 +100,12 @@ export class ComponentStore {
 
     return instanceCompletion.promise;
   }
+
+  private _idCounter = 0;
+
+  nextId<T extends string>() {
+    return (this._idCounter++).toString() as T;
+  }
 }
 
 export type ComponentStoreState = Record<ComponentId, ComponentEntry>;

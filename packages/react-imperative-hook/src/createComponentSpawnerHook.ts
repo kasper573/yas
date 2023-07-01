@@ -46,15 +46,12 @@ export function createComponentSpawnerHook(context: Context<ComponentStore>) {
     >(
       component: Component,
       props?: InstanceProps<ResolutionValue, AdditionalComponentProps>,
-      componentId = nextId()
+      componentId = store.nextId()
     ): Promise<ResolutionValue> {
-      const instanceId = nextId();
+      const instanceId = store.nextId();
       componentIds.current.push(componentId);
       store.upsertComponent(componentId, { component });
       return store.spawnInstance(componentId, instanceId, props);
     };
   };
 }
-
-let idCounter = 0;
-const nextId = () => (++idCounter).toString();

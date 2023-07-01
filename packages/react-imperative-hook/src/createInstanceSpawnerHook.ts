@@ -1,9 +1,8 @@
 import type { Context, ComponentProps } from "react";
-import { useContext, useEffect, useId, useMemo, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef } from "react";
 import type {
   ComponentStore,
   ImperativeComponentProps,
-  InstanceId,
   ResolvingComponentProps,
 } from "./ComponentStore";
 import type { AnyComponent } from "./utilityTypes";
@@ -23,10 +22,9 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
       removeOnUnmount = removeOnUnmountDefault,
     }: { fixedId?: ComponentId } & GeneralHookOptions = {}
   ): InstanceSpawnerFor<Component, DefaultProps> {
-    const autoId = useId();
-    const id = fixedId ?? autoId;
     const store = useContext(context);
-    const current = { id, store, removeOnUnmount };
+    const id = useMemo(() => fixedId ?? store.nextId(), [store, fixedId]);
+    const current = { id, store, removeOnUnmount, component, defaultProps };
     const latest = useRef(current);
     latest.current = current;
 
@@ -48,14 +46,21 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
     );
 
     return useMemo(
-      () => (props) => store.spawnInstance(id, nextInstanceId(), props),
+      () => (props) => {
+        // Revive the component temporarily if attempting to spawn an instance for a removed component.
+        // This is useful when the spawning happens asynchronously after a component has been removed,
+        // which is common in async sequencing of components while react triggers a fast refresh.
+        if (!store.state[id]) {
+          const { component, defaultProps } = latest.current;
+          store.upsertComponent(id, { component, defaultProps });
+          store.markComponentsForRemoval([id]);
+        }
+        return store.spawnInstance(id, store.nextId(), props);
+      },
       [store, id]
     );
   };
 }
-
-let instanceIdCounter = 0;
-const nextInstanceId = (): InstanceId => (++instanceIdCounter).toString();
 
 export type InstanceSpawner<
   ResolutionValue,
