@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useMemo } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ModalOutlet } from "@yas/ui";
