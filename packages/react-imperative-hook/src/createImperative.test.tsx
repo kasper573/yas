@@ -5,6 +5,7 @@ import {
   render,
   fireEvent as userEvent,
 } from "@testing-library/react";
+import { useState } from "react";
 import { createImperative } from "./createImperative";
 import type { ImperativeComponentProps } from "./index";
 import { ComponentStore } from "./index";
@@ -69,6 +70,25 @@ describe("can display", () => {
     const dialog = await screen.findByRole("dialog");
     await within(dialog).findByText("Custom message");
   });
+});
+
+it("persist dialog after source component unmounts by default", async () => {
+  function Source() {
+    const alert = useModal(Dialog);
+    return <button onClick={() => alert()}>Open dialog</button>;
+  }
+  setup(() => {
+    const [visible, setVisible] = useState(true);
+    return (
+      <>
+        {visible && <Source />}
+        <button onClick={() => setVisible(false)}>Unmount</button>
+      </>
+    );
+  });
+  userEvent.click(screen.getByText("Open dialog"));
+  userEvent.click(screen.getByText("Unmount"));
+  await screen.findByRole("dialog");
 });
 
 function Dialog({
