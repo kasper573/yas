@@ -1,21 +1,23 @@
-import type { ComponentType, ReactNode } from "react";
+import { useState } from "react";
 import {
+  act,
+  fireEvent as userEvent,
   screen,
   within,
-  render as renderReact,
-  fireEvent as userEvent,
-  act,
 } from "@testing-library/react";
-import { useState } from "react";
-import { createImperative } from "../createImperative";
-import type { ImperativeComponentProps, InstanceSpawnerFor } from "../index";
-import { ComponentStore } from "../index";
 import { deferPromise } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
+import { Dialog } from "./Dialog";
+import type { HookTestFactory } from "./setup";
+import {
+  setupImperative,
+  defineSimpleTestForBothHooks,
+  defineTestForBothHooks,
+} from "./setup";
 
 describe("can display", () => {
   describe("built-in message", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn()}>Open dialog</button>
       ));
@@ -25,7 +27,7 @@ describe("can display", () => {
     }));
 
   describe("custom message", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn({ message: "Custom message" })}>
           Open dialog
@@ -71,8 +73,8 @@ describe("can display", () => {
 
 describe("removeOnUnmount", () => {
   const setupUnmountTest = (
-    useHook: Parameters<HookTestFactoryImpl>[0],
-    render: Parameters<HookTestFactoryImpl>[1],
+    useHook: Parameters<HookTestFactory>[0],
+    render: Parameters<HookTestFactory>[1],
     hookOptions?: GeneralHookOptions
   ) => {
     function Source() {
@@ -93,13 +95,13 @@ describe("removeOnUnmount", () => {
   };
 
   describe("is disabled by default", () =>
-    testsForBothHooksImpl(async (useHook, render) => {
+    defineTestForBothHooks(async (useHook, render) => {
       setupUnmountTest(useHook, render);
       await screen.findByRole("dialog");
     }));
 
   describe("can be opt-in enabled", () =>
-    testsForBothHooksImpl(async (useHook, render) => {
+    defineTestForBothHooks(async (useHook, render) => {
       setupUnmountTest(useHook, render, { removeOnUnmount: true });
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
@@ -107,7 +109,7 @@ describe("removeOnUnmount", () => {
 
 describe("can resolve instance", () => {
   describe("immediately", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       render(({ spawn }) => (
         <button onClick={() => spawn()}>Open dialog</button>
       ));
@@ -117,7 +119,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("delayed", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       const delay = deferPromise();
       render(({ spawn }) => (
         <button onClick={() => spawn({ removeDelay: delay.promise })}>
@@ -135,7 +137,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("with value", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       let promise: Promise<unknown> | undefined;
       render(({ spawn }) => {
         return (
@@ -151,7 +153,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("when there are multiple instances", () =>
-    testsForBothHooks(async (render) => {
+    defineSimpleTestForBothHooks(async (render) => {
       render(({ spawn }) => (
         <>
           <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
@@ -166,80 +168,3 @@ describe("can resolve instance", () => {
       expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
     }));
 });
-
-function Dialog({
-  state,
-  message = "Built-in message",
-  name,
-  resolve,
-  resolution,
-  removeDelay,
-}: ModalProps<unknown> & {
-  message?: ReactNode;
-  name?: string;
-  resolution?: unknown;
-  removeDelay?: Promise<unknown>;
-}) {
-  return (
-    <div role="dialog" aria-label={name} className={state.type}>
-      <p>{message}</p>
-      <button onClick={() => resolve(resolution, removeDelay)}>OK</button>
-    </div>
-  );
-}
-
-type HookTestFactory = (
-  render: (
-    Content: ComponentType<{
-      spawn: InstanceSpawnerFor<typeof Dialog>;
-    }>
-  ) => ReturnType<typeof renderReact>
-) => void;
-
-function testsForBothHooks(createTest: HookTestFactory) {
-  return testsForBothHooksImpl((useHook, render) =>
-    createTest((Content) => render(() => <Content spawn={useHook()} />))
-  );
-}
-
-type HookTestFactoryImpl = (
-  useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<typeof Dialog>,
-  render: (Content: ComponentType) => ReturnType<typeof renderReact>
-) => void;
-
-function testsForBothHooksImpl(createTest: HookTestFactoryImpl) {
-  const { imp, render } = setupImperative();
-
-  test("useInstanceSpawner", () =>
-    createTest(
-      (options) => imp.useInstanceSpawner(Dialog, {}, options),
-      render
-    ));
-
-  test("useComponentSpawner", () =>
-    createTest((options) => {
-      const spawnModal = imp.useComponentSpawner(options);
-      return (props) => spawnModal(Dialog, props);
-    }, render));
-}
-
-function setupImperative() {
-  const imp = createImperative();
-
-  function render(Content: ComponentType) {
-    const store = new ComponentStore();
-    function Wrapper({ children }: { children?: ReactNode }) {
-      return (
-        <imp.Context.Provider value={store}>
-          {children}
-          <imp.Outlet />
-        </imp.Context.Provider>
-      );
-    }
-    return renderReact(<Content />, { wrapper: Wrapper });
-  }
-
-  return { imp, render };
-}
-
-type ModalProps<Output = void> = ImperativeComponentProps<Output>;
