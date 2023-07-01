@@ -6,14 +6,14 @@ import { createImperative } from "../createImperative";
 import { ComponentStore } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
 
-export type HookTestFactory<T extends AnyComponent> = (
+export type AbstractHookTestFactory<T extends AnyComponent> = (
   useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<T>,
   render: (Content: ComponentType) => ReturnType<typeof renderReact>
 ) => void;
 
-export function defineTestForBothHooks<T extends AnyComponent>(
+export function defineAbstractHookTest<T extends AnyComponent>(
   component: T,
-  defineTest: HookTestFactory<T>
+  defineTest: AbstractHookTestFactory<T>
 ) {
   const { imp, render } = setupImperative();
 

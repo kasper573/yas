@@ -10,12 +10,12 @@ import { deferPromise } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
 import type { ImperativeComponentProps } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
-import type { HookTestFactory } from "./setup";
-import { setupImperative, defineTestForBothHooks } from "./setup";
+import type { AbstractHookTestFactory } from "./setup";
+import { setupImperative, defineAbstractHookTest } from "./setup";
 
 describe("can display", () => {
   describe("built-in message", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       render(() => {
         const spawn = useHook();
         return <button onClick={() => spawn()}>Open dialog</button>;
@@ -26,7 +26,7 @@ describe("can display", () => {
     }));
 
   describe("custom message", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       render(() => {
         const spawn = useHook();
         return (
@@ -75,8 +75,8 @@ describe("can display", () => {
 
 describe("removeOnUnmount", () => {
   const setupUnmountTest = <T extends AnyComponent>(
-    useHook: Parameters<HookTestFactory<T>>[0],
-    render: Parameters<HookTestFactory<T>>[1],
+    useHook: Parameters<AbstractHookTestFactory<T>>[0],
+    render: Parameters<AbstractHookTestFactory<T>>[1],
     hookOptions?: GeneralHookOptions
   ) => {
     function Source() {
@@ -97,13 +97,13 @@ describe("removeOnUnmount", () => {
   };
 
   describe("is disabled by default", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       setupUnmountTest(useHook, render);
       await screen.findByRole("dialog");
     }));
 
   describe("can be opt-in enabled", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       setupUnmountTest(useHook, render, { removeOnUnmount: true });
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
@@ -111,7 +111,7 @@ describe("removeOnUnmount", () => {
 
 describe("can resolve instance", () => {
   describe("immediately", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       render(() => {
         const spawn = useHook();
         return <button onClick={() => spawn()}>Open dialog</button>;
@@ -122,7 +122,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("delayed", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       const delay = deferPromise();
       render(() => {
         const spawn = useHook();
@@ -143,7 +143,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("with value", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       let promise: Promise<unknown> | undefined;
       render(() => {
         const spawn = useHook();
@@ -160,7 +160,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("and select the correct one when there are multiple instances", () =>
-    defineTestForBothHooks(Dialog, async (useHook, render) => {
+    defineAbstractHookTest(Dialog, async (useHook, render) => {
       render(() => {
         const spawn = useHook();
         return (
