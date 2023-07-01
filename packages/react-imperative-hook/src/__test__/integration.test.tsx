@@ -4,11 +4,13 @@ import {
   within,
   render,
   fireEvent as userEvent,
+  act,
 } from "@testing-library/react";
 import { useState } from "react";
 import { createImperative } from "../createImperative";
 import type { ImperativeComponentProps } from "../index";
 import { ComponentStore } from "../index";
+import { deferPromise } from "../deferPromise";
 
 describe("can display", () => {
   test("predefined dialog with built-in message", async () => {
@@ -139,7 +141,21 @@ describe("can resolve instance", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 
-  it("delayed", async () => {});
+  it("delayed", async () => {
+    const delay = deferPromise();
+    setup(() => {
+      const alert = useModal(Dialog, { removeDelay: delay.promise });
+      return <button onClick={() => alert()}>Open dialog</button>;
+    });
+    userEvent.click(screen.getByText("Open dialog"));
+    userEvent.click(screen.getByRole("button", { name: "OK" }));
+    expect(screen.queryByRole("dialog")).not.toBeNull();
+    await act(async () => {
+      delay.resolve();
+      await delay.promise;
+    });
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
 
   it("with value", async () => {
     let promise: Promise<unknown> | undefined;
@@ -178,18 +194,17 @@ function Dialog<T>({
   name,
   resolve,
   resolution,
+  removeDelay,
 }: ModalProps<T | undefined> & {
   message?: ReactNode;
   name?: string;
   resolution?: T;
+  removeDelay?: Promise<unknown>;
 }) {
-  if (state.type !== "pending") {
-    return null;
-  }
   return (
-    <div role="dialog" aria-label={name}>
+    <div role="dialog" aria-label={name} className={state.type}>
       <p>{message}</p>
-      <button onClick={() => resolve(resolution)}>OK</button>
+      <button onClick={() => resolve(resolution, removeDelay)}>OK</button>
     </div>
   );
 }
