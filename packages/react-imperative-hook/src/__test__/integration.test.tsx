@@ -154,7 +154,7 @@ describe("can resolve instance", () => {
       expect(value).toBe("foo");
     }));
 
-  describe("when there are multiple instances", () =>
+  describe("and select the correct one when there are multiple instances", () =>
     defineSimpleTestForBothHooks(Dialog, async (render) => {
       render(({ spawn }) => (
         <>
