@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { useState } from "react";
 import { createImperative } from "../createImperative";
-import type { ImperativeComponentProps } from "../index";
+import type { ImperativeComponentProps, InstanceSpawnerFor } from "../index";
 import { ComponentStore } from "../index";
 import { deferPromise } from "../deferPromise";
 
@@ -160,7 +160,7 @@ describe("can resolve instance", () => {
   it("with value", async () => {
     let promise: Promise<unknown> | undefined;
     setup(() => {
-      const alert = useModal(Dialog<string>, { resolution: "foo" });
+      const alert = useModal(Dialog, { resolution: "foo" });
       return <button onClick={() => (promise = alert())}>Open dialog</button>;
     });
     userEvent.click(screen.getByText("Open dialog"));
@@ -169,36 +169,35 @@ describe("can resolve instance", () => {
     expect(value).toBe("foo");
   });
 
-  it("when there are multiple instances", async () => {
-    setup(() => {
-      const spawn = useModal(Dialog);
-      return (
+  describe("when there are multiple instances", () => {
+    testsForBothHooks(async (setup) => {
+      setup(({ spawn }) => (
         <>
           <button onClick={() => spawn({ name: "foo" })}>Spawn foo</button>
           <button onClick={() => spawn({ name: "bar" })}>Spawn bar</button>
         </>
-      );
+      ));
+      userEvent.click(screen.getByText("Spawn foo"));
+      userEvent.click(screen.getByText("Spawn bar"));
+      const fooDialog = await screen.findByRole("dialog", { name: "foo" });
+      userEvent.click(within(fooDialog).getByRole("button", { name: "OK" }));
+      const remainingDialog = await screen.findByRole("dialog");
+      expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
     });
-    userEvent.click(screen.getByText("Spawn foo"));
-    userEvent.click(screen.getByText("Spawn bar"));
-    const fooDialog = await screen.findByRole("dialog", { name: "foo" });
-    userEvent.click(within(fooDialog).getByRole("button", { name: "OK" }));
-    const remainingDialog = await screen.findByRole("dialog");
-    expect(remainingDialog.getAttribute("aria-label")).toBe("bar");
   });
 });
 
-function Dialog<T>({
+function Dialog({
   state,
   message = "Built-in message",
   name,
   resolve,
   resolution,
   removeDelay,
-}: ModalProps<T | undefined> & {
+}: ModalProps<unknown> & {
   message?: ReactNode;
   name?: string;
-  resolution?: T;
+  resolution?: unknown;
   removeDelay?: Promise<unknown>;
 }) {
   return (
@@ -207,6 +206,32 @@ function Dialog<T>({
       <button onClick={() => resolve(resolution, removeDelay)}>OK</button>
     </div>
   );
+}
+
+function testsForBothHooks(
+  createTest: (
+    setup: (
+      Content: ComponentType<{
+        spawn: InstanceSpawnerFor<typeof Dialog>;
+      }>
+    ) => ReturnType<typeof render>
+  ) => void
+) {
+  test("useModal", () =>
+    createTest((Content) =>
+      setup(() => {
+        const spawn = useModal(Dialog);
+        return <Content spawn={spawn} />;
+      })
+    ));
+
+  test("useModals", () =>
+    createTest((Content) =>
+      setup(() => {
+        const spawnModal = useModals();
+        return <Content spawn={(props) => spawnModal(Dialog, props)} />;
+      })
+    ));
 }
 
 function setup(Content: ComponentType) {

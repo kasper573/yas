@@ -21,13 +21,7 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
       fixedId,
       removeOnUnmount = removeOnUnmountDefault,
     }: { fixedId?: ComponentId; removeOnUnmount?: boolean } = {}
-  ): InstanceSpawner<
-    ComponentProps<Component> extends ResolvingComponentProps<infer R>
-      ? R
-      : never,
-    Omit<ComponentProps<Component>, keyof ImperativeComponentProps>,
-    DefaultProps
-  > {
+  ): InstanceSpawnerFor<Component, DefaultProps> {
     const autoId = useId();
     const id = fixedId ?? autoId;
     const store = useContext(context);
@@ -60,10 +54,23 @@ export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
 let instanceIdCounter = 0;
 const nextInstanceId = (): InstanceId => (++instanceIdCounter).toString();
 
-type InstanceSpawner<
+export type InstanceSpawner<
   ResolutionValue,
   AdditionalComponentProps,
   DefaultProps extends Partial<AdditionalComponentProps>
 > = (
   props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>
 ) => Promise<ResolutionValue>;
+
+export type InstanceSpawnerFor<
+  Component extends AnyComponent,
+  DefaultProps extends Partial<ComponentProps<Component>> = Partial<
+    ComponentProps<Component>
+  >
+> = InstanceSpawner<
+  ComponentProps<Component> extends ResolvingComponentProps<infer R>
+    ? R
+    : never,
+  Omit<ComponentProps<Component>, keyof ImperativeComponentProps>,
+  DefaultProps
+>;
