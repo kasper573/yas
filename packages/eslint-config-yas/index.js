@@ -31,6 +31,9 @@ module.exports = {
         // This one is too excessive. Basic use of plenty of libraries causes this one to fail, so it's not worth having it enabled.
         "@typescript-eslint/no-misused-promises": "off",
 
+        // We use TypeScript for type checking, so we don't need prop-types
+        "react/prop-types": "off",
+
         // Automatically removes unused imports. Reduces need for tree shaking in builds.
         "unused-imports/no-unused-imports": "error",
         "@typescript-eslint/no-unused-vars": "off", // Turning off no-unused-vars is recommended by the unused-imports plugin
