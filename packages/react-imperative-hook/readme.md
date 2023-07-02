@@ -18,13 +18,13 @@ you'd much rather want an imperative and promise based interface, which is what 
 
 ### Usage
 
-#### Define your imperative primitives
+#### 1. Define your imperative primitives
 
-Use the `createImperative` factory to define the primitives that you will be using.
-This is useful to be able to customize rendering, and it allows you to produce multiple instances,
+Use the [createImperative](#createimperative) factory to define the primitives that you will be using.
+The factory is useful to be able to customize rendering, and it allows you to produce multiple instances,
 i.e. if you want separate rendering for modals and toasts.
 
-See the [Primitives](#primitives) section more information on each primitive.
+See the [Primitives](#primitives) section for more information on each primitive.
 
 ```tsx
 // imperative.ts
@@ -49,9 +49,9 @@ const {
 export type ModalProps<T = void> = ImperativeComponentProps<T>;
 ```
 
-#### Create a compatible react component
+#### 2. Create a compatible react component
 
-Any react component that accepts `ImperativeComponentProps` is compatible with the hooks.
+Any component that accept `ImperativeComponentProps` is compatible with the hooks.
 
 ```tsx
 // Prompt.tsx
@@ -74,7 +74,7 @@ function Prompt({
 }
 ```
 
-#### Place the outlet at the root of your app
+#### 3. Place the outlet at the root of your app
 
 ```tsx
 // main.tsx
@@ -91,7 +91,7 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-#### Use the hooks in your app
+#### 4. Use the hooks in your app
 
 ```tsx
 // App.tsx
