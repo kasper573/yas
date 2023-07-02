@@ -9,7 +9,7 @@
     "component"
   ],
   "author": "Kasper Sandin",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",

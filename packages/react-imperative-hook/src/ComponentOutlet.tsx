@@ -25,25 +25,25 @@ export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   const [, rerender] = useReducer((x) => x + 1, 0);
   useEffect(() => store.subscribe(rerender), [store]);
   return createElement(renderer, {
-    entries: Array.from(collectEntries(store.state)),
+    entries: collectEntries(store.state),
   });
 }
 
-function* collectEntries(
-  components: ComponentStoreState
-): Generator<OutletEntry> {
+function collectEntries(components: ComponentStoreState) {
+  const entries: OutletEntry[] = [];
   for (const componentId in components) {
     const { component, instances, defaultProps } = components[componentId];
     for (const instanceId in instances) {
-      yield {
+      entries.push({
         instanceId,
         componentId,
         component,
         defaultProps,
         ...instances[instanceId],
-      };
+      });
     }
   }
+  return entries;
 }
 
 /**
