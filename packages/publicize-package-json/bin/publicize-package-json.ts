@@ -85,6 +85,7 @@ function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
       types: `./${distFolder}/index.d.ts`,
     },
   };
+  pkg.files = [distFolder, "package.json", "readme.md"];
 }
 
 function removeInternalPackageDependencies(deps: Record<string, string> = {}) {
