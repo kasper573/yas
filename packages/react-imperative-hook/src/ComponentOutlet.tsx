@@ -8,7 +8,6 @@ import type {
   InstanceId,
   ComponentEntry,
 } from "./ComponentStore";
-import { DefaultOutletRenderer } from "./DefaultOutletRenderer";
 
 export interface ComponentOutletProps {
   /**
@@ -18,13 +17,10 @@ export interface ComponentOutletProps {
   /**
    * The OutletRenderer to use. Defaults to defaultOutletRenderer.
    */
-  renderer?: OutletRenderer;
+  renderer: OutletRenderer;
 }
 
-export function ComponentOutlet({
-  context,
-  renderer = DefaultOutletRenderer,
-}: ComponentOutletProps) {
+export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   const store = useContext(context);
   const [, rerender] = useReducer((x) => x + 1, 0);
   useEffect(() => store.subscribe(rerender), [store]);

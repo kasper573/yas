@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import { ComponentStore } from "./ComponentStore";
-import type { OutletRenderer } from "./ComponentOutlet";
 import { ComponentOutlet } from "./ComponentOutlet";
 import { createPredefinedSpawnerHook } from "./createPredefinedSpawnerHook";
 import { createInlineSpawnerHook } from "./createInlineSpawnerHook";
 import { createSpawnSustainerHook } from "./createSpawnSustainerHook";
+import { DefaultOutletRenderer } from "./DefaultOutletRenderer";
 
-export function createImperative(renderer?: OutletRenderer) {
+export function createImperative(renderer = DefaultOutletRenderer) {
   const Context = createContext(new ComponentStore());
 
   return {
