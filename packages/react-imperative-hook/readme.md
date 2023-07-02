@@ -126,9 +126,9 @@ export function App() {
 }
 ```
 
-See [CodeSandbox](#try-it-on-codesandbox) for more examples.
-
 ### Primitives
+
+See [CodeSandbox](#try-it-on-codesandbox) for examples for all primitives.
 
 #### Outlet
 
@@ -136,8 +136,10 @@ A React component that renders the currently spawned components.
 
 #### Context
 
-A React context that holds the store that contains the currently spawned components.
-Has a default store, so usually don't need to use this, but it's exposed in case you need it.
+A React context that holds the store that manages all the state of react-imperative-hook.
+Using this is optional. The context already contain a default store, and the hooks are
+using the store internally. Manual use of the context and store is only necessary
+if you want to extend the library with custom behavior.
 
 #### usePredefinedSpawner
 
