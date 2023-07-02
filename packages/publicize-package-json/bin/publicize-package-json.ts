@@ -33,10 +33,12 @@ async function run({
   try {
     console.log(`Running command "${command}"`);
     await execa(command);
+    return 0;
   } catch (e) {
     console.error(
       `Error while running command "${command}":\n` + (e as Error).message
     );
+    return 1;
   } finally {
     pkg.reload();
     pkg.restore((original) => {
@@ -91,7 +93,7 @@ const args = yargs(hideBin(process.argv))
   })
   .parseSync();
 
-run(args);
+run(args).then(process.exit);
 
 type PackageJson = {
   version: string;
