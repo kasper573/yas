@@ -287,15 +287,9 @@ importers:
       '@semantic-release/release-notes-generator':
         specifier: ^11.0.3
         version: 11.0.3(semantic-release@21.0.6)
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
       semantic-release:
         specifier: ^21.0.6
         version: 21.0.6
-      tsx:
-        specifier: ^3.12.7
-        version: 3.12.7
 
   packages/yas-tsconfig:
     devDependencies:
