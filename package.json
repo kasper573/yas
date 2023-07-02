@@ -14,14 +14,10 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
-    "test:watch": "turbo run test:watch",
-    "release": "turbo run release"
+    "test:watch": "turbo run test:watch"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.6",
-    "@commitlint/config-conventional": "^17.6.6",
     "eslint-config-yas": "workspace:*",
-    "husky": "^8.0.3",
     "prettier": "latest",
     "turbo": "1.8.3"
   },

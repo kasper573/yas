@@ -22,7 +22,6 @@ It's important that each package uses the same script names for the same use cas
 - `lint:fix` Fixes code style errors (where possible)
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
-- `release` Deploys the application, or publishes the package to npm. Assumes the `build` script was run before it.
 
 A general rule of thumb is that scripts should exit with a non-zero exit code if they fail.
 

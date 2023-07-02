@@ -39,7 +39,6 @@
     "@yas/tsconfig": "workspace:*",
     "@yas/jest": "workspace:*",
     "@yas/build-tools": "workspace:*",
-    "@yas/release": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "publicize-package-json": "workspace:*",
     "jest": "^29.5.0",

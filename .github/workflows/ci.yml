@@ -25,23 +25,3 @@ jobs:
         with:
           name: playwright
           path: "**/.playwright/**"
-
-  release:
-    runs-on: ubuntu-latest
-    needs: [code-style, test]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    permissions:
-      # Required for semantic-release
-      contents: write
-      issues: write
-      pull-requests: write
-      id-token: write
-    env:
-      # Required for semantic-release
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/composites/install/
-      - run: pnpm build
-      - run: pnpm release

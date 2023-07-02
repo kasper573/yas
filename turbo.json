@@ -17,10 +17,6 @@
       "cache": false,
       "persistent": true
     },
-    "release": {
-      "dependsOn": ["^release", "^build"],
-      "cache": false
-    },
     "dev": {
       "cache": false,
       "persistent": true
