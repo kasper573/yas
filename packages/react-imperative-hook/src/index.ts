@@ -5,5 +5,4 @@ export * from "./createImperative";
 export type * from "./createInlineSpawnerHook";
 export type * from "./createPredefinedSpawnerHook";
 export type * from "./createSpawnSustainerHook";
-export * from "./DefaultOutletRenderer";
 export type * from "./deferPromise";
