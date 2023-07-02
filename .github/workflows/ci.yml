@@ -30,6 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [code-style, test]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      # Required for semantic-release
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
