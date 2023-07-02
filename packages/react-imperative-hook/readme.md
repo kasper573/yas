@@ -133,9 +133,8 @@ See [CodeSandbox](#try-it-on-codesandbox) for more examples.
 #### Outlet
 
 A React component that renders the currently spawned components.
-Allows you to pass in a React component to customize how all spawned components should be rendered in the outlet.
 
-#### ModalContext
+#### Context
 
 A React context that holds the store that contains the currently spawned components.
 Has a default store, so usually don't need to use this, but it's exposed in case you need it.
@@ -165,7 +164,4 @@ Once you no longer want to sustain the component, call the function returned fro
 #### createImperative
 
 Produces the primitives in this list. Allows you to pass in a React component
-that will be used as the default renderer passed to the Outlet.
-
-> This is mostly for convenience so that you can define the renderer
-> together with the factory and have it become embedded in the Outlet.
+to customize how all spawned components should be rendered in the outlet.
