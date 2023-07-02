@@ -32,7 +32,8 @@ async function run({
 
   try {
     console.log(`Running command "${command}"`);
-    await execa(command);
+    const { stdout } = await execa(command);
+    console.log(stdout);
     return 0;
   } catch (e) {
     console.error(
