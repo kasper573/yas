@@ -27,7 +27,7 @@
     "lint:fix": "eslint . --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "release": "publicize-package-json -c \"pnpm publish\" -d dist"
+    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
   },
   "jest": {
     "preset": "@yas/jest/presets/react"
