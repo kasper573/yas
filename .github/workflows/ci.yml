@@ -2,7 +2,7 @@ name: CI
 on: [push]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
   code-style:
@@ -15,9 +15,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
@@ -28,3 +25,13 @@ jobs:
         with:
           name: playwright
           path: "**/.playwright/**"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [code-style, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm build
+      - run: pnpm deploy
