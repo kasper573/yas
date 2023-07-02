@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { useState } from "react";
 import {
   act,
@@ -6,7 +6,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import { deferPromise } from "../deferPromise";
+import type { Deferred } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
 import type { ImperativeComponentProps } from "../ComponentStore";
 import type { AnyComponent } from "../utilityTypes";
@@ -172,26 +172,32 @@ describe("can resolve instance", () => {
       expect(screen.queryByRole("dialog")).toBeNull();
     }));
 
-  describe("delayed", () =>
-    defineAbstractHookTest(Dialog, async (useHook, render) => {
-      const delay = deferPromise();
-      render(() => {
-        const spawn = useHook();
-        return (
-          <button onClick={() => spawn({ removeDelay: delay.promise })}>
-            Open dialog
-          </button>
-        );
-      });
-      userEvent.click(screen.getByText("Open dialog"));
-      userEvent.click(screen.getByRole("button", { name: "OK" }));
-      expect(screen.queryByRole("dialog")).not.toBeNull();
-      await act(async () => {
-        delay.resolve();
-        await delay.promise;
-      });
-      expect(screen.queryByRole("dialog")).toBeNull();
-    }));
+  describe("delayed", () => {
+    const { imp, render } = setupImperative();
+    let releaseSustain: Deferred<void>;
+    function DialogWithDelay(props: ComponentProps<typeof Dialog>) {
+      releaseSustain = imp.useSpawnSustainer(props);
+      return <Dialog {...props} />;
+    }
+    defineAbstractHookTest(
+      DialogWithDelay,
+      async (useHook, render) => {
+        render(() => {
+          const spawn = useHook();
+          return <button onClick={() => spawn()}>Open dialog</button>;
+        });
+        userEvent.click(screen.getByText("Open dialog"));
+        userEvent.click(screen.getByRole("button", { name: "OK" }));
+        expect(screen.queryByRole("dialog")).not.toBeNull();
+        await act(async () => {
+          releaseSustain();
+          await releaseSustain.promise;
+        });
+        expect(screen.queryByRole("dialog")).toBeNull();
+      },
+      { imp, render }
+    );
+  });
 
   describe("with value", () =>
     defineAbstractHookTest(Dialog, async (useHook, render) => {
@@ -236,17 +242,15 @@ function Dialog({
   name,
   resolve,
   resolution,
-  removeDelay,
 }: ModalProps<unknown> & {
   message?: ReactNode;
   name?: string;
   resolution?: unknown;
-  removeDelay?: Promise<unknown>;
 }) {
   return (
     <div role="dialog" aria-label={name} className={state.type}>
       <p>{message}</p>
-      <button onClick={() => resolve(resolution, removeDelay)}>OK</button>
+      <button onClick={() => resolve(resolution)}>OK</button>
     </div>
   );
 }

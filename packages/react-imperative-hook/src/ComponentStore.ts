@@ -1,12 +1,14 @@
+import type { ComponentType } from "react";
 import { Store } from "./Store";
-import type {
-  AnyComponent,
-  MakeOptionalIfEmptyObject,
-  PartialByKeys,
-} from "./utilityTypes";
+import type { MakeOptionalIfEmptyObject, PartialByKeys } from "./utilityTypes";
 import { deferPromise } from "./deferPromise";
+import type { UseSpawnSustainerProps } from "./createSpawnSustainerHook";
 
 export class ComponentStore {
+  // Remove delays are not part of the observable Store since they have no reactive impact.
+  // They are pulled from the map when instances resolve.
+  private removeDelays = new Map<InstanceId, Promise<void>>();
+
   constructor(private store = new Store<ComponentStoreState>({})) {
     this.subscribe = this.store.subscribe.bind(this.store);
   }
@@ -43,6 +45,14 @@ export class ComponentStore {
     });
   }
 
+  setInstanceRemoveDelay(instanceId: InstanceId, newDelay?: Promise<void>) {
+    if (newDelay) {
+      this.removeDelays.set(instanceId, newDelay);
+    } else {
+      this.removeDelays.delete(instanceId);
+    }
+  }
+
   removeInstance(componentId: ComponentId, instanceId: InstanceId) {
     return this.store.mutate((components) => {
       const component = components[componentId];
@@ -62,7 +72,7 @@ export class ComponentStore {
     instanceId: InstanceId,
     props: Props
   ) {
-    const instanceCompletion = deferPromise<Resolution>();
+    const resolveSpawnCall = deferPromise<Resolution>();
 
     this.store.mutate((state) => {
       const component = state[componentId];
@@ -79,12 +89,11 @@ export class ComponentStore {
       component.instances[instanceId] = {
         state: { type: "pending" },
         props,
-        resolve: (value, removeDelay) => {
+        resolve: (value) => {
           this.store.mutate((components) => {
-            components[componentId].instances[instanceId].state = {
-              type: "resolved",
-              value,
-            };
+            const instance = components[componentId].instances[instanceId];
+            instance.state = { type: "resolved", value };
+            const removeDelay = this.removeDelays.get(instanceId);
             if (removeDelay) {
               removeDelay.then(() =>
                 this.removeInstance(componentId, instanceId)
@@ -93,12 +102,12 @@ export class ComponentStore {
               this.removeInstance(componentId, instanceId);
             }
           });
-          instanceCompletion.resolve(value);
+          resolveSpawnCall(value);
         },
       };
     });
 
-    return instanceCompletion.promise;
+    return resolveSpawnCall.promise;
   }
 
   private _idCounter = 0;
@@ -112,12 +121,13 @@ export type ComponentStoreState = Record<ComponentId, ComponentEntry>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ImperativeComponentProps<ResolutionValue = any>
-  extends ResolvingComponentProps<ResolutionValue> {
+  extends ResolvingComponentProps<ResolutionValue>,
+    UseSpawnSustainerProps {
   state: InstanceState<ResolutionValue>;
 }
 
 export interface ResolvingComponentProps<ResolutionValue> {
-  resolve: (value: ResolutionValue, removeDelay?: Promise<unknown>) => void;
+  resolve: (value: ResolutionValue) => void;
 }
 
 export type ComponentId = string;
@@ -128,7 +138,7 @@ export type UpsertComponentPayload = Pick<
 >;
 
 export interface ComponentEntry {
-  component: AnyComponent;
+  component: ComponentType<ImperativeComponentProps>;
   defaultProps?: Record<string, unknown>;
   instances: Record<InstanceId, InstanceEntry>;
   shouldBeRemovedWhenEmpty?: boolean;
@@ -136,7 +146,8 @@ export interface ComponentEntry {
 
 export type InstanceId = string;
 
-export interface InstanceEntry extends ImperativeComponentProps {
+export interface InstanceEntry
+  extends Omit<ImperativeComponentProps, keyof UseSpawnSustainerProps> {
   props: InstanceProps;
 }
 

@@ -12,6 +12,7 @@ export const defaultOutletRenderer: OutletRenderer = (components) => (
               {...props}
               state={state}
               resolve={resolve}
+              instanceId={instanceId}
             />
           )
         )

@@ -41,6 +41,7 @@ const {
   Context: ModalContext,
   usePredefinedSpawner: useModal,
   useInlineSpawner: useModals,
+  useSpawnSustainer: useModalSustainer,
 } = createImperative();
 
 // For TypeScript users, use this type helper to define a props type
@@ -153,6 +154,13 @@ The component is however specified inline when you call the function.
 
 - This is useful when you want to spawn different components, or don't know what component to spawn until later.
 - Comes with the caveat that you cannot update default props once the component has been spawned
+
+#### useSpawnSustainer
+
+A hook that is designed to be used from within a component you spawn with useInlineSpawner or usePredefinedSpawner.
+Once used it will prevent the spawned component from being removed from the store, keeping it in the DOM.
+This is useful to allow animations to finish before removing the component.
+Once you no longer want to sustain the component, call the function returned from the hook.
 
 #### createImperative
 

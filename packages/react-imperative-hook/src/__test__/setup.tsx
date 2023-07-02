@@ -14,10 +14,9 @@ export type AbstractHookTestFactory<T extends AnyComponent> = (
 
 export function defineAbstractHookTest<T extends AnyComponent>(
   component: T,
-  defineTest: AbstractHookTestFactory<T>
+  defineTest: AbstractHookTestFactory<T>,
+  { imp, render } = setupImperative()
 ) {
-  const { imp, render } = setupImperative();
-
   test("usePredefinedSpawner", () =>
     defineTest(
       (options) => imp.usePredefinedSpawner(component, {}, options),
