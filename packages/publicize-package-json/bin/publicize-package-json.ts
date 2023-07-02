@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 import * as path from "path";
-import { execa } from "execa";
+import { execaCommand } from "execa";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { createMutableResource } from "./createMutableResource";
@@ -32,7 +32,7 @@ async function run({
 
   try {
     console.log(`Running command "${command}"`);
-    const { stdout } = await execa(command);
+    const { stdout } = await execaCommand(command);
     console.log(stdout);
     return 0;
   } catch (e) {
