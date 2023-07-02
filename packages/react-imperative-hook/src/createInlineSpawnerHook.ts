@@ -46,9 +46,8 @@ export function createInlineSpawnerHook(context: Context<ComponentStore>) {
     >(
       component: Component,
       props?: InstanceProps<ResolutionValue, AdditionalComponentProps>,
-      componentId = store.nextId()
+      { componentId = store.nextId(), instanceId = store.nextId() } = {}
     ): Promise<ResolutionValue> {
-      const instanceId = store.nextId();
       componentIds.current.push(componentId);
       store.upsertComponent(componentId, { component });
       return store.spawnInstance(componentId, instanceId, props);
