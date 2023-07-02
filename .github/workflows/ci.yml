@@ -2,7 +2,7 @@ name: CI
 on: [push]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
   code-style:
@@ -23,5 +23,19 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report
-          path: "**/.playwright/output/report/**"
+          name: playwright
+          path: "**/.playwright/**"
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [code-style, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      # Required for semantic-release
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm build
+      - run: pnpm release

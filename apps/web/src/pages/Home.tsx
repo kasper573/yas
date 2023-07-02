@@ -1,5 +1,4 @@
 import { Text } from "@yas/ui";
-import * as React from "react";
 import { env } from "../env";
 import { hello } from "../hello";
 import { trpc } from "../trpc";

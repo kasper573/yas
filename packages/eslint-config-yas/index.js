@@ -3,10 +3,12 @@ const path = require("path");
 
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["import", "unused-imports", "monorepo-cop"],
+  plugins: ["import", "unused-imports", "monorepo-cop", "react"],
   extends: [
     "plugin:monorepo-cop/recommended",
     "plugin:storybook/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "prettier",
   ],
   settings: { react: { version: "detect" } },
@@ -28,6 +30,9 @@ module.exports = {
       rules: {
         // This one is too excessive. Basic use of plenty of libraries causes this one to fail, so it's not worth having it enabled.
         "@typescript-eslint/no-misused-promises": "off",
+
+        // We use TypeScript for type checking, so we don't need prop-types
+        "react/prop-types": "off",
 
         // Automatically removes unused imports. Reduces need for tree shaking in builds.
         "unused-imports/no-unused-imports": "error",
@@ -68,7 +73,7 @@ module.exports = {
       },
     },
     {
-      files: ["*.test.ts"],
+      files: ["*.test.ts", "*.stories.tsx"],
       rules: {
         // Tests are allowed to use non-null assertions since failures in tests are acceptable
         "@typescript-eslint/no-non-null-assertion": "off",

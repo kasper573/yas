@@ -2,7 +2,7 @@ import type { StorybookConfig } from "@storybook/react-vite";
 import { enhanceStoryIndexers } from "./enhanceStoryIndexers";
 
 const config: StorybookConfig = {
-  stories: ["./**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ["../docs/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",

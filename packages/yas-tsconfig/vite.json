@@ -4,6 +4,6 @@
   "compilerOptions": {
     "esModuleInterop": false,
     "noEmit": true,
-    "types": ["vite/client", "jest"]
+    "types": ["vite/client"]
   }
 }

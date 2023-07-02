@@ -14,7 +14,7 @@ with a heavy focus of code sharing between packages.
 
 ## Monorepo script convention
 
-Each package is expected to define the following scripts:
+It's important that each package uses the same script names for the same use cases. If a package is in need any of these use cases, it must use these exact script names:
 
 - `dev` Starts the development server (and other tools, like code generators) in watch mode. Displays URL to app in terminal.
 - `build` Builds the package for production (Not required for development, but useful to be aware of)
@@ -22,6 +22,7 @@ Each package is expected to define the following scripts:
 - `lint:fix` Fixes code style errors (where possible)
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
+- `release` Deploys the application, or publishes the package to npm. Assumes the `build` script was run before it.
 
 A general rule of thumb is that scripts should exit with a non-zero exit code if they fail.
 
