@@ -1,7 +1,7 @@
 {
-  "branches": ["main"],
+  "branches": ["master"],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    ["@semantic-release/commit-analyzer", { "preset": "conventionalcommits" }],
     "@semantic-release/release-notes-generator",
     "@semantic-release/npm",
     [
@@ -11,5 +11,6 @@
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
-  ]
+  ],
+  "extends": ["semantic-release-monorepo"]
 }
