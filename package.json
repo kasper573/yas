@@ -15,7 +15,7 @@
     "format:fix": "prettier --write .",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "deploy": "turbo run deploy"
+    "release": "turbo run release"
   },
   "devDependencies": {
     "eslint-config-yas": "workspace:*",
