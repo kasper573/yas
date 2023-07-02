@@ -122,7 +122,7 @@ export function App() {
     });
   }
 
-  return <button onClick={sequence}>Start sequence</button>;
+  return <button onClick={promptManyTimes}>Start sequence</button>;
 }
 ```
 
