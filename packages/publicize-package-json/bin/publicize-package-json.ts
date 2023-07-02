@@ -13,9 +13,11 @@ import { createMutableResource } from "./createMutableResource";
 async function run({
   command,
   distFolder,
+  preview,
 }: {
   command: string;
   distFolder: string;
+  preview?: boolean;
 }) {
   const packageFolder = path.resolve(distFolder, "..");
   const packageJsonPath = path.resolve(packageFolder, "package.json");
@@ -26,6 +28,13 @@ async function run({
     (str) => JSON.parse(str) as PackageJson,
     (json) => JSON.stringify(json, null, 2) + "\n"
   );
+
+  if (preview) {
+    console.log("Previewing changes to package.json:");
+    makePackageReleaseReady(pkg.contents, relativeDistFolder);
+    console.log(pkg.contents);
+    return 0;
+  }
 
   pkg.update((pkg) => makePackageReleaseReady(pkg, relativeDistFolder));
   console.log("package.json has been made release ready");
@@ -91,6 +100,7 @@ const args = yargs(hideBin(process.argv))
   .options({
     command: { type: "string", alias: "c", demandOption: true },
     distFolder: { type: "string", alias: "d", demandOption: true },
+    preview: { type: "boolean", alias: "p" },
   })
   .parseSync();
 
