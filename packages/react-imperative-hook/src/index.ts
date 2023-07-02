@@ -1,5 +1,5 @@
 export * from "./ComponentOutlet";
 export * from "./ComponentStore";
-export * from "./createInstanceSpawnerHook";
+export * from "./createPredefinedSpawnerHook";
 export * from "./createImperative";
 export * from "./defaultOutletRenderer";

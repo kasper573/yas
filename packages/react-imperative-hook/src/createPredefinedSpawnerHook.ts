@@ -10,7 +10,7 @@ import type { ComponentId, InstanceProps } from "./ComponentStore";
 import type { GeneralHookOptions } from "./constants";
 import { removeOnUnmountDefault } from "./constants";
 
-export function createInstanceSpawnerHook(context: Context<ComponentStore>) {
+export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
   return function useInstanceSpawner<
     Component extends AnyComponent,
     DefaultProps extends Partial<ComponentProps<Component>>

@@ -44,7 +44,7 @@ describe("can display", () => {
   test("predefined dialog with default message", async () => {
     const { render, imp } = setupImperative();
     render(() => {
-      const alert = imp.useInstanceSpawner(Dialog, {
+      const alert = imp.usePredefinedSpawner(Dialog, {
         message: "Default message",
       });
       return <button onClick={() => alert()}>Open dialog</button>;
@@ -58,7 +58,7 @@ describe("can display", () => {
     const { render, imp } = setupImperative();
     render(() => {
       const [message, setMessage] = useState("Default message");
-      const alert = imp.useInstanceSpawner(Dialog, { message });
+      const alert = imp.usePredefinedSpawner(Dialog, { message });
       return (
         <>
           <button onClick={() => alert()}>Open dialog</button>
@@ -99,7 +99,7 @@ test("can spawn an instance temporarily for a removed component", async () => {
 
   let spawn: () => void;
   function Source() {
-    spawn = imp.useInstanceSpawner(Dialog, {}, { removeOnUnmount: true });
+    spawn = imp.usePredefinedSpawner(Dialog, {}, { removeOnUnmount: true });
     return <button onClick={() => spawn()}>Spawn</button>;
   }
 

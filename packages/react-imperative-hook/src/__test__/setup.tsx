@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode } from "react";
 import { render as renderReact } from "@testing-library/react";
 import { useMemo } from "react";
-import type { InstanceSpawnerFor } from "../createInstanceSpawnerHook";
+import type { InstanceSpawnerFor } from "../createPredefinedSpawnerHook";
 import type { GeneralHookOptions } from "../constants";
 import { createImperative } from "../createImperative";
 import { ComponentStore } from "../ComponentStore";
@@ -18,15 +18,15 @@ export function defineAbstractHookTest<T extends AnyComponent>(
 ) {
   const { imp, render } = setupImperative();
 
-  test("useInstanceSpawner", () =>
+  test("usePredefinedSpawner", () =>
     defineTest(
-      (options) => imp.useInstanceSpawner(component, {}, options),
+      (options) => imp.usePredefinedSpawner(component, {}, options),
       render
     ));
 
-  test("useComponentSpawner", () =>
+  test("useInlineSpawner", () =>
     defineTest((options) => {
-      const spawnModal = imp.useComponentSpawner(options);
+      const spawnModal = imp.useInlineSpawner(options);
       return (props) => spawnModal(component, props as never);
     }, render));
 }

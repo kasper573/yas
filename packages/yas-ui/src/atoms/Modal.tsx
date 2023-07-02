@@ -23,8 +23,8 @@ export function Modal({
 }
 
 export const {
-  useInstanceSpawner: useModal,
-  useComponentSpawner: useModals,
+  usePredefinedSpawner: useModal,
+  useInlineSpawner: useModals,
   Context: ModalContext,
   Outlet: ModalOutlet,
 } = createImperative();
