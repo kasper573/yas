@@ -11,7 +11,11 @@ import { ZodDefault, ZodEffects, ZodNullable, ZodOptional } from "zod";
 export function createComposableForm(
   options: ComposableFormOptions = {},
 ): ComposableForm {
-  const { layout: DefaultLayout = NoLayout, components: build } = options;
+  const {
+    schema: defaultSchema,
+    layout: DefaultLayout = NoLayout,
+    components: build,
+  } = options;
 
   const typeComponents = new Map<ZodType, FormField>();
   const fieldComponents = new Map<string, FormField>();
@@ -19,7 +23,7 @@ export function createComposableForm(
   build?.(createBuilder(typeComponents, fieldComponents));
 
   function ComposableForm({
-    schema,
+    schema = defaultSchema,
     children: inlineLayout,
   }: ComposableFormProps) {
     const fields = useMemo(
@@ -135,6 +139,7 @@ function mergeOptions(
   b: ComposableFormOptions,
 ): ComposableFormOptions {
   return {
+    schema: b.schema ?? a.schema,
     layout: b.layout ?? a.layout,
     components(builder) {
       a.components?.(builder);
@@ -162,6 +167,7 @@ function createBuilder(
 }
 
 export interface ComposableFormOptions {
+  schema?: AnyZodObject;
   layout?: FormLayout;
   components?: FormComponentFactory;
 }
