@@ -13,7 +13,7 @@ importers:
         version: link:packages/eslint-config-yas
       prettier:
         specifier: latest
-        version: 2.8.8
+        version: 3.0.0
       turbo:
         specifier: 1.8.3
         version: 1.8.3
@@ -202,6 +202,39 @@ importers:
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
+
+  packages/react-composable-form:
+    devDependencies:
+      '@testing-library/react':
+        specifier: ^14.0.0
+        version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@yas/build-tools':
+        specifier: workspace:*
+        version: link:../yas-build-tools
+      '@yas/jest':
+        specifier: workspace:*
+        version: link:../yas-jest
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      jest:
+        specifier: ^29.5.0
+        version: 29.5.0(@types/node@20.3.1)
+      jest-environment-jsdom:
+        specifier: ^29.5.0
+        version: 29.5.0
+      publicize-package-json:
+        specifier: workspace:*
+        version: link:../publicize-package-json
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      tsup:
+        specifier: ^7.1.0
+        version: 7.1.0
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
 
   packages/react-imperative-hook:
     dependencies:
@@ -11132,6 +11165,12 @@ packages:
     hasBin: true
     dev: true
 
+  /prettier@3.0.0:
+    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -13499,4 +13538,3 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-    dev: false

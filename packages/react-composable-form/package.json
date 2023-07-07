@@ -1,0 +1,49 @@
+{
+  "name": "react-composable-form",
+  "description": "Form composition library for React",
+  "keywords": [
+    "react",
+    "composable",
+    "form"
+  ],
+  "author": "Kasper Sandin",
+  "version": "0.1.5",
+  "license": "MIT",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/react"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@yas/tsconfig": "workspace:*",
+    "@yas/jest": "workspace:*",
+    "@yas/build-tools": "workspace:*",
+    "@testing-library/react": "^14.0.0",
+    "publicize-package-json": "workspace:*",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "tsup": "^7.1.0",
+    "react": "^18.2.0",
+    "zod": "^3.21.4"
+  }
+}
