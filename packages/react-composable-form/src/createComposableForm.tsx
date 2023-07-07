@@ -20,15 +20,16 @@ export function createComposableForm(
 
   function ComposableForm({
     schema,
-    children: Layout = DefaultLayout,
+    children: inlineLayout,
   }: ComposableFormProps) {
-    return (
-      <Layout
-        fields={useMemo(
-          () => deriveFormFields(typeComponents, fieldComponents, schema),
-          [schema],
-        )}
-      />
+    const fields = useMemo(
+      () => deriveFormFields(typeComponents, fieldComponents, schema),
+      [schema],
+    );
+    return inlineLayout ? (
+      inlineLayout({ fields })
+    ) : (
+      <DefaultLayout fields={fields} />
     );
   }
 
@@ -165,9 +166,14 @@ export interface ComposableFormOptions {
   components?: FormComponentFactory;
 }
 
+/**
+ * Not a ComponentType to be able to be used as non-memoized inline render prop
+ */
+export type InlineFormLayout = (props: FormLayoutProps) => JSX.Element;
+
 export type ComposableFormProps = {
   schema?: AnyZodObject;
-  children?: FormLayout;
+  children?: InlineFormLayout;
 };
 
 export type ComposableForm = ComponentType<ComposableFormProps> & {
