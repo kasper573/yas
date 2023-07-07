@@ -67,9 +67,10 @@ describe("components", () => {
 });
 
 describe("layout", () => {
-  it("default can be defined", () => {
+  it("can be defined", () => {
     const Form = createComposableForm({ layout: () => <span>default</span> });
     const { getByText } = render(<Form />);
+    getByText("default");
   });
 
   it("can be extended from predefined forms", () => {
