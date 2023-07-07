@@ -41,7 +41,7 @@ describe("components", () => {
       });
       const { getByText } = render(
         <ExtendedForm
-          schema={z.object({ foo: z.number(), bar: z.number() })}
+          schema={z.object({ foo: z.string(), bar: z.number() })}
         />,
       );
       getByText("number");
@@ -101,8 +101,8 @@ describe("layout", () => {
         )}
       </Form>,
     );
-    expect(baseElement.outerHTML).toBe(
-      `<main><section>foo</section><section><span>bar</span></section></main>`,
+    expect(baseElement.innerHTML).toBe(
+      `<div><main><section><span>foo</span></section><section><span>bar</span></section></main></div>`,
     );
   });
 
