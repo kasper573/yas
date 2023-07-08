@@ -1,12 +1,15 @@
-import type { ComponentType } from "react";
-import type {
-  AnyZodObject,
-  ZodRawShape,
-  ZodType,
-  ZodFirstPartyTypeKind,
-} from "zod";
 import { useMemo } from "react";
-import { ZodDefault, ZodEffects, ZodNullable, ZodOptional } from "zod";
+import type { ZodType } from "zod";
+import { mergeOptions } from "./mergeOptions";
+import { createBuilder } from "./createBuilder";
+import type {
+  ComposableForm,
+  ComposableFormOptions,
+  ComposableFormProps,
+  FormField,
+} from "./types";
+import { deriveFormFields } from "./deriveFormFields";
+import type { FormLayoutProps } from "./types";
 
 export function createComposableForm(
   options: ComposableFormOptions = {},
@@ -52,159 +55,3 @@ function NoLayout({ fields }: FormLayoutProps) {
     </>
   );
 }
-
-function deriveFormFields(
-  typeMap: Map<ZodType, FormField>,
-  fieldMap: Map<string, FormField>,
-  schema?: AnyZodObject,
-): FormFields {
-  return Object.entries((schema?.shape ?? {}) as ZodRawShape).reduce(
-    (fields, [name, type]) => {
-      const Component = fieldMap.get(name) ?? findMatchingType(typeMap, type);
-      if (!Component) {
-        throw new Error(
-          `No component available for field "${name}" or type ${describeType(
-            type,
-          )}`,
-        );
-      }
-      fields[capitalize(name)] = embedDefaultProps(Component, name);
-      return fields;
-    },
-    {} as FormFields,
-  );
-}
-
-function findMatchingType(map: Map<ZodType, FormField>, type: ZodType) {
-  for (const [candidate, Component] of map.entries()) {
-    if (isMatchingType(candidate, type)) {
-      return Component;
-    }
-  }
-}
-
-function isMatchingType(a: ZodType, b: ZodType): boolean {
-  if (a === b) {
-    return true;
-  }
-  const n1 = normalizeType(a);
-  const n2 = normalizeType(b);
-  if (n1 === n2) {
-    return true;
-  }
-  return firstPartyType(n1) === firstPartyType(n2);
-}
-
-function normalizeType(type: ZodType): ZodType {
-  while (
-    type instanceof ZodEffects ||
-    type instanceof ZodOptional ||
-    type instanceof ZodNullable ||
-    type instanceof ZodDefault
-  ) {
-    type = type instanceof ZodEffects ? type.innerType() : type._def.innerType;
-  }
-  return type;
-}
-
-function firstPartyType(type: ZodType): ZodFirstPartyTypeKind {
-  if ("typeName" in type._def) {
-    return type._def.typeName as ZodFirstPartyTypeKind;
-  }
-  throw new Error(`Could not determine first party type`);
-}
-
-function embedDefaultProps(
-  Component: FormField,
-  name: string,
-): FormFieldWithEmbeddedDefaultProps {
-  return function FormFieldWithDefaultProps(props: Partial<FormFieldProps>) {
-    return <Component name={name} {...props} />;
-  };
-}
-
-function capitalize(str: string): string {
-  return str[0].toUpperCase() + str.slice(1);
-}
-
-function describeType(type: ZodType): string {
-  if ("typeName" in type._def) {
-    return String(type._def.typeName);
-  }
-  return String(type);
-}
-
-function mergeOptions(
-  a: ComposableFormOptions,
-  b: ComposableFormOptions,
-): ComposableFormOptions {
-  return {
-    schema: b.schema ?? a.schema,
-    layout: b.layout ?? a.layout,
-    components(builder) {
-      a.components?.(builder);
-      b.components?.(builder);
-      return builder;
-    },
-  };
-}
-
-function createBuilder(
-  typeMap: Map<ZodType, FormField>,
-  fieldMap: Map<string, FormField>,
-): FormComponentBuilder {
-  const builder: FormComponentBuilder = {
-    type(type, component) {
-      typeMap.set(type, component);
-      return builder;
-    },
-    field(name, component) {
-      fieldMap.set(name, component);
-      return builder;
-    },
-  };
-  return builder;
-}
-
-export interface ComposableFormOptions {
-  schema?: AnyZodObject;
-  layout?: FormLayout;
-  components?: FormComponentFactory;
-}
-
-/**
- * Not a ComponentType to be able to be used as non-memoized inline render prop
- */
-export type InlineFormLayout = (props: FormLayoutProps) => JSX.Element;
-
-export type ComposableFormProps = {
-  schema?: AnyZodObject;
-  children?: InlineFormLayout;
-};
-
-export type ComposableForm = ComponentType<ComposableFormProps> & {
-  extend(options: ComposableFormOptions): ComposableForm;
-};
-
-export type FormLayoutProps = {
-  fields: FormFields;
-};
-
-export type FormLayout = ComponentType<FormLayoutProps>;
-
-export type FormFieldProps = { name: string };
-
-export type FormFields = Record<string, FormFieldWithEmbeddedDefaultProps>;
-export type FormField = ComponentType<FormFieldProps>;
-export type FormFieldWithEmbeddedDefaultProps = ComponentType<
-  Partial<FormFieldProps>
->;
-
-export type FormComponentFactory = (
-  builder: FormComponentBuilder,
-) => FormComponentBuilder;
-
-export type FormComponentBuilder = {
-  type(type: ZodType, component: FormField): FormComponentBuilder;
-  field(name: string, component: FormField): FormComponentBuilder;
-};

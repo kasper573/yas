@@ -37,6 +37,7 @@
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
     "@yas/jest": "workspace:*",
+    "@yas/zod": "workspace:*",
     "@yas/build-tools": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@testing-library/jest-dom": "^5.16.5",
