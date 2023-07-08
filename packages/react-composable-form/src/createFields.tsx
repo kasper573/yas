@@ -1,11 +1,13 @@
 import type { AnyZodObject, ZodRawShape, ZodType } from "zod";
 import { getFirstPartyType, normalizeType } from "@yas/zod";
+import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
   FormField,
   FormFieldProps,
   FormFields,
-  FormFieldWithEmbeddedDefaultProps,
+  FormFieldWithDefaultProps,
 } from "./types";
+import { FormContext } from "./FormContext";
 
 export function createFields(
   typeMap: Map<ZodType, FormField>,
@@ -22,7 +24,7 @@ export function createFields(
           )}`,
         );
       }
-      fields[capitalize(name)] = embedDefaultProps(Component, name);
+      fields[capitalize(name)] = enhanceFormField(Component, name);
       return fields;
     },
     {} as FormFields,
@@ -49,13 +51,39 @@ function isMatchingType(a: ZodType, b: ZodType): boolean {
   return getFirstPartyType(n1) === getFirstPartyType(n2);
 }
 
-function embedDefaultProps(
+function enhanceFormField(
   Component: FormField,
   name: string,
-): FormFieldWithEmbeddedDefaultProps {
-  return function FormFieldWithDefaultProps(props: Partial<FormFieldProps>) {
-    return <Component name={name} {...props} />;
-  };
+): FormFieldWithDefaultProps {
+  function EnhancedFormField(props: Partial<FormFieldProps>) {
+    const store = useContext(FormContext);
+    const value = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.data[name],
+    );
+    const errors = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.errors[name],
+    );
+    const changeHandler = useCallback(
+      (value: unknown) => {
+        store.mutate((state) => {
+          state.data[name] = value;
+        });
+      },
+      [store],
+    );
+    return (
+      <Component
+        name={name}
+        value={value}
+        errors={errors}
+        onChange={changeHandler}
+        {...props}
+      />
+    );
+  }
+  return memo(EnhancedFormField);
 }
 
 function capitalize(str: string): string {

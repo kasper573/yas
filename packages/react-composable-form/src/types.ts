@@ -1,5 +1,6 @@
 import type { AnyZodObject, ZodType } from "zod";
 import type { ComponentType } from "react";
+import type { Store } from "./Store";
 
 export interface ComposableFormOptions {
   schema?: AnyZodObject;
@@ -10,6 +11,7 @@ export interface ComposableFormOptions {
 export type ComposableFormProps = {
   schema?: AnyZodObject;
   children?: InlineFormLayout;
+  data?: Record<string, unknown>;
 };
 
 export type ComposableForm = ComponentType<ComposableFormProps> & {
@@ -27,14 +29,15 @@ export type FormLayoutProps = {
 
 export type FormLayout = ComponentType<FormLayoutProps>;
 
-export type FormFieldProps = { name: string };
+export interface FormFieldProps extends FieldState {
+  name: string;
+  onChange: (newValue: unknown) => unknown;
+}
 
-export type FormFields = Record<string, FormFieldWithEmbeddedDefaultProps>;
+export type FormFields = Record<string, FormFieldWithDefaultProps>;
 export type FormField = ComponentType<FormFieldProps>;
 
-export type FormFieldWithEmbeddedDefaultProps = ComponentType<
-  Partial<FormFieldProps>
->;
+export type FormFieldWithDefaultProps = ComponentType<Partial<FormFieldProps>>;
 
 export type FormComponentFactory = (
   builder: FormComponentBuilder,
@@ -44,3 +47,15 @@ export type FormComponentBuilder = {
   type(type: ZodType, component: FormField): FormComponentBuilder;
   field(name: string, component: FormField): FormComponentBuilder;
 };
+
+export type FormStore = Store<FormState>;
+
+export interface FormState {
+  data: Record<string, unknown>;
+  errors: Record<string, unknown[]>;
+}
+
+export interface FieldState {
+  value: unknown;
+  errors: unknown[];
+}

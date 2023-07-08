@@ -7,9 +7,12 @@ import type {
   ComposableFormOptions,
   ComposableFormProps,
   FormField,
+  FormState,
 } from "./types";
 import { createFields } from "./createFields";
 import type { FormLayoutProps } from "./types";
+import { FormContext } from "./FormContext";
+import { Store } from "./Store";
 
 export function createForm(
   options: ComposableFormOptions = {},
@@ -28,15 +31,21 @@ export function createForm(
   function ComposableForm({
     schema = defaultSchema,
     children: inlineLayout,
+    data = empty,
   }: ComposableFormProps) {
+    const store = useMemo(() => new Store<FormState>({ data, errors: {} }), []);
     const fields = useMemo(
       () => createFields(typeComponents, fieldComponents, schema),
       [schema],
     );
-    return inlineLayout ? (
-      inlineLayout({ fields })
-    ) : (
-      <DefaultLayout fields={fields} />
+    return (
+      <FormContext.Provider value={store}>
+        {inlineLayout ? (
+          inlineLayout({ fields })
+        ) : (
+          <DefaultLayout fields={fields} />
+        )}
+      </FormContext.Provider>
     );
   }
 
@@ -55,3 +64,5 @@ function NoLayout({ fields }: FormLayoutProps) {
     </>
   );
 }
+
+const empty = {};
