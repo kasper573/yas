@@ -1,6 +1,10 @@
+import type { Draft } from "immer";
+import { produce } from "immer";
+
 export class Store<State> {
   private _listeners = new Set<StoreListener<State>>();
-  private _isMutating = false;
+  private _currentMutation?: { draft: Draft<State> };
+
   get state(): State {
     return this._state;
   }
@@ -8,17 +12,20 @@ export class Store<State> {
   constructor(private _state: State) {}
 
   mutate(mutator: (state: State) => void): void {
-    if (this._isMutating) {
-      mutator(this._state);
+    if (this._currentMutation) {
+      mutator(this._currentMutation.draft as State);
       return;
     }
 
-    this._isMutating = true;
-    mutator(this._state);
-    this._isMutating = false;
+    const newState = produce(this._state, (draft) => {
+      this._currentMutation = { draft };
+      mutator(draft as State);
+      this._currentMutation = undefined;
+    });
 
+    this._state = newState;
     for (const listener of this._listeners) {
-      listener(this._state);
+      listener(newState);
     }
   }
 
