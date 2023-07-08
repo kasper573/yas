@@ -1,5 +1,5 @@
 import type { AnyZodObject, ZodType } from "zod";
-import type { ComponentType } from "react";
+import type { ChangeEvent, ComponentType } from "react";
 import type { Store } from "@yas/store";
 
 export interface ComposableFormOptions {
@@ -31,7 +31,8 @@ export type FormLayout = ComponentType<FormLayoutProps>;
 
 export interface FormFieldProps extends FieldState {
   name: string;
-  onChange: (newValue: unknown) => unknown;
+  onChange: (e: ChangeEvent) => unknown;
+  onValueChange: (newValue: unknown) => unknown;
 }
 
 export type FormFields = Record<string, FormFieldWithDefaultProps>;
@@ -56,6 +57,7 @@ export interface FormState {
 }
 
 export interface FieldState {
-  value: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
   errors: unknown[];
 }

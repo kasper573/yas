@@ -186,12 +186,7 @@ describe("data", () => {
   it("can be updated", async () => {
     const Form = createForm({
       components: (builder) =>
-        builder.type(z.string(), ({ value, onChange }) => (
-          <input
-            value={String(value)}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        )),
+        builder.type(z.string(), (props) => <input {...props} />),
     });
     const { getByRole } = render(
       <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
