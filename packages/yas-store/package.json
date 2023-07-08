@@ -1,0 +1,17 @@
+{
+  "name": "@yas/store",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "devDependencies": {
+    "@yas/tsconfig": "workspace:*"
+  }
+}

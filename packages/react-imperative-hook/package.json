@@ -32,6 +32,9 @@
   "jest": {
     "preset": "@yas/jest/presets/react"
   },
+  "dependencies": {
+    "@yas/store": "workspace:*"
+  },
   "peerDependencies": {
     "react": "^18.2.0"
   },

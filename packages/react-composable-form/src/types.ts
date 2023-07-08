@@ -1,6 +1,6 @@
 import type { AnyZodObject, ZodType } from "zod";
 import type { ComponentType } from "react";
-import type { Store } from "./Store";
+import type { Store } from "@yas/store";
 
 export interface ComposableFormOptions {
   schema?: AnyZodObject;
