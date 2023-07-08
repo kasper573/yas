@@ -1,7 +1,7 @@
 import type { ZodType } from "zod";
 import type { FormComponentBuilder, FormField } from "./types";
 
-export function createBuilder(
+export function createComponentBuilder(
   typeMap: Map<ZodType, FormField>,
   fieldMap: Map<string, FormField>,
 ): FormComponentBuilder {

@@ -7,7 +7,7 @@ import type {
   FormFieldWithEmbeddedDefaultProps,
 } from "./types";
 
-export function enhanceFields(
+export function createFields(
   typeMap: Map<ZodType, FormField>,
   fieldMap: Map<string, FormField>,
   schema?: AnyZodObject,

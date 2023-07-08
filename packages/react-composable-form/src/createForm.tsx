@@ -1,14 +1,14 @@
 import { useMemo } from "react";
 import type { ZodType } from "zod";
 import { mergeOptions } from "./mergeOptions";
-import { createBuilder } from "./createBuilder";
+import { createComponentBuilder } from "./createComponentBuilder";
 import type {
   ComposableForm,
   ComposableFormOptions,
   ComposableFormProps,
   FormField,
 } from "./types";
-import { enhanceFields } from "./enhanceFields";
+import { createFields } from "./createFields";
 import type { FormLayoutProps } from "./types";
 
 export function createForm(
@@ -23,14 +23,14 @@ export function createForm(
   const typeComponents = new Map<ZodType, FormField>();
   const fieldComponents = new Map<string, FormField>();
 
-  build?.(createBuilder(typeComponents, fieldComponents));
+  build?.(createComponentBuilder(typeComponents, fieldComponents));
 
   function ComposableForm({
     schema = defaultSchema,
     children: inlineLayout,
   }: ComposableFormProps) {
     const fields = useMemo(
-      () => enhanceFields(typeComponents, fieldComponents, schema),
+      () => createFields(typeComponents, fieldComponents, schema),
       [schema],
     );
     return inlineLayout ? (
