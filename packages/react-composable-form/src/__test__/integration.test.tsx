@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { z } from "zod";
+import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 
 describe("components", () => {
@@ -180,5 +181,24 @@ describe("data", () => {
       <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
     );
     expect(getByRole("textbox")).toHaveValue("bar");
+  });
+
+  it("can be updated", async () => {
+    const Form = createForm({
+      components: (builder) =>
+        builder.type(z.string(), ({ value, onChange }) => (
+          <input
+            value={String(value)}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )),
+    });
+    const { getByRole } = render(
+      <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
+    );
+
+    await userEvent.clear(getByRole("textbox"));
+    await userEvent.type(getByRole("textbox"), "baz");
+    expect(getByRole("textbox")).toHaveValue("baz");
   });
 });
