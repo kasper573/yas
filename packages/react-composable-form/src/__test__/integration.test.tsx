@@ -119,3 +119,50 @@ describe("layout", () => {
     getByText("bar");
   });
 });
+
+describe("schema", () => {
+  it("can be predefined", () => {
+    const Form = createComposableForm({
+      schema: z.object({ foo: z.string() }),
+      components: (builder) => builder.type(z.string(), () => <span>foo</span>),
+    });
+    const { getByText } = render(<Form />);
+    getByText("foo");
+  });
+
+  it("can be inlined", () => {
+    const Form = createComposableForm({
+      components: (builder) => builder.type(z.string(), () => <span>foo</span>),
+    });
+    const { getByText } = render(
+      <Form schema={z.object({ foo: z.string() })} />,
+    );
+    getByText("foo");
+  });
+
+  it("inlined replaces predefined", () => {
+    const Form = createComposableForm({
+      schema: z.object({ foo: z.string() }),
+      components: (builder) =>
+        builder.type(z.string(), ({ name }) => <span>{name}</span>),
+    });
+    const { getByText, queryByText } = render(
+      <Form schema={z.object({ bar: z.string() })} />,
+    );
+    expect(queryByText("foo")).toBeNull();
+    getByText("bar");
+  });
+
+  it("can be extended from predefined forms", () => {
+    const Form = createComposableForm({
+      schema: z.object({ foo: z.string() }),
+      components: (builder) =>
+        builder.type(z.string(), ({ name }) => <span>{name}</span>),
+    });
+    const ExtendedForm = Form.extend({
+      schema: z.object({ bar: z.string() }),
+    });
+    const { getByText } = render(<ExtendedForm />);
+    getByText("bar");
+  });
+});
