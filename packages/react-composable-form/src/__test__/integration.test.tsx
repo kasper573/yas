@@ -172,7 +172,9 @@ describe("data", () => {
   it("can be displayed", () => {
     const Form = createForm({
       components: (builder) =>
-        builder.type(z.string(), (props) => <input {...props} />),
+        builder.type(z.string(), ({ value }) => (
+          <input defaultValue={String(value)} />
+        )),
     });
     const { getByRole } = render(
       <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
