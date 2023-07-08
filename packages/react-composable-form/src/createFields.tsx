@@ -1,6 +1,5 @@
 import type { AnyZodObject, ZodRawShape, ZodType } from "zod";
 import { getFirstPartyType, normalizeType } from "@yas/zod";
-import type { ChangeEvent } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
   FormField,
@@ -66,7 +65,7 @@ function enhanceFormField(
       store.subscribe,
       () => store.state.errors[name],
     );
-    const valueChangeHandler = useCallback(
+    const changeHandler = useCallback(
       (value: unknown) => {
         store.mutate((state) => {
           state.data[name] = value;
@@ -74,23 +73,12 @@ function enhanceFormField(
       },
       [store],
     );
-    const changeHandler = useCallback(
-      (e: ChangeEvent) => {
-        if ("value" in e.target) {
-          valueChangeHandler(e.target.value);
-        } else {
-          throw new Error("Could not extract value from event target");
-        }
-      },
-      [valueChangeHandler],
-    );
     return (
       <Component
         name={name}
         value={value}
         errors={errors}
         onChange={changeHandler}
-        onValueChange={valueChangeHandler}
         {...props}
       />
     );

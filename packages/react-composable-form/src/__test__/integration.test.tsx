@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
+import type { ComponentProps, ComponentType } from "react";
 import { createForm } from "../createForm";
 
 describe("components", () => {
@@ -186,7 +187,9 @@ describe("data", () => {
   it("can be updated", async () => {
     const Form = createForm({
       components: (builder) =>
-        builder.type(z.string(), (props) => <input {...props} />),
+        builder.type(z.string(), ({ onChange, ...rest }) => (
+          <input onChange={(e) => onChange(e.target.value)} {...rest} />
+        )),
     });
     const { getByRole } = render(
       <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
@@ -196,4 +199,34 @@ describe("data", () => {
     await userEvent.type(getByRole("textbox"), "baz");
     expect(getByRole("textbox")).toHaveValue("baz");
   });
+
+  it("changes to one field does not re-render other fields", async () => {
+    const Bar = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Foo = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Form = createForm({
+      schema: z.object({ foo: z.string(), bar: z.string() }),
+      components: (builder) => builder.field("foo", Foo).field("bar", Bar),
+    });
+    const { getByRole } = render(<Form data={{ foo: "" }} />);
+    const fooBefore = Foo.getCount();
+    const barBefore = Bar.getCount();
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
+    expect(Foo.getCount() - fooBefore).toBe(3);
+    expect(Bar.getCount() - barBefore).toBe(0);
+  });
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function renderCounter<T extends ComponentType<any>>(Component: T) {
+  let count = 0;
+  function Wrapper(props: ComponentProps<T>) {
+    count++;
+    return <Component {...props} />;
+  }
+  Wrapper.getCount = () => count;
+  return Wrapper;
+}
