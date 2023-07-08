@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { z } from "zod";
 import { createComposableForm } from "../createComposableForm";
@@ -164,5 +165,18 @@ describe("schema", () => {
     });
     const { getByText } = render(<ExtendedForm />);
     getByText("bar");
+  });
+});
+
+describe("data", () => {
+  it("can be displayed", () => {
+    const Form = createComposableForm({
+      components: (builder) =>
+        builder.type(z.string(), (props) => <input {...props} />),
+    });
+    const { getByRole } = render(
+      <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
+    );
+    expect(getByRole("textbox")).toHaveValue("bar");
   });
 });

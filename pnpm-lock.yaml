@@ -205,6 +205,9 @@ importers:
 
   packages/react-composable-form:
     devDependencies:
+      '@testing-library/jest-dom':
+        specifier: ^5.16.5
+        version: 5.16.5
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
