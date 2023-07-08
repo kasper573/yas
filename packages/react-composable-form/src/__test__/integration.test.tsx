@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { z } from "zod";
-import { createComposableForm } from "../createComposableForm";
+import { createForm } from "../createForm";
 
 describe("components", () => {
   it("can be defined by value type", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) =>
         builder
           .type(z.string(), () => <span>text</span>)
@@ -18,7 +18,7 @@ describe("components", () => {
   });
 
   it("can be defined per field name", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) =>
         builder
           .field("foo", () => <span>foo</span>)
@@ -32,7 +32,7 @@ describe("components", () => {
 
   describe("can be extended from predefined forms", () => {
     it("by value type", () => {
-      const Form = createComposableForm({
+      const Form = createForm({
         components: (builder) =>
           builder.type(z.string(), () => <span>text</span>),
       });
@@ -50,7 +50,7 @@ describe("components", () => {
     });
 
     it("by field name", () => {
-      const Form = createComposableForm({
+      const Form = createForm({
         components: (builder) => builder.field("foo", () => <span>foo</span>),
       });
       const ExtendedForm = Form.extend({
@@ -69,13 +69,13 @@ describe("components", () => {
 
 describe("layout", () => {
   it("can be defined", () => {
-    const Form = createComposableForm({ layout: () => <span>default</span> });
+    const Form = createForm({ layout: () => <span>default</span> });
     const { getByText } = render(<Form />);
     getByText("default");
   });
 
   it("can be extended from predefined forms", () => {
-    const Form = createComposableForm();
+    const Form = createForm();
     const ExtendedForm = Form.extend({
       layout: () => <span>extended</span>,
     });
@@ -84,7 +84,7 @@ describe("layout", () => {
   });
 
   it("can control where fields are rendered", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
     });
@@ -108,7 +108,7 @@ describe("layout", () => {
   });
 
   it("can override field component props", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
     });
@@ -123,7 +123,7 @@ describe("layout", () => {
 
 describe("schema", () => {
   it("can be predefined", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       schema: z.object({ foo: z.string() }),
       components: (builder) => builder.type(z.string(), () => <span>foo</span>),
     });
@@ -132,7 +132,7 @@ describe("schema", () => {
   });
 
   it("can be inlined", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) => builder.type(z.string(), () => <span>foo</span>),
     });
     const { getByText } = render(
@@ -142,7 +142,7 @@ describe("schema", () => {
   });
 
   it("inlined replaces predefined", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       schema: z.object({ foo: z.string() }),
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
@@ -155,7 +155,7 @@ describe("schema", () => {
   });
 
   it("can be extended from predefined forms", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       schema: z.object({ foo: z.string() }),
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
@@ -170,7 +170,7 @@ describe("schema", () => {
 
 describe("data", () => {
   it("can be displayed", () => {
-    const Form = createComposableForm({
+    const Form = createForm({
       components: (builder) =>
         builder.type(z.string(), (props) => <input {...props} />),
     });

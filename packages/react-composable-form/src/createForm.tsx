@@ -8,10 +8,10 @@ import type {
   ComposableFormProps,
   FormField,
 } from "./types";
-import { deriveFormFields } from "./deriveFormFields";
+import { enhanceFields } from "./enhanceFields";
 import type { FormLayoutProps } from "./types";
 
-export function createComposableForm(
+export function createForm(
   options: ComposableFormOptions = {},
 ): ComposableForm {
   const {
@@ -30,7 +30,7 @@ export function createComposableForm(
     children: inlineLayout,
   }: ComposableFormProps) {
     const fields = useMemo(
-      () => deriveFormFields(typeComponents, fieldComponents, schema),
+      () => enhanceFields(typeComponents, fieldComponents, schema),
       [schema],
     );
     return inlineLayout ? (
@@ -41,7 +41,7 @@ export function createComposableForm(
   }
 
   ComposableForm.extend = (extension: ComposableFormOptions): ComposableForm =>
-    createComposableForm(mergeOptions(options, extension));
+    createForm(mergeOptions(options, extension));
 
   return ComposableForm;
 }
