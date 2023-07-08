@@ -10,7 +10,7 @@ export const DefaultOutletRenderer: OutletRenderer = ({ entries }) => (
           {...props}
           {...rest}
         />
-      )
+      ),
     )}
   </>
 );

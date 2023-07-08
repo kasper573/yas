@@ -26,7 +26,7 @@ async function run({
   const pkg = createMutableResource(
     packageJsonPath,
     (str) => JSON.parse(str) as PackageJson,
-    (json) => JSON.stringify(json, null, 2) + "\n"
+    (json) => JSON.stringify(json, null, 2) + "\n",
   );
 
   if (preview) {
@@ -46,7 +46,7 @@ async function run({
     return 0;
   } catch (e) {
     console.error(
-      `Error while running command "${command}":\n` + (e as Error).message
+      `Error while running command "${command}":\n` + (e as Error).message,
     );
     return 1;
   } finally {
@@ -56,7 +56,7 @@ async function run({
         original.version = pkg.contents.version;
         console.log(
           "Retaining new package version before restoring original package.json: " +
-            pkg.contents.version
+            pkg.contents.version,
         );
       }
     });

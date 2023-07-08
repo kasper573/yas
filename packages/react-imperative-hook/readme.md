@@ -88,7 +88,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
     <ModalOutlet />
-  </StrictMode>
+  </StrictMode>,
 );
 ```
 

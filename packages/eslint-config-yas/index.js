@@ -62,7 +62,7 @@ module.exports = {
       files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
       excludedFiles: ["**/src/env.ts"],
       rules: rulesForBanningEnvUsage(
-        "Environment variables may only be accessed via the env.ts file in the root of each app."
+        "Environment variables may only be accessed via the env.ts file in the root of each app.",
       ),
     },
     {
