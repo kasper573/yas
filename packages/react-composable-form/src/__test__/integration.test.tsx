@@ -121,6 +121,14 @@ describe("layout", () => {
     );
     getByText("bar");
   });
+
+  it("inherits the form props", () => {
+    const Form = createForm({
+      layout: ({ foo }) => <main>{foo}</main>,
+    });
+    const { getByText } = render(<Form foo="bar" />);
+    getByText("bar");
+  });
 });
 
 describe("schema", () => {

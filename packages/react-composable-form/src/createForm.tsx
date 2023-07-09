@@ -32,6 +32,7 @@ export function createForm(
     schema = defaultSchema,
     children: inlineLayout,
     data = empty,
+    ...layoutProps
   }: ComposableFormProps) {
     const store = useMemo(() => new Store<FormState>({ data, errors: {} }), []);
     const fields = useMemo(
@@ -41,16 +42,18 @@ export function createForm(
     return (
       <FormContext.Provider value={store}>
         {inlineLayout ? (
-          inlineLayout({ fields })
+          inlineLayout({ fields, ...layoutProps })
         ) : (
-          <DefaultLayout fields={fields} />
+          <DefaultLayout fields={fields} {...layoutProps} />
         )}
       </FormContext.Provider>
     );
   }
 
-  ComposableForm.extend = (extension: ComposableFormOptions): ComposableForm =>
+  const extend: ComposableForm["extend"] = (extension) =>
     createForm(mergeOptions(options, extension));
+
+  ComposableForm.extend = extend;
 
   return ComposableForm;
 }
@@ -65,4 +68,4 @@ function NoLayout({ fields }: FormLayoutProps) {
   );
 }
 
-const empty = {};
+const empty = Object.freeze({});
