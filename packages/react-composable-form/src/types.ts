@@ -1,38 +1,40 @@
 import type { AnyZodObject, ZodType } from "zod";
-import type { ComponentProps, ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { Store } from "@yas/store";
 import type { output } from "zod";
 
 export interface ComposableFormOptions<
   Schema extends AnyZodObject,
-  Layout extends FormLayout,
+  LayoutProps extends AnyProps,
 > {
-  schema?: Schema;
-  layout?: Layout;
-  components?: FormComponentFactory;
+  schema: Schema;
+  layout: FormLayout<LayoutProps>;
+  components: FormComponentFactory;
 }
 
-export type ComposableFormProps<Schema extends AnyZodObject> = {
+export type ComposableFormProps<
+  Schema extends AnyZodObject,
+  LayoutProps extends AnyProps,
+> = LayoutProps & {
   data?: output<Schema>;
 };
 
 export type ComposableForm<
   Schema extends AnyZodObject,
-  Layout extends FormLayout,
-> = ComponentType<
-  ComposableFormProps<Schema> &
-    MakePartial<ComponentProps<Layout>, keyof FormLayoutProps>
-> & {
-  extend<NewSchema extends AnyZodObject, NewLayout extends FormLayout>(
-    options: ComposableFormOptions<NewSchema, NewLayout>,
-  ): ComposableForm<NewSchema, NewLayout>;
+  LayoutProps extends AnyProps,
+> = ComponentType<ComposableFormProps<Schema, LayoutProps>> & {
+  extend<NewSchema extends AnyZodObject, NewLayoutProps extends AnyProps>(
+    options: Partial<ComposableFormOptions<NewSchema, NewLayoutProps>>,
+  ): ComposableForm<NewSchema, NewLayoutProps>;
 };
 
-export type FormLayoutProps = {
+export type FormLayoutProps<AdditionalProps extends AnyProps = AnyProps> = {
   fields: FormFields;
-};
+} & AdditionalProps;
 
-export type FormLayout = ComponentType<FormLayoutProps>;
+export type FormLayout<AdditionalProps extends AnyProps> = ComponentType<
+  FormLayoutProps<AdditionalProps>
+>;
 
 export interface FormFieldProps extends FieldState {
   name: string;
@@ -66,4 +68,5 @@ export interface FieldState {
   errors: unknown[];
 }
 
-type MakePartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyProps = Record<string, any>;

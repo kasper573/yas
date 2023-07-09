@@ -1,10 +1,12 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import type { AnyZodObject } from "zod";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
-import { createForm } from "../createForm";
+import { createForm as createFormImpl } from "../createForm";
 import type { FormLayoutProps } from "../types";
+import type { AnyProps, ComposableFormOptions } from "../types";
 
 describe("components", () => {
   it("can be defined by value type", () => {
@@ -205,4 +207,25 @@ function renderCounter<T extends ComponentType<any>>(Component: T) {
   }
   Wrapper.getCount = () => count;
   return Wrapper;
+}
+
+function createForm<Schema extends AnyZodObject, LayoutProps extends AnyProps>(
+  props: Partial<ComposableFormOptions<Schema, LayoutProps>> = {},
+) {
+  return createFormImpl({
+    schema: z.object({}),
+    components: (builder) => builder,
+    layout: NoLayout,
+    ...props,
+  });
+}
+
+function NoLayout({ fields }: FormLayoutProps) {
+  return (
+    <>
+      {Object.values(fields).map((Component, index) => (
+        <Component key={index} />
+      ))}
+    </>
+  );
 }
