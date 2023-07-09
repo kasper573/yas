@@ -3,18 +3,17 @@ import { useMemo } from "react";
 import type { ZodType } from "zod";
 import { Store } from "@yas/store";
 import type { AnyZodObject } from "zod";
-import { mergeOptions } from "./mergeOptions";
 import { createComponentBuilder } from "./createComponentBuilder";
 import type {
   AnyProps,
   ComposableForm,
   ComposableFormOptions,
   ComposableFormProps,
-  FormField,
   FormState,
 } from "./types";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
+import type { AnyFormField } from "./types";
 
 export function createForm<
   Schema extends AnyZodObject,
@@ -24,16 +23,19 @@ export function createForm<
 ): ComposableForm<Schema, LayoutProps> {
   const { schema, layout: Layout, components: build } = options;
 
-  const typeComponents = new Map<ZodType, FormField>();
-  const fieldComponents = new Map<string, FormField>();
+  const typeComponents = new Map<ZodType, AnyFormField>();
+  const fieldComponents = new Map<string, AnyFormField>();
 
-  build?.(createComponentBuilder(typeComponents, fieldComponents));
+  build(createComponentBuilder(typeComponents, fieldComponents));
 
   function ComposableForm({
     data = empty,
     ...layoutProps
-  }: ComposableFormProps<Schema, LayoutProps>) {
-    const store = useMemo(() => new Store<FormState>({ data, errors: {} }), []);
+  }: ComposableFormProps<Schema> & LayoutProps) {
+    const store = useMemo(
+      () => new Store<FormState<Schema>>({ data, errors: {} as never }),
+      [],
+    );
     const fields = useMemo(
       () => createFields(typeComponents, fieldComponents, schema),
       [schema],
@@ -41,7 +43,6 @@ export function createForm<
     return (
       <FormContext.Provider value={store}>
         <Layout
-          // Unfortunate assertion, but couldn't find a way to avoid it
           {...(layoutProps as ComponentProps<typeof Layout>)}
           fields={fields}
         />
@@ -49,12 +50,23 @@ export function createForm<
     );
   }
 
-  const extend: ComposableForm<Schema, LayoutProps>["extend"] = (extension) =>
-    createForm(mergeOptions(options, extension));
+  ComposableForm.extend = <
+    NewSchema extends AnyZodObject,
+    NewLayoutProps extends AnyProps,
+  >(
+    ext: ComposableFormOptions<NewSchema, NewLayoutProps>,
+  ) =>
+    createForm({
+      schema: ext.schema ?? schema,
+      layout: ext.layout ?? Layout,
+      components(builder) {
+        build(builder);
+        ext.components?.(builder);
+        return builder;
+      },
+    });
 
-  ComposableForm.extend = extend;
-
-  return ComposableForm;
+  return ComposableForm as ComposableForm<Schema, LayoutProps>;
 }
 
 const empty = Object.freeze({});

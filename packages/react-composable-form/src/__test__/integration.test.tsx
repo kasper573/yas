@@ -117,9 +117,7 @@ describe("layout", () => {
 
   it("inherits the form props", () => {
     const Form = createForm({
-      layout: ({ foo }: FormLayoutProps & { foo: string }) => (
-        <main>{foo}</main>
-      ),
+      layout: ({ foo }: { foo: string }) => <main>{foo}</main>,
     });
     const { getByText } = render(<Form foo="bar" />);
     getByText("bar");
@@ -215,12 +213,14 @@ function createForm<Schema extends AnyZodObject, LayoutProps extends AnyProps>(
   return createFormImpl({
     schema: z.object({}),
     components: (builder) => builder,
-    layout: NoLayout,
+    layout: NoLayout<Schema>,
     ...props,
   });
 }
 
-function NoLayout({ fields }: FormLayoutProps) {
+function NoLayout<Schema extends AnyZodObject>({
+  fields,
+}: FormLayoutProps<Schema>) {
   return (
     <>
       {Object.values(fields).map((Component, index) => (

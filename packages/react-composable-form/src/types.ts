@@ -5,75 +5,86 @@ import type { output } from "zod";
 
 export interface ComposableFormOptions<
   Schema extends AnyZodObject,
-  LayoutProps extends AnyProps,
+  AdditionalLayoutProps extends AnyProps,
 > {
   schema: Schema;
-  layout: FormLayout<LayoutProps>;
+  layout: ComponentType<FormLayoutProps<Schema> & AdditionalLayoutProps>;
   components: FormComponentFactory;
 }
 
-export type ComposableFormProps<
-  Schema extends AnyZodObject,
-  LayoutProps extends AnyProps,
-> = LayoutProps & {
+export type ComposableFormProps<Schema extends AnyZodObject> = {
   data?: output<Schema>;
 };
 
 export type ComposableForm<
   Schema extends AnyZodObject,
-  LayoutProps extends AnyProps,
-> = ComponentType<ComposableFormProps<Schema, LayoutProps>> & {
+  AdditionalLayoutProps extends AnyProps,
+> = ComponentType<
+  ComposableFormProps<Schema> &
+    Omit<AdditionalLayoutProps, keyof FormLayoutProps>
+> & {
   extend<NewSchema extends AnyZodObject, NewLayoutProps extends AnyProps>(
     options: Partial<ComposableFormOptions<NewSchema, NewLayoutProps>>,
   ): ComposableForm<
     Fallback<NewSchema, Schema>,
-    Fallback<NewLayoutProps, LayoutProps>
+    Fallback<NewLayoutProps, AdditionalLayoutProps>
   >;
 };
 
-export type FormLayoutProps<AdditionalProps extends AnyProps = AnyProps> = {
-  fields: FormFields;
-} & AdditionalProps;
+export type FormLayoutProps<Schema extends AnyZodObject = AnyZodObject> = {
+  fields: FieldComponentsPassedToLayout<Schema>;
+};
 
-export type FormLayout<AdditionalProps extends AnyProps> = ComponentType<
-  FormLayoutProps<AdditionalProps>
->;
-
-export interface FormFieldProps extends FieldState {
+export interface FormFieldProps<Type extends ZodType> extends FieldState<Type> {
   name: string;
-  onChange: (newValue: unknown) => unknown;
+  onChange: (newValue: output<Type>) => unknown;
 }
 
-export type FormFields = Record<string, FormFieldWithDefaultProps>;
-export type FormField = ComponentType<FormFieldProps>;
+export type AnyFormField = ComponentType<FormFieldProps<ZodType>>;
 
-export type FormFieldWithDefaultProps = ComponentType<Partial<FormFieldProps>>;
+export type FormFieldFor<
+  Schema extends AnyZodObject,
+  FieldName extends string,
+> = ComponentType<FormFieldProps<Schema["shape"][FieldName]>>;
+
+export type FieldComponentsPassedToLayout<Schema extends AnyZodObject> = {
+  [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
+    Partial<FormFieldProps<Schema["shape"][K]>>
+  >;
+};
 
 export type FormComponentFactory = (
   builder: FormComponentBuilder,
 ) => FormComponentBuilder;
 
 export type FormComponentBuilder = {
-  type(type: ZodType, component: FormField): FormComponentBuilder;
-  field(name: string, component: FormField): FormComponentBuilder;
+  type<Type extends ZodType>(
+    type: Type,
+    component: ComponentType<FormFieldProps<Type>>,
+  ): FormComponentBuilder;
+  field(
+    name: string,
+    component: ComponentType<FormFieldProps<ZodType>>,
+  ): FormComponentBuilder;
 };
 
-export type FormStore = Store<FormState>;
+export type FormStore<Schema extends AnyZodObject> = Store<FormState<Schema>>;
+export type FieldNames<Schema extends AnyZodObject> = `${string &
+  keyof Schema["shape"]}`;
 
-export interface FormState {
-  data: Record<string, unknown>;
-  errors: Record<string, unknown[]>;
+export interface FormState<Schema extends AnyZodObject> {
+  data: output<Schema>;
+  errors: Record<FieldNames<Schema>, unknown[]>;
 }
 
-export interface FieldState {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+export interface FieldState<Type extends ZodType> {
+  value: output<Type>;
   errors: unknown[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyProps = Record<string, any>;
 
-type Fallback<A, B> = IsNever<A> extends true ? B : A;
+export type Fallback<A, B> = IsNever<A> extends true ? B : A;
 
-type IsNever<T> = [T] extends [never] ? true : false;
+export type IsNever<T> = [T] extends [never] ? true : false;

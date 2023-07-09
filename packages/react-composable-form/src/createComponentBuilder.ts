@@ -1,9 +1,9 @@
 import type { ZodType } from "zod";
-import type { FormComponentBuilder, FormField } from "./types";
+import type { AnyFormField, FormComponentBuilder } from "./types";
 
 export function createComponentBuilder(
-  typeMap: Map<ZodType, FormField>,
-  fieldMap: Map<string, FormField>,
+  typeMap: Map<ZodType, AnyFormField>,
+  fieldMap: Map<string, AnyFormField>,
 ): FormComponentBuilder {
   const builder: FormComponentBuilder = {
     type(type, component) {

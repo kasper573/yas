@@ -1,20 +1,22 @@
 import type { AnyZodObject, ZodRawShape, ZodType } from "zod";
 import { getFirstPartyType, normalizeType } from "@yas/zod";
+import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
-  FormField,
-  FormFieldProps,
-  FormFields,
-  FormFieldWithDefaultProps,
+  FieldComponentsPassedToLayout,
+  FormStore,
+  FormFieldFor,
 } from "./types";
 import { FormContext } from "./FormContext";
+import type { FieldNames } from "./types";
+import type { AnyFormField } from "./types";
 
-export function createFields(
-  typeMap: Map<ZodType, FormField>,
-  fieldMap: Map<string, FormField>,
-  schema?: AnyZodObject,
-): FormFields {
-  return Object.entries((schema?.shape ?? {}) as ZodRawShape).reduce(
+export function createFields<Schema extends AnyZodObject>(
+  typeMap: Map<ZodType, AnyFormField>,
+  fieldMap: Map<string, AnyFormField>,
+  schema: Schema,
+): FieldComponentsPassedToLayout<Schema> {
+  return Object.entries(schema.shape as ZodRawShape).reduce(
     (fields, [name, type]) => {
       const Component = fieldMap.get(name) ?? findMatchingType(typeMap, type);
       if (!Component) {
@@ -24,17 +26,57 @@ export function createFields(
           )}`,
         );
       }
-      fields[capitalize(name)] = enhanceFormField(Component, name);
+      (fields as Record<string, ComponentType>)[capitalize(name)] =
+        enhanceFormField(Component, name as FieldNames<Schema>);
       return fields;
     },
-    {} as FormFields,
+    {} as FieldComponentsPassedToLayout<Schema>,
   );
 }
 
-function findMatchingType(map: Map<ZodType, FormField>, type: ZodType) {
-  for (const [candidate, Component] of map.entries()) {
+function enhanceFormField<
+  Schema extends AnyZodObject,
+  FieldName extends FieldNames<Schema>,
+>(Component: FormFieldFor<Schema, FieldName>, name: FieldName) {
+  type Props = ComponentProps<FormFieldFor<Schema, FieldName>>;
+  return memo(function EnhancedFormField(props: Partial<Props>) {
+    const store: FormStore<Schema> = useContext(FormContext);
+    const value = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.data[name],
+    );
+    const errors = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.errors[name],
+    );
+    const changeHandler = useCallback(
+      (newValue: typeof value) => {
+        store.mutate((state) => {
+          state.data[name] = newValue;
+        });
+      },
+      [store],
+    );
+    return (
+      <Component
+        name={name}
+        value={value}
+        errors={errors}
+        onChange={changeHandler as Props["onChange"]}
+        {...props}
+      />
+    );
+  });
+}
+
+function capitalize(str: string): string {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+function findMatchingType<T>(map: Map<ZodType, T>, type: ZodType) {
+  for (const [candidate, value] of map.entries()) {
     if (isMatchingType(candidate, type)) {
-      return Component;
+      return value;
     }
   }
 }
@@ -49,43 +91,4 @@ function isMatchingType(a: ZodType, b: ZodType): boolean {
     return true;
   }
   return getFirstPartyType(n1) === getFirstPartyType(n2);
-}
-
-function enhanceFormField(
-  Component: FormField,
-  name: string,
-): FormFieldWithDefaultProps {
-  function EnhancedFormField(props: Partial<FormFieldProps>) {
-    const store = useContext(FormContext);
-    const value = useSyncExternalStore(
-      store.subscribe,
-      () => store.state.data[name],
-    );
-    const errors = useSyncExternalStore(
-      store.subscribe,
-      () => store.state.errors[name],
-    );
-    const changeHandler = useCallback(
-      (value: unknown) => {
-        store.mutate((state) => {
-          state.data[name] = value;
-        });
-      },
-      [store],
-    );
-    return (
-      <Component
-        name={name}
-        value={value}
-        errors={errors}
-        onChange={changeHandler}
-        {...props}
-      />
-    );
-  }
-  return memo(EnhancedFormField);
-}
-
-function capitalize(str: string): string {
-  return str[0].toUpperCase() + str.slice(1);
 }
