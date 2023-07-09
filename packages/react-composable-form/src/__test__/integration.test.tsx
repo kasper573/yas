@@ -33,6 +33,17 @@ describe("components", () => {
     getByText("bar");
   });
 
+  it("inherits props from layout composition", () => {
+    const Form = createForm({
+      schema: z.object({ foo: z.string() }),
+      layout: ({ fields: { Foo } }) => <Foo bar="baz" />,
+      components: (builder) =>
+        builder.field("foo", ({ bar }) => <span>{bar}</span>),
+    });
+    const { getByText } = render(<Form />);
+    getByText("baz");
+  });
+
   describe("can be extended from predefined forms", () => {
     it("by value type", () => {
       const Form = createForm({
