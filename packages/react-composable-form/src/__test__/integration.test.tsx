@@ -8,33 +8,32 @@ import { createForm } from "../createForm";
 describe("components", () => {
   it("can be defined by value type", () => {
     const Form = createForm({
+      schema: z.object({ foo: z.number() }),
       components: (builder) =>
         builder
           .type(z.string(), () => <span>text</span>)
           .type(z.number(), () => <span>number</span>),
     });
-    const { getByText } = render(
-      <Form schema={z.object({ foo: z.number() })} />,
-    );
+    const { getByText } = render(<Form />);
     getByText("number");
   });
 
   it("can be defined per field name", () => {
     const Form = createForm({
+      schema: z.object({ bar: z.number() }),
       components: (builder) =>
         builder
           .field("foo", () => <span>foo</span>)
           .field("bar", () => <span>bar</span>),
     });
-    const { getByText } = render(
-      <Form schema={z.object({ bar: z.number() })} />,
-    );
+    const { getByText } = render(<Form />);
     getByText("bar");
   });
 
   describe("can be extended from predefined forms", () => {
     it("by value type", () => {
       const Form = createForm({
+        schema: z.object({ foo: z.string(), bar: z.number() }),
         components: (builder) =>
           builder.type(z.string(), () => <span>text</span>),
       });
@@ -42,27 +41,22 @@ describe("components", () => {
         components: (builder) =>
           builder.type(z.number(), () => <span>number</span>),
       });
-      const { getByText } = render(
-        <ExtendedForm
-          schema={z.object({ foo: z.string(), bar: z.number() })}
-        />,
-      );
+      const { getByText } = render(<ExtendedForm />);
       getByText("number");
       getByText("text");
     });
 
     it("by field name", () => {
+      const schema = z.object({ foo: z.string(), bar: z.number() });
       const Form = createForm({
+        schema,
         components: (builder) => builder.field("foo", () => <span>foo</span>),
       });
       const ExtendedForm = Form.extend({
+        schema,
         components: (builder) => builder.field("bar", () => <span>bar</span>),
       });
-      const { getByText } = render(
-        <ExtendedForm
-          schema={z.object({ foo: z.string(), bar: z.number() })}
-        />,
-      );
+      const { getByText } = render(<ExtendedForm />);
       getByText("foo");
       getByText("bar");
     });
@@ -87,23 +81,21 @@ describe("layout", () => {
 
   it("can control where fields are rendered", () => {
     const Form = createForm({
+      schema: z.object({ foo: z.string(), bar: z.string() }),
+      layout: ({ fields: { Foo, Bar } }) => (
+        <main>
+          <section>
+            <Foo />
+          </section>
+          <section>
+            <Bar />
+          </section>
+        </main>
+      ),
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
     });
-    const { baseElement } = render(
-      <Form schema={z.object({ foo: z.string(), bar: z.string() })}>
-        {({ fields: { Foo, Bar } }) => (
-          <main>
-            <section>
-              <Foo />
-            </section>
-            <section>
-              <Bar />
-            </section>
-          </main>
-        )}
-      </Form>,
-    );
+    const { baseElement } = render(<Form />);
     expect(baseElement.innerHTML).toBe(
       `<div><main><section><span>foo</span></section><section><span>bar</span></section></main></div>`,
     );
@@ -111,14 +103,12 @@ describe("layout", () => {
 
   it("can override field component props", () => {
     const Form = createForm({
+      layout: ({ fields: { Foo } }) => <Foo name="bar" />,
+      schema: z.object({ foo: z.string() }),
       components: (builder) =>
         builder.type(z.string(), ({ name }) => <span>{name}</span>),
     });
-    const { getByText } = render(
-      <Form schema={z.object({ foo: z.string() })}>
-        {({ fields: { Foo } }) => <Foo name="bar" />}
-      </Form>,
-    );
+    const { getByText } = render(<Form />);
     getByText("bar");
   });
 
@@ -132,36 +122,13 @@ describe("layout", () => {
 });
 
 describe("schema", () => {
-  it("can be predefined", () => {
+  it("defines which fields are rendered", () => {
     const Form = createForm({
       schema: z.object({ foo: z.string() }),
       components: (builder) => builder.type(z.string(), () => <span>foo</span>),
     });
     const { getByText } = render(<Form />);
     getByText("foo");
-  });
-
-  it("can be inlined", () => {
-    const Form = createForm({
-      components: (builder) => builder.type(z.string(), () => <span>foo</span>),
-    });
-    const { getByText } = render(
-      <Form schema={z.object({ foo: z.string() })} />,
-    );
-    getByText("foo");
-  });
-
-  it("inlined replaces predefined", () => {
-    const Form = createForm({
-      schema: z.object({ foo: z.string() }),
-      components: (builder) =>
-        builder.type(z.string(), ({ name }) => <span>{name}</span>),
-    });
-    const { getByText, queryByText } = render(
-      <Form schema={z.object({ bar: z.string() })} />,
-    );
-    expect(queryByText("foo")).toBeNull();
-    getByText("bar");
   });
 
   it("can be extended from predefined forms", () => {
@@ -181,27 +148,25 @@ describe("schema", () => {
 describe("data", () => {
   it("can be displayed", () => {
     const Form = createForm({
+      schema: z.object({ foo: z.string() }),
       components: (builder) =>
         builder.type(z.string(), ({ value }) => (
           <input defaultValue={String(value)} />
         )),
     });
-    const { getByRole } = render(
-      <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
-    );
+    const { getByRole } = render(<Form data={{ foo: "bar" }} />);
     expect(getByRole("textbox")).toHaveValue("bar");
   });
 
   it("can be updated", async () => {
     const Form = createForm({
+      schema: z.object({ foo: z.string() }),
       components: (builder) =>
         builder.type(z.string(), ({ onChange, ...rest }) => (
           <input onChange={(e) => onChange(e.target.value)} {...rest} />
         )),
     });
-    const { getByRole } = render(
-      <Form schema={z.object({ foo: z.string() })} data={{ foo: "bar" }} />,
-    );
+    const { getByRole } = render(<Form data={{ foo: "bar" }} />);
 
     await userEvent.clear(getByRole("textbox"));
     await userEvent.type(getByRole("textbox"), "baz");

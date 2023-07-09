@@ -17,11 +17,7 @@ import { FormContext } from "./FormContext";
 export function createForm(
   options: ComposableFormOptions = {},
 ): ComposableForm {
-  const {
-    schema: defaultSchema,
-    layout: DefaultLayout = NoLayout,
-    components: build,
-  } = options;
+  const { schema, layout: Layout = NoLayout, components: build } = options;
 
   const typeComponents = new Map<ZodType, FormField>();
   const fieldComponents = new Map<string, FormField>();
@@ -29,8 +25,6 @@ export function createForm(
   build?.(createComponentBuilder(typeComponents, fieldComponents));
 
   function ComposableForm({
-    schema = defaultSchema,
-    children: inlineLayout,
     data = empty,
     ...layoutProps
   }: ComposableFormProps) {
@@ -41,11 +35,7 @@ export function createForm(
     );
     return (
       <FormContext.Provider value={store}>
-        {inlineLayout ? (
-          inlineLayout({ fields, ...layoutProps })
-        ) : (
-          <DefaultLayout fields={fields} {...layoutProps} />
-        )}
+        <Layout fields={fields} {...layoutProps} />
       </FormContext.Provider>
     );
   }

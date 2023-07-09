@@ -9,19 +9,12 @@ export interface ComposableFormOptions {
 }
 
 export type ComposableFormProps = {
-  schema?: AnyZodObject;
-  children?: InlineFormLayout;
   data?: Record<string, unknown>;
 };
 
 export type ComposableForm = ComponentType<ComposableFormProps> & {
   extend(options: ComposableFormOptions): ComposableForm;
 };
-
-/**
- * Not a ComponentType to be able to be used as non-memoized inline render prop
- */
-export type InlineFormLayout = (props: FormLayoutProps) => JSX.Element;
 
 export type FormLayoutProps = {
   fields: FormFields;
