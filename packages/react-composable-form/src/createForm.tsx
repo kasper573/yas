@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { ZodType } from "zod";
 import { Store } from "@yas/store";
+import type { AnyZodObject } from "zod";
 import { mergeOptions } from "./mergeOptions";
 import { createComponentBuilder } from "./createComponentBuilder";
 import type {
@@ -13,10 +14,14 @@ import type {
 import { createFields } from "./createFields";
 import type { FormLayoutProps } from "./types";
 import { FormContext } from "./FormContext";
+import type { FormLayout } from "./types";
 
-export function createForm(
-  options: ComposableFormOptions = {},
-): ComposableForm {
+export function createForm<
+  Schema extends AnyZodObject,
+  Layout extends FormLayout,
+>(
+  options: ComposableFormOptions<Schema, Layout> = {},
+): ComposableForm<Schema, Layout> {
   const { schema, layout: Layout = NoLayout, components: build } = options;
 
   const typeComponents = new Map<ZodType, FormField>();
@@ -27,7 +32,7 @@ export function createForm(
   function ComposableForm({
     data = empty,
     ...layoutProps
-  }: ComposableFormProps) {
+  }: ComposableFormProps<Schema>) {
     const store = useMemo(() => new Store<FormState>({ data, errors: {} }), []);
     const fields = useMemo(
       () => createFields(typeComponents, fieldComponents, schema),
@@ -40,7 +45,7 @@ export function createForm(
     );
   }
 
-  const extend: ComposableForm["extend"] = (extension) =>
+  const extend: ComposableForm<Schema, Layout>["extend"] = (extension) =>
     createForm(mergeOptions(options, extension));
 
   ComposableForm.extend = extend;

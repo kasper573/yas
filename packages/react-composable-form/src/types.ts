@@ -1,19 +1,31 @@
 import type { AnyZodObject, ZodType } from "zod";
-import type { ComponentType } from "react";
+import type { ComponentProps, ComponentType } from "react";
 import type { Store } from "@yas/store";
+import type { output } from "zod";
 
-export interface ComposableFormOptions {
-  schema?: AnyZodObject;
-  layout?: FormLayout;
+export interface ComposableFormOptions<
+  Schema extends AnyZodObject,
+  Layout extends FormLayout,
+> {
+  schema?: Schema;
+  layout?: Layout;
   components?: FormComponentFactory;
 }
 
-export type ComposableFormProps = {
-  data?: Record<string, unknown>;
+export type ComposableFormProps<Schema extends AnyZodObject> = {
+  data?: output<Schema>;
 };
 
-export type ComposableForm = ComponentType<ComposableFormProps> & {
-  extend(options: ComposableFormOptions): ComposableForm;
+export type ComposableForm<
+  Schema extends AnyZodObject,
+  Layout extends FormLayout,
+> = ComponentType<
+  ComposableFormProps<Schema> &
+    MakePartial<ComponentProps<Layout>, keyof FormLayoutProps>
+> & {
+  extend<NewSchema extends AnyZodObject, NewLayout extends FormLayout>(
+    options: ComposableFormOptions<NewSchema, NewLayout>,
+  ): ComposableForm<NewSchema, NewLayout>;
 };
 
 export type FormLayoutProps = {
@@ -53,3 +65,5 @@ export interface FieldState {
   value: any;
   errors: unknown[];
 }
+
+type MakePartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

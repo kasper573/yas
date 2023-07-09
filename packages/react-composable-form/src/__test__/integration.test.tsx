@@ -4,6 +4,7 @@ import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
 import { createForm } from "../createForm";
+import type { FormLayoutProps } from "../types";
 
 describe("components", () => {
   it("can be defined by value type", () => {
@@ -114,7 +115,9 @@ describe("layout", () => {
 
   it("inherits the form props", () => {
     const Form = createForm({
-      layout: ({ foo }) => <main>{foo}</main>,
+      layout: ({ foo }: FormLayoutProps & { foo: string }) => (
+        <main>{foo}</main>
+      ),
     });
     const { getByText } = render(<Form foo="bar" />);
     getByText("bar");
