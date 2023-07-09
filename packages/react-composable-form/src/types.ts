@@ -25,7 +25,10 @@ export type ComposableForm<
 > = ComponentType<ComposableFormProps<Schema, LayoutProps>> & {
   extend<NewSchema extends AnyZodObject, NewLayoutProps extends AnyProps>(
     options: Partial<ComposableFormOptions<NewSchema, NewLayoutProps>>,
-  ): ComposableForm<NewSchema, NewLayoutProps>;
+  ): ComposableForm<
+    Fallback<NewSchema, Schema>,
+    Fallback<NewLayoutProps, LayoutProps>
+  >;
 };
 
 export type FormLayoutProps<AdditionalProps extends AnyProps = AnyProps> = {
@@ -70,3 +73,7 @@ export interface FieldState {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyProps = Record<string, any>;
+
+type Fallback<A, B> = IsNever<A> extends true ? B : A;
+
+type IsNever<T> = [T] extends [never] ? true : false;
