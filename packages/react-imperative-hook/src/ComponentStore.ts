@@ -119,7 +119,6 @@ export class ComponentStore {
 
 export type ComponentStoreState = Record<ComponentId, ComponentEntry>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ImperativeComponentProps<ResolutionValue = any>
   extends ResolvingComponentProps<ResolutionValue>,
     UseSpawnSustainerProps {
@@ -157,9 +156,7 @@ export type InstanceState<ResolutionValue = unknown> =
 
 export type InstanceProps<
   ResolutionValue = unknown,
-  // eslint-disable-next-line @typescript-eslint/ban-types
   AdditionalComponentProps = {},
-  // eslint-disable-next-line @typescript-eslint/ban-types
   DefaultProps extends Partial<AdditionalComponentProps> = {},
 > = MakeOptionalIfEmptyObject<
   Omit<
