@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { createFieldBuilder } from "./createFieldBuilder";
 import type {
   FormComponent,
@@ -40,17 +40,30 @@ function createFormImpl<
 
   const ComposableForm: FormComponent<Options> = (({
     data = empty,
+    onChange,
     ...layoutProps
   }) => {
     const store = useMemo(
       () => new Store<FormState<Schema>>({ data, errors: {} as never }),
       [],
     );
+
+    useEffect(
+      () => store.subscribe((state) => onChange?.(state.data)),
+      [store, onChange],
+    );
+
+    useEffect(
+      () => store.mutate((state) => (state.data = data)),
+      [data, store],
+    );
+
     const fields = useMemo(() => createFields(components, schema), [schema]);
     return (
       <FormContext.Provider value={store}>
         <Layout
           {...(layoutProps as ComponentProps<typeof Layout>)}
+          onChange={onChange}
           fields={fields}
         />
       </FormContext.Provider>

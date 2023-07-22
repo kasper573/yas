@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
+import { useState } from "react";
 import { createForm } from "../createForm";
 import type { FormFieldProps } from "../types/commonTypes";
 
@@ -210,7 +211,7 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("bar");
   });
 
-  it("can be updated", async () => {
+  it("can be updated via props", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
@@ -220,11 +221,66 @@ describe("data", () => {
           )),
         ),
     );
-    const { getByRole } = render(<Form data={{ foo: "bar" }} />);
+    function App() {
+      const [data, setData] = useState({ foo: "default" });
+      return (
+        <>
+          <Form data={data} onChange={setData} />
+          <button onClick={() => setData({ foo: "changed" })}>change</button>
+        </>
+      );
+    }
+
+    const { getByRole } = render(<App />);
+
+    await userEvent.click(getByRole("button"));
+    expect(getByRole("textbox")).toHaveValue("changed");
+  });
+
+  it("can be updated via input", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .components((builder) =>
+          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
+            <input
+              onChange={(e) => onChange(e.target.value)}
+              value={value}
+              {...rest}
+            />
+          )),
+        ),
+    );
+    const { getByRole } = render(<Form />);
 
     await userEvent.clear(getByRole("textbox"));
     await userEvent.type(getByRole("textbox"), "baz");
     expect(getByRole("textbox")).toHaveValue("baz");
+  });
+
+  it("can be emitted", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .components((builder) =>
+          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
+            <input
+              onChange={(e) => onChange(e.target.value)}
+              value={value}
+              {...rest}
+            />
+          )),
+        ),
+    );
+
+    let data: unknown;
+    const { getByRole } = render(
+      <Form onChange={(d: unknown) => (data = d)} />,
+    );
+
+    await userEvent.clear(getByRole("textbox"));
+    await userEvent.type(getByRole("textbox"), "input");
+    expect(data).toEqual({ foo: "input" });
   });
 
   it("changes to one field does not re-render other fields", async () => {
