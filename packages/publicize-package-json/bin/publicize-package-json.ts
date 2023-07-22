@@ -72,6 +72,7 @@ function makePackageReleaseReady(pkg: PackageJson, distFolder: string) {
   bindPackageToDistFolder(pkg, distFolder);
   removeInternalPackageDependencies(pkg.dependencies);
   removeInternalPackageDependencies(pkg.peerDependencies);
+  removeInternalPackageDependencies(pkg.devDependencies);
 }
 
 function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
