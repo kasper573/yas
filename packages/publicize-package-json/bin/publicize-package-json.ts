@@ -36,7 +36,15 @@ async function run({
     return 0;
   }
 
-  pkg.update((pkg) => makePackageReleaseReady(pkg, relativeDistFolder));
+  const ok = pkg.update((pkg) =>
+    makePackageReleaseReady(pkg, relativeDistFolder),
+  );
+
+  if (!ok) {
+    console.error("Failed to make package.json release ready");
+    return 1;
+  }
+
   console.log("package.json has been made release ready");
 
   try {
@@ -70,9 +78,11 @@ function makePackageReleaseReady(pkg: PackageJson, distFolder: string) {
   delete pkg.devDependencies;
   delete pkg.jest;
   bindPackageToDistFolder(pkg, distFolder);
-  removeInternalPackageDependencies(pkg.dependencies);
-  removeInternalPackageDependencies(pkg.peerDependencies);
-  removeInternalPackageDependencies(pkg.devDependencies);
+  return (
+    handleInternalPackageDependencies(pkg, "dependencies", "error") &&
+    handleInternalPackageDependencies(pkg, "peerDependencies", "error") &&
+    handleInternalPackageDependencies(pkg, "devDependencies", "delete")
+  );
 }
 
 function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
@@ -89,13 +99,27 @@ function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
   pkg.files = [distFolder, "package.json", "readme.md"];
 }
 
-function removeInternalPackageDependencies(deps: Record<string, string> = {}) {
+function handleInternalPackageDependencies(
+  pkg: PackageJson,
+  prop: "dependencies" | "peerDependencies" | "devDependencies",
+  action: "delete" | "error",
+): boolean {
+  let ok = true;
+  const deps = pkg[prop] ?? {};
   for (const key in deps) {
     const value = deps[key];
     if (value.startsWith("workspace:")) {
-      delete deps[key];
+      if (action === "error") {
+        ok = false;
+        console.error(
+          `${prop} may not reference internal packages. Found: ${key}: ${value}`,
+        );
+      } else {
+        delete deps[key];
+      }
     }
   }
+  return ok;
 }
 
 const args = yargs(hideBin(process.argv))

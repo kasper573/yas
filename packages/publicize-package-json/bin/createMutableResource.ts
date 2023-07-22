@@ -9,9 +9,13 @@ export function createMutableResource<T>(
   const original = load();
   let current = original;
 
-  function update(mutator: (contents: T) => void) {
-    current = produce(current, discard(mutator));
+  function update<R>(mutator: (contents: T) => R) {
+    let res = undefined as R;
+    current = produce(current, (draft) => {
+      res = mutator(draft as T);
+    });
     fs.writeFileSync(filePath, format(current));
+    return res;
   }
 
   function restore(mutator: (contents: T) => void) {
