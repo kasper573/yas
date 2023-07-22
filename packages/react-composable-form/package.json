@@ -7,9 +7,8 @@
     "form"
   ],
   "author": "Kasper Sandin",
-  "version": "0.1.5",
+  "version": "0.0.0",
   "license": "MIT",
-  "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
