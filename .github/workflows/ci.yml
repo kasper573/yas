@@ -25,3 +25,10 @@ jobs:
         with:
           name: playwright
           path: "**/.playwright/**"
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm build
