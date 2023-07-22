@@ -6,19 +6,24 @@ import type {
   FieldComponentsPassedToLayout,
   FormStore,
   FormFieldFor,
-} from "./types";
+  FieldComponents,
+} from "./types/commonTypes";
 import { FormContext } from "./FormContext";
-import type { FieldNames } from "./types";
-import type { AnyFormField } from "./types";
+import type { FieldNames } from "./types/commonTypes";
+import { determinePrimitiveType } from "./createFieldBuilder";
 
-export function createFields<Schema extends AnyZodObject>(
-  typeMap: Map<ZodType, AnyFormField>,
-  fieldMap: Map<string, AnyFormField>,
+export function createFields<
+  Schema extends AnyZodObject,
+  Components extends FieldComponents,
+>(
+  components: Components,
   schema: Schema,
-): FieldComponentsPassedToLayout<Schema> {
+): FieldComponentsPassedToLayout<Schema, Components> {
   return Object.entries(schema.shape as ZodRawShape).reduce(
     (fields, [name, type]) => {
-      const Component = fieldMap.get(name) ?? findMatchingType(typeMap, type);
+      const Component =
+        components.fields[name] ??
+        components.types[determinePrimitiveType(type)];
       if (!Component) {
         throw new Error(
           `No component available for field "${name}" or type ${getFirstPartyType(
@@ -30,7 +35,7 @@ export function createFields<Schema extends AnyZodObject>(
         enhanceFormField(Component, name as FieldNames<Schema>);
       return fields;
     },
-    {} as FieldComponentsPassedToLayout<Schema>,
+    {} as FieldComponentsPassedToLayout<Schema, FieldComponents>,
   );
 }
 
@@ -71,14 +76,6 @@ function enhanceFormField<
 
 function capitalize(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
-}
-
-function findMatchingType<T>(map: Map<ZodType, T>, type: ZodType) {
-  for (const [candidate, value] of map.entries()) {
-    if (isMatchingType(candidate, type)) {
-      return value;
-    }
-  }
 }
 
 function isMatchingType(a: ZodType, b: ZodType): boolean {

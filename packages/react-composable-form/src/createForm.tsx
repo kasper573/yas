@@ -1,45 +1,52 @@
 import type { ComponentProps } from "react";
 import { useMemo } from "react";
-import type { ZodType } from "zod";
 import { Store } from "@yas/store";
-import type { AnyZodObject } from "zod";
-import { createComponentBuilder } from "./createComponentBuilder";
+import { createFieldBuilder } from "./createFieldBuilder";
 import type {
-  AnyProps,
-  ComposableForm,
-  ComposableFormOptions,
-  ComposableFormProps,
+  FormComponent,
+  FormOptions,
   FormState,
-} from "./types";
+} from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
-import type { AnyFormField } from "./types";
+import type {
+  FormOptionsBuilderFactory,
+  EmptyFormOptions,
+  FormOptionsBuilderFor,
+} from "./createFormOptionsBuilder";
+import { FormOptionsBuilder } from "./createFormOptionsBuilder";
 
-export function createForm<
-  Schema extends AnyZodObject,
-  LayoutProps extends AnyProps,
+export function createForm<Options extends FormOptions>(
+  reduceOptions = passThrough as FormOptionsBuilderFactory<
+    EmptyFormOptions,
+    Options
+  >,
+): FormComponent<Options> {
+  return createFormImpl(reduceOptions, FormOptionsBuilder.empty);
+}
+
+function createFormImpl<
+  Options extends FormOptions,
+  BaseOptions extends FormOptions,
 >(
-  options: ComposableFormOptions<Schema, LayoutProps>,
-): ComposableForm<Schema, LayoutProps> {
-  const { schema, layout: Layout, components: build } = options;
+  reduceOptions: FormOptionsBuilderFactory<BaseOptions, Options>,
+  initialOptionsBuilder: FormOptionsBuilderFor<BaseOptions>,
+): FormComponent<Options> {
+  type Schema = Options["schema"];
 
-  const typeComponents = new Map<ZodType, AnyFormField>();
-  const fieldComponents = new Map<string, AnyFormField>();
+  const optionsBuilder = reduceOptions(initialOptionsBuilder);
+  const { schema, layout: Layout, components: build } = optionsBuilder.build();
+  const { components } = build(createFieldBuilder());
 
-  build(createComponentBuilder(typeComponents, fieldComponents));
-
-  function ComposableForm({
+  const ComposableForm: FormComponent<Options> = (({
     data = empty,
     ...layoutProps
-  }: ComposableFormProps<Schema> & LayoutProps) {
+  }) => {
     const store = useMemo(
       () => new Store<FormState<Schema>>({ data, errors: {} as never }),
       [],
     );
-    const fields = useMemo(
-      () => createFields(typeComponents, fieldComponents, schema),
-      [schema],
-    );
+    const fields = useMemo(() => createFields(components, schema), [schema]);
     return (
       <FormContext.Provider value={store}>
         <Layout
@@ -48,25 +55,13 @@ export function createForm<
         />
       </FormContext.Provider>
     );
-  }
+  }) as FormComponent<Options>;
 
-  ComposableForm.extend = <
-    NewSchema extends AnyZodObject,
-    NewLayoutProps extends AnyProps,
-  >(
-    ext: ComposableFormOptions<NewSchema, NewLayoutProps>,
-  ) =>
-    createForm({
-      schema: ext.schema ?? schema,
-      layout: ext.layout ?? Layout,
-      components(builder) {
-        build(builder);
-        ext.components?.(builder);
-        return builder;
-      },
-    });
+  ComposableForm.extend = (extendOptions) =>
+    createFormImpl(extendOptions, optionsBuilder);
 
-  return ComposableForm as ComposableForm<Schema, LayoutProps>;
+  return ComposableForm;
 }
 
 const empty = Object.freeze({});
+const passThrough = <T extends any>(value: T) => value;
