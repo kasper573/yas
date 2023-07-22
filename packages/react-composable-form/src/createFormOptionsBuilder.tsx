@@ -90,16 +90,11 @@ export class FormOptionsBuilder<
     return this.options;
   }
 
-  static readonly empty = new FormOptionsBuilder<
-    ZodObject<{}>,
-    {},
-    EmptyFieldComponents,
-    EmptyFieldComponents
-  >({
+  static readonly empty = new FormOptionsBuilder({
     schema: z.object({}),
     layout: NoLayout,
     components: (_) => _,
-  });
+  }) as FormOptionsBuilderFor<EmptyFormOptions>;
 }
 
 export type EmptyFormOptions = FormOptions<
