@@ -1,5 +1,10 @@
 import type { Context, ComponentType } from "react";
-import { createElement, useContext, useEffect, useReducer } from "react";
+import {
+  createElement,
+  useContext,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import type {
   ComponentId,
   ComponentStore,
@@ -22,11 +27,9 @@ export interface ComponentOutletProps {
 
 export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   const store = useContext(context);
-  const [, rerender] = useReducer((x) => x + 1, 0);
-  useEffect(() => store.subscribe(rerender), [store]);
-  return createElement(renderer, {
-    entries: collectEntries(store.state),
-  });
+  const state = useSyncExternalStore(store.subscribe, () => store.state);
+  const entries = useMemo(() => collectEntries(state), [state]);
+  return createElement(renderer, { entries });
 }
 
 function collectEntries(components: ComponentStoreState) {
