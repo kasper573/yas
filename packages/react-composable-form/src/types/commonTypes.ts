@@ -38,20 +38,20 @@ export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
 
-export type FieldComponents = {
+export interface FieldComponents {
   types: Partial<Record<PrimitiveType, AnyComponent>>;
   fields: Record<string, AnyComponent>;
-};
+}
 
-export type EmptyFieldComponents = {
+export interface EmptyFieldComponents {
   types: {};
   fields: {};
-};
+}
 
-export type NoFieldComponents = {
+export interface NoFieldComponents {
   types: {};
   fields: {};
-};
+}
 
 export interface ComposableFormProps<Value> {
   value?: Value;
@@ -67,12 +67,12 @@ export type FormComponent<Options extends FormOptions> = ComponentType<
   ): FormComponent<NewOptions>;
 };
 
-export type FormLayoutProps<
+export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = NoFieldComponents,
-> = {
+> {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
-};
+}
 
 export interface FormFieldProps<Value = any> extends FieldState<Value> {
   name: string;
