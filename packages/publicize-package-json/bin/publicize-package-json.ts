@@ -40,14 +40,14 @@ async function run({
     makePackageReleaseReady(pkg, relativeDistFolder),
   );
 
-  if (!ok) {
-    console.error("Failed to make package.json release ready");
-    return 1;
-  }
-
-  console.log("package.json has been made release ready");
-
   try {
+    if (!ok) {
+      console.error("Failed to make package.json release ready");
+      return 1;
+    }
+
+    console.log("package.json has been made release ready");
+
     console.log(`Running command "${command}"`);
     const { stdout } = await execaCommand(command);
     console.log(stdout);
