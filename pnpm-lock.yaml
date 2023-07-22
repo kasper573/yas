@@ -205,9 +205,9 @@ importers:
 
   packages/react-composable-form:
     dependencies:
-      '@yas/store':
-        specifier: workspace:*
-        version: link:../yas-store
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
     devDependencies:
       '@testing-library/jest-dom':
         specifier: ^5.16.5
@@ -251,9 +251,9 @@ importers:
 
   packages/react-imperative-hook:
     dependencies:
-      '@yas/store':
-        specifier: workspace:*
-        version: link:../yas-store
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -318,16 +318,6 @@ importers:
       '@playwright/test':
         specifier: ^1.35.1
         version: 1.35.1
-
-  packages/yas-store:
-    dependencies:
-      immer:
-        specifier: ^10.0.2
-        version: 10.0.2
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
 
   packages/yas-tsconfig:
     devDependencies:
@@ -484,7 +474,7 @@ packages:
       '@babel/parser': 7.22.7
       '@babel/template': 7.22.5
       '@babel/traverse': 7.22.8
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.5
       convert-source-map: 1.9.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
@@ -521,7 +511,7 @@ packages:
     resolution: {integrity: sha512-F3fZga2uv09wFdEjEQIJxXALXfz0+JaOb7SabvVMmjHxeVTuGW8wgE8Vp1Hd7O+zMTYtcfEISGRzPkeiaPPsvg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.5
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
       jsesc: 2.5.2
@@ -862,7 +852,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.5
     dev: true
 
   /@babel/parser@7.22.7:
@@ -2527,7 +2517,7 @@ packages:
       '@babel/plugin-transform-unicode-escapes': 7.22.5(@babel/core@7.21.8)
       '@babel/plugin-transform-unicode-regex': 7.22.5(@babel/core@7.21.8)
       '@babel/preset-modules': 0.1.6(@babel/core@7.21.8)
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.5
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.21.8)
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.21.8)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.21.8)
@@ -2719,13 +2709,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.22.5
-      '@babel/generator': 7.21.9
+      '@babel/generator': 7.22.9
       '@babel/helper-environment-visitor': 7.22.5
       '@babel/helper-function-name': 7.22.5
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
-      '@babel/parser': 7.21.9
-      '@babel/types': 7.21.5
+      '@babel/parser': 7.22.7
+      '@babel/types': 7.22.5
       debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
@@ -5371,7 +5361,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 16.18.39
+      '@types/node': 20.4.3
     dev: true
 
   /@types/graceful-fs@4.1.6:
@@ -5456,7 +5446,7 @@ packages:
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 16.18.39
+      '@types/node': 20.4.3
       form-data: 3.0.1
     dev: true
 

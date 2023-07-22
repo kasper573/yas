@@ -1,6 +1,5 @@
 import type { ComponentProps } from "react";
 import { useMemo } from "react";
-import { Store } from "@yas/store";
 import { createFieldBuilder } from "./createFieldBuilder";
 import type {
   FormComponent,
@@ -15,6 +14,7 @@ import type {
   FormOptionsBuilderFor,
 } from "./createFormOptionsBuilder";
 import { FormOptionsBuilder } from "./createFormOptionsBuilder";
+import { Store } from "./Store";
 
 export function createForm<Options extends FormOptions>(
   reduceOptions = passThrough as FormOptionsBuilderFactory<
