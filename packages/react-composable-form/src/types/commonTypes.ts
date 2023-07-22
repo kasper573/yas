@@ -1,10 +1,4 @@
-import type {
-  AnyZodObject,
-  output,
-  ZodAny,
-  ZodFirstPartyTypeKind,
-  ZodType,
-} from "zod";
+import type { AnyZodObject, output, ZodFirstPartyTypeKind, ZodType } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
 import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
@@ -36,6 +30,8 @@ export type inferParentComponents<Options extends FormOptions> =
     ? ParentComponents
     : never;
 
+export type inferFieldValueType<Type extends ZodType> = output<Type>;
+
 export type PrimitiveType = ZodFirstPartyTypeKind;
 
 export type FieldComponents = {
@@ -54,7 +50,7 @@ export type NoFieldComponents = {
 };
 
 export type ComposableFormProps<Schema extends AnyZodObject> = {
-  data?: output<Schema>;
+  data?: inferFieldValueType<Schema>;
 };
 
 export type FormComponent<Options extends FormOptions> = ComponentType<
@@ -73,16 +69,17 @@ export type FormLayoutProps<
   fields: FieldComponentsPassedToLayout<Schema, Components>;
 };
 
-export interface FormFieldProps<Type extends ZodType = ZodAny>
-  extends FieldState<Type> {
+export interface FormFieldProps<Value = any> extends FieldState<Value> {
   name: string;
-  onChange: (newValue: output<Type>) => unknown;
+  onChange: (newValue: Value) => unknown;
 }
 
 export type FormFieldFor<
   Schema extends AnyZodObject,
   FieldName extends string,
-> = ComponentType<FormFieldProps<Schema["shape"][FieldName]>>;
+> = ComponentType<
+  FormFieldProps<inferFieldValueType<Schema["shape"][FieldName]>>
+>;
 
 export type FieldComponentsPassedToLayout<
   Schema extends AnyZodObject,
@@ -111,11 +108,11 @@ export type FieldNames<Schema extends AnyZodObject> = `${string &
   keyof Schema["shape"]}`;
 
 export interface FormState<Schema extends AnyZodObject> {
-  data: output<Schema>;
+  data: inferFieldValueType<Schema>;
   errors: Record<FieldNames<Schema>, unknown[]>;
 }
 
-export interface FieldState<Type extends ZodType> {
-  value: output<Type>;
+export interface FieldState<Value> {
+  value: Value;
   errors: unknown[];
 }

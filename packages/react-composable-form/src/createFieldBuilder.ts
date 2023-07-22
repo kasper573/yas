@@ -7,6 +7,7 @@ import type {
   PrimitiveType,
 } from "./types/commonTypes";
 import type { TypeNameForType } from "./types/utilityTypes";
+import type { inferFieldValueType } from "./types/commonTypes";
 
 export function createFieldBuilder<Components extends FieldComponents>(
   components: Components = emptyComponents as Components,
@@ -50,7 +51,10 @@ export type FieldBuilderFactory<
 > = (builder: FieldBuilder<InputComponents>) => FieldBuilder<OutputComponents>;
 
 export type FieldBuilder<Components extends FieldComponents> = {
-  type<Type extends ZodType, ComponentProps extends FormFieldProps<Type>>(
+  type<
+    Type extends ZodType,
+    ComponentProps extends FormFieldProps<inferFieldValueType<Type>>,
+  >(
     type: Type,
     component: ComponentType<ComponentProps>,
   ): FieldBuilder<{
