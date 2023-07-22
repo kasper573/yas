@@ -48,7 +48,6 @@
     "publicize-package-json": "workspace:*",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
-    "tsd": "^0.28.1",
     "tsup": "^7.1.0",
     "react": "^18.2.0",
     "zod": "^3.21.4"
