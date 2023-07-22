@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
-import { Store } from "@yas/store";
 import type { MakeOptionalIfEmptyObject, PartialByKeys } from "./utilityTypes";
 import { deferPromise } from "./deferPromise";
 import type { UseSpawnSustainerProps } from "./createSpawnSustainerHook";
+import { Store } from "./Store";
 
 export class ComponentStore {
   // Remove delays are not part of the observable Store since they have no reactive impact.

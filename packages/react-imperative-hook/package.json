@@ -9,7 +9,7 @@
     "component"
   ],
   "author": "Kasper Sandin",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
@@ -32,11 +32,9 @@
   "jest": {
     "preset": "@yas/jest/presets/react"
   },
-  "dependencies": {
-    "@yas/store": "workspace:*"
-  },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "immer": "^10.0.2"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",

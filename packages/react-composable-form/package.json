@@ -7,7 +7,7 @@
     "form"
   ],
   "author": "Kasper Sandin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -29,11 +29,9 @@
   "jest": {
     "preset": "@yas/jest/presets/react"
   },
-  "dependencies": {
-    "@yas/store": "workspace:*"
-  },
   "peerDependencies": {
     "react": "^18.2.0",
+    "immer": "^10.0.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {

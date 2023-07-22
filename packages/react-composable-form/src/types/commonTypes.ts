@@ -6,9 +6,9 @@ import type {
   ZodType,
 } from "zod";
 import type { ComponentProps, ComponentType } from "react";
-import type { Store } from "@yas/store";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
 import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
+import type { Store } from "../Store";
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
 export interface FormOptions<
