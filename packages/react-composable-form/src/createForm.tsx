@@ -39,7 +39,7 @@ function createFormImpl<
   const { components } = build(createFieldBuilder());
 
   const ComposableForm: FormComponent<Options> = (({
-    data = empty,
+    value: data = empty,
     onChange,
     ...layoutProps
   }) => {

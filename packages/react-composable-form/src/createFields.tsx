@@ -1,4 +1,4 @@
-import type { AnyZodObject, ZodRawShape } from "zod";
+import type { ZodRawShape } from "zod";
 import { getFirstPartyType } from "@yas/zod";
 import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
@@ -11,9 +11,10 @@ import type {
 import { FormContext } from "./FormContext";
 import type { FieldNames } from "./types/commonTypes";
 import { determinePrimitiveType } from "./createFieldBuilder";
+import type { FormSchema } from "./types/commonTypes";
 
 export function createFields<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   Components extends FieldComponents,
 >(
   components: Components,
@@ -40,7 +41,7 @@ export function createFields<
 }
 
 function enhanceFormField<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
 >(Component: FormFieldFor<Schema, FieldName>, name: FieldName) {
   type Props = ComponentProps<FormFieldFor<Schema, FieldName>>;

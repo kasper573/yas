@@ -6,7 +6,7 @@ import type { Store } from "../Store";
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
 export interface FormOptions<
-  Schema extends AnyZodObject = any,
+  Schema extends FormSchema = any,
   LayoutProps extends AnyProps = any,
   Components extends FieldComponents = any,
   ParentComponents extends FieldComponents = any,
@@ -30,7 +30,11 @@ export type inferParentComponents<Options extends FormOptions> =
     ? ParentComponents
     : never;
 
-export type inferFieldValueType<Type extends ZodType> = output<Type>;
+export type FormSchema = AnyZodObject;
+
+export type FormValueType<T = any> = ZodType<T>;
+
+export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
 
@@ -49,12 +53,13 @@ export type NoFieldComponents = {
   fields: {};
 };
 
-export type ComposableFormProps<Schema extends AnyZodObject> = {
-  data?: inferFieldValueType<Schema>;
-};
+export interface ComposableFormProps<Value> {
+  value?: Value;
+  onChange?: (newValue: Value) => unknown;
+}
 
 export type FormComponent<Options extends FormOptions> = ComponentType<
-  ComposableFormProps<inferSchema<Options>> &
+  ComposableFormProps<inferFormValue<inferSchema<Options>>> &
     Omit<inferLayoutProps<Options>, keyof FormLayoutProps>
 > & {
   extend<NewOptions extends FormOptions>(
@@ -63,7 +68,7 @@ export type FormComponent<Options extends FormOptions> = ComponentType<
 };
 
 export type FormLayoutProps<
-  Schema extends AnyZodObject = AnyZodObject,
+  Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = NoFieldComponents,
 > = {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
@@ -75,14 +80,12 @@ export interface FormFieldProps<Value = any> extends FieldState<Value> {
 }
 
 export type FormFieldFor<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   FieldName extends string,
-> = ComponentType<
-  FormFieldProps<inferFieldValueType<Schema["shape"][FieldName]>>
->;
+> = ComponentType<FormFieldProps<inferFormValue<Schema["shape"][FieldName]>>>;
 
 export type FieldComponentsPassedToLayout<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   Components extends FieldComponents,
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
@@ -93,7 +96,7 @@ export type FieldComponentsPassedToLayout<
 type InferFieldComponentProps<
   Components extends FieldComponents,
   FieldName extends string,
-  Type extends ZodType,
+  Type extends FormValueType,
 > = FieldName extends keyof Components["fields"]
   ? ComponentProps<Components["fields"][FieldName]>
   : TypeNameForType<Type> extends keyof Components["types"]
@@ -102,13 +105,15 @@ type InferFieldComponentProps<
     >
   : never;
 
-export type FormStore<Schema extends AnyZodObject> = Store<FormState<Schema>>;
+export type FormStore<Schema extends FormSchema = FormSchema> = Store<
+  FormState<Schema>
+>;
 
-export type FieldNames<Schema extends AnyZodObject> = `${string &
+export type FieldNames<Schema extends FormSchema> = `${string &
   keyof Schema["shape"]}`;
 
-export interface FormState<Schema extends AnyZodObject> {
-  data: inferFieldValueType<Schema>;
+export interface FormState<Schema extends FormSchema> {
+  data: inferFormValue<Schema>;
   errors: Record<FieldNames<Schema>, unknown[]>;
 }
 

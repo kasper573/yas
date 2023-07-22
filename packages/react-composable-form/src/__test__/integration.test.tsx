@@ -207,7 +207,7 @@ describe("data", () => {
           )),
         ),
     );
-    const { getByRole } = render(<Form data={{ foo: "bar" }} />);
+    const { getByRole } = render(<Form value={{ foo: "bar" }} />);
     expect(getByRole("textbox")).toHaveValue("bar");
   });
 
@@ -225,7 +225,7 @@ describe("data", () => {
       const [data, setData] = useState({ foo: "default" });
       return (
         <>
-          <Form data={data} onChange={setData} />
+          <Form value={data} onChange={setData} />
           <button onClick={() => setData({ foo: "changed" })}>change</button>
         </>
       );
@@ -295,7 +295,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string(), bar: z.string() }))
         .components((add) => add.field("foo", Foo).field("bar", Bar)),
     );
-    const { getByRole } = render(<Form data={{ foo: "", bar: "" }} />);
+    const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
     const fooBefore = Foo.getCount();
     const barBefore = Bar.getCount();
     await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");

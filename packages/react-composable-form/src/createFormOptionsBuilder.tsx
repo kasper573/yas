@@ -1,4 +1,4 @@
-import type { AnyZodObject, ZodObject } from "zod";
+import type { ZodObject } from "zod";
 import type { ComponentType } from "react";
 import { z } from "zod";
 import type {
@@ -14,6 +14,7 @@ import type { FormLayoutProps } from "./types/commonTypes";
 
 import type { FieldBuilderFactory } from "./createFieldBuilder";
 import type { EmptyFieldComponents } from "./types/commonTypes";
+import type { FormSchema } from "./types/commonTypes";
 
 export type FormOptionsBuilderFactory<
   StartOptions extends FormOptions,
@@ -31,7 +32,7 @@ export type FormOptionsBuilderFor<Options extends FormOptions> =
   >;
 
 export class FormOptionsBuilder<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   LayoutProps extends AnyProps,
   Components extends FieldComponents,
   ParentComponents extends FieldComponents,
@@ -45,7 +46,7 @@ export class FormOptionsBuilder<
     >,
   ) {}
 
-  schema<NewSchema extends AnyZodObject>(schema: NewSchema) {
+  schema<NewSchema extends FormSchema>(schema: NewSchema) {
     return new FormOptionsBuilder<
       NewSchema,
       LayoutProps,
@@ -105,7 +106,7 @@ export type EmptyFormOptions = FormOptions<
 >;
 
 function NoLayout<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   Components extends FieldComponents,
 >({ fields }: FormLayoutProps<Schema, Components>) {
   return (
