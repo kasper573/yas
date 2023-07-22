@@ -211,7 +211,7 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("bar");
   });
 
-  it("can be changed via props", async () => {
+  it("can be updated via props", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
@@ -237,13 +237,17 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("changed");
   });
 
-  it("fields accepts input while uncontrolled", async () => {
+  it("can be updated via input", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
         .components((builder) =>
-          builder.type(z.string(), ({ onChange, ...rest }) => (
-            <input onChange={(e) => onChange(e.target.value)} {...rest} />
+          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
+            <input
+              onChange={(e) => onChange(e.target.value)}
+              value={value}
+              {...rest}
+            />
           )),
         ),
     );
@@ -254,30 +258,17 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("baz");
   });
 
-  it("fields do not update while controlled without proper data wiring", async () => {
-    const Form = createForm((options) =>
-      options
-        .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ onChange, ...rest }) => (
-            <input onChange={(e) => onChange(e.target.value)} {...rest} />
-          )),
-        ),
-    );
-    const { getByRole } = render(<Form data={{ foo: "fixed" }} />);
-
-    await userEvent.clear(getByRole("textbox"));
-    await userEvent.type(getByRole("textbox"), "input");
-    expect(getByRole("textbox")).toHaveValue("fixed");
-  });
-
   it("can be emitted", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
         .components((builder) =>
-          builder.type(z.string(), ({ onChange, ...rest }) => (
-            <input onChange={(e) => onChange(e.target.value)} {...rest} />
+          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
+            <input
+              onChange={(e) => onChange(e.target.value)}
+              value={value}
+              {...rest}
+            />
           )),
         ),
     );

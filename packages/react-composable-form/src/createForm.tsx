@@ -53,6 +53,11 @@ function createFormImpl<
       [store, onChange],
     );
 
+    useEffect(
+      () => store.mutate((state) => (state.data = data)),
+      [data, store],
+    );
+
     const fields = useMemo(() => createFields(components, schema), [schema]);
     return (
       <FormContext.Provider value={store}>
