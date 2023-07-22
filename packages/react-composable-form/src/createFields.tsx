@@ -1,5 +1,5 @@
-import type { AnyZodObject, ZodRawShape, ZodType } from "zod";
-import { getFirstPartyType, normalizeType } from "@yas/zod";
+import type { AnyZodObject, ZodRawShape } from "zod";
+import { getFirstPartyType } from "@yas/zod";
 import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
@@ -76,16 +76,4 @@ function enhanceFormField<
 
 function capitalize(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
-}
-
-function isMatchingType(a: ZodType, b: ZodType): boolean {
-  if (a === b) {
-    return true;
-  }
-  const n1 = normalizeType(a);
-  const n2 = normalizeType(b);
-  if (n1 === n2) {
-    return true;
-  }
-  return getFirstPartyType(n1) === getFirstPartyType(n2);
 }
