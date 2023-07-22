@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import { Store } from "./Store";
+import { Store } from "@yas/store";
 import type { MakeOptionalIfEmptyObject, PartialByKeys } from "./utilityTypes";
 import { deferPromise } from "./deferPromise";
 import type { UseSpawnSustainerProps } from "./createSpawnSustainerHook";
@@ -70,7 +70,7 @@ export class ComponentStore {
   spawnInstance<Props extends InstanceProps, Resolution>(
     componentId: ComponentId,
     instanceId: InstanceId,
-    props: Props
+    props: Props,
   ) {
     const resolveSpawnCall = deferPromise<Resolution>();
 
@@ -82,7 +82,7 @@ export class ComponentStore {
 
       if (component.instances[instanceId]) {
         throw new Error(
-          `Instance ${instanceId} of component ${componentId} already exists`
+          `Instance ${instanceId} of component ${componentId} already exists`,
         );
       }
 
@@ -96,7 +96,7 @@ export class ComponentStore {
             const removeDelay = this.removeDelays.get(instanceId);
             if (removeDelay) {
               removeDelay.then(() =>
-                this.removeInstance(componentId, instanceId)
+                this.removeInstance(componentId, instanceId),
               );
             } else {
               this.removeInstance(componentId, instanceId);
@@ -119,7 +119,6 @@ export class ComponentStore {
 
 export type ComponentStoreState = Record<ComponentId, ComponentEntry>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ImperativeComponentProps<ResolutionValue = any>
   extends ResolvingComponentProps<ResolutionValue>,
     UseSpawnSustainerProps {
@@ -157,10 +156,8 @@ export type InstanceState<ResolutionValue = unknown> =
 
 export type InstanceProps<
   ResolutionValue = unknown,
-  // eslint-disable-next-line @typescript-eslint/ban-types
   AdditionalComponentProps = {},
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  DefaultProps extends Partial<AdditionalComponentProps> = {}
+  DefaultProps extends Partial<AdditionalComponentProps> = {},
 > = MakeOptionalIfEmptyObject<
   Omit<
     PartialByKeys<

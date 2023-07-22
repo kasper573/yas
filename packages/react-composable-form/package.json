@@ -1,15 +1,13 @@
 {
-  "name": "react-imperative-hook",
-  "description": "React hook that provides an imperative interface for spawning and resolving components",
+  "name": "react-composable-form",
+  "description": "Form composition library for React",
   "keywords": [
     "react",
-    "hook",
-    "imperative",
-    "async",
-    "component"
+    "composable",
+    "form"
   ],
   "author": "Kasper Sandin",
-  "version": "0.0.0",
+  "version": "0.1.5",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
@@ -36,16 +34,23 @@
     "@yas/store": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
     "@yas/jest": "workspace:*",
+    "@yas/zod": "workspace:*",
     "@yas/build-tools": "workspace:*",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^14.4.3",
     "publicize-package-json": "workspace:*",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
-    "tsup": "^7.1.0"
+    "tsd": "^0.28.1",
+    "tsup": "^7.1.0",
+    "react": "^18.2.0",
+    "zod": "^3.21.4"
   }
 }

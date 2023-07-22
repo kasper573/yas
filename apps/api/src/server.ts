@@ -14,7 +14,7 @@ export function createServer() {
     trpcExpress.createExpressMiddleware({
       router: createApiRouter(),
       createContext,
-    })
+    }),
   );
   app.use(morgan(env.logFormat));
   app.use("/healthz", (_, res) => res.send("ok"));
