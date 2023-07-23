@@ -1,13 +1,12 @@
-import { getFirstPartyType, normalizeType } from "@yas/zod";
 import type { ComponentType } from "react";
 import type {
   FieldComponents,
   FormFieldProps,
   FormValueType,
-  PrimitiveType,
+  inferFormValue,
 } from "./types/commonTypes";
 import type { TypeNameForType } from "./types/utilityTypes";
-import type { inferFormValue } from "./types/commonTypes";
+import { determinePrimitiveType } from "./zod/determinePrimitiveType";
 
 export function createFieldBuilder<Components extends FieldComponents>(
   components: Components = emptyComponents as Components,
@@ -39,9 +38,6 @@ export function createFieldBuilder<Components extends FieldComponents>(
     components,
   };
 }
-
-export const determinePrimitiveType = (type: FormValueType): PrimitiveType =>
-  getFirstPartyType(normalizeType(type));
 
 const emptyComponents = { fields: {}, types: {} } satisfies FieldComponents;
 

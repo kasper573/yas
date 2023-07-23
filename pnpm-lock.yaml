@@ -227,9 +227,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
-      '@yas/zod':
-        specifier: workspace:*
-        version: link:../yas-zod
       jest:
         specifier: ^29.5.0
         version: 29.5.0(@types/node@20.4.3)
