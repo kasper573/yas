@@ -10,7 +10,6 @@ import type {
   RCFGenerics,
 } from "./types/commonTypes";
 import type { AnyProps, Replace } from "./types/utilityTypes";
-
 import type { FieldBuilderFactory } from "./createFieldBuilder";
 
 export type FormOptionsBuilderFactory<

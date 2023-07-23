@@ -14,7 +14,7 @@ export function createFieldBuilder<Components extends FieldComponents>(
 ): FieldBuilder<Components> {
   const { types, fields } = components;
 
-  // lazy "as never" assertions to avoid generic subtype constraint errors
+  // "as never" assertions to avoid generic subtype constraint errors
   // The type definition makes external use safe, and the code below is minimal enough to not be a problem
 
   return {

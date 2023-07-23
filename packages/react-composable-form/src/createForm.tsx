@@ -28,6 +28,8 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   reduceOptions: FormOptionsBuilderFactory<PG, G>,
   initialOptionsBuilder: FormOptionsBuilder<PG>,
 ): FormComponent<G> {
+  type FS = FormState<G["schema"]>;
+
   const optionsBuilder = reduceOptions(initialOptionsBuilder);
   const { schema, layout: Layout, components: build } = optionsBuilder.build();
   const { components } = build(createFieldBuilder());
@@ -38,7 +40,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     ...layoutProps
   }) => {
     const store = useMemo(
-      () => new Store<FormState<G["schema"]>>({ data, errors: {} as never }),
+      () => new Store<FS>({ data, errors: {} as FS["errors"] }),
       [],
     );
 
