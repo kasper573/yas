@@ -1,5 +1,6 @@
 {
   "name": "react-imperative-hook",
+  "repository": "https://github.com/ksandin/yas/tree/master/packages/react-imperative-hook",
   "description": "React hook that provides an imperative interface for spawning and resolving components",
   "keywords": [
     "react",

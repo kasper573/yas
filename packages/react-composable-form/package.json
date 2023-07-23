@@ -1,5 +1,6 @@
 {
   "name": "react-composable-form",
+  "repository": "https://github.com/ksandin/yas/tree/master/packages/react-composable-form",
   "description": "Form composition library for React",
   "keywords": [
     "react",
