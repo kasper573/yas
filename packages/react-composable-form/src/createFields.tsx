@@ -7,6 +7,7 @@ import type {
   FormStore,
   FormFieldFor,
   FieldComponents,
+  FormValueType,
 } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FieldNames } from "./types/commonTypes";
@@ -25,19 +26,27 @@ export function createFields<
       const Component =
         components.fields[name] ??
         components.types[determinePrimitiveType(type)];
-      if (!Component) {
-        throw new Error(
-          `No component available for field "${name}" or type ${getFirstPartyType(
-            type,
-          )}`,
-        );
-      }
       (fields as Record<string, ComponentType>)[capitalize(name)] =
-        enhanceFormField(Component, name as FieldNames<Schema>);
+        enhanceFormField(
+          Component ?? createFallbackComponent(name, type),
+          name as FieldNames<Schema>,
+        );
       return fields;
     },
     {} as FieldComponentsPassedToLayout<Schema, FieldComponents>,
   );
+}
+
+function createFallbackComponent(name: string, type: FormValueType) {
+  // Missing field component errors are thrown when the component is rendered, not when the form is built.
+  // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
+  return function FallbackFieldComponent() {
+    throw new Error(
+      `No component available for field "${name}" or type ${getFirstPartyType(
+        type,
+      )}`,
+    );
+  };
 }
 
 function enhanceFormField<

@@ -34,6 +34,9 @@ module.exports = {
         // We use TypeScript for type checking, so we don't need prop-types
         "react/prop-types": "off",
 
+        // No-op functions are useful
+        "@typescript-eslint/no-empty-function": "off",
+
         // Automatically removes unused imports. Reduces need for tree shaking in builds.
         "unused-imports/no-unused-imports": "error",
         "@typescript-eslint/no-unused-vars": "off", // Turning off no-unused-vars is recommended by the unused-imports plugin

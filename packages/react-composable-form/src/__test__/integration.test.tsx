@@ -64,6 +64,17 @@ describe("components", () => {
     getByText("two");
   });
 
+  it("throws when trying to render a form with a field that has no component defined", () => {
+    const restoreErrorLogs = silenceErrorLogs();
+    const Form = createForm((options) =>
+      options.schema(z.object({ foo: z.string() })),
+    );
+    expect(() => render(<Form />)).toThrow(
+      'No component available for field "foo" or type ZodString',
+    );
+    restoreErrorLogs();
+  });
+
   describe("can be extended from predefined forms", () => {
     it("by value type", () => {
       const Form = createForm((options) =>
@@ -310,4 +321,12 @@ function renderCounter<T extends ComponentType<any>>(Component: T) {
   }
   Wrapper.getCount = () => count;
   return Wrapper;
+}
+
+function silenceErrorLogs() {
+  const original = console.error;
+  console.error = () => {};
+  return () => {
+    console.error = original;
+  };
 }
