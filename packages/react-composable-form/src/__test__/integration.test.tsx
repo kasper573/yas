@@ -274,9 +274,7 @@ describe("data", () => {
     );
 
     let data: unknown;
-    const { getByRole } = render(
-      <Form onChange={(d: unknown) => (data = d)} />,
-    );
+    const { getByRole } = render(<Form onChange={(d) => (data = d)} />);
 
     await userEvent.clear(getByRole("textbox"));
     await userEvent.type(getByRole("textbox"), "input");
