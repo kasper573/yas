@@ -5,7 +5,6 @@ import type {
   FormOptions,
   inferComponents,
   inferLayoutProps,
-  inferParentComponents,
   inferSchema,
 } from "./types/commonTypes";
 import type { AnyProps } from "./types/utilityTypes";
@@ -45,32 +44,18 @@ export type FormOptionsBuilderFor<Options extends FormOptions> =
   FormOptionsBuilder<
     inferSchema<Options>,
     inferLayoutProps<Options>,
-    inferComponents<Options>,
-    inferParentComponents<Options>
+    inferComponents<Options>
   >;
 
 export class FormOptionsBuilder<
   Schema extends FormSchema = any,
   LayoutProps extends AnyProps = any,
   Components extends FieldComponents = any,
-  ParentComponents extends FieldComponents = any,
 > {
-  constructor(
-    private options: FormOptions<
-      Schema,
-      LayoutProps,
-      Components,
-      ParentComponents
-    >,
-  ) {}
+  constructor(private options: FormOptions<Schema, LayoutProps, Components>) {}
 
   schema<NewSchema extends FormSchema>(schema: NewSchema) {
-    return new FormOptionsBuilder<
-      NewSchema,
-      LayoutProps,
-      Components,
-      ParentComponents
-    >({
+    return new FormOptionsBuilder<NewSchema, LayoutProps, Components>({
       ...this.options,
       schema,
     });
@@ -79,12 +64,7 @@ export class FormOptionsBuilder<
   layout<NewLayoutProps extends AnyProps>(
     layout: ComponentType<FormLayoutProps<Schema, Components> & NewLayoutProps>,
   ) {
-    return new FormOptionsBuilder<
-      Schema,
-      NewLayoutProps,
-      Components,
-      ParentComponents
-    >({
+    return new FormOptionsBuilder<Schema, NewLayoutProps, Components>({
       ...this.options,
       layout,
     });
@@ -94,12 +74,7 @@ export class FormOptionsBuilder<
     newComponents: FieldBuilderFactory<Components, NewComponents>,
   ) {
     const { components: oldComponents } = this.options;
-    return new FormOptionsBuilder<
-      Schema,
-      LayoutProps,
-      NewComponents,
-      ParentComponents
-    >({
+    return new FormOptionsBuilder<Schema, LayoutProps, NewComponents>({
       ...this.options,
       components: (builder) => newComponents(oldComponents(builder)),
     });
@@ -113,7 +88,6 @@ export class FormOptionsBuilder<
 export const emptyFormOptionsBuilder = new FormOptionsBuilder<
   ZodObject<{}>,
   {},
-  EmptyFieldComponents,
   EmptyFieldComponents
 >({
   schema: z.object({}),
