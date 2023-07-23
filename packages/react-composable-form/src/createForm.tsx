@@ -33,6 +33,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   const optionsBuilder = reduceOptions(initialOptionsBuilder);
   const { schema, layout: Layout, components: build } = optionsBuilder.build();
   const { components } = build(createFieldBuilder());
+  const fields = createFields(components, schema);
 
   const ComposableForm: FormComponent<G> = (({
     value: data = empty,
@@ -54,7 +55,6 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
       [data, store],
     );
 
-    const fields = useMemo(() => createFields(components, schema), [schema]);
     return (
       <FormContext.Provider value={store}>
         <Layout {...layoutProps} onChange={onChange} fields={fields} />
