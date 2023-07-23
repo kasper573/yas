@@ -356,11 +356,22 @@ describe("validation", () => {
         .validate("blur")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
         .components((builder) =>
-          builder.type(z.string(), ({ name, errors }) => (
-            <span>
-              {name}: {errors.length ? errors.join(",") : "No errors"}
-            </span>
-          )),
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
         ),
     );
     const { getByRole, getByText } = render(
@@ -384,11 +395,22 @@ describe("validation", () => {
         .validate("change")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
         .components((builder) =>
-          builder.type(z.string(), ({ name, errors }) => (
-            <span>
-              {name}: {errors.length ? errors.join(",") : "No errors"}
-            </span>
-          )),
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
         ),
     );
     const { getByRole, getByText } = render(
@@ -410,9 +432,20 @@ describe("validation", () => {
         .validate("change")
         .schema(z.object({ foo: z.string().min(3) }))
         .components((builder) =>
-          builder.type(z.string(), ({ name, errors }) => (
-            <span>{errors.length ? errors.join(",") : "No errors"}</span>
-          )),
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                {errors.length ? errors.join(",") : "No errors"}
+              </>
+            ),
+          ),
         ),
     );
     const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
