@@ -26,6 +26,10 @@ export class FormStore<
     return this._state;
   }
 
+  get isValid() {
+    return !Object.values(this._state.errors).some((errors) => errors?.length);
+  }
+
   constructor(
     private _schema: Schema,
     private _state: FormState<Schema>,
@@ -39,9 +43,7 @@ export class FormStore<
   }
 
   handleSubmit() {
-    if (this._mode === "submit") {
-      this.validate();
-    }
+    this.validate();
   }
 
   changeField<FieldName extends FieldNames<Schema>>(

@@ -457,6 +457,22 @@ describe("validation", () => {
     await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
     getByText("No errors");
   });
+
+  it("does not trigger submit for invalid data", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string().min(3) }))
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
+    );
+    const { getByText } = render(
+      <Form value={{ foo: "" }} onSubmit={onSubmit} />,
+    );
+    await userEvent.click(getByText("submit"));
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
 });
 
 function renderCounter<T extends ComponentType<any>>(Component: T) {

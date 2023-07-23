@@ -65,7 +65,9 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
       (e?: FormEvent) => {
         e?.preventDefault();
         store.handleSubmit();
-        onSubmit?.(store.state.data);
+        if (store.isValid) {
+          onSubmit?.(store.state.data);
+        }
       },
       [store],
     );
