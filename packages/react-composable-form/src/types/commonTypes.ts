@@ -1,40 +1,32 @@
 import type { AnyZodObject, output, ZodFirstPartyTypeKind, ZodType } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
-import type {
-  FormOptionsBuilderFactory,
-  FormOptionsBuilder,
-  FormOptionsBuilderFor,
-  inferFormOptions,
-} from "../createFormOptionsBuilder";
+import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
 import type { Store } from "../Store";
 
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
-export interface FormOptions<
+export interface RCFGenerics<
   Schema extends FormSchema = any,
   LayoutProps extends AnyProps = any,
   Components extends FieldComponents = any,
   ParentComponents extends FieldComponents = any,
 > {
   schema: Schema;
-  layout: ComponentType<FormLayoutProps<Schema, Components> & LayoutProps>;
-  components: FieldBuilderFactory<ParentComponents, Components>;
+  layoutProps: LayoutProps;
+  components: Components;
+  parentComponents: ParentComponents;
 }
 
-export type inferSchema<Options extends FormOptions> =
-  Options extends FormOptions<infer Schema> ? Schema : never;
+export interface FormOptions<G extends RCFGenerics> {
+  schema: G["schema"];
+  layout: FormLayoutFor<G>;
+  components: FieldBuilderFactory<G["parentComponents"], G["components"]>;
+}
 
-export type inferLayoutProps<Options extends FormOptions> =
-  Options extends FormOptions<any, infer LayoutProps> ? LayoutProps : never;
-
-export type inferComponents<Options extends FormOptions> =
-  Options extends FormOptions<any, any, infer Components> ? Components : never;
-
-export type inferParentComponents<Options extends FormOptions> =
-  Options extends FormOptions<any, any, any, infer ParentComponents>
-    ? ParentComponents
-    : never;
+export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
+  FormLayoutProps<G["schema"], G["components"]> & G["layoutProps"]
+>;
 
 export type FormSchema = AnyZodObject;
 
@@ -64,16 +56,13 @@ export interface ComposableFormProps<Value> {
   onChange?: (newValue: Value) => unknown;
 }
 
-export type FormComponent<Options extends FormOptions> = ComponentType<
-  ComposableFormProps<inferFormValue<inferSchema<Options>>> &
-    Omit<inferLayoutProps<Options>, keyof FormLayoutProps>
+export type FormComponent<G extends RCFGenerics> = ComponentType<
+  ComposableFormProps<inferFormValue<G["schema"]>> &
+    Omit<G["layoutProps"], keyof FormLayoutProps>
 > & {
-  extend<NewOptions extends FormOptionsBuilder>(
-    options: FormOptionsBuilderFactory<
-      FormOptionsBuilderFor<Options>,
-      NewOptions
-    >,
-  ): FormComponent<inferFormOptions<NewOptions>>;
+  extend<NewG extends RCFGenerics>(
+    options: FormOptionsBuilderFactory<G, NewG>,
+  ): FormComponent<NewG>;
 };
 
 export interface FormLayoutProps<

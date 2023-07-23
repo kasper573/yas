@@ -1,50 +1,45 @@
 import type { ComponentProps } from "react";
 import { useEffect, useMemo } from "react";
 import { createFieldBuilder } from "./createFieldBuilder";
-import type { FormComponent, FormState } from "./types/commonTypes";
+import type {
+  FormComponent,
+  FormState,
+  RCFGenerics,
+} from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
   FormOptionsBuilderFactory,
-  inferFormOutputOptions,
-  inferFactoryInput,
-  FormOptionsBuilderFor,
-  EmptyFormOptions,
+  EmptyFormOptionsGenerics,
+  FormOptionsBuilder,
 } from "./createFormOptionsBuilder";
 import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
 import { Store } from "./Store";
 
-export function createForm<
-  OptionsFactory extends FormOptionsBuilderFactory<
-    FormOptionsBuilderFor<EmptyFormOptions>
+export function createForm<G extends RCFGenerics>(
+  reduceOptions = passThrough as FormOptionsBuilderFactory<
+    EmptyFormOptionsGenerics,
+    G
   >,
->(
-  reduceOptions = passThrough as OptionsFactory,
-): FormComponent<inferFormOutputOptions<OptionsFactory>> {
-  return createFormImpl(
-    reduceOptions,
-    emptyFormOptionsBuilder as inferFactoryInput<OptionsFactory>,
-  );
+): FormComponent<G> {
+  return createFormImpl(reduceOptions, emptyFormOptionsBuilder);
 }
 
-function createFormImpl<OptionsFactory extends FormOptionsBuilderFactory>(
-  reduceOptions: OptionsFactory,
-  initialOptionsBuilder: inferFactoryInput<OptionsFactory>,
-): FormComponent<inferFormOutputOptions<OptionsFactory>> {
-  type Options = inferFormOutputOptions<OptionsFactory>;
-  type Schema = Options["schema"];
-
+function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
+  reduceOptions: FormOptionsBuilderFactory<PG, G>,
+  initialOptionsBuilder: FormOptionsBuilder<PG>,
+): FormComponent<G> {
   const optionsBuilder = reduceOptions(initialOptionsBuilder);
   const { schema, layout: Layout, components: build } = optionsBuilder.build();
   const { components } = build(createFieldBuilder());
 
-  const ComposableForm: FormComponent<Options> = (({
+  const ComposableForm: FormComponent<G> = (({
     value: data = empty,
     onChange,
     ...layoutProps
   }) => {
     const store = useMemo(
-      () => new Store<FormState<Schema>>({ data, errors: {} as never }),
+      () => new Store<FormState<G["schema"]>>({ data, errors: {} as never }),
       [],
     );
 
@@ -68,7 +63,7 @@ function createFormImpl<OptionsFactory extends FormOptionsBuilderFactory>(
         />
       </FormContext.Provider>
     );
-  }) as FormComponent<Options>;
+  }) as FormComponent<G>;
 
   ComposableForm.extend = (extendOptions) =>
     createFormImpl(extendOptions, optionsBuilder);
