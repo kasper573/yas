@@ -177,7 +177,7 @@ describe("layout", () => {
     getByText("bar");
   });
 
-  it("can submit the form", () => {
+  it("can submit the form", async () => {
     const onSubmit = jest.fn();
     const Form = createForm((options) =>
       options
@@ -187,7 +187,7 @@ describe("layout", () => {
     const { getByText } = render(
       <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
     );
-    userEvent.click(getByText("submit"));
+    await userEvent.click(getByText("submit"));
     expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
   });
 });
@@ -324,6 +324,120 @@ describe("data", () => {
     await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
     expect(Foo.getCount() - fooBefore).toBe(3);
     expect(Bar.getCount() - barBefore).toBe(0);
+  });
+});
+
+describe("validation", () => {
+  it("displays errors on submit by default", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string().min(3) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ errors }) => (
+            <span>{errors.length ? errors.join(",") : "No errors"}</span>
+          )),
+        )
+        .layout(({ fields: { Foo }, submit }) => (
+          <>
+            <Foo />
+            <button onClick={submit}>submit</button>
+          </>
+        )),
+    );
+    const { getByText } = render(<Form value={{ foo: "" }} />);
+    getByText("No errors");
+    await userEvent.click(getByText("submit"));
+    getByText("String must contain at least 3 character(s)");
+  });
+
+  it("can display errors on blur", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("blur")
+        .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ name, errors }) => (
+            <span>
+              {name}: {errors.length ? errors.join(",") : "No errors"}
+            </span>
+          )),
+        ),
+    );
+    const { getByRole, getByText } = render(
+      <Form value={{ foo: "", bar: "" }} />,
+    );
+    getByText("foo: No errors");
+    getByText("bar: No errors");
+    await userEvent.click(getByRole("textbox", { name: "foo" }));
+    await userEvent.tab();
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: No errors");
+    await userEvent.click(getByRole("textbox", { name: "bar" }));
+    await userEvent.tab();
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: String must contain at least 5 character(s)");
+  });
+
+  it("can display errors on change", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("change")
+        .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ name, errors }) => (
+            <span>
+              {name}: {errors.length ? errors.join(",") : "No errors"}
+            </span>
+          )),
+        ),
+    );
+    const { getByRole, getByText } = render(
+      <Form value={{ foo: "", bar: "" }} />,
+    );
+    getByText("foo: No errors");
+    getByText("bar: No errors");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: No errors");
+    await userEvent.type(getByRole("textbox", { name: "bar" }), "b");
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: String must contain at least 5 character(s)");
+  });
+
+  it("can fix errors", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("change")
+        .schema(z.object({ foo: z.string().min(3) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ name, errors }) => (
+            <span>{errors.length ? errors.join(",") : "No errors"}</span>
+          )),
+        ),
+    );
+    const { getByRole, getByText } = render(
+      <Form value={{ foo: "", bar: "" }} />,
+    );
+    getByText("No errors");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
+    getByText("String must contain at least 3 character(s)");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
+    getByText("No errors");
+  });
+
+  it("can display errors immediately", () => {
+    const Form = createForm((options) =>
+      options
+        .validate("immediate")
+        .schema(z.object({ foo: z.string().min(3) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ errors }) => (
+            <span>{errors.length ? errors.join(",") : "No errors"}</span>
+          )),
+        ),
+    );
+    const { getByText } = render(<Form value={{ foo: "" }} />);
+    getByText("String must contain at least 3 character(s)");
   });
 });
 
