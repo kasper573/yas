@@ -3,7 +3,6 @@ import type { ComponentProps, ComponentType } from "react";
 import type { FormEvent } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
 import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
-import type { Store } from "../Store";
 
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
@@ -42,7 +41,7 @@ export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
 
-export type FormValidationMode = "immediate" | "change" | "blur" | "submit";
+export type FormValidationMode = "change" | "blur" | "submit";
 
 export interface FieldComponents {
   types: Partial<Record<PrimitiveType, AnyComponent>>;
@@ -85,6 +84,7 @@ export interface FormLayoutProps<
 export interface FormFieldProps<Value = any> extends FieldState<Value> {
   name: string;
   onChange: (newValue: Value) => unknown;
+  onBlur: () => unknown;
 }
 
 export type FormFieldFor<
@@ -113,10 +113,6 @@ type InferFieldComponentProps<
     >
   : never;
 
-export type FormStore<Schema extends FormSchema = FormSchema> = Store<
-  FormState<Schema>
->;
-
 export type FieldNames<Schema extends FormSchema> = `${string &
   keyof Schema["shape"]}`;
 
@@ -124,6 +120,10 @@ export interface FormState<Schema extends FormSchema> {
   data: inferFormValue<Schema>;
   errors: Partial<Record<FieldNames<Schema>, FormError[]>>;
 }
+
+export type FormFieldErrors<Schema extends FormSchema> = Partial<
+  Record<FieldNames<Schema>, FormError[]>
+>;
 
 export interface FieldState<Value> {
   value: Value;

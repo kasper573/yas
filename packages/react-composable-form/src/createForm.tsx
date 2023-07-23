@@ -14,7 +14,8 @@ import type {
   FormOptionsBuilder,
 } from "./createFormOptionsBuilder";
 import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
-import { Store } from "./Store";
+import type { FormStoreFor } from "./FormStore";
+import { FormStore } from "./FormStore";
 
 export function createForm<G extends RCFGenerics>(
   reduceOptions: FormOptionsBuilderFactory<
@@ -32,7 +33,12 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   type FS = FormState<G["schema"]>;
 
   const optionsBuilder = reduceOptions(initialOptionsBuilder);
-  const { schema, layout: Layout, components: build } = optionsBuilder.build();
+  const {
+    schema,
+    layout: Layout,
+    components: build,
+    validate,
+  } = optionsBuilder.build();
   const { components } = build(createFieldBuilder());
   const fields = createFields(components, schema);
 
@@ -42,25 +48,27 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     onSubmit,
     ...layoutProps
   }) => {
-    const store = useMemo(
-      () => new Store<FS>({ data, errors: {} as FS["errors"] }),
+    const store: FormStoreFor<G> = useMemo(
+      () =>
+        new FormStore(schema, { data, errors: {} as FS["errors"] }, validate),
       [],
     );
 
     useEffect(
-      () => store.subscribe((state) => onChange?.(state.data)),
+      () => store.subscribe(() => onChange?.(store.state.data)),
       [store, onChange],
     );
 
-    useEffect(
-      () => store.mutate((state) => (state.data = data)),
-      [data, store],
-    );
+    useEffect(() => store.resetData(data), [data, store]);
 
-    const handleSubmit = useCallback((e?: FormEvent) => {
-      e?.preventDefault();
-      onSubmit?.(store.state.data);
-    }, []);
+    const handleSubmit = useCallback(
+      (e?: FormEvent) => {
+        e?.preventDefault();
+        store.handleSubmit();
+        onSubmit?.(store.state.data);
+      },
+      [store],
+    );
 
     return (
       <FormContext.Provider value={store}>

@@ -339,10 +339,10 @@ describe("validation", () => {
             <span>{errors.length ? errors.join(",") : "No errors"}</span>
           )),
         )
-        .layout(({ fields: { Foo }, submit }) => (
+        .layout(({ fields: { Foo }, handleSubmit }) => (
           <>
             <Foo />
-            <button onClick={submit}>submit</button>
+            <button onClick={handleSubmit}>submit</button>
           </>
         )),
     );
@@ -456,21 +456,6 @@ describe("validation", () => {
     getByText("String must contain at least 3 character(s)");
     await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
     getByText("No errors");
-  });
-
-  it("can display errors immediately", () => {
-    const Form = createForm((options) =>
-      options
-        .validate("immediate")
-        .schema(z.object({ foo: z.string().min(3) }))
-        .components((builder) =>
-          builder.type(z.string(), ({ errors }) => (
-            <span>{errors.length ? errors.join(",") : "No errors"}</span>
-          )),
-        ),
-    );
-    const { getByText } = render(<Form value={{ foo: "" }} />);
-    getByText("String must contain at least 3 character(s)");
   });
 });
 
