@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from "react";
+import type { FormEvent } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { createFieldBuilder } from "./createFieldBuilder";
 import type {
   FormComponent,
@@ -38,6 +39,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   const ComposableForm: FormComponent<G> = (({
     value: data = empty,
     onChange,
+    onSubmit,
     ...layoutProps
   }) => {
     const store = useMemo(
@@ -55,9 +57,20 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
       [data, store],
     );
 
+    const handleSubmit = useCallback((e?: FormEvent) => {
+      e?.preventDefault();
+      onSubmit?.(store.state.data);
+    }, []);
+
     return (
       <FormContext.Provider value={store}>
-        <Layout {...layoutProps} onChange={onChange} fields={fields} />
+        <Layout
+          {...layoutProps}
+          onSubmit={onSubmit}
+          onChange={onChange}
+          handleSubmit={handleSubmit}
+          fields={fields}
+        />
       </FormContext.Provider>
     );
   }) as FormComponent<G>;

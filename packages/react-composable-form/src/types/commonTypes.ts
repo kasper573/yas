@@ -1,5 +1,6 @@
 import type { AnyZodObject, output, ZodFirstPartyTypeKind, ZodType } from "zod";
 import type { ComponentProps, ComponentType } from "react";
+import type { FormEvent } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
 import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
 import type { Store } from "../Store";
@@ -61,6 +62,7 @@ export interface NoFieldComponents {
 export interface ComposableFormProps<Value> {
   value?: Value;
   onChange?: (newValue: Value) => unknown;
+  onSubmit?: (value: Value) => unknown;
 }
 
 export type FormComponent<G extends RCFGenerics> = ComponentType<
@@ -77,6 +79,7 @@ export interface FormLayoutProps<
   Components extends FieldComponents = NoFieldComponents,
 > {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
+  handleSubmit: (e?: FormEvent) => unknown;
 }
 
 export interface FormFieldProps<Value = any> extends FieldState<Value> {

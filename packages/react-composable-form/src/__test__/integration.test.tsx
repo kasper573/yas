@@ -182,7 +182,9 @@ describe("layout", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .layout(({ submit }) => <button onClick={submit}>submit</button>),
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
     );
     const { getByText } = render(
       <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
