@@ -35,6 +35,8 @@ export type FormSchema = AnyZodObject;
 
 export type FormValueType<T = any> = ZodType<T>;
 
+export type FormError = unknown;
+
 export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
@@ -117,10 +119,10 @@ export type FieldNames<Schema extends FormSchema> = `${string &
 
 export interface FormState<Schema extends FormSchema> {
   data: inferFormValue<Schema>;
-  errors: Record<FieldNames<Schema>, unknown[]>;
+  errors: Partial<Record<FieldNames<Schema>, FormError[]>>;
 }
 
 export interface FieldState<Value> {
   value: Value;
-  errors: unknown[];
+  errors: FormError[];
 }

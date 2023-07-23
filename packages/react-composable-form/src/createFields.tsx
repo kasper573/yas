@@ -62,7 +62,7 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name],
+      () => store.state.errors[name] ?? emptyArrayAsT(),
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {
@@ -82,6 +82,11 @@ function enhanceFormField<
       />
     );
   });
+}
+
+const emptyArray = Object.freeze([]);
+function emptyArrayAsT<T>(): T[] {
+  return emptyArray as unknown as T[];
 }
 
 function capitalize(str: string): string {
