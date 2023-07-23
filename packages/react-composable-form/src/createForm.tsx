@@ -1,4 +1,3 @@
-import type { ComponentProps } from "react";
 import { useEffect, useMemo } from "react";
 import { createFieldBuilder } from "./createFieldBuilder";
 import type {
@@ -17,10 +16,10 @@ import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
 import { Store } from "./Store";
 
 export function createForm<G extends RCFGenerics>(
-  reduceOptions = passThrough as FormOptionsBuilderFactory<
+  reduceOptions: FormOptionsBuilderFactory<
     EmptyFormOptionsGenerics,
     G
-  >,
+  > = passThrough,
 ): FormComponent<G> {
   return createFormImpl(reduceOptions, emptyFormOptionsBuilder);
 }
@@ -56,11 +55,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     const fields = useMemo(() => createFields(components, schema), [schema]);
     return (
       <FormContext.Provider value={store}>
-        <Layout
-          {...(layoutProps as ComponentProps<typeof Layout>)}
-          onChange={onChange}
-          fields={fields}
-        />
+        <Layout {...layoutProps} onChange={onChange} fields={fields} />
       </FormContext.Provider>
     );
   }) as FormComponent<G>;
