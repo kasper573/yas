@@ -1,86 +1,48 @@
-import type { AnyZodObject, ZodObject } from "zod";
-import type { ComponentType } from "react";
+import type { ZodObject } from "zod";
 import { z } from "zod";
+import type { ComponentType } from "react";
 import type {
+  EmptyFieldComponents,
+  FieldComponents,
+  FormLayoutProps,
   FormOptions,
-  inferComponents,
-  inferLayoutProps,
-  inferParentComponents,
-  inferSchema,
+  FormSchema,
+  RCFGenerics,
 } from "./types/commonTypes";
-import type { AnyProps } from "./types/utilityTypes";
-import type { FieldComponents } from "./types/commonTypes";
-import type { FormLayoutProps } from "./types/commonTypes";
-
+import type { AnyProps, Replace } from "./types/utilityTypes";
 import type { FieldBuilderFactory } from "./createFieldBuilder";
-import type { EmptyFieldComponents } from "./types/commonTypes";
 
 export type FormOptionsBuilderFactory<
-  StartOptions extends FormOptions,
-  OutputOptions extends FormOptions,
-> = (
-  builder: FormOptionsBuilderFor<StartOptions>,
-) => FormOptionsBuilderFor<OutputOptions>;
+  Input extends RCFGenerics,
+  Output extends RCFGenerics,
+> = (input: FormOptionsBuilder<Input>) => FormOptionsBuilder<Output>;
 
-export type FormOptionsBuilderFor<Options extends FormOptions> =
-  FormOptionsBuilder<
-    inferSchema<Options>,
-    inferLayoutProps<Options>,
-    inferComponents<Options>,
-    inferParentComponents<Options>
-  >;
+export class FormOptionsBuilder<G extends RCFGenerics> {
+  constructor(private options: FormOptions<G>) {}
 
-export class FormOptionsBuilder<
-  Schema extends AnyZodObject,
-  LayoutProps extends AnyProps,
-  Components extends FieldComponents,
-  ParentComponents extends FieldComponents,
-> {
-  private constructor(
-    private options: FormOptions<
-      Schema,
-      LayoutProps,
-      Components,
-      ParentComponents
-    >,
-  ) {}
-
-  schema<NewSchema extends AnyZodObject>(schema: NewSchema) {
-    return new FormOptionsBuilder<
-      NewSchema,
-      LayoutProps,
-      Components,
-      ParentComponents
-    >({
+  schema<NewSchema extends FormSchema>(schema: NewSchema) {
+    return new FormOptionsBuilder<Replace<G, "schema", NewSchema>>({
       ...this.options,
       schema,
     });
   }
 
   layout<NewLayoutProps extends AnyProps>(
-    layout: ComponentType<FormLayoutProps<Schema, Components> & NewLayoutProps>,
+    layout: ComponentType<
+      FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
+    >,
   ) {
-    return new FormOptionsBuilder<
-      Schema,
-      NewLayoutProps,
-      Components,
-      ParentComponents
-    >({
+    return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({
       ...this.options,
       layout,
     });
   }
 
   components<NewComponents extends FieldComponents>(
-    newComponents: FieldBuilderFactory<Components, NewComponents>,
+    newComponents: FieldBuilderFactory<G["components"], NewComponents>,
   ) {
     const { components: oldComponents } = this.options;
-    return new FormOptionsBuilder<
-      Schema,
-      LayoutProps,
-      NewComponents,
-      ParentComponents
-    >({
+    return new FormOptionsBuilder<Replace<G, "components", NewComponents>>({
       ...this.options,
       components: (builder) => newComponents(oldComponents(builder)),
     });
@@ -89,15 +51,16 @@ export class FormOptionsBuilder<
   build() {
     return this.options;
   }
+}
 
-  static readonly empty = new FormOptionsBuilder({
+export const emptyFormOptionsBuilder =
+  new FormOptionsBuilder<EmptyFormOptionsGenerics>({
     schema: z.object({}),
     layout: NoLayout,
     components: (_) => _,
-  }) as FormOptionsBuilderFor<EmptyFormOptions>;
-}
+  });
 
-export type EmptyFormOptions = FormOptions<
+export type EmptyFormOptionsGenerics = RCFGenerics<
   ZodObject<{}>,
   {},
   EmptyFieldComponents,
@@ -105,7 +68,7 @@ export type EmptyFormOptions = FormOptions<
 >;
 
 function NoLayout<
-  Schema extends AnyZodObject,
+  Schema extends FormSchema,
   Components extends FieldComponents,
 >({ fields }: FormLayoutProps<Schema, Components>) {
   return (

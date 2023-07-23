@@ -1,20 +1,20 @@
 import { getFirstPartyType, normalizeType } from "@yas/zod";
-import type { ZodType } from "zod";
 import type { ComponentType } from "react";
 import type {
   FieldComponents,
   FormFieldProps,
+  FormValueType,
   PrimitiveType,
 } from "./types/commonTypes";
 import type { TypeNameForType } from "./types/utilityTypes";
-import type { inferFieldValueType } from "./types/commonTypes";
+import type { inferFormValue } from "./types/commonTypes";
 
 export function createFieldBuilder<Components extends FieldComponents>(
   components: Components = emptyComponents as Components,
 ): FieldBuilder<Components> {
   const { types, fields } = components;
 
-  // lazy "as never" assertions to avoid generic subtype constraint errors
+  // "as never" assertions to avoid generic subtype constraint errors
   // The type definition makes external use safe, and the code below is minimal enough to not be a problem
 
   return {
@@ -40,7 +40,7 @@ export function createFieldBuilder<Components extends FieldComponents>(
   };
 }
 
-export const determinePrimitiveType = (type: ZodType): PrimitiveType =>
+export const determinePrimitiveType = (type: FormValueType): PrimitiveType =>
   getFirstPartyType(normalizeType(type));
 
 const emptyComponents = { fields: {}, types: {} } satisfies FieldComponents;
@@ -52,8 +52,8 @@ export type FieldBuilderFactory<
 
 export type FieldBuilder<Components extends FieldComponents> = {
   type<
-    Type extends ZodType,
-    ComponentProps extends FormFieldProps<inferFieldValueType<Type>>,
+    Type extends FormValueType,
+    ComponentProps extends FormFieldProps<inferFormValue<Type>>,
   >(
     type: Type,
     component: ComponentType<ComponentProps>,
