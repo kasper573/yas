@@ -17,11 +17,29 @@ import type { EmptyFieldComponents } from "./types/commonTypes";
 import type { FormSchema } from "./types/commonTypes";
 
 export type FormOptionsBuilderFactory<
-  StartOptions extends FormOptions,
-  OutputOptions extends FormOptions,
-> = (
-  builder: FormOptionsBuilderFor<StartOptions>,
-) => FormOptionsBuilderFor<OutputOptions>;
+  Input extends FormOptionsBuilder = FormOptionsBuilder,
+  Output extends FormOptionsBuilder = FormOptionsBuilder,
+> = (input: Input) => Output;
+
+export type inferFactoryInput<T> = T extends FormOptionsBuilderFactory<
+  infer Input,
+  infer _
+>
+  ? Input
+  : never;
+
+export type inferFactoryOutput<T> = T extends FormOptionsBuilderFactory<
+  infer _,
+  infer Output
+>
+  ? Output
+  : never;
+
+export type inferFormOptions<T extends FormOptionsBuilder> = ReturnType<
+  T["build"]
+>;
+
+export type inferFormOutputOptions<T> = inferFormOptions<inferFactoryOutput<T>>;
 
 export type FormOptionsBuilderFor<Options extends FormOptions> =
   FormOptionsBuilder<
@@ -32,12 +50,12 @@ export type FormOptionsBuilderFor<Options extends FormOptions> =
   >;
 
 export class FormOptionsBuilder<
-  Schema extends FormSchema,
-  LayoutProps extends AnyProps,
-  Components extends FieldComponents,
-  ParentComponents extends FieldComponents,
+  Schema extends FormSchema = any,
+  LayoutProps extends AnyProps = any,
+  Components extends FieldComponents = any,
+  ParentComponents extends FieldComponents = any,
 > {
-  private constructor(
+  constructor(
     private options: FormOptions<
       Schema,
       LayoutProps,
@@ -90,20 +108,20 @@ export class FormOptionsBuilder<
   build() {
     return this.options;
   }
-
-  static readonly empty = new FormOptionsBuilder({
-    schema: z.object({}),
-    layout: NoLayout,
-    components: (_) => _,
-  }) as FormOptionsBuilderFor<EmptyFormOptions>;
 }
 
-export type EmptyFormOptions = FormOptions<
+export const emptyFormOptionsBuilder = new FormOptionsBuilder<
   ZodObject<{}>,
   {},
   EmptyFieldComponents,
   EmptyFieldComponents
->;
+>({
+  schema: z.object({}),
+  layout: NoLayout,
+  components: (_) => _,
+});
+
+export type EmptyFormOptions = inferFormOptions<typeof emptyFormOptionsBuilder>;
 
 function NoLayout<
   Schema extends FormSchema,

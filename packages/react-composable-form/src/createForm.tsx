@@ -1,37 +1,37 @@
 import type { ComponentProps } from "react";
 import { useEffect, useMemo } from "react";
 import { createFieldBuilder } from "./createFieldBuilder";
-import type {
-  FormComponent,
-  FormOptions,
-  FormState,
-} from "./types/commonTypes";
+import type { FormComponent, FormState } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
   FormOptionsBuilderFactory,
-  EmptyFormOptions,
+  inferFormOutputOptions,
+  inferFactoryInput,
   FormOptionsBuilderFor,
+  EmptyFormOptions,
 } from "./createFormOptionsBuilder";
-import { FormOptionsBuilder } from "./createFormOptionsBuilder";
+import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
 import { Store } from "./Store";
 
-export function createForm<Options extends FormOptions>(
-  reduceOptions = passThrough as FormOptionsBuilderFactory<
-    EmptyFormOptions,
-    Options
+export function createForm<
+  OptionsFactory extends FormOptionsBuilderFactory<
+    FormOptionsBuilderFor<EmptyFormOptions>
   >,
-): FormComponent<Options> {
-  return createFormImpl(reduceOptions, FormOptionsBuilder.empty);
+>(
+  reduceOptions = passThrough as OptionsFactory,
+): FormComponent<inferFormOutputOptions<OptionsFactory>> {
+  return createFormImpl(
+    reduceOptions,
+    emptyFormOptionsBuilder as inferFactoryInput<OptionsFactory>,
+  );
 }
 
-function createFormImpl<
-  Options extends FormOptions,
-  BaseOptions extends FormOptions,
->(
-  reduceOptions: FormOptionsBuilderFactory<BaseOptions, Options>,
-  initialOptionsBuilder: FormOptionsBuilderFor<BaseOptions>,
-): FormComponent<Options> {
+function createFormImpl<OptionsFactory extends FormOptionsBuilderFactory>(
+  reduceOptions: OptionsFactory,
+  initialOptionsBuilder: inferFactoryInput<OptionsFactory>,
+): FormComponent<inferFormOutputOptions<OptionsFactory>> {
+  type Options = inferFormOutputOptions<OptionsFactory>;
   type Schema = Options["schema"];
 
   const optionsBuilder = reduceOptions(initialOptionsBuilder);

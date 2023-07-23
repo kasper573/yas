@@ -1,8 +1,14 @@
 import type { AnyZodObject, output, ZodFirstPartyTypeKind, ZodType } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
-import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
+import type {
+  FormOptionsBuilderFactory,
+  FormOptionsBuilder,
+  FormOptionsBuilderFor,
+  inferFormOptions,
+} from "../createFormOptionsBuilder";
 import type { Store } from "../Store";
+
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
 export interface FormOptions<
@@ -62,9 +68,12 @@ export type FormComponent<Options extends FormOptions> = ComponentType<
   ComposableFormProps<inferFormValue<inferSchema<Options>>> &
     Omit<inferLayoutProps<Options>, keyof FormLayoutProps>
 > & {
-  extend<NewOptions extends FormOptions>(
-    options: FormOptionsBuilderFactory<Options, NewOptions>,
-  ): FormComponent<NewOptions>;
+  extend<NewOptions extends FormOptionsBuilder>(
+    options: FormOptionsBuilderFactory<
+      FormOptionsBuilderFor<Options>,
+      NewOptions
+    >,
+  ): FormComponent<inferFormOptions<NewOptions>>;
 };
 
 export interface FormLayoutProps<
