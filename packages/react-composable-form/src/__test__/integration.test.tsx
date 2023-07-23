@@ -415,9 +415,7 @@ describe("validation", () => {
           )),
         ),
     );
-    const { getByRole, getByText } = render(
-      <Form value={{ foo: "", bar: "" }} />,
-    );
+    const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
     getByText("No errors");
     await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
     getByText("String must contain at least 3 character(s)");

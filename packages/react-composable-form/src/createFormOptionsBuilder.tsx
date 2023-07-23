@@ -7,6 +7,7 @@ import type {
   FormLayoutProps,
   FormOptions,
   FormSchema,
+  FormValidationMode,
   RCFGenerics,
 } from "./types/commonTypes";
 import type { AnyProps, Replace } from "./types/utilityTypes";
@@ -48,6 +49,13 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
+  validate<NewMode extends FormValidationMode>(validate: NewMode) {
+    return new FormOptionsBuilder<Replace<G, "validate", NewMode>>({
+      ...this.options,
+      validate,
+    });
+  }
+
   build() {
     return this.options;
   }
@@ -58,13 +66,15 @@ export const emptyFormOptionsBuilder =
     schema: z.object({}),
     layout: NoLayout,
     components: (_) => _,
+    validate: "submit",
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
   ZodObject<{}>,
   {},
   EmptyFieldComponents,
-  EmptyFieldComponents
+  EmptyFieldComponents,
+  "submit"
 >;
 
 function NoLayout<

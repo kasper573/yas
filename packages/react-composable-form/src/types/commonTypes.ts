@@ -11,17 +11,20 @@ export interface RCFGenerics<
   LayoutProps extends AnyProps = any,
   Components extends FieldComponents = any,
   ParentComponents extends FieldComponents = any,
+  ValidationMode extends FormValidationMode = any,
 > {
   schema: Schema;
   layoutProps: LayoutProps;
   components: Components;
   parentComponents: ParentComponents;
+  validate: ValidationMode;
 }
 
 export interface FormOptions<G extends RCFGenerics> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
   components: FieldBuilderFactory<G["parentComponents"], G["components"]>;
+  validate: G["validate"];
 }
 
 export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
@@ -35,6 +38,8 @@ export type FormValueType<T = any> = ZodType<T>;
 export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
+
+export type FormValidationMode = "immediate" | "change" | "blur" | "submit";
 
 export interface FieldComponents {
   types: Partial<Record<PrimitiveType, AnyComponent>>;
