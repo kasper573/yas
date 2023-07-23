@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import type { ZodType } from "zod";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
@@ -8,18 +9,63 @@ import { createForm } from "../createForm";
 import type { FormFieldProps } from "../types/commonTypes";
 
 describe("components", () => {
-  it("can be defined by value type", () => {
-    const Form = createForm((options) =>
-      options
-        .schema(z.object({ foo: z.number() }))
-        .components((builder) =>
-          builder
-            .type(z.string(), () => <span>text</span>)
-            .type(z.number(), () => <span>number</span>),
-        ),
-    );
-    const { getByText } = render(<Form />);
-    getByText("number");
+  describe("can be defined by value type", () => {
+    for (const { name, type, wrong } of [
+      { name: "number", type: z.number(), wrong: z.string() },
+      { name: "string", type: z.string(), wrong: z.number() },
+      { name: "boolean", type: z.boolean(), wrong: z.string() },
+      { name: "date", type: z.date(), wrong: z.string() },
+      {
+        name: "enum",
+        type: z.enum(["correct1", "correct2", "correct3"]),
+        wrong: z.enum(["wrong1", "wrong2", "wrong3"]),
+      },
+      {
+        name: "object",
+        type: z.object({ one: z.string() }),
+        wrong: z.object({ two: z.number() }),
+      },
+    ]) {
+      describe(name, () => testType(type, wrong));
+      describe(`optional ${name}`, () =>
+        testType(type.optional(), wrong.optional()));
+      describe(`nullable ${name}`, () =>
+        testType(type.nullable(), wrong.nullable()));
+      describe(`nullish ${name}`, () =>
+        testType(type.nullish(), wrong.nullish()));
+      describe(`array of ${name}`, () => testType(type.array(), wrong.array()));
+    }
+
+    function testType(correctType: ZodType, wrongType: ZodType) {
+      it("alone", () => testTypeAlone(correctType));
+      it("among others", () => testTypeCollision(correctType, wrongType));
+    }
+
+    function testTypeAlone(type: ZodType) {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: type }))
+          .components((builder) =>
+            builder.type(type, () => <span>found</span>),
+          ),
+      );
+      const { getByText } = render(<Form />);
+      getByText("found");
+    }
+
+    function testTypeCollision(correctType: ZodType, wrongType: ZodType) {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: correctType }))
+          .components((builder) =>
+            builder
+              .type(correctType, () => <span>correct</span>)
+              .type(wrongType, () => <span>incorrect</span>),
+          ),
+      );
+      const { getByText } = render(<Form />);
+      getByText("correct");
+    }
   });
 
   it("can be defined per field name", () => {
