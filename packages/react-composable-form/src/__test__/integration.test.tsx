@@ -176,6 +176,20 @@ describe("layout", () => {
     const { getByText } = render(<Form foo="bar" />);
     getByText("bar");
   });
+
+  it("can submit the form", () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .layout(({ submit }) => <button onClick={submit}>submit</button>),
+    );
+    const { getByText } = render(
+      <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
+    );
+    userEvent.click(getByText("submit"));
+    expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
+  });
 });
 
 describe("schema", () => {
