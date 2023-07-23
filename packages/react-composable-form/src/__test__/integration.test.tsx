@@ -176,6 +176,22 @@ describe("layout", () => {
     const { getByText } = render(<Form foo="bar" />);
     getByText("bar");
   });
+
+  it("can submit the form", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
+    );
+    const { getByText } = render(
+      <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
+    );
+    await userEvent.click(getByText("submit"));
+    expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
+  });
 });
 
 describe("schema", () => {
@@ -310,6 +326,152 @@ describe("data", () => {
     await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
     expect(Foo.getCount() - fooBefore).toBe(3);
     expect(Bar.getCount() - barBefore).toBe(0);
+  });
+});
+
+describe("validation", () => {
+  it("displays errors on submit by default", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string().min(3) }))
+        .components((builder) =>
+          builder.type(z.string(), ({ errors }) => (
+            <span>{errors.length ? errors.join(",") : "No errors"}</span>
+          )),
+        )
+        .layout(({ fields: { Foo }, handleSubmit }) => (
+          <>
+            <Foo />
+            <button onClick={handleSubmit}>submit</button>
+          </>
+        )),
+    );
+    const { getByText } = render(<Form value={{ foo: "" }} />);
+    getByText("No errors");
+    await userEvent.click(getByText("submit"));
+    getByText("String must contain at least 3 character(s)");
+  });
+
+  it("can display errors on blur", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("blur")
+        .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+        .components((builder) =>
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+        ),
+    );
+    const { getByRole, getByText } = render(
+      <Form value={{ foo: "", bar: "" }} />,
+    );
+    getByText("foo: No errors");
+    getByText("bar: No errors");
+    await userEvent.click(getByRole("textbox", { name: "foo" }));
+    await userEvent.tab();
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: No errors");
+    await userEvent.click(getByRole("textbox", { name: "bar" }));
+    await userEvent.tab();
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: String must contain at least 5 character(s)");
+  });
+
+  it("can display errors on change", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("change")
+        .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+        .components((builder) =>
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+        ),
+    );
+    const { getByRole, getByText } = render(
+      <Form value={{ foo: "", bar: "" }} />,
+    );
+    getByText("foo: No errors");
+    getByText("bar: No errors");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: No errors");
+    await userEvent.type(getByRole("textbox", { name: "bar" }), "b");
+    getByText("foo: String must contain at least 3 character(s)");
+    getByText("bar: String must contain at least 5 character(s)");
+  });
+
+  it("can fix errors", async () => {
+    const Form = createForm((options) =>
+      options
+        .validate("change")
+        .schema(z.object({ foo: z.string().min(3) }))
+        .components((builder) =>
+          builder.type(
+            z.string(),
+            ({ onChange, value = "", errors, name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                {errors.length ? errors.join(",") : "No errors"}
+              </>
+            ),
+          ),
+        ),
+    );
+    const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
+    getByText("No errors");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
+    getByText("String must contain at least 3 character(s)");
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
+    getByText("No errors");
+  });
+
+  it("does not trigger submit for invalid data", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string().min(3) }))
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
+    );
+    const { getByText } = render(
+      <Form value={{ foo: "" }} onSubmit={onSubmit} />,
+    );
+    await userEvent.click(getByText("submit"));
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 });
 

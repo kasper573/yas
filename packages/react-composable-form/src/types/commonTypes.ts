@@ -1,8 +1,8 @@
 import type { AnyZodObject, output, ZodFirstPartyTypeKind, ZodType } from "zod";
 import type { ComponentProps, ComponentType } from "react";
+import type { FormEvent } from "react";
 import type { FieldBuilderFactory } from "../createFieldBuilder";
 import type { FormOptionsBuilderFactory } from "../createFormOptionsBuilder";
-import type { Store } from "../Store";
 
 import type { AnyComponent, AnyProps, TypeNameForType } from "./utilityTypes";
 
@@ -11,17 +11,20 @@ export interface RCFGenerics<
   LayoutProps extends AnyProps = any,
   Components extends FieldComponents = any,
   ParentComponents extends FieldComponents = any,
+  ValidationMode extends FormValidationMode = any,
 > {
   schema: Schema;
   layoutProps: LayoutProps;
   components: Components;
   parentComponents: ParentComponents;
+  validate: ValidationMode;
 }
 
 export interface FormOptions<G extends RCFGenerics> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
   components: FieldBuilderFactory<G["parentComponents"], G["components"]>;
+  validate: G["validate"];
 }
 
 export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
@@ -32,9 +35,13 @@ export type FormSchema = AnyZodObject;
 
 export type FormValueType<T = any> = ZodType<T>;
 
+export type FormError = unknown;
+
 export type inferFormValue<Type extends FormValueType> = output<Type>;
 
 export type PrimitiveType = ZodFirstPartyTypeKind;
+
+export type FormValidationMode = "change" | "blur" | "submit";
 
 export interface FieldComponents {
   types: Partial<Record<PrimitiveType, AnyComponent>>;
@@ -54,6 +61,7 @@ export interface NoFieldComponents {
 export interface ComposableFormProps<Value> {
   value?: Value;
   onChange?: (newValue: Value) => unknown;
+  onSubmit?: (value: Value) => unknown;
 }
 
 export type FormComponent<G extends RCFGenerics> = ComponentType<
@@ -70,11 +78,13 @@ export interface FormLayoutProps<
   Components extends FieldComponents = NoFieldComponents,
 > {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
+  handleSubmit: (e?: FormEvent) => unknown;
 }
 
 export interface FormFieldProps<Value = any> extends FieldState<Value> {
   name: string;
   onChange: (newValue: Value) => unknown;
+  onBlur: () => unknown;
 }
 
 export type FormFieldFor<
@@ -103,19 +113,19 @@ type InferFieldComponentProps<
     >
   : never;
 
-export type FormStore<Schema extends FormSchema = FormSchema> = Store<
-  FormState<Schema>
->;
-
 export type FieldNames<Schema extends FormSchema> = `${string &
   keyof Schema["shape"]}`;
 
 export interface FormState<Schema extends FormSchema> {
   data: inferFormValue<Schema>;
-  errors: Record<FieldNames<Schema>, unknown[]>;
+  errors: Partial<Record<FieldNames<Schema>, FormError[]>>;
 }
+
+export type FormFieldErrors<Schema extends FormSchema> = Partial<
+  Record<FieldNames<Schema>, FormError[]>
+>;
 
 export interface FieldState<Value> {
   value: Value;
-  errors: unknown[];
+  errors: FormError[];
 }

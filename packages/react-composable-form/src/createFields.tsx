@@ -4,7 +4,6 @@ import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
   FieldComponentsPassedToLayout,
-  FormStore,
   FormFieldFor,
   FieldComponents,
   FormValueType,
@@ -13,6 +12,7 @@ import { FormContext } from "./FormContext";
 import type { FieldNames } from "./types/commonTypes";
 import { determinePrimitiveType } from "./createFieldBuilder";
 import type { FormSchema } from "./types/commonTypes";
+import type { FormStore } from "./FormStore";
 
 export function createFields<
   Schema extends FormSchema,
@@ -62,26 +62,31 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name],
+      () => store.state.errors[name] ?? emptyArrayAsT(),
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {
-        store.mutate((state) => {
-          state.data[name] = newValue;
-        });
+        store.changeField(name, newValue);
       },
       [store],
     );
+    const blurHandler = useCallback(() => store.blurField(name), [store]);
     return (
       <Component
         name={name}
         value={value}
         errors={errors}
         onChange={changeHandler as Props["onChange"]}
+        onBlur={blurHandler as Props["onBlur"]}
         {...props}
       />
     );
   });
+}
+
+const emptyArray = Object.freeze([]);
+function emptyArrayAsT<T>(): T[] {
+  return emptyArray as unknown as T[];
 }
 
 function capitalize(str: string): string {
