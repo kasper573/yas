@@ -2,16 +2,22 @@ import type { ZodObject } from "zod";
 import { z } from "zod";
 import type { ComponentType } from "react";
 import type {
-  EmptyFieldComponents,
-  FieldComponents,
   FormLayoutProps,
   FormOptions,
   FormSchema,
   FormValidationMode,
   RCFGenerics,
+  FieldComponents,
+  EmptyFieldComponents,
 } from "./types/commonTypes";
 import type { AnyProps, Replace } from "./types/utilityTypes";
-import type { FieldBuilderFactory } from "./createFieldBuilder";
+import type {
+  FormFieldProps,
+  FormValueType,
+  inferFormValue,
+} from "./types/commonTypes";
+import type { SetTypedComponent } from "./typedComponents";
+import { setTypedComponent } from "./typedComponents";
 
 export type FormOptionsBuilderFactory<
   Input extends RCFGenerics,
@@ -29,9 +35,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
   }
 
   layout<NewLayoutProps extends AnyProps>(
-    layout: ComponentType<
-      FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
-    >,
+    layout: ComponentType<FormLayoutProps<G["schema"], G> & NewLayoutProps>,
   ) {
     return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({
       ...this.options,
@@ -39,13 +43,35 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  components<NewComponents extends FieldComponents>(
-    newComponents: FieldBuilderFactory<G["components"], NewComponents>,
+  type<
+    Type extends FormValueType,
+    ComponentProps extends FormFieldProps<inferFormValue<Type>>,
+  >(type: Type, component: ComponentType<ComponentProps>) {
+    type NewTypes = SetTypedComponent<
+      G["typedComponents"],
+      Type,
+      ComponentType<ComponentProps>
+    >;
+    const { typedComponents, ...rest } = this.options;
+    return new FormOptionsBuilder<Replace<G, "typedComponents", NewTypes>>({
+      ...rest,
+      typedComponents: setTypedComponent(typedComponents, type, component),
+    });
+  }
+
+  field<FieldName extends string, ComponentProps extends FormFieldProps>(
+    name: FieldName,
+    component: ComponentType<ComponentProps>,
   ) {
-    const { components: oldComponents } = this.options;
-    return new FormOptionsBuilder<Replace<G, "components", NewComponents>>({
-      ...this.options,
-      components: (builder) => newComponents(oldComponents(builder)),
+    type NewNamed = Omit<G["namedComponents"], FieldName> &
+      Record<FieldName, ComponentType<ComponentProps>>;
+    const { namedComponents, ...rest } = this.options;
+    return new FormOptionsBuilder<Replace<G, "namedComponents", NewNamed>>({
+      ...rest,
+      namedComponents: {
+        ...namedComponents,
+        [name]: component,
+      },
     });
   }
 
@@ -65,16 +91,17 @@ export const emptyFormOptionsBuilder =
   new FormOptionsBuilder<EmptyFormOptionsGenerics>({
     schema: z.object({}),
     layout: NoLayout,
-    components: (_) => _,
+    namedComponents: {},
+    typedComponents: [],
     validate: "submit",
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
   ZodObject<{}>,
   {},
-  EmptyFieldComponents,
-  EmptyFieldComponents,
-  "submit"
+  "submit",
+  EmptyFieldComponents["namedComponents"],
+  EmptyFieldComponents["typedComponents"]
 >;
 
 function NoLayout<

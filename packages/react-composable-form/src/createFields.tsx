@@ -2,17 +2,16 @@ import type { ZodRawShape } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
-  FieldComponentsPassedToLayout,
-  FormFieldFor,
   FieldComponents,
+  FieldComponentsPassedToLayout,
+  FieldNames,
+  FormFieldFor,
+  FormSchema,
   FormValueType,
 } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
-import type { FieldNames } from "./types/commonTypes";
-import type { FormSchema } from "./types/commonTypes";
 import type { FormStore } from "./FormStore";
-import { getFirstPartyType } from "./zod/getFirstPartyType";
-import { determinePrimitiveType } from "./zod/determinePrimitiveType";
+import { describeType, getTypedComponent } from "./typedComponents";
 
 export function createFields<
   Schema extends FormSchema,
@@ -24,8 +23,9 @@ export function createFields<
   return Object.entries(schema.shape as ZodRawShape).reduce(
     (fields, [name, type]) => {
       const Component =
-        components.fields[name] ??
-        components.types[determinePrimitiveType(type)];
+        components.namedComponents[name] ??
+        getTypedComponent(components.typedComponents, type);
+
       (fields as Record<string, ComponentType>)[capitalize(name)] =
         enhanceFormField(
           Component ?? createFallbackComponent(name, type),
@@ -33,7 +33,7 @@ export function createFields<
         );
       return fields;
     },
-    {} as FieldComponentsPassedToLayout<Schema, FieldComponents>,
+    {} as FieldComponentsPassedToLayout<Schema, Components>,
   );
 }
 
@@ -42,7 +42,7 @@ function createFallbackComponent(name: string, type: FormValueType) {
   // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
   return function FallbackFieldComponent() {
     throw new Error(
-      `No component available for field "${name}" or type ${getFirstPartyType(
+      `No component available for field "${name}" or type ${describeType(
         type,
       )}`,
     );

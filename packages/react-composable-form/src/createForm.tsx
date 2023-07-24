@@ -1,6 +1,5 @@
 import type { FormEvent } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import { createFieldBuilder } from "./createFieldBuilder";
 import type {
   FormComponent,
   FormState,
@@ -12,16 +11,16 @@ import type {
   FormOptionsBuilderFactory,
   EmptyFormOptionsGenerics,
   FormOptionsBuilder,
-} from "./createFormOptionsBuilder";
-import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
+} from "./createFormOptions";
+import { emptyFormOptionsBuilder } from "./createFormOptions";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 
 export function createForm<G extends RCFGenerics>(
-  reduceOptions: FormOptionsBuilderFactory<
+  reduceOptions = passThrough as FormOptionsBuilderFactory<
     EmptyFormOptionsGenerics,
     G
-  > = passThrough,
+  >,
 ): FormComponent<G> {
   return createFormImpl(reduceOptions, emptyFormOptionsBuilder);
 }
@@ -36,11 +35,11 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   const {
     schema,
     layout: Layout,
-    components: build,
+    namedComponents,
+    typedComponents,
     validate,
   } = optionsBuilder.build();
-  const { components } = build(createFieldBuilder());
-  const fields = createFields(components, schema);
+  const fields = createFields({ namedComponents, typedComponents }, schema);
 
   const ComposableForm: FormComponent<G> = (({
     value: data = empty,
