@@ -367,7 +367,7 @@ describe("validation", () => {
   it("can display errors on blur", async () => {
     const Form = createForm((options) =>
       options
-        .validate("blur")
+        .validateOn("blur")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
         .type(
           z.string(),
@@ -404,7 +404,7 @@ describe("validation", () => {
   it("can display errors on change", async () => {
     const Form = createForm((options) =>
       options
-        .validate("change")
+        .validateOn("change")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
         .type(
           z.string(),
@@ -439,7 +439,7 @@ describe("validation", () => {
   it("can fix errors", async () => {
     const Form = createForm((options) =>
       options
-        .validate("change")
+        .validateOn("change")
         .schema(z.object({ foo: z.string().min(3) }))
         .type(
           z.string(),

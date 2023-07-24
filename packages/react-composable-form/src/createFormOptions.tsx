@@ -74,7 +74,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  validate<NewMode extends FormValidationMode>(validate: NewMode) {
+  validateOn<NewMode extends FormValidationMode>(validate: NewMode) {
     return new FormOptionsBuilder<Replace<G, "mode", NewMode>>({
       ...this.options,
       mode: validate,
