@@ -2,23 +2,21 @@ import type { ZodObject } from "zod";
 import { z } from "zod";
 import type { ComponentType } from "react";
 import type {
-  FormLayoutProps,
-  FormOptions,
+  FieldNames,
   FormSchema,
   FormValidationMode,
-  RCFGenerics,
-  FieldComponents,
-  EmptyFieldComponents,
-  FieldNames,
 } from "./types/commonTypes";
 import type { AnyProps, Replace } from "./types/utilityTypes";
-import type {
-  FormFieldProps,
-  FormValueType,
-  inferFormValue,
-} from "./types/commonTypes";
+import type { FormValueType, inferFormValue } from "./types/commonTypes";
 import type { SetTypedComponent } from "./typedComponents";
 import { setTypedComponent } from "./typedComponents";
+import type {
+  FieldComponents,
+  FieldProps,
+  FormLayoutProps,
+  FormOptions,
+  RCFGenerics,
+} from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends RCFGenerics,
@@ -46,7 +44,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
 
   type<
     Type extends FormValueType,
-    ComponentProps extends FormFieldProps<inferFormValue<Type>>,
+    ComponentProps extends FieldProps<inferFormValue<Type>>,
   >(type: Type, component: ComponentType<ComponentProps>) {
     type NewTypes = SetTypedComponent<
       G["typedComponents"],
@@ -62,9 +60,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
 
   field<
     FieldName extends FieldNames<G["schema"]>,
-    ComponentProps extends FormFieldProps<
-      inferFormValue<G["schema"]>[FieldName]
-    >,
+    ComponentProps extends FieldProps<inferFormValue<G["schema"]>[FieldName]>,
   >(name: FieldName, component: ComponentType<ComponentProps>) {
     type NewNamed = Omit<G["namedComponents"], FieldName> &
       Record<FieldName, ComponentType<ComponentProps>>;
@@ -103,8 +99,8 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   ZodObject<{}>,
   {},
   "submit",
-  EmptyFieldComponents["namedComponents"],
-  EmptyFieldComponents["typedComponents"]
+  {},
+  []
 >;
 
 function NoLayout<

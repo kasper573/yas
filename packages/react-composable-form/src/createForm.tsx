@@ -1,17 +1,32 @@
-import type { FormEvent } from "react";
+import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import type { FormComponent, RCFGenerics } from "./types/commonTypes";
+import type { FieldErrors, inferFormValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
-  FormOptionsBuilderFactory,
   EmptyFormOptionsGenerics,
   FormOptionsBuilder,
+  FormOptionsBuilderFactory,
 } from "./createFormOptions";
 import { emptyFormOptionsBuilder } from "./createFormOptions";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { FormFieldErrors } from "./types/commonTypes";
+import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
+
+export interface FormProps<Value> {
+  value?: Value;
+  onChange?: (newValue: Value) => unknown;
+  onSubmit?: (value: Value) => unknown;
+}
+
+export type FormComponent<G extends RCFGenerics> = ComponentType<
+  FormProps<inferFormValue<G["schema"]>> &
+    Omit<G["layoutProps"], keyof FormLayoutProps>
+> & {
+  extend<NewG extends RCFGenerics>(
+    options: FormOptionsBuilderFactory<G, NewG>,
+  ): FormComponent<NewG>;
+};
 
 export function createForm<G extends RCFGenerics>(
   reduceOptions = passThrough as FormOptionsBuilderFactory<
@@ -48,7 +63,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
       () =>
         new FormStore(
           schema,
-          { data, errors: {} as FormFieldErrors<G["schema"]> },
+          { data, errors: {} as FieldErrors<G["schema"]> },
           validate,
         ),
       [],

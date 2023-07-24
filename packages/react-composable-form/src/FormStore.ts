@@ -2,13 +2,13 @@ import type { Draft } from "immer";
 import { produce } from "immer";
 import type {
   FieldNames,
+  FieldErrors,
   FormSchema,
   FormState,
   FormValidationMode,
   inferFormValue,
-  RCFGenerics,
 } from "./types/commonTypes";
-import type { FormFieldErrors } from "./types/commonTypes";
+import type { RCFGenerics } from "./types/optionTypes";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
@@ -104,12 +104,12 @@ export class FormStore<
 function getFormFieldErrors<Schema extends FormSchema>(
   schema: Schema,
   value: inferFormValue<Schema>,
-): FormFieldErrors<Schema> {
+): FieldErrors<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
     return {};
   }
-  return res.error.flatten().fieldErrors as FormFieldErrors<Schema>;
+  return res.error.flatten().fieldErrors as FieldErrors<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;

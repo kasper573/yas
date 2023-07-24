@@ -2,16 +2,18 @@ import type { ZodRawShape } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
-  FieldComponents,
-  FieldComponentsPassedToLayout,
   FieldNames,
-  FormFieldFor,
   FormSchema,
   FormValueType,
 } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FormStore } from "./FormStore";
 import { describeType, getTypedComponent } from "./typedComponents";
+import type {
+  FieldComponents,
+  FieldComponentsPassedToLayout,
+  FieldFor,
+} from "./types/optionTypes";
 
 export function createFields<
   Schema extends FormSchema,
@@ -52,8 +54,8 @@ function createFallbackComponent(name: string, type: FormValueType) {
 function enhanceFormField<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
->(Component: FormFieldFor<Schema, FieldName>, name: FieldName) {
-  type Props = ComponentProps<FormFieldFor<Schema, FieldName>>;
+>(Component: FieldFor<Schema, FieldName>, name: FieldName) {
+  type Props = ComponentProps<FieldFor<Schema, FieldName>>;
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncExternalStore(
@@ -62,7 +64,7 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name] ?? emptyArrayAsT(),
+      () => store.state.errors[name],
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {
@@ -82,11 +84,6 @@ function enhanceFormField<
       />
     );
   });
-}
-
-const emptyArray = Object.freeze([]);
-function emptyArrayAsT<T>(): T[] {
-  return emptyArray as unknown as T[];
 }
 
 function capitalize(str: string): string {
