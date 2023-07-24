@@ -48,7 +48,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     layout: Layout,
     namedComponents,
     typedComponents,
-    validate,
+    mode,
   } = optionsBuilder.build();
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
@@ -64,7 +64,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
         new FormStore(
           schema,
           { data, errors: {} as FieldErrors<G["schema"]> },
-          validate,
+          mode,
         ),
       [],
     );

@@ -22,14 +22,14 @@ export interface RCFGenerics<
 > extends FieldComponents<Named, Typed> {
   schema: Schema;
   layoutProps: LayoutProps;
-  validate: ValidationMode;
+  mode: ValidationMode;
 }
 
 export interface FormOptions<G extends RCFGenerics>
   extends Pick<G, "namedComponents" | "typedComponents"> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
-  validate: G["validate"];
+  mode: G["mode"];
 }
 
 export type FormLayoutFor<G extends RCFGenerics> = ComponentType<

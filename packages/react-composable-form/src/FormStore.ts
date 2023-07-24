@@ -12,7 +12,7 @@ import type { RCFGenerics } from "./types/optionTypes";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
-  G["validate"]
+  G["mode"]
 >;
 
 export class FormStore<

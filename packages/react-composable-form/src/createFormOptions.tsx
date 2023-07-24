@@ -75,9 +75,9 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
   }
 
   validate<NewMode extends FormValidationMode>(validate: NewMode) {
-    return new FormOptionsBuilder<Replace<G, "validate", NewMode>>({
+    return new FormOptionsBuilder<Replace<G, "mode", NewMode>>({
       ...this.options,
-      validate,
+      mode: validate,
     });
   }
 
@@ -92,7 +92,7 @@ export const emptyFormOptionsBuilder =
     layout: NoLayout,
     namedComponents: {},
     typedComponents: [],
-    validate: "submit",
+    mode: "submit",
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
