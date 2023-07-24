@@ -27,14 +27,13 @@ describe("components", () => {
         wrong: z.object({ two: z.number() }),
       },
     ]) {
-      describe(name, () => testType(type, wrong));
-      describe(`optional ${name}`, () =>
-        testType(type.optional(), wrong.optional()));
-      describe(`nullable ${name}`, () =>
-        testType(type.nullable(), wrong.nullable()));
-      describe(`nullish ${name}`, () =>
-        testType(type.nullish(), wrong.nullish()));
-      describe(`array of ${name}`, () => testType(type.array(), wrong.array()));
+      describe(name, () => {
+        testType(type, wrong);
+        describe(`optional`, () => testType(type.optional(), wrong.optional()));
+        describe(`nullable`, () => testType(type.nullable(), wrong.nullable()));
+        describe(`nullish`, () => testType(type.nullish(), wrong.nullish()));
+        describe(`array`, () => testType(type.array(), wrong.array()));
+      });
     }
 
     function testType(correctType: ZodType, wrongType: ZodType) {
