@@ -67,7 +67,6 @@ describe("components", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ bar: z.number() }))
-        .field("foo", () => <span>foo</span>)
         .field("bar", () => <span>bar</span>),
     );
     const { getByText } = render(<Form />);

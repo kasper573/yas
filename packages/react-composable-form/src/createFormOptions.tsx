@@ -9,6 +9,7 @@ import type {
   RCFGenerics,
   FieldComponents,
   EmptyFieldComponents,
+  FieldNames,
 } from "./types/commonTypes";
 import type { AnyProps, Replace } from "./types/utilityTypes";
 import type {
@@ -59,10 +60,12 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  field<FieldName extends string, ComponentProps extends FormFieldProps>(
-    name: FieldName,
-    component: ComponentType<ComponentProps>,
-  ) {
+  field<
+    FieldName extends FieldNames<G["schema"]>,
+    ComponentProps extends FormFieldProps<
+      inferFormValue<G["schema"]>[FieldName]
+    >,
+  >(name: FieldName, component: ComponentType<ComponentProps>) {
     type NewNamed = Omit<G["namedComponents"], FieldName> &
       Record<FieldName, ComponentType<ComponentProps>>;
     const { namedComponents, ...rest } = this.options;
