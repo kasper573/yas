@@ -11,6 +11,12 @@ import type { FieldProps } from "../types/optionTypes";
 
 describe("components", () => {
   describe("can be defined by value type", () => {
+    enum EnumA {
+      Foo,
+    }
+    enum EnumB {
+      Bar,
+    }
     for (const { name, type, wrong } of [
       { name: "number", type: z.number(), wrong: z.string() },
       { name: "string", type: z.string(), wrong: z.number() },
@@ -20,6 +26,11 @@ describe("components", () => {
         name: "enum",
         type: z.enum(["correct1", "correct2", "correct3"]),
         wrong: z.enum(["wrong1", "wrong2", "wrong3"]),
+      },
+      {
+        name: "nativeEnum",
+        type: z.nativeEnum(EnumA),
+        wrong: z.nativeEnum(EnumB),
       },
       {
         name: "object",

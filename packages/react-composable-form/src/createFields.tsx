@@ -8,12 +8,13 @@ import type {
 } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FormStore } from "./FormStore";
-import { describeType, getTypedComponent } from "./typedComponents";
+import { getTypedComponent } from "./typedComponents";
 import type {
   FieldComponents,
   FieldComponentsPassedToLayout,
   FieldFor,
 } from "./types/optionTypes";
+import { getFirstPartyType } from "./isMatchingType";
 
 export function createFields<
   Schema extends FormSchema,
@@ -44,7 +45,7 @@ function createFallbackComponent(name: string, type: FormValueType) {
   // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
   return function FallbackFieldComponent() {
     throw new Error(
-      `No component available for field "${name}" or type ${describeType(
+      `No component available for field "${name}" or type ${getFirstPartyType(
         type,
       )}`,
     );
