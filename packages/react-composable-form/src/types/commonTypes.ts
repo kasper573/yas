@@ -76,7 +76,7 @@ export type FieldNames<Schema extends FormSchema> = `${string &
 
 export interface FormState<Schema extends FormSchema> {
   data: inferFormValue<Schema>;
-  errors: Partial<Record<FieldNames<Schema>, FormError[]>>;
+  errors: FormFieldErrors<Schema>;
 }
 
 export type FormFieldErrors<Schema extends FormSchema> = Partial<
