@@ -34,22 +34,19 @@ export function createForm<G extends RCFGenerics>(
     G
   >,
 ): FormComponent<G> {
-  return createFormImpl(reduceOptions, emptyFormOptionsBuilder);
+  return createFormImpl(reduceOptions(emptyFormOptionsBuilder));
 }
 
-function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
-  reduceOptions: FormOptionsBuilderFactory<PG, G>,
-  initialOptionsBuilder: FormOptionsBuilder<PG>,
+function createFormImpl<G extends RCFGenerics>(
+  options: FormOptionsBuilder<G>,
 ): FormComponent<G> {
-  const optionsBuilder = reduceOptions(initialOptionsBuilder);
-
   const {
     schema,
     layout: Layout,
     namedComponents,
     typedComponents,
     mode,
-  } = optionsBuilder.build();
+  } = options.build();
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
 
@@ -100,8 +97,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     );
   }) as FormComponent<G>;
 
-  ComposableForm.extend = (extendOptions) =>
-    createFormImpl(extendOptions, optionsBuilder);
+  ComposableForm.extend = (extend) => createFormImpl(extend(options));
 
   return ComposableForm;
 }
