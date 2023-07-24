@@ -1,18 +1,20 @@
 import type { ZodRawShape } from "zod";
-import { getFirstPartyType } from "@yas/zod";
 import type { ComponentProps, ComponentType } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
-  FieldComponentsPassedToLayout,
-  FormFieldFor,
-  FieldComponents,
+  FieldNames,
+  FormSchema,
   FormValueType,
 } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
-import type { FieldNames } from "./types/commonTypes";
-import { determinePrimitiveType } from "./createFieldBuilder";
-import type { FormSchema } from "./types/commonTypes";
 import type { FormStore } from "./FormStore";
+import { getTypedComponent } from "./typedComponents";
+import type {
+  FieldComponents,
+  FieldComponentsPassedToLayout,
+  FieldFor,
+} from "./types/optionTypes";
+import { getFirstPartyType } from "./isMatchingType";
 
 export function createFields<
   Schema extends FormSchema,
@@ -24,8 +26,9 @@ export function createFields<
   return Object.entries(schema.shape as ZodRawShape).reduce(
     (fields, [name, type]) => {
       const Component =
-        components.fields[name] ??
-        components.types[determinePrimitiveType(type)];
+        components.namedComponents[name] ??
+        getTypedComponent(components.typedComponents, type);
+
       (fields as Record<string, ComponentType>)[capitalize(name)] =
         enhanceFormField(
           Component ?? createFallbackComponent(name, type),
@@ -33,7 +36,7 @@ export function createFields<
         );
       return fields;
     },
-    {} as FieldComponentsPassedToLayout<Schema, FieldComponents>,
+    {} as FieldComponentsPassedToLayout<Schema, Components>,
   );
 }
 
@@ -52,8 +55,8 @@ function createFallbackComponent(name: string, type: FormValueType) {
 function enhanceFormField<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
->(Component: FormFieldFor<Schema, FieldName>, name: FieldName) {
-  type Props = ComponentProps<FormFieldFor<Schema, FieldName>>;
+>(Component: FieldFor<Schema, FieldName>, name: FieldName) {
+  type Props = ComponentProps<FieldFor<Schema, FieldName>>;
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncExternalStore(
@@ -62,7 +65,7 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name] ?? emptyArrayAsT(),
+      () => store.state.errors[name],
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {
@@ -82,11 +85,6 @@ function enhanceFormField<
       />
     );
   });
-}
-
-const emptyArray = Object.freeze([]);
-function emptyArrayAsT<T>(): T[] {
-  return emptyArray as unknown as T[];
 }
 
 function capitalize(str: string): string {

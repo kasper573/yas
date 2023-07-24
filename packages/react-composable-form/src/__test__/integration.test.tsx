@@ -1,36 +1,84 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import type { ZodType } from "zod";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
 import { useState } from "react";
 import { createForm } from "../createForm";
-import type { FormFieldProps } from "../types/commonTypes";
+
+import type { FieldProps } from "../types/optionTypes";
 
 describe("components", () => {
-  it("can be defined by value type", () => {
-    const Form = createForm((options) =>
-      options
-        .schema(z.object({ foo: z.number() }))
-        .components((builder) =>
-          builder
-            .type(z.string(), () => <span>text</span>)
-            .type(z.number(), () => <span>number</span>),
-        ),
-    );
-    const { getByText } = render(<Form />);
-    getByText("number");
+  describe("can be defined by value type", () => {
+    enum EnumA {
+      Foo,
+    }
+    enum EnumB {
+      Bar,
+    }
+    for (const { name, type, wrong } of [
+      { name: "number", type: z.number(), wrong: z.string() },
+      { name: "string", type: z.string(), wrong: z.number() },
+      { name: "boolean", type: z.boolean(), wrong: z.string() },
+      { name: "date", type: z.date(), wrong: z.string() },
+      {
+        name: "enum",
+        type: z.enum(["correct1", "correct2", "correct3"]),
+        wrong: z.enum(["wrong1", "wrong2", "wrong3"]),
+      },
+      {
+        name: "nativeEnum",
+        type: z.nativeEnum(EnumA),
+        wrong: z.nativeEnum(EnumB),
+      },
+      {
+        name: "object",
+        type: z.object({ one: z.string() }),
+        wrong: z.object({ two: z.number() }),
+      },
+    ]) {
+      describe(name, () => {
+        testType(type, wrong);
+        describe(`optional`, () => testType(type.optional(), wrong.optional()));
+        describe(`nullable`, () => testType(type.nullable(), wrong.nullable()));
+        describe(`nullish`, () => testType(type.nullish(), wrong.nullish()));
+        describe(`array`, () => testType(type.array(), wrong.array()));
+      });
+    }
+
+    function testType(correctType: ZodType, wrongType: ZodType) {
+      it("alone", () => testTypeAlone(correctType));
+      it("among others", () => testTypeCollision(correctType, wrongType));
+    }
+
+    function testTypeAlone(type: ZodType) {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: type }))
+          .type(type, () => <span>found</span>),
+      );
+      const { getByText } = render(<Form />);
+      getByText("found");
+    }
+
+    function testTypeCollision(correctType: ZodType, wrongType: ZodType) {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: correctType }))
+          .type(correctType, () => <span>correct</span>)
+          .type(wrongType, () => <span>incorrect</span>),
+      );
+      const { getByText } = render(<Form />);
+      getByText("correct");
+    }
   });
 
   it("can be defined per field name", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ bar: z.number() }))
-        .components((builder) =>
-          builder
-            .field("foo", () => <span>foo</span>)
-            .field("bar", () => <span>bar</span>),
-        ),
+        .field("bar", () => <span>bar</span>),
     );
     const { getByText } = render(<Form />);
     getByText("bar");
@@ -40,9 +88,8 @@ describe("components", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
-        .components((add) =>
-          add.field("foo", FieldImpl).type(z.string(), TypeImpl),
-        )
+        .field("foo", FieldImpl)
+        .type(z.string(), TypeImpl)
         .layout(({ fields: { Foo, Bar } }) => (
           <>
             <Foo prop={123} />
@@ -51,11 +98,11 @@ describe("components", () => {
         )),
     );
 
-    function FieldImpl({ prop }: { prop: number } & FormFieldProps) {
+    function FieldImpl({ prop }: { prop: number } & FieldProps<string>) {
       return <span>{prop}</span>;
     }
 
-    function TypeImpl({ prop }: { prop: string } & FormFieldProps) {
+    function TypeImpl({ prop }: { prop: string } & FieldProps<string>) {
       return <span>{prop}</span>;
     }
 
@@ -80,14 +127,10 @@ describe("components", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string(), bar: z.number() }))
-          .components((builder) =>
-            builder.type(z.string(), () => <span>text</span>),
-          ),
+          .type(z.string(), () => <span>text</span>),
       );
       const ExtendedForm = Form.extend((options) =>
-        options.components((builder) =>
-          builder.type(z.number(), () => <span>number</span>),
-        ),
+        options.type(z.number(), () => <span>number</span>),
       );
       const { getByText } = render(<ExtendedForm />);
       getByText("number");
@@ -98,14 +141,10 @@ describe("components", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string(), bar: z.number() }))
-          .components((builder) =>
-            builder.field("foo", () => <span>foo</span>),
-          ),
+          .field("foo", () => <span>foo</span>),
       );
       const ExtendedForm = Form.extend((options) =>
-        options.components((builder) =>
-          builder.field("bar", () => <span>bar</span>),
-        ),
+        options.field("bar", () => <span>bar</span>),
       );
       const { getByText } = render(<ExtendedForm />);
       getByText("foo");
@@ -136,9 +175,7 @@ describe("layout", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ name }) => <span>{name}</span>),
-        )
+        .type(z.string(), ({ name }) => <span>{name}</span>)
         .layout(({ fields: { Foo, Bar } }) => (
           <main>
             <section>
@@ -160,9 +197,7 @@ describe("layout", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ name }) => <span>{name}</span>),
-        )
+        .type(z.string(), ({ name }) => <span>{name}</span>)
         .layout(({ fields: { Foo } }) => <Foo name="bar" />),
     );
     const { getByText } = render(<Form />);
@@ -199,9 +234,7 @@ describe("schema", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), () => <span>foo</span>),
-        ),
+        .type(z.string(), () => <span>foo</span>),
     );
     const { getByText } = render(<Form />);
     getByText("foo");
@@ -211,9 +244,7 @@ describe("schema", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ name }) => <span>{name}</span>),
-        ),
+        .type(z.string(), ({ name }) => <span>{name}</span>),
     );
     const ExtendedForm = Form.extend((options) =>
       options.schema(z.object({ bar: z.string() })),
@@ -228,11 +259,9 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ value }) => (
-            <input defaultValue={String(value)} />
-          )),
-        ),
+        .type(z.string(), ({ value }) => (
+          <input defaultValue={String(value)} />
+        )),
     );
     const { getByRole } = render(<Form value={{ foo: "bar" }} />);
     expect(getByRole("textbox")).toHaveValue("bar");
@@ -242,11 +271,9 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ onChange, ...rest }) => (
-            <input onChange={(e) => onChange(e.target.value)} {...rest} />
-          )),
-        ),
+        .type(z.string(), ({ onChange, ...rest }) => (
+          <input onChange={(e) => onChange(e.target.value)} {...rest} />
+        )),
     );
     function App() {
       const [data, setData] = useState({ foo: "default" });
@@ -268,15 +295,13 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
-            <input
-              onChange={(e) => onChange(e.target.value)}
-              value={value}
-              {...rest}
-            />
-          )),
-        ),
+        .type(z.string(), ({ onChange, value = "", ...rest }) => (
+          <input
+            onChange={(e) => onChange(e.target.value)}
+            value={value}
+            {...rest}
+          />
+        )),
     );
     const { getByRole } = render(<Form />);
 
@@ -289,15 +314,13 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .components((builder) =>
-          builder.type(z.string(), ({ onChange, value = "", ...rest }) => (
-            <input
-              onChange={(e) => onChange(e.target.value)}
-              value={value}
-              {...rest}
-            />
-          )),
-        ),
+        .type(z.string(), ({ onChange, value = "", ...rest }) => (
+          <input
+            onChange={(e) => onChange(e.target.value)}
+            value={value}
+            {...rest}
+          />
+        )),
     );
 
     let data: unknown;
@@ -318,7 +341,8 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
-        .components((add) => add.field("foo", Foo).field("bar", Bar)),
+        .field("foo", Foo)
+        .field("bar", Bar),
     );
     const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
     const fooBefore = Foo.getCount();
@@ -334,11 +358,9 @@ describe("validation", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string().min(3) }))
-        .components((builder) =>
-          builder.type(z.string(), ({ errors }) => (
-            <span>{errors.length ? errors.join(",") : "No errors"}</span>
-          )),
-        )
+        .type(z.string(), ({ errors = [] }) => (
+          <span>{errors.length ? errors.join(",") : "No errors"}</span>
+        ))
         .layout(({ fields: { Foo }, handleSubmit }) => (
           <>
             <Foo />
@@ -355,24 +377,22 @@ describe("validation", () => {
   it("can display errors on blur", async () => {
     const Form = createForm((options) =>
       options
-        .validate("blur")
+        .validateOn("blur")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
-        .components((builder) =>
-          builder.type(
-            z.string(),
-            ({ onChange, value = "", errors, name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                <span>
-                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
-              </>
-            ),
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange(e.target.value)}
+                value={value}
+                aria-label={name}
+                {...rest}
+              />
+              <span>
+                {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+              </span>
+            </>
           ),
         ),
     );
@@ -394,24 +414,22 @@ describe("validation", () => {
   it("can display errors on change", async () => {
     const Form = createForm((options) =>
       options
-        .validate("change")
+        .validateOn("change")
         .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
-        .components((builder) =>
-          builder.type(
-            z.string(),
-            ({ onChange, value = "", errors, name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                <span>
-                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
-              </>
-            ),
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange(e.target.value)}
+                value={value}
+                aria-label={name}
+                {...rest}
+              />
+              <span>
+                {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+              </span>
+            </>
           ),
         ),
     );
@@ -431,22 +449,20 @@ describe("validation", () => {
   it("can fix errors", async () => {
     const Form = createForm((options) =>
       options
-        .validate("change")
+        .validateOn("change")
         .schema(z.object({ foo: z.string().min(3) }))
-        .components((builder) =>
-          builder.type(
-            z.string(),
-            ({ onChange, value = "", errors, name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                {errors.length ? errors.join(",") : "No errors"}
-              </>
-            ),
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange(e.target.value)}
+                value={value}
+                aria-label={name}
+                {...rest}
+              />
+              {errors.length ? errors.join(",") : "No errors"}
+            </>
           ),
         ),
     );

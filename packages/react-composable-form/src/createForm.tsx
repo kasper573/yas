@@ -1,46 +1,54 @@
-import type { FormEvent } from "react";
+import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import { createFieldBuilder } from "./createFieldBuilder";
-import type {
-  FormComponent,
-  FormState,
-  RCFGenerics,
-} from "./types/commonTypes";
+import type { FieldErrors, inferFormValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
-  FormOptionsBuilderFactory,
   EmptyFormOptionsGenerics,
   FormOptionsBuilder,
-} from "./createFormOptionsBuilder";
-import { emptyFormOptionsBuilder } from "./createFormOptionsBuilder";
+  FormOptionsBuilderFactory,
+} from "./createFormOptions";
+import { emptyFormOptionsBuilder } from "./createFormOptions";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
+import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
 
-export function createForm<G extends RCFGenerics>(
-  reduceOptions: FormOptionsBuilderFactory<
-    EmptyFormOptionsGenerics,
-    G
-  > = passThrough,
-): FormComponent<G> {
-  return createFormImpl(reduceOptions, emptyFormOptionsBuilder);
+export interface FormProps<Value> {
+  value?: Value;
+  onChange?: (newValue: Value) => unknown;
+  onSubmit?: (value: Value) => unknown;
 }
 
-function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
-  reduceOptions: FormOptionsBuilderFactory<PG, G>,
-  initialOptionsBuilder: FormOptionsBuilder<PG>,
-): FormComponent<G> {
-  type FS = FormState<G["schema"]>;
+export type FormComponent<G extends RCFGenerics> = ComponentType<
+  FormProps<inferFormValue<G["schema"]>> &
+    Omit<G["layoutProps"], keyof FormLayoutProps>
+> & {
+  extend<NewG extends RCFGenerics>(
+    options: FormOptionsBuilderFactory<G, NewG>,
+  ): FormComponent<NewG>;
+};
 
-  const optionsBuilder = reduceOptions(initialOptionsBuilder);
+export function createForm<G extends RCFGenerics>(
+  reduceOptions = passThrough as FormOptionsBuilderFactory<
+    EmptyFormOptionsGenerics,
+    G
+  >,
+): FormComponent<G> {
+  return createFormImpl(reduceOptions(emptyFormOptionsBuilder));
+}
+
+function createFormImpl<G extends RCFGenerics>(
+  options: FormOptionsBuilder<G>,
+): FormComponent<G> {
   const {
     schema,
     layout: Layout,
-    components: build,
-    validate,
-  } = optionsBuilder.build();
-  const { components } = build(createFieldBuilder());
-  const fields = createFields(components, schema);
+    namedComponents,
+    typedComponents,
+    mode,
+  } = options.build();
+
+  const fields = createFields({ namedComponents, typedComponents }, schema);
 
   const ComposableForm: FormComponent<G> = (({
     value: data = empty,
@@ -50,7 +58,11 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
   }) => {
     const store: FormStoreFor<G> = useMemo(
       () =>
-        new FormStore(schema, { data, errors: {} as FS["errors"] }, validate),
+        new FormStore(
+          schema,
+          { data, errors: {} as FieldErrors<G["schema"]> },
+          mode,
+        ),
       [],
     );
 
@@ -85,8 +97,7 @@ function createFormImpl<G extends RCFGenerics, PG extends RCFGenerics>(
     );
   }) as FormComponent<G>;
 
-  ComposableForm.extend = (extendOptions) =>
-    createFormImpl(extendOptions, optionsBuilder);
+  ComposableForm.extend = (extend) => createFormImpl(extend(options));
 
   return ComposableForm;
 }

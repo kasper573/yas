@@ -1,6 +1,10 @@
 {
   "name": "react-composable-form",
-  "repository": "https://github.com/ksandin/yas/tree/master/packages/react-composable-form",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksandin/yas.git",
+    "directory": "packages/react-composable-form"
+  },
   "description": "Form composition library for React",
   "keywords": [
     "react",
@@ -8,7 +12,7 @@
     "form"
   ],
   "author": "Kasper Sandin",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -38,7 +42,6 @@
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
     "@yas/jest": "workspace:*",
-    "@yas/zod": "workspace:*",
     "@yas/build-tools": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@testing-library/jest-dom": "^5.16.5",

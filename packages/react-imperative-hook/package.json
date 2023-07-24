@@ -1,6 +1,10 @@
 {
   "name": "react-imperative-hook",
-  "repository": "https://github.com/ksandin/yas/tree/master/packages/react-imperative-hook",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksandin/yas.git",
+    "directory": "packages/react-imperative-hook"
+  },
   "description": "React hook that provides an imperative interface for spawning and resolving components",
   "keywords": [
     "react",
@@ -10,7 +14,7 @@
     "component"
   ],
   "author": "Kasper Sandin",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
