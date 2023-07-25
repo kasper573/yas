@@ -5,20 +5,26 @@ import type {
   FieldNames,
   FormSchema,
   FormValidationMode,
+  FormValueType,
+  inferFormValue,
 } from "./types/commonTypes";
-import type { AnyProps, MakeOptional, Replace } from "./types/utilityTypes";
-import type { FormValueType, inferFormValue } from "./types/commonTypes";
+import type {
+  AnyProps,
+  OptionalArgIfEmpty,
+  Replace,
+} from "./types/utilityTypes";
 import type { SetTypedComponent } from "./typedComponents";
 import { setTypedComponent } from "./typedComponents";
 import type {
+  ComposedFieldComponent,
   FieldComponents,
   FieldProps,
   FormLayoutProps,
   FormOptions,
   RCFGenerics,
-  FieldInitPropsArgs,
-  WithInitProps,
 } from "./types/optionTypes";
+import { withDefaultProps } from "./withDefaultProps";
+import type { InputFieldComponent } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends RCFGenerics,
@@ -44,23 +50,19 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  type<
-    Type extends FormValueType,
-    ComponentProps extends FieldProps<inferFormValue<Type>>,
-    InitPropsArgs extends FieldInitPropsArgs<ComponentProps>,
-  >(
+  type<Type extends FormValueType, AdditionalProps>(
     type: Type,
-    component: ComponentType<ComponentProps>,
-    ...[initProps]: InitPropsArgs
+    component: InputFieldComponent<Type, AdditionalProps>,
+    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
   ) {
     type NewTypes = SetTypedComponent<
       G["typedComponents"],
       Type,
-      ComponentType<WithInitProps<ComponentProps, InitPropsArgs[0]>>
+      ComposedFieldComponent<Type, AdditionalProps>
     >;
     const { typedComponents, ...rest } = this.options;
     if (initProps) {
-      component = withDefaults(component, initProps as never);
+      component = withDefaultProps(component, initProps as never);
     }
     return new FormOptionsBuilder<Replace<G, "typedComponents", NewTypes>>({
       ...rest,
@@ -72,23 +74,25 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  field<
-    FieldName extends FieldNames<G["schema"]>,
-    ComponentProps extends FieldProps<inferFormValue<G["schema"]>[FieldName]>,
-    InitPropsArgs extends FieldInitPropsArgs<ComponentProps>,
-  >(
+  field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
     name: FieldName,
-    component: ComponentType<ComponentProps>,
-    ...[initProps]: InitPropsArgs
+    component: InputFieldComponent<
+      G["schema"]["shape"][FieldName],
+      AdditionalProps
+    >,
+    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
   ) {
     type NewNamed = Omit<G["namedComponents"], FieldName> &
       Record<
         FieldName,
-        ComponentType<WithInitProps<ComponentProps, InitPropsArgs[0]>>
+        ComposedFieldComponent<
+          inferFormValue<G["schema"]>[FieldName],
+          AdditionalProps
+        >
       >;
     const { namedComponents, ...rest } = this.options;
     if (initProps) {
-      component = withDefaults(component, initProps as never);
+      component = withDefaultProps(component, initProps as never);
     }
     return new FormOptionsBuilder<Replace<G, "namedComponents", NewNamed>>({
       ...rest,
@@ -139,15 +143,4 @@ function NoLayout<
       ))}
     </>
   );
-}
-
-function withDefaults<
-  Props extends object,
-  DefaultProps extends Partial<Props>,
->(WrappedComponent: ComponentType<Props>, defaultProps: DefaultProps) {
-  return function WithDefaultProps(
-    props: MakeOptional<Props, keyof DefaultProps>,
-  ) {
-    return <WrappedComponent {...defaultProps} {...(props as Props)} />;
-  };
 }

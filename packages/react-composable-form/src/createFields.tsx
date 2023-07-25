@@ -89,7 +89,7 @@ function enhanceFormField<
         name={name}
         value={value}
         errors={errors}
-        required={required as any} // Unfortunate assert due to "boolean not assignable to type false" bs
+        required={required}
         onChange={changeHandler as Props["onChange"]}
         onBlur={blurHandler as Props["onBlur"]}
         {...props}

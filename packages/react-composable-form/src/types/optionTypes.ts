@@ -1,20 +1,14 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
 import type { TypedComponents } from "../typedComponents";
-import type {
-  AnyComponent,
-  DictionaryGet,
-  AnyProps,
-  HasRequiredProps,
-} from "./utilityTypes";
+import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   FieldNames,
+  FormError,
   FormSchema,
   FormValidationMode,
   FormValueType,
   inferFormValue,
 } from "./commonTypes";
-import type { FormError } from "./commonTypes";
-import type { MakeOptional } from "./utilityTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -50,36 +44,24 @@ export interface FormLayoutProps<
   handleSubmit: (e?: FormEvent) => unknown;
 }
 
-export type FieldProps<Value = any> = OptionalityRelativeFieldProps<Value> & {
+export type InputFieldComponent<
+  Type extends FormValueType,
+  AdditionalProps,
+> = ComponentType<FieldProps<inferFormValue<Type>> & AdditionalProps>;
+
+export type ComposedFieldComponent<
+  Type extends FormValueType,
+  AdditionalProps,
+> = ComponentType<Partial<FieldProps<inferFormValue<Type>> & AdditionalProps>>;
+
+export interface FieldProps<Value = any> {
   name: string;
-  onBlur: () => unknown;
-  errors?: FormError[];
-};
-
-export type FieldInitProps<ComponentProps> = Omit<
-  ComponentProps,
-  keyof FieldProps
->;
-
-export type FieldInitPropsArgs<ComponentProps> = HasRequiredProps<
-  FieldInitProps<ComponentProps>
-> extends true
-  ? [initProps: FieldInitProps<ComponentProps>]
-  : [initProps?: FieldInitProps<ComponentProps>];
-
-export type WithInitProps<ComponentProps, InitInitialProps> = MakeOptional<
-  ComponentProps,
-  keyof InitInitialProps
->;
-
-export type OptionalityRelativeFieldProps<Value> =
-  | ({ required: true } & FieldValueProps<Value>)
-  | ({ required: false } & FieldValueProps<Value | undefined>);
-
-export type FieldValueProps<Value> = {
   value: Value;
+  required?: boolean;
+  errors?: FormError[];
   onChange: (newValue: Value) => unknown;
-};
+  onBlur: () => unknown;
+}
 
 export type FieldFor<
   Schema extends FormSchema,

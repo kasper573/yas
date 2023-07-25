@@ -17,6 +17,10 @@ export type RequiredKeys<T> = {
 
 export type HasRequiredProps<T> = RequiredKeys<T> extends never ? false : true;
 
+export type OptionalArgIfEmpty<T> = HasRequiredProps<T> extends true
+  ? [T]
+  : [arg?: T];
+
 export type DictionaryGet<TupleBasedDictionary, Key> =
   TupleBasedDictionary extends [...infer Head, [infer Candidate, infer Value]]
     ? Candidate extends Key
