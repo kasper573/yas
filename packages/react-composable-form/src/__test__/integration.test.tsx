@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import type { ZodType } from "zod";
+import type { AnyZodObject, ZodType } from "zod";
 import { z } from "zod";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, ComponentType } from "react";
@@ -120,6 +120,52 @@ describe("components", () => {
       'No component available for field "foo" or type ZodString',
     );
     restoreErrorLogs();
+  });
+
+  describe("knows when a field is required", () => {
+    function renderOptional(type: AnyZodObject) {
+      const Form = createForm((options) =>
+        options
+          .schema(type)
+          .type(z.string(), ({ required }) => (
+            <span>{required ? "required" : "optional"}</span>
+          )),
+      );
+      return render(<Form />);
+    }
+    it("plain types are required by default", () => {
+      const { getByText } = renderOptional(z.object({ foo: z.string() }));
+      getByText("required");
+    });
+    it(".optional() makes optional", () => {
+      const { getByText } = renderOptional(
+        z.object({ foo: z.string().optional() }),
+      );
+      getByText("optional");
+    });
+    it(".nullish() counts as optional", () => {
+      const { getByText } = renderOptional(
+        z.object({ foo: z.string().nullish() }),
+      );
+      getByText("optional");
+    });
+    it(".nullable() does not count as optional", () => {
+      const { getByText } = renderOptional(
+        z.object({ foo: z.string().nullable() }),
+      );
+      getByText("required");
+    });
+    it(".optional().transform() counts as optional", () => {
+      const { getByText } = renderOptional(
+        z.object({
+          foo: z
+            .string()
+            .optional()
+            .transform((v) => v?.repeat(2)),
+        }),
+      );
+      getByText("optional");
+    });
   });
 
   describe("can be extended from predefined forms", () => {

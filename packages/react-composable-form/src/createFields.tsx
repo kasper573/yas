@@ -59,6 +59,7 @@ function enhanceFormField<
   type Props = ComponentProps<FieldFor<Schema, FieldName>>;
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
+    const required = !store.schema.shape[name].isOptional();
     const value = useSyncExternalStore(
       store.subscribe,
       () => store.state.data[name],
@@ -79,6 +80,7 @@ function enhanceFormField<
         name={name}
         value={value}
         errors={errors}
+        required={required}
         onChange={changeHandler as Props["onChange"]}
         onBlur={blurHandler as Props["onBlur"]}
         {...props}

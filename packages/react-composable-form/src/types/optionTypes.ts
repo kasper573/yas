@@ -46,6 +46,7 @@ export interface FormLayoutProps<
 
 export interface FieldProps<Value = any> extends FieldState<Value> {
   name: string;
+  required: boolean;
   onChange: (newValue: Value) => unknown;
   onBlur: () => unknown;
 }

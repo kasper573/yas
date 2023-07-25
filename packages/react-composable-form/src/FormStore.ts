@@ -31,7 +31,7 @@ export class FormStore<
   }
 
   constructor(
-    private _schema: Schema,
+    public readonly schema: Schema,
     private _state: FormState<Schema>,
     private _mode: FormValidationMode,
   ) {}
@@ -66,7 +66,7 @@ export class FormStore<
 
   validate<FieldName extends FieldNames<Schema>>(...names: FieldName[]) {
     this.mutate((draft) => {
-      const errors = getFormFieldErrors(this._schema, draft.data);
+      const errors = getFormFieldErrors(this.schema, draft.data);
       if (names.length) {
         for (const name of names) {
           draft.errors[name] = errors[name];
