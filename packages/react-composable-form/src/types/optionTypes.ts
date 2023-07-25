@@ -1,6 +1,11 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
 import type { TypedComponents } from "../typedComponents";
-import type { AnyComponent, DictionaryGet, AnyProps } from "./utilityTypes";
+import type {
+  AnyComponent,
+  DictionaryGet,
+  AnyProps,
+  HasRequiredProps,
+} from "./utilityTypes";
 import type {
   FieldNames,
   FormSchema,
@@ -9,6 +14,7 @@ import type {
   inferFormValue,
 } from "./commonTypes";
 import type { FormError } from "./commonTypes";
+import type { MakeOptional } from "./utilityTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -49,6 +55,22 @@ export type FieldProps<Value = any> = OptionalityRelativeFieldProps<Value> & {
   onBlur: () => unknown;
   errors?: FormError[];
 };
+
+export type FieldInitProps<ComponentProps> = Omit<
+  ComponentProps,
+  keyof FieldProps
+>;
+
+export type FieldInitPropsArgs<ComponentProps> = HasRequiredProps<
+  FieldInitProps<ComponentProps>
+> extends true
+  ? [initProps: FieldInitProps<ComponentProps>]
+  : [initProps?: FieldInitProps<ComponentProps>];
+
+export type WithInitProps<ComponentProps, InitInitialProps> = MakeOptional<
+  ComponentProps,
+  keyof InitInitialProps
+>;
 
 export type OptionalityRelativeFieldProps<Value> =
   | ({ required: true } & FieldValueProps<Value>)

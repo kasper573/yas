@@ -8,6 +8,15 @@ export type Replace<T, K extends keyof T, V> = {
   [P in keyof T]: P extends K ? V : T[P];
 };
 
+export type MakeOptional<T, K extends PropertyKey> = Omit<T, K> &
+  Partial<Pick<T, Extract<keyof T, K>>>;
+
+export type RequiredKeys<T> = {
+  [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
+}[keyof T];
+
+export type HasRequiredProps<T> = RequiredKeys<T> extends never ? false : true;
+
 export type DictionaryGet<TupleBasedDictionary, Key> =
   TupleBasedDictionary extends [...infer Head, [infer Candidate, infer Value]]
     ? Candidate extends Key

@@ -98,6 +98,27 @@ describe("components", () => {
         )),
     );
 
+    function FieldImpl({ prop }: { prop?: number } & FieldProps<string>) {
+      return <span>{prop}</span>;
+    }
+
+    function TypeImpl({ prop }: { prop?: string } & FieldProps<string>) {
+      return <span>{prop}</span>;
+    }
+
+    const { getByText } = render(<Form />);
+    getByText("123");
+    getByText("two");
+  });
+
+  it("can specify initial props", () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string(), bar: z.string() }))
+        .field("foo", FieldImpl, { prop: 123 })
+        .type(z.string(), TypeImpl, { prop: "two" }),
+    );
+
     function FieldImpl({ prop }: { prop: number } & FieldProps<string>) {
       return <span>{prop}</span>;
     }

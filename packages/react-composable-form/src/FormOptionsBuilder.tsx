@@ -6,7 +6,7 @@ import type {
   FormSchema,
   FormValidationMode,
 } from "./types/commonTypes";
-import type { AnyProps, Replace } from "./types/utilityTypes";
+import type { AnyProps, MakeOptional, Replace } from "./types/utilityTypes";
 import type { FormValueType, inferFormValue } from "./types/commonTypes";
 import type { SetTypedComponent } from "./typedComponents";
 import { setTypedComponent } from "./typedComponents";
@@ -16,6 +16,8 @@ import type {
   FormLayoutProps,
   FormOptions,
   RCFGenerics,
+  FieldInitPropsArgs,
+  WithInitProps,
 } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
@@ -45,26 +47,49 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
   type<
     Type extends FormValueType,
     ComponentProps extends FieldProps<inferFormValue<Type>>,
-  >(type: Type, component: ComponentType<ComponentProps>) {
+    InitPropsArgs extends FieldInitPropsArgs<ComponentProps>,
+  >(
+    type: Type,
+    component: ComponentType<ComponentProps>,
+    ...[initProps]: InitPropsArgs
+  ) {
     type NewTypes = SetTypedComponent<
       G["typedComponents"],
       Type,
-      ComponentType<ComponentProps>
+      ComponentType<WithInitProps<ComponentProps, InitPropsArgs[0]>>
     >;
     const { typedComponents, ...rest } = this.options;
+    if (initProps) {
+      component = withDefaults(component, initProps as never);
+    }
     return new FormOptionsBuilder<Replace<G, "typedComponents", NewTypes>>({
       ...rest,
-      typedComponents: setTypedComponent(typedComponents, type, component),
+      typedComponents: setTypedComponent(
+        typedComponents,
+        type,
+        component,
+      ) as NewTypes,
     });
   }
 
   field<
     FieldName extends FieldNames<G["schema"]>,
     ComponentProps extends FieldProps<inferFormValue<G["schema"]>[FieldName]>,
-  >(name: FieldName, component: ComponentType<ComponentProps>) {
+    InitPropsArgs extends FieldInitPropsArgs<ComponentProps>,
+  >(
+    name: FieldName,
+    component: ComponentType<ComponentProps>,
+    ...[initProps]: InitPropsArgs
+  ) {
     type NewNamed = Omit<G["namedComponents"], FieldName> &
-      Record<FieldName, ComponentType<ComponentProps>>;
+      Record<
+        FieldName,
+        ComponentType<WithInitProps<ComponentProps, InitPropsArgs[0]>>
+      >;
     const { namedComponents, ...rest } = this.options;
+    if (initProps) {
+      component = withDefaults(component, initProps as never);
+    }
     return new FormOptionsBuilder<Replace<G, "namedComponents", NewNamed>>({
       ...rest,
       namedComponents: {
@@ -114,4 +139,15 @@ function NoLayout<
       ))}
     </>
   );
+}
+
+function withDefaults<
+  Props extends object,
+  DefaultProps extends Partial<Props>,
+>(WrappedComponent: ComponentType<Props>, defaultProps: DefaultProps) {
+  return function WithDefaultProps(
+    props: MakeOptional<Props, keyof DefaultProps>,
+  ) {
+    return <WrappedComponent {...defaultProps} {...(props as Props)} />;
+  };
 }
