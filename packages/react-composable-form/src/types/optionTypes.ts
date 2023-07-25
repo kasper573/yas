@@ -51,7 +51,7 @@ export type FieldProps<Value = any> = OptionalityRelativeFieldProps<Value> & {
 };
 
 export type OptionalityRelativeFieldProps<Value> =
-  | ({ required: true } & FieldValueProps<Exclude<Value, undefined>>)
+  | ({ required: true } & FieldValueProps<Value>)
   | ({ required: false } & FieldValueProps<Value | undefined>);
 
 export type FieldValueProps<Value> = {
