@@ -7,8 +7,8 @@ import type {
   EmptyFormOptionsGenerics,
   FormOptionsBuilder,
   FormOptionsBuilderFactory,
-} from "./createFormOptions";
-import { emptyFormOptionsBuilder } from "./createFormOptions";
+} from "./FormOptionsBuilder";
+import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
