@@ -127,9 +127,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../packages/yas-tsconfig
-      concurrently:
-        specifier: ^8.0.1
-        version: 8.0.1
       eslint:
         specifier: ^8.35.0
         version: 8.35.0

@@ -6,11 +6,7 @@
     "build": "vite build",
     "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "test": "pnpm test:unit && pnpm test:e2e",
-    "test:watch": "concurrently -n unit,e2e \"pnpm test:unit --watch\" \"pnpm test:e2e --ui\"",
-    "test:unit": "jest",
-    "test:e2e": "yas-playwright test"
+    "lint:fix": "eslint . --fix"
   },
   "jest": {
     "preset": "@yas/jest/presets/node"
@@ -31,7 +27,6 @@
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "^8.0.1",
     "eslint": "^8.35.0",
     "eslint-config-yas": "workspace:*",
     "jest": "^29.6.1",
