@@ -10,6 +10,8 @@ export function Home() {
       <Text variant="h1">Yet Another Stack</Text>
       <Text paragraph>Mode: {env.mode}</Text>
       <Text paragraph>{response}</Text>
+
+      Some UI change
     </>
   );
 }
