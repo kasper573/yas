@@ -6,7 +6,7 @@ import {
   MenuItem,
   FormHelperText,
 } from "@mui/material";
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 
 export interface SelectOption<Value> {
@@ -29,7 +29,7 @@ export function SingleSelectField<Value>({
   const id = useId();
   const valueAsOptionIndex = useMemo(
     () => options.findIndex((o) => o.value === value),
-    [value, options]
+    [value, options],
   );
   return (
     <FormControl fullWidth>
