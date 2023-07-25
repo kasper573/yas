@@ -6,7 +6,7 @@ import { BaseForm } from "../forms/BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
 
-const UserForm = BaseForm.extend((options) =>
+const LoginForm = BaseForm.extend((options) =>
   options
     .schema(
       z.object({
@@ -17,18 +17,18 @@ const UserForm = BaseForm.extend((options) =>
     .field("password", TextField, { password: true }),
 );
 
-const InlineUserForm = UserForm.extend((options) =>
+const InlineUserForm = LoginForm.extend((options) =>
   options.layout(InlineFormLayout),
 );
 
 export function LoginExample() {
-  const [data, setData] = useState<inferFormValue<typeof UserForm>>();
+  const [data, setData] = useState<inferFormValue<typeof LoginForm>>();
   return (
     <>
-      <UserForm value={data} onChange={setData} title="Login form" />
+      <LoginForm value={data} onChange={setData} title="Login form" />
 
       <Typography variant="h4" sx={{ my: 2 }}>
-        Regular form
+        Inline form
       </Typography>
       <InlineUserForm value={data} onChange={setData} />
     </>
