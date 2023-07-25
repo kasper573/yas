@@ -6,7 +6,7 @@ import type {
   FormSchema,
   FormState,
   FormValidationMode,
-  inferFormValue,
+  inferValue,
 } from "./types/commonTypes";
 import type { RCFGenerics } from "./types/optionTypes";
 
@@ -36,7 +36,7 @@ export class FormStore<
     private _mode: FormValidationMode,
   ) {}
 
-  resetData(data: inferFormValue<Schema>) {
+  resetData(data: inferValue<Schema>) {
     this.mutate((state) => {
       state.data = data;
     });
@@ -48,7 +48,7 @@ export class FormStore<
 
   changeField<FieldName extends FieldNames<Schema>>(
     name: FieldName,
-    value: inferFormValue<Schema>[FieldName],
+    value: inferValue<Schema>[FieldName],
   ) {
     this.mutate((draft) => {
       draft.data[name] = value;
@@ -103,7 +103,7 @@ export class FormStore<
 
 function getFormFieldErrors<Schema extends FormSchema>(
   schema: Schema,
-  value: inferFormValue<Schema>,
+  value: inferValue<Schema>,
 ): FieldErrors<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {

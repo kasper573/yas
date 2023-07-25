@@ -1,6 +1,6 @@
 import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import type { FieldErrors, inferFormValue } from "./types/commonTypes";
+import type { FieldErrors, inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
@@ -19,8 +19,12 @@ export interface FormProps<Value> {
   onSubmit?: (value: Value) => unknown;
 }
 
+export type inferFormValue<T> = T extends FormComponent<infer G>
+  ? inferValue<G["schema"]>
+  : never;
+
 export type FormComponent<G extends RCFGenerics> = ComponentType<
-  FormProps<inferFormValue<G["schema"]>> &
+  FormProps<inferValue<G["schema"]>> &
     Omit<G["layoutProps"], keyof FormLayoutProps>
 > & {
   extend<NewG extends RCFGenerics>(

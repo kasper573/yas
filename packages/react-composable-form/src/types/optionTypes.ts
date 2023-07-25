@@ -6,8 +6,8 @@ import type {
   FormError,
   FormSchema,
   FormValidationMode,
-  FormValueType,
-  inferFormValue,
+  ValueType,
+  inferValue,
 } from "./commonTypes";
 
 /**
@@ -45,14 +45,14 @@ export interface FormLayoutProps<
 }
 
 export type InputFieldComponent<
-  Type extends FormValueType,
+  Type extends ValueType,
   AdditionalProps,
-> = ComponentType<FieldProps<inferFormValue<Type>> & AdditionalProps>;
+> = ComponentType<FieldProps<inferValue<Type>> & AdditionalProps>;
 
 export type ComposedFieldComponent<
-  Type extends FormValueType,
+  Type extends ValueType,
   AdditionalProps,
-> = ComponentType<Partial<FieldProps<inferFormValue<Type>> & AdditionalProps>>;
+> = ComponentType<Partial<FieldProps<inferValue<Type>> & AdditionalProps>>;
 
 export interface FieldProps<Value = any> {
   name: string;
@@ -66,7 +66,7 @@ export interface FieldProps<Value = any> {
 export type FieldFor<
   Schema extends FormSchema,
   FieldName extends string,
-> = ComponentType<FieldProps<inferFormValue<Schema["shape"][FieldName]>>>;
+> = ComponentType<FieldProps<inferValue<Schema["shape"][FieldName]>>>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
@@ -90,17 +90,17 @@ export type FieldComponentsPassedToLayout<
 type InferFieldComponentProps<
   Components extends FieldComponents,
   FieldName extends string,
-  Type extends FormValueType,
+  Type extends ValueType,
 > = FieldName extends keyof Components["namedComponents"]
   ? ComponentProps<Components["namedComponents"][FieldName]>
   : DictionaryGet<
       InferredTypedComponents<Components["typedComponents"]>,
-      inferFormValue<Type>
+      inferValue<Type>
     >;
 
 type InferredTypedComponents<T extends TypedComponents> = {
   [K in keyof T]: [
-    type: inferFormValue<T[K][0]>,
+    type: inferValue<T[K][0]>,
     component: ComponentProps<T[K][1]>,
   ];
 };

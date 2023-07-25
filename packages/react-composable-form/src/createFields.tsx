@@ -7,11 +7,7 @@ import {
   useMemo,
   useSyncExternalStore,
 } from "react";
-import type {
-  FieldNames,
-  FormSchema,
-  FormValueType,
-} from "./types/commonTypes";
+import type { FieldNames, FormSchema, ValueType } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FormStore } from "./FormStore";
 import { getTypedComponent } from "./typedComponents";
@@ -46,7 +42,7 @@ export function createFields<
   );
 }
 
-function createFallbackComponent(name: string, type: FormValueType) {
+function createFallbackComponent(name: string, type: ValueType) {
   // Missing field component errors are thrown when the component is rendered, not when the form is built.
   // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
   return function FallbackFieldComponent() {

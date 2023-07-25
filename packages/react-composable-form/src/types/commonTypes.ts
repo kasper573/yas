@@ -2,16 +2,16 @@ import type { AnyZodObject, output, ZodType } from "zod";
 
 export type FormSchema = AnyZodObject;
 
-export type FormValueType<T = any> = ZodType<T>;
+export type ValueType<T = any> = ZodType<T>;
 
 export type FormError = unknown;
 
 export type FormValidationMode = "change" | "blur" | "submit";
 
-export type inferFormValue<Type extends FormValueType> = output<Type>;
+export type inferValue<Type extends ValueType> = output<Type>;
 
 export interface FormState<Schema extends FormSchema> {
-  data: inferFormValue<Schema>;
+  data: inferValue<Schema>;
   errors: FieldErrors<Schema>;
 }
 

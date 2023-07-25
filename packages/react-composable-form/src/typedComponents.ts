@@ -1,24 +1,21 @@
 import { produce } from "immer";
-import type { FormValueType } from "./types/commonTypes";
+import type { ValueType } from "./types/commonTypes";
 import type { AnyComponent, DictionarySet } from "./types/utilityTypes";
 import { isMatchingType } from "./isMatchingType";
 
 export type TypedComponents = TypedComponentTuple[];
 
-export type TypedComponentTuple = [
-  type: FormValueType,
-  component: AnyComponent,
-];
+export type TypedComponentTuple = [type: ValueType, component: AnyComponent];
 
 export type SetTypedComponent<
   Existing extends TypedComponents,
-  Type extends FormValueType,
+  Type extends ValueType,
   Component extends AnyComponent,
 > = DictionarySet<Existing, Type, Component>;
 
 export function getTypedComponent(
   components: TypedComponents,
-  type: FormValueType,
+  type: ValueType,
 ): AnyComponent | undefined {
   const tuple = components.find(([candidate]) =>
     isMatchingType(type, candidate),
@@ -28,7 +25,7 @@ export function getTypedComponent(
 
 export function setTypedComponent<
   Existing extends TypedComponents,
-  Type extends FormValueType,
+  Type extends ValueType,
   Component extends AnyComponent,
 >(
   components: Existing,
