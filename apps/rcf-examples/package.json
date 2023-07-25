@@ -1,0 +1,35 @@
+{
+  "name": "@yas/rcf-examples",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/node"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.5",
+    "@mui/material": "^5.14.1",
+    "immer": "^10.0.2",
+    "react": "^18.2.0",
+    "react-composable-form": "workspace:*",
+    "react-dom": "^18.2.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@yas/build-tools": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "eslint": "^8.35.0",
+    "eslint-config-yas": "workspace:*",
+    "jest": "^29.6.1",
+    "vite": "^4.3.9"
+  }
+}
