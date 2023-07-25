@@ -3,12 +3,12 @@ import type { TypedComponents } from "../typedComponents";
 import type { AnyComponent, DictionaryGet, AnyProps } from "./utilityTypes";
 import type {
   FieldNames,
-  FieldState,
   FormSchema,
   FormValidationMode,
   FormValueType,
   inferFormValue,
 } from "./commonTypes";
+import type { FormError } from "./commonTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -44,12 +44,20 @@ export interface FormLayoutProps<
   handleSubmit: (e?: FormEvent) => unknown;
 }
 
-export interface FieldProps<Value = any> extends FieldState<Value> {
+export type FieldProps<Value = any> = OptionalityRelativeFieldProps<Value> & {
   name: string;
-  required: boolean;
-  onChange: (newValue: Value) => unknown;
   onBlur: () => unknown;
-}
+  errors?: FormError[];
+};
+
+export type OptionalityRelativeFieldProps<Value> =
+  | ({ required: true } & FieldValueProps<Exclude<Value, undefined>>)
+  | ({ required: false } & FieldValueProps<Value | undefined>);
+
+export type FieldValueProps<Value> = {
+  value: Value;
+  onChange: (newValue: Value) => unknown;
+};
 
 export type FieldFor<
   Schema extends FormSchema,

@@ -1,6 +1,12 @@
 import type { ZodRawShape } from "zod";
 import type { ComponentProps, ComponentType } from "react";
-import { memo, useCallback, useContext, useSyncExternalStore } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import type {
   FieldNames,
   FormSchema,
@@ -59,7 +65,10 @@ function enhanceFormField<
   type Props = ComponentProps<FieldFor<Schema, FieldName>>;
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
-    const required = !store.schema.shape[name].isOptional();
+    const required = useMemo(
+      () => !store.schema.shape[name].isOptional(),
+      [store],
+    );
     const value = useSyncExternalStore(
       store.subscribe,
       () => store.state.data[name],
@@ -80,7 +89,7 @@ function enhanceFormField<
         name={name}
         value={value}
         errors={errors}
-        required={required}
+        required={required as any} // Unfortunate assert due to "boolean not assignable to type false" bs
         onChange={changeHandler as Props["onChange"]}
         onBlur={blurHandler as Props["onBlur"]}
         {...props}

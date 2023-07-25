@@ -18,11 +18,6 @@ export interface FormState<Schema extends FormSchema> {
 export type FieldNames<Schema extends FormSchema> = `${string &
   keyof Schema["shape"]}`;
 
-export interface FieldState<Value> {
-  value: Value;
-  errors?: FormError[];
-}
-
 export type FieldErrors<Schema extends FormSchema> = Partial<
   Record<FieldNames<Schema>, FormError[]>
 >;
