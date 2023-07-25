@@ -34,7 +34,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      Testing forms
+      Testing forms 2
       <UserForm value={data} onChange={setData} />
       <pre>{JSON.stringify({ data }, null, 2)}</pre>
     </ThemeProvider>
