@@ -1,10 +1,12 @@
 import { z } from "zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
-import { Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
+
+type LoginPayload = inferFormValue<typeof LoginForm>;
 
 const LoginForm = BaseForm.extend((options) =>
   options
@@ -21,16 +23,39 @@ const InlineUserForm = LoginForm.extend((options) =>
   options.layout(InlineFormLayout),
 );
 
+const SpecializedUserForm = LoginForm.extend((options) =>
+  options.layout(({ fields: { Email, Password }, handleSubmit }) => (
+    <Box sx={{ mt: 5 }}>
+      <form onSubmit={handleSubmit}>
+        <Email sx={{ transform: "rotateZ(-15deg)" }} />
+        <Password sx={{ transform: "rotateZ(15deg)", mx: 3 }} />
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
+      </form>
+    </Box>
+  )),
+);
+
 export function LoginExample() {
-  const [data, setData] = useState<inferFormValue<typeof LoginForm>>();
+  const [data, setData] = useState<LoginPayload>();
+  const showData = (data: LoginPayload) => alert(JSON.stringify(data, null, 2));
   return (
     <>
-      <LoginForm value={data} onChange={setData} title="Login form" />
-
+      <LoginForm
+        title="Basic layout"
+        value={data}
+        onChange={setData}
+        onSubmit={showData}
+      />
       <Typography variant="h4" sx={{ my: 2 }}>
-        Inline form
+        Inline layout
       </Typography>
-      <InlineUserForm value={data} onChange={setData} />
+      <InlineUserForm value={data} onChange={setData} onSubmit={showData} />
+      <Typography variant="h4" sx={{ my: 2 }}>
+        Specialized layout
+      </Typography>
+      <SpecializedUserForm value={data} onChange={setData} />
     </>
   );
 }

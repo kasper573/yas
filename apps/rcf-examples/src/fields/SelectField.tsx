@@ -24,8 +24,7 @@ export function SingleSelectField<Value>({
   value,
   errors = [],
   onChange,
-  onBlur,
-  size,
+  ...rest
 }: SingleSelectFieldProps<Value>) {
   const id = useId();
   const valueAsOptionIndex = useMemo(
@@ -36,13 +35,12 @@ export function SingleSelectField<Value>({
     <FormControl fullWidth>
       <InputLabel id={id}>{name}</InputLabel>
       <Select
-        size={size}
         labelId={id}
         value={valueAsOptionIndex ?? ""}
         label={name}
         error={errors.length > 0}
         onChange={(e) => onChange?.(options[e.target.value as number]?.value)}
-        onBlur={onBlur}
+        {...rest}
       >
         {options.map((option, index) => (
           <MenuItem key={index} value={index}>

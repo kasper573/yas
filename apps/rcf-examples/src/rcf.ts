@@ -1,8 +1,10 @@
 import { createRCF } from "react-composable-form";
 import type { inferFieldProps, inferLayoutProps } from "react-composable-form";
+import type { SxProps } from "@mui/material";
 
 interface BaseFieldProps {
   size?: "small" | "medium";
+  sx?: SxProps;
 }
 
 // The form factory is created with a generic type with the props that all field components must implement.

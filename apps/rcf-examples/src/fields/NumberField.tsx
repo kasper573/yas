@@ -6,21 +6,19 @@ export function NumberField({
   value,
   errors = [],
   onChange,
-  onBlur,
-  size,
+  ...rest
 }: FieldProps<number>) {
   return (
     <MuiTextField
-      size={size}
       value={value ?? ""}
       label={name}
       error={errors.length > 0}
       helperText={errors.join(", ")}
-      onBlur={onBlur}
       onChange={(e) => {
         const num = parseFloat(e.target.value);
         onChange?.(isNaN(num) ? undefined : num);
       }}
+      {...rest}
     />
   );
 }
