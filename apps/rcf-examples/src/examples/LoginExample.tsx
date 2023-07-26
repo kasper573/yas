@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, keyframes, Typography } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
@@ -29,13 +29,22 @@ const SpecializedUserForm = LoginForm.extend((options) =>
       <form onSubmit={handleSubmit}>
         <Email sx={{ transform: "rotateZ(-15deg)" }} />
         <Password sx={{ transform: "rotateZ(15deg)", mx: 3 }} />
-        <Button type="submit" variant="contained">
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ animation: `${spin} 1s linear infinite` }}
+        >
           Submit
         </Button>
       </form>
     </Box>
   )),
 );
+
+const spin = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
 
 export function LoginExample() {
   const [data, setData] = useState<LoginPayload>();
