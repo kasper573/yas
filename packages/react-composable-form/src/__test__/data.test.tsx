@@ -5,6 +5,7 @@ import type { ComponentProps, ComponentType } from "react";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
+import { silenceErrorLogs } from "./utils";
 
 describe("data", () => {
   it("can be displayed", () => {
@@ -17,6 +18,44 @@ describe("data", () => {
     );
     const { getByRole } = render(<Form value={{ foo: "bar" }} />);
     expect(getByRole("textbox")).toHaveValue("bar");
+  });
+
+  it("can use default value", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(z.string(), ({ value, onChange }) => (
+          <input value={value} onChange={(e) => onChange?.(e.target.value)} />
+        ))
+        .layout(({ fields: { Foo }, handleSubmit }) => (
+          <>
+            <Foo />
+            <button onClick={handleSubmit}>submit</button>
+          </>
+        )),
+    );
+
+    const fn = jest.fn();
+    const { getByRole } = render(
+      <Form defaultValue={{ foo: "default" }} onSubmit={fn} />,
+    );
+    expect(getByRole("textbox")).toHaveValue("default");
+    await userEvent.clear(getByRole("textbox"));
+    await userEvent.type(getByRole("textbox"), "changed");
+    await userEvent.click(getByRole("button"));
+    expect(fn).toHaveBeenCalledWith({ foo: "changed" });
+  });
+
+  it("cannot use both value and defaultValue", () => {
+    const Form = createForm();
+
+    const restoreErrorLogs = silenceErrorLogs();
+    expect(() =>
+      render(<Form value={{ foo: "default" }} defaultValue={{ bar: "baz" }} />),
+    ).toThrow(
+      "Cannot set both defaultValue and value, please use one or the other",
+    );
+    restoreErrorLogs();
   });
 
   it("can be updated via props", async () => {

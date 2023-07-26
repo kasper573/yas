@@ -3,6 +3,7 @@ import { z } from "zod";
 import { render } from "@testing-library/react";
 import { createForm } from "../createForm";
 import type { FieldProps } from "../types/optionTypes";
+import { silenceErrorLogs } from "./utils";
 
 describe("components", () => {
   describe("can be defined by value type", () => {
@@ -214,11 +215,3 @@ describe("components", () => {
     });
   });
 });
-
-function silenceErrorLogs() {
-  const original = console.error;
-  console.error = () => {};
-  return () => {
-    console.error = original;
-  };
-}

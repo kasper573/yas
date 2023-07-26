@@ -55,11 +55,18 @@ function createFormImpl<G extends RCFGenerics>(
   const fields = createFields({ namedComponents, typedComponents }, schema);
 
   const ComposableForm: FormComponent<G> = (({
-    value: data = empty,
+    defaultValue,
+    value: data = defaultValue ?? empty,
     onChange,
     onSubmit,
     ...layoutProps
   }) => {
+    if (defaultValue !== undefined && data !== defaultValue) {
+      throw new Error(
+        "Cannot set both defaultValue and value, please use one or the other",
+      );
+    }
+
     const store: FormStoreFor<G> = useMemo(
       () =>
         new FormStore(
