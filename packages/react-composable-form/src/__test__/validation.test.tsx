@@ -153,6 +153,7 @@ describe("validation", () => {
 
     const Form = createForm((options) =>
       options
+        .validateOn("change")
         .schema(objectType)
         .type(
           z.string(),
