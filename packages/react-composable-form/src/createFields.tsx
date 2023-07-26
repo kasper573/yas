@@ -1,4 +1,3 @@
-import type { ZodRawShape } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import {
   memo,
@@ -18,6 +17,7 @@ import type {
   FieldFor,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./isMatchingType";
+import type { GetShapeFromSchema } from "./types/commonTypes";
 
 export function createFields<
   Schema extends FormSchema,
@@ -43,12 +43,18 @@ export function createFields<
   );
 }
 
-function getShapeFromSchema(type: FormSchema): ZodRawShape {
+function getShapeFromSchema<Schema extends FormSchema>(
+  type: FormSchema,
+): GetShapeFromSchema<Schema> {
   while (type instanceof ZodEffects) {
     type = type.innerType();
   }
   if (!(type instanceof ZodObject)) {
-    throw new Error("Schema must be an object");
+    throw new Error(
+      `Schema must be an object or effect chain that starts with an object, got ${getFirstPartyType(
+        type,
+      )}`,
+    );
   }
   return type.shape;
 }

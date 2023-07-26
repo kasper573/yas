@@ -9,6 +9,7 @@ import type {
   ValueType,
   inferValue,
 } from "./commonTypes";
+import type { GetShapeFromSchema } from "./commonTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -68,7 +69,9 @@ export interface FieldProps<Value = any> {
 export type FieldFor<
   Schema extends FormSchema,
   FieldName extends string,
-> = ComponentType<FieldProps<inferValue<Schema["shape"][FieldName]>>>;
+> = ComponentType<
+  FieldProps<inferValue<GetShapeFromSchema<Schema>[FieldName]>>
+>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
@@ -90,7 +93,9 @@ export type FieldComponentsPassedToLayout<
   Components extends FieldComponents,
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
-    Partial<InferFieldComponentProps<Components, K, Schema["shape"][K]>>
+    Partial<
+      InferFieldComponentProps<Components, K, GetShapeFromSchema<Schema>[K]>
+    >
   >;
 };
 

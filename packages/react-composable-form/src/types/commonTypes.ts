@@ -1,6 +1,7 @@
-import type { AnyZodObject, output, ZodType } from "zod";
+import type { AnyZodObject, output, ZodEffects, ZodType } from "zod";
+import type { ZodRawShape } from "zod/lib/types";
 
-export type FormSchema = AnyZodObject;
+export type FormSchema = ValueType;
 
 export type ValueType<T = any> = ZodType<T>;
 
@@ -15,8 +16,14 @@ export interface FormState<Schema extends FormSchema> {
   errors: FieldErrors<Schema>;
 }
 
+export type GetShapeFromSchema<T extends ValueType> = T extends AnyZodObject
+  ? T["shape"]
+  : T extends ZodEffects<infer U>
+  ? GetShapeFromSchema<U>
+  : ZodRawShape;
+
 export type FieldNames<Schema extends FormSchema> = `${string &
-  keyof Schema["shape"]}`;
+  keyof GetShapeFromSchema<Schema>}`;
 
 export type FieldErrors<Schema extends FormSchema> = Partial<
   Record<FieldNames<Schema>, FormError[]>
