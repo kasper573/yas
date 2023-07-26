@@ -83,7 +83,7 @@ describe("data", () => {
     expect(data).toEqual({ foo: "input" });
   });
 
-  it("changes to one field does not re-render other fields", async () => {
+  it("changes to one field does not re-render other fields (without errors)", async () => {
     const Bar = renderCounter(({ name, ...rest }) => (
       <input aria-label={name} {...rest} />
     ));
@@ -93,6 +93,32 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
+        .field("foo", Foo)
+        .field("bar", Bar),
+    );
+    const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
+    const fooBefore = Foo.getCount();
+    const barBefore = Bar.getCount();
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
+    expect(Foo.getCount() - fooBefore).toBe(3);
+    expect(Bar.getCount() - barBefore).toBe(0);
+  });
+
+  it("changes to one field does not re-render other fields (with errors)", async () => {
+    const Bar = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Foo = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Form = createForm((options) =>
+      options
+        .validateOn("change")
+        .schema(
+          z
+            .object({ foo: z.string().min(3), bar: z.string().min(3) })
+            .refine(() => false, { message: "Some error" }),
+        )
         .field("foo", Foo)
         .field("bar", Bar),
     );
