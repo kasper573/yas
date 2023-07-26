@@ -140,7 +140,7 @@ describe("validation", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it("can work on refined object schemas", async () => {
+  it("can display field errors from refined validations with paths", async () => {
     const objectType = z
       .object({
         password: z.string(),
