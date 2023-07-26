@@ -75,6 +75,11 @@ function createFormImpl<G extends RCFGenerics>(
       () => store.state.generalErrors,
     );
 
+    const fieldErrors = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.fieldErrors,
+    );
+
     useEffect(
       () => store.subscribe(() => onChange?.(store.state.data)),
       [store, onChange],
@@ -98,6 +103,7 @@ function createFormImpl<G extends RCFGenerics>(
         <Layout
           {...layoutProps}
           generalErrors={generalErrors}
+          fieldErrors={fieldErrors}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}

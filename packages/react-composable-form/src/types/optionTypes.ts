@@ -43,7 +43,7 @@ export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
 export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = FieldComponents,
-> extends Pick<FormErrors<Schema>, "generalErrors"> {
+> extends FormErrors<Schema> {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
 }
