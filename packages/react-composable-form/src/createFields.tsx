@@ -88,7 +88,7 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name],
+      () => store.state.fieldErrors[name],
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {

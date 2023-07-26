@@ -179,4 +179,26 @@ describe("validation", () => {
     );
     getByText("Passwords do not match");
   });
+
+  it("can display form errors from refined validations", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(
+          z
+            .object({})
+            .refine(() => false, { message: "Error 1" })
+            .refine(() => false, { message: "Error 2" }),
+        )
+        .layout(({ generalErrors, handleSubmit }) => (
+          <>
+            <span>{generalErrors?.join(", ")}</span>
+            <button onClick={handleSubmit}>submit</button>
+          </>
+        )),
+    );
+
+    const { getByRole, getByText } = render(<Form />);
+    await userEvent.click(getByRole("button", { name: "submit" }));
+    getByText("Error 1, Error 2");
+  });
 });

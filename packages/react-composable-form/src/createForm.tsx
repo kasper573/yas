@@ -1,6 +1,6 @@
 import type { FormEvent, ComponentType } from "react";
-import { useCallback, useEffect, useMemo } from "react";
-import type { FieldErrors, inferValue } from "./types/commonTypes";
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
+import type { inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
@@ -64,10 +64,15 @@ function createFormImpl<G extends RCFGenerics>(
       () =>
         new FormStore(
           schema,
-          { data, errors: {} as FieldErrors<G["schema"]> },
+          { data, generalErrors: [], fieldErrors: {} },
           mode,
         ),
       [],
+    );
+
+    const generalErrors = useSyncExternalStore(
+      store.subscribe,
+      () => store.state.generalErrors,
     );
 
     useEffect(
@@ -92,6 +97,7 @@ function createFormImpl<G extends RCFGenerics>(
       <FormContext.Provider value={store}>
         <Layout
           {...layoutProps}
+          generalErrors={generalErrors}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}

@@ -2,7 +2,7 @@ import type { Draft } from "immer";
 import { produce } from "immer";
 import type {
   FieldNames,
-  FieldErrors,
+  FormErrors,
   FormSchema,
   FormState,
   FormValidationMode,
@@ -27,7 +27,9 @@ export class FormStore<
   }
 
   get isValid() {
-    return !Object.values(this._state.errors).some((errors) => errors?.length);
+    return !Object.values(this._state.fieldErrors).some(
+      (errors) => errors?.length,
+    );
   }
 
   constructor(
@@ -66,13 +68,17 @@ export class FormStore<
 
   validate<FieldName extends FieldNames<Schema>>(...names: FieldName[]) {
     this.mutate((draft) => {
-      const errors = getFormFieldErrors(this.schema, draft.data);
+      const { generalErrors, fieldErrors } = getFormErrors(
+        this.schema,
+        draft.data,
+      );
+      draft.generalErrors = generalErrors;
       if (names.length) {
         for (const name of names) {
-          draft.errors[name] = errors[name];
+          draft.fieldErrors[name] = fieldErrors[name];
         }
       } else {
-        draft.errors = errors;
+        draft.fieldErrors = fieldErrors;
       }
     });
   }
@@ -101,16 +107,19 @@ export class FormStore<
   };
 }
 
-function getFormFieldErrors<Schema extends FormSchema>(
+function getFormErrors<Schema extends FormSchema>(
   schema: Schema,
   value: inferValue<Schema>,
-): FieldErrors<Schema> {
+): FormErrors<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
-    return {};
+    return {
+      generalErrors: [],
+      fieldErrors: {},
+    };
   }
-  const { fieldErrors } = res.error.flatten();
-  return fieldErrors as FieldErrors<Schema>;
+  const { formErrors: generalErrors, fieldErrors } = res.error.flatten();
+  return { generalErrors, fieldErrors } as FormErrors<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;

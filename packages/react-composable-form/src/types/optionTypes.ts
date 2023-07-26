@@ -3,11 +3,12 @@ import type { TypedComponents } from "../typedComponents";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   FieldNames,
-  FormError,
+  AnyError,
   FormSchema,
   FormValidationMode,
   ValueType,
   inferValue,
+  FormErrors,
 } from "./commonTypes";
 import type { GetShapeFromSchema } from "./commonTypes";
 
@@ -42,7 +43,7 @@ export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
 export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = FieldComponents,
-> {
+> extends Pick<FormErrors<Schema>, "generalErrors"> {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
 }
@@ -61,7 +62,7 @@ export interface FieldProps<Value = any> {
   name?: string;
   value?: Value;
   required?: boolean;
-  errors?: FormError[];
+  errors?: AnyError[];
   onChange?: (newValue?: Value) => unknown;
   onBlur?: () => unknown;
 }

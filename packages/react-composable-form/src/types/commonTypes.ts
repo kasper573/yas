@@ -5,15 +5,15 @@ export type FormSchema = ValueType;
 
 export type ValueType<T = any> = ZodType<T>;
 
-export type FormError = unknown;
+export type AnyError = unknown;
 
 export type FormValidationMode = "change" | "blur" | "submit";
 
 export type inferValue<Type extends ValueType> = output<Type>;
 
-export interface FormState<Schema extends FormSchema> {
+export interface FormState<Schema extends FormSchema>
+  extends FormErrors<Schema> {
   data: inferValue<Schema>;
-  errors: FieldErrors<Schema>;
 }
 
 export type GetShapeFromSchema<T extends ValueType> = T extends AnyZodObject
@@ -26,5 +26,10 @@ export type FieldNames<Schema extends FormSchema> = `${string &
   keyof GetShapeFromSchema<Schema>}`;
 
 export type FieldErrors<Schema extends FormSchema> = Partial<
-  Record<FieldNames<Schema>, FormError[]>
+  Record<FieldNames<Schema>, AnyError[]>
 >;
+
+export interface FormErrors<Schema extends FormSchema> {
+  generalErrors: AnyError[];
+  fieldErrors: FieldErrors<Schema>;
+}
