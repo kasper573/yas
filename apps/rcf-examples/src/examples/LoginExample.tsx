@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
-import { Box, Button, keyframes, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
@@ -13,7 +13,7 @@ const LoginForm = BaseForm.extend((options) =>
     .schema(
       z.object({
         email: z.string().email(),
-        password: z.string(),
+        password: z.string().min(8),
       }),
     )
     .field("password", TextField, { password: true }),
@@ -27,12 +27,16 @@ const SpecializedUserForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <Box sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
-        <Email sx={{ animation: `${spinY} 1s linear infinite` }} />
-        <Password sx={{ animation: `${spinX} 2s linear infinite`, mx: 3 }} />
+        <Email sx={{ transform: `rotateZ(-15deg)` }} size="small" />
+        <Password
+          name="PWD"
+          helperText="I'm so special!"
+          sx={{ transform: `rotateZ(15deg)`, mx: 3 }}
+        />
         <Button
           type="submit"
-          variant="contained"
-          sx={{ animation: `${spinZ} 3s linear infinite` }}
+          variant="outlined"
+          sx={{ transform: `rotateZ(-15deg)` }}
         >
           Submit
         </Button>
@@ -63,18 +67,3 @@ export function LoginExample() {
     </>
   );
 }
-
-const spinX = keyframes`
-  from { transform: rotateX(0deg); }
-  to { transform: rotateX(360deg); }
-`;
-
-const spinY = keyframes`
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-`;
-
-const spinZ = keyframes`
-  from { transform: rotateZ(0deg); }
-  to { transform: rotateZ(360deg); }
-`;

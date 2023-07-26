@@ -1,8 +1,10 @@
 import { TextField as MuiTextField } from "@mui/material";
+import type { ReactNode } from "react";
 import type { FieldProps } from "../rcf";
 
 export interface TextFieldProps extends FieldProps<string> {
   password?: boolean;
+  helperText?: ReactNode;
 }
 
 export function TextField({
@@ -11,6 +13,7 @@ export function TextField({
   errors = [],
   onChange,
   password,
+  helperText,
   ...rest
 }: TextFieldProps) {
   return (
@@ -18,7 +21,7 @@ export function TextField({
       value={value ?? ""}
       label={name}
       error={errors.length > 0}
-      helperText={errors.join(", ")}
+      helperText={errors.join(", ") || helperText}
       onChange={(e) => onChange?.(e.target.value || undefined)}
       type={password ? "password" : "text"}
       {...rest}
