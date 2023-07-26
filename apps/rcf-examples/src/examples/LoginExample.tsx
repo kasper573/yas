@@ -27,12 +27,12 @@ const SpecializedUserForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <Box sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
-        <Email sx={{ transform: "rotateZ(-15deg)" }} />
-        <Password sx={{ transform: "rotateZ(15deg)", mx: 3 }} />
+        <Email sx={{ animation: `${spinY} 1s linear infinite` }} />
+        <Password sx={{ animation: `${spinX} 2s linear infinite`, mx: 3 }} />
         <Button
           type="submit"
           variant="contained"
-          sx={{ animation: `${spin} 1s linear infinite` }}
+          sx={{ animation: `${spinZ} 3s linear infinite` }}
         >
           Submit
         </Button>
@@ -40,11 +40,6 @@ const SpecializedUserForm = LoginForm.extend((options) =>
     </Box>
   )),
 );
-
-const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-`;
 
 export function LoginExample() {
   const [data, setData] = useState<LoginPayload>();
@@ -68,3 +63,18 @@ export function LoginExample() {
     </>
   );
 }
+
+const spinX = keyframes`
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
+`;
+
+const spinY = keyframes`
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+`;
+
+const spinZ = keyframes`
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(360deg); }
+`;
