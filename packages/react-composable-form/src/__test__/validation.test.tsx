@@ -139,4 +139,43 @@ describe("validation", () => {
     await userEvent.click(getByText("submit"));
     expect(onSubmit).not.toHaveBeenCalled();
   });
+
+  it("can work on refined object schemas", async () => {
+    const objectType = z
+      .object({
+        password: z.string(),
+        passwordConfirm: z.string(),
+      })
+      .refine((data) => data.password === data.passwordConfirm, {
+        message: "Passwords do not match",
+        path: ["passwordConfirm", "password"],
+      });
+
+    const Form = createForm((options) =>
+      options
+        .schema(objectType)
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+                {...rest}
+              />
+              {errors.join(",")}
+            </>
+          ),
+        ),
+    );
+
+    const { getByRole, getByText } = render(<Form />);
+    await userEvent.type(getByRole("textbox", { name: "password" }), "foo");
+    await userEvent.type(
+      getByRole("textbox", { name: "passwordConfirm" }),
+      "bar",
+    );
+    getByText("Passwords do not match");
+  });
 });
