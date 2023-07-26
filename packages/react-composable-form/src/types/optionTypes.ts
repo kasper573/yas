@@ -14,6 +14,7 @@ import type {
  * Generic type holder. Reused as a reliable single source of truth of common generics.
  */
 export interface RCFGenerics<
+  BaseFieldProps extends AnyProps = any,
   Schema extends FormSchema = any,
   LayoutProps extends AnyProps = any,
   ValidationMode extends FormValidationMode = any,
@@ -23,6 +24,7 @@ export interface RCFGenerics<
   schema: Schema;
   layoutProps: LayoutProps;
   mode: ValidationMode;
+  baseFieldProps: BaseFieldProps;
 }
 
 export interface FormOptions<G extends RCFGenerics>
@@ -55,12 +57,12 @@ export type ComposedFieldComponent<
 > = ComponentType<Partial<FieldProps<inferValue<Type>> & AdditionalProps>>;
 
 export interface FieldProps<Value = any> {
-  name: string;
-  value: Value;
+  name?: string;
+  value?: Value;
   required?: boolean;
   errors?: FormError[];
-  onChange: (newValue: Value) => unknown;
-  onBlur: () => unknown;
+  onChange?: (newValue?: Value) => unknown;
+  onBlur?: () => unknown;
 }
 
 export type FieldFor<
@@ -77,6 +79,11 @@ export interface FieldComponents<
   namedComponents: Named;
   typedComponents: Typed;
 }
+
+export type FieldComponentsForProps<BaseFieldProps> = FieldComponents<
+  Record<string, ComponentType<BaseFieldProps>>,
+  [ValueType, ComponentType<BaseFieldProps>][]
+>;
 
 export type FieldComponentsPassedToLayout<
   Schema extends FormSchema,
