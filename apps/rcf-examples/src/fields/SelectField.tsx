@@ -1,4 +1,3 @@
-import type { FieldProps } from "react-composable-form";
 import {
   Select,
   FormControl,
@@ -8,15 +7,16 @@ import {
 } from "@mui/material";
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
+import type { FieldProps } from "../rcf";
 
 export interface SelectOption<Value> {
   value: Value;
   label: ReactNode;
 }
 
-export type SingleSelectFieldProps<Value> = FieldProps<Value | undefined> & {
+export interface SingleSelectFieldProps<Value> extends FieldProps<Value> {
   options: SelectOption<Value>[];
-};
+}
 
 export function SingleSelectField<Value>({
   options,
@@ -25,6 +25,7 @@ export function SingleSelectField<Value>({
   errors = [],
   onChange,
   onBlur,
+  size,
 }: SingleSelectFieldProps<Value>) {
   const id = useId();
   const valueAsOptionIndex = useMemo(
@@ -35,11 +36,12 @@ export function SingleSelectField<Value>({
     <FormControl fullWidth>
       <InputLabel id={id}>{name}</InputLabel>
       <Select
+        size={size}
         labelId={id}
         value={valueAsOptionIndex ?? ""}
         label={name}
         error={errors.length > 0}
-        onChange={(e) => onChange(options[e.target.value as number]?.value)}
+        onChange={(e) => onChange?.(options[e.target.value as number]?.value)}
         onBlur={onBlur}
       >
         {options.map((option, index) => (

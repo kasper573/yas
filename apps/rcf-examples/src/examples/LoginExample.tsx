@@ -2,7 +2,7 @@ import { z } from "zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { Typography } from "@mui/material";
-import { BaseForm } from "../forms/BaseForm";
+import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
 

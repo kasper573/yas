@@ -1,8 +1,8 @@
 import { Button, Stack, Typography } from "@mui/material";
-import type { FormLayoutProps } from "react-composable-form";
 import type { ReactNode } from "react";
+import type { FormLayoutProps } from "../rcf";
 
-export function DefaultFormLayout({
+export function BasicFormLayout({
   title,
   fields,
   handleSubmit,

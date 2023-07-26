@@ -1,7 +1,7 @@
-import type { FieldProps } from "react-composable-form";
 import { TextField as MuiTextField } from "@mui/material";
+import type { FieldProps } from "../rcf";
 
-export interface TextFieldProps extends FieldProps<string | undefined> {
+export interface TextFieldProps extends FieldProps<string> {
   password?: boolean;
 }
 
@@ -19,7 +19,7 @@ export function TextField({
       label={name}
       error={errors.length > 0}
       helperText={errors.join(", ")}
-      onChange={(e) => onChange(e.target.value || undefined)}
+      onChange={(e) => onChange?.(e.target.value || undefined)}
       type={password ? "password" : "text"}
       {...rest}
     />
