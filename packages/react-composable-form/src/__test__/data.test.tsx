@@ -24,7 +24,7 @@ describe("data", () => {
       options
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, ...rest }) => (
-          <input onChange={(e) => onChange(e.target.value)} {...rest} />
+          <input onChange={(e) => onChange?.(e.target.value)} {...rest} />
         )),
     );
     function App() {
@@ -49,7 +49,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "", ...rest }) => (
           <input
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => onChange?.(e.target.value)}
             value={value}
             {...rest}
           />
@@ -68,7 +68,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "", ...rest }) => (
           <input
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => onChange?.(e.target.value)}
             value={value}
             {...rest}
           />

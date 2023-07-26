@@ -34,7 +34,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
@@ -71,7 +71,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
@@ -106,7 +106,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
