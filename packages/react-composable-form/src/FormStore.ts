@@ -109,7 +109,8 @@ function getFormFieldErrors<Schema extends FormSchema>(
   if (res.success) {
     return {};
   }
-  return res.error.flatten().fieldErrors as FieldErrors<Schema>;
+  const { fieldErrors } = res.error.flatten();
+  return fieldErrors as FieldErrors<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;
