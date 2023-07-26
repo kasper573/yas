@@ -1,3 +1,3 @@
-import { LoginExample } from "./LoginExample";
+import { LayoutExample } from "./LayoutExample";
 
-export const examples = [{ name: "Login", component: LoginExample }];
+export const examples = [{ name: "Layout", component: LayoutExample }];

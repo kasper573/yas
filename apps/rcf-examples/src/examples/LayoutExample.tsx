@@ -45,7 +45,7 @@ const SpecializedUserForm = LoginForm.extend((options) =>
   )),
 );
 
-export function LoginExample() {
+export function LayoutExample() {
   const [data, setData] = useState<LoginPayload>();
   const showData = (data: LoginPayload) => alert(JSON.stringify(data, null, 2));
   return (
