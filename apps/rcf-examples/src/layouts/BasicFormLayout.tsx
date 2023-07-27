@@ -1,10 +1,11 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Alert, Button, Stack, Typography } from "@mui/material";
 import type { ReactNode } from "react";
 import type { FormLayoutProps } from "../rcf";
 
 export function BasicFormLayout({
   title,
   fields,
+  generalErrors,
   handleSubmit,
 }: FormLayoutProps & { title: ReactNode }) {
   return (
@@ -23,6 +24,11 @@ export function BasicFormLayout({
           <Component key={index} />
         ))}
       </Stack>
+      {generalErrors.length > 0 && (
+        <Alert color="error" sx={{ mt: 2 }}>
+          {generalErrors.join(", ")}
+        </Alert>
+      )}
     </form>
   );
 }
