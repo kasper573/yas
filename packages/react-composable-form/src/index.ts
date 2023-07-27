@@ -1,3 +1,2 @@
-export * from "./types/commonTypes";
-export * from "./types/optionTypes";
-export * from "./createForm";
+export * from "./createRCF";
+export type { inferFormValue } from "./createForm";

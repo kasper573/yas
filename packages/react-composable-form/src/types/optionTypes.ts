@@ -3,17 +3,20 @@ import type { TypedComponents } from "../typedComponents";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   FieldNames,
-  FormError,
+  AnyError,
   FormSchema,
   FormValidationMode,
   ValueType,
   inferValue,
+  FormErrors,
 } from "./commonTypes";
+import type { GetShapeFromSchema } from "./commonTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
  */
 export interface RCFGenerics<
+  BaseFieldProps extends AnyProps = any,
   Schema extends FormSchema = any,
   LayoutProps extends AnyProps = any,
   ValidationMode extends FormValidationMode = any,
@@ -23,6 +26,7 @@ export interface RCFGenerics<
   schema: Schema;
   layoutProps: LayoutProps;
   mode: ValidationMode;
+  baseFieldProps: BaseFieldProps;
 }
 
 export interface FormOptions<G extends RCFGenerics>
@@ -39,7 +43,7 @@ export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
 export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = FieldComponents,
-> {
+> extends FormErrors<Schema> {
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
 }
@@ -55,18 +59,20 @@ export type ComposedFieldComponent<
 > = ComponentType<Partial<FieldProps<inferValue<Type>> & AdditionalProps>>;
 
 export interface FieldProps<Value = any> {
-  name: string;
-  value: Value;
+  name?: string;
+  value?: Value;
   required?: boolean;
-  errors?: FormError[];
-  onChange: (newValue: Value) => unknown;
-  onBlur: () => unknown;
+  errors?: AnyError[];
+  onChange?: (newValue?: Value) => unknown;
+  onBlur?: () => unknown;
 }
 
 export type FieldFor<
   Schema extends FormSchema,
   FieldName extends string,
-> = ComponentType<FieldProps<inferValue<Schema["shape"][FieldName]>>>;
+> = ComponentType<
+  FieldProps<inferValue<GetShapeFromSchema<Schema>[FieldName]>>
+>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
@@ -78,12 +84,19 @@ export interface FieldComponents<
   typedComponents: Typed;
 }
 
+export type FieldComponentsForProps<BaseFieldProps> = FieldComponents<
+  Record<string, ComponentType<BaseFieldProps>>,
+  [ValueType, ComponentType<BaseFieldProps>][]
+>;
+
 export type FieldComponentsPassedToLayout<
   Schema extends FormSchema,
   Components extends FieldComponents,
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
-    Partial<InferFieldComponentProps<Components, K, Schema["shape"][K]>>
+    Partial<
+      InferFieldComponentProps<Components, K, GetShapeFromSchema<Schema>[K]>
+    >
   >;
 };
 

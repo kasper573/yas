@@ -125,6 +125,7 @@ export const emptyFormOptionsBuilder =
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
+  {},
   ZodObject<{}>,
   {},
   "submit",

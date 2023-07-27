@@ -5,6 +5,7 @@ import type { ComponentProps, ComponentType } from "react";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
+import { silenceErrorLogs } from "./utils";
 
 describe("data", () => {
   it("can be displayed", () => {
@@ -19,12 +20,50 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("bar");
   });
 
+  it("can use default value", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(z.string(), ({ value, onChange }) => (
+          <input value={value} onChange={(e) => onChange?.(e.target.value)} />
+        ))
+        .layout(({ fields: { Foo }, handleSubmit }) => (
+          <>
+            <Foo />
+            <button onClick={handleSubmit}>submit</button>
+          </>
+        )),
+    );
+
+    const fn = jest.fn();
+    const { getByRole } = render(
+      <Form defaultValue={{ foo: "default" }} onSubmit={fn} />,
+    );
+    expect(getByRole("textbox")).toHaveValue("default");
+    await userEvent.clear(getByRole("textbox"));
+    await userEvent.type(getByRole("textbox"), "changed");
+    await userEvent.click(getByRole("button"));
+    expect(fn).toHaveBeenCalledWith({ foo: "changed" });
+  });
+
+  it("cannot use both value and defaultValue", () => {
+    const Form = createForm();
+
+    const restoreErrorLogs = silenceErrorLogs();
+    expect(() =>
+      render(<Form value={{ foo: "default" }} defaultValue={{ bar: "baz" }} />),
+    ).toThrow(
+      "Cannot set both defaultValue and value, please use one or the other",
+    );
+    restoreErrorLogs();
+  });
+
   it("can be updated via props", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, ...rest }) => (
-          <input onChange={(e) => onChange(e.target.value)} {...rest} />
+          <input onChange={(e) => onChange?.(e.target.value)} {...rest} />
         )),
     );
     function App() {
@@ -49,7 +88,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "", ...rest }) => (
           <input
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => onChange?.(e.target.value)}
             value={value}
             {...rest}
           />
@@ -68,7 +107,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "", ...rest }) => (
           <input
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => onChange?.(e.target.value)}
             value={value}
             {...rest}
           />
@@ -83,7 +122,7 @@ describe("data", () => {
     expect(data).toEqual({ foo: "input" });
   });
 
-  it("changes to one field does not re-render other fields", async () => {
+  it("changes to one field does not re-render other fields (without errors)", async () => {
     const Bar = renderCounter(({ name, ...rest }) => (
       <input aria-label={name} {...rest} />
     ));
@@ -93,6 +132,32 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
+        .field("foo", Foo)
+        .field("bar", Bar),
+    );
+    const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
+    const fooBefore = Foo.getCount();
+    const barBefore = Bar.getCount();
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
+    expect(Foo.getCount() - fooBefore).toBe(3);
+    expect(Bar.getCount() - barBefore).toBe(0);
+  });
+
+  it("changes to one field does not re-render other fields (with errors)", async () => {
+    const Bar = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Foo = renderCounter(({ name, ...rest }) => (
+      <input aria-label={name} {...rest} />
+    ));
+    const Form = createForm((options) =>
+      options
+        .validateOn("change")
+        .schema(
+          z
+            .object({ foo: z.string().min(3), bar: z.string().min(3) })
+            .refine(() => false, { message: "Some error" }),
+        )
         .field("foo", Foo)
         .field("bar", Bar),
     );

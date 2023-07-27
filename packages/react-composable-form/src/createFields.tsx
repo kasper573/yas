@@ -1,4 +1,3 @@
-import type { ZodRawShape } from "zod";
 import type { ComponentProps, ComponentType } from "react";
 import {
   memo,
@@ -7,6 +6,7 @@ import {
   useMemo,
   useSyncExternalStore,
 } from "react";
+import { ZodEffects, ZodObject } from "zod";
 import type { FieldNames, FormSchema, ValueType } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FormStore } from "./FormStore";
@@ -17,6 +17,7 @@ import type {
   FieldFor,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./isMatchingType";
+import type { GetShapeFromSchema } from "./types/commonTypes";
 
 export function createFields<
   Schema extends FormSchema,
@@ -25,7 +26,7 @@ export function createFields<
   components: Components,
   schema: Schema,
 ): FieldComponentsPassedToLayout<Schema, Components> {
-  return Object.entries(schema.shape as ZodRawShape).reduce(
+  return Object.entries(getShapeFromSchema(schema)).reduce(
     (fields, [name, type]) => {
       const Component =
         components.namedComponents[name] ??
@@ -40,6 +41,22 @@ export function createFields<
     },
     {} as FieldComponentsPassedToLayout<Schema, Components>,
   );
+}
+
+function getShapeFromSchema<Schema extends FormSchema>(
+  type: FormSchema,
+): GetShapeFromSchema<Schema> {
+  while (type instanceof ZodEffects) {
+    type = type.innerType();
+  }
+  if (!(type instanceof ZodObject)) {
+    throw new Error(
+      `Schema must be an object or effect chain that starts with an object, got ${getFirstPartyType(
+        type,
+      )}`,
+    );
+  }
+  return type.shape;
 }
 
 function createFallbackComponent(name: string, type: ValueType) {
@@ -62,7 +79,7 @@ function enhanceFormField<
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
     const required = useMemo(
-      () => !store.schema.shape[name].isOptional(),
+      () => !getShapeFromSchema(store.schema)[name].isOptional(),
       [store],
     );
     const value = useSyncExternalStore(
@@ -71,7 +88,7 @@ function enhanceFormField<
     );
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.errors[name],
+      () => store.state.fieldErrors[name],
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {

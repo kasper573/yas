@@ -34,7 +34,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
@@ -71,7 +71,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
@@ -106,7 +106,7 @@ describe("validation", () => {
           ({ onChange, value = "", errors = [], name, ...rest }) => (
             <>
               <input
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
                 value={value}
                 aria-label={name}
                 {...rest}
@@ -138,5 +138,95 @@ describe("validation", () => {
     );
     await userEvent.click(getByText("submit"));
     expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it("can display field errors from refined validations with paths", async () => {
+    const objectType = z
+      .object({
+        password: z.string(),
+        passwordConfirm: z.string(),
+      })
+      .refine((data) => data.password === data.passwordConfirm, {
+        message: "Passwords do not match",
+        path: ["passwordConfirm", "password"],
+      });
+
+    const Form = createForm((options) =>
+      options
+        .validateOn("change")
+        .schema(objectType)
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+                {...rest}
+              />
+              {errors.join(",")}
+            </>
+          ),
+        ),
+    );
+
+    const { getByRole, getByText } = render(<Form />);
+    await userEvent.type(getByRole("textbox", { name: "password" }), "foo");
+    await userEvent.type(
+      getByRole("textbox", { name: "passwordConfirm" }),
+      "bar",
+    );
+    getByText("Passwords do not match");
+  });
+
+  it("can display general errors from refined validations", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(
+          z
+            .object({})
+            .refine(() => false, { message: "Error 1" })
+            .refine(() => false, { message: "Error 2" }),
+        )
+        .layout(({ generalErrors, handleSubmit }) => (
+          <>
+            <span>{generalErrors?.join(", ")}</span>
+            <button onClick={handleSubmit}>submit</button>
+          </>
+        )),
+    );
+
+    const { getByRole, getByText } = render(<Form />);
+    await userEvent.click(getByRole("button", { name: "submit" }));
+    getByText("Error 1, Error 2");
+  });
+
+  it("can display field errors in layout", async () => {
+    const Form = createForm((options) =>
+      options
+        .validateOn("change")
+        .schema(z.object({ foo: z.string().min(3) }))
+        .type(
+          z.string(),
+          ({ onChange, value = "", errors = [], name, ...rest }) => (
+            <input
+              onChange={(e) => onChange?.(e.target.value)}
+              value={value}
+              aria-label={name}
+              {...rest}
+            />
+          ),
+        )
+        .layout(({ fields: { Foo }, fieldErrors }) => (
+          <>
+            <Foo />
+            {fieldErrors.foo?.join(",")}
+          </>
+        )),
+    );
+    const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
+    await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
+    getByText("String must contain at least 3 character(s)");
   });
 });
