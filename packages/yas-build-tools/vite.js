@@ -8,7 +8,9 @@ const { expand } = require("dotenv-expand");
 // NOTE This is a JS file because it was much simpler than configuring
 // Vite & node to load non-prebuilt ESM files via the workspace:* monorepo directive.
 
-function createYasViteConfig({ analyze = process.env.ANALYZE } = {}) {
+function createYasViteConfig({ analyze } = {}) {
+  // Reasonable exception since it's dynamic access
+  // eslint-disable-next-line no-restricted-syntax
   expand({ parsed: process.env });
 
   return defineConfig({
