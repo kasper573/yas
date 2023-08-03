@@ -13,6 +13,8 @@ export type inferValue<Type extends ValueType> = output<Type>;
 
 export interface FormState<Schema extends FormSchema> {
   generalErrors: AnyError[];
+  externalFieldErrors: FieldErrors<Schema>;
+  combinedFieldErrors: FieldErrors<Schema>;
   fieldErrors: FieldErrors<Schema>;
   data: inferValue<Schema>;
 }

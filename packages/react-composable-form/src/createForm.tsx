@@ -70,12 +70,7 @@ function createFormImpl<G extends RCFGenerics>(
     }
 
     const store: FormStoreFor<G> = useMemo(
-      () =>
-        new FormStore(
-          schema,
-          { data, generalErrors: [], fieldErrors: {} },
-          mode,
-        ),
+      () => new FormStore(schema, data, mode),
       [],
     );
 
@@ -92,6 +87,11 @@ function createFormImpl<G extends RCFGenerics>(
     useEffect(
       () => store.subscribe(() => onChange?.(store.data)),
       [store, onChange],
+    );
+
+    useEffect(
+      () => store.setExternalFieldErrors(externalFieldErrors),
+      [store, externalFieldErrors],
     );
 
     useEffect(() => store.resetData(data), [data, store]);

@@ -22,6 +22,7 @@ export class FormStore<
 > {
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
+  private _state: FormState<Schema>;
 
   get data(): inferValue<Schema> {
     return this._state.data;
@@ -32,7 +33,7 @@ export class FormStore<
   }
 
   get fieldErrors(): FieldErrors<Schema> {
-    return this._state.fieldErrors;
+    return this._state.combinedFieldErrors;
   }
 
   get isValid() {
@@ -41,9 +42,17 @@ export class FormStore<
 
   constructor(
     public readonly schema: Schema,
-    private _state: FormState<Schema>,
+    initialData: inferValue<Schema>,
     private _mode: FormValidationMode,
-  ) {}
+  ) {
+    this._state = {
+      generalErrors: [],
+      externalFieldErrors: {},
+      combinedFieldErrors: {},
+      fieldErrors: {},
+      data: initialData,
+    };
+  }
 
   resetData(data: inferValue<Schema>) {
     this.mutate((state) => {
@@ -73,22 +82,42 @@ export class FormStore<
     }
   }
 
+  setExternalFieldErrors(errors: FieldErrors<Schema>) {
+    this.mutate((draft) => {
+      draft.externalFieldErrors = errors;
+      this.updateCombinedFieldErrors();
+    });
+  }
+
+  private updateCombinedFieldErrors() {
+    this.mutate((draft) => {
+      draft.combinedFieldErrors = {
+        ...draft.fieldErrors,
+        ...draft.externalFieldErrors,
+      };
+    });
+  }
+
   private validate<FieldName extends FieldNames<Schema>>(
-    ...names: FieldName[]
+    ...fieldNames: FieldName[]
   ) {
     this.mutate((draft) => {
       const { generalErrors, fieldErrors } = getFormErrors(
         this.schema,
         draft.data,
       );
+
       draft.generalErrors = generalErrors;
-      if (names.length) {
-        for (const name of names) {
+
+      if (fieldNames.length) {
+        for (const name of fieldNames) {
           draft.fieldErrors[name] = fieldErrors[name];
         }
       } else {
         draft.fieldErrors = fieldErrors;
       }
+
+      this.updateCombinedFieldErrors();
     });
   }
 
