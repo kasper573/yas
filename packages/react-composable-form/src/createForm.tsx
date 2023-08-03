@@ -1,6 +1,6 @@
 import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import type { FormSchema, inferValue } from "./types/commonTypes";
+import type { inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
@@ -12,13 +12,12 @@ import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
-import type { ExternalFormErrors } from "./types/commonTypes";
 
-export interface FormProps<Value> {
-  value?: Value;
-  onChange?: (newValue: Value) => unknown;
-  onSubmit?: (value: Value) => unknown;
-  errors?: ExternalFormErrors<FormSchema>;
+export interface FormProps<G extends RCFGenerics> {
+  value?: inferValue<G["schema"]>;
+  onChange?: (newValue: inferValue<G["schema"]>) => unknown;
+  onSubmit?: (value: inferValue<G["schema"]>) => unknown;
+  errors?: G["externalErrors"];
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -26,8 +25,7 @@ export type inferFormValue<T> = T extends FormComponent<infer G>
   : never;
 
 export type FormComponent<G extends RCFGenerics> = ComponentType<
-  FormProps<inferValue<G["schema"]>> &
-    Omit<G["layoutProps"], keyof FormLayoutProps>
+  FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
 > & {
   extend<NewG extends RCFGenerics>(
     options: FormOptionsBuilderFactory<G, NewG>,

@@ -268,6 +268,33 @@ describe("validation", () => {
     getByText("No external errors");
   });
 
+  it("can customize external error format", async () => {
+    const Form = createForm((options) =>
+      options
+        .externalErrorsNormalizer(([general, field]: [string[], string[]]) => ({
+          general,
+          field: { foo: field },
+        }))
+        .layout(({ generalErrors, fieldErrors }) => (
+          <>
+            <span>general: {generalErrors?.join(", ")}</span>
+            <span>field: {Object.values(fieldErrors).flat().join(", ")}</span>
+          </>
+        )),
+    );
+
+    const { getByText } = render(
+      <Form
+        errors={[
+          ["1", "2"],
+          ["a", "b"],
+        ]}
+      />,
+    );
+    getByText("general: 1, 2");
+    getByText("field: a, b");
+  });
+
   it("can display external field errors in field component", async () => {
     const Form = createForm((options) =>
       options
@@ -277,9 +304,7 @@ describe("validation", () => {
         )),
     );
     const { getByText } = render(
-      <Form
-        errors={{ field: { foo: ["External error"] }, }}
-      />,
+      <Form errors={{ field: { foo: ["External error"] } }} />,
     );
     getByText("External error");
   });
@@ -291,9 +316,7 @@ describe("validation", () => {
         .layout(({ fieldErrors }) => <span>{fieldErrors.foo?.join(",")}</span>),
     );
     const { getByText } = render(
-      <Form
-        errors={{ field: { foo: ["External error"] }, }}
-      />,
+      <Form errors={{ field: { foo: ["External error"] } }} />,
     );
     getByText("External error");
   });

@@ -7,6 +7,7 @@ import type {
   FormValidationMode,
   ValueType,
   inferValue,
+  ExternalFormErrors,
 } from "./types/commonTypes";
 import type {
   AnyProps,
@@ -38,6 +39,19 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     return new FormOptionsBuilder<Replace<G, "schema", NewSchema>>({
       ...this.options,
       schema,
+    });
+  }
+
+  externalErrorsNormalizer<NewExternalErrors>(
+    externalErrorsNormalizer: (
+      errors: NewExternalErrors,
+    ) => ExternalFormErrors<G["schema"]>,
+  ) {
+    return new FormOptionsBuilder<
+      Replace<G, "externalErrors", NewExternalErrors>
+    >({
+      ...this.options,
+      externalErrorsNormalizer,
     });
   }
 
@@ -122,6 +136,7 @@ export const emptyFormOptionsBuilder =
     namedComponents: {},
     typedComponents: [],
     mode: "submit",
+    externalErrorsNormalizer: (error) => error,
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
@@ -130,7 +145,8 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   {},
   "submit",
   {},
-  []
+  [],
+  ExternalFormErrors<ZodObject<{}>>
 >;
 
 function NoLayout<

@@ -8,6 +8,7 @@ import type {
   FormValidationMode,
   ValueType,
   inferValue,
+  ExternalFormErrors,
 } from "./commonTypes";
 import type { GetShapeFromSchema } from "./commonTypes";
 import type { FieldErrors } from "./commonTypes";
@@ -22,11 +23,13 @@ export interface RCFGenerics<
   ValidationMode extends FormValidationMode = any,
   Named extends NamedComponents = any,
   Typed extends TypedComponents = any,
+  ExternalErrors = any,
 > extends FieldComponents<Named, Typed> {
   schema: Schema;
   layoutProps: LayoutProps;
   mode: ValidationMode;
   baseFieldProps: BaseFieldProps;
+  externalErrors: ExternalErrors;
 }
 
 export interface FormOptions<G extends RCFGenerics>
@@ -34,6 +37,9 @@ export interface FormOptions<G extends RCFGenerics>
   schema: G["schema"];
   layout: FormLayoutFor<G>;
   mode: G["mode"];
+  externalErrorsNormalizer: (
+    errors: G["externalErrors"],
+  ) => ExternalFormErrors<G["schema"]>;
 }
 
 export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
