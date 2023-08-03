@@ -3,28 +3,29 @@ import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo } from "react";
 import { BaseForm } from "../BaseForm";
+import { TextField } from "../fields/TextField";
 
 interface CustomRemoteErrors {
-  general?: string[];
-  field?: Array<[string, string[]]>;
+  foo?: string[];
+  bar?: Array<[string, string[]]>;
 }
 
 type FormData = inferFormValue<typeof UserRegistrationForm>;
 const UserRegistrationForm = BaseForm.extend((options) =>
   options
-    .externalErrorsNormalizer(
-      ({ general, field = [] }: CustomRemoteErrors) => ({
-        general,
-        field: Object.fromEntries(field),
-      }),
-    )
     .schema(
       z.object({
         email: z.string().email(),
-        password: z.string().min(6),
-        passwordConfirm: z.string().min(6),
+        password: z.string().min(1),
+        passwordConfirm: z.string().min(1),
       }),
-    ),
+    )
+    .field("password", TextField, { password: true })
+    .field("passwordConfirm", TextField, { password: true })
+    .customExternalErrors(({ foo = [], bar = [] }: CustomRemoteErrors) => ({
+      general: foo,
+      field: Object.fromEntries(bar),
+    })),
 );
 
 function RemoteExampleImpl() {
@@ -58,8 +59,8 @@ async function simulatedEndpoint(value: FormData) {
   await wait(1000); // Emulate server side validation
   const errors: CustomRemoteErrors = {};
   if (value.password !== value.passwordConfirm) {
-    errors.field = [["password", ["Passwords do not match"]]];
+    errors.bar = [["password", ["Server error: Passwords do not match"]]];
   }
-  errors.general = ["You are not allowed to register at this time"];
+  errors.foo = ["Server error: You are not allowed to register at this time"];
   throw errors;
 }

@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
+import type { ErrorList } from "../types/commonTypes";
 
 describe("validation", () => {
   it("displays field errors on submit by default", async () => {
@@ -271,9 +272,9 @@ describe("validation", () => {
   it("can customize external error format", async () => {
     const Form = createForm((options) =>
       options
-        .externalErrorsNormalizer(([general, field]: [string[], string[]]) => ({
+        .customExternalErrors(([general, field]: [ErrorList, ErrorList]) => ({
           general,
-          field: { foo: field },
+          field: { field },
         }))
         .layout(({ generalErrors, fieldErrors }) => (
           <>

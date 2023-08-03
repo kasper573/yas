@@ -1,7 +1,6 @@
 import type { Draft } from "immer";
 import { produce } from "immer";
 import type {
-  ExternalFormErrors,
   FieldNames,
   FormSchema,
   FormState,
@@ -11,7 +10,7 @@ import type {
 import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
-import type { FormErrorState } from "./types/commonTypes";
+import type { FormErrors } from "./types/commonTypes";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
@@ -83,7 +82,7 @@ export class FormStore<
     }
   }
 
-  setExternalErrors(errors?: ExternalFormErrors<Schema>) {
+  setExternalErrors(errors?: FormErrors<Schema>) {
     this.mutate((draft) => {
       draft.externalErrors.field = errors?.field ?? {};
       draft.externalErrors.general = errors?.general ?? [];
@@ -150,13 +149,13 @@ export class FormStore<
 function getFormErrorState<Schema extends FormSchema>(
   schema: Schema,
   value: inferValue<Schema>,
-): FormErrorState<Schema> {
+): FormErrors<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
     return emptyFormErrorState();
   }
   const { formErrors: general, fieldErrors: field } = res.error.flatten();
-  return { general, field } as FormErrorState<Schema>;
+  return { general, field } as FormErrors<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;
@@ -165,9 +164,7 @@ export type StoreListener<Schema extends FormSchema> = (
   state: FormState<Schema>,
 ) => void;
 
-function emptyFormErrorState<
-  Schema extends FormSchema,
->(): FormErrorState<Schema> {
+function emptyFormErrorState<Schema extends FormSchema>(): FormErrors<Schema> {
   return {
     general: [],
     field: {},
