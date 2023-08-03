@@ -60,6 +60,7 @@ function createFormImpl<G extends RCFGenerics>(
     onChange,
     onSubmit,
     generalErrors: externalGeneralErrors,
+    fieldErrors: externalFieldErrors,
     ...layoutProps
   }) => {
     if (defaultValue !== undefined && data !== defaultValue) {
@@ -111,7 +112,7 @@ function createFormImpl<G extends RCFGenerics>(
         <Layout
           {...layoutProps}
           generalErrors={externalGeneralErrors ?? formGeneralErrors}
-          fieldErrors={fieldErrors}
+          fieldErrors={externalFieldErrors ?? fieldErrors}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}
