@@ -230,19 +230,14 @@ describe("validation", () => {
     getByText("String must contain at least 3 character(s)");
   });
 
-  it("can display external general errors", async () => {
+  it("can display external general errors", () => {
     const Form = createForm((options) =>
-      options.layout(({ generalErrors, handleSubmit }) => (
-        <>
-          <span>{generalErrors?.join(", ")}</span>
-          <button onClick={handleSubmit}>submit</button>
-        </>
+      options.layout(({ generalErrors }) => (
+        <span>{generalErrors?.join(", ")}</span>
       )),
     );
 
-    const { getByText } = render(
-      <Form generalErrors={["External error 1", "External error 2"]} />,
-    );
-    getByText("External error 1, External error 2");
+    const { getByText } = render(<Form generalErrors={["External error"]} />);
+    getByText("External error");
   });
 });

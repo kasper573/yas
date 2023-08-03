@@ -56,9 +56,10 @@ function createFormImpl<G extends RCFGenerics>(
 
   const ComposableForm: FormComponent<G> = (({
     defaultValue,
-    value: data = defaultValue ?? empty,
+    value: data = defaultValue ?? emptyObject,
     onChange,
     onSubmit,
+    generalErrors: externalGeneralErrors,
     ...layoutProps
   }) => {
     if (defaultValue !== undefined && data !== defaultValue) {
@@ -77,7 +78,7 @@ function createFormImpl<G extends RCFGenerics>(
       [],
     );
 
-    const generalErrors = useSyncExternalStore(
+    const formGeneralErrors = useSyncExternalStore(
       store.subscribe,
       () => store.state.generalErrors,
     );
@@ -109,7 +110,7 @@ function createFormImpl<G extends RCFGenerics>(
       <FormContext.Provider value={store}>
         <Layout
           {...layoutProps}
-          generalErrors={layoutProps.generalErrors ?? generalErrors}
+          generalErrors={externalGeneralErrors ?? formGeneralErrors}
           fieldErrors={fieldErrors}
           onSubmit={onSubmit}
           onChange={onChange}
@@ -125,5 +126,5 @@ function createFormImpl<G extends RCFGenerics>(
   return ComposableForm;
 }
 
-const empty = Object.freeze({});
+const emptyObject = Object.freeze({});
 const passThrough = <T extends any>(value: T) => value;
