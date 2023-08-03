@@ -66,7 +66,9 @@ export class FormStore<
     }
   }
 
-  validate<FieldName extends FieldNames<Schema>>(...names: FieldName[]) {
+  private validate<FieldName extends FieldNames<Schema>>(
+    ...names: FieldName[]
+  ) {
     this.mutate((draft) => {
       const { generalErrors, fieldErrors } = getFormErrors(
         this.schema,
