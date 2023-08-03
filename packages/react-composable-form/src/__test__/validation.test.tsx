@@ -266,13 +266,15 @@ describe("validation", () => {
     getByText("No external errors");
   });
 
-  it("can display external field errors", async () => {
+  it("can display external field errors in field component", async () => {
+    throw new Error("Not implemented");
+  });
+
+  it("can display external field errors in layout", async () => {
     const Form = createForm((options) =>
       options
-        .schema(z.object({ foo: z.string().min(3) }))
-        .type(z.string(), ({ errors = [] }) => (
-          <span>{errors.length ? errors.join(",") : "No errors"}</span>
-        )),
+        .schema(z.object({ foo: z.string() }))
+        .layout(({ fieldErrors }) => <span>{fieldErrors.foo?.join(",")}</span>),
     );
     const { getByText } = render(
       <Form fieldErrors={{ foo: ["External error"] }} />,
