@@ -265,4 +265,16 @@ describe("validation", () => {
     await userEvent.click(getByText("Fix errors"));
     getByText("No external errors");
   });
+
+  it("can display external field errors", () => {
+    throw new Error("Not implemented");
+  });
+
+  it("external field errors override form field errors", () => {
+    throw new Error("Not implemented");
+  });
+
+  it("fixed external field errors fall back to form field errors", () => {
+    throw new Error("Not implemented");
+  });
 });
