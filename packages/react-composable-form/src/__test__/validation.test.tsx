@@ -266,8 +266,18 @@ describe("validation", () => {
     getByText("No external errors");
   });
 
-  it("can display external field errors", () => {
-    throw new Error("Not implemented");
+  it("can display external field errors", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string().min(3) }))
+        .type(z.string(), ({ errors = [] }) => (
+          <span>{errors.length ? errors.join(",") : "No errors"}</span>
+        )),
+    );
+    const { getByText } = render(
+      <Form fieldErrors={{ foo: ["External error"] }} />,
+    );
+    getByText("External error");
   });
 
   it("external field errors override form field errors", () => {
