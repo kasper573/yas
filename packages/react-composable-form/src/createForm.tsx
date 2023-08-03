@@ -17,7 +17,7 @@ export interface FormProps<G extends RCFGenerics> {
   value?: inferValue<G["schema"]>;
   onChange?: (newValue: inferValue<G["schema"]>) => unknown;
   onSubmit?: (value: inferValue<G["schema"]>) => unknown;
-  errors?: G["externalErrors"];
+  errors?: G["externalErrors"] | null; // null because some libraries like react-query use null for empty
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -49,6 +49,7 @@ function createFormImpl<G extends RCFGenerics>(
     layout: Layout,
     namedComponents,
     typedComponents,
+    externalErrorsNormalizer,
     mode,
   } = options.build();
 
@@ -89,7 +90,7 @@ function createFormImpl<G extends RCFGenerics>(
     );
 
     useEffect(
-      () => store.setExternalErrors(externalErrors),
+      () => store.setExternalErrors(externalErrorsNormalizer(externalErrors)),
       [store, externalErrors],
     );
 
