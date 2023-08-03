@@ -109,7 +109,7 @@ function createFormImpl<G extends RCFGenerics>(
       <FormContext.Provider value={store}>
         <Layout
           {...layoutProps}
-          generalErrors={generalErrors}
+          generalErrors={layoutProps.generalErrors ?? generalErrors}
           fieldErrors={fieldErrors}
           onSubmit={onSubmit}
           onChange={onChange}
