@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import { createForm } from "../createForm";
 
 describe("validation", () => {
@@ -239,5 +240,29 @@ describe("validation", () => {
 
     const { getByText } = render(<Form generalErrors={["External error"]} />);
     getByText("External error");
+  });
+
+  it("can fix external general errors", async () => {
+    const Form = createForm((options) =>
+      options.layout(({ generalErrors }) => (
+        <span>{generalErrors?.join(", ")}</span>
+      )),
+    );
+
+    function TestApp() {
+      const [errors, setErrors] = useState(["External error"]);
+      return (
+        <>
+          <Form generalErrors={errors} />
+          {!errors.length && "No external errors"}
+          <button onClick={() => setErrors([])}>Fix errors</button>
+        </>
+      );
+    }
+
+    const { getByText } = render(<TestApp />);
+    getByText("External error");
+    await userEvent.click(getByText("Fix errors"));
+    getByText("No external errors");
   });
 });
