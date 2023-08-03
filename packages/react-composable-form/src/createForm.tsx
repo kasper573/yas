@@ -1,11 +1,6 @@
 import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import type {
-  AnyError,
-  FieldErrors,
-  FormSchema,
-  inferValue,
-} from "./types/commonTypes";
+import type { FormSchema, inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
@@ -17,13 +12,13 @@ import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
+import type { ExternalFormErrors } from "./types/commonTypes";
 
 export interface FormProps<Value> {
   value?: Value;
   onChange?: (newValue: Value) => unknown;
   onSubmit?: (value: Value) => unknown;
-  generalErrors?: AnyError[];
-  fieldErrors?: FieldErrors<FormSchema>;
+  errors?: ExternalFormErrors<FormSchema>;
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -66,8 +61,7 @@ function createFormImpl<G extends RCFGenerics>(
     value: data = defaultValue ?? emptyObject,
     onChange,
     onSubmit,
-    generalErrors: externalGeneralErrors,
-    fieldErrors: externalFieldErrors,
+    errors: externalErrors,
     ...layoutProps
   }) => {
     if (defaultValue !== undefined && data !== defaultValue) {
@@ -81,7 +75,7 @@ function createFormImpl<G extends RCFGenerics>(
       [],
     );
 
-    const formGeneralErrors = useSyncExternalStore(
+    const generalErrors = useSyncExternalStore(
       store.subscribe,
       () => store.generalErrors,
     );
@@ -97,8 +91,8 @@ function createFormImpl<G extends RCFGenerics>(
     );
 
     useEffect(
-      () => store.setExternalFieldErrors(externalFieldErrors),
-      [store, externalFieldErrors],
+      () => store.setExternalErrors(externalErrors),
+      [store, externalErrors],
     );
 
     useEffect(() => store.resetData(data), [data, store]);
@@ -118,8 +112,8 @@ function createFormImpl<G extends RCFGenerics>(
       <FormContext.Provider value={store}>
         <Layout
           {...layoutProps}
-          generalErrors={externalGeneralErrors ?? formGeneralErrors}
-          fieldErrors={externalFieldErrors ?? fieldErrors}
+          generalErrors={generalErrors}
+          fieldErrors={fieldErrors}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}

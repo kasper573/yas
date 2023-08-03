@@ -1,6 +1,7 @@
 import type { Draft } from "immer";
 import { produce } from "immer";
 import type {
+  ExternalFormErrors,
   FieldNames,
   FormSchema,
   FormState,
@@ -10,6 +11,7 @@ import type {
 import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
+import type { FormErrorState } from "./types/commonTypes";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
@@ -29,11 +31,11 @@ export class FormStore<
   }
 
   get generalErrors(): AnyError[] {
-    return this._state.generalErrors;
+    return this._state.combinedErrors.general;
   }
 
   get fieldErrors(): FieldErrors<Schema> {
-    return this._state.combinedFieldErrors;
+    return this._state.combinedErrors.field;
   }
 
   get isValid() {
@@ -46,10 +48,9 @@ export class FormStore<
     private _mode: FormValidationMode,
   ) {
     this._state = {
-      generalErrors: [],
-      externalFieldErrors: {},
-      combinedFieldErrors: {},
-      fieldErrors: {},
+      localErrors: emptyFormErrorState(),
+      externalErrors: emptyFormErrorState(),
+      combinedErrors: emptyFormErrorState(),
       data: initialData,
     };
   }
@@ -82,18 +83,22 @@ export class FormStore<
     }
   }
 
-  setExternalFieldErrors(errors: FieldErrors<Schema> = {}) {
+  setExternalErrors(errors?: ExternalFormErrors<Schema>) {
     this.mutate((draft) => {
-      draft.externalFieldErrors = errors;
+      draft.externalErrors.field = errors?.field ?? {};
+      draft.externalErrors.general = errors?.general ?? [];
       this.updateCombinedFieldErrors();
     });
   }
 
   private updateCombinedFieldErrors() {
     this.mutate((draft) => {
-      draft.combinedFieldErrors = {
-        ...draft.fieldErrors,
-        ...draft.externalFieldErrors,
+      draft.combinedErrors.general = draft.localErrors.general.concat(
+        draft.externalErrors.general,
+      );
+      draft.combinedErrors.field = {
+        ...draft.localErrors.field,
+        ...draft.externalErrors.field,
       };
     });
   }
@@ -102,19 +107,16 @@ export class FormStore<
     ...fieldNames: FieldName[]
   ) {
     this.mutate((draft) => {
-      const { generalErrors, fieldErrors } = getFormErrors(
-        this.schema,
-        draft.data,
-      );
+      const localErrors = getFormErrorState(this.schema, draft.data);
 
-      draft.generalErrors = generalErrors;
+      draft.localErrors.general = localErrors.general;
 
       if (fieldNames.length) {
         for (const name of fieldNames) {
-          draft.fieldErrors[name] = fieldErrors[name];
+          draft.localErrors.field[name] = localErrors.field[name];
         }
       } else {
-        draft.fieldErrors = fieldErrors;
+        draft.localErrors.field = localErrors.field;
       }
 
       this.updateCombinedFieldErrors();
@@ -145,19 +147,16 @@ export class FormStore<
   };
 }
 
-function getFormErrors<Schema extends FormSchema>(
+function getFormErrorState<Schema extends FormSchema>(
   schema: Schema,
   value: inferValue<Schema>,
-): FormErrors<Schema> {
+): FormErrorState<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
-    return {
-      generalErrors: [],
-      fieldErrors: {},
-    };
+    return emptyFormErrorState();
   }
-  const { formErrors: generalErrors, fieldErrors } = res.error.flatten();
-  return { generalErrors, fieldErrors } as FormErrors<Schema>;
+  const { formErrors: general, fieldErrors: field } = res.error.flatten();
+  return { general, field } as FormErrorState<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;
@@ -166,7 +165,11 @@ export type StoreListener<Schema extends FormSchema> = (
   state: FormState<Schema>,
 ) => void;
 
-interface FormErrors<Schema extends FormSchema> {
-  generalErrors: AnyError[];
-  fieldErrors: FieldErrors<Schema>;
+function emptyFormErrorState<
+  Schema extends FormSchema,
+>(): FormErrorState<Schema> {
+  return {
+    general: [],
+    field: {},
+  };
 }
