@@ -322,11 +322,11 @@ describe("validation", () => {
     getByText("External error");
   });
 
-  it.skip("external field errors override form field errors", () => {
+  it("external field errors override form field errors", () => {
     throw new Error("Not implemented");
   });
 
-  it.skip("fixed external field errors fall back to form field errors", () => {
+  it("fixed external field errors fall back to form field errors", () => {
     throw new Error("Not implemented");
   });
 });
