@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createForm } from "../createForm";
 
 describe("validation", () => {
-  it("displays errors on submit by default", async () => {
+  it("displays field errors on submit by default", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string().min(3) }))
@@ -25,7 +25,7 @@ describe("validation", () => {
     getByText("String must contain at least 3 character(s)");
   });
 
-  it("can display errors on blur", async () => {
+  it("can display field errors on blur", async () => {
     const Form = createForm((options) =>
       options
         .validateOn("blur")
@@ -62,7 +62,7 @@ describe("validation", () => {
     getByText("bar: String must contain at least 5 character(s)");
   });
 
-  it("can display errors on change", async () => {
+  it("can display field errors on change", async () => {
     const Form = createForm((options) =>
       options
         .validateOn("change")
@@ -97,7 +97,7 @@ describe("validation", () => {
     getByText("bar: String must contain at least 5 character(s)");
   });
 
-  it("can fix errors", async () => {
+  it("can fix field errors", async () => {
     const Form = createForm((options) =>
       options
         .validateOn("change")
@@ -292,11 +292,11 @@ describe("validation", () => {
     getByText("External error");
   });
 
-  it("external field errors override form field errors", () => {
+  it.skip("external field errors override form field errors", () => {
     throw new Error("Not implemented");
   });
 
-  it("fixed external field errors fall back to form field errors", () => {
+  it.skip("fixed external field errors fall back to form field errors", () => {
     throw new Error("Not implemented");
   });
 });
