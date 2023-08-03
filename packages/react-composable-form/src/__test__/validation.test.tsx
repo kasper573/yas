@@ -267,7 +267,17 @@ describe("validation", () => {
   });
 
   it("can display external field errors in field component", async () => {
-    throw new Error("Not implemented");
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(z.string(), ({ name, errors = [] }) => (
+          <span>{errors.join(",")}</span>
+        )),
+    );
+    const { getByText } = render(
+      <Form fieldErrors={{ foo: ["External error"] }} />,
+    );
+    getByText("External error");
   });
 
   it("can display external field errors in layout", async () => {
