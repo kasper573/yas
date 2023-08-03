@@ -238,7 +238,9 @@ describe("validation", () => {
       )),
     );
 
-    const { getByText } = render(<Form generalErrors={["External error"]} />);
+    const { getByText } = render(
+      <Form errors={{ general: ["External error"] }} />,
+    );
     getByText("External error");
   });
 
@@ -253,7 +255,7 @@ describe("validation", () => {
       const [errors, setErrors] = useState(["External error"]);
       return (
         <>
-          <Form generalErrors={errors} />
+          <Form errors={{ general: errors }} />
           {!errors.length && "No external errors"}
           <button onClick={() => setErrors([])}>Fix errors</button>
         </>
@@ -275,7 +277,9 @@ describe("validation", () => {
         )),
     );
     const { getByText } = render(
-      <Form fieldErrors={{ foo: ["External error"] }} />,
+      <Form
+        errors={{ field: { foo: ["External error"] }, }}
+      />,
     );
     getByText("External error");
   });
@@ -287,7 +291,9 @@ describe("validation", () => {
         .layout(({ fieldErrors }) => <span>{fieldErrors.foo?.join(",")}</span>),
     );
     const { getByText } = render(
-      <Form fieldErrors={{ foo: ["External error"] }} />,
+      <Form
+        errors={{ field: { foo: ["External error"] }, }}
+      />,
     );
     getByText("External error");
   });
