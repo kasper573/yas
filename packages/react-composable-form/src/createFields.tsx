@@ -82,13 +82,10 @@ function enhanceFormField<
       () => !getShapeFromSchema(store.schema)[name].isOptional(),
       [store],
     );
-    const value = useSyncExternalStore(
-      store.subscribe,
-      () => store.state.data[name],
-    );
+    const value = useSyncExternalStore(store.subscribe, () => store.data[name]);
     const errors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.fieldErrors[name],
+      () => store.fieldErrors[name],
     );
     const changeHandler = useCallback(
       (newValue: typeof value) => {

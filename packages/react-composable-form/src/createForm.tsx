@@ -81,16 +81,16 @@ function createFormImpl<G extends RCFGenerics>(
 
     const formGeneralErrors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.generalErrors,
+      () => store.generalErrors,
     );
 
     const fieldErrors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.fieldErrors,
+      () => store.fieldErrors,
     );
 
     useEffect(
-      () => store.subscribe(() => onChange?.(store.state.data)),
+      () => store.subscribe(() => onChange?.(store.data)),
       [store, onChange],
     );
 
@@ -101,7 +101,7 @@ function createFormImpl<G extends RCFGenerics>(
         e?.preventDefault();
         store.handleSubmit();
         if (store.isValid) {
-          onSubmit?.(store.state.data);
+          onSubmit?.(store.data);
         }
       },
       [store],

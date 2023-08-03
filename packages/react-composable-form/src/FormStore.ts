@@ -2,13 +2,14 @@ import type { Draft } from "immer";
 import { produce } from "immer";
 import type {
   FieldNames,
-  FormErrors,
   FormSchema,
   FormState,
   FormValidationMode,
   inferValue,
 } from "./types/commonTypes";
 import type { RCFGenerics } from "./types/optionTypes";
+import type { FieldErrors } from "./types/commonTypes";
+import type { AnyError } from "./types/commonTypes";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
@@ -22,14 +23,20 @@ export class FormStore<
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
 
-  get state() {
-    return this._state;
+  get data(): inferValue<Schema> {
+    return this._state.data;
+  }
+
+  get generalErrors(): AnyError[] {
+    return this._state.generalErrors;
+  }
+
+  get fieldErrors(): FieldErrors<Schema> {
+    return this._state.fieldErrors;
   }
 
   get isValid() {
-    return !Object.values(this._state.fieldErrors).some(
-      (errors) => errors?.length,
-    );
+    return !Object.values(this.fieldErrors).some((errors) => errors?.length);
   }
 
   constructor(
@@ -129,3 +136,8 @@ export type StoreUnsubscriber = () => void;
 export type StoreListener<Schema extends FormSchema> = (
   state: FormState<Schema>,
 ) => void;
+
+interface FormErrors<Schema extends FormSchema> {
+  generalErrors: AnyError[];
+  fieldErrors: FieldErrors<Schema>;
+}

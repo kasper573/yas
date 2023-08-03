@@ -11,8 +11,9 @@ export type FormValidationMode = "change" | "blur" | "submit";
 
 export type inferValue<Type extends ValueType> = output<Type>;
 
-export interface FormState<Schema extends FormSchema>
-  extends FormErrors<Schema> {
+export interface FormState<Schema extends FormSchema> {
+  generalErrors: AnyError[];
+  fieldErrors: FieldErrors<Schema>;
   data: inferValue<Schema>;
 }
 
@@ -28,8 +29,3 @@ export type FieldNames<Schema extends FormSchema> = `${string &
 export type FieldErrors<Schema extends FormSchema> = Partial<
   Record<FieldNames<Schema>, AnyError[]>
 >;
-
-export interface FormErrors<Schema extends FormSchema> {
-  generalErrors: AnyError[];
-  fieldErrors: FieldErrors<Schema>;
-}

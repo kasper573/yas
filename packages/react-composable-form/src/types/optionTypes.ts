@@ -8,9 +8,9 @@ import type {
   FormValidationMode,
   ValueType,
   inferValue,
-  FormErrors,
 } from "./commonTypes";
 import type { GetShapeFromSchema } from "./commonTypes";
+import type { FieldErrors } from "./commonTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -43,7 +43,9 @@ export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
 export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = FieldComponents,
-> extends FormErrors<Schema> {
+> {
+  generalErrors: AnyError[];
+  fieldErrors: FieldErrors<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
 }
