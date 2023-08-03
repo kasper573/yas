@@ -229,4 +229,20 @@ describe("validation", () => {
     await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
     getByText("String must contain at least 3 character(s)");
   });
+
+  it("can display external general errors", async () => {
+    const Form = createForm((options) =>
+      options.layout(({ generalErrors, handleSubmit }) => (
+        <>
+          <span>{generalErrors?.join(", ")}</span>
+          <button onClick={handleSubmit}>submit</button>
+        </>
+      )),
+    );
+
+    const { getByText } = render(
+      <Form generalErrors={["External error 1", "External error 2"]} />,
+    );
+    getByText("External error 1, External error 2");
+  });
 });
