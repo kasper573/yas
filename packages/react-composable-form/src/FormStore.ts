@@ -82,7 +82,7 @@ export class FormStore<
     }
   }
 
-  setExternalFieldErrors(errors: FieldErrors<Schema>) {
+  setExternalFieldErrors(errors: FieldErrors<Schema> = {}) {
     this.mutate((draft) => {
       draft.externalFieldErrors = errors;
       this.updateCombinedFieldErrors();

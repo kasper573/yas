@@ -1,4 +1,11 @@
-import { Alert, Button, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Fade,
+  Stack,
+  Typography,
+} from "@mui/material";
 import type { ReactNode } from "react";
 import type { FormLayoutProps } from "../rcf";
 
@@ -7,14 +14,18 @@ export function BasicFormLayout({
   fields,
   generalErrors,
   handleSubmit,
-}: FormLayoutProps & { title: ReactNode }) {
+  isLoading,
+}: FormLayoutProps & { title: ReactNode; isLoading?: boolean }) {
   return (
     <form onSubmit={handleSubmit}>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 3 }}>
         <Typography variant="h4">{title}</Typography>
-        <Stack direction="row" gap={2}>
+        <Stack direction="row" gap={2} alignItems="center">
+          <Fade in={isLoading}>
+            <CircularProgress size={24} />
+          </Fade>
           <Button variant="outlined">Reset</Button>
-          <Button type="submit" variant="contained">
+          <Button disabled={isLoading} type="submit" variant="contained">
             Submit
           </Button>
         </Stack>
