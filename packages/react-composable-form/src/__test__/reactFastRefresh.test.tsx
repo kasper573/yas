@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires,import/order,no-var */
 import "@testing-library/jest-dom";
 import type { ComponentProps, ComponentType } from "react";
+import { z } from "zod";
+import { useState } from "react";
 import RefreshRuntime from "react-refresh/runtime";
+import type { RCFGenerics } from "../types/optionTypes";
 import userEvent from "@testing-library/user-event";
 import type { FormComponent } from "../createForm";
 import { createForm } from "../createForm";
-import { z } from "zod";
 
-// React refresh runtime must inject global hook before
-// importing react-dom/client and react-dom/test-utils
+// React refresh runtime must inject global hook before testing-library
 RefreshRuntime.injectIntoGlobalHook(window);
 import rtl = require("@testing-library/react");
-import type { RCFGenerics } from "../types/optionTypes";
-import { useState } from "react";
 const { act, render } = rtl;
 
 describe("reactFastRefresh", () => {
