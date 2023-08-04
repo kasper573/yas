@@ -1,5 +1,5 @@
 import type { FormEvent, ComponentType } from "react";
-import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import type { inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
@@ -13,10 +13,11 @@ import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
 
-export interface FormProps<Value> {
-  value?: Value;
-  onChange?: (newValue: Value) => unknown;
-  onSubmit?: (value: Value) => unknown;
+export interface FormProps<G extends RCFGenerics> {
+  value?: inferValue<G["schema"]>;
+  onChange?: (newValue: inferValue<G["schema"]>) => unknown;
+  onSubmit?: (value: inferValue<G["schema"]>) => unknown;
+  errors?: G["customExternalError"] | null; // null because some libraries like react-query use null for empty
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -24,8 +25,7 @@ export type inferFormValue<T> = T extends FormComponent<infer G>
   : never;
 
 export type FormComponent<G extends RCFGenerics> = ComponentType<
-  FormProps<inferValue<G["schema"]>> &
-    Omit<G["layoutProps"], keyof FormLayoutProps>
+  FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
 > & {
   extend<NewG extends RCFGenerics>(
     options: FormOptionsBuilderFactory<G, NewG>,
@@ -49,57 +49,66 @@ function createFormImpl<G extends RCFGenerics>(
     layout: Layout,
     namedComponents,
     typedComponents,
+    externalErrorParser,
     mode,
   } = options.build();
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
 
-  const ComposableForm: FormComponent<G> = (({
-    defaultValue,
-    value: data = defaultValue ?? empty,
-    onChange,
-    onSubmit,
-    ...layoutProps
-  }) => {
-    if (defaultValue !== undefined && data !== defaultValue) {
+  const ComposableForm: FormComponent<G> = ((props) => {
+    if ("value" in props && "defaultValue" in props) {
       throw new Error(
         "Cannot set both defaultValue and value, please use one or the other",
       );
     }
 
-    const store: FormStoreFor<G> = useMemo(
-      () =>
-        new FormStore(
-          schema,
-          { data, generalErrors: [], fieldErrors: {} },
-          mode,
-        ),
-      [],
+    const isControlledComponent = "value" in props;
+
+    const {
+      defaultValue,
+      value: data = defaultValue ?? emptyObject,
+      onChange,
+      onSubmit,
+      errors: externalErrors,
+      ...layoutProps
+    } = props;
+
+    const [store] = useState(
+      (): FormStoreFor<G> => new FormStore(schema, data, mode),
     );
 
     const generalErrors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.generalErrors,
+      () => store.generalErrors,
     );
 
     const fieldErrors = useSyncExternalStore(
       store.subscribe,
-      () => store.state.fieldErrors,
+      () => store.fieldErrors,
     );
 
     useEffect(
-      () => store.subscribe(() => onChange?.(store.state.data)),
+      () => store.subscribe(() => onChange?.(store.data)),
       [store, onChange],
     );
 
-    useEffect(() => store.resetData(data), [data, store]);
+    useEffect(
+      () => store.setExternalErrors(externalErrorParser(externalErrors)),
+      [store, externalErrors],
+    );
+
+    useEffect(() => {
+      if (isControlledComponent) {
+        store.resetData(data);
+      }
+    }, [data, store, isControlledComponent]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {
         e?.preventDefault();
         store.handleSubmit();
-        if (store.isValid) {
-          onSubmit?.(store.state.data);
+        if (store.isLocallyValid) {
+          onSubmit?.(store.data);
         }
       },
       [store],
@@ -125,5 +134,5 @@ function createFormImpl<G extends RCFGenerics>(
   return ComposableForm;
 }
 
-const empty = Object.freeze({});
+const emptyObject = Object.freeze({});
 const passThrough = <T extends any>(value: T) => value;

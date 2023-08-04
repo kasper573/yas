@@ -4,8 +4,9 @@ import {
   CssBaseline,
   ThemeProvider,
   Box,
-  Tabs,
   Tab,
+  Container,
+  Tabs,
 } from "@mui/material";
 import { examples } from "./examples";
 
@@ -24,9 +25,13 @@ function ExampleTabs() {
   const CurrentTab = examples[tabIndex].component;
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={tabIndex} onChange={(e, newTab) => setTabIndex(newTab)}>
+        <Tabs
+          centered
+          value={tabIndex}
+          onChange={(e, newTab) => setTabIndex(newTab)}
+        >
           {examples.map(({ name }, index) => (
             <Tab key={index} label={name} />
           ))}
@@ -35,6 +40,6 @@ function ExampleTabs() {
       <Box sx={{ p: 3 }}>
         <CurrentTab />
       </Box>
-    </Box>
+    </Container>
   );
 }

@@ -7,14 +7,16 @@ import type {
   FormValidationMode,
   ValueType,
   inferValue,
+  FormErrorsParser,
+  FormErrors,
 } from "./types/commonTypes";
 import type {
   AnyProps,
   OptionalArgIfEmpty,
   Replace,
 } from "./types/utilityTypes";
-import type { SetTypedComponent } from "./typedComponents";
-import { setTypedComponent } from "./typedComponents";
+import type { SetTypedComponent } from "./utils/typedComponents";
+import { setTypedComponent } from "./utils/typedComponents";
 import type {
   ComposedFieldComponent,
   FieldComponents,
@@ -23,7 +25,7 @@ import type {
   FormOptions,
   RCFGenerics,
 } from "./types/optionTypes";
-import { withDefaultProps } from "./withDefaultProps";
+import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
@@ -38,6 +40,17 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     return new FormOptionsBuilder<Replace<G, "schema", NewSchema>>({
       ...this.options,
       schema,
+    });
+  }
+
+  customExternalErrors<NewCustomError>(
+    externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>,
+  ) {
+    return new FormOptionsBuilder<
+      Replace<G, "customExternalError", NewCustomError>
+    >({
+      ...this.options,
+      externalErrorParser,
     });
   }
 
@@ -122,6 +135,10 @@ export const emptyFormOptionsBuilder =
     namedComponents: {},
     typedComponents: [],
     mode: "submit",
+    externalErrorParser: (error) => ({
+      general: error?.general ?? [],
+      field: error?.field ?? {},
+    }),
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
@@ -130,7 +147,8 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   {},
   "submit",
   {},
-  []
+  [],
+  Partial<FormErrors<ZodObject<{}>>> | undefined
 >;
 
 function NoLayout<

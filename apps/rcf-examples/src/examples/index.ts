@@ -4,6 +4,7 @@ import { ListExample } from "./ListExample";
 import { NestedExample } from "./NestedExample";
 import { StepsExample } from "./StepsExample";
 import { DataFormatExample } from "./DataFormatExample";
+import { RemoteExample } from "./RemoteExample";
 
 export const examples = [
   { name: "Layout", component: LayoutExample },
@@ -12,4 +13,5 @@ export const examples = [
   { name: "Steps", component: StepsExample },
   { name: "List", component: ListExample },
   { name: "Nested", component: NestedExample },
+  { name: "Remote", component: RemoteExample },
 ];

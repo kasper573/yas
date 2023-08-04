@@ -1,16 +1,17 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
-import type { TypedComponents } from "../typedComponents";
+import type { TypedComponents } from "../utils/typedComponents";
+import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
-  FieldNames,
   AnyError,
+  FormErrorsParser,
+  FieldErrors,
+  FieldNames,
   FormSchema,
   FormValidationMode,
-  ValueType,
   inferValue,
-  FormErrors,
+  ValueType,
 } from "./commonTypes";
-import type { GetShapeFromSchema } from "./commonTypes";
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -22,11 +23,13 @@ export interface RCFGenerics<
   ValidationMode extends FormValidationMode = any,
   Named extends NamedComponents = any,
   Typed extends TypedComponents = any,
+  CustomExternalError = any,
 > extends FieldComponents<Named, Typed> {
   schema: Schema;
   layoutProps: LayoutProps;
   mode: ValidationMode;
   baseFieldProps: BaseFieldProps;
+  customExternalError: CustomExternalError;
 }
 
 export interface FormOptions<G extends RCFGenerics>
@@ -34,6 +37,7 @@ export interface FormOptions<G extends RCFGenerics>
   schema: G["schema"];
   layout: FormLayoutFor<G>;
   mode: G["mode"];
+  externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
 }
 
 export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
@@ -43,7 +47,9 @@ export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
 export interface FormLayoutProps<
   Schema extends FormSchema = FormSchema,
   Components extends FieldComponents = FieldComponents,
-> extends FormErrors<Schema> {
+> {
+  generalErrors: AnyError[];
+  fieldErrors: FieldErrors<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
 }
