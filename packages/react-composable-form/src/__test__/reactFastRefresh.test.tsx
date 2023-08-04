@@ -1,59 +1,96 @@
 /* eslint-disable @typescript-eslint/no-var-requires,import/order,no-var */
 import "@testing-library/jest-dom";
 import type { ComponentType } from "react";
-import React from "react";
-import ReactFreshRuntime from "react-refresh/runtime";
+import RefreshRuntime from "react-refresh/runtime";
 import userEvent from "@testing-library/user-event";
+import type { FormComponent } from "../createForm";
+import { createForm } from "../createForm";
+import { z } from "zod";
 
 // React refresh runtime must inject global hook before
 // importing react-dom/client and react-dom/test-utils
-ReactFreshRuntime.injectIntoGlobalHook(window);
+RefreshRuntime.injectIntoGlobalHook(window);
 import rtl = require("@testing-library/react");
+import type { RCFGenerics } from "../types/optionTypes";
+import { useState } from "react";
 const { act, render } = rtl;
 
 describe("reactFastRefresh", () => {
-  it("can preserve state for compatible types", async () => {
-    const { getByRole, patch } = prepare(function Hello() {
-      const [val, setVal] = React.useState(0);
-      return (
-        <button style={{ color: "blue" }} onClick={() => setVal(val + 1)}>
-          {val}
-        </button>
-      );
-    });
+  it("controlled + same form component instance", async () => {
+    const instance = createTestForm();
+    await testForm(() => instance, useControlledProps);
+  });
 
-    // Bump the state before patching.
-    let button = getByRole("button");
-    expect(button).toHaveTextContent("0");
-    expect(button).toHaveStyle({ color: "blue" });
-    await userEvent.click(button);
-    expect(button).toHaveTextContent("1");
+  it("controlled + new form component instance", async () => {
+    await testForm(createTestForm, useControlledProps);
+  });
 
-    // Perform a hot update.
-    await patch(function Hello() {
-      const [val, setVal] = React.useState(0);
-      return (
-        <button style={{ color: "red" }} onClick={() => setVal(val + 1)}>
-          {val}
-        </button>
-      );
-    });
+  it("uncontrolled + same form component instance", async () => {
+    const instance = createTestForm();
+    await testForm(() => instance);
+  });
 
-    // Assert the state was preserved but color changed.
-    button = getByRole("button");
-    expect(button).toHaveTextContent("1");
-    expect(button).toHaveStyle({ color: "red" });
+  it("uncontrolled + new form component instance", async () => {
+    await testForm(createTestForm);
   });
 });
+
+function useControlledProps() {
+  const [value, onChange] = useState();
+  return { value, onChange };
+}
+
+function createTestForm() {
+  return createForm((options) =>
+    options
+      .schema(z.object({ foo: z.string() }))
+      .type(z.string(), ({ name, value, onChange }) => (
+        <input
+          aria-label={name}
+          value={value ?? ""}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
+      ))
+      .layout(({ fields, title }) => (
+        <>
+          <h1>{title}</h1>
+          {Object.values(fields).map((Field, index) => (
+            <Field key={index} />
+          ))}
+        </>
+      )),
+  );
+}
+
+async function testForm(
+  createFormVersion: () => FormComponent<RCFGenerics>,
+  useProps: () => Record<string, unknown> = () => ({}),
+) {
+  const FormV1 = createFormVersion();
+  const { getByRole, patch } = prepare(function AppV1() {
+    return <FormV1 {...useProps()} title="V1" />;
+  });
+
+  expect(getByRole("heading")).toHaveTextContent("V1");
+  await userEvent.type(getByRole("textbox"), "hello");
+
+  const FormV2 = createFormVersion();
+  await patch(function AppV2() {
+    return <FormV2 {...useProps()} title="V2" />;
+  });
+
+  expect(getByRole("heading")).toHaveTextContent("V2");
+  expect(getByRole("textbox")).toHaveValue("hello");
+}
 
 let idCounter = 0;
 function prepare(Original: ComponentType) {
   const id = (idCounter++).toString();
   const result = render(<Original />);
-  ReactFreshRuntime.register(Original, id);
+  RefreshRuntime.register(Original, id);
   async function patch(Updated: ComponentType) {
-    ReactFreshRuntime.register(Updated, id);
-    await act(() => ReactFreshRuntime.performReactRefresh());
+    RefreshRuntime.register(Updated, id);
+    await act(() => RefreshRuntime.performReactRefresh());
   }
   return { ...result, patch };
 }
