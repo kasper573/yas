@@ -5,14 +5,18 @@
     "url": "https://github.com/ksandin/yas.git",
     "directory": "packages/react-composable-form"
   },
-  "description": "Form composition library for React",
+  "description": "Form library for React with focus on composition, convention and type safety.",
   "keywords": [
     "react",
     "composable",
-    "form"
+    "form",
+    "convention",
+    "validation",
+    "typescript",
+    "state"
   ],
   "author": "Kasper Sandin",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
