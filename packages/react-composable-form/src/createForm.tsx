@@ -1,5 +1,5 @@
 import type { FormEvent, ComponentType } from "react";
-import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import type { inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
@@ -55,23 +55,26 @@ function createFormImpl<G extends RCFGenerics>(
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
 
-  const ComposableForm: FormComponent<G> = (({
-    defaultValue,
-    value: data = defaultValue ?? emptyObject,
-    onChange,
-    onSubmit,
-    errors: externalErrors,
-    ...layoutProps
-  }) => {
-    if (defaultValue !== undefined && data !== defaultValue) {
+  const ComposableForm: FormComponent<G> = ((props) => {
+    if ("value" in props && "defaultValue" in props) {
       throw new Error(
         "Cannot set both defaultValue and value, please use one or the other",
       );
     }
 
-    const store: FormStoreFor<G> = useMemo(
-      () => new FormStore(schema, data, mode),
-      [],
+    const isControlledComponent = "value" in props;
+
+    const {
+      defaultValue,
+      value: data = defaultValue ?? emptyObject,
+      onChange,
+      onSubmit,
+      errors: externalErrors,
+      ...layoutProps
+    } = props;
+
+    const [store] = useState(
+      (): FormStoreFor<G> => new FormStore(schema, data, mode),
     );
 
     const generalErrors = useSyncExternalStore(
@@ -94,7 +97,11 @@ function createFormImpl<G extends RCFGenerics>(
       [store, externalErrors],
     );
 
-    useEffect(() => store.resetData(data), [data, store]);
+    useEffect(() => {
+      if (isControlledComponent) {
+        store.resetData(data);
+      }
+    }, [data, store, isControlledComponent]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {
