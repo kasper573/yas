@@ -15,8 +15,8 @@ import type {
   OptionalArgIfEmpty,
   Replace,
 } from "./types/utilityTypes";
-import type { SetTypedComponent } from "./typedComponents";
-import { setTypedComponent } from "./typedComponents";
+import type { SetTypedComponent } from "./utils/typedComponents";
+import { setTypedComponent } from "./utils/typedComponents";
 import type {
   ComposedFieldComponent,
   FieldComponents,
@@ -25,7 +25,7 @@ import type {
   FormOptions,
   RCFGenerics,
 } from "./types/optionTypes";
-import { withDefaultProps } from "./withDefaultProps";
+import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<

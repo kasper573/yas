@@ -1,10 +1,6 @@
-import type {
-  AnyZodObject,
-  output,
-  ZodEffects,
-  ZodRawShape,
-  ZodType,
-} from "zod";
+import type { output, ZodType } from "zod";
+
+import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
 
 export type FormSchema = ValueType;
 
@@ -24,12 +20,6 @@ export interface FormState<Schema extends FormSchema> {
   combinedErrors: FormErrors<Schema>;
   data: inferValue<Schema>;
 }
-
-export type GetShapeFromSchema<T extends ValueType> = T extends AnyZodObject
-  ? T["shape"]
-  : T extends ZodEffects<infer U>
-  ? GetShapeFromSchema<U>
-  : ZodRawShape;
 
 export type FieldNames<Schema extends FormSchema> = `${string &
   keyof GetShapeFromSchema<Schema>}`;

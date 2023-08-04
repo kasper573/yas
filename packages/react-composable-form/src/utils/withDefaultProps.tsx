@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { MakeOptional } from "./types/utilityTypes";
+import type { MakeOptional } from "../types/utilityTypes";
 
 export function withDefaultProps<
   Props extends object,

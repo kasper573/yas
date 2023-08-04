@@ -6,18 +6,17 @@ import {
   useMemo,
   useSyncExternalStore,
 } from "react";
-import { ZodEffects, ZodObject } from "zod";
 import type { FieldNames, FormSchema, ValueType } from "./types/commonTypes";
 import { FormContext } from "./FormContext";
 import type { FormStore } from "./FormStore";
-import { getTypedComponent } from "./typedComponents";
+import { getTypedComponent } from "./utils/typedComponents";
 import type {
   FieldComponents,
   FieldComponentsPassedToLayout,
   FieldFor,
 } from "./types/optionTypes";
-import { getFirstPartyType } from "./isMatchingType";
-import type { GetShapeFromSchema } from "./types/commonTypes";
+import { getFirstPartyType } from "./utils/isMatchingType";
+import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 
 export function createFields<
   Schema extends FormSchema,
@@ -41,22 +40,6 @@ export function createFields<
     },
     {} as FieldComponentsPassedToLayout<Schema, Components>,
   );
-}
-
-function getShapeFromSchema<Schema extends FormSchema>(
-  type: FormSchema,
-): GetShapeFromSchema<Schema> {
-  while (type instanceof ZodEffects) {
-    type = type.innerType();
-  }
-  if (!(type instanceof ZodObject)) {
-    throw new Error(
-      `Schema must be an object or effect chain that starts with an object, got ${getFirstPartyType(
-        type,
-      )}`,
-    );
-  }
-  return type.shape;
 }
 
 function createFallbackComponent(name: string, type: ValueType) {

@@ -11,6 +11,7 @@ import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
+import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
   G["schema"],
@@ -89,19 +90,28 @@ export class FormStore<
     this.mutate((draft) => {
       draft.externalErrors.field = errors?.field ?? {};
       draft.externalErrors.general = errors?.general ?? [];
-      this.updateCombinedFieldErrors();
+      this.updateCombinedErrors();
     });
   }
 
-  private updateCombinedFieldErrors() {
-    this.mutate((draft) => {
-      draft.combinedErrors.general = draft.externalErrors.general.concat(
-        draft.localErrors.general,
+  private updateCombinedErrors() {
+    this.mutate(({ externalErrors, localErrors, combinedErrors }) => {
+      combinedErrors.general = externalErrors.general.concat(
+        localErrors.general,
       );
-      draft.combinedErrors.field = {
-        ...draft.localErrors.field,
-        ...draft.externalErrors.field,
-      };
+      for (const fieldName of Object.keys(
+        getShapeFromSchema<Schema>(this.schema),
+      ) as FieldNames<Schema>[]) {
+        const combined = [
+          ...(externalErrors.field[fieldName] ?? []),
+          ...(localErrors.field[fieldName] ?? []),
+        ];
+        if (combined.length) {
+          combinedErrors.field[fieldName] = combined;
+        } else {
+          delete combinedErrors.field[fieldName];
+        }
+      }
     });
   }
 
@@ -121,7 +131,7 @@ export class FormStore<
         draft.localErrors.field = localErrors.field;
       }
 
-      this.updateCombinedFieldErrors();
+      this.updateCombinedErrors();
     });
   }
 

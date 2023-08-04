@@ -1,5 +1,6 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
-import type { TypedComponents } from "../typedComponents";
+import type { TypedComponents } from "../utils/typedComponents";
+import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   AnyError,
@@ -8,7 +9,6 @@ import type {
   FieldNames,
   FormSchema,
   FormValidationMode,
-  GetShapeFromSchema,
   inferValue,
   ValueType,
 } from "./commonTypes";

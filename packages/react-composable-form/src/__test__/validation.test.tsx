@@ -296,14 +296,15 @@ describe("validation", () => {
     it("can customize error format", async () => {
       const Form = createForm((options) =>
         options
-          .customExternalErrors(([general, field]: [ErrorList, ErrorList]) => ({
+          .customExternalErrors(([general, foo]: [ErrorList, ErrorList]) => ({
             general,
-            field: { field },
+            field: { foo },
           }))
+          .schema(z.object({ foo: z.string() }))
           .layout(({ generalErrors, fieldErrors }) => (
             <>
-              <span>general: {generalErrors?.join(", ")}</span>
-              <span>field: {Object.values(fieldErrors).flat().join(", ")}</span>
+              <span>general: {generalErrors.join(", ")}</span>
+              <span>field: {fieldErrors.foo?.join(", ")}</span>
             </>
           )),
       );
@@ -348,10 +349,10 @@ describe("validation", () => {
       getByText("External error");
     });
 
-    it("override local field errors", async () => {
+    it("combines with local field errors", async () => {
       const Form = createForm((options) =>
         options
-          .schema(z.object({ foo: z.string().min(3), bar: z.string().min(3) }))
+          .schema(z.object({ foo: z.string().min(5), bar: z.string().min(3) }))
           .layout(({ fieldErrors, handleSubmit }) => (
             <>
               <span>{JSON.stringify(fieldErrors)}</span>
@@ -370,7 +371,10 @@ describe("validation", () => {
       await userEvent.click(getByText("submit"));
       getByText(
         JSON.stringify({
-          foo: ["External error"],
+          foo: [
+            "External error",
+            "String must contain at least 5 character(s)",
+          ],
           bar: ["String must contain at least 3 character(s)"],
         }),
       );

@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import type { ValueType } from "./types/commonTypes";
-import type { AnyComponent, DictionarySet } from "./types/utilityTypes";
+import type { ValueType } from "../types/commonTypes";
+import type { AnyComponent, DictionarySet } from "../types/utilityTypes";
 import { isMatchingType } from "./isMatchingType";
 
 export type TypedComponents = TypedComponentTuple[];
