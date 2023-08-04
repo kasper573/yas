@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires,import/order,no-var */
 import "@testing-library/jest-dom";
-import type { ComponentType } from "react";
+import type { ComponentProps, ComponentType } from "react";
 import RefreshRuntime from "react-refresh/runtime";
 import userEvent from "@testing-library/user-event";
 import type { FormComponent } from "../createForm";
@@ -16,13 +16,49 @@ import { useState } from "react";
 const { act, render } = rtl;
 
 describe("reactFastRefresh", () => {
+  function createTestForm() {
+    return createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(z.string(), ({ name, value, onChange }) => (
+          <input
+            aria-label={name}
+            value={value ?? ""}
+            onChange={(e) => onChange?.(e.target.value)}
+          />
+        ))
+        .layout(({ fields, title }) => (
+          <>
+            <h1>{title}</h1>
+            {Object.values(fields).map((Field, index) => (
+              <Field key={index} />
+            ))}
+          </>
+        )),
+    );
+  }
+
+  async function testForm(createFormVersion: () => FormComponent<RCFGenerics>) {
+    const FormV1 = createFormVersion();
+    const { getByRole, patch } = prepare(FormV1, { title: "V1" });
+
+    expect(getByRole("heading")).toHaveTextContent("V1");
+    await userEvent.type(getByRole("textbox"), "hello");
+
+    const FormV2 = createFormVersion();
+    await patch(FormV2, { title: "V2" });
+
+    expect(getByRole("heading")).toHaveTextContent("V2");
+    expect(getByRole("textbox")).toHaveValue("hello");
+  }
+
   it("controlled + same form component instance", async () => {
-    const instance = createTestForm();
-    await testForm(() => instance, useControlledProps);
+    const instance = withControlledState(createTestForm());
+    await testForm(() => instance);
   });
 
   it("controlled + new form component instance", async () => {
-    await testForm(createTestForm, useControlledProps);
+    await testForm(() => withControlledState(createTestForm()));
   });
 
   it("uncontrolled + same form component instance", async () => {
@@ -35,62 +71,40 @@ describe("reactFastRefresh", () => {
   });
 });
 
-function useControlledProps() {
-  const [value, onChange] = useState();
-  return { value, onChange };
-}
-
-function createTestForm() {
-  return createForm((options) =>
-    options
-      .schema(z.object({ foo: z.string() }))
-      .type(z.string(), ({ name, value, onChange }) => (
-        <input
-          aria-label={name}
-          value={value ?? ""}
-          onChange={(e) => onChange?.(e.target.value)}
-        />
-      ))
-      .layout(({ fields, title }) => (
-        <>
-          <h1>{title}</h1>
-          {Object.values(fields).map((Field, index) => (
-            <Field key={index} />
-          ))}
-        </>
-      )),
-  );
-}
-
-async function testForm(
-  createFormVersion: () => FormComponent<RCFGenerics>,
-  useProps: () => Record<string, unknown> = () => ({}),
-) {
-  const FormV1 = createFormVersion();
-  const { getByRole, patch } = prepare(function AppV1() {
-    return <FormV1 {...useProps()} title="V1" />;
-  });
-
-  expect(getByRole("heading")).toHaveTextContent("V1");
-  await userEvent.type(getByRole("textbox"), "hello");
-
-  const FormV2 = createFormVersion();
-  await patch(function AppV2() {
-    return <FormV2 {...useProps()} title="V2" />;
-  });
-
-  expect(getByRole("heading")).toHaveTextContent("V2");
-  expect(getByRole("textbox")).toHaveValue("hello");
+function withControlledState<C extends ComponentType>(Component: C) {
+  return function ControlledComponent<Value>(props: ComponentProps<C>) {
+    const [value, onChange] = useState<Value>();
+    return <Component {...({ value, onChange, ...props } as any)} />;
+  } as C;
 }
 
 let idCounter = 0;
-function prepare(Original: ComponentType) {
+function prepare<Props extends Record<string, unknown>>(
+  Original: ComponentType<Props>,
+  props: Partial<Props> = {},
+) {
   const id = (idCounter++).toString();
-  const result = render(<Original />);
-  RefreshRuntime.register(Original, id);
-  async function patch(Updated: ComponentType) {
-    RefreshRuntime.register(Updated, id);
+  const OriginalWithProps = wrapAndRegister(Original, props, id);
+  const result = render(<OriginalWithProps />);
+  async function patch(
+    Updated: ComponentType<Props>,
+    props: Partial<Props> = {},
+  ) {
+    wrapAndRegister(Updated, props, id);
     await act(() => RefreshRuntime.performReactRefresh());
   }
   return { ...result, patch };
+}
+
+function wrapAndRegister<Props extends Record<string, unknown>>(
+  Inner: ComponentType<Props>,
+  props: Partial<Props>,
+  id = (idCounter++).toString(),
+) {
+  function Outer() {
+    return <Inner {...(props as Props)} />;
+  }
+  RefreshRuntime.register(Outer, id + "_outer");
+  RefreshRuntime.register(Inner, id + "_inner");
+  return Outer;
 }
