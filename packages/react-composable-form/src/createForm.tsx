@@ -90,7 +90,7 @@ function createFormImpl<G extends RCFGenerics>(
     );
 
     useEffect(
-      () => store.setExternalErrors(externalErrorParser(externalErrors ?? {})),
+      () => store.setExternalErrors(externalErrorParser(externalErrors)),
       [store, externalErrors],
     );
 
