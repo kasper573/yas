@@ -13,5 +13,5 @@ export const examples = [
   { name: "Steps", component: StepsExample },
   { name: "List", component: ListExample },
   { name: "Nested", component: NestedExample },
-  { name: "Registration", component: RemoteExample },
+  { name: "Remote", component: RemoteExample },
 ];
