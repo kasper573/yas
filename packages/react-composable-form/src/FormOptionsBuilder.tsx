@@ -135,7 +135,10 @@ export const emptyFormOptionsBuilder =
     namedComponents: {},
     typedComponents: [],
     mode: "submit",
-    externalErrorParser: ({ general = [], field = {} }) => ({ general, field }),
+    externalErrorParser: (error) => ({
+      general: error?.general ?? [],
+      field: error?.field ?? {},
+    }),
   });
 
 export type EmptyFormOptionsGenerics = RCFGenerics<
@@ -145,7 +148,7 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   "submit",
   {},
   [],
-  Partial<FormErrors<ZodObject<{}>>>
+  Partial<FormErrors<ZodObject<{}>>> | undefined | null // null because some libraries like react-query use null for empty
 >;
 
 function NoLayout<
