@@ -22,9 +22,9 @@ const UserRegistrationForm = BaseForm.extend((options) =>
     )
     .field("password", TextField, { password: true })
     .field("passwordConfirm", TextField, { password: true })
-    .customExternalErrors(({ foo = [], bar = [] }: CustomRemoteErrors) => ({
-      general: foo,
-      field: Object.fromEntries(bar),
+    .customExternalErrors((error?: CustomRemoteErrors) => ({
+      general: error?.foo ?? [],
+      field: Object.fromEntries(error?.bar ?? []),
     })),
 );
 

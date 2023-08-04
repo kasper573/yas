@@ -148,7 +148,7 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   "submit",
   {},
   [],
-  Partial<FormErrors<ZodObject<{}>>> | undefined | null // null because some libraries like react-query use null for empty
+  Partial<FormErrors<ZodObject<{}>>> | undefined
 >;
 
 function NoLayout<
