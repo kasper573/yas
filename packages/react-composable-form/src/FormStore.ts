@@ -95,8 +95,8 @@ export class FormStore<
 
   private updateCombinedFieldErrors() {
     this.mutate((draft) => {
-      draft.combinedErrors.general = draft.localErrors.general.concat(
-        draft.externalErrors.general,
+      draft.combinedErrors.general = draft.externalErrors.general.concat(
+        draft.localErrors.general,
       );
       draft.combinedErrors.field = {
         ...draft.localErrors.field,

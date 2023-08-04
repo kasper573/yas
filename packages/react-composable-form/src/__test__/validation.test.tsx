@@ -348,8 +348,54 @@ describe("validation", () => {
       getByText("External error");
     });
 
-    it("field errors override local field errors", () => {});
+    it("override local field errors", async () => {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: z.string().min(3), bar: z.string().min(3) }))
+          .layout(({ fieldErrors, handleSubmit }) => (
+            <>
+              <span>{JSON.stringify(fieldErrors)}</span>
+              <button onClick={handleSubmit}>submit</button>
+            </>
+          )),
+      );
+      const { getByText } = render(
+        <Form
+          value={{ foo: "", bar: "" }}
+          errors={{
+            field: { foo: ["External error"] },
+          }}
+        />,
+      );
+      await userEvent.click(getByText("submit"));
+      getByText(
+        JSON.stringify({
+          foo: ["External error"],
+          bar: ["String must contain at least 3 character(s)"],
+        }),
+      );
+    });
 
-    it("fixed field errors fall back to form field errors", () => {});
+    it("combines with local general errors", async () => {
+      const Form = createForm((options) =>
+        options
+          .schema(
+            z
+              .object({ foo: z.string() })
+              .refine(() => false, { message: "Local error" }),
+          )
+          .layout(({ generalErrors, handleSubmit }) => (
+            <>
+              <span>{generalErrors?.join(", ")}</span>
+              <button onClick={handleSubmit}>submit</button>
+            </>
+          )),
+      );
+      const { getByText } = render(
+        <Form value={{ foo: "" }} errors={{ general: ["External error"] }} />,
+      );
+      await userEvent.click(getByText("submit"));
+      getByText("External error, Local error");
+    });
   });
 });
