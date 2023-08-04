@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
 import type { ErrorList } from "../types/commonTypes";
+import { silenceErrorLogs } from "./utils";
 
 describe("validation", () => {
   describe("local schema", () => {
@@ -275,13 +276,17 @@ describe("validation", () => {
     it("can submit while having errors", async () => {
       const onSubmit = jest.fn();
       const Form = createForm((options) =>
-        options.layout(({ handleSubmit }) => (
-          <button onClick={handleSubmit}>submit</button>
-        )),
+        options
+          .schema(z.object({ foo: z.string() }))
+          .type(z.string(), () => <span />)
+          .layout(({ handleSubmit }) => (
+            <button onClick={handleSubmit}>submit</button>
+          )),
       );
 
       const { getByRole } = render(
         <Form
+          value={{ foo: "" }}
           onSubmit={onSubmit}
           errors={{
             general: ["External error"],
@@ -290,7 +295,7 @@ describe("validation", () => {
         />,
       );
       await userEvent.click(getByRole("button", { name: "submit" }));
-      expect(onSubmit).toHaveBeenCalled();
+      expect(onSubmit).toHaveBeenCalledWith({ foo: "" });
     });
 
     it("can customize error format", async () => {
@@ -347,6 +352,21 @@ describe("validation", () => {
         <Form errors={{ field: { foo: ["External error"] } }} />,
       );
       getByText("External error");
+    });
+
+    it("throws errors if schema doesn't contain external field name", () => {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: z.string() }))
+          .type(z.string(), () => <span />),
+      );
+      const restoreErrorLogs = silenceErrorLogs();
+      expect(() =>
+        render(<Form errors={{ field: { bar: ["External error"] } }} />),
+      ).toThrow(
+        `Invalid external field error: Field "bar" doesn't exist in schema`,
+      );
+      restoreErrorLogs();
     });
 
     it("combines with local field errors", async () => {

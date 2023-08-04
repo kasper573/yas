@@ -11,6 +11,7 @@ import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
+import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
 import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 
 export type FormStoreFor<G extends RCFGenerics> = FormStore<
@@ -25,6 +26,7 @@ export class FormStore<
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
   private _state: FormState<Schema>;
+  private readonly _schemaShape: GetShapeFromSchema<Schema>;
 
   get data(): inferValue<Schema> {
     return this._state.data;
@@ -50,6 +52,7 @@ export class FormStore<
     initialData: inferValue<Schema>,
     private _mode: FormValidationMode,
   ) {
+    this._schemaShape = getShapeFromSchema(schema);
     this._state = {
       localErrors: emptyFormErrorState(),
       externalErrors: emptyFormErrorState(),
@@ -95,24 +98,30 @@ export class FormStore<
   }
 
   private updateCombinedErrors() {
-    this.mutate(({ externalErrors, localErrors, combinedErrors }) => {
-      combinedErrors.general = externalErrors.general.concat(
-        localErrors.general,
-      );
-      for (const fieldName of Object.keys(
-        getShapeFromSchema<Schema>(this.schema),
-      ) as FieldNames<Schema>[]) {
-        const combined = [
-          ...(externalErrors.field[fieldName] ?? []),
-          ...(localErrors.field[fieldName] ?? []),
-        ];
-        if (combined.length) {
-          combinedErrors.field[fieldName] = combined;
-        } else {
-          delete combinedErrors.field[fieldName];
+    this.mutate(
+      ({
+        externalErrors: external,
+        localErrors: local,
+        combinedErrors: combined,
+      }) => {
+        combined.general = external.general.concat(local.general);
+
+        combined.field = { ...local.field };
+        for (const key in external.field) {
+          const fieldName = key as FieldNames<Schema>;
+          if (fieldName in this._schemaShape) {
+            combined.field[fieldName] = [
+              ...(external.field[fieldName] ?? []),
+              ...(local.field?.[fieldName] ?? []),
+            ];
+          } else {
+            throw new Error(
+              `Invalid external field error: Field "${fieldName}" doesn't exist in schema`,
+            );
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   private validate<FieldName extends FieldNames<Schema>>(
