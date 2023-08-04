@@ -37,8 +37,11 @@ export class FormStore<
     return this._state.combinedErrors.field;
   }
 
-  get isValid() {
-    return !Object.values(this.fieldErrors).some((errors) => errors?.length);
+  get isLocallyValid() {
+    const { field, general } = this._state.localErrors;
+    const hasLocalFieldErrors = Object.values(field).some((e) => e?.length);
+    const hasLocalGeneralErrors = general.length > 0;
+    return !hasLocalFieldErrors && !hasLocalGeneralErrors;
   }
 
   constructor(

@@ -100,7 +100,7 @@ function createFormImpl<G extends RCFGenerics>(
       (e?: FormEvent) => {
         e?.preventDefault();
         store.handleSubmit();
-        if (store.isValid) {
+        if (store.isLocallyValid) {
           onSubmit?.(store.data);
         }
       },

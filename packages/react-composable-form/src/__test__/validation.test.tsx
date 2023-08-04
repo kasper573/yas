@@ -269,6 +269,27 @@ describe("validation", () => {
     getByText("No external errors");
   });
 
+  it("can submit while having external errors", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+
+    const { getByRole } = render(
+      <Form
+        onSubmit={onSubmit}
+        errors={{
+          general: ["External error"],
+          field: { foo: ["External foo"] },
+        }}
+      />,
+    );
+    await userEvent.click(getByRole("button", { name: "submit" }));
+    expect(onSubmit).toHaveBeenCalled();
+  });
+
   it("can customize external error format", async () => {
     const Form = createForm((options) =>
       options
