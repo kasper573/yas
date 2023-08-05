@@ -109,11 +109,11 @@ export function App() {
 
     // The function returns a promise that resolves when the `resolve` function
     // is called from within the component, and will resolve with the value that was passed.
-    const firstInput = await promise;
+    const input = await promise;
 
     // You can override default props by providing specific props per spawn
     await prompt({
-      message: `This was your previous input: "${firstInput}"`,
+      message: `This was your previous input: "${input}"`,
     });
 
     await showModal(Prompt, {
