@@ -15,6 +15,24 @@ import rtl = require("@testing-library/react");
 const { act, render } = rtl;
 
 describe("reactFastRefresh", () => {
+  it("controlled + same form component instance", async () => {
+    const instance = withControlledState(createTestForm());
+    await testForm(() => instance);
+  });
+
+  it("controlled + new form component instance", async () => {
+    await testForm(() => withControlledState(createTestForm()));
+  });
+
+  it("uncontrolled + same form component instance", async () => {
+    const instance = createTestForm();
+    await testForm(() => instance);
+  });
+
+  it("uncontrolled + new form component instance", async () => {
+    await testForm(createTestForm);
+  });
+
   function createTestForm() {
     return createForm((options) =>
       options
@@ -50,24 +68,6 @@ describe("reactFastRefresh", () => {
     expect(getByRole("heading")).toHaveTextContent("V2");
     expect(getByRole("textbox")).toHaveValue("hello");
   }
-
-  it("controlled + same form component instance", async () => {
-    const instance = withControlledState(createTestForm());
-    await testForm(() => instance);
-  });
-
-  it("controlled + new form component instance", async () => {
-    await testForm(() => withControlledState(createTestForm()));
-  });
-
-  it("uncontrolled + same form component instance", async () => {
-    const instance = createTestForm();
-    await testForm(() => instance);
-  });
-
-  it("uncontrolled + new form component instance", async () => {
-    await testForm(createTestForm);
-  });
 });
 
 function withControlledState<C extends ComponentType>(Component: C) {
