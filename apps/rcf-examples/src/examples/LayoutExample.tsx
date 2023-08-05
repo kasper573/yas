@@ -27,16 +27,16 @@ const SpecializedUserForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <Box sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
-        <Email sx={{ transform: `rotateZ(-15deg)` }} size="small" />
+        <Email sx={{ transform: `rotateZ(-10deg)` }} size="small" />
         <Password
           name="PWD"
           helperText="I'm so special!"
-          sx={{ transform: `rotateZ(15deg)`, mx: 3 }}
+          sx={{ transform: `rotateZ(10deg)`, mx: 3 }}
         />
         <Button
           type="submit"
           variant="outlined"
-          sx={{ transform: `rotateZ(-15deg)` }}
+          sx={{ transform: `rotateZ(-10deg)` }}
         >
           Submit
         </Button>
@@ -56,11 +56,11 @@ export function LayoutExample() {
         onChange={setData}
         onSubmit={showData}
       />
-      <Typography variant="h4" sx={{ my: 2 }}>
+      <Typography variant="h4" sx={{ my: 4 }}>
         Inline layout
       </Typography>
       <InlineUserForm value={data} onChange={setData} onSubmit={showData} />
-      <Typography variant="h4" sx={{ my: 2 }}>
+      <Typography variant="h4" sx={{ my: 4 }}>
         Specialized layout
       </Typography>
       <SpecializedUserForm value={data} onChange={setData} />
