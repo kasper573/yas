@@ -9,7 +9,7 @@ import userEvent from "@testing-library/user-event";
 import type { FormComponent } from "../createForm";
 import { createForm } from "../createForm";
 
-// React refresh runtime must inject global hook before testing-library
+// React refresh runtime must inject global hook before importing testing-library
 RefreshRuntime.injectIntoGlobalHook(window);
 import rtl = require("@testing-library/react");
 const { act, render } = rtl;
