@@ -5,19 +5,17 @@ import { createForm } from "../createForm";
 
 it("inferFormValue resolves to the correct type", () => {
   const Form = createForm((options) =>
-    options.schema(z.object({ foo: z.string() })),
+    options.schema(z.object({ foo: z.string(), bar: z.number() })),
   );
 
-  expectTypeOf<inferFormValue<typeof Form>>({ foo: "hello" });
+  expectTypeOf<inferFormValue<typeof Form>>().toEqualTypeOf<{
+    foo: string;
+    bar: number;
+  }>();
 });
 
-it("layout disallows unknown properties", () => {
-  const DefaultForm = createForm();
-  const FormWithLayout = createForm((options) => options.layout(() => null));
-
-  // @ts-expect-error foo is not a valid property
-  const element1 = <DefaultForm foo={123} />;
-
-  // @ts-expect-error bar is not a valid property
-  const element2 = <FormWithLayout bar={123} />;
+it("Form inherits its layouts properties", () => {
+  type Props = { foo: string };
+  const Form = createForm((options) => options.layout((props: Props) => null));
+  expectTypeOf(Form).parameter(0).toMatchTypeOf<Props>();
 });
