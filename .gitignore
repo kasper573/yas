@@ -8,6 +8,7 @@ node_modules
 # testing
 coverage
 **/.playwright
+*.vitest-temp.json
 
 # build tools
 out/
