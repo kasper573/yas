@@ -10,3 +10,14 @@ it("inferFormValue resolves to the correct type", () => {
 
   expectTypeOf<inferFormValue<typeof Form>>({ foo: "hello" });
 });
+
+it("layout disallows unknown properties", () => {
+  const DefaultForm = createForm();
+  const FormWithLayout = createForm((options) => options.layout(() => null));
+
+  // @ts-expect-error foo is not a valid property
+  const element1 = <DefaultForm foo={123} />;
+
+  // @ts-expect-error bar is not a valid property
+  const element2 = <FormWithLayout bar={123} />;
+});
