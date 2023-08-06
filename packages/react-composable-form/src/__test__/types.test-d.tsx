@@ -18,7 +18,10 @@ it("inferFormValue resolves to the correct type", () => {
 it("Form inherits its layouts properties", () => {
   type Props = { foo: string };
   const Form = createForm((options) => options.layout((props: Props) => null));
-  expectTypeOf(Form).parameter(0).toMatchTypeOf<Props>();
+  const expectProps = expectTypeOf(Form).parameter(0);
+
+  expectProps.not.toEqualTypeOf<any>();
+  expectProps.toMatchTypeOf<Props>();
 });
 
 it("Form does not accept unknown properties", () => {
