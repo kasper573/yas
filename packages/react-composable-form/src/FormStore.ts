@@ -44,7 +44,7 @@ export class FormStore<Schema extends FormSchema> {
   constructor(
     public readonly schema: Schema,
     initialData: inferValue<Schema>,
-    private _modes: FormValidationMode[],
+    private _modes: readonly FormValidationMode[],
   ) {
     this._schemaShape = getShapeFromSchema(schema);
     this._state = {
@@ -124,7 +124,7 @@ export class FormStore<Schema extends FormSchema> {
     );
   }
 
-  setModes(modes: FormValidationMode[]) {
+  setModes(modes: readonly FormValidationMode[]) {
     this._modes = modes;
   }
 

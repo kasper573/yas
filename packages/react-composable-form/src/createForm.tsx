@@ -19,7 +19,7 @@ export interface FormProps<G extends AnyRCFGenerics> {
   onChange?: (newValue: inferValue<G["schema"]>) => unknown;
   onSubmit?: (value: inferValue<G["schema"]>) => unknown;
   errors?: G["customExternalError"] | null; // null because some libraries like react-query use null for empty
-  validateOn?: FormValidationMode[];
+  validateOn?: readonly FormValidationMode[];
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
