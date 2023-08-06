@@ -32,7 +32,8 @@ const UserRegistrationForm = BaseForm.extend((options) =>
 
 function RemoteExampleImpl() {
   const [errorType, setErrorType] = useState<ErrorType>("No Error");
-  const [validateOn, setValidateOn] = useState<FormValidationMode>("submit");
+  const [validateOn, setValidateOn] =
+    useState<readonly FormValidationMode[]>(formValidationModes);
 
   const endpoint = useMemo(
     () => createSimulatedRemoteEndpoint(errorType),
@@ -57,9 +58,9 @@ function RemoteExampleImpl() {
       <SingleSelectField
         sx={{ mb: 4 }}
         name="Validate on"
-        value={validateOn}
+        value={validateOn[0]}
         options={formValidationModes.map((x) => ({ label: x, value: x }))}
-        onChange={(mode) => mode && setValidateOn(mode)}
+        onChange={(mode) => mode && setValidateOn([mode])}
       />
       <UserRegistrationForm
         onSubmit={mutate}
