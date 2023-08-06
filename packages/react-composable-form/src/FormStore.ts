@@ -62,7 +62,9 @@ export class FormStore<Schema extends FormSchema> {
   }
 
   handleSubmit() {
-    this.validate();
+    if (this.hasMode("submit")) {
+      this.validate();
+    }
   }
 
   changeField<FieldName extends FieldNames<Schema>>(
