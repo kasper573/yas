@@ -14,15 +14,9 @@ import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
 import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 import type { AnyRCFGenerics } from "./types/optionTypes";
 
-export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<
-  G["schema"],
-  G["mode"]
->;
+export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<G["schema"]>;
 
-export class FormStore<
-  Schema extends FormSchema,
-  Mode extends FormValidationMode = FormValidationMode,
-> {
+export class FormStore<Schema extends FormSchema> {
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
   private _state: FormState<Schema>;
@@ -122,6 +116,10 @@ export class FormStore<
         }
       },
     );
+  }
+
+  setMode(mode: FormValidationMode) {
+    this._mode = mode;
   }
 
   private validate<FieldName extends FieldNames<Schema>>(

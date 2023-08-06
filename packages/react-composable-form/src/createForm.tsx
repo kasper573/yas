@@ -1,6 +1,6 @@
 import type { FormEvent, ComponentType } from "react";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
-import type { inferValue } from "./types/commonTypes";
+import type { FormValidationMode, inferValue } from "./types/commonTypes";
 import { createFields } from "./createFields";
 import { FormContext } from "./FormContext";
 import type {
@@ -19,6 +19,7 @@ export interface FormProps<G extends AnyRCFGenerics> {
   onChange?: (newValue: inferValue<G["schema"]>) => unknown;
   onSubmit?: (value: inferValue<G["schema"]>) => unknown;
   errors?: G["customExternalError"] | null; // null because some libraries like react-query use null for empty
+  validateOn?: FormValidationMode;
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -52,7 +53,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
     namedComponents,
     typedComponents,
     externalErrorParser,
-    mode,
+    mode: prebuiltMode,
   } = optionsBuilder.build();
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
@@ -72,6 +73,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
       onChange,
       onSubmit,
       errors: externalErrors,
+      validateOn: mode = prebuiltMode,
       ...layoutProps
     } = props;
 
@@ -104,6 +106,8 @@ function createFormImpl<G extends AnyRCFGenerics>(
         store.resetData(data);
       }
     }, [data, store, isControlledComponent]);
+
+    useEffect(() => store.setMode(mode), [mode]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {

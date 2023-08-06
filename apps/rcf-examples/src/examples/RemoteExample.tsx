@@ -45,12 +45,6 @@ function RemoteExampleImpl() {
     FormData
   >(endpoint);
 
-  const UserRegistrationFormWithCustomValidateOnOption = useMemo(
-    () =>
-      UserRegistrationForm.extend((options) => options.validateOn(validateOn)),
-    [validateOn],
-  );
-
   return (
     <>
       <SingleSelectField
@@ -67,11 +61,12 @@ function RemoteExampleImpl() {
         options={formValidationModes.map((x) => ({ label: x, value: x }))}
         onChange={(mode) => mode && setValidateOn(mode)}
       />
-      <UserRegistrationFormWithCustomValidateOnOption
+      <UserRegistrationForm
         onSubmit={mutate}
         errors={error}
         title="asdf"
         isLoading={isLoading}
+        validateOn={validateOn}
       />
     </>
   );
