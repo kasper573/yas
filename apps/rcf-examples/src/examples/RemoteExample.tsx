@@ -1,7 +1,8 @@
 import { z } from "zod";
-import type { inferFormValue } from "react-composable-form";
+import type { FormValidationMode, inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
+import { formValidationModes } from "react-composable-form";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { SingleSelectField } from "../fields/SelectField";
@@ -31,6 +32,7 @@ const UserRegistrationForm = BaseForm.extend((options) =>
 
 function RemoteExampleImpl() {
   const [errorType, setErrorType] = useState<ErrorType>("No Error");
+  const [validateOn, setValidateOn] = useState<FormValidationMode>("submit");
 
   const endpoint = useMemo(
     () => createSimulatedRemoteEndpoint(errorType),
@@ -43,6 +45,12 @@ function RemoteExampleImpl() {
     FormData
   >(endpoint);
 
+  const UserRegistrationFormWithCustomValidateOnOption = useMemo(
+    () =>
+      UserRegistrationForm.extend((options) => options.validateOn(validateOn)),
+    [validateOn],
+  );
+
   return (
     <>
       <SingleSelectField
@@ -52,7 +60,14 @@ function RemoteExampleImpl() {
         options={simulatedErrorTypes.map((x) => ({ label: x, value: x }))}
         onChange={(option) => option && setErrorType(option)}
       />
-      <UserRegistrationForm
+      <SingleSelectField
+        sx={{ mb: 4 }}
+        name="Validate on"
+        value={validateOn}
+        options={formValidationModes.map((x) => ({ label: x, value: x }))}
+        onChange={(mode) => mode && setValidateOn(mode)}
+      />
+      <UserRegistrationFormWithCustomValidateOnOption
         onSubmit={mutate}
         errors={error}
         title="asdf"
