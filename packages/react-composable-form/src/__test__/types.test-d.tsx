@@ -31,3 +31,15 @@ it("Form does not accept unknown properties", () => {
   // @ts-expect-error Should not accept unknown properties
   const res = <Form unknownProp={123} />;
 });
+
+it("Form with custom layout does not accept unknown properties (no explicit layout props type)", () => {
+  const Form = createForm((options) => options.layout(() => null));
+  expectTypeOf(Form).toMatchTypeOf<ComponentType>();
+
+  // @ts-expect-error Should not accept unknown properties
+  const res = <Form unknownProp={123} />;
+});
+
+type Evaluate<T> = {
+  [K in keyof T]: T[K];
+};

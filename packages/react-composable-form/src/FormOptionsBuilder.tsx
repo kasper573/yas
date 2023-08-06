@@ -55,7 +55,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     });
   }
 
-  layout<NewLayoutProps extends AnyProps>(
+  layout<NewLayoutProps extends AnyProps = {}>(
     layout: ComponentType<FormLayoutProps<G["schema"], G> & NewLayoutProps>,
   ) {
     return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({

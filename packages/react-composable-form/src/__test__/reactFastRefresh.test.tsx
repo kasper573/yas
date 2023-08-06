@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires,import/order,no-var */
 import "@testing-library/jest-dom";
-import type { ComponentProps, ComponentType } from "react";
+import type { ComponentProps, ComponentType, ReactNode } from "react";
 import { z } from "zod";
 import { useState } from "react";
 import RefreshRuntime from "react-refresh/runtime";
@@ -43,7 +43,7 @@ describe("reactFastRefresh", () => {
             onChange={(e) => onChange?.(e.target.value)}
           />
         ))
-        .layout(({ fields, title }) => (
+        .layout<{ title?: ReactNode }>(({ fields, title }) => (
           <>
             <h1>{title}</h1>
             {Object.values(fields).map((Field, index) => (
