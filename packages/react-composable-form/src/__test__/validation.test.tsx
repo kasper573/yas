@@ -168,6 +168,8 @@ describe("validation", () => {
       getByText("No errors");
       await userEvent.click(getByText("Switch to validate on change"));
       expect(getByRole("textbox")).toHaveValue("b");
+      getByText("No errors");
+      await userEvent.type(getByRole("textbox"), "a");
       getByText("String must contain at least 3 character(s)");
     });
 
