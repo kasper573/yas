@@ -92,7 +92,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
     );
 
     useEffect(
-      () => store.subscribe(() => onChange?.(store.data)),
+      () => store.subscribeToSlice(() => store.data, onChange),
       [store, onChange],
     );
 

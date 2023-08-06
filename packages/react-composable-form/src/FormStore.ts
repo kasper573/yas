@@ -176,6 +176,21 @@ export class FormStore<Schema extends FormSchema> {
     this._listeners.add(listener);
     return () => this._listeners.delete(listener);
   };
+
+  subscribeToSlice<Slice>(
+    selectSlice: () => Slice,
+    onChange?: (slice: Slice) => void,
+    isEqual = (a: Slice, b: Slice) => a === b,
+  ) {
+    let prevSlice = selectSlice();
+    return this.subscribe(() => {
+      const newSlice = selectSlice();
+      if (!isEqual(prevSlice, newSlice)) {
+        prevSlice = newSlice;
+        onChange?.(newSlice);
+      }
+    });
+  }
 }
 
 function getFormErrorState<Schema extends FormSchema>(
