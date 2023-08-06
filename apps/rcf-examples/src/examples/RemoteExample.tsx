@@ -1,12 +1,11 @@
 import { z } from "zod";
-import type { FormValidationMode, inferFormValue } from "react-composable-form";
+import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
-import { formValidationModes } from "react-composable-form";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { SingleSelectField } from "../fields/SingleSelectField";
-import { MultiSelectField } from "../fields/MultiSelectField";
+import { ExampleContent } from "../ExampleContent";
 
 interface CustomRemoteErrors {
   generalErrors?: string[];
@@ -33,9 +32,6 @@ const UserRegistrationForm = BaseForm.extend((options) =>
 
 function RemoteExampleImpl() {
   const [errorType, setErrorType] = useState<ErrorType>("No Error");
-  const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
-    "submit",
-  ]);
 
   const endpoint = useMemo(
     () => createSimulatedRemoteEndpoint(errorType),
@@ -49,30 +45,30 @@ function RemoteExampleImpl() {
   >(endpoint);
 
   return (
-    <>
-      <SingleSelectField
-        sx={{ mb: 4 }}
-        name="Select error type to simulate"
-        value={errorType}
-        options={simulatedErrorTypes.map((x) => ({ label: x, value: x }))}
-        onChange={(option) => option && setErrorType(option)}
-      />
-      <MultiSelectField
-        sx={{ mb: 4 }}
-        name="Validate on"
-        value={validateOn}
-        options={formValidationModes.map((x) => ({ label: x, value: x }))}
-        onChange={setValidateOn}
-      />
-      <UserRegistrationForm
-        onSubmit={mutate}
-        errors={error}
-        onChange={reset}
-        title="asdf"
-        isLoading={isLoading}
-        validateOn={validateOn}
-      />
-    </>
+    <ExampleContent
+      menu={
+        <SingleSelectField
+          sx={{ mb: 4 }}
+          name="Select error type to simulate"
+          value={errorType}
+          options={simulatedErrorTypes.map((x) => ({ label: x, value: x }))}
+          onChange={(option) => option && setErrorType(option)}
+        />
+      }
+    >
+      {({ validateOn }) => (
+        <>
+          <UserRegistrationForm
+            onSubmit={mutate}
+            errors={error}
+            onChange={reset}
+            title="asdf"
+            isLoading={isLoading}
+            validateOn={validateOn}
+          />
+        </>
+      )}
+    </ExampleContent>
   );
 }
 

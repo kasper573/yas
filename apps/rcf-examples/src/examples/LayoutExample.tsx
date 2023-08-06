@@ -5,6 +5,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
+import { ExampleContent } from "../ExampleContent";
 
 type LoginPayload = inferFormValue<typeof LoginForm>;
 
@@ -49,21 +50,35 @@ export function LayoutExample() {
   const [data, setData] = useState<LoginPayload>();
   const showData = (data: LoginPayload) => alert(JSON.stringify(data, null, 2));
   return (
-    <>
-      <LoginForm
-        title="Basic layout"
-        value={data}
-        onChange={setData}
-        onSubmit={showData}
-      />
-      <Typography variant="h4" sx={{ my: 4 }}>
-        Inline layout
-      </Typography>
-      <InlineUserForm value={data} onChange={setData} onSubmit={showData} />
-      <Typography variant="h4" sx={{ my: 4 }}>
-        Specialized layout
-      </Typography>
-      <SpecializedUserForm value={data} onChange={setData} />
-    </>
+    <ExampleContent>
+      {({ validateOn }) => (
+        <>
+          <LoginForm
+            title="Basic layout"
+            value={data}
+            onChange={setData}
+            onSubmit={showData}
+            validateOn={validateOn}
+          />
+          <Typography variant="h4" sx={{ my: 4 }}>
+            Inline layout
+          </Typography>
+          <InlineUserForm
+            value={data}
+            onChange={setData}
+            onSubmit={showData}
+            validateOn={validateOn}
+          />
+          <Typography variant="h4" sx={{ my: 4 }}>
+            Specialized layout
+          </Typography>
+          <SpecializedUserForm
+            value={data}
+            onChange={setData}
+            validateOn={validateOn}
+          />
+        </>
+      )}
+    </ExampleContent>
   );
 }
