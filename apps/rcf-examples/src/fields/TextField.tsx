@@ -14,6 +14,7 @@ export function TextField({
   onChange,
   password,
   helperText,
+  required,
   ...rest
 }: TextFieldProps) {
   return (

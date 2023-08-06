@@ -6,14 +6,17 @@ import type {
 } from "./FormOptionsBuilder";
 import type { AnyProps } from "./types/utilityTypes";
 import type {
+  AnyRCFGenerics,
   FieldProps,
   FormLayoutProps,
-  RCFGenerics,
 } from "./types/optionTypes";
 import type { FieldComponentsForProps } from "./types/optionTypes";
+import type { AnyRCFGenericsForFieldProps } from "./types/optionTypes";
 
 export function createRCF<FieldProps extends AnyProps = {}>() {
-  return function createFormForFieldProps<G extends RCFGenerics<FieldProps>>(
+  return function createFormForFieldProps<
+    G extends AnyRCFGenericsForFieldProps<FieldProps>,
+  >(
     reduceOptions?: FormOptionsBuilderFactory<EmptyFormOptionsGenerics, G>,
   ): FormComponent<G> {
     return createForm(reduceOptions);
@@ -23,12 +26,12 @@ export function createRCF<FieldProps extends AnyProps = {}>() {
 export type inferFieldProps<
   FormFactory,
   Value = any,
-> = FormFactory extends typeof createForm<infer G extends RCFGenerics>
+> = FormFactory extends typeof createForm<infer G extends AnyRCFGenerics>
   ? FieldProps<Value> & G["baseFieldProps"]
   : never;
 
 export type inferLayoutProps<FormFactory> =
-  FormFactory extends typeof createForm<infer G extends RCFGenerics>
+  FormFactory extends typeof createForm<infer G extends AnyRCFGenerics>
     ? FormLayoutProps<
         G["schema"],
         FieldComponentsForProps<inferFieldProps<FormFactory>>

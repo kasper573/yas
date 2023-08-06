@@ -47,11 +47,13 @@ describe("data", () => {
   });
 
   it("cannot use both value and defaultValue", () => {
-    const Form = createForm();
+    const Form = createForm((options) =>
+      options.schema(z.object({ foo: z.string() })),
+    );
 
     const restoreErrorLogs = silenceErrorLogs();
     expect(() =>
-      render(<Form value={{ foo: "default" }} defaultValue={{ bar: "baz" }} />),
+      render(<Form value={{ foo: "default" }} defaultValue={{ foo: "baz" }} />),
     ).toThrow(
       "Cannot set both defaultValue and value, please use one or the other",
     );
@@ -99,6 +101,32 @@ describe("data", () => {
     await userEvent.clear(getByRole("textbox"));
     await userEvent.type(getByRole("textbox"), "baz");
     expect(getByRole("textbox")).toHaveValue("baz");
+  });
+
+  it("can reset", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(z.string(), ({ onChange, value = "", ...rest }) => (
+          <input
+            onChange={(e) => onChange?.(e.target.value)}
+            value={value}
+            {...rest}
+          />
+        ))
+        .layout(({ fields: { Foo }, reset }) => (
+          <>
+            <Foo />
+            <button onClick={reset}>reset</button>
+          </>
+        )),
+    );
+    const { getByRole } = render(<Form />);
+
+    await userEvent.type(getByRole("textbox"), "baz");
+    expect(getByRole("textbox")).toHaveValue("baz");
+    await userEvent.click(getByRole("button", { name: "reset" }));
+    expect(getByRole("textbox")).toHaveValue("");
   });
 
   it("can be emitted", async () => {

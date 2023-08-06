@@ -25,7 +25,7 @@ function ExampleTabs() {
   const CurrentTab = examples[tabIndex].component;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           centered

@@ -7,22 +7,16 @@ import type {
   FormValidationMode,
   inferValue,
 } from "./types/commonTypes";
-import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
 import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
 import { getShapeFromSchema } from "./utils/getShapeFromSchema";
+import type { AnyRCFGenerics } from "./types/optionTypes";
 
-export type FormStoreFor<G extends RCFGenerics> = FormStore<
-  G["schema"],
-  G["mode"]
->;
+export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<G["schema"]>;
 
-export class FormStore<
-  Schema extends FormSchema,
-  Mode extends FormValidationMode = FormValidationMode,
-> {
+export class FormStore<Schema extends FormSchema> {
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
   private _state: FormState<Schema>;
@@ -49,26 +43,23 @@ export class FormStore<
 
   constructor(
     public readonly schema: Schema,
-    initialData: inferValue<Schema>,
-    private _mode: FormValidationMode,
+    private _initialData: inferValue<Schema>,
+    private _modes: readonly FormValidationMode[],
   ) {
     this._schemaShape = getShapeFromSchema(schema);
-    this._state = {
-      localErrors: emptyFormErrorState(),
-      externalErrors: emptyFormErrorState(),
-      combinedErrors: emptyFormErrorState(),
-      data: initialData,
-    };
+    this._state = initialFormState(_initialData);
   }
 
-  resetData(data: inferValue<Schema>) {
-    this.mutate((state) => {
-      state.data = data;
+  reset() {
+    this.mutate((draft) => {
+      Object.assign(draft, initialFormState(this._initialData));
     });
   }
 
   handleSubmit() {
-    this.validate();
+    if (this.hasMode("submit")) {
+      this.validate();
+    }
   }
 
   changeField<FieldName extends FieldNames<Schema>>(
@@ -77,16 +68,28 @@ export class FormStore<
   ) {
     this.mutate((draft) => {
       draft.data[name] = value;
-      if (this._mode === "change") {
+      if (this.hasMode("change")) {
         this.validate(name);
       }
     });
   }
 
-  blurField<FieldName extends FieldNames<Schema>>(name: FieldName) {
-    if (this._mode === "blur") {
+  focusField<FieldName extends FieldNames<Schema>>(name: FieldName) {
+    if (this.hasMode("focus")) {
       this.validate(name);
     }
+  }
+
+  blurField<FieldName extends FieldNames<Schema>>(name: FieldName) {
+    if (this.hasMode("blur")) {
+      this.validate(name);
+    }
+  }
+
+  setData(data: inferValue<Schema>) {
+    this.mutate((state) => {
+      state.data = data;
+    });
   }
 
   setExternalErrors(errors?: FormErrors<Schema>) {
@@ -122,6 +125,14 @@ export class FormStore<
         }
       },
     );
+  }
+
+  setModes(modes: readonly FormValidationMode[]) {
+    this._modes = modes;
+  }
+
+  private hasMode(mode: FormValidationMode) {
+    return this._modes.includes(mode);
   }
 
   private validate<FieldName extends FieldNames<Schema>>(
@@ -166,6 +177,21 @@ export class FormStore<
     this._listeners.add(listener);
     return () => this._listeners.delete(listener);
   };
+
+  subscribeToSlice<Slice>(
+    selectSlice: () => Slice,
+    onChange?: (slice: Slice) => void,
+    isEqual = (a: Slice, b: Slice) => a === b,
+  ) {
+    let prevSlice = selectSlice();
+    return this.subscribe(() => {
+      const newSlice = selectSlice();
+      if (!isEqual(prevSlice, newSlice)) {
+        prevSlice = newSlice;
+        onChange?.(newSlice);
+      }
+    });
+  }
 }
 
 function getFormErrorState<Schema extends FormSchema>(
@@ -190,5 +216,16 @@ function emptyFormErrorState<Schema extends FormSchema>(): FormErrors<Schema> {
   return {
     general: [],
     field: {},
+  };
+}
+
+function initialFormState<Schema extends FormSchema>(
+  data: inferValue<Schema>,
+): FormState<Schema> {
+  return {
+    localErrors: emptyFormErrorState(),
+    externalErrors: emptyFormErrorState(),
+    combinedErrors: emptyFormErrorState(),
+    data,
   };
 }

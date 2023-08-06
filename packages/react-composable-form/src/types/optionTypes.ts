@@ -13,34 +13,37 @@ import type {
   ValueType,
 } from "./commonTypes";
 
+export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any, any>;
+
+export type AnyRCFGenericsForFieldProps<FieldProps extends AnyProps> =
+  RCFGenerics<FieldProps, any, any, any, any, any>;
+
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
  */
 export interface RCFGenerics<
-  BaseFieldProps extends AnyProps = any,
-  Schema extends FormSchema = any,
-  LayoutProps extends AnyProps = any,
-  ValidationMode extends FormValidationMode = any,
-  Named extends NamedComponents = any,
-  Typed extends TypedComponents = any,
-  CustomExternalError = any,
+  BaseFieldProps extends AnyProps,
+  Schema extends FormSchema,
+  LayoutProps extends AnyProps,
+  Named extends NamedComponents,
+  Typed extends TypedComponents,
+  CustomExternalError,
 > extends FieldComponents<Named, Typed> {
   schema: Schema;
   layoutProps: LayoutProps;
-  mode: ValidationMode;
   baseFieldProps: BaseFieldProps;
   customExternalError: CustomExternalError;
 }
 
-export interface FormOptions<G extends RCFGenerics>
+export interface FormOptions<G extends AnyRCFGenerics>
   extends Pick<G, "namedComponents" | "typedComponents"> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
-  mode: G["mode"];
+  modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
 }
 
-export type FormLayoutFor<G extends RCFGenerics> = ComponentType<
+export type FormLayoutFor<G extends AnyRCFGenerics> = ComponentType<
   FormLayoutProps<G["schema"], G> & G["layoutProps"]
 >;
 
@@ -52,6 +55,7 @@ export interface FormLayoutProps<
   fieldErrors: FieldErrors<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
+  reset: () => unknown;
 }
 
 export type InputFieldComponent<
@@ -71,6 +75,7 @@ export interface FieldProps<Value = any> {
   errors?: AnyError[];
   onChange?: (newValue?: Value) => unknown;
   onBlur?: () => unknown;
+  onFocus?: () => unknown;
 }
 
 export type FieldFor<

@@ -14,6 +14,7 @@ export function BasicFormLayout({
   fields,
   generalErrors,
   handleSubmit,
+  reset,
   isLoading,
 }: FormLayoutProps & { title: ReactNode; isLoading?: boolean }) {
   return (
@@ -24,7 +25,9 @@ export function BasicFormLayout({
           <Fade in={isLoading}>
             <CircularProgress size={24} />
           </Fade>
-          <Button variant="outlined">Reset</Button>
+          <Button variant="outlined" onClick={reset}>
+            Reset
+          </Button>
           <Button disabled={isLoading} type="submit" variant="contained">
             Submit
           </Button>

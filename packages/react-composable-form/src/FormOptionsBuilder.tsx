@@ -18,6 +18,7 @@ import type {
 import type { SetTypedComponent } from "./utils/typedComponents";
 import { setTypedComponent } from "./utils/typedComponents";
 import type {
+  AnyRCFGenerics,
   ComposedFieldComponent,
   FieldComponents,
   FieldProps,
@@ -29,11 +30,11 @@ import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
-  Input extends RCFGenerics,
-  Output extends RCFGenerics,
+  Input extends AnyRCFGenerics,
+  Output extends AnyRCFGenerics,
 > = (input: FormOptionsBuilder<Input>) => FormOptionsBuilder<Output>;
 
-export class FormOptionsBuilder<G extends RCFGenerics> {
+export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   constructor(private options: FormOptions<G>) {}
 
   schema<NewSchema extends FormSchema>(schema: NewSchema) {
@@ -54,7 +55,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
     });
   }
 
-  layout<NewLayoutProps extends AnyProps>(
+  layout<NewLayoutProps extends AnyProps = {}>(
     layout: ComponentType<FormLayoutProps<G["schema"], G> & NewLayoutProps>,
   ) {
     return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({
@@ -113,13 +114,13 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
         ...namedComponents,
         [name]: component,
       },
-    });
+    } as never);
   }
 
-  validateOn<NewMode extends FormValidationMode>(validate: NewMode) {
-    return new FormOptionsBuilder<Replace<G, "mode", NewMode>>({
+  validateOn(...modes: FormValidationMode[]) {
+    return new FormOptionsBuilder({
       ...this.options,
-      mode: validate,
+      modes,
     });
   }
 
@@ -134,7 +135,7 @@ export const emptyFormOptionsBuilder =
     layout: NoLayout,
     namedComponents: {},
     typedComponents: [],
-    mode: "submit",
+    modes: ["submit"],
     externalErrorParser: (error) => ({
       general: error?.general ?? [],
       field: error?.field ?? {},
@@ -145,7 +146,6 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   {},
   ZodObject<{}>,
   {},
-  "submit",
   {},
   [],
   Partial<FormErrors<ZodObject<{}>>> | undefined

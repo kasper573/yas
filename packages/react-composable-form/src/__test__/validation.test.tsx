@@ -1,9 +1,10 @@
+import "@testing-library/jest-dom";
 import { z } from "zod";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
-import type { ErrorList } from "../types/commonTypes";
+import type { ErrorList, FormValidationMode } from "../types/commonTypes";
 import { silenceErrorLogs } from "./utils";
 
 describe("validation", () => {
@@ -25,6 +26,68 @@ describe("validation", () => {
       const { getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
       await userEvent.click(getByText("submit"));
+      getByText("String must contain at least 3 character(s)");
+    });
+
+    it("can disable validation", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn()
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          )
+          .layout(({ fields: { Foo }, handleSubmit }) => (
+            <>
+              <Foo />
+              <button onClick={handleSubmit}>submit</button>
+            </>
+          )),
+      );
+      const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
+      getByText("No errors");
+      await userEvent.click(getByRole("button"));
+      getByText("No errors");
+    });
+
+    it("can display field errors on focus", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn("focus")
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+      );
+      const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
+      getByText("No errors");
+      await userEvent.click(getByRole("textbox"));
       getByText("String must contain at least 3 character(s)");
     });
 
@@ -100,6 +163,42 @@ describe("validation", () => {
       getByText("bar: String must contain at least 5 character(s)");
     });
 
+    it("can display field errors on blur or change", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn("blur", "change")
+          .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+      );
+      const { getByRole, getByText } = render(
+        <Form value={{ foo: "", bar: "" }} />,
+      );
+      getByText("foo: No errors");
+      getByText("bar: No errors");
+      await userEvent.click(getByRole("textbox", { name: "foo" }));
+      await userEvent.tab();
+      getByText("foo: String must contain at least 3 character(s)");
+      getByText("bar: No errors");
+      await userEvent.type(getByRole("textbox", { name: "bar" }), "a");
+      getByText("foo: String must contain at least 3 character(s)");
+      getByText("bar: String must contain at least 5 character(s)");
+    });
+
     it("can fix field errors", async () => {
       const Form = createForm((options) =>
         options
@@ -126,6 +225,81 @@ describe("validation", () => {
       getByText("String must contain at least 3 character(s)");
       await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
       getByText("No errors");
+    });
+
+    it("can reset", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn("change")
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(z.string(), ({ onChange, value = "", errors, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                {...rest}
+              />
+              {`${errors?.length ? errors.join(",") : "No Errors"}`}
+            </>
+          ))
+          .layout(({ fields: { Foo }, reset }) => (
+            <>
+              <Foo />
+              <button onClick={reset}>reset</button>
+            </>
+          )),
+      );
+      const { getByRole, getByText } = render(<Form />);
+
+      await userEvent.type(getByRole("textbox"), "b");
+      getByText("String must contain at least 3 character(s)");
+      await userEvent.click(getByRole("button", { name: "reset" }));
+      getByText("No Errors");
+    });
+
+    it("can change validation mode on predefined form", async () => {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+      );
+      function App() {
+        const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
+          "submit",
+        ]);
+        return (
+          <>
+            <Form defaultValue={{ foo: "" }} validateOn={validateOn} />
+            <button onClick={() => setValidateOn(["change"])}>
+              Switch to validate on change
+            </button>
+          </>
+        );
+      }
+      const { getByRole, getByText } = render(<App />);
+      getByText("No errors");
+      await userEvent.type(getByRole("textbox"), "b");
+      getByText("No errors");
+      await userEvent.click(getByText("Switch to validate on change"));
+      expect(getByRole("textbox")).toHaveValue("b");
+      getByText("No errors");
+      await userEvent.type(getByRole("textbox"), "a");
+      getByText("String must contain at least 3 character(s)");
     });
 
     it("does not trigger submit for invalid data", async () => {
