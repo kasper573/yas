@@ -129,6 +129,42 @@ describe("validation", () => {
       getByText("bar: String must contain at least 5 character(s)");
     });
 
+    it("can display field errors on blur or change", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn("blur", "change")
+          .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+      );
+      const { getByRole, getByText } = render(
+        <Form value={{ foo: "", bar: "" }} />,
+      );
+      getByText("foo: No errors");
+      getByText("bar: No errors");
+      await userEvent.click(getByRole("textbox", { name: "foo" }));
+      await userEvent.tab();
+      getByText("foo: String must contain at least 3 character(s)");
+      getByText("bar: No errors");
+      await userEvent.type(getByRole("textbox", { name: "bar" }), "a");
+      getByText("foo: String must contain at least 3 character(s)");
+      getByText("bar: String must contain at least 5 character(s)");
+    });
+
     it("can fix field errors", async () => {
       const Form = createForm((options) =>
         options
