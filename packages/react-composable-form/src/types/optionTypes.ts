@@ -76,6 +76,7 @@ export interface FieldProps<Value = any> {
   errors?: AnyError[];
   onChange?: (newValue?: Value) => unknown;
   onBlur?: () => unknown;
+  onFocus?: () => unknown;
 }
 
 export type FieldFor<

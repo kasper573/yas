@@ -77,6 +77,7 @@ function enhanceFormField<
       [store],
     );
     const blurHandler = useCallback(() => store.blurField(name), [store]);
+    const focusHandler = useCallback(() => store.focusField(name), [store]);
     return (
       <Component
         name={name}
@@ -85,6 +86,7 @@ function enhanceFormField<
         required={required}
         onChange={changeHandler as Props["onChange"]}
         onBlur={blurHandler as Props["onBlur"]}
+        onFocus={focusHandler as Props["onFocus"]}
         {...props}
       />
     );

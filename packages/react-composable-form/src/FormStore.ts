@@ -77,6 +77,12 @@ export class FormStore<Schema extends FormSchema> {
     });
   }
 
+  focusField<FieldName extends FieldNames<Schema>>(name: FieldName) {
+    if (this._mode === "focus") {
+      this.validate(name);
+    }
+  }
+
   blurField<FieldName extends FieldNames<Schema>>(name: FieldName) {
     if (this._mode === "blur") {
       this.validate(name);
