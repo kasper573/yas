@@ -61,7 +61,7 @@ function RemoteExampleImpl() {
         name="Validate on"
         value={validateOn}
         options={formValidationModes.map((x) => ({ label: x, value: x }))}
-        onChange={(newValue = []) => setValidateOn(newValue)}
+        onChange={setValidateOn}
       />
       <UserRegistrationForm
         onSubmit={mutate}

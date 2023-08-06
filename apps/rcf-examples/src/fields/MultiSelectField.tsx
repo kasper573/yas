@@ -15,7 +15,9 @@ export interface SelectOption<Value> {
 }
 
 export interface MultiSelectFieldProps<Value>
-  extends FieldProps<readonly Value[]> {
+  extends Omit<FieldProps<readonly Value[]>, "value" | "onChange"> {
+  value?: readonly Value[];
+  onChange?: (value: readonly Value[]) => void;
   options: SelectOption<Value>[];
 }
 
