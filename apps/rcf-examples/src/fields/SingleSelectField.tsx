@@ -36,7 +36,7 @@ export function SingleSelectField<Value>({
       <InputLabel id={id}>{name}</InputLabel>
       <Select
         labelId={id}
-        value={valueAsOptionIndex ?? ""}
+        value={valueAsOptionIndex !== -1 ? valueAsOptionIndex : ""}
         label={name}
         error={errors.length > 0}
         onChange={(e) => onChange?.(options[e.target.value as number]?.value)}
