@@ -57,16 +57,14 @@ function RemoteExampleImpl() {
       }
     >
       {({ validateOn }) => (
-        <>
-          <UserRegistrationForm
-            onSubmit={mutate}
-            errors={error}
-            onChange={reset}
-            title="asdf"
-            isLoading={isLoading}
-            validateOn={validateOn}
-          />
-        </>
+        <UserRegistrationForm
+          onSubmit={mutate}
+          errors={error}
+          onChange={reset}
+          title="Remote error handling"
+          isLoading={isLoading}
+          validateOn={validateOn}
+        />
       )}
     </ExampleContent>
   );
