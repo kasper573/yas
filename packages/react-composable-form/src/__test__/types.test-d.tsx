@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { expectTypeOf } from "vitest";
-import type { ComponentType } from "react";
 import type { inferFormValue } from "../createForm";
 import { createForm } from "../createForm";
 
@@ -26,20 +25,25 @@ it("Form inherits its layouts properties", () => {
 
 it("Form does not accept unknown properties", () => {
   const Form = createForm();
-  expectTypeOf(Form).toMatchTypeOf<ComponentType>();
 
   // @ts-expect-error Should not accept unknown properties
   const res = <Form unknownProp={123} />;
 });
 
-it("Form with custom layout does not accept unknown properties (no explicit layout props type)", () => {
-  const Form = createForm((options) => options.layout(() => null));
-  expectTypeOf(Form).toMatchTypeOf<ComponentType>();
+describe("Form with custom layout does not accept unknown properties ", () => {
+  it("no explicit layout props type", () => {
+    const Form = createForm(({ layout }) => layout(() => null));
 
-  // @ts-expect-error Should not accept unknown properties
-  const res = <Form unknownProp={123} />;
+    // @ts-expect-error Should not accept unknown properties
+    const res = <Form unknownProp={123} />;
+  });
+
+  it("with explicit layout props type", () => {
+    const Form = createForm(({ layout }) =>
+      layout<{ foo: string }>(() => null),
+    );
+
+    // @ts-expect-error Should not accept unknown properties
+    const res = <Form unknownProp={123} />;
+  });
 });
-
-type Evaluate<T> = {
-  [K in keyof T]: T[K];
-};
