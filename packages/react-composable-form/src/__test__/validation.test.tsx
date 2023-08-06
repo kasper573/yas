@@ -227,6 +227,36 @@ describe("validation", () => {
       getByText("No errors");
     });
 
+    it("can reset", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn("change")
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(z.string(), ({ onChange, value = "", errors, ...rest }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                {...rest}
+              />
+              {`${errors?.length ? errors.join(",") : "No Errors"}`}
+            </>
+          ))
+          .layout(({ fields: { Foo }, reset }) => (
+            <>
+              <Foo />
+              <button onClick={reset}>reset</button>
+            </>
+          )),
+      );
+      const { getByRole, getByText } = render(<Form />);
+
+      await userEvent.type(getByRole("textbox"), "b");
+      getByText("String must contain at least 3 character(s)");
+      await userEvent.click(getByRole("button", { name: "reset" }));
+      getByText("No Errors");
+    });
+
     it("can change validation mode on predefined form", async () => {
       const Form = createForm((options) =>
         options
