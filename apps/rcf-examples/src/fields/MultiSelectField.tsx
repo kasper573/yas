@@ -80,7 +80,3 @@ function valueAsOptionIndexes<Value>(
   }
   return indexes;
 }
-
-export function valueOptions<Value>(values: Value[]): SelectOption<Value>[] {
-  return values.map((value) => ({ value, label: `${value}` }));
-}
