@@ -12,7 +12,12 @@ export type ErrorList = AnyError[];
 
 export type FormValidationMode = (typeof formValidationModes)[number];
 
-export const formValidationModes = ["change", "blur", "submit"] as const;
+export const formValidationModes = [
+  "focus",
+  "change",
+  "blur",
+  "submit",
+] as const;
 
 export type inferValue<Type extends ValueType> = output<Type>;
 
