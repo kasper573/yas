@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
-import type { ErrorList } from "../types/commonTypes";
+import type { ErrorList, FormValidationMode } from "../types/commonTypes";
 import { silenceErrorLogs } from "./utils";
 
 describe("validation", () => {
@@ -126,6 +126,48 @@ describe("validation", () => {
       getByText("String must contain at least 3 character(s)");
       await userEvent.type(getByRole("textbox", { name: "foo" }), "bar");
       getByText("No errors");
+    });
+
+    it("can change validation mode on predefined form", async () => {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          ),
+      );
+      function App() {
+        const [validateOn, setValidateOn] =
+          useState<FormValidationMode>("submit");
+        return (
+          <>
+            <Form defaultValue={{ foo: "" }} validateOn={validateOn} />
+            <button onClick={() => setValidateOn("change")}>
+              Switch to validate on change
+            </button>
+          </>
+        );
+      }
+      const { getByRole, getByText } = render(<App />);
+      getByText("No errors");
+      await userEvent.type(getByRole("textbox"), "b");
+      getByText("No errors");
+      await userEvent.click(getByText("Switch to validate on change"));
+      expect(getByRole("textbox")).toHaveValue("b");
+      getByText("String must contain at least 3 character(s)");
     });
 
     it("does not trigger submit for invalid data", async () => {
