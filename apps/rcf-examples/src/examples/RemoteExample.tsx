@@ -93,15 +93,17 @@ const simulatedErrorTypes = [
 function createSimulatedRemoteEndpoint(errorType?: ErrorType) {
   return async function simulatedRemoteEndpoint(value: FormData) {
     await wait(1000); // Emulate server side validation
-    const errors: CustomRemoteErrors = {};
+    let errors: CustomRemoteErrors | undefined;
     switch (errorType) {
       case "Internal Server Error":
-        errors.generalErrors = ["Internal Server Error"];
+        errors = { generalErrors: ["Internal Server Error"] };
         break;
       case "Email Already Taken":
-        errors.fieldErrors = [["email", ["Your email is already taken"]]];
+        errors = { fieldErrors: [["email", ["Your email is already taken"]]] };
         break;
     }
-    throw errors;
+    if (errors) {
+      throw errors;
+    }
   };
 }
