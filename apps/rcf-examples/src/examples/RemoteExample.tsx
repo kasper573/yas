@@ -5,7 +5,8 @@ import { useMemo, useState } from "react";
 import { formValidationModes } from "react-composable-form";
 import { BaseForm } from "../BaseForm";
 import { TextField } from "../fields/TextField";
-import { SingleSelectField } from "../fields/SelectField";
+import { SingleSelectField } from "../fields/SingleSelectField";
+import { MultiSelectField } from "../fields/MultiSelectField";
 
 interface CustomRemoteErrors {
   generalErrors?: string[];
@@ -55,12 +56,12 @@ function RemoteExampleImpl() {
         options={simulatedErrorTypes.map((x) => ({ label: x, value: x }))}
         onChange={(option) => option && setErrorType(option)}
       />
-      <SingleSelectField
+      <MultiSelectField
         sx={{ mb: 4 }}
         name="Validate on"
-        value={validateOn[0]}
+        value={validateOn}
         options={formValidationModes.map((x) => ({ label: x, value: x }))}
-        onChange={(mode) => mode && setValidateOn([mode])}
+        onChange={(newValue = []) => setValidateOn(newValue)}
       />
       <UserRegistrationForm
         onSubmit={mutate}
