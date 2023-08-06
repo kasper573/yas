@@ -11,10 +11,11 @@ import type {
 import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { FormLayoutProps, RCFGenerics } from "./types/optionTypes";
+import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
 
-export interface FormProps<G extends RCFGenerics> {
+export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
+  defaultValue?: inferValue<G["schema"]>;
   onChange?: (newValue: inferValue<G["schema"]>) => unknown;
   onSubmit?: (value: inferValue<G["schema"]>) => unknown;
   errors?: G["customExternalError"] | null; // null because some libraries like react-query use null for empty
@@ -24,15 +25,16 @@ export type inferFormValue<T> = T extends FormComponent<infer G>
   ? inferValue<G["schema"]>
   : never;
 
-export type FormComponent<G extends RCFGenerics> = ComponentType<
-  FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
-> & {
-  extend<NewG extends RCFGenerics>(
-    options: FormOptionsBuilderFactory<G, NewG>,
-  ): FormComponent<NewG>;
-};
+export type FormComponent<G extends AnyRCFGenerics = AnyRCFGenerics> =
+  ComponentType<
+    FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
+  > & {
+    extend<NewG extends AnyRCFGenerics>(
+      options: FormOptionsBuilderFactory<G, NewG>,
+    ): FormComponent<NewG>;
+  };
 
-export function createForm<G extends RCFGenerics>(
+export function createForm<G extends AnyRCFGenerics = EmptyFormOptionsGenerics>(
   reduceOptions = passThrough as FormOptionsBuilderFactory<
     EmptyFormOptionsGenerics,
     G
@@ -41,7 +43,7 @@ export function createForm<G extends RCFGenerics>(
   return createFormImpl(reduceOptions(emptyFormOptionsBuilder));
 }
 
-function createFormImpl<G extends RCFGenerics>(
+function createFormImpl<G extends AnyRCFGenerics>(
   optionsBuilder: FormOptionsBuilder<G>,
 ): FormComponent<G> {
   const {

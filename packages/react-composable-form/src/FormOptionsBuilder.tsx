@@ -18,6 +18,7 @@ import type {
 import type { SetTypedComponent } from "./utils/typedComponents";
 import { setTypedComponent } from "./utils/typedComponents";
 import type {
+  AnyRCFGenerics,
   ComposedFieldComponent,
   FieldComponents,
   FieldProps,
@@ -29,11 +30,11 @@ import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
-  Input extends RCFGenerics,
-  Output extends RCFGenerics,
+  Input extends AnyRCFGenerics,
+  Output extends AnyRCFGenerics,
 > = (input: FormOptionsBuilder<Input>) => FormOptionsBuilder<Output>;
 
-export class FormOptionsBuilder<G extends RCFGenerics> {
+export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   constructor(private options: FormOptions<G>) {}
 
   schema<NewSchema extends FormSchema>(schema: NewSchema) {
@@ -113,7 +114,7 @@ export class FormOptionsBuilder<G extends RCFGenerics> {
         ...namedComponents,
         [name]: component,
       },
-    });
+    } as never);
   }
 
   validateOn<NewMode extends FormValidationMode>(validate: NewMode) {

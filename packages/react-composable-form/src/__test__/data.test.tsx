@@ -47,11 +47,13 @@ describe("data", () => {
   });
 
   it("cannot use both value and defaultValue", () => {
-    const Form = createForm();
+    const Form = createForm((options) =>
+      options.schema(z.object({ foo: z.string() })),
+    );
 
     const restoreErrorLogs = silenceErrorLogs();
     expect(() =>
-      render(<Form value={{ foo: "default" }} defaultValue={{ bar: "baz" }} />),
+      render(<Form value={{ foo: "default" }} defaultValue={{ foo: "baz" }} />),
     ).toThrow(
       "Cannot set both defaultValue and value, please use one or the other",
     );

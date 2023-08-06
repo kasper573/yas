@@ -7,14 +7,14 @@ import type {
   FormValidationMode,
   inferValue,
 } from "./types/commonTypes";
-import type { RCFGenerics } from "./types/optionTypes";
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
 import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
 import { getShapeFromSchema } from "./utils/getShapeFromSchema";
+import type { AnyRCFGenerics } from "./types/optionTypes";
 
-export type FormStoreFor<G extends RCFGenerics> = FormStore<
+export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<
   G["schema"],
   G["mode"]
 >;

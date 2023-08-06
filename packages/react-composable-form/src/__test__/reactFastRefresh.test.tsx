@@ -4,7 +4,6 @@ import type { ComponentProps, ComponentType } from "react";
 import { z } from "zod";
 import { useState } from "react";
 import RefreshRuntime from "react-refresh/runtime";
-import type { RCFGenerics } from "../types/optionTypes";
 import userEvent from "@testing-library/user-event";
 import type { FormComponent } from "../createForm";
 import { createForm } from "../createForm";
@@ -55,7 +54,7 @@ describe("reactFastRefresh", () => {
     );
   }
 
-  async function testForm(createFormVersion: () => FormComponent<RCFGenerics>) {
+  async function testForm(createFormVersion: () => FormComponent) {
     const FormV1 = createFormVersion();
     const { getByRole, patch } = prepare(FormV1, { title: "V1" });
 
