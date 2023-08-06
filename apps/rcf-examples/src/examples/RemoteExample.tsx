@@ -33,8 +33,9 @@ const UserRegistrationForm = BaseForm.extend((options) =>
 
 function RemoteExampleImpl() {
   const [errorType, setErrorType] = useState<ErrorType>("No Error");
-  const [validateOn, setValidateOn] =
-    useState<readonly FormValidationMode[]>(formValidationModes);
+  const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
+    "submit",
+  ]);
 
   const endpoint = useMemo(
     () => createSimulatedRemoteEndpoint(errorType),
