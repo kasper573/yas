@@ -29,6 +29,40 @@ describe("validation", () => {
       getByText("String must contain at least 3 character(s)");
     });
 
+    it("can disable validation", async () => {
+      const Form = createForm((options) =>
+        options
+          .validateOn()
+          .schema(z.object({ foo: z.string().min(3) }))
+          .type(
+            z.string(),
+            ({ onChange, value = "", errors = [], name, ...rest }) => (
+              <>
+                <input
+                  onChange={(e) => onChange?.(e.target.value)}
+                  value={value}
+                  aria-label={name}
+                  {...rest}
+                />
+                <span>
+                  {`${errors.length ? errors.join(",") : "No errors"}`}
+                </span>
+              </>
+            ),
+          )
+          .layout(({ fields: { Foo }, handleSubmit }) => (
+            <>
+              <Foo />
+              <button onClick={handleSubmit}>submit</button>
+            </>
+          )),
+      );
+      const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
+      getByText("No errors");
+      await userEvent.click(getByRole("button"));
+      getByText("No errors");
+    });
+
     it("can display field errors on focus", async () => {
       const Form = createForm((options) =>
         options
