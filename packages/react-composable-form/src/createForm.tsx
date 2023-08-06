@@ -103,7 +103,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
 
     useEffect(() => {
       if (isControlledComponent) {
-        store.resetData(data);
+        store.setData(data);
       }
     }, [data, store, isControlledComponent]);
 
@@ -120,6 +120,8 @@ function createFormImpl<G extends AnyRCFGenerics>(
       [store],
     );
 
+    const handleReset = useCallback(() => store.reset(), [store]);
+
     return (
       <FormContext.Provider value={store}>
         <Layout
@@ -129,6 +131,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}
+          reset={handleReset}
           fields={fields}
         />
       </FormContext.Provider>

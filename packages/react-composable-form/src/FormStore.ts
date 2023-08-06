@@ -43,21 +43,16 @@ export class FormStore<Schema extends FormSchema> {
 
   constructor(
     public readonly schema: Schema,
-    initialData: inferValue<Schema>,
+    private _initialData: inferValue<Schema>,
     private _modes: readonly FormValidationMode[],
   ) {
     this._schemaShape = getShapeFromSchema(schema);
-    this._state = {
-      localErrors: emptyFormErrorState(),
-      externalErrors: emptyFormErrorState(),
-      combinedErrors: emptyFormErrorState(),
-      data: initialData,
-    };
+    this._state = initialFormState(_initialData);
   }
 
-  resetData(data: inferValue<Schema>) {
-    this.mutate((state) => {
-      state.data = data;
+  reset() {
+    this.mutate((draft) => {
+      Object.assign(draft, initialFormState(this._initialData));
     });
   }
 
@@ -89,6 +84,12 @@ export class FormStore<Schema extends FormSchema> {
     if (this.hasMode("blur")) {
       this.validate(name);
     }
+  }
+
+  setData(data: inferValue<Schema>) {
+    this.mutate((state) => {
+      state.data = data;
+    });
   }
 
   setExternalErrors(errors?: FormErrors<Schema>) {
@@ -215,5 +216,16 @@ function emptyFormErrorState<Schema extends FormSchema>(): FormErrors<Schema> {
   return {
     general: [],
     field: {},
+  };
+}
+
+function initialFormState<Schema extends FormSchema>(
+  data: inferValue<Schema>,
+): FormState<Schema> {
+  return {
+    localErrors: emptyFormErrorState(),
+    externalErrors: emptyFormErrorState(),
+    combinedErrors: emptyFormErrorState(),
+    data,
   };
 }

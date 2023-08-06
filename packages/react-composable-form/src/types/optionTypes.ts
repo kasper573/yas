@@ -55,6 +55,7 @@ export interface FormLayoutProps<
   fieldErrors: FieldErrors<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
+  reset: () => unknown;
 }
 
 export type InputFieldComponent<
