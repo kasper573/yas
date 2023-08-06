@@ -44,7 +44,7 @@ export class FormStore<Schema extends FormSchema> {
   constructor(
     public readonly schema: Schema,
     initialData: inferValue<Schema>,
-    private _mode: FormValidationMode,
+    private _modes: FormValidationMode[],
   ) {
     this._schemaShape = getShapeFromSchema(schema);
     this._state = {
@@ -71,20 +71,20 @@ export class FormStore<Schema extends FormSchema> {
   ) {
     this.mutate((draft) => {
       draft.data[name] = value;
-      if (this._mode === "change") {
+      if (this.hasMode("change")) {
         this.validate(name);
       }
     });
   }
 
   focusField<FieldName extends FieldNames<Schema>>(name: FieldName) {
-    if (this._mode === "focus") {
+    if (this.hasMode("focus")) {
       this.validate(name);
     }
   }
 
   blurField<FieldName extends FieldNames<Schema>>(name: FieldName) {
-    if (this._mode === "blur") {
+    if (this.hasMode("blur")) {
       this.validate(name);
     }
   }
@@ -124,8 +124,12 @@ export class FormStore<Schema extends FormSchema> {
     );
   }
 
-  setMode(mode: FormValidationMode) {
-    this._mode = mode;
+  setModes(modes: FormValidationMode[]) {
+    this._modes = modes;
+  }
+
+  private hasMode(mode: FormValidationMode) {
+    return this._modes.includes(mode);
   }
 
   private validate<FieldName extends FieldNames<Schema>>(

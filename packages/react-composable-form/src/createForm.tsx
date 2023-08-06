@@ -19,7 +19,7 @@ export interface FormProps<G extends AnyRCFGenerics> {
   onChange?: (newValue: inferValue<G["schema"]>) => unknown;
   onSubmit?: (value: inferValue<G["schema"]>) => unknown;
   errors?: G["customExternalError"] | null; // null because some libraries like react-query use null for empty
-  validateOn?: FormValidationMode;
+  validateOn?: FormValidationMode[];
 }
 
 export type inferFormValue<T> = T extends FormComponent<infer G>
@@ -53,7 +53,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
     namedComponents,
     typedComponents,
     externalErrorParser,
-    mode: prebuiltMode,
+    modes: prebuiltModes,
   } = optionsBuilder.build();
 
   const fields = createFields({ namedComponents, typedComponents }, schema);
@@ -73,12 +73,12 @@ function createFormImpl<G extends AnyRCFGenerics>(
       onChange,
       onSubmit,
       errors: externalErrors,
-      validateOn: mode = prebuiltMode,
+      validateOn: modes = prebuiltModes,
       ...layoutProps
     } = props;
 
     const [store] = useState(
-      (): FormStoreFor<G> => new FormStore(schema, data, mode),
+      (): FormStoreFor<G> => new FormStore(schema, data, modes),
     );
 
     const generalErrors = useSyncExternalStore(
@@ -107,7 +107,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
       }
     }, [data, store, isControlledComponent]);
 
-    useEffect(() => store.setMode(mode), [mode]);
+    useEffect(() => store.setModes(modes), [modes]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {

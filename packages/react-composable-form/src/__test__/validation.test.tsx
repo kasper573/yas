@@ -215,12 +215,13 @@ describe("validation", () => {
           ),
       );
       function App() {
-        const [validateOn, setValidateOn] =
-          useState<FormValidationMode>("submit");
+        const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
+          "submit",
+        ]);
         return (
           <>
             <Form defaultValue={{ foo: "" }} validateOn={validateOn} />
-            <button onClick={() => setValidateOn("change")}>
+            <button onClick={() => setValidateOn(["change"])}>
               Switch to validate on change
             </button>
           </>

@@ -13,10 +13,10 @@ import type {
   ValueType,
 } from "./commonTypes";
 
-export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any, any, any>;
+export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any, any>;
 
 export type AnyRCFGenericsForFieldProps<FieldProps extends AnyProps> =
-  RCFGenerics<FieldProps, any, any, any, any, any, any>;
+  RCFGenerics<FieldProps, any, any, any, any, any>;
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -25,14 +25,12 @@ export interface RCFGenerics<
   BaseFieldProps extends AnyProps,
   Schema extends FormSchema,
   LayoutProps extends AnyProps,
-  ValidationMode extends FormValidationMode,
   Named extends NamedComponents,
   Typed extends TypedComponents,
   CustomExternalError,
 > extends FieldComponents<Named, Typed> {
   schema: Schema;
   layoutProps: LayoutProps;
-  mode: ValidationMode;
   baseFieldProps: BaseFieldProps;
   customExternalError: CustomExternalError;
 }
@@ -41,7 +39,7 @@ export interface FormOptions<G extends AnyRCFGenerics>
   extends Pick<G, "namedComponents" | "typedComponents"> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
-  mode: G["mode"];
+  modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
 }
 

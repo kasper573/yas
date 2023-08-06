@@ -117,10 +117,10 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     } as never);
   }
 
-  validateOn<NewMode extends FormValidationMode>(validate: NewMode) {
-    return new FormOptionsBuilder<Replace<G, "mode", NewMode>>({
+  validateOn(...modes: FormValidationMode[]) {
+    return new FormOptionsBuilder({
       ...this.options,
-      mode: validate,
+      modes,
     });
   }
 
@@ -135,7 +135,7 @@ export const emptyFormOptionsBuilder =
     layout: NoLayout,
     namedComponents: {},
     typedComponents: [],
-    mode: "submit",
+    modes: ["submit"],
     externalErrorParser: (error) => ({
       general: error?.general ?? [],
       field: error?.field ?? {},
@@ -146,7 +146,6 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   {},
   ZodObject<{}>,
   {},
-  "submit",
   {},
   [],
   Partial<FormErrors<ZodObject<{}>>> | undefined
