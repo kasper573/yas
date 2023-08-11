@@ -87,7 +87,7 @@ export interface FieldProps<Value = any> {
 
 export type FieldFor<
   Schema extends FormSchema,
-  FieldName extends string,
+  FieldName extends string = string,
 > = ComponentType<
   FieldProps<inferValue<GetShapeFromSchema<Schema>[FieldName]>>
 >;

@@ -138,7 +138,7 @@ export class FormStore<Schema extends FormSchema> {
   private determineActiveFieldNames() {
     return this._fieldList.reduce(
       (names, info) =>
-        info.isActive(this.data) ? names.add(info.fieldName) : names,
+        info.isActive(this.data) ? names.add(info.name) : names,
       new Set<FieldNames<Schema>>(),
     );
   }

@@ -22,67 +22,36 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: Pick<G, keyof FieldComponents>,
   fieldList: FieldInfo<G["schema"]>[],
 ) {
-  const resolveFieldComponents = createSchemaInterpreter(
-    fieldList,
-    ({ componentName, fieldName, fieldType }) => {
-      const Component =
-        components.namedComponents[fieldName] ??
-        getTypedComponent(components.typedComponents, fieldType);
+  const enhancedComponents = fieldList.reduce((map, field) => {
+    const Component =
+      components.namedComponents[field.name] ??
+      getTypedComponent(components.typedComponents, field.type);
 
-      const EnhancedComponent = enhanceFormField(
-        Component ?? createFallbackComponent(fieldName, fieldType),
-        fieldName,
-        fieldType,
-      );
-      return [componentName, EnhancedComponent];
-    },
-  );
-
-  function createSchemaInterpreter<
-    Schema extends FormSchema,
-    K extends string,
-    V,
-  >(
-    fields: FieldInfo<Schema>[],
-    createEntry: <FieldName extends FieldNames<Schema>>(
-      info: FieldInfo<Schema, FieldName>,
-    ) => [K, V],
-  ) {
-    const memo = new Map<FieldInfo<Schema>, [K, V]>();
-    return function getMappedValues(values: inferValue<Schema>): Record<K, V> {
-      const mappedValues = {} as Record<K, V>;
-      for (const field of fields) {
-        let entry = memo.get(field);
-        if (!entry) {
-          entry = createEntry(field);
-          memo.set(field, entry);
-        }
-        if (field.isActive(values)) {
-          mappedValues[entry[0]] = entry[1];
-        }
-      }
-      return mappedValues;
-    };
-  }
-
-  return resolveFieldComponents as unknown as (
-    values: inferValue<G["schema"]>,
-  ) => FieldComponentsPassedToLayout<G["schema"], G>;
-}
-
-function createFallbackComponent(name: string, type: ValueType) {
-  // Missing field component errors are thrown when the component is rendered, not when the form is built.
-  // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
-  return function FallbackFieldComponent() {
-    throw new Error(
-      `No component available for field "${name}" or type ${getFirstPartyType(
-        type,
-      )}`,
+    const EnhancedComponent = enhanceFieldComponent(
+      Component ?? createMissingFieldComponent(field.name, field.type),
+      field.name,
+      field.type,
     );
+
+    return map.set(field, EnhancedComponent);
+  }, new Map<FieldInfo<G["schema"]>, FieldFor<G["schema"]>>());
+
+  /**
+   * Resolves the enhanced components that should be active for the given values.
+   */
+  return function resolveFieldComponents(values: inferValue<G["schema"]>) {
+    const resolved = {} as FieldComponentsPassedToLayout<G["schema"], G>;
+    for (const [field, component] of enhancedComponents.entries()) {
+      if (field.isActive(values)) {
+        // @ts-expect-error Typescript won't allow using Capitalized as key, which is silly, so we ignore it.
+        resolved[field.componentName] = component;
+      }
+    }
+    return resolved;
   };
 }
 
-function enhanceFormField<
+function enhanceFieldComponent<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
 >(Component: FieldFor<Schema, FieldName>, name: FieldName, type: ValueType) {
@@ -116,4 +85,16 @@ function enhanceFormField<
       />
     );
   });
+}
+
+function createMissingFieldComponent(name: string, type: ValueType) {
+  // Missing field component errors are thrown when the component is rendered, not when the form is built.
+  // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
+  return function MissingFieldComponent() {
+    throw new Error(
+      `No component available for field "${name}" or type ${getFirstPartyType(
+        type,
+      )}`,
+    );
+  };
 }

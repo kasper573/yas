@@ -25,8 +25,8 @@ export function determineFieldList<Schema extends FormSchema>(
       for (const fieldName in type.shape) {
         fields.push({
           componentName: capitalize(fieldName),
-          fieldName: fieldName as never,
-          fieldType: type.shape[fieldName],
+          name: fieldName as never,
+          type: type.shape[fieldName],
           isActive: () => true,
         });
       }
@@ -46,8 +46,8 @@ export function determineFieldList<Schema extends FormSchema>(
 
       fields.push({
         componentName: capitalize(discriminator),
-        fieldName: discriminator,
-        fieldType: discriminatorType as never,
+        name: discriminator,
+        type: discriminatorType as never,
         isActive: () => true,
       });
 
@@ -56,8 +56,8 @@ export function determineFieldList<Schema extends FormSchema>(
           if (fieldName !== discriminator) {
             fields.push({
               componentName: capitalize(fieldName),
-              fieldName: fieldName as never,
-              fieldType: option.shape[fieldName] as never,
+              name: fieldName as never,
+              type: option.shape[fieldName] as never,
               isActive: (values) => optionValue === values[discriminator],
             });
           }
@@ -91,8 +91,8 @@ export interface FieldInfo<
   Schema extends FormSchema = FormSchema,
   FieldName extends FieldNames<Schema> = FieldNames<Schema>,
 > {
-  componentName: Capitalize<FieldName>;
-  fieldName: FieldName;
-  fieldType: GetShapeFromSchema<Schema>[FieldName];
+  name: FieldName;
+  type: GetShapeFromSchema<Schema>[FieldName];
   isActive: (values: inferValue<Schema>) => boolean;
+  componentName: Capitalize<FieldName>;
 }
