@@ -28,6 +28,7 @@ import type {
 } from "./types/optionTypes";
 import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
+import type { FieldSelector } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
@@ -117,6 +118,13 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     } as never);
   }
 
+  conditionals(fieldSelector: FieldSelector<G>) {
+    return new FormOptionsBuilder<G>({
+      ...this.options,
+      fieldSelector,
+    });
+  }
+
   validateOn(...modes: FormValidationMode[]) {
     return new FormOptionsBuilder({
       ...this.options,
@@ -135,6 +143,7 @@ export const emptyFormOptionsBuilder =
     layout: NoLayout,
     namedComponents: {},
     typedComponents: [],
+    fieldSelector: (fields) => fields,
     modes: ["submit"],
     externalErrorParser: (error) => ({
       general: error?.general ?? [],

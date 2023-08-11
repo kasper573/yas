@@ -1,7 +1,13 @@
 import type { FormEvent, ComponentType } from "react";
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import type { FormValidationMode, inferValue } from "./types/commonTypes";
-import { createFields } from "./createFields";
+import { createFieldComponentFactory } from "./createFieldComponentFactory";
 import { FormContext } from "./FormContext";
 import type {
   EmptyFormOptionsGenerics,
@@ -12,6 +18,9 @@ import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
 import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
+import type { FieldInfo } from "./utils/determineFieldList";
+import { determineFieldList } from "./utils/determineFieldList";
+import type { AnyComponent } from "./types/utilityTypes";
 
 export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
@@ -54,9 +63,14 @@ function createFormImpl<G extends AnyRCFGenerics>(
     typedComponents,
     externalErrorParser,
     modes: prebuiltModes,
+    fieldSelector: selectFields,
   } = optionsBuilder.build();
 
-  const fields = createFields({ namedComponents, typedComponents }, schema);
+  const fieldList = determineFieldList(schema);
+  const resolveFieldComponents = createFieldComponentFactory(
+    { namedComponents, typedComponents },
+    fieldList,
+  );
 
   const ComposableForm: FormComponent<G> = ((props) => {
     if ("value" in props && "defaultValue" in props) {
@@ -78,7 +92,18 @@ function createFormImpl<G extends AnyRCFGenerics>(
     } = props;
 
     const [store] = useState(
-      (): FormStoreFor<G> => new FormStore(schema, data, modes),
+      (): FormStoreFor<G> => new FormStore(schema, data, modes, fieldList),
+    );
+
+    const fieldValues = useSyncExternalStore(store.subscribe, () => store.data);
+
+    const selectedFields = useMemo(
+      () =>
+        nullComponentFallbacks(
+          selectFields(resolveFieldComponents(fieldValues), fieldValues),
+          fieldList,
+        ),
+      [fieldValues],
     );
 
     const generalErrors = useSyncExternalStore(
@@ -128,11 +153,12 @@ function createFormImpl<G extends AnyRCFGenerics>(
           {...layoutProps}
           generalErrors={generalErrors}
           fieldErrors={fieldErrors}
+          fieldValues={fieldValues}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}
           reset={handleReset}
-          fields={fields}
+          fields={selectedFields}
         />
       </FormContext.Provider>
     );
@@ -145,3 +171,20 @@ function createFormImpl<G extends AnyRCFGenerics>(
 
 const emptyObject = Object.freeze({});
 const passThrough = <T extends any>(value: T) => value;
+
+function nullComponentFallbacks<
+  T extends Record<string, AnyComponent | undefined>,
+>(record: T, fieldList: FieldInfo[]) {
+  return Object.fromEntries(
+    fieldList.map((info) => [
+      info.componentName,
+      record[info.componentName] ?? NullComponent,
+    ]),
+  ) as {
+    [K in keyof T]: Exclude<T[K], null | undefined>;
+  };
+}
+
+function NullComponent() {
+  return null;
+}

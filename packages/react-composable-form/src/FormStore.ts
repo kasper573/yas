@@ -10,9 +10,8 @@ import type {
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
-import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
-import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 import type { AnyRCFGenerics } from "./types/optionTypes";
+import type { FieldInfo } from "./utils/determineFieldList";
 
 export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<G["schema"]>;
 
@@ -20,7 +19,6 @@ export class FormStore<Schema extends FormSchema> {
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
   private _state: FormState<Schema>;
-  private readonly _schemaShape: GetShapeFromSchema<Schema>;
 
   get data(): inferValue<Schema> {
     return this._state.data;
@@ -45,8 +43,8 @@ export class FormStore<Schema extends FormSchema> {
     public readonly schema: Schema,
     private _initialData: inferValue<Schema>,
     private _modes: readonly FormValidationMode[],
+    private _fieldList: FieldInfo<Schema>[],
   ) {
-    this._schemaShape = getShapeFromSchema(schema);
     this._state = initialFormState(_initialData);
   }
 
@@ -110,9 +108,11 @@ export class FormStore<Schema extends FormSchema> {
         combined.general = external.general.concat(local.general);
 
         combined.field = { ...local.field };
+
+        const activeFieldNames = this.determineActiveFieldNames();
         for (const key in external.field) {
           const fieldName = key as FieldNames<Schema>;
-          if (fieldName in this._schemaShape) {
+          if (activeFieldNames.has(fieldName)) {
             combined.field[fieldName] = [
               ...(external.field[fieldName] ?? []),
               ...(local.field?.[fieldName] ?? []),
@@ -133,6 +133,14 @@ export class FormStore<Schema extends FormSchema> {
 
   private hasMode(mode: FormValidationMode) {
     return this._modes.includes(mode);
+  }
+
+  private determineActiveFieldNames() {
+    return this._fieldList.reduce(
+      (names, info) =>
+        info.isActive(this.data) ? names.add(info.fieldName) : names,
+      new Set<FieldNames<Schema>>(),
+    );
   }
 
   private validate<FieldName extends FieldNames<Schema>>(

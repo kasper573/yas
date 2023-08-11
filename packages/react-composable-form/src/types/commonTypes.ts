@@ -1,6 +1,6 @@
 import type { output, ZodType } from "zod";
 
-import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
+import type { GetShapeFromSchema } from "../utils/determineFieldList";
 
 export type FormSchema = ValueType;
 

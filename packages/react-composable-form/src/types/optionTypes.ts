@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
 import type { TypedComponents } from "../utils/typedComponents";
-import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
+import type { GetShapeFromSchema } from "../utils/determineFieldList";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   AnyError,
@@ -41,7 +41,13 @@ export interface FormOptions<G extends AnyRCFGenerics>
   layout: FormLayoutFor<G>;
   modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
+  fieldSelector: FieldSelector<G>;
 }
+
+export type FieldSelector<G extends AnyRCFGenerics> = (
+  fields: FieldComponentsPassedToLayout<G["schema"], G>,
+  fieldValues: inferValue<G["schema"]>,
+) => Partial<FieldComponentsPassedToLayout<G["schema"], G>>;
 
 export type FormLayoutFor<G extends AnyRCFGenerics> = ComponentType<
   FormLayoutProps<G["schema"], G> & G["layoutProps"]
@@ -53,6 +59,7 @@ export interface FormLayoutProps<
 > {
   generalErrors: AnyError[];
   fieldErrors: FieldErrors<Schema>;
+  fieldValues: inferValue<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
   reset: () => unknown;
