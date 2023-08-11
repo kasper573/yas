@@ -1,4 +1,4 @@
-import type { AnyZodObject, ZodRawShape, ZodType } from "zod";
+import type { ZodType } from "zod";
 import {
   z,
   ZodDiscriminatedUnion,
@@ -7,14 +7,12 @@ import {
   ZodLiteral,
   ZodObject,
 } from "zod";
-import type { FieldNames, FormSchema, inferValue } from "../types/commonTypes";
-import type { ValueType } from "../types/commonTypes";
-
-export type GetShapeFromSchema<T extends ValueType> = T extends AnyZodObject
-  ? T["shape"]
-  : T extends ZodEffects<infer U>
-  ? GetShapeFromSchema<U>
-  : ZodRawShape;
+import type {
+  FieldNames,
+  FormSchema,
+  inferFieldType,
+  inferValue,
+} from "../types/commonTypes";
 
 export function determineFieldList<Schema extends FormSchema>(
   schema: Schema,
@@ -92,7 +90,7 @@ export interface FieldInfo<
   FieldName extends FieldNames<Schema> = FieldNames<Schema>,
 > {
   name: FieldName;
-  type: GetShapeFromSchema<Schema>[FieldName];
-  isActive: (values: inferValue<Schema>) => boolean;
+  type: inferFieldType<Schema, FieldName>;
+  isActive: (fieldValues: inferValue<Schema>) => boolean;
   componentName: Capitalize<FieldName>;
 }

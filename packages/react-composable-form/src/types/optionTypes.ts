@@ -1,6 +1,5 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
 import type { TypedComponents } from "../utils/typedComponents";
-import type { GetShapeFromSchema } from "../utils/determineFieldList";
 import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
 import type {
   AnyError,
@@ -11,6 +10,8 @@ import type {
   FormValidationMode,
   inferValue,
   ValueType,
+  inferFieldValue,
+  inferFieldType,
 } from "./commonTypes";
 
 export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any, any>;
@@ -88,9 +89,7 @@ export interface FieldProps<Value = any> {
 export type FieldFor<
   Schema extends FormSchema,
   FieldName extends string = string,
-> = ComponentType<
-  FieldProps<inferValue<GetShapeFromSchema<Schema>[FieldName]>>
->;
+> = ComponentType<FieldProps<inferFieldValue<Schema, FieldName>>>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
@@ -112,9 +111,7 @@ export type FieldComponentsPassedToLayout<
   Components extends FieldComponents,
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
-    Partial<
-      InferFieldComponentProps<Components, K, GetShapeFromSchema<Schema>[K]>
-    >
+    Partial<InferFieldComponentProps<Components, K, inferFieldType<Schema, K>>>
   >;
 };
 
