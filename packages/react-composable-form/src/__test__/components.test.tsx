@@ -13,7 +13,8 @@ describe("components", () => {
     enum EnumB {
       Bar,
     }
-    for (const { name, type, wrong } of [
+    for (const { name, type, schemaType, wrong } of [
+      { name: "any", type: z.number(), wrong: z.string(), schemaType: z.any() },
       { name: "number", type: z.number(), wrong: z.string() },
       { name: "string", type: z.string(), wrong: z.number() },
       { name: "boolean", type: z.boolean(), wrong: z.string() },
@@ -35,33 +36,46 @@ describe("components", () => {
       },
     ]) {
       describe(name, () => {
-        testType(type, wrong);
-        describe(`optional`, () => testType(type.optional(), wrong.optional()));
-        describe(`nullable`, () => testType(type.nullable(), wrong.nullable()));
-        describe(`nullish`, () => testType(type.nullish(), wrong.nullish()));
-        describe(`array`, () => testType(type.array(), wrong.array()));
+        testType(type, wrong, schemaType);
+        describe(`optional`, () =>
+          testType(type.optional(), wrong.optional(), schemaType));
+        describe(`nullable`, () =>
+          testType(type.nullable(), wrong.nullable(), schemaType));
+        describe(`nullish`, () =>
+          testType(type.nullish(), wrong.nullish(), schemaType));
+        describe(`array`, () =>
+          testType(type.array(), wrong.array(), schemaType));
       });
     }
 
-    function testType(correctType: ZodType, wrongType: ZodType) {
-      it("alone", () => testTypeAlone(correctType));
-      it("among others", () => testTypeCollision(correctType, wrongType));
+    function testType(
+      correctType: ZodType,
+      wrongType: ZodType,
+      schemaType?: ZodType,
+    ) {
+      it("alone", () => testTypeAlone(correctType, schemaType));
+      it("among others", () =>
+        testTypeCollision(correctType, wrongType, schemaType));
     }
 
-    function testTypeAlone(type: ZodType) {
+    function testTypeAlone(type: ZodType, schemaType = type) {
       const Form = createForm((options) =>
         options
-          .schema(z.object({ foo: type }))
+          .schema(z.object({ foo: schemaType }))
           .type(type, () => <span>found</span>),
       );
       const { getByText } = render(<Form />);
       getByText("found");
     }
 
-    function testTypeCollision(correctType: ZodType, wrongType: ZodType) {
+    function testTypeCollision(
+      correctType: ZodType,
+      wrongType: ZodType,
+      schemaType = correctType,
+    ) {
       const Form = createForm((options) =>
         options
-          .schema(z.object({ foo: correctType }))
+          .schema(z.object({ foo: schemaType }))
           .type(correctType, () => <span>correct</span>)
           .type(wrongType, () => <span>incorrect</span>),
       );

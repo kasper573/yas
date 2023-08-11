@@ -1,6 +1,7 @@
 import type { AnyZodObject, ZodFirstPartyTypeKind, ZodType } from "zod";
 import {
   z,
+  ZodAny,
   ZodArray,
   ZodDefault,
   ZodEffects,
@@ -28,6 +29,10 @@ export function isMatchingType(_a: ZodType, _b?: ZodType): boolean {
   const b = normalizeType(_b);
 
   if (a === b) {
+    return true;
+  }
+
+  if (a instanceof ZodAny || b instanceof ZodAny) {
     return true;
   }
 
