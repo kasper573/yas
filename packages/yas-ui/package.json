@@ -13,7 +13,7 @@
   "scripts": {
     "build": "storybook build -o dist",
     "dev": "storybook dev -p 6006 --no-open",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "pnpm test:components && pnpm test:unit",
     "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",

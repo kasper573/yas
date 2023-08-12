@@ -28,7 +28,7 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "jest",
     "test:watch": "jest --watch",
