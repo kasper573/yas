@@ -17,13 +17,8 @@ import type {
 import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type {
-  AnyRCFGenerics,
-  FieldComponentsPassedToLayout,
-  FormLayoutProps,
-} from "./types/optionTypes";
-import type { FieldInfo } from "./utils/determineFieldList";
-import { determineFieldList } from "./utils/determineFieldList";
+import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
+import { determineFields } from "./utils/determineFields";
 
 export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
@@ -66,10 +61,10 @@ function createFormImpl<G extends AnyRCFGenerics>(
     typedComponents,
     externalErrorParser,
     modes: prebuiltModes,
-    fieldSelector: selectFields,
+    fieldConditionsSelector,
   } = optionsBuilder.build();
 
-  const fieldList = determineFieldList(schema);
+  const fieldList = determineFields(schema, fieldConditionsSelector);
   const resolveFieldComponents = createFieldComponentFactory(
     { namedComponents, typedComponents },
     fieldList,
@@ -101,11 +96,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
     const fieldValues = useSyncExternalStore(store.subscribe, () => store.data);
 
     const selectedFields = useMemo(
-      () =>
-        nullComponentFallbacks(
-          selectFields(resolveFieldComponents(fieldValues), fieldValues),
-          fieldList,
-        ),
+      () => resolveFieldComponents(fieldValues),
       [fieldValues],
     );
 
@@ -174,19 +165,3 @@ function createFormImpl<G extends AnyRCFGenerics>(
 
 const emptyObject = Object.freeze({});
 const passThrough = <T extends any>(value: T) => value;
-
-function nullComponentFallbacks<G extends AnyRCFGenerics>(
-  record: Partial<FieldComponentsPassedToLayout<G["schema"], G>>,
-  fieldList: FieldInfo[],
-): FieldComponentsPassedToLayout<G["schema"], G> {
-  return Object.fromEntries(
-    fieldList.map((info) => [
-      info.componentName,
-      record[info.componentName as keyof typeof record] ?? NullComponent,
-    ]),
-  ) as unknown as FieldComponentsPassedToLayout<G["schema"], G>;
-}
-
-function NullComponent() {
-  return null;
-}

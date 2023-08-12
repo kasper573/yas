@@ -11,7 +11,7 @@ import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
 import type { AnyRCFGenerics } from "./types/optionTypes";
-import type { FieldInfo } from "./utils/determineFieldList";
+import type { FieldInfo } from "./utils/determineFields";
 
 export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<G["schema"]>;
 
@@ -109,19 +109,28 @@ export class FormStore<Schema extends FormSchema> {
 
         combined.field = { ...local.field };
 
-        const activeFieldNames = this.determineActiveFieldNames();
-        for (const key in external.field) {
-          const fieldName = key as FieldNames<Schema>;
-          if (activeFieldNames.has(fieldName)) {
-            combined.field[fieldName] = [
-              ...(external.field[fieldName] ?? []),
-              ...(local.field?.[fieldName] ?? []),
+        const remainingExternalNames = new Set<string>(
+          Object.keys(external.field),
+        );
+
+        for (const field of this._fieldList) {
+          remainingExternalNames.delete(field.name);
+          if (!field.isActive(this.data)) {
+            delete combined.field[field.name];
+          } else if (field.name in external.field) {
+            combined.field[field.name] = [
+              ...(external.field[field.name] ?? []),
+              ...(local.field?.[field.name] ?? []),
             ];
-          } else {
-            throw new Error(
-              `Invalid external field error: Field "${fieldName}" doesn't exist in schema`,
-            );
           }
+        }
+
+        if (remainingExternalNames.size) {
+          throw new Error(
+            `Invalid external field error, field(s) doesn't exist in schema: ${[
+              ...remainingExternalNames,
+            ].join(", ")}`,
+          );
         }
       },
     );
@@ -133,14 +142,6 @@ export class FormStore<Schema extends FormSchema> {
 
   private hasMode(mode: FormValidationMode) {
     return this._modes.includes(mode);
-  }
-
-  private determineActiveFieldNames() {
-    return this._fieldList.reduce(
-      (names, info) =>
-        info.isActive(this.data) ? names.add(info.name) : names,
-      new Set<FieldNames<Schema>>(),
-    );
   }
 
   private validate<FieldName extends FieldNames<Schema>>(

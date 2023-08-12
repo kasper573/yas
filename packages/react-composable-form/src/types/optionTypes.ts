@@ -42,13 +42,16 @@ export interface FormOptions<G extends AnyRCFGenerics>
   layout: FormLayoutFor<G>;
   modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
-  fieldSelector: FieldSelector<G>;
+  fieldConditionsSelector: FieldConditionsSelector<G["schema"]>;
 }
 
-export type FieldSelector<G extends AnyRCFGenerics> = (
-  fields: FieldComponentsPassedToLayout<G["schema"], G>,
-  fieldValues: inferValue<G["schema"]>,
-) => Partial<FieldComponentsPassedToLayout<G["schema"], G>>;
+export type FieldConditionsSelector<Schema extends FormSchema> = (
+  fieldValues: inferValue<Schema>,
+) => FieldConditions<Schema>;
+
+export type FieldConditions<Schema extends FormSchema> = {
+  [K in FieldNames<Schema>]?: boolean;
+};
 
 export type FormLayoutFor<G extends AnyRCFGenerics> = ComponentType<
   FormLayoutProps<G["schema"], G> & G["layoutProps"]

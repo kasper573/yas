@@ -4,59 +4,81 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 
-describe("discriminated union schema renders the correct fields", () => {
-  it("when discriminator is not set", () => {
-    const Form = createDiscriminatorForm();
+describe("discriminated union schema", () => {
+  describe("renders the correct fields", () => {
+    it("when discriminator is not set", () => {
+      const Form = createDiscriminatorForm();
 
-    const { getByText, getAllByTestId } = render(
-      <Form value={{ base: "foo", type: undefined as never, str: "hello" }} />,
-    );
+      const { getByText, getAllByTestId } = render(
+        <Form
+          value={{ base: "foo", type: undefined as never, str: "hello" }}
+        />,
+      );
 
-    expect(getAllByTestId("field")).toHaveLength(2);
-    getByText("base:foo");
-    getByText("type:undefined");
+      expect(getAllByTestId("field")).toHaveLength(2);
+      getByText("base:foo");
+      getByText("type:undefined");
+    });
+
+    it("when discriminator is set", () => {
+      const Form = createDiscriminatorForm();
+
+      const { getByText, getAllByTestId, rerender } = render(
+        <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+      );
+
+      expect(getAllByTestId("field")).toHaveLength(3);
+      getByText("base:foo");
+      getByText("type:string");
+      getByText("str:hello");
+
+      rerender(<Form value={{ base: "bar", type: "number", num: 42 }} />);
+
+      expect(getAllByTestId("field")).toHaveLength(3);
+      getByText("base:bar");
+      getByText("type:number");
+      getByText("num:42");
+    });
+
+    it("when using a layout", () => {
+      const Form = createDiscriminatorForm().extend((options) =>
+        options.layout(({ fields: { Base, Type, Str, Num } }) => (
+          <>
+            <Base />
+            <Type />
+            <Str />
+            <Num />
+          </>
+        )),
+      );
+
+      const { getByText, getAllByTestId } = render(
+        <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+      );
+
+      expect(getAllByTestId("field")).toHaveLength(3);
+      getByText("base:foo");
+      getByText("type:string");
+      getByText("str:hello");
+    });
   });
 
-  it("when discriminator is set", () => {
-    const Form = createDiscriminatorForm();
-
-    const { getByText, getAllByTestId, rerender } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello" }} />,
-    );
-
-    expect(getAllByTestId("field")).toHaveLength(3);
-    getByText("base:foo");
-    getByText("type:string");
-    getByText("str:hello");
-
-    rerender(<Form value={{ base: "bar", type: "number", num: 42 }} />);
-
-    expect(getAllByTestId("field")).toHaveLength(3);
-    getByText("base:bar");
-    getByText("type:number");
-    getByText("num:42");
-  });
-
-  it("when using a layout", () => {
+  it("only validates the active fields", async () => {
+    let lastFieldErrors: unknown;
     const Form = createDiscriminatorForm().extend((options) =>
-      options.layout(({ fields: { Base, Type, Str, Num } }) => (
-        <>
-          <Base />
-          <Type />
-          <Str />
-          <Num />
-        </>
-      )),
+      options.layout(({ fields, fieldErrors, handleSubmit }) => {
+        lastFieldErrors = fieldErrors;
+        return <button onClick={handleSubmit}>submit</button>;
+      }),
     );
-
-    const { getByText, getAllByTestId } = render(
+    const { getByRole } = render(
       <Form value={{ base: "foo", type: "string", str: "hello" }} />,
     );
 
-    expect(getAllByTestId("field")).toHaveLength(3);
-    getByText("base:foo");
-    getByText("type:string");
-    getByText("str:hello");
+    await userEvent.click(getByRole("button"));
+    expect(lastFieldErrors).toEqual({
+      str: ["String must contain at least 10 character(s)"],
+    });
   });
 
   function createDiscriminatorForm() {
@@ -67,11 +89,11 @@ describe("discriminated union schema renders the correct fields", () => {
             z.discriminatedUnion("type", [
               z.object({
                 type: z.literal("string"),
-                str: z.string(),
+                str: z.string().min(10),
               }),
               z.object({
                 type: z.literal("number"),
-                num: z.number(),
+                num: z.number().min(10),
               }),
             ]),
           ),
@@ -111,7 +133,7 @@ describe("conditional fields selector", () => {
         return <button onClick={handleSubmit}>submit</button>;
       }),
     );
-    const { getByTestId, getByRole } = render(
+    const { getByRole } = render(
       <Form value={{ base: "foo", type: "string", str: "hello" }} />,
     );
 
@@ -137,11 +159,9 @@ describe("conditional fields selector", () => {
             {name}:{`${value}`}
           </span>
         ))
-        .conditionals(({ Base, Type, Str, Num }, values) => ({
-          Base,
-          Type,
-          Str: values.type === "string" ? Str : undefined,
-          Num: values.type === "number" ? Num : undefined,
+        .conditions((values) => ({
+          str: values.type === "string",
+          num: values.type === "number",
         })),
     );
   }

@@ -16,7 +16,7 @@ import type {
   FieldFor,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./utils/isMatchingType";
-import type { FieldInfo } from "./utils/determineFieldList";
+import type { FieldInfo } from "./utils/determineFields";
 
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: Pick<G, keyof FieldComponents>,
@@ -42,10 +42,10 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   return function resolveFieldComponents(values: inferValue<G["schema"]>) {
     const resolved = {} as FieldComponentsPassedToLayout<G["schema"], G>;
     for (const [field, component] of enhancedComponents.entries()) {
-      if (field.isActive(values)) {
-        // @ts-expect-error Typescript won't allow using Capitalized as key, which is silly, so we ignore it.
-        resolved[field.componentName] = component;
-      }
+      // @ts-expect-error Typescript won't allow using Capitalized as key, which is silly, so we ignore it.
+      resolved[field.componentName] = field.isActive(values)
+        ? component
+        : NullComponent;
     }
     return resolved;
   };
@@ -97,4 +97,8 @@ function createMissingFieldComponent(name: string, type: ValueType) {
       )}`,
     );
   };
+}
+
+function NullComponent() {
+  return null;
 }

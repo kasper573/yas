@@ -13,19 +13,33 @@ import type {
   inferFieldType,
   inferValue,
 } from "../types/commonTypes";
+import type { FieldConditionsSelector } from "../types/optionTypes";
 
-export function determineFieldList<Schema extends FormSchema>(
+export interface FieldInfo<
+  Schema extends FormSchema = FormSchema,
+  FieldName extends FieldNames<Schema> = FieldNames<Schema>,
+> {
+  name: FieldName;
+  type: inferFieldType<Schema, FieldName>;
+  isActive: (fieldValues: inferValue<Schema>) => boolean;
+  componentName: Capitalize<FieldName>;
+}
+
+export function determineFields<Schema extends FormSchema>(
   schema: Schema,
+  realSelectConditions: FieldConditionsSelector<Schema>,
 ): FieldInfo<Schema>[] {
   const fields: FieldInfo<Schema>[] = [];
+  const selectConditions = memoize(realSelectConditions);
   enumerateType(stripEffects(schema), (type) => {
     if (type instanceof ZodObject) {
-      for (const fieldName in type.shape) {
+      for (const key in type.shape) {
+        const fieldName = key as FieldNames<Schema>;
         fields.push({
-          componentName: capitalize(fieldName) as never,
-          name: fieldName as never,
+          componentName: capitalize(fieldName),
+          name: fieldName,
           type: type.shape[fieldName],
-          isActive: () => true,
+          isActive: (values) => selectConditions(values)[fieldName] ?? true,
         });
       }
     } else if (type instanceof ZodDiscriminatedUnion) {
@@ -46,7 +60,7 @@ export function determineFieldList<Schema extends FormSchema>(
         componentName: capitalize(discriminator),
         name: discriminator,
         type: discriminatorType as never,
-        isActive: () => true,
+        isActive: (values) => selectConditions(values)[discriminator] ?? true,
       });
 
       for (const [optionValue, option] of optionsMap.entries()) {
@@ -56,7 +70,9 @@ export function determineFieldList<Schema extends FormSchema>(
               componentName: capitalize(fieldName) as never,
               name: fieldName as never,
               type: option.shape[fieldName] as never,
-              isActive: (values) => optionValue === values[discriminator],
+              isActive: (values) =>
+                selectConditions(values)[discriminator] ??
+                optionValue === values[discriminator],
             });
           }
         }
@@ -85,12 +101,19 @@ function capitalize<S extends string>(str: S): Capitalize<S> {
   return (str[0].toUpperCase() + str.slice(1)) as Capitalize<S>;
 }
 
-export interface FieldInfo<
-  Schema extends FormSchema = FormSchema,
-  FieldName extends FieldNames<Schema> = FieldNames<Schema>,
-> {
-  name: FieldName;
-  type: inferFieldType<Schema, FieldName>;
-  isActive: (fieldValues: inferValue<Schema>) => boolean;
-  componentName: Capitalize<FieldName>;
+function memoize<Fn extends (input: Input) => Output, Input, Output>(
+  fn: Fn,
+): Fn {
+  let hasInitialized = false;
+  let memoizedInput: Input;
+  let memoizedOutput: Output;
+  return ((input) => {
+    if (hasInitialized && input === memoizedInput) {
+      return memoizedOutput;
+    }
+    memoizedInput = input;
+    memoizedOutput = fn(input);
+    hasInitialized = true;
+    return memoizedOutput;
+  }) as Fn;
 }
