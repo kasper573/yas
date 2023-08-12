@@ -81,6 +81,54 @@ describe("discriminated union schema", () => {
     });
   });
 
+  it("can submit when conditionally valid", async () => {
+    const Form = createDiscriminatorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+    const handleSubmit = jest.fn();
+    const { getByRole } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "this is a long string" }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalled();
+  });
+
+  it("submits data representing the current union", async () => {
+    const Form = createDiscriminatorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+
+    const handleSubmit = jest.fn();
+    const { getByRole, rerender } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "this is a long string" }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    rerender(
+      <Form
+        value={{ base: "foo", type: "number", num: 20 }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalledWith({
+      base: "foo",
+      type: "number",
+      num: 20,
+    });
+  });
+
   function createDiscriminatorForm() {
     return createForm((options) =>
       options
@@ -142,6 +190,46 @@ describe("conditional fields selector", () => {
     await userEvent.click(getByRole("button"));
     expect(lastFieldErrors).toEqual({
       str: ["String must contain at least 10 character(s)"],
+    });
+  });
+
+  it("can submit when conditionally valid", async () => {
+    const Form = createSelectorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+    const handleSubmit = jest.fn();
+    const { getByRole } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "hello", num: 0 }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalled();
+  });
+
+  it("submits data representing current condition", async () => {
+    const Form = createSelectorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+    const handleSubmit = jest.fn();
+    const { getByRole } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "hello", num: 0 }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalledWith({
+      base: "foo",
+      type: "string",
+      str: "hello",
     });
   });
 
