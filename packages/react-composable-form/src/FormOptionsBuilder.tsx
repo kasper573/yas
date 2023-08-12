@@ -6,9 +6,9 @@ import type {
   FormSchema,
   FormValidationMode,
   ValueType,
-  inferValue,
   FormErrorsParser,
   FormErrors,
+  inferFieldType,
 } from "./types/commonTypes";
 import type {
   AnyProps,
@@ -92,7 +92,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
     name: FieldName,
     component: InputFieldComponent<
-      G["schema"]["shape"][FieldName],
+      inferFieldType<G["schema"], FieldName>,
       AdditionalProps
     >,
     ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
@@ -101,7 +101,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       Record<
         FieldName,
         ComposedFieldComponent<
-          inferValue<G["schema"]>[FieldName],
+          inferFieldType<G["schema"], FieldName>,
           AdditionalProps
         >
       >;

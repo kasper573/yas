@@ -15,6 +15,8 @@ export type RequiredKeys<T> = {
   [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
 }[keyof T];
 
+export type AllKeysInUnion<T> = T extends any ? keyof T : never;
+
 export type HasRequiredProps<T> = RequiredKeys<T> extends never ? false : true;
 
 export type OptionalArgIfEmpty<T> = HasRequiredProps<T> extends true

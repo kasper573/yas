@@ -1,5 +1,5 @@
 import type { output, ZodType } from "zod";
-import type { AnyZodObject, ZodEffects, ZodRawShape } from "zod";
+import type { AllKeysInUnion } from "./utilityTypes";
 
 export type FormSchema = ValueType;
 
@@ -26,7 +26,7 @@ export interface FormState<Schema extends FormSchema> {
 }
 
 export type FieldNames<Schema extends FormSchema> = `${string &
-  keyof inferSchemaShape<Schema>}`;
+  AllKeysInUnion<inferValue<Schema>>}`;
 
 export type FieldErrors<Schema extends FormSchema> =
   // Falls back to anonymous record when no fields are specified to avoid defining as {} which would match any type
@@ -47,18 +47,12 @@ export interface FormErrors<Schema extends FormSchema> {
 
 export type inferValue<Type extends ValueType> = output<Type>;
 
-export type inferSchemaShape<T extends ValueType> = T extends AnyZodObject
-  ? T["shape"]
-  : T extends ZodEffects<infer U>
-  ? inferSchemaShape<U>
-  : ZodRawShape;
-
 export type inferFieldValue<
   Schema extends FormSchema,
   FieldName extends string,
-> = inferValue<inferFieldType<Schema, FieldName>>;
+> = inferValue<Schema>[FieldName];
 
 export type inferFieldType<
   Schema extends FormSchema,
   FieldName extends string,
-> = inferSchemaShape<Schema>[FieldName];
+> = ValueType<inferFieldValue<Schema, FieldName>>;

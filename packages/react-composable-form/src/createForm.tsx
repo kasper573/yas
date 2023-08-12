@@ -17,10 +17,13 @@ import type {
 import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
+import type {
+  AnyRCFGenerics,
+  FieldComponentsPassedToLayout,
+  FormLayoutProps,
+} from "./types/optionTypes";
 import type { FieldInfo } from "./utils/determineFieldList";
 import { determineFieldList } from "./utils/determineFieldList";
-import type { AnyComponent } from "./types/utilityTypes";
 
 export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
@@ -172,17 +175,16 @@ function createFormImpl<G extends AnyRCFGenerics>(
 const emptyObject = Object.freeze({});
 const passThrough = <T extends any>(value: T) => value;
 
-function nullComponentFallbacks<
-  T extends Record<string, AnyComponent | undefined>,
->(record: T, fieldList: FieldInfo[]) {
+function nullComponentFallbacks<G extends AnyRCFGenerics>(
+  record: Partial<FieldComponentsPassedToLayout<G["schema"], G>>,
+  fieldList: FieldInfo[],
+): FieldComponentsPassedToLayout<G["schema"], G> {
   return Object.fromEntries(
     fieldList.map((info) => [
       info.componentName,
-      record[info.componentName] ?? NullComponent,
+      record[info.componentName as keyof typeof record] ?? NullComponent,
     ]),
-  ) as {
-    [K in keyof T]: Exclude<T[K], null | undefined>;
-  };
+  ) as unknown as FieldComponentsPassedToLayout<G["schema"], G>;
 }
 
 function NullComponent() {

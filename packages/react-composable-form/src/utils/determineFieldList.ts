@@ -22,7 +22,7 @@ export function determineFieldList<Schema extends FormSchema>(
     if (type instanceof ZodObject) {
       for (const fieldName in type.shape) {
         fields.push({
-          componentName: capitalize(fieldName),
+          componentName: capitalize(fieldName) as never,
           name: fieldName as never,
           type: type.shape[fieldName],
           isActive: () => true,
@@ -53,7 +53,7 @@ export function determineFieldList<Schema extends FormSchema>(
         for (const fieldName in option.shape) {
           if (fieldName !== discriminator) {
             fields.push({
-              componentName: capitalize(fieldName),
+              componentName: capitalize(fieldName) as never,
               name: fieldName as never,
               type: option.shape[fieldName] as never,
               isActive: (values) => optionValue === values[discriminator],
