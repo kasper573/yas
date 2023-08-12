@@ -91,6 +91,10 @@ module.exports = {
         // This rule yields false negative errors in storybook stories due to invalid type definitions
         // Rule can be re-enabled once issue is fixed upstream: https://github.com/storybookjs/testing-library/issues/10
         "@typescript-eslint/await-thenable": "off",
+
+        // Storybook stories often use a render prop with anonymous components,
+        // which breaks the rules of hooks but is acceptable for storybook
+        "react-hooks/rules-of-hooks": "off",
       },
     },
     {
