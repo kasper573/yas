@@ -56,14 +56,14 @@ function RemoteExampleImpl() {
         />
       }
     >
-      {({ validateOn }) => (
+      {(props) => (
         <UserRegistrationForm
+          {...props}
           onSubmit={mutate}
           errors={error}
           onChange={reset}
           title="Remote error handling"
           isLoading={isLoading}
-          validateOn={validateOn}
         />
       )}
     </ExampleContent>

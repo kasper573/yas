@@ -51,32 +51,28 @@ export function LayoutExample() {
   const showData = (data: LoginPayload) => alert(JSON.stringify(data, null, 2));
   return (
     <ExampleContent>
-      {({ validateOn }) => (
+      {(props) => (
         <>
           <LoginForm
+            {...props}
             title="Basic layout"
             value={data}
             onChange={setData}
             onSubmit={showData}
-            validateOn={validateOn}
           />
           <Typography variant="h4" sx={{ my: 4 }}>
             Inline layout
           </Typography>
           <InlineUserForm
+            {...props}
             value={data}
             onChange={setData}
             onSubmit={showData}
-            validateOn={validateOn}
           />
           <Typography variant="h4" sx={{ my: 4 }}>
             Specialized layout
           </Typography>
-          <SpecializedUserForm
-            value={data}
-            onChange={setData}
-            validateOn={validateOn}
-          />
+          <SpecializedUserForm {...props} value={data} onChange={setData} />
         </>
       )}
     </ExampleContent>

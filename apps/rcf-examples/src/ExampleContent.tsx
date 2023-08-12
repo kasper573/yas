@@ -7,6 +7,7 @@ import { MultiSelectField } from "./fields/MultiSelectField";
 
 export type ExampleContentRenderer = (props: {
   validateOn: FormValidationMode[];
+  onSubmit?: (data: unknown) => unknown;
 }) => ReactNode;
 
 export function ExampleContent({
@@ -20,9 +21,12 @@ export function ExampleContent({
     "blur",
     "submit",
   ]);
+  function onSubmit(data: unknown) {
+    alert(JSON.stringify(data, null, 2));
+  }
   return (
     <Stack direction="row" gap={4}>
-      <Box sx={{ flex: 1 }}>{children?.({ validateOn })}</Box>
+      <Box sx={{ flex: 1 }}>{children?.({ validateOn, onSubmit })}</Box>
       <Box>
         <MultiSelectField
           sx={{ mb: 4 }}

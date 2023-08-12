@@ -71,11 +71,7 @@ export function ConditionalExample() {
         <Stack direction="column" gap={4}>
           <DiscriminatedForm title="Discriminated" {...props} />
 
-          <ConditionsForm
-            title="Conditions"
-            {...props}
-            onSubmit={(data) => alert(JSON.stringify(data, null, 2))}
-          />
+          <ConditionsForm title="Conditions" {...props} />
         </Stack>
       )}
     </ExampleContent>
