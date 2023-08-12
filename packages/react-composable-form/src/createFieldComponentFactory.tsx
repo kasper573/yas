@@ -64,23 +64,33 @@ function enhanceFieldComponent<
       store.subscribe,
       () => store.fieldErrors[name],
     );
-    const changeHandler = useCallback(
+
+    const changeHandler: Props["onChange"] = useCallback(
       (newValue: typeof value) => {
         store.changeField(name, newValue);
       },
       [store],
     );
-    const blurHandler = useCallback(() => store.blurField(name), [store]);
-    const focusHandler = useCallback(() => store.focusField(name), [store]);
+
+    const blurHandler: Props["onBlur"] = useCallback(
+      () => store.blurField(name),
+      [store],
+    );
+
+    const focusHandler: Props["onFocus"] = useCallback(
+      () => store.focusField(name),
+      [store],
+    );
+
     return (
       <Component
         name={name}
         value={value}
         errors={errors}
         required={required}
-        onChange={changeHandler as Props["onChange"]}
-        onBlur={blurHandler as Props["onBlur"]}
-        onFocus={focusHandler as Props["onFocus"]}
+        onChange={changeHandler}
+        onBlur={blurHandler}
+        onFocus={focusHandler}
         {...props}
       />
     );
