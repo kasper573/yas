@@ -115,9 +115,7 @@ export class FormStore<Schema extends FormSchema> {
 
         for (const field of this._fieldList) {
           remainingExternalNames.delete(field.name);
-          if (!field.isActive(this.data)) {
-            delete combined.field[field.name];
-          } else if (field.name in external.field) {
+          if (field.name in external.field) {
             combined.field[field.name] = [
               ...(external.field[field.name] ?? []),
               ...(local.field?.[field.name] ?? []),
@@ -158,6 +156,13 @@ export class FormStore<Schema extends FormSchema> {
         }
       } else {
         draft.localErrors.field = localErrors.field;
+      }
+
+      // Remove errors for inactive fields
+      for (const field of this._fieldList) {
+        if (!field.isActive(this.data)) {
+          delete draft.localErrors.field[field.name];
+        }
       }
 
       this.updateCombinedErrors();
