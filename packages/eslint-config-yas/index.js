@@ -3,11 +3,12 @@ const path = require("path");
 
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["import", "unused-imports", "monorepo-cop", "react"],
+  plugins: ["import", "unused-imports", "monorepo-cop", "react", "react-hooks"],
   extends: [
     "plugin:monorepo-cop/recommended",
     "plugin:storybook/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
     "prettier",
   ],
