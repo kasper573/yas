@@ -1,5 +1,7 @@
+import "@testing-library/jest-dom";
 import { z } from "zod";
 import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 
 describe("discriminated union schema renders the correct fields", () => {
@@ -101,6 +103,24 @@ describe("conditional fields selector", () => {
     getByText("num:42");
   });
 
+  it("only validates the active fields", async () => {
+    let lastFieldErrors: unknown;
+    const Form = createSelectorForm().extend((options) =>
+      options.layout(({ fields, fieldErrors, handleSubmit }) => {
+        lastFieldErrors = fieldErrors;
+        return <button onClick={handleSubmit}>submit</button>;
+      }),
+    );
+    const { getByTestId, getByRole } = render(
+      <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(lastFieldErrors).toEqual({
+      str: ["String must contain at least 10 character(s)"],
+    });
+  });
+
   function createSelectorForm() {
     return createForm((options) =>
       options
@@ -108,8 +128,8 @@ describe("conditional fields selector", () => {
           z.object({
             base: z.string(),
             type: z.enum(["string", "number"]),
-            str: z.string().optional(),
-            num: z.number().optional(),
+            str: z.string().min(10),
+            num: z.number().min(10),
           }),
         )
         .type(z.any(), ({ name, value }) => (
