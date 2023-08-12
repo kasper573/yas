@@ -111,14 +111,16 @@ describe("conditional fields selector", () => {
   it("renders the correct fields", () => {
     const Form = createSelectorForm();
     const { getByText, rerender } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />,
     );
 
     getByText("base:foo");
     getByText("type:string");
     getByText("str:hello");
 
-    rerender(<Form value={{ base: "bar", type: "number", num: 42 }} />);
+    rerender(
+      <Form value={{ base: "bar", type: "number", num: 42, str: "" }} />,
+    );
 
     getByText("base:bar");
     getByText("type:number");
@@ -134,7 +136,7 @@ describe("conditional fields selector", () => {
       }),
     );
     const { getByRole } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />,
     );
 
     await userEvent.click(getByRole("button"));
