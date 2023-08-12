@@ -30,7 +30,8 @@ const paypalSchema = z.object({
 
 const paymentSchema = z
   .object({ owner: z.string() })
-  .and(z.discriminatedUnion("type", [cardSchema, paypalSchema]));
+  .and(z.discriminatedUnion("type", [cardSchema, paypalSchema]))
+  .and(z.discriminatedUnion("kind", [fooSchema, barSchema]));
 
 const PaymentForm = BaseForm.extend((options) =>
   options
@@ -38,8 +39,8 @@ const PaymentForm = BaseForm.extend((options) =>
     .type(paymentType, SingleSelectField, {
       options: valueOptions(paymentType.options),
     })
-    .type(paymentType, SingleSelectField, {
-      options: valueOptions(paymentType.options),
+    .type(kindType, SingleSelectField, {
+      options: valueOptions(kindType.options),
     }),
 );
 
