@@ -126,7 +126,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
       }
     }, [data, store, isControlledComponent]);
 
-    useEffect(() => store.setModes(modes), [modes]);
+    useEffect(() => store.setModes(modes), [store, modes]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {
@@ -136,7 +136,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
           onSubmit?.(store.data);
         }
       },
-      [store],
+      [store, onSubmit],
     );
 
     const handleReset = useCallback(() => store.reset(), [store]);

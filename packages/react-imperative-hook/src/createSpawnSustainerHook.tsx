@@ -13,7 +13,8 @@ export function createSpawnSustainerHook(context: Context<ComponentStore>) {
     useEffect(() => {
       store.setInstanceRemoveDelay(instanceId, sustainer.promise);
       return () => store.setInstanceRemoveDelay(instanceId, undefined);
-    }, [store, instanceId]);
+    }, [store, instanceId, sustainer.promise]);
+
     return sustainer;
   };
 }
