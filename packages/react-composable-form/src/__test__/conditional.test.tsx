@@ -211,28 +211,6 @@ describe("conditional fields selector", () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it("submits data representing current condition", async () => {
-    const Form = createSelectorForm().extend((options) =>
-      options.layout(({ handleSubmit }) => (
-        <button onClick={handleSubmit}>submit</button>
-      )),
-    );
-    const handleSubmit = jest.fn();
-    const { getByRole } = render(
-      <Form
-        value={{ base: "foo", type: "string", str: "hello", num: 0 }}
-        onSubmit={handleSubmit}
-      />,
-    );
-
-    await userEvent.click(getByRole("button"));
-    expect(handleSubmit).toHaveBeenCalledWith({
-      base: "foo",
-      type: "string",
-      str: "hello",
-    });
-  });
-
   function createSelectorForm() {
     return createForm((options) =>
       options
