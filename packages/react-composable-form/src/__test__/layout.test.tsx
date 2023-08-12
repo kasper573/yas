@@ -77,4 +77,21 @@ describe("layout", () => {
     await userEvent.click(getByText("submit"));
     expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
   });
+
+  it("can submit the form when adding submit handler after mount", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
+    );
+    const { getByText, rerender } = render(<Form value={{ foo: "hello" }} />);
+
+    rerender(<Form value={{ foo: "hello" }} onSubmit={onSubmit} />);
+
+    await userEvent.click(getByText("submit"));
+    expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
+  });
 });
