@@ -1,41 +1,43 @@
 import { z } from "zod";
+import { Stack } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { ExampleContent } from "../ExampleContent";
 import { SingleSelectField, valueOptions } from "../fields/SingleSelectField";
 
 const kindType = z.enum(["foo", "bar"]);
-
-const fooSchema = z.object({
-  kind: z.literal("foo"),
-  foo: z.string(),
-});
-
-const barSchema = z.object({
-  kind: z.literal("bar"),
-  bar: z.string(),
-});
-
 const paymentType = z.enum(["card", "paypal"]);
 
-const cardSchema = z.object({
-  type: z.literal("card"),
-  number: z.string(),
-  expiry: z.string(),
-});
+function createDiscriminatingSchema() {
+  const fooSchema = z.object({
+    kind: z.literal("foo"),
+    foo: z.string(),
+  });
 
-const paypalSchema = z.object({
-  type: z.literal("paypal"),
-  email: z.string(),
-});
+  const barSchema = z.object({
+    kind: z.literal("bar"),
+    bar: z.string(),
+  });
 
-const paymentSchema = z
-  .object({ owner: z.string() })
-  .and(z.discriminatedUnion("type", [cardSchema, paypalSchema]))
-  .and(z.discriminatedUnion("kind", [fooSchema, barSchema]));
+  const cardSchema = z.object({
+    type: z.literal("card"),
+    number: z.string(),
+    expiry: z.string(),
+  });
 
-const PaymentForm = BaseForm.extend((options) =>
+  const paypalSchema = z.object({
+    type: z.literal("paypal"),
+    email: z.string(),
+  });
+
+  return z
+    .object({ owner: z.string() })
+    .and(z.discriminatedUnion("type", [cardSchema, paypalSchema]))
+    .and(z.discriminatedUnion("kind", [fooSchema, barSchema]));
+}
+
+const DiscriminatedForm = BaseForm.extend((options) =>
   options
-    .schema(paymentSchema)
+    .schema(createDiscriminatingSchema())
     .type(paymentType, SingleSelectField, {
       options: valueOptions(paymentType.options),
     })
@@ -44,10 +46,38 @@ const PaymentForm = BaseForm.extend((options) =>
     }),
 );
 
+const ConditionsForm = BaseForm.extend((options) =>
+  options
+    .schema(
+      z.object({
+        type: kindType,
+        foo: z.string(),
+        bar: z.number(),
+      }),
+    )
+    .conditions((data) => ({
+      foo: data.type === "foo",
+      bar: data.type === "bar",
+    }))
+    .type(kindType, SingleSelectField, {
+      options: valueOptions(kindType.options),
+    }),
+);
+
 export function ConditionalExample() {
   return (
     <ExampleContent>
-      {(props) => <PaymentForm title="Conditional" {...props} />}
+      {(props) => (
+        <Stack direction="column" gap={4}>
+          <DiscriminatedForm title="Discriminated" {...props} />
+
+          <ConditionsForm
+            title="Conditions"
+            {...props}
+            onSubmit={(data) => alert(JSON.stringify(data, null, 2))}
+          />
+        </Stack>
+      )}
     </ExampleContent>
   );
 }
