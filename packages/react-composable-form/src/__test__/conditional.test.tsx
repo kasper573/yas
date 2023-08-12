@@ -202,7 +202,7 @@ describe("conditional fields selector", () => {
     const handleSubmit = jest.fn();
     const { getByRole } = render(
       <Form
-        value={{ base: "foo", type: "string", str: "hello", num: 0 }}
+        value={{ base: "foo", type: "string", str: "a long string", num: 0 }}
         onSubmit={handleSubmit}
       />,
     );
