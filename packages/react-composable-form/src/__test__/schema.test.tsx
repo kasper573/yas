@@ -25,4 +25,12 @@ describe("schema", () => {
     const { getByText } = render(<ExtendedForm />);
     getByText("bar");
   });
+
+  it("does not support unions", () => {
+    expect(() =>
+      createForm((options) =>
+        options.schema(z.union([z.string(), z.number()])),
+      ),
+    ).toThrowError(`RCF does not support union types`);
+  });
 });

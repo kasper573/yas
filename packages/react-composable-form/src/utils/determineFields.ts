@@ -6,6 +6,7 @@ import {
   ZodIntersection,
   ZodLiteral,
   ZodObject,
+  ZodUnion,
 } from "zod";
 import type {
   FieldNames,
@@ -77,6 +78,8 @@ export function determineFields<Schema extends FormSchema>(
           }
         }
       }
+    } else if (type instanceof ZodUnion) {
+      throw new Error("RCF does not support union types");
     }
   });
   return fields;
