@@ -13,56 +13,48 @@ import {
   priceReductionType,
   fetchManufacturers,
 } from "../api/fakeApiSdk";
+import { CheckboxGroupField } from "../fields/CheckboxGroupField";
 
-const FilterForm = BaseForm.extend((options) => {
-  return (
-    options
-      .schema(
-        z.object({
-          priceReduction: priceReductionType,
-          manufacturer: manufacturerType.shape.id,
-          foo: z.string(),
-        }),
-      )
-      // Local enum options
-      .type(priceReductionType, RadioGroupField, {
-        options: priceReductionType.options.map((value) => ({
-          value,
-          label: value,
-        })),
-      })
-      // Local object type, but remote option values
-      .type(manufacturerType.shape.id, (props) => {
-        const { data = [], isLoading } = useQuery(
-          "manufacturers",
-          fetchManufacturers,
-        );
-        return (
-          <RadioGroupField
-            options={data.map((m) => ({ value: m.id, label: m.name }))}
-            isLoading={isLoading}
-            {...props}
-          />
-        );
-      })
-      .layout(({ fields }) => (
-        <>
-          <AccordionGroup
-            defaultExpanded
-            entries={{
-              Main: (
-                <FieldGroup>
-                  {Object.values(fields).map((Component, index) => (
-                    <Component key={index} />
-                  ))}
-                </FieldGroup>
-              ),
-            }}
-          />
-        </>
-      ))
-  );
-});
+const FilterForm = BaseForm.extend((options) =>
+  options
+    .schema(
+      z.object({
+        priceReduction: priceReductionType,
+        manufacturer: manufacturerType.shape.id.array(),
+      }),
+    )
+    .type(priceReductionType, RadioGroupField, {
+      options: priceReductionType.options.map((value) => ({
+        value,
+        label: value,
+      })),
+    })
+    .type(manufacturerType.shape.id.array(), (props) => {
+      const { data = [] } = useQuery("manufacturers", fetchManufacturers);
+      return (
+        <CheckboxGroupField
+          options={data.map((m) => ({ value: m.id, label: m.name }))}
+          {...props}
+        />
+      );
+    })
+    .layout(({ fields }) => (
+      <>
+        <AccordionGroup
+          defaultExpanded
+          entries={{
+            Main: (
+              <FieldGroup>
+                {Object.values(fields).map((Component, index) => (
+                  <Component key={index} />
+                ))}
+              </FieldGroup>
+            ),
+          }}
+        />
+      </>
+    )),
+);
 
 export function FilterExample() {
   const queryClient = useMemo(() => new QueryClient(), []);
