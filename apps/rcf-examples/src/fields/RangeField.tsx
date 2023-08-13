@@ -1,8 +1,16 @@
-import { FormControl, FormHelperText, InputLabel, Slider } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  Slider,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useId } from "react";
 import type { FieldProps } from "../rcf";
 
-export interface RangeFieldProps extends FieldProps<[number, number]> {
+export type Range = [number, number];
+
+export interface RangeFieldProps extends FieldProps<Range> {
   min: number;
   max: number;
 }
@@ -20,20 +28,25 @@ export function RangeField({
   const id = useId();
   return (
     <FormControl fullWidth>
-      <InputLabel id={id}>{name}</InputLabel>
-      <Slider
-        value={value}
-        onChange={() => {}}
-        valueLabelDisplay="auto"
-        getAriaLabel={name ? () => name : undefined}
-        getAriaValueText={() => value.join(", ")}
-        min={min}
-        max={max}
-        {...rest}
-      />
-      {errors.length > 0 && (
-        <FormHelperText error>{errors.join(", ")}</FormHelperText>
-      )}
+      <Stack gap={1}>
+        <Typography id={id}>{name}</Typography>
+        <div>
+          <Slider
+            aria-labelledby={id}
+            value={value}
+            onChange={(e, newValue) => onChange?.(newValue as Range)}
+            valueLabelDisplay="auto"
+            getAriaLabel={name ? () => name : undefined}
+            getAriaValueText={() => value.join(", ")}
+            min={min}
+            max={max}
+            {...rest}
+          />
+          {errors.length > 0 && (
+            <FormHelperText error>{errors.join(", ")}</FormHelperText>
+          )}
+        </div>
+      </Stack>
     </FormControl>
   );
 }
