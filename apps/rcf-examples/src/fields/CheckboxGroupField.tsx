@@ -29,14 +29,12 @@ export function CheckboxGroupField<Value>({
   size,
 }: CheckboxGroupFieldProps<Value>) {
   return (
-    <FormGroup sx={sx}>
+    <FormGroup sx={sx} onFocus={onFocus} onBlur={onBlur}>
       <InputLabel>{name}</InputLabel>
       {options.map((option, index) => (
         <FormControlLabel
           key={index}
           label={option.label}
-          onFocus={onFocus}
-          onBlur={onBlur}
           control={
             <Checkbox
               value={option.value}
