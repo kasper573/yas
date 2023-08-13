@@ -28,6 +28,8 @@ export function RadioGroupField<Value>({
   errors = [],
   onChange,
   isLoading,
+  sx,
+  size,
   ...rest
 }: RadioGroupFieldProps<Value>) {
   const id = useId();
@@ -36,7 +38,7 @@ export function RadioGroupField<Value>({
     [value, options],
   );
   return (
-    <FormControl fullWidth error={errors.length > 0}>
+    <FormControl fullWidth error={errors.length > 0} sx={sx}>
       <FormLabel id={id}>{name}</FormLabel>
       {isLoading ? (
         <Skeleton
@@ -55,12 +57,18 @@ export function RadioGroupField<Value>({
             }
             aria-labelledby={id}
             name={name}
+            {...rest}
           >
             {options.map((option, index) => (
               <FormControlLabel
                 key={index}
-                control={<Radio disabled={isLoading} />}
+                control={<Radio size={size} disabled={isLoading} />}
                 label={option.label}
+                componentsProps={
+                  size && {
+                    typography: { variant: sizeFontVariants[size] },
+                  }
+                }
                 value={index}
               />
             ))}
@@ -73,3 +81,8 @@ export function RadioGroupField<Value>({
     </FormControl>
   );
 }
+
+const sizeFontVariants = {
+  small: "body2",
+  medium: "body1",
+} as const;
