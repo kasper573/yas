@@ -14,7 +14,7 @@ export function ExampleContent({
   menu,
   children,
 }: {
-  menu?: ReactNode;
+  menu?: ReactNode | ExampleContentRenderer;
   children?: ExampleContentRenderer;
 }) {
   const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
@@ -24,9 +24,12 @@ export function ExampleContent({
   function onSubmit(data: unknown) {
     alert(JSON.stringify(data, null, 2));
   }
+
+  const rendererArgs = { validateOn, onSubmit };
+  const menuElement = typeof menu === "function" ? menu(rendererArgs) : menu;
   return (
     <Stack direction="row" gap={4}>
-      <Box sx={{ flex: 1 }}>{children?.({ validateOn, onSubmit })}</Box>
+      <Box sx={{ flex: 1 }}>{children?.(rendererArgs)}</Box>
       <Box sx={{ width: 250 }}>
         <MultiSelectField
           sx={{ mb: 4 }}
@@ -35,7 +38,7 @@ export function ExampleContent({
           options={formValidationModes.map((x) => ({ label: x, value: x }))}
           onChange={setValidateOn}
         />
-        {menu}
+        {menuElement}
       </Box>
     </Stack>
   );
