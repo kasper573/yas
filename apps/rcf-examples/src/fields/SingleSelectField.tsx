@@ -9,13 +9,13 @@ import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import type { FieldProps } from "../rcf";
 
-export interface SelectOption<Value> {
+export interface SingleSelectOption<Value> {
   value: Value;
   label: ReactNode;
 }
 
 export interface SingleSelectFieldProps<Value> extends FieldProps<Value> {
-  options: SelectOption<Value>[];
+  options: SingleSelectOption<Value>[];
 }
 
 export function SingleSelectField<Value>({
@@ -55,6 +55,8 @@ export function SingleSelectField<Value>({
   );
 }
 
-export function valueOptions<Value>(values: Value[]): SelectOption<Value>[] {
+export function valueOptions<Value>(
+  values: Value[],
+): SingleSelectOption<Value>[] {
   return values.map((value) => ({ value, label: `${value}` }));
 }

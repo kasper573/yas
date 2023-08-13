@@ -9,7 +9,7 @@ import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import type { FieldProps } from "../rcf";
 
-export interface SelectOption<Value> {
+export interface MultiSelectOption<Value> {
   value: Value;
   label: ReactNode;
 }
@@ -18,7 +18,7 @@ export interface MultiSelectFieldProps<Value>
   extends Omit<FieldProps<readonly Value[]>, "value" | "onChange"> {
   value?: Value[];
   onChange?: (value: Value[]) => void;
-  options: SelectOption<Value>[];
+  options: MultiSelectOption<Value>[];
 }
 
 export function MultiSelectField<Value>({
@@ -65,7 +65,7 @@ export function MultiSelectField<Value>({
 }
 
 function valueAsOptionIndexes<Value>(
-  options: SelectOption<Value>[],
+  options: MultiSelectOption<Value>[],
   values?: readonly Value[],
 ) {
   if (!values) {
