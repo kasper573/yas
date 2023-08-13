@@ -1,15 +1,15 @@
 import type { ZodBranded, ZodTypeAny } from "zod";
-import { ZodString } from "zod";
+import { ZodType } from "zod";
 
 export function monkeyPatchZodBranded() {
-  const originalBrand = ZodString.prototype.brand;
-  ZodString.prototype.brand = function monkeyPatchedBrand(brand) {
+  const originalBrand = ZodType.prototype.brand;
+  ZodType.prototype.brand = function monkeyPatchedBrand(brand) {
     const branded = originalBrand.call(this, brand);
     setBrand(branded, brand);
     return branded;
   };
   function restore() {
-    ZodString.prototype.brand = originalBrand;
+    ZodType.prototype.brand = originalBrand;
   }
   return restore;
 }
