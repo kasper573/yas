@@ -99,6 +99,10 @@ describe("discriminated union schema", () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
+  it("only submits discriminated data", () => {
+    throw new Error("Not implemented");
+  });
+
   it("submits data representing the current union", async () => {
     const Form = createDiscriminatorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
@@ -209,6 +213,10 @@ describe("conditional fields selector", () => {
 
     await userEvent.click(getByRole("button"));
     expect(handleSubmit).toHaveBeenCalled();
+  });
+
+  it("only submits conditional data", () => {
+    throw new Error("Not implemented");
   });
 
   function createSelectorForm() {
