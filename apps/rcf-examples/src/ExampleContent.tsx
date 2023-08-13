@@ -15,21 +15,26 @@ export function ExampleContent({
   children,
 }: {
   menu?: ReactNode | ExampleContentRenderer;
-  children?: ExampleContentRenderer;
+  children?: ReactNode | ExampleContentRenderer;
 }) {
   const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
     "blur",
     "submit",
   ]);
+
   function onSubmit(data: unknown) {
     alert(JSON.stringify(data, null, 2));
   }
 
-  const rendererArgs = { validateOn, onSubmit };
-  const menuElement = typeof menu === "function" ? menu(rendererArgs) : menu;
+  function normalizeContent(content: ReactNode | ExampleContentRenderer) {
+    return typeof content === "function"
+      ? content({ validateOn, onSubmit })
+      : content;
+  }
+
   return (
     <Stack direction="row" gap={4}>
-      <Box sx={{ flex: 1 }}>{children?.(rendererArgs)}</Box>
+      <Box sx={{ flex: 1 }}>{normalizeContent(children)}</Box>
       <Box sx={{ width: 250 }}>
         <MultiSelectField
           sx={{ mb: 4 }}
@@ -38,7 +43,7 @@ export function ExampleContent({
           options={formValidationModes.map((x) => ({ label: x, value: x }))}
           onChange={setValidateOn}
         />
-        {menuElement}
+        {normalizeContent(menu)}
       </Box>
     </Stack>
   );
