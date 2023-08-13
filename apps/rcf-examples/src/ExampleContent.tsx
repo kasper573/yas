@@ -27,7 +27,7 @@ export function ExampleContent({
   return (
     <Stack direction="row" gap={4}>
       <Box sx={{ flex: 1 }}>{children?.({ validateOn, onSubmit })}</Box>
-      <Box>
+      <Box sx={{ width: 250 }}>
         <MultiSelectField
           sx={{ mb: 4 }}
           name="Validate on"
