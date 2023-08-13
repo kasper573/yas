@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { LayoutExample } from "./LayoutExample";
 import { ConditionalExample } from "./ConditionalExample";
 import { ListExample } from "./ListExample";
@@ -14,4 +15,10 @@ export const examples = [
   { name: "List", component: ListExample },
   { name: "Nested", component: NestedExample },
   { name: "Remote", component: RemoteExample },
+  {
+    name: "Filter",
+    component: lazy(() =>
+      import("./FilterExample").then((m) => ({ default: m.FilterExample })),
+    ),
+  },
 ];
