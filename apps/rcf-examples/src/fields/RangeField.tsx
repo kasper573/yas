@@ -5,7 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useId } from "react";
+import { useId, useMemo } from "react";
 import type { FieldProps } from "../rcf";
 
 export type Range = [number, number];
@@ -26,6 +26,13 @@ export function RangeField({
   ...rest
 }: RangeFieldProps) {
   const id = useId();
+  const marks = useMemo(
+    () => [
+      { value: min, label: min },
+      { value: max, label: max },
+    ],
+    [min, max],
+  );
   return (
     <FormControl fullWidth>
       <Stack gap={1}>
@@ -38,6 +45,7 @@ export function RangeField({
             valueLabelDisplay="auto"
             getAriaLabel={name ? () => name : undefined}
             getAriaValueText={() => value.join(", ")}
+            marks={marks}
             min={min}
             max={max}
             {...rest}
