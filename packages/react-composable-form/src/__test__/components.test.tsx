@@ -149,6 +149,42 @@ describe("components", () => {
     getByText('No component available for field "foo" or type ZodString');
   });
 
+  describe("selects the correct components when using multiple branded types", () => {
+    it("tuple", () => test(z.tuple([z.number(), z.number()])));
+    it("number", () => test(z.number()));
+    it("string", () => test(z.string()));
+    it("object", () => test(z.object({ foo: z.string() })));
+    it("array", () => test(z.array(z.string())));
+
+    function test(base: ZodType) {
+      const brand1 = base.brand("brand1");
+      const brand2 = base.brand("brand2");
+
+      const Form = createForm((options) =>
+        options
+          .schema(
+            z.object({
+              base,
+              brand1,
+              brand2,
+            }),
+          )
+          .type(base, Field, { param: 1 })
+          .type(brand1, Field, { param: 2 })
+          .type(brand2, Field, { param: 3 }),
+      );
+
+      function Field({ name, param }: FieldProps & { param: number }) {
+        return <span>{`${name}:${param}`}</span>;
+      }
+
+      const { getByText } = render(<Form />);
+      getByText("base:1");
+      getByText("brand1:2");
+      getByText("brand2:3");
+    }
+  });
+
   describe("knows when a field is required", () => {
     function renderOptional(type: AnyZodObject) {
       const Form = createForm((options) =>
