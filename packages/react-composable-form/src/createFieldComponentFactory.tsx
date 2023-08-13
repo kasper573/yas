@@ -98,14 +98,11 @@ function enhanceFieldComponent<
 }
 
 function createMissingFieldComponent(name: string, type: ValueType) {
-  // Missing field component errors are thrown when the component is rendered, not when the form is built.
-  // This is to allow partially complete forms, used to extend into the final form that is actually rendered.
+  const errorMessage = `No component available for field "${name}" or type ${getFirstPartyType(
+    type,
+  )}`;
   return function MissingFieldComponent() {
-    throw new Error(
-      `No component available for field "${name}" or type ${getFirstPartyType(
-        type,
-      )}`,
-    );
+    return <span>{errorMessage}</span>;
   };
 }
 

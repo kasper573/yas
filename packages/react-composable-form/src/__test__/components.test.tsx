@@ -3,7 +3,6 @@ import { z } from "zod";
 import { render } from "@testing-library/react";
 import { createForm } from "../createForm";
 import type { FieldProps } from "../types/optionTypes";
-import { silenceErrorLogs } from "./utils";
 
 describe("components", () => {
   describe("can be defined by value type", () => {
@@ -142,15 +141,12 @@ describe("components", () => {
     getByText("two");
   });
 
-  it("throws when trying to render a form with a field that has no component defined", () => {
-    const restoreErrorLogs = silenceErrorLogs();
+  it("shows error when trying to render a form with a field that has no component defined", () => {
     const Form = createForm((options) =>
       options.schema(z.object({ foo: z.string() })),
     );
-    expect(() => render(<Form />)).toThrow(
-      'No component available for field "foo" or type ZodString',
-    );
-    restoreErrorLogs();
+    const { getByText } = render(<Form />);
+    getByText('No component available for field "foo" or type ZodString');
   });
 
   describe("knows when a field is required", () => {
