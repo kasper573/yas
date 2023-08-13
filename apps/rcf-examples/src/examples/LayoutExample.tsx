@@ -20,11 +20,11 @@ const LoginForm = BaseForm.extend((options) =>
     .field("password", TextField, { password: true }),
 );
 
-const InlineUserForm = LoginForm.extend((options) =>
+const InlineLoginForm = LoginForm.extend((options) =>
   options.layout(InlineFormLayout),
 );
 
-const SpecializedUserForm = LoginForm.extend((options) =>
+const SpecializedLoginForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <Box sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
@@ -63,7 +63,7 @@ export function LayoutExample() {
           <Typography variant="h4" sx={{ my: 4 }}>
             Inline layout
           </Typography>
-          <InlineUserForm
+          <InlineLoginForm
             {...props}
             value={data}
             onChange={setData}
@@ -72,7 +72,7 @@ export function LayoutExample() {
           <Typography variant="h4" sx={{ my: 4 }}>
             Specialized layout
           </Typography>
-          <SpecializedUserForm {...props} value={data} onChange={setData} />
+          <SpecializedLoginForm {...props} value={data} onChange={setData} />
         </>
       )}
     </ExampleContent>
