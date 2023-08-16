@@ -39,20 +39,44 @@ it("Layout fields have the correct names", () => {
   );
 });
 
-it("Type associated components have the correct property types in layout", () => {
-  createForm((options) =>
-    options
-      .schema(z.object({ foo: z.string(), bar: z.number() }))
-      .type(z.string(), (props: { foo?: string }) => null)
-      .type(z.number(), (props: { bar?: number }) => null)
-      .layout(({ fields }) => {
-        expectTypeOf(fields).toMatchTypeOf<{
-          Foo: ComponentType<FieldProps<string> & { foo?: string }>;
-          Bar: ComponentType<FieldProps<number> & { bar?: number }>;
-        }>();
-        return null;
-      }),
-  );
+describe("Type associated components have the correct property types in layout", () => {
+  it("strings and numbers", () => {
+    createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string(), bar: z.number() }))
+        .type(z.string(), (props: { foo?: string }) => null)
+        .type(z.number(), (props: { bar?: number }) => null)
+        .layout(({ fields }) => {
+          expectTypeOf(fields).toMatchTypeOf<{
+            Foo: ComponentType<FieldProps<string> & { foo?: string }>;
+            Bar: ComponentType<FieldProps<number> & { bar?: number }>;
+          }>();
+          return null;
+        }),
+    );
+  });
+
+  it("branded types", () => {
+    type Str = z.infer<typeof str>;
+    const str = z.string().brand("str");
+    type Num = z.infer<typeof num>;
+    const num = z.number().brand("num");
+    createForm((options) =>
+      options
+        .schema(z.object({ foo: str, bar: num }))
+        .type(z.string(), (props: { foo?: Str }) => null)
+        .type(z.number(), (props: { bar?: Num }) => null)
+        .layout(({ fields: { Foo, Bar } }) => {
+          expectTypeOf(Foo).toMatchTypeOf<
+            ComponentType<FieldProps<Str> & { foo?: Str }>
+          >();
+          expectTypeOf(Bar).toMatchTypeOf<
+            ComponentType<FieldProps<Num> & { bar?: Num }>
+          >();
+          return null;
+        }),
+    );
+  });
 });
 
 it("Field associated components have the correct property types in layout", () => {
