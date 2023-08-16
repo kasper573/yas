@@ -1,4 +1,5 @@
 import {
+  Box,
   FormControl,
   FormHelperText,
   Slider,
@@ -10,21 +11,22 @@ import type { FieldProps } from "../rcf";
 
 export type Range = [number, number];
 
-export interface RangeFieldProps extends FieldProps<Range> {
-  min: number;
-  max: number;
+export interface RangeFieldProps<T extends Range> extends FieldProps<T> {
+  min?: number;
+  max?: number;
 }
 
-export function RangeField({
+export function RangeField<T extends Range>({
   name,
-  min,
-  max,
-  value = [min, max],
+  min = 0,
+  max = 1,
+  value = [min, max] as T,
   errors = [],
   onChange,
   required,
+  sx,
   ...rest
-}: RangeFieldProps) {
+}: RangeFieldProps<T>) {
   const id = useId();
   const marks = useMemo(
     () => [
@@ -34,14 +36,15 @@ export function RangeField({
     [min, max],
   );
   return (
-    <FormControl fullWidth>
+    <FormControl sx={sx} fullWidth>
       <Stack gap={1}>
         <Typography id={id}>{name}</Typography>
-        <div>
+        <Box sx={{ px: 1 }}>
           <Slider
+            sx={{ m: 0, mb: 1 }}
             aria-labelledby={id}
             value={value}
-            onChange={(e, newValue) => onChange?.(newValue as Range)}
+            onChange={(e, newValue) => onChange?.(newValue as T)}
             valueLabelDisplay="auto"
             getAriaLabel={name ? () => name : undefined}
             getAriaValueText={() => value.join(", ")}
@@ -50,11 +53,11 @@ export function RangeField({
             max={max}
             {...rest}
           />
-          {errors.length > 0 && (
-            <FormHelperText error>{errors.join(", ")}</FormHelperText>
-          )}
-        </div>
+        </Box>
       </Stack>
+      {errors.length > 0 && (
+        <FormHelperText error>{errors.join(", ")}</FormHelperText>
+      )}
     </FormControl>
   );
 }
