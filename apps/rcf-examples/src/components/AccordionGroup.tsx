@@ -21,7 +21,7 @@ export function AccordionGroup({
           <AccordionSummary>
             <Summary>{title}</Summary>
           </AccordionSummary>
-          <AccordionDetails>{content}</AccordionDetails>
+          <AccordionDetails sx={{ p: 0 }}>{content}</AccordionDetails>
         </Accordion>
       ))}
     </>
