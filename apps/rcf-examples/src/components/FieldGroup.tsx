@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import { Children, Fragment } from "react";
-import { Divider, Stack } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 
 export function FieldGroup({
   children,
@@ -11,7 +11,7 @@ export function FieldGroup({
       {Children.map(children, (child, index) => (
         <Fragment key={index}>
           {index > 0 && <Divider />}
-          {child}
+          <Box sx={{ px: 2 }}>{child}</Box>
         </Fragment>
       ))}
     </Stack>
