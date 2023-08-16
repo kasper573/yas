@@ -46,11 +46,13 @@ describe("Type associated components have the correct property types in layout",
         .schema(z.object({ foo: z.string(), bar: z.number() }))
         .type(z.string(), (props: { foo?: string }) => null)
         .type(z.number(), (props: { bar?: number }) => null)
-        .layout(({ fields }) => {
-          expectTypeOf(fields).toMatchTypeOf<{
-            Foo: ComponentType<FieldProps<string> & { foo?: string }>;
-            Bar: ComponentType<FieldProps<number> & { bar?: number }>;
-          }>();
+        .layout(({ fields: { Foo, Bar } }) => {
+          expectTypeOf(Foo).toMatchTypeOf<
+            ComponentType<FieldProps<string> & { foo?: string }>
+          >();
+          expectTypeOf(Bar).toMatchTypeOf<
+            ComponentType<FieldProps<number> & { bar?: number }>
+          >();
           return null;
         }),
     );
@@ -64,8 +66,8 @@ describe("Type associated components have the correct property types in layout",
     createForm((options) =>
       options
         .schema(z.object({ foo: str, bar: num }))
-        .type(z.string(), (props: { foo?: Str }) => null)
-        .type(z.number(), (props: { bar?: Num }) => null)
+        .type(str, (props: { foo?: Str }) => null)
+        .type(num, (props: { bar?: Num }) => null)
         .layout(({ fields: { Foo, Bar } }) => {
           expectTypeOf(Foo).toMatchTypeOf<
             ComponentType<FieldProps<Str> & { foo?: Str }>
