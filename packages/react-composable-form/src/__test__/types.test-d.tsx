@@ -47,18 +47,18 @@ describe("Type associated components have the correct property types in layout",
         .type(z.string(), (props: { foo?: string }) => null)
         .type(z.number(), (props: { bar?: number }) => null)
         .layout(({ fields: { Foo, Bar } }) => {
-          expectTypeOf(Foo).toMatchTypeOf<
-            ComponentType<FieldProps<string> & { foo?: string }>
+          expectTypeOf(Foo).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<string> & { foo?: string }>>
           >();
-          expectTypeOf(Bar).toMatchTypeOf<
-            ComponentType<FieldProps<number> & { bar?: number }>
+          expectTypeOf(Bar).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<number> & { bar?: number }>>
           >();
           return null;
         }),
     );
   });
 
-  it("branded types", () => {
+  it("branded types of different kinds", () => {
     type Str = z.infer<typeof str>;
     const str = z.string().brand("str");
     type Num = z.infer<typeof num>;
@@ -69,11 +69,54 @@ describe("Type associated components have the correct property types in layout",
         .type(str, (props: { foo?: Str }) => null)
         .type(num, (props: { bar?: Num }) => null)
         .layout(({ fields: { Foo, Bar } }) => {
-          expectTypeOf(Foo).toMatchTypeOf<
-            ComponentType<FieldProps<Str> & { foo?: Str }>
+          expectTypeOf(Foo).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<Str> & { foo?: Str }>>
           >();
-          expectTypeOf(Bar).toMatchTypeOf<
-            ComponentType<FieldProps<Num> & { bar?: Num }>
+          expectTypeOf(Bar).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<Num> & { bar?: Num }>>
+          >();
+          return null;
+        }),
+    );
+  });
+
+  it("branded types of same kinds", () => {
+    type First = z.infer<typeof first>;
+    const first = z.string().brand("first");
+    type Second = z.infer<typeof second>;
+    const second = z.string().brand("second");
+
+    createForm((options) =>
+      options
+        .schema(z.object({ first, second }))
+        .type(first, (props: { foo?: First }) => null)
+        .type(second, (props: { bar?: Second }) => null)
+        .layout(({ fields: { First, Second } }) => {
+          expectTypeOf(First).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<First> & { foo?: First }>>
+          >();
+          expectTypeOf(Second).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<Second> & { bar?: Second }>>
+          >();
+          return null;
+        }),
+    );
+  });
+
+  it("strings, numbers and branded types mixed", () => {
+    type Branded = z.infer<typeof branded>;
+    const branded = z.string().brand("brand");
+    createForm((options) =>
+      options
+        .schema(z.object({ str: z.string(), branded }))
+        .type(z.string(), (props: { foo?: string }) => null)
+        .type(branded, (props: { bar?: Branded }) => null)
+        .layout(({ fields: { Str, Branded } }) => {
+          expectTypeOf(Str).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<string> & { foo?: string }>>
+          >();
+          expectTypeOf(Branded).toEqualTypeOf<
+            ComponentType<Partial<FieldProps<Branded> & { bar?: Branded }>>
           >();
           return null;
         }),
