@@ -12,6 +12,10 @@ describe("layout", () => {
     getByText("default");
   });
 
+  it("can be given default props", () => {
+    throw new Error("Not implemented");
+  });
+
   it("can be extended from predefined forms", () => {
     const Form = createForm();
     const ExtendedForm = Form.extend((options) =>
