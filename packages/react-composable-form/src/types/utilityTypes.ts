@@ -30,12 +30,15 @@ export type DictionaryGet<TupleBasedDictionary, Key> =
       : DictionaryGet<Head, Key>
     : never;
 
-export type DictionarySet<TupleBasedDictionary, Key, Value> =
-  TupleBasedDictionary extends [
-    [infer Candidate, infer OldValue],
-    ...infer Tail,
-  ]
-    ? Candidate extends Key
-      ? [[Candidate, Value], ...Tail]
-      : [[Candidate, OldValue], ...DictionarySet<Tail, Key, Value>]
-    : [[Key, Value]];
+export type DictionarySet<TupleBasedDictionary, SearchKey, NewValue> =
+  TupleBasedDictionary extends [[infer Key, infer OldValue], ...infer Tail]
+    ? Equal<Key, SearchKey> extends true
+      ? [[Key, NewValue], ...Tail]
+      : [[Key, OldValue], ...DictionarySet<Tail, SearchKey, NewValue>]
+    : [[SearchKey, NewValue]];
+
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
+  ? true
+  : false;
