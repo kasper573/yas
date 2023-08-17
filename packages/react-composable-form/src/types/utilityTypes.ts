@@ -23,11 +23,11 @@ export type OptionalArgIfEmpty<T> = HasRequiredProps<T> extends true
   ? [T]
   : [arg?: T];
 
-export type DictionaryGet<TupleBasedDictionary, Key> =
-  TupleBasedDictionary extends [...infer Head, [infer Candidate, infer Value]]
-    ? Candidate extends Key
+export type DictionaryGet<TupleBasedDictionary, SearchKey> =
+  TupleBasedDictionary extends [...infer Head, [infer Key, infer Value]]
+    ? SearchKey extends Key
       ? Value
-      : DictionaryGet<Head, Key>
+      : DictionaryGet<Head, SearchKey>
     : never;
 
 export type DictionarySet<TupleBasedDictionary, SearchKey, NewValue> =
