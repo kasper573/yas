@@ -51,8 +51,3 @@ export type inferFieldValue<
   Schema extends FormSchema,
   FieldName extends string,
 > = inferValue<Schema>[FieldName];
-
-export type inferFieldType<
-  Schema extends FormSchema,
-  FieldName extends string,
-> = ValueType<inferFieldValue<Schema, FieldName>>;

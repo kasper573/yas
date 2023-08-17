@@ -8,20 +8,16 @@ import {
   ZodObject,
   ZodUnion,
 } from "zod";
-import type {
-  FieldNames,
-  FormSchema,
-  inferFieldType,
-  inferValue,
-} from "../types/commonTypes";
+import type { FieldNames, FormSchema, inferValue } from "../types/commonTypes";
 import type { FieldConditionsSelector } from "../types/optionTypes";
+import type { inferFieldValue, ValueType } from "../types/commonTypes";
 
 export interface FieldInfo<
   Schema extends FormSchema = FormSchema,
   FieldName extends FieldNames<Schema> = FieldNames<Schema>,
 > {
   name: FieldName;
-  type: inferFieldType<Schema, FieldName>;
+  type: ValueType<inferFieldValue<Schema, FieldName>>;
   isActive: (fieldValues: inferValue<Schema>) => boolean;
   componentName: Capitalize<FieldName>;
 }
@@ -60,17 +56,18 @@ export function determineFields<Schema extends FormSchema>(
       fields.push({
         componentName: capitalize(discriminator),
         name: discriminator,
-        type: discriminatorType as never,
+        type: discriminatorType,
         isActive: (values) => selectConditions(values)[discriminator] ?? true,
       });
 
       for (const [optionValue, option] of optionsMap.entries()) {
-        for (const fieldName in option.shape) {
+        for (const key in option.shape) {
+          const fieldName = key as FieldNames<Schema>;
           if (fieldName !== discriminator) {
             fields.push({
-              componentName: capitalize(fieldName) as never,
-              name: fieldName as never,
-              type: option.shape[fieldName] as never,
+              componentName: capitalize(fieldName),
+              name: fieldName,
+              type: option.shape[fieldName],
               isActive: (values) =>
                 selectConditions(values)[discriminator] ??
                 optionValue === values[discriminator],

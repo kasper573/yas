@@ -1,4 +1,3 @@
-import type { ComponentProps } from "react";
 import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
   FieldNames,
@@ -11,21 +10,23 @@ import type { FormStore } from "./FormStore";
 import { getTypedComponent } from "./utils/typedComponents";
 import type {
   AnyRCFGenerics,
-  FieldComponents,
+  FieldComponentRegistry,
   FieldComponentsPassedToLayout,
   FieldFor,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./utils/isMatchingType";
 import type { FieldInfo } from "./utils/determineFields";
+import type { inferFieldValue } from "./types/commonTypes";
+import type { FieldProps } from "./types/optionTypes";
 
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
-  components: Pick<G, keyof FieldComponents>,
+  components: FieldComponentRegistry<G["components"]>,
   fieldList: FieldInfo<G["schema"]>[],
 ) {
   const enhancedComponents = fieldList.reduce((map, field) => {
     const Component =
-      components.namedComponents[field.name] ??
-      getTypedComponent(components.typedComponents, field.type);
+      components.named[field.name] ??
+      getTypedComponent(components.typed, field.type);
 
     const EnhancedComponent = enhanceFieldComponent(
       Component ?? createMissingFieldComponent(field.name, field.type),
@@ -40,7 +41,10 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
    * Resolves the enhanced components that should be active for the given values.
    */
   return function resolveFieldComponents(values: inferValue<G["schema"]>) {
-    const resolved = {} as FieldComponentsPassedToLayout<G["schema"], G>;
+    const resolved = {} as FieldComponentsPassedToLayout<
+      G["schema"],
+      G["components"]
+    >;
     for (const [field, component] of enhancedComponents.entries()) {
       // @ts-expect-error Typescript won't allow using Capitalized as key, which is silly, so we ignore it.
       resolved[field.componentName] = field.isActive(values)
@@ -55,7 +59,7 @@ function enhanceFieldComponent<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
 >(Component: FieldFor<Schema, FieldName>, name: FieldName, type: ValueType) {
-  type Props = ComponentProps<FieldFor<Schema, FieldName>>;
+  type Props = FieldProps<inferFieldValue<Schema, FieldName>>;
   const required = !type.isOptional();
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);

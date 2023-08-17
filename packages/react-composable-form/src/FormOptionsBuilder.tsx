@@ -8,7 +8,8 @@ import type {
   ValueType,
   FormErrorsParser,
   FormErrors,
-  inferFieldType,
+  inferFieldValue,
+  inferValue,
 } from "./types/commonTypes";
 import type {
   AnyProps,
@@ -20,7 +21,6 @@ import { setTypedComponent } from "./utils/typedComponents";
 import type {
   AnyRCFGenerics,
   ComposedFieldComponent,
-  FieldComponents,
   FieldProps,
   FormLayoutProps,
   FormOptions,
@@ -29,6 +29,7 @@ import type {
 import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 import type { FieldConditionsSelector } from "./types/optionTypes";
+import type { FieldComponentGenerics } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
@@ -45,6 +46,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     });
   }
 
+  // TODO rename to errorTransformer
   customExternalErrors<NewCustomError>(
     externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>,
   ) {
@@ -57,7 +59,9 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   }
 
   layout<NewLayoutProps extends AnyProps = {}>(
-    layout: ComponentType<FormLayoutProps<G["schema"], G> & NewLayoutProps>,
+    layout: ComponentType<
+      FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
+    >,
   ) {
     return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({
       ...this.options,
@@ -67,55 +71,67 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
 
   type<Type extends ValueType, AdditionalProps>(
     type: Type,
-    component: InputFieldComponent<Type, AdditionalProps>,
+    component: InputFieldComponent<inferValue<Type>, AdditionalProps>,
     ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
   ) {
-    type NewTypes = SetTypedComponent<
-      G["typedComponents"],
-      Type,
-      ComposedFieldComponent<Type, AdditionalProps>
+    type NewTyped = SetTypedComponent<
+      G["components"]["typed"],
+      inferValue<Type>,
+      ComposedFieldComponent<inferValue<Type>, AdditionalProps>
     >;
-    const { typedComponents, ...rest } = this.options;
+    type NewComponents = Replace<G["components"], "typed", NewTyped>;
+    type NewG = Replace<G, "components", NewComponents>;
+    const {
+      components: { typed, named },
+      ...rest
+    } = this.options;
     if (initProps) {
       component = withDefaultProps(component, initProps as never);
     }
-    return new FormOptionsBuilder<Replace<G, "typedComponents", NewTypes>>({
+    return new FormOptionsBuilder<NewG>({
       ...rest,
-      typedComponents: setTypedComponent(
-        typedComponents,
-        type,
-        component,
-      ) as NewTypes,
+      components: {
+        named,
+        typed: setTypedComponent(typed, type, component),
+      },
     });
   }
 
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
     name: FieldName,
     component: InputFieldComponent<
-      inferFieldType<G["schema"], FieldName>,
+      inferFieldValue<G["schema"], FieldName>,
       AdditionalProps
     >,
     ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
   ) {
-    type NewNamed = Omit<G["namedComponents"], FieldName> &
+    type NewNamed = Omit<G["components"]["named"], FieldName> &
       Record<
         FieldName,
         ComposedFieldComponent<
-          inferFieldType<G["schema"], FieldName>,
+          inferFieldValue<G["schema"], FieldName>,
           AdditionalProps
         >
       >;
-    const { namedComponents, ...rest } = this.options;
+    type NewComponents = Replace<G["components"], "named", NewNamed>;
+    type NewG = Replace<G, "components", NewComponents>;
+    const {
+      components: { named, typed },
+      ...rest
+    } = this.options;
     if (initProps) {
       component = withDefaultProps(component, initProps as never);
     }
-    return new FormOptionsBuilder<Replace<G, "namedComponents", NewNamed>>({
+    return new FormOptionsBuilder<NewG>({
       ...rest,
-      namedComponents: {
-        ...namedComponents,
-        [name]: component,
+      components: {
+        typed,
+        named: {
+          ...named,
+          [name]: component,
+        },
       },
-    } as never);
+    });
   }
 
   conditions(fieldConditionSelector: FieldConditionsSelector<G["schema"]>) {
@@ -141,8 +157,7 @@ export const emptyFormOptionsBuilder =
   new FormOptionsBuilder<EmptyFormOptionsGenerics>({
     schema: z.object({}),
     layout: NoLayout,
-    namedComponents: {},
-    typedComponents: [],
+    components: { named: {}, typed: [] },
     fieldConditionsSelector: () => ({}),
     modes: ["submit"],
     externalErrorParser: (error) => ({
@@ -155,18 +170,17 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   {},
   ZodObject<{}>,
   {},
-  {},
-  [],
+  FieldComponentGenerics<{}, []>,
   Partial<FormErrors<ZodObject<{}>>> | undefined
 >;
 
 function NoLayout<
   Schema extends FormSchema,
-  Components extends FieldComponents,
+  Components extends FieldComponentGenerics,
 >({ fields }: FormLayoutProps<Schema, Components>) {
   return (
     <>
-      {Object.values(fields).map((Component, index) => (
+      {Object.values(fields).map((Component: ComponentType, index) => (
         <Component key={index} />
       ))}
     </>

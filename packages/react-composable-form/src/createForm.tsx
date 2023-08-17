@@ -17,7 +17,7 @@ import type {
 import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
+import type { AnyFormLayoutProps, AnyRCFGenerics } from "./types/optionTypes";
 import { determineFields } from "./utils/determineFields";
 
 export interface FormProps<G extends AnyRCFGenerics> {
@@ -35,7 +35,7 @@ export type inferFormValue<T> = T extends FormComponent<infer G>
 
 export type FormComponent<G extends AnyRCFGenerics = AnyRCFGenerics> =
   ComponentType<
-    FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
+    FormProps<G> & Omit<G["layoutProps"], keyof AnyFormLayoutProps>
   > & {
     extend<NewG extends AnyRCFGenerics>(
       options: FormOptionsBuilderFactory<G, NewG>,
@@ -57,8 +57,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
   const {
     schema,
     layout: Layout,
-    namedComponents,
-    typedComponents,
+    components,
     externalErrorParser,
     modes: prebuiltModes,
     fieldConditionsSelector,
@@ -66,7 +65,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
 
   const fieldList = determineFields(schema, fieldConditionsSelector);
   const resolveFieldComponents = createFieldComponentFactory(
-    { namedComponents, typedComponents },
+    components,
     fieldList,
   );
 

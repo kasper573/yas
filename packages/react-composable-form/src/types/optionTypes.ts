@@ -1,6 +1,8 @@
 import type { ComponentProps, ComponentType, FormEvent } from "react";
 import type { TypedComponents } from "../utils/typedComponents";
-import type { AnyComponent, AnyProps, DictionaryGet } from "./utilityTypes";
+import type { GetTypedComponent } from "../utils/typedComponents";
+import type { TypedComponentTuple } from "../utils/typedComponents";
+import type { AnyComponent, AnyProps } from "./utilityTypes";
 import type {
   AnyError,
   FormErrorsParser,
@@ -9,15 +11,14 @@ import type {
   FormSchema,
   FormValidationMode,
   inferValue,
-  ValueType,
   inferFieldValue,
-  inferFieldType,
+  ValueType,
 } from "./commonTypes";
 
-export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any, any>;
+export type AnyRCFGenerics = RCFGenerics<any, any, any, any, any>;
 
 export type AnyRCFGenericsForFieldProps<FieldProps extends AnyProps> =
-  RCFGenerics<FieldProps, any, any, any, any, any>;
+  RCFGenerics<FieldProps, any, any, any, any>;
 
 /**
  * Generic type holder. Reused as a reliable single source of truth of common generics.
@@ -26,23 +27,23 @@ export interface RCFGenerics<
   BaseFieldProps extends AnyProps,
   Schema extends FormSchema,
   LayoutProps extends AnyProps,
-  Named extends NamedComponents,
-  Typed extends TypedComponents,
+  Components extends FieldComponentGenerics,
   CustomExternalError,
-> extends FieldComponents<Named, Typed> {
+> {
   schema: Schema;
   layoutProps: LayoutProps;
   baseFieldProps: BaseFieldProps;
   customExternalError: CustomExternalError;
+  components: Components;
 }
 
-export interface FormOptions<G extends AnyRCFGenerics>
-  extends Pick<G, "namedComponents" | "typedComponents"> {
+export interface FormOptions<G extends AnyRCFGenerics> {
   schema: G["schema"];
   layout: FormLayoutFor<G>;
   modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
   fieldConditionsSelector: FieldConditionsSelector<G["schema"]>;
+  components: FieldComponentRegistry<G["components"]>;
 }
 
 export type FieldConditionsSelector<Schema extends FormSchema> = (
@@ -54,12 +55,14 @@ export type FieldConditions<Schema extends FormSchema> = {
 };
 
 export type FormLayoutFor<G extends AnyRCFGenerics> = ComponentType<
-  FormLayoutProps<G["schema"], G> & G["layoutProps"]
+  FormLayoutProps<G["schema"], G["components"]> & G["layoutProps"]
 >;
 
+export type AnyFormLayoutProps = FormLayoutProps<any, any>;
+
 export interface FormLayoutProps<
-  Schema extends FormSchema = FormSchema,
-  Components extends FieldComponents = FieldComponents,
+  Schema extends FormSchema,
+  Components extends FieldComponentGenerics,
 > {
   generalErrors: AnyError[];
   fieldErrors: FieldErrors<Schema>;
@@ -69,15 +72,13 @@ export interface FormLayoutProps<
   reset: () => unknown;
 }
 
-export type InputFieldComponent<
-  Type extends ValueType,
-  AdditionalProps,
-> = ComponentType<FieldProps<inferValue<Type>> & AdditionalProps>;
+export type InputFieldComponent<Value, AdditionalProps> = ComponentType<
+  FieldProps<Value> & AdditionalProps
+>;
 
-export type ComposedFieldComponent<
-  Type extends ValueType,
-  AdditionalProps,
-> = ComponentType<Partial<FieldProps<inferValue<Type>> & AdditionalProps>>;
+export type ComposedFieldComponent<Value, AdditionalProps> = ComponentType<
+  Partial<FieldProps<Value> & AdditionalProps>
+>;
 
 export interface FieldProps<Value = any> {
   name?: string;
@@ -91,47 +92,52 @@ export interface FieldProps<Value = any> {
 
 export type FieldFor<
   Schema extends FormSchema,
-  FieldName extends string = string,
+  FieldName extends FieldNames<Schema> = FieldNames<Schema>,
 > = ComponentType<FieldProps<inferFieldValue<Schema, FieldName>>>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
-export interface FieldComponents<
+export interface FieldComponentGenerics<
   Named extends NamedComponents = any,
   Typed extends TypedComponents = any,
 > {
-  namedComponents: Named;
-  typedComponents: Typed;
+  named: Named;
+  typed: Typed;
 }
 
-export type FieldComponentsForProps<BaseFieldProps> = FieldComponents<
-  Record<string, ComponentType<BaseFieldProps>>,
-  [ValueType, ComponentType<BaseFieldProps>][]
->;
+export interface FieldComponentRegistry<G extends FieldComponentGenerics> {
+  named: G["named"];
+  typed: TypedComponentRegistry<G["typed"]>;
+}
+
+export type TypedComponentRegistry<Tuples extends TypedComponents> = {
+  [K in keyof Tuples]: TypedComponentRegistryEntry<Tuples[K]>;
+};
+
+export type TypedComponentRegistryEntry<Tuple extends TypedComponentTuple> = [
+  ValueType<Tuple[0]>,
+  Tuple[1],
+];
+
+export type FieldComponentsForProps<BaseFieldProps extends AnyProps> =
+  FieldComponentGenerics<
+    Record<string, ComponentType<BaseFieldProps>>,
+    TypedComponents<BaseFieldProps>
+  >;
 
 export type FieldComponentsPassedToLayout<
   Schema extends FormSchema,
-  Components extends FieldComponents,
+  Components extends FieldComponentGenerics,
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
-    Partial<InferFieldComponentProps<Components, K, inferFieldType<Schema, K>>>
+    Partial<
+      K extends keyof Components["named"]
+        ? ComponentProps<Components["named"][K]>
+        : inferComponentProps<
+            GetTypedComponent<Components["typed"], inferFieldValue<Schema, K>>
+          >
+    >
   >;
 };
 
-type InferFieldComponentProps<
-  Components extends FieldComponents,
-  FieldName extends string,
-  Type extends ValueType,
-> = FieldName extends keyof Components["namedComponents"]
-  ? ComponentProps<Components["namedComponents"][FieldName]>
-  : DictionaryGet<
-      InferredTypedComponents<Components["typedComponents"]>,
-      inferValue<Type>
-    >;
-
-type InferredTypedComponents<T extends TypedComponents> = {
-  [K in keyof T]: [
-    type: inferValue<T[K][0]>,
-    component: ComponentProps<T[K][1]>,
-  ];
-};
+type inferComponentProps<T> = T extends AnyComponent ? ComponentProps<T> : T;
