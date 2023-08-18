@@ -53,10 +53,12 @@ export function RadioGroupField<Value>({
       >
         {options.map((option, index) => {
           const metric = metrics?.get(option.value);
+          const selected = valueAsOptionIndex === index;
+          const disabled = metric === 0 && !selected;
           return (
             <FormControlLabelWithAdornment
               key={index}
-              disabled={metric === 0}
+              disabled={disabled}
               control={<Radio size={size} disabled={isLoading} />}
               label={option.label}
               adornment={metric}

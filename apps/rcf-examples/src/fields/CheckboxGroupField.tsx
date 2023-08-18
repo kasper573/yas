@@ -31,16 +31,18 @@ export function CheckboxGroupField<Value>({
       <InputLabel>{name}</InputLabel>
       {options.map((option, index) => {
         const metric = metrics?.get(option.value);
+        const checked = checkedValues.includes(option.value);
+        const disabled = metric === 0 && !checked;
         return (
           <FormControlLabelWithAdornment
             key={index}
-            disabled={metric === 0}
+            disabled={disabled}
             label={option.label}
             adornment={metric}
             control={
               <Checkbox
                 value={option.value}
-                checked={checkedValues.includes(option.value)}
+                checked={checked}
                 onChange={(e) =>
                   onChange?.(
                     e.target.checked
