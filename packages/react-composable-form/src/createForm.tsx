@@ -69,6 +69,15 @@ function createFormImpl<G extends AnyRCFGenerics>(
     fieldList,
   );
 
+  function extractActiveFieldsData(allData: inferValue<G["schema"]>) {
+    return fieldList.reduce((acc: Record<string, unknown>, field) => {
+      if (field.isActive(allData)) {
+        acc[field.name] = allData[field.name];
+      }
+      return acc;
+    }, {});
+  }
+
   const ComposableForm: FormComponent<G> = ((props) => {
     if ("value" in props && "defaultValue" in props) {
       throw new Error(
@@ -132,7 +141,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
         e?.preventDefault();
         store.handleSubmit();
         if (store.isLocallyValid) {
-          onSubmit?.(store.data);
+          onSubmit?.(extractActiveFieldsData(store.data));
         }
       },
       [store, onSubmit],

@@ -215,8 +215,26 @@ describe("conditional fields selector", () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it("only submits conditional data", () => {
-    throw new Error("Not implemented");
+  it("only submits conditional data", async () => {
+    const Form = createSelectorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+    const handleSubmit = jest.fn();
+    const { getByRole } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "a long string", num: 0 }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalledWith({
+      base: "foo",
+      type: "string",
+      str: "a long string",
+    });
   });
 
   function createSelectorForm() {
