@@ -3,12 +3,13 @@ import {
   FormHelperText,
   FormLabel,
   RadioGroup,
-  FormControlLabel,
   Radio,
 } from "@mui/material";
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import type { FieldProps } from "../rcf";
+import type { Metrics } from "../api/fakeApiSdk";
+import { FormControlLabelWithAdornment } from "../components/FormControlLabelWithAdornment";
 
 export interface RadioGroupOption<Value> {
   value: Value;
@@ -18,6 +19,7 @@ export interface RadioGroupOption<Value> {
 export interface RadioGroupFieldProps<Value> extends FieldProps<Value> {
   options: RadioGroupOption<Value>[];
   isLoading?: boolean;
+  metrics?: Metrics<Value>;
 }
 
 export function RadioGroupField<Value>({
@@ -25,6 +27,7 @@ export function RadioGroupField<Value>({
   name,
   value,
   errors = [],
+  metrics,
   onChange,
   isLoading,
   sx,
@@ -48,19 +51,20 @@ export function RadioGroupField<Value>({
         name={name}
         {...rest}
       >
-        {options.map((option, index) => (
-          <FormControlLabel
-            key={index}
-            control={<Radio size={size} disabled={isLoading} />}
-            label={option.label}
-            componentsProps={
-              size && {
-                typography: { variant: sizeFontVariants[size] },
-              }
-            }
-            value={index}
-          />
-        ))}
+        {options.map((option, index) => {
+          const metric = metrics?.get(option.value);
+          return (
+            <FormControlLabelWithAdornment
+              key={index}
+              disabled={metric === 0}
+              control={<Radio size={size} disabled={isLoading} />}
+              label={option.label}
+              adornment={metric}
+              size={size}
+              value={index}
+            />
+          );
+        })}
       </RadioGroup>
       {errors.length > 0 && (
         <FormHelperText error>{errors.join(", ")}</FormHelperText>
