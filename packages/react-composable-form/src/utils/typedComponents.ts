@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import type { ValueType } from "../types/commonTypes";
 import type {
   AnyComponent,
@@ -43,14 +42,14 @@ export function setTypedComponent<Components extends TypedComponents>(
   type: ValueType,
   component: AnyComponent,
 ) {
-  return produce(components, (draft: TypedComponentRegistry<Components>) => {
-    const index = draft.findIndex(([candidate]) =>
-      isMatchingType(type, candidate),
-    );
-    if (index >= 0) {
-      draft[index] = [type, component];
-    } else {
-      draft.push([type, component]);
-    }
-  });
+  const copy = [...components] as TypedComponentRegistry<Components>;
+  const index = components.findIndex(([candidate]) =>
+    isMatchingType(type, candidate),
+  );
+  if (index >= 0) {
+    copy[index] = [type, component];
+  } else {
+    copy.push([type, component]);
+  }
+  return copy;
 }
