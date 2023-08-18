@@ -1,15 +1,17 @@
 import {
   FormControl,
   FormHelperText,
-  FormLabel,
   RadioGroup,
   Radio,
+  IconButton,
 } from "@mui/material";
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
+import { Delete } from "@mui/icons-material";
 import type { FieldProps } from "../rcf";
 import type { Metrics } from "../api/fakeApiSdk";
 import { FormControlLabelWithAdornment } from "../components/FormControlLabelWithAdornment";
+import { FormLabelWithActions } from "../components/FormLabelWithActions";
 
 export interface RadioGroupOption<Value> {
   value: Value;
@@ -30,6 +32,7 @@ export function RadioGroupField<Value>({
   metrics,
   onChange,
   isLoading,
+  required,
   sx,
   size,
   ...rest
@@ -41,7 +44,22 @@ export function RadioGroupField<Value>({
   );
   return (
     <FormControl fullWidth error={errors.length > 0} sx={sx}>
-      <FormLabel id={id}>{name}</FormLabel>
+      <FormLabelWithActions
+        id={id}
+        actions={
+          !required && (
+            <IconButton
+              onClick={() => onChange?.(undefined)}
+              size={size}
+              edge="end"
+            >
+              <Delete />
+            </IconButton>
+          )
+        }
+      >
+        {name}
+      </FormLabelWithActions>
       <RadioGroup
         value={valueAsOptionIndex !== -1 ? valueAsOptionIndex : ""}
         onChange={(e) =>
