@@ -1,6 +1,5 @@
 import type { output, ZodType } from "zod";
-
-import type { GetShapeFromSchema } from "../utils/getShapeFromSchema";
+import type { AllKeysInUnion } from "./utilityTypes";
 
 export type FormSchema = ValueType;
 
@@ -19,8 +18,6 @@ export const formValidationModes = [
 
 export type FormValidationMode = (typeof formValidationModes)[number];
 
-export type inferValue<Type extends ValueType> = output<Type>;
-
 export interface FormState<Schema extends FormSchema> {
   localErrors: FormErrors<Schema>;
   externalErrors: FormErrors<Schema>;
@@ -29,7 +26,7 @@ export interface FormState<Schema extends FormSchema> {
 }
 
 export type FieldNames<Schema extends FormSchema> = `${string &
-  keyof GetShapeFromSchema<Schema>}`;
+  AllKeysInUnion<inferValue<Schema>>}`;
 
 export type FieldErrors<Schema extends FormSchema> =
   // Falls back to anonymous record when no fields are specified to avoid defining as {} which would match any type
@@ -45,3 +42,12 @@ export interface FormErrors<Schema extends FormSchema> {
   general: ErrorList;
   field: FieldErrors<Schema>;
 }
+
+// infer utils
+
+export type inferValue<Type extends ValueType> = output<Type>;
+
+export type inferFieldValue<
+  Schema extends FormSchema,
+  FieldName extends string,
+> = inferValue<Schema>[FieldName];

@@ -10,9 +10,8 @@ import type {
 import type { FieldErrors } from "./types/commonTypes";
 import type { AnyError } from "./types/commonTypes";
 import type { FormErrors } from "./types/commonTypes";
-import type { GetShapeFromSchema } from "./utils/getShapeFromSchema";
-import { getShapeFromSchema } from "./utils/getShapeFromSchema";
 import type { AnyRCFGenerics } from "./types/optionTypes";
+import type { FieldInfo } from "./utils/determineFields";
 
 export type FormStoreFor<G extends AnyRCFGenerics> = FormStore<G["schema"]>;
 
@@ -20,7 +19,6 @@ export class FormStore<Schema extends FormSchema> {
   private _listeners = new Set<StoreListener<Schema>>();
   private _currentMutation?: { draft: Draft<FormState<Schema>> };
   private _state: FormState<Schema>;
-  private readonly _schemaShape: GetShapeFromSchema<Schema>;
 
   get data(): inferValue<Schema> {
     return this._state.data;
@@ -45,8 +43,8 @@ export class FormStore<Schema extends FormSchema> {
     public readonly schema: Schema,
     private _initialData: inferValue<Schema>,
     private _modes: readonly FormValidationMode[],
+    private _fieldList: FieldInfo<Schema>[],
   ) {
-    this._schemaShape = getShapeFromSchema(schema);
     this._state = initialFormState(_initialData);
   }
 
@@ -110,18 +108,27 @@ export class FormStore<Schema extends FormSchema> {
         combined.general = external.general.concat(local.general);
 
         combined.field = { ...local.field };
-        for (const key in external.field) {
-          const fieldName = key as FieldNames<Schema>;
-          if (fieldName in this._schemaShape) {
-            combined.field[fieldName] = [
-              ...(external.field[fieldName] ?? []),
-              ...(local.field?.[fieldName] ?? []),
+
+        const remainingExternalNames = new Set<string>(
+          Object.keys(external.field),
+        );
+
+        for (const field of this._fieldList) {
+          remainingExternalNames.delete(field.name);
+          if (field.name in external.field) {
+            combined.field[field.name] = [
+              ...(external.field[field.name] ?? []),
+              ...(local.field?.[field.name] ?? []),
             ];
-          } else {
-            throw new Error(
-              `Invalid external field error: Field "${fieldName}" doesn't exist in schema`,
-            );
           }
+        }
+
+        if (remainingExternalNames.size) {
+          throw new Error(
+            `Invalid external field error, field(s) doesn't exist in schema: ${[
+              ...remainingExternalNames,
+            ].join(", ")}`,
+          );
         }
       },
     );
@@ -149,6 +156,13 @@ export class FormStore<Schema extends FormSchema> {
         }
       } else {
         draft.localErrors.field = localErrors.field;
+      }
+
+      // Remove errors for inactive fields
+      for (const field of this._fieldList) {
+        if (!field.isActive(this.data)) {
+          delete draft.localErrors.field[field.name];
+        }
       }
 
       this.updateCombinedErrors();

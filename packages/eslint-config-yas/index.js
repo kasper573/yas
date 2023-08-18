@@ -3,11 +3,12 @@ const path = require("path");
 
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["import", "unused-imports", "monorepo-cop", "react"],
+  plugins: ["import", "unused-imports", "monorepo-cop", "react", "react-hooks"],
   extends: [
     "plugin:monorepo-cop/recommended",
     "plugin:storybook/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
     "prettier",
   ],
@@ -16,6 +17,7 @@ module.exports = {
     // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
     "import/order": ["error"],
   },
+  ignorePatterns: ["node_modules", ".turbo", "dist"],
   // Rules only applied to specific files or file types
   overrides: [
     {
@@ -89,6 +91,10 @@ module.exports = {
         // This rule yields false negative errors in storybook stories due to invalid type definitions
         // Rule can be re-enabled once issue is fixed upstream: https://github.com/storybookjs/testing-library/issues/10
         "@typescript-eslint/await-thenable": "off",
+
+        // Storybook stories often use a render prop with anonymous components,
+        // which breaks the rules of hooks but is acceptable for storybook
+        "react-hooks/rules-of-hooks": "off",
       },
     },
     {

@@ -1,17 +1,56 @@
-import { LayoutExample } from "./LayoutExample";
-import { ConditionalExample } from "./ConditionalExample";
-import { ListExample } from "./ListExample";
-import { NestedExample } from "./NestedExample";
-import { StepsExample } from "./StepsExample";
-import { DataFormatExample } from "./DataFormatExample";
-import { RemoteExample } from "./RemoteExample";
+import { lazy } from "react";
 
 export const examples = [
-  { name: "Layout", component: LayoutExample },
-  { name: "DataFormat", component: DataFormatExample },
-  { name: "Conditional", component: ConditionalExample },
-  { name: "Steps", component: StepsExample },
-  { name: "List", component: ListExample },
-  { name: "Nested", component: NestedExample },
-  { name: "Remote", component: RemoteExample },
+  {
+    name: "Layout",
+    component: lazy(() =>
+      import("./LayoutExample").then((m) => ({ default: m.LayoutExample })),
+    ),
+  },
+  {
+    name: "DataFormat",
+    component: lazy(() =>
+      import("./DataFormatExample").then((m) => ({
+        default: m.DataFormatExample,
+      })),
+    ),
+  },
+  {
+    name: "Conditional",
+    component: lazy(() =>
+      import("./ConditionalExample").then((m) => ({
+        default: m.ConditionalExample,
+      })),
+    ),
+  },
+  {
+    name: "Steps",
+    component: lazy(() =>
+      import("./StepsExample").then((m) => ({ default: m.StepsExample })),
+    ),
+  },
+  {
+    name: "List",
+    component: lazy(() =>
+      import("./ListExample").then((m) => ({ default: m.ListExample })),
+    ),
+  },
+  {
+    name: "Nested",
+    component: lazy(() =>
+      import("./NestedExample").then((m) => ({ default: m.NestedExample })),
+    ),
+  },
+  {
+    name: "Remote",
+    component: lazy(() =>
+      import("./RemoteExample").then((m) => ({ default: m.RemoteExample })),
+    ),
+  },
+  {
+    name: "Filter",
+    component: lazy(() =>
+      import("./FilterExample").then((m) => ({ default: m.FilterExample })),
+    ),
+  },
 ];

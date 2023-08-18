@@ -12,6 +12,18 @@ describe("layout", () => {
     getByText("default");
   });
 
+  it("can be given default props", () => {
+    const Layout = ({ foo }: { foo: string }) => <span>{`foo:${foo}`}</span>;
+    const Form = createForm((options) =>
+      options.layout(Layout, { foo: "bar" }),
+    );
+
+    const { getByText, rerender } = render(<Form />);
+    getByText("foo:bar");
+    rerender(<Form foo="baz" />);
+    getByText("foo:baz");
+  });
+
   it("can be extended from predefined forms", () => {
     const Form = createForm();
     const ExtendedForm = Form.extend((options) =>
@@ -74,6 +86,23 @@ describe("layout", () => {
     const { getByText } = render(
       <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
     );
+    await userEvent.click(getByText("submit"));
+    expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
+  });
+
+  it("can submit the form when adding submit handler after mount", async () => {
+    const onSubmit = jest.fn();
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .layout(({ handleSubmit }) => (
+          <button onClick={handleSubmit}>submit</button>
+        )),
+    );
+    const { getByText, rerender } = render(<Form value={{ foo: "hello" }} />);
+
+    rerender(<Form value={{ foo: "hello" }} onSubmit={onSubmit} />);
+
     await userEvent.click(getByText("submit"));
     expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
   });

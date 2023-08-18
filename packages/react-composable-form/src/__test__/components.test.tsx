@@ -3,7 +3,6 @@ import { z } from "zod";
 import { render } from "@testing-library/react";
 import { createForm } from "../createForm";
 import type { FieldProps } from "../types/optionTypes";
-import { silenceErrorLogs } from "./utils";
 
 describe("components", () => {
   describe("can be defined by value type", () => {
@@ -13,7 +12,8 @@ describe("components", () => {
     enum EnumB {
       Bar,
     }
-    for (const { name, type, wrong } of [
+    for (const { name, type, schemaType, wrong } of [
+      { name: "any", type: z.number(), wrong: z.string(), schemaType: z.any() },
       { name: "number", type: z.number(), wrong: z.string() },
       { name: "string", type: z.string(), wrong: z.number() },
       { name: "boolean", type: z.boolean(), wrong: z.string() },
@@ -35,33 +35,46 @@ describe("components", () => {
       },
     ]) {
       describe(name, () => {
-        testType(type, wrong);
-        describe(`optional`, () => testType(type.optional(), wrong.optional()));
-        describe(`nullable`, () => testType(type.nullable(), wrong.nullable()));
-        describe(`nullish`, () => testType(type.nullish(), wrong.nullish()));
-        describe(`array`, () => testType(type.array(), wrong.array()));
+        testType(type, wrong, schemaType);
+        describe(`optional`, () =>
+          testType(type.optional(), wrong.optional(), schemaType));
+        describe(`nullable`, () =>
+          testType(type.nullable(), wrong.nullable(), schemaType));
+        describe(`nullish`, () =>
+          testType(type.nullish(), wrong.nullish(), schemaType));
+        describe(`array`, () =>
+          testType(type.array(), wrong.array(), schemaType));
       });
     }
 
-    function testType(correctType: ZodType, wrongType: ZodType) {
-      it("alone", () => testTypeAlone(correctType));
-      it("among others", () => testTypeCollision(correctType, wrongType));
+    function testType(
+      correctType: ZodType,
+      wrongType: ZodType,
+      schemaType?: ZodType,
+    ) {
+      it("alone", () => testTypeAlone(correctType, schemaType));
+      it("among others", () =>
+        testTypeCollision(correctType, wrongType, schemaType));
     }
 
-    function testTypeAlone(type: ZodType) {
+    function testTypeAlone(type: ZodType, schemaType = type) {
       const Form = createForm((options) =>
         options
-          .schema(z.object({ foo: type }))
+          .schema(z.object({ foo: schemaType }))
           .type(type, () => <span>found</span>),
       );
       const { getByText } = render(<Form />);
       getByText("found");
     }
 
-    function testTypeCollision(correctType: ZodType, wrongType: ZodType) {
+    function testTypeCollision(
+      correctType: ZodType,
+      wrongType: ZodType,
+      schemaType = correctType,
+    ) {
       const Form = createForm((options) =>
         options
-          .schema(z.object({ foo: correctType }))
+          .schema(z.object({ foo: schemaType }))
           .type(correctType, () => <span>correct</span>)
           .type(wrongType, () => <span>incorrect</span>),
       );
@@ -128,15 +141,48 @@ describe("components", () => {
     getByText("two");
   });
 
-  it("throws when trying to render a form with a field that has no component defined", () => {
-    const restoreErrorLogs = silenceErrorLogs();
+  it("shows error when trying to render a form with a field that has no component defined", () => {
     const Form = createForm((options) =>
       options.schema(z.object({ foo: z.string() })),
     );
-    expect(() => render(<Form />)).toThrow(
-      'No component available for field "foo" or type ZodString',
-    );
-    restoreErrorLogs();
+    const { getByText } = render(<Form />);
+    getByText('No component available for field "foo" or type ZodString');
+  });
+
+  describe("selects the correct components when using multiple branded types", () => {
+    it("tuple", () => test(z.tuple([z.number(), z.number()])));
+    it("number", () => test(z.number()));
+    it("string", () => test(z.string()));
+    it("object", () => test(z.object({ foo: z.string() })));
+    it("array", () => test(z.array(z.string())));
+
+    function test(base: ZodType) {
+      const brand1 = base.brand("brand1");
+      const brand2 = base.brand("brand2");
+
+      const Form = createForm((options) =>
+        options
+          .schema(
+            z.object({
+              base,
+              brand1,
+              brand2,
+            }),
+          )
+          .type(base, Field, { param: 1 })
+          .type(brand1, Field, { param: 2 })
+          .type(brand2, Field, { param: 3 }),
+      );
+
+      function Field({ name, param }: FieldProps & { param: number }) {
+        return <span>{`${name}:${param}`}</span>;
+      }
+
+      const { getByText } = render(<Form />);
+      getByText("base:1");
+      getByText("brand1:2");
+      getByText("brand2:3");
+    }
   });
 
   describe("knows when a field is required", () => {

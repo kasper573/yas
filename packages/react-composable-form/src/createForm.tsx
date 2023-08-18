@@ -1,7 +1,13 @@
 import type { FormEvent, ComponentType } from "react";
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import type { FormValidationMode, inferValue } from "./types/commonTypes";
-import { createFields } from "./createFields";
+import { createFieldComponentFactory } from "./createFieldComponentFactory";
 import { FormContext } from "./FormContext";
 import type {
   EmptyFormOptionsGenerics,
@@ -11,7 +17,8 @@ import type {
 import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { AnyRCFGenerics, FormLayoutProps } from "./types/optionTypes";
+import type { AnyFormLayoutProps, AnyRCFGenerics } from "./types/optionTypes";
+import { determineFields } from "./utils/determineFields";
 
 export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
@@ -28,7 +35,7 @@ export type inferFormValue<T> = T extends FormComponent<infer G>
 
 export type FormComponent<G extends AnyRCFGenerics = AnyRCFGenerics> =
   ComponentType<
-    FormProps<G> & Omit<G["layoutProps"], keyof FormLayoutProps>
+    FormProps<G> & Omit<G["layoutProps"], keyof AnyFormLayoutProps>
   > & {
     extend<NewG extends AnyRCFGenerics>(
       options: FormOptionsBuilderFactory<G, NewG>,
@@ -50,13 +57,26 @@ function createFormImpl<G extends AnyRCFGenerics>(
   const {
     schema,
     layout: Layout,
-    namedComponents,
-    typedComponents,
+    components,
     externalErrorParser,
     modes: prebuiltModes,
+    fieldConditionsSelector,
   } = optionsBuilder.build();
 
-  const fields = createFields({ namedComponents, typedComponents }, schema);
+  const fieldList = determineFields(schema, fieldConditionsSelector);
+  const resolveFieldComponents = createFieldComponentFactory(
+    components,
+    fieldList,
+  );
+
+  function extractActiveFieldsData(allData: inferValue<G["schema"]>) {
+    return fieldList.reduce((acc: Record<string, unknown>, field) => {
+      if (field.isActive(allData)) {
+        acc[field.name] = allData[field.name];
+      }
+      return acc;
+    }, {});
+  }
 
   const ComposableForm: FormComponent<G> = ((props) => {
     if ("value" in props && "defaultValue" in props) {
@@ -78,7 +98,14 @@ function createFormImpl<G extends AnyRCFGenerics>(
     } = props;
 
     const [store] = useState(
-      (): FormStoreFor<G> => new FormStore(schema, data, modes),
+      (): FormStoreFor<G> => new FormStore(schema, data, modes, fieldList),
+    );
+
+    const fieldValues = useSyncExternalStore(store.subscribe, () => store.data);
+
+    const selectedFields = useMemo(
+      () => resolveFieldComponents(fieldValues),
+      [fieldValues],
     );
 
     const generalErrors = useSyncExternalStore(
@@ -107,17 +134,17 @@ function createFormImpl<G extends AnyRCFGenerics>(
       }
     }, [data, store, isControlledComponent]);
 
-    useEffect(() => store.setModes(modes), [modes]);
+    useEffect(() => store.setModes(modes), [store, modes]);
 
     const handleSubmit = useCallback(
       (e?: FormEvent) => {
         e?.preventDefault();
         store.handleSubmit();
         if (store.isLocallyValid) {
-          onSubmit?.(store.data);
+          onSubmit?.(extractActiveFieldsData(store.data));
         }
       },
-      [store],
+      [store, onSubmit],
     );
 
     const handleReset = useCallback(() => store.reset(), [store]);
@@ -128,11 +155,12 @@ function createFormImpl<G extends AnyRCFGenerics>(
           {...layoutProps}
           generalErrors={generalErrors}
           fieldErrors={fieldErrors}
+          fieldValues={fieldValues}
           onSubmit={onSubmit}
           onChange={onChange}
           handleSubmit={handleSubmit}
           reset={handleReset}
-          fields={fields}
+          fields={selectedFields}
         />
       </FormContext.Provider>
     );

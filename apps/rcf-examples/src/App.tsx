@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import {
   createTheme,
   CssBaseline,
@@ -7,6 +7,7 @@ import {
   Tab,
   Container,
   Tabs,
+  CircularProgress,
 } from "@mui/material";
 import { examples } from "./examples";
 
@@ -37,8 +38,10 @@ function ExampleTabs() {
           ))}
         </Tabs>
       </Box>
-      <Box sx={{ p: 3 }}>
-        <CurrentTab />
+      <Box sx={{ p: 3, flex: 1 }}>
+        <Suspense fallback={<CircularProgress />}>
+          <CurrentTab />
+        </Suspense>
       </Box>
     </Container>
   );

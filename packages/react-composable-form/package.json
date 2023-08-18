@@ -29,7 +29,7 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.build.json",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "pnpm test:unit && pnpm test:types --run",
     "test:watch": "concurrently -n unit,types \"pnpm test:unit --watch\" \"pnpm test:types\"",

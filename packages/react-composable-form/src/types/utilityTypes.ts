@@ -15,25 +15,30 @@ export type RequiredKeys<T> = {
   [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
 }[keyof T];
 
+export type AllKeysInUnion<T> = T extends any ? keyof T : never;
+
 export type HasRequiredProps<T> = RequiredKeys<T> extends never ? false : true;
 
 export type OptionalArgIfEmpty<T> = HasRequiredProps<T> extends true
   ? [T]
   : [arg?: T];
 
-export type DictionaryGet<TupleBasedDictionary, Key> =
-  TupleBasedDictionary extends [...infer Head, [infer Candidate, infer Value]]
-    ? Candidate extends Key
+export type DictionaryGet<TupleBasedDictionary, SearchKey> =
+  TupleBasedDictionary extends [...infer Head, [infer Key, infer Value]]
+    ? SearchKey extends Key
       ? Value
-      : DictionaryGet<Head, Key>
+      : DictionaryGet<Head, SearchKey>
     : never;
 
-export type DictionarySet<TupleBasedDictionary, Key, Value> =
-  TupleBasedDictionary extends [
-    [infer Candidate, infer OldValue],
-    ...infer Tail,
-  ]
-    ? Candidate extends Key
-      ? [[Candidate, Value], ...Tail]
-      : [[Candidate, OldValue], ...DictionarySet<Tail, Key, Value>]
-    : [[Key, Value]];
+export type DictionarySet<TupleBasedDictionary, SearchKey, NewValue> =
+  TupleBasedDictionary extends [[infer Key, infer OldValue], ...infer Tail]
+    ? Equal<Key, SearchKey> extends true
+      ? [[Key, NewValue], ...Tail]
+      : [[Key, OldValue], ...DictionarySet<Tail, SearchKey, NewValue>]
+    : [[SearchKey, NewValue]];
+
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
+  ? true
+  : false;

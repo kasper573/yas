@@ -1,7 +1,9 @@
 import type { AnyZodObject, ZodFirstPartyTypeKind, ZodType } from "zod";
 import {
   z,
+  ZodAny,
   ZodArray,
+  ZodBranded,
   ZodDefault,
   ZodEffects,
   ZodEnum,
@@ -14,6 +16,10 @@ import {
   ZodTuple,
   ZodUnion,
 } from "zod";
+import { getBrand, monkeyPatchZodBranded } from "./monkeyPatchZodBranded";
+
+// Required for ZodBranded comparisons to work
+monkeyPatchZodBranded();
 
 export function isMatchingType(_a: ZodType, _b?: ZodType): boolean {
   if (_a === _b) {
@@ -28,6 +34,10 @@ export function isMatchingType(_a: ZodType, _b?: ZodType): boolean {
   const b = normalizeType(_b);
 
   if (a === b) {
+    return true;
+  }
+
+  if (a instanceof ZodAny || b instanceof ZodAny) {
     return true;
   }
 
@@ -53,6 +63,12 @@ export function isMatchingType(_a: ZodType, _b?: ZodType): boolean {
 
   if (a instanceof ZodArray && b instanceof ZodArray) {
     return isMatchingType(a._def.type, b._def.type);
+  }
+
+  if (a instanceof ZodBranded && b instanceof ZodBranded) {
+    return (
+      getBrand(a) === getBrand(b) && isMatchingType(a._def.type, b._def.type)
+    );
   }
 
   return getFirstPartyType(a) === getFirstPartyType(b);

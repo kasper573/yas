@@ -536,9 +536,15 @@ describe("validation", () => {
       );
       const restoreErrorLogs = silenceErrorLogs();
       expect(() =>
-        render(<Form errors={{ field: { bar: ["External error"] } }} />),
+        render(
+          <Form
+            errors={{
+              field: { bar: ["External error"], baz: ["External error 2"] },
+            }}
+          />,
+        ),
       ).toThrow(
-        `Invalid external field error: Field "bar" doesn't exist in schema`,
+        `Invalid external field error, field(s) doesn't exist in schema: bar, baz`,
       );
       restoreErrorLogs();
     });

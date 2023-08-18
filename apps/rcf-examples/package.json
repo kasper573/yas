@@ -5,7 +5,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix"
   },
   "jest": {
@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.5",
     "@mui/material": "^5.14.1",
+    "@mui/icons-material": "^5.14.3",
     "immer": "^10.0.2",
     "react": "^18.2.0",
     "react-composable-form": "workspace:*",
