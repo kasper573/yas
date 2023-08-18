@@ -6,6 +6,7 @@ import { BaseForm } from "../BaseForm";
 import { ExampleContent } from "../ExampleContent";
 import { AccordionGroup } from "../components/AccordionGroup";
 import { FieldGroup } from "../components/FieldGroup";
+import type { SearchResultMetrics } from "../api/fakeApiSdk";
 import {
   manufacturerType,
   discountType,
@@ -58,26 +59,24 @@ export const FilterForm = BaseForm.extend((options) =>
       const { data } = useQuery("screen-size-range", fetchScreenSizeRange);
       return <RangeField {...props} min={data?.[0]} max={data?.[1]} />;
     })
-    .layout<{ fieldMetrics?: Record<string, number> }>(
-      ({ fields, fieldMetrics = {} }) => (
-        <AccordionGroup
-          defaultExpanded
-          sx={{ p: 0 }}
-          entries={{
-            Main: (
-              <FieldGroup>
-                {Object.entries(fields).map(([componentName, Component]) => (
-                  <Component
-                    key={componentName}
-                    metrics={fieldMetrics[componentName]}
-                  />
-                ))}
-              </FieldGroup>
-            ),
-          }}
-        />
-      ),
-    ),
+    .layout<{ metrics?: SearchResultMetrics }>(({ fields, metrics = {} }) => (
+      <AccordionGroup
+        defaultExpanded
+        sx={{ p: 0 }}
+        entries={{
+          Main: (
+            <FieldGroup>
+              {Object.entries(fields).map(([componentName, Component]) => (
+                <Component
+                  key={componentName}
+                  metrics={metrics[componentName]}
+                />
+              ))}
+            </FieldGroup>
+          ),
+        }}
+      />
+    )),
 );
 
 function SearchPage() {
@@ -96,7 +95,7 @@ function SearchPage() {
         <FilterForm
           value={filter}
           onChange={setFilter}
-          fieldMetrics={response?.metrics}
+          metrics={response?.metrics}
           {...props}
         />
       )}
