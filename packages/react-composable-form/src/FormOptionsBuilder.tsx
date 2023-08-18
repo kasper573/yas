@@ -62,14 +62,16 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     layout: ComponentType<
       FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
     >,
-    defaultProps?: Partial<NewLayoutProps>,
+    ...[initProps]: OptionalArgIfEmpty<Omit<NewLayoutProps, keyof FieldProps>>
   ) {
-    if (defaultProps) {
-      layout = withDefaultProps(layout, defaultProps);
+    if (initProps) {
+      layout = withDefaultProps(layout, initProps as never);
     }
-    return new FormOptionsBuilder<Replace<G, "layoutProps", NewLayoutProps>>({
+    return new FormOptionsBuilder<
+      Replace<G, "layoutProps", Partial<NewLayoutProps>>
+    >({
       ...this.options,
-      layout,
+      layout: layout as never,
     });
   }
 
