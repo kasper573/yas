@@ -99,8 +99,26 @@ describe("discriminated union schema", () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it("only submits discriminated data", () => {
-    throw new Error("Not implemented");
+  it("only submits discriminated data", async () => {
+    const Form = createDiscriminatorForm().extend((options) =>
+      options.layout(({ handleSubmit }) => (
+        <button onClick={handleSubmit}>submit</button>
+      )),
+    );
+    const handleSubmit = jest.fn();
+    const { getByRole } = render(
+      <Form
+        value={{ base: "foo", type: "string", str: "this is a long string" }}
+        onSubmit={handleSubmit}
+      />,
+    );
+
+    await userEvent.click(getByRole("button"));
+    expect(handleSubmit).toHaveBeenCalledWith({
+      base: "foo",
+      type: "string",
+      str: "this is a long string",
+    });
   });
 
   it("submits data representing the current union", async () => {
@@ -113,7 +131,13 @@ describe("discriminated union schema", () => {
     const handleSubmit = jest.fn();
     const { getByRole, rerender } = render(
       <Form
-        value={{ base: "foo", type: "string", str: "this is a long string" }}
+        value={{
+          base: "foo",
+          type: "string",
+          str: "this is a long string",
+          // @ts-expect-error Ignoring intentional error added for testing just to see what happens if input form data contains excessive fields
+          num: 123,
+        }}
         onSubmit={handleSubmit}
       />,
     );
