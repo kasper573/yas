@@ -13,6 +13,7 @@ import type {
 } from "./types/commonTypes";
 import type {
   AnyProps,
+  MakeOptional,
   OptionalArgIfEmpty,
   Replace,
 } from "./types/utilityTypes";
@@ -58,17 +59,24 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     });
   }
 
-  layout<NewLayoutProps extends AnyProps = {}>(
+  layout<
+    NewLayoutProps extends AnyProps = {},
+    DefaultProps extends Partial<NewLayoutProps> = {},
+  >(
     layout: ComponentType<
       FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
     >,
-    ...[initProps]: OptionalArgIfEmpty<Omit<NewLayoutProps, keyof FieldProps>>
+    defaultProps?: DefaultProps,
   ) {
-    if (initProps) {
-      layout = withDefaultProps(layout, initProps as never);
+    if (defaultProps) {
+      layout = withDefaultProps(layout, defaultProps);
     }
+    type NewLayoutPropsWithDefaultsConsidered = MakeOptional<
+      NewLayoutProps,
+      keyof DefaultProps
+    >;
     return new FormOptionsBuilder<
-      Replace<G, "layoutProps", Partial<NewLayoutProps>>
+      Replace<G, "layoutProps", NewLayoutPropsWithDefaultsConsidered>
     >({
       ...this.options,
       layout: layout as never,
