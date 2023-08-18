@@ -13,7 +13,15 @@ describe("layout", () => {
   });
 
   it("can be given default props", () => {
-    throw new Error("Not implemented");
+    const Layout = ({ foo }: { foo: string }) => <span>{`foo:${foo}`}</span>;
+    const Form = createForm((options) =>
+      options.layout(Layout, { foo: "bar" }),
+    );
+
+    const { getByText, rerender } = render(<Form />);
+    getByText("foo:bar");
+    rerender(<Form foo="baz" />);
+    getByText("foo:baz");
   });
 
   it("can be extended from predefined forms", () => {
