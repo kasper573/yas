@@ -1,5 +1,13 @@
 import { TextField as MuiTextField } from "@mui/material";
+import type { ComponentProps } from "react";
 import type { FieldProps } from "../rcf";
+
+export interface NumberFieldProps
+  extends FieldProps<number>,
+    Omit<
+      ComponentProps<typeof MuiTextField>,
+      "value" | "onChange" | "onFocus" | "onBlur" | "sx"
+    > {}
 
 export function NumberField({
   name,
@@ -8,7 +16,7 @@ export function NumberField({
   onChange,
   required,
   ...rest
-}: FieldProps<number>) {
+}: NumberFieldProps) {
   return (
     <MuiTextField
       value={value ?? ""}

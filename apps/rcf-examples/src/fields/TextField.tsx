@@ -1,8 +1,13 @@
 import { TextField as MuiTextField } from "@mui/material";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import type { FieldProps } from "../rcf";
 
-export interface TextFieldProps extends FieldProps<string> {
+export interface TextFieldProps
+  extends FieldProps<string>,
+    Omit<
+      ComponentProps<typeof MuiTextField>,
+      "value" | "onChange" | "onFocus" | "onBlur" | "sx"
+    > {
   password?: boolean;
   helperText?: ReactNode;
 }
