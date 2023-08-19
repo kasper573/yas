@@ -99,7 +99,7 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("baz");
   });
 
-  it("can be derived", async () => {
+  it("can access other field values from within a field component", async () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
