@@ -151,11 +151,11 @@ describe("data", () => {
   });
 
   it("changes to one field does not re-render other fields (without errors)", async () => {
-    const Bar = renderCounter(({ name, ...rest }) => (
-      <input aria-label={name} {...rest} />
+    const Bar = renderCounter(({ name, value, onChange }) => (
+      <input aria-label={name} value={value} onChange={onChange} />
     ));
-    const Foo = renderCounter(({ name, ...rest }) => (
-      <input aria-label={name} {...rest} />
+    const Foo = renderCounter(({ name, value, onChange }) => (
+      <input aria-label={name} value={value} onChange={onChange} />
     ));
     const Form = createForm((options) =>
       options
@@ -172,11 +172,11 @@ describe("data", () => {
   });
 
   it("changes to one field does not re-render other fields (with errors)", async () => {
-    const Bar = renderCounter(({ name, ...rest }) => (
-      <input aria-label={name} {...rest} />
+    const Bar = renderCounter(({ name, value, onChange }) => (
+      <input aria-label={name} value={value} onChange={onChange} />
     ));
-    const Foo = renderCounter(({ name, ...rest }) => (
-      <input aria-label={name} {...rest} />
+    const Foo = renderCounter(({ name, value, onChange }) => (
+      <input aria-label={name} value={value} onChange={onChange} />
     ));
     const Form = createForm((options) =>
       options
