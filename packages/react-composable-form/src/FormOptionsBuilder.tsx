@@ -22,7 +22,6 @@ import { setTypedComponent } from "./utils/typedComponents";
 import type {
   AnyRCFGenerics,
   ComposedFieldComponent,
-  FieldProps,
   FormLayoutProps,
   FormOptions,
   RCFGenerics,
@@ -31,6 +30,7 @@ import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 import type { FieldConditionsSelector } from "./types/optionTypes";
 import type { FieldComponentGenerics } from "./types/optionTypes";
+import type { AnyFieldProps } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
@@ -85,13 +85,19 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
 
   type<Type extends ValueType, AdditionalProps>(
     type: Type,
-    component: InputFieldComponent<inferValue<Type>, AdditionalProps>,
-    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
+    component: InputFieldComponent<
+      G["schema"],
+      inferValue<Type>,
+      AdditionalProps
+    >,
+    ...[initProps]: OptionalArgIfEmpty<
+      Omit<AdditionalProps, keyof AnyFieldProps>
+    >
   ) {
     type NewTyped = SetTypedComponent<
       G["components"]["typed"],
       inferValue<Type>,
-      ComposedFieldComponent<inferValue<Type>, AdditionalProps>
+      ComposedFieldComponent<G["schema"], inferValue<Type>, AdditionalProps>
     >;
     type NewComponents = Replace<G["components"], "typed", NewTyped>;
     type NewG = Replace<G, "components", NewComponents>;
@@ -114,15 +120,19 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
     name: FieldName,
     component: InputFieldComponent<
+      G["schema"],
       inferFieldValue<G["schema"], FieldName>,
       AdditionalProps
     >,
-    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
+    ...[initProps]: OptionalArgIfEmpty<
+      Omit<AdditionalProps, keyof AnyFieldProps>
+    >
   ) {
     type NewNamed = Omit<G["components"]["named"], FieldName> &
       Record<
         FieldName,
         ComposedFieldComponent<
+          G["schema"],
           inferFieldValue<G["schema"], FieldName>,
           AdditionalProps
         >

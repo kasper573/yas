@@ -27,9 +27,9 @@ type FormFactoryLike<G extends AnyRCFGenerics> = () => FormComponent<G>;
 
 export type inferFieldProps<
   FormFactory,
-  Value = any,
+  Value = unknown,
 > = FormFactory extends FormFactoryLike<infer G>
-  ? FieldProps<Value> & G["baseFieldProps"]
+  ? FieldProps<Value, G["schema"]> & G["baseFieldProps"]
   : never;
 
 export type inferLayoutProps<FormFactory> = FormFactory extends FormFactoryLike<
