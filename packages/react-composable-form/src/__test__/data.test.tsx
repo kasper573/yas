@@ -64,8 +64,8 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .type(z.string(), ({ onChange, ...rest }) => (
-          <input onChange={(e) => onChange?.(e.target.value)} {...rest} />
+        .type(z.string(), ({ onChange, value }) => (
+          <input value={value} onChange={(e) => onChange?.(e.target.value)} />
         )),
     );
     function App() {
@@ -88,12 +88,8 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .type(z.string(), ({ onChange, value = "", ...rest }) => (
-          <input
-            onChange={(e) => onChange?.(e.target.value)}
-            value={value}
-            {...rest}
-          />
+        .type(z.string(), ({ onChange, value = "" }) => (
+          <input onChange={(e) => onChange?.(e.target.value)} value={value} />
         )),
     );
     const { getByRole } = render(<Form />);
@@ -107,12 +103,8 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .type(z.string(), ({ onChange, value = "", ...rest }) => (
-          <input
-            onChange={(e) => onChange?.(e.target.value)}
-            value={value}
-            {...rest}
-          />
+        .type(z.string(), ({ onChange, value = "" }) => (
+          <input onChange={(e) => onChange?.(e.target.value)} value={value} />
         ))
         .layout(({ fields: { Foo }, reset }) => (
           <>
@@ -133,12 +125,8 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .type(z.string(), ({ onChange, value = "", ...rest }) => (
-          <input
-            onChange={(e) => onChange?.(e.target.value)}
-            value={value}
-            {...rest}
-          />
+        .type(z.string(), ({ onChange, value = "" }) => (
+          <input onChange={(e) => onChange?.(e.target.value)} value={value} />
         )),
     );
 

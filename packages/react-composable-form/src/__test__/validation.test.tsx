@@ -34,22 +34,16 @@ describe("validation", () => {
         options
           .validateOn()
           .schema(z.object({ foo: z.string().min(3) }))
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange?.(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                <span>
-                  {`${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
-              </>
-            ),
-          )
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+              />
+              <span>{`${errors.length ? errors.join(",") : "No errors"}`}</span>
+            </>
+          ))
           .layout(({ fields: { Foo }, handleSubmit }) => (
             <>
               <Foo />
@@ -70,17 +64,17 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string().min(3) }))
           .type(
             z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
+            ({ onFocus, onChange, value = "", errors = [], name }) => (
               <>
                 <input
+                  onFocus={onFocus}
                   onChange={(e) => onChange?.(e.target.value)}
                   value={value}
                   aria-label={name}
-                  {...rest}
                 />
-                <span>
-                  {`${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
+                <span>{`${
+                  errors.length ? errors.join(",") : "No errors"
+                }`}</span>
               </>
             ),
           ),
@@ -98,13 +92,13 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
           .type(
             z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
+            ({ onBlur, onChange, value = "", errors = [], name }) => (
               <>
                 <input
+                  onBlur={onBlur}
                   onChange={(e) => onChange?.(e.target.value)}
                   value={value}
                   aria-label={name}
-                  {...rest}
                 />
                 <span>
                   {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
@@ -133,22 +127,18 @@ describe("validation", () => {
         options
           .validateOn("change")
           .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange?.(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                <span>
-                  {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
-              </>
-            ),
-          ),
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+              />
+              <span>
+                {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
+              </span>
+            </>
+          )),
       );
       const { getByRole, getByText } = render(
         <Form value={{ foo: "", bar: "" }} />,
@@ -170,13 +160,13 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string().min(3), bar: z.string().min(5) }))
           .type(
             z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
+            ({ onChange, onBlur, value = "", errors = [], name }) => (
               <>
                 <input
+                  onBlur={onBlur}
                   onChange={(e) => onChange?.(e.target.value)}
                   value={value}
                   aria-label={name}
-                  {...rest}
                 />
                 <span>
                   {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
@@ -204,20 +194,16 @@ describe("validation", () => {
         options
           .validateOn("change")
           .schema(z.object({ foo: z.string().min(3) }))
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange?.(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                {errors.length ? errors.join(",") : "No errors"}
-              </>
-            ),
-          ),
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+              />
+              {errors.length ? errors.join(",") : "No errors"}
+            </>
+          )),
       );
       const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
@@ -232,12 +218,11 @@ describe("validation", () => {
         options
           .validateOn("change")
           .schema(z.object({ foo: z.string().min(3) }))
-          .type(z.string(), ({ onChange, value = "", errors, ...rest }) => (
+          .type(z.string(), ({ onChange, value = "", errors }) => (
             <>
               <input
                 onChange={(e) => onChange?.(e.target.value)}
                 value={value}
-                {...rest}
               />
               {`${errors?.length ? errors.join(",") : "No Errors"}`}
             </>
@@ -261,22 +246,16 @@ describe("validation", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string().min(3) }))
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange?.(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                <span>
-                  {`${errors.length ? errors.join(",") : "No errors"}`}
-                </span>
-              </>
-            ),
-          ),
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+              />
+              <span>{`${errors.length ? errors.join(",") : "No errors"}`}</span>
+            </>
+          )),
       );
       function App() {
         const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
@@ -333,20 +312,16 @@ describe("validation", () => {
         options
           .validateOn("change")
           .schema(objectType)
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <>
-                <input
-                  onChange={(e) => onChange?.(e.target.value)}
-                  value={value}
-                  aria-label={name}
-                  {...rest}
-                />
-                {errors.join(",")}
-              </>
-            ),
-          ),
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <>
+              <input
+                onChange={(e) => onChange?.(e.target.value)}
+                value={value}
+                aria-label={name}
+              />
+              {errors.join(",")}
+            </>
+          )),
       );
 
       const { getByRole, getByText } = render(<Form />);
@@ -385,17 +360,13 @@ describe("validation", () => {
         options
           .validateOn("change")
           .schema(z.object({ foo: z.string().min(3) }))
-          .type(
-            z.string(),
-            ({ onChange, value = "", errors = [], name, ...rest }) => (
-              <input
-                onChange={(e) => onChange?.(e.target.value)}
-                value={value}
-                aria-label={name}
-                {...rest}
-              />
-            ),
-          )
+          .type(z.string(), ({ onChange, value = "", errors = [], name }) => (
+            <input
+              onChange={(e) => onChange?.(e.target.value)}
+              value={value}
+              aria-label={name}
+            />
+          ))
           .layout(({ fields: { Foo }, fieldErrors }) => (
             <>
               <Foo />
