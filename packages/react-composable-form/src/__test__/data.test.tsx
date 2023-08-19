@@ -99,6 +99,23 @@ describe("data", () => {
     expect(getByRole("textbox")).toHaveValue("baz");
   });
 
+  it("can be derived", async () => {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string(), bar: z.string() }))
+        .field("foo", ({ value, onChange }) => (
+          <input
+            value={value ?? ""}
+            onChange={(e) => onChange?.(e.target.value)}
+          />
+        ))
+        .field("bar", ({ fieldValues }) => <span>bar:{fieldValues?.foo}</span>),
+    );
+    const { getByRole, getByText } = render(<Form />);
+    await userEvent.type(getByRole("textbox"), "hello");
+    getByText("bar:hello");
+  });
+
   it("can reset", async () => {
     const Form = createForm((options) =>
       options
