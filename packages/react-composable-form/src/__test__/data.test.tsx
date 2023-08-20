@@ -115,6 +115,25 @@ describe("data", () => {
       getByText("bar:hello");
     });
 
+    it("can react to changes in a single other field (uncontrolled)", async () => {
+      const Form = createForm((options) =>
+        options
+          .schema(z.object({ foo: z.string(), bar: z.string() }))
+          .field("foo", ({ value, onChange }) => (
+            <input
+              value={value ?? ""}
+              onChange={(e) => onChange?.(e.target.value)}
+            />
+          ))
+          .field("bar", ({ fieldValues }) => (
+            <span>bar:{fieldValues?.foo}</span>
+          )),
+      );
+      const { getByText, getByRole } = render(<Form />);
+      await userEvent.type(getByRole("textbox"), "hello");
+      getByText("bar:hello");
+    });
+
     it("reacts to changes in a single other field", async () => {
       const Form = createForm((options) =>
         options
