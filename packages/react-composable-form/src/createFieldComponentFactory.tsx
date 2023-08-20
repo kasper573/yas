@@ -72,7 +72,12 @@ function enhanceFieldComponent<
 ) {
   type Props = FieldProps<inferFieldValue<Schema, FieldName>>;
   const required = !type.isOptional();
-  return memo(function EnhancedFormField(props: Partial<Props>) {
+  return memo(function EnhancedFormField({
+    onFocus,
+    onChange,
+    onBlur,
+    ...props
+  }: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncExternalStore(store.subscribe, () => store.data[name]);
     const fieldValues = useDeferredFieldValues(allFieldNames, store);
@@ -84,19 +89,20 @@ function enhanceFieldComponent<
     const changeHandler: Props["onChange"] = useCallback(
       (newValue: typeof value) => {
         store.changeField(name, newValue);
+        onChange?.(newValue);
       },
-      [store],
+      [store, onChange],
     );
 
-    const blurHandler: Props["onBlur"] = useCallback(
-      () => store.blurField(name),
-      [store],
-    );
+    const blurHandler: Props["onBlur"] = useCallback(() => {
+      store.blurField(name);
+      onBlur?.();
+    }, [store, onBlur]);
 
-    const focusHandler: Props["onFocus"] = useCallback(
-      () => store.focusField(name),
-      [store],
-    );
+    const focusHandler: Props["onFocus"] = useCallback(() => {
+      store.focusField(name);
+      onFocus?.();
+    }, [store, onFocus]);
 
     return (
       <Component

@@ -22,7 +22,17 @@ function mergeProps(a: Record<string, unknown>, b: Record<string, unknown>) {
     merged[key] = a[key];
   }
   for (const key in b) {
-    merged[key] = b[key] ?? a[key];
+    const bValue = b[key];
+    const aValue = a[key];
+
+    if (typeof aValue === "function" && typeof bValue === "function") {
+      merged[key] = (...args: unknown[]) => {
+        aValue(...args);
+        return bValue(...args);
+      };
+    } else {
+      merged[key] = b[key] ?? a[key];
+    }
   }
   return merged;
 }

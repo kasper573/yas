@@ -86,7 +86,15 @@ export type ComposedFieldComponent<
   Partial<FieldProps<Value, inferValue<Schema>> & AdditionalProps>
 >;
 
-export type AnyFieldProps = FieldProps<any, unknown>;
+export type FieldPropNamesNotAvailableInDefaults = Exclude<
+  keyof FieldProps,
+  FieldPropNamesAvailableInDefaults
+>;
+
+export type FieldPropNamesAvailableInDefaults = keyof Pick<
+  FieldProps,
+  "onChange" | "onBlur" | "onFocus" | "value"
+>;
 
 export interface FieldProps<Value = unknown, FieldValues = unknown> {
   name?: string;

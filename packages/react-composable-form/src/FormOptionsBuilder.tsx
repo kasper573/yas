@@ -29,7 +29,7 @@ import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 import type { FieldConditionsSelector } from "./types/optionTypes";
 import type { FieldComponentGenerics } from "./types/optionTypes";
-import type { AnyFieldProps } from "./types/optionTypes";
+import type { FieldPropNamesNotAvailableInDefaults } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
@@ -108,7 +108,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       AdditionalProps
     >,
     ...[initProps]: OptionalArgIfEmpty<
-      Omit<AdditionalProps, keyof AnyFieldProps>
+      Omit<AdditionalProps, FieldPropNamesNotAvailableInDefaults>
     >
   ): FormOptionsBuilder<
     RCFGenerics<
@@ -150,7 +150,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       AdditionalProps
     >,
     ...[initProps]: OptionalArgIfEmpty<
-      Omit<AdditionalProps, keyof AnyFieldProps>
+      Omit<AdditionalProps, FieldPropNamesNotAvailableInDefaults>
     >
   ): FormOptionsBuilder<
     RCFGenerics<

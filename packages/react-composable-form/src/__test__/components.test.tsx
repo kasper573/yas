@@ -1,8 +1,11 @@
+import "@testing-library/jest-dom";
 import type { AnyZodObject, ZodType } from "zod";
 import { z } from "zod";
 import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 import type { FieldProps } from "../types/optionTypes";
+import type { FieldPropNamesAvailableInDefaults } from "../types/optionTypes";
 
 describe("components", () => {
   describe("can be defined by value type", () => {
@@ -260,4 +263,96 @@ describe("components", () => {
       getByText("bar");
     });
   });
+});
+
+describe("overriding built-in props", () => {
+  describe("embedded defaults", () => {
+    const tests = {
+      value() {
+        const { getByRole } = createFieldPropForm("value", "default");
+        expect(getByRole("textbox")).toHaveValue("default");
+      },
+      async onBlur() {
+        const fn = jest.fn();
+        const { getByRole } = createFieldPropForm("onBlur", fn);
+        await userEvent.click(getByRole("textbox"));
+        await userEvent.tab();
+        expect(fn).toHaveBeenCalled();
+      },
+      async onChange() {
+        const fn = jest.fn();
+        const { getByRole } = createFieldPropForm("onChange", fn);
+        await userEvent.type(getByRole("textbox"), "hello");
+        expect(fn).toHaveBeenCalledTimes(5);
+      },
+      async onFocus() {
+        const fn = jest.fn();
+        const { getByRole } = createFieldPropForm("onFocus", fn);
+        await userEvent.click(getByRole("textbox"));
+        expect(fn).toHaveBeenCalled();
+      },
+    } satisfies Record<FieldPropNamesAvailableInDefaults, () => unknown>;
+
+    for (const [prop, test] of Object.entries(tests)) {
+      it(prop, test);
+    }
+  });
+
+  describe("embedded defaults and inline props via layout", () => {
+    const tests = {
+      value() {
+        const { getByRole } = createFieldPropForm("value", "default", "inline");
+        expect(getByRole("textbox")).toHaveValue("inline");
+      },
+      async onBlur() {
+        const fn = jest.fn();
+        const fn2 = jest.fn();
+        const { getByRole } = createFieldPropForm("onBlur", fn, fn2);
+        await userEvent.click(getByRole("textbox"));
+        await userEvent.tab();
+        expect(fn).toHaveBeenCalled();
+        expect(fn2).toHaveBeenCalled();
+      },
+      async onChange() {
+        const fn = jest.fn();
+        const fn2 = jest.fn();
+        const { getByRole } = createFieldPropForm("onChange", fn, fn2);
+        await userEvent.type(getByRole("textbox"), "hello");
+        expect(fn).toHaveBeenCalledTimes(5);
+        expect(fn2).toHaveBeenCalledTimes(5);
+      },
+      async onFocus() {
+        const fn = jest.fn();
+        const fn2 = jest.fn();
+        const { getByRole } = createFieldPropForm("onFocus", fn, fn2);
+        await userEvent.click(getByRole("textbox"));
+        expect(fn).toHaveBeenCalled();
+        expect(fn2).toHaveBeenCalled();
+      },
+    } satisfies Record<FieldPropNamesAvailableInDefaults, () => unknown>;
+
+    for (const [prop, test] of Object.entries(tests)) {
+      it(prop, test);
+    }
+  });
+
+  function createFieldPropForm(
+    name: FieldPropNamesAvailableInDefaults,
+    defaultValue?: unknown,
+    layoutValue?: unknown,
+  ) {
+    const Form = createForm((options) =>
+      options
+        .schema(z.object({ foo: z.string() }))
+        .type(
+          z.string(),
+          (props) => <input onChange={() => {}} {...{ [name]: props[name] }} />,
+          {
+            [name]: defaultValue,
+          },
+        )
+        .layout(({ fields: { Foo } }) => <Foo {...{ [name]: layoutValue }} />),
+    );
+    return render(<Form />);
+  }
 });
