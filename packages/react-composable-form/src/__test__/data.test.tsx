@@ -203,8 +203,8 @@ describe("data", () => {
             )),
         );
         const { getByText, getByRole } = render(<Form />);
-        await userEvent.type(getByRole("textbox"), "hello");
-        getByText("bar:hello");
+        await userEvent.type(getByRole("textbox"), "A");
+        getByText("bar:A");
       });
 
       it("reacts to changes in a single other field", async () => {
