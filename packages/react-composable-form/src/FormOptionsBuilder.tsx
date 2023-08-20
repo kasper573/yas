@@ -56,7 +56,6 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     } as never);
   }
 
-  // TODO rename to errorTransformer
   customExternalErrors<NewCustomError>(
     externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>,
   ): FormOptionsBuilder<
