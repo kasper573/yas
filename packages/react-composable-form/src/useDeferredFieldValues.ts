@@ -51,7 +51,7 @@ export function useDeferredFieldValues<Schema extends FormSchema>(
           return store.data[fieldName];
         },
       }),
-    [allFieldNames, store],
+    [allFieldNames, store, touchedFields],
   );
 
   useEffect(() => {
