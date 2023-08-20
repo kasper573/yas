@@ -4,10 +4,6 @@ export type AnyProps = Record<string, any>;
 
 export type AnyComponent = ComponentType<any>;
 
-export type Replace<T, K extends keyof T, V> = {
-  [P in keyof T]: P extends K ? V : T[P];
-};
-
 export type MakeOptional<T, K extends PropertyKey> = Omit<T, K> &
   Partial<Pick<T, Extract<keyof T, K>>>;
 

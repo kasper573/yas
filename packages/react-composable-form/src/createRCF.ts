@@ -29,7 +29,7 @@ export type inferFieldProps<
   FormFactory,
   Value = unknown,
 > = FormFactory extends FormFactoryLike<infer G>
-  ? FieldProps<Value, G["schema"]> & G["baseFieldProps"]
+  ? FieldProps<Value> & G["baseFieldProps"]
   : never;
 
 export type inferLayoutProps<FormFactory> = FormFactory extends FormFactoryLike<
