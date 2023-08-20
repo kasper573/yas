@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { z } from "zod";
-import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
+import { render } from "./utils";
 
 describe("discriminated union schema", () => {
   describe("renders the correct fields", () => {
