@@ -15,6 +15,7 @@ export function NumberField({
   errors = [],
   onChange,
   required,
+  fieldValues,
   ...rest
 }: NumberFieldProps) {
   return (

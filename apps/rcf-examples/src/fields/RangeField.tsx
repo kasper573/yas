@@ -25,6 +25,7 @@ export function RangeField<T extends Range>({
   onChange,
   required,
   sx,
+  fieldValues,
   ...rest
 }: RangeFieldProps<T>) {
   const id = useId();

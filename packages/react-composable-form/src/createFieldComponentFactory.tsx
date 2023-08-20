@@ -2,6 +2,7 @@ import { memo, useCallback, useContext, useSyncExternalStore } from "react";
 import type {
   FieldNames,
   FormSchema,
+  inferFieldValue,
   inferValue,
   ValueType,
 } from "./types/commonTypes";
@@ -13,16 +14,20 @@ import type {
   FieldComponentRegistry,
   FieldComponentsPassedToLayout,
   FieldFor,
+  FieldProps,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./utils/isMatchingType";
 import type { FieldInfo } from "./utils/determineFields";
-import type { inferFieldValue } from "./types/commonTypes";
-import type { FieldProps } from "./types/optionTypes";
+import { useDeferredFieldValues } from "./useDeferredFieldValues";
 
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: FieldComponentRegistry<G["components"]>,
   fieldList: FieldInfo<G["schema"]>[],
 ) {
+  const allFieldNames = fieldList.reduce(
+    (map, field) => map.set(field.name, true),
+    new Map<FieldNames<G["schema"]>, true>(),
+  );
   const enhancedComponents = fieldList.reduce((map, field) => {
     const Component =
       components.named[field.name] ??
@@ -32,6 +37,7 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
       Component ?? createMissingFieldComponent(field.name, field.type),
       field.name,
       field.type,
+      allFieldNames,
     );
 
     return map.set(field, EnhancedComponent);
@@ -58,12 +64,18 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
 function enhanceFieldComponent<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema>,
->(Component: FieldFor<Schema, FieldName>, name: FieldName, type: ValueType) {
+>(
+  Component: FieldFor<Schema, FieldName>,
+  name: FieldName,
+  type: ValueType,
+  allFieldNames: Map<FieldNames<Schema>, boolean>,
+) {
   type Props = FieldProps<inferFieldValue<Schema, FieldName>>;
   const required = !type.isOptional();
   return memo(function EnhancedFormField(props: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncExternalStore(store.subscribe, () => store.data[name]);
+    const fieldValues = useDeferredFieldValues(allFieldNames, store);
     const errors = useSyncExternalStore(
       store.subscribe,
       () => store.fieldErrors[name],
@@ -95,6 +107,7 @@ function enhanceFieldComponent<
         onChange={changeHandler}
         onBlur={blurHandler}
         onFocus={focusHandler}
+        fieldValues={fieldValues}
         {...props}
       />
     );

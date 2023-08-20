@@ -53,4 +53,10 @@ export const examples = [
       import("./FilterExample").then((m) => ({ default: m.FilterExample })),
     ),
   },
+  {
+    name: "Checkout",
+    component: lazy(() =>
+      import("./CheckoutExample").then((m) => ({ default: m.CheckoutExample })),
+    ),
+  },
 ];

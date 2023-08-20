@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { Stack } from "@mui/material";
+import { InputAdornment, Stack } from "@mui/material";
 import { BaseForm } from "../BaseForm";
 import { ExampleContent } from "../ExampleContent";
 import { SingleSelectField, valueOptions } from "../fields/SingleSelectField";
+import { NumberField } from "../fields/NumberField";
 
 const kindType = z.enum(["foo", "bar"]);
 const paymentType = z.enum(["card", "paypal"]);
@@ -64,6 +65,32 @@ const ConditionsForm = BaseForm.extend((options) =>
     }),
 );
 
+const currencyType = z.enum(["USD", "EUR", "SEK"]);
+const RelatedForm = BaseForm.extend((options) =>
+  options
+    .schema(
+      z.object({
+        currency: currencyType,
+        amount: z.number(),
+      }),
+    )
+    .type(currencyType, SingleSelectField, {
+      options: valueOptions(currencyType.options),
+    })
+    .field("amount", ({ fieldValues, ...props }) => (
+      <NumberField
+        {...props}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {fieldValues?.currency}
+            </InputAdornment>
+          ),
+        }}
+      />
+    )),
+);
+
 export function ConditionalExample() {
   return (
     <ExampleContent>
@@ -72,6 +99,8 @@ export function ConditionalExample() {
           <DiscriminatedForm title="Discriminated" {...props} />
 
           <ConditionsForm title="Conditions" {...props} />
+
+          <RelatedForm title="Related" {...props} />
         </Stack>
       )}
     </ExampleContent>

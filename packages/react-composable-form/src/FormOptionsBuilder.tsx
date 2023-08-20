@@ -15,14 +15,12 @@ import type {
   AnyProps,
   MakeOptional,
   OptionalArgIfEmpty,
-  Replace,
 } from "./types/utilityTypes";
 import type { SetTypedComponent } from "./utils/typedComponents";
 import { setTypedComponent } from "./utils/typedComponents";
 import type {
   AnyRCFGenerics,
   ComposedFieldComponent,
-  FieldProps,
   FormLayoutProps,
   FormOptions,
   RCFGenerics,
@@ -31,6 +29,7 @@ import { withDefaultProps } from "./utils/withDefaultProps";
 import type { InputFieldComponent } from "./types/optionTypes";
 import type { FieldConditionsSelector } from "./types/optionTypes";
 import type { FieldComponentGenerics } from "./types/optionTypes";
+import type { AnyFieldProps } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
@@ -40,23 +39,39 @@ export type FormOptionsBuilderFactory<
 export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   constructor(private options: FormOptions<G>) {}
 
-  schema<NewSchema extends FormSchema>(schema: NewSchema) {
-    return new FormOptionsBuilder<Replace<G, "schema", NewSchema>>({
+  schema<NewSchema extends FormSchema>(
+    schema: NewSchema,
+  ): FormOptionsBuilder<
+    RCFGenerics<
+      G["baseFieldProps"],
+      NewSchema,
+      G["layoutProps"],
+      G["components"],
+      G["customExternalError"]
+    >
+  > {
+    return new FormOptionsBuilder({
       ...this.options,
       schema,
-    });
+    } as never);
   }
 
   // TODO rename to errorTransformer
   customExternalErrors<NewCustomError>(
     externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>,
-  ) {
-    return new FormOptionsBuilder<
-      Replace<G, "customExternalError", NewCustomError>
-    >({
+  ): FormOptionsBuilder<
+    RCFGenerics<
+      G["baseFieldProps"],
+      G["schema"],
+      G["layoutProps"],
+      G["components"],
+      NewCustomError
+    >
+  > {
+    return new FormOptionsBuilder({
       ...this.options,
       externalErrorParser,
-    });
+    } as never);
   }
 
   layout<
@@ -67,34 +82,50 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
     >,
     defaultProps?: DefaultProps,
-  ) {
+  ): FormOptionsBuilder<
+    RCFGenerics<
+      G["baseFieldProps"],
+      G["schema"],
+      MakeOptional<NewLayoutProps, keyof DefaultProps>,
+      G["components"],
+      G["customExternalError"]
+    >
+  > {
     if (defaultProps) {
       layout = withDefaultProps(layout, defaultProps);
     }
-    type NewLayoutPropsWithDefaultsConsidered = MakeOptional<
-      NewLayoutProps,
-      keyof DefaultProps
-    >;
-    return new FormOptionsBuilder<
-      Replace<G, "layoutProps", NewLayoutPropsWithDefaultsConsidered>
-    >({
+    return new FormOptionsBuilder({
       ...this.options,
-      layout: layout as never,
-    });
+      layout,
+    } as never);
   }
 
   type<Type extends ValueType, AdditionalProps>(
     type: Type,
-    component: InputFieldComponent<inferValue<Type>, AdditionalProps>,
-    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
-  ) {
-    type NewTyped = SetTypedComponent<
-      G["components"]["typed"],
+    component: InputFieldComponent<
+      G["schema"],
       inferValue<Type>,
-      ComposedFieldComponent<inferValue<Type>, AdditionalProps>
-    >;
-    type NewComponents = Replace<G["components"], "typed", NewTyped>;
-    type NewG = Replace<G, "components", NewComponents>;
+      AdditionalProps
+    >,
+    ...[initProps]: OptionalArgIfEmpty<
+      Omit<AdditionalProps, keyof AnyFieldProps>
+    >
+  ): FormOptionsBuilder<
+    RCFGenerics<
+      G["baseFieldProps"],
+      G["schema"],
+      G["layoutProps"],
+      {
+        named: G["components"]["named"];
+        typed: SetTypedComponent<
+          G["components"]["typed"],
+          inferValue<Type>,
+          ComposedFieldComponent<G["schema"], inferValue<Type>, AdditionalProps>
+        >;
+      },
+      G["customExternalError"]
+    >
+  > {
     const {
       components: { typed, named },
       ...rest
@@ -102,33 +133,45 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     if (initProps) {
       component = withDefaultProps(component, initProps as never);
     }
-    return new FormOptionsBuilder<NewG>({
+    return new FormOptionsBuilder({
       ...rest,
       components: {
         named,
         typed: setTypedComponent(typed, type, component),
       },
-    });
+    } as never);
   }
 
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
     name: FieldName,
     component: InputFieldComponent<
+      G["schema"],
       inferFieldValue<G["schema"], FieldName>,
       AdditionalProps
     >,
-    ...[initProps]: OptionalArgIfEmpty<Omit<AdditionalProps, keyof FieldProps>>
-  ) {
-    type NewNamed = Omit<G["components"]["named"], FieldName> &
-      Record<
-        FieldName,
-        ComposedFieldComponent<
-          inferFieldValue<G["schema"], FieldName>,
-          AdditionalProps
-        >
-      >;
-    type NewComponents = Replace<G["components"], "named", NewNamed>;
-    type NewG = Replace<G, "components", NewComponents>;
+    ...[initProps]: OptionalArgIfEmpty<
+      Omit<AdditionalProps, keyof AnyFieldProps>
+    >
+  ): FormOptionsBuilder<
+    RCFGenerics<
+      G["baseFieldProps"],
+      G["schema"],
+      G["layoutProps"],
+      {
+        typed: G["components"]["typed"];
+        named: Omit<G["components"]["named"], FieldName> &
+          Record<
+            FieldName,
+            ComposedFieldComponent<
+              G["schema"],
+              inferFieldValue<G["schema"], FieldName>,
+              AdditionalProps
+            >
+          >;
+      },
+      G["customExternalError"]
+    >
+  > {
     const {
       components: { named, typed },
       ...rest
@@ -136,7 +179,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     if (initProps) {
       component = withDefaultProps(component, initProps as never);
     }
-    return new FormOptionsBuilder<NewG>({
+    return new FormOptionsBuilder({
       ...rest,
       components: {
         typed,
@@ -145,24 +188,26 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
           [name]: component,
         },
       },
-    });
+    } as never);
   }
 
-  conditions(fieldConditionSelector: FieldConditionsSelector<G["schema"]>) {
-    return new FormOptionsBuilder<G>({
+  conditions(
+    fieldConditionSelector: FieldConditionsSelector<G["schema"]>,
+  ): FormOptionsBuilder<G> {
+    return new FormOptionsBuilder({
       ...this.options,
       fieldConditionsSelector: fieldConditionSelector,
-    });
+    } as never);
   }
 
-  validateOn(...modes: FormValidationMode[]) {
+  validateOn(...modes: FormValidationMode[]): FormOptionsBuilder<G> {
     return new FormOptionsBuilder({
       ...this.options,
       modes,
-    });
+    } as never);
   }
 
-  build() {
+  build(): FormOptions<G> {
     return this.options;
   }
 }

@@ -1,8 +1,9 @@
 import "@testing-library/jest-dom";
 import { z } from "zod";
+import type { RenderResult } from "@testing-library/react";
 import { render } from "@testing-library/react";
 import type { ComponentProps, ComponentType } from "react";
-import { useState } from "react";
+import { StrictMode, useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 import { silenceErrorLogs } from "./utils";
@@ -97,6 +98,189 @@ describe("data", () => {
     await userEvent.clear(getByRole("textbox"));
     await userEvent.type(getByRole("textbox"), "baz");
     expect(getByRole("textbox")).toHaveValue("baz");
+  });
+
+  describe("external field value access", () => {
+    describe("strict mode", () => {
+      testStrictModeSensitiveCases((element) =>
+        render(<StrictMode>{element}</StrictMode>),
+      );
+    });
+
+    describe("non-strict mode", () => {
+      it("ignores changes in unused other fields", async () => {
+        let valRenders = 0;
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ a: z.number(), b: z.number(), val: z.string() }))
+            .field("a", ({ name, value, onChange }) => (
+              <input
+                aria-label={name}
+                value={value ?? ""}
+                onChange={(e) => onChange?.(parseInt(e.target.value))}
+              />
+            ))
+            .field("b", ({ name, value, onChange }) => (
+              <input
+                aria-label={name}
+                value={value ?? ""}
+                onChange={(e) => onChange?.(parseInt(e.target.value))}
+              />
+            ))
+            .field("val", ({ fieldValues }) => (
+              <span>{`val:${fieldValues?.a},renders:${++valRenders}`}</span>
+            )),
+        );
+        const { getByRole, getByText } = render(
+          <Form defaultValue={{ a: 0, b: 0, val: "baz" }} />,
+        );
+        getByText("val:0,renders:1");
+        await userEvent.type(getByRole("textbox", { name: "a" }), "2");
+        getByText("val:2,renders:2");
+        await userEvent.type(getByRole("textbox", { name: "b" }), "3");
+        getByText("val:2,renders:2");
+      });
+
+      it("ignores changes when no longer using field value", async () => {
+        const valRenders: unknown[] = [];
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ a: z.string(), val: z.string() }))
+            .field("a", ({ name, value, onChange }) => (
+              <input
+                aria-label={name}
+                value={value ?? ""}
+                onChange={(e) => onChange?.(e.target.value)}
+              />
+            ))
+            .field("val", ({ fieldValues }) => {
+              const val = valRenders.length < 5 ? fieldValues?.a : "unknown";
+              valRenders.push(val);
+              return null;
+            }),
+        );
+        const { getByRole } = render(
+          <Form defaultValue={{ a: "", val: "baz" }} />,
+        );
+        expect(valRenders).toEqual([""]);
+        await userEvent.type(getByRole("textbox"), "hello world");
+        expect(valRenders).toEqual(["", "h", "he", "hel", "hell", "unknown"]);
+      });
+
+      testStrictModeSensitiveCases(render);
+    });
+
+    function testStrictModeSensitiveCases(
+      render: (element: JSX.Element) => RenderResult,
+    ) {
+      it("can access initial value of another field", () => {
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ foo: z.string(), bar: z.string() }))
+            .field("foo", () => <></>)
+            .field("bar", ({ fieldValues }) => (
+              <span>bar:{fieldValues?.foo}</span>
+            )),
+        );
+        const { getByText } = render(
+          <Form value={{ foo: "hello", bar: "world" }} />,
+        );
+        getByText("bar:hello");
+      });
+
+      it("can react to changes in a single other field (uncontrolled)", async () => {
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ foo: z.string(), bar: z.string() }))
+            .field("foo", ({ value, onChange }) => (
+              <input
+                value={value ?? ""}
+                onChange={(e) => onChange?.(e.target.value)}
+              />
+            ))
+            .field("bar", ({ fieldValues }) => (
+              <span>bar:{fieldValues?.foo}</span>
+            )),
+        );
+        const { getByText, getByRole } = render(<Form />);
+        await userEvent.type(getByRole("textbox"), "A");
+        getByText("bar:A");
+      });
+
+      it("reacts to changes in a single other field", async () => {
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ foo: z.string(), bar: z.string() }))
+            .field("foo", ({ value, onChange }) => (
+              <input
+                value={value ?? ""}
+                onChange={(e) => onChange?.(e.target.value)}
+              />
+            ))
+            .field("bar", ({ fieldValues }) => (
+              <span>bar:{fieldValues?.foo}</span>
+            )),
+        );
+        const { getByRole, getByText } = render(
+          <Form defaultValue={{ foo: "before", bar: "baz" }} />,
+        );
+        getByText("bar:before");
+        await userEvent.clear(getByRole("textbox"));
+        await userEvent.type(getByRole("textbox"), "after");
+        getByText("bar:after");
+      });
+
+      it("reacts to changes in multiple other fields", async () => {
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ a: z.number(), b: z.number(), sum: z.string() }))
+            .field("a", ({ name, value, onChange }) => (
+              <input
+                aria-label={name}
+                value={value ?? ""}
+                onChange={(e) => onChange?.(parseInt(e.target.value))}
+              />
+            ))
+            .field("b", ({ name, value, onChange }) => (
+              <input
+                aria-label={name}
+                value={value ?? ""}
+                onChange={(e) => onChange?.(parseInt(e.target.value))}
+              />
+            ))
+            .field("sum", ({ fieldValues }) => (
+              <span>sum:{fieldValues?.a! + fieldValues?.b!}</span>
+            )),
+        );
+        const { getByRole, getByText } = render(
+          <Form defaultValue={{ a: 0, b: 0, sum: "baz" }} />,
+        );
+        getByText("sum:0");
+        await userEvent.type(getByRole("textbox", { name: "a" }), "2");
+        getByText("sum:2");
+        await userEvent.type(getByRole("textbox", { name: "b" }), "3");
+        getByText("sum:5");
+      });
+
+      it("can react to changes in a single other field (uncontrolled, strict mode)", async () => {
+        const Form = createForm((options) =>
+          options
+            .schema(z.object({ foo: z.string(), bar: z.string() }))
+            .field("foo", ({ value, onChange }) => (
+              <input
+                value={value ?? ""}
+                onChange={(e) => onChange?.(e.target.value)}
+              />
+            ))
+            .field("bar", ({ fieldValues }) => (
+              <span>bar:{fieldValues?.foo}</span>
+            )),
+        );
+        const { getByText, getByRole } = render(<Form />);
+        await userEvent.type(getByRole("textbox"), "hello");
+        getByText("bar:hello");
+      });
+    }
   });
 
   it("can reset", async () => {

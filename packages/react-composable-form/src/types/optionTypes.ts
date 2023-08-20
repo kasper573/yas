@@ -72,18 +72,27 @@ export interface FormLayoutProps<
   reset: () => unknown;
 }
 
-export type InputFieldComponent<Value, AdditionalProps> = ComponentType<
-  FieldProps<Value> & AdditionalProps
+export type InputFieldComponent<
+  Schema extends FormSchema,
+  Value,
+  AdditionalProps,
+> = ComponentType<FieldProps<Value, inferValue<Schema>> & AdditionalProps>;
+
+export type ComposedFieldComponent<
+  Schema extends FormSchema,
+  Value,
+  AdditionalProps,
+> = ComponentType<
+  Partial<FieldProps<Value, inferValue<Schema>> & AdditionalProps>
 >;
 
-export type ComposedFieldComponent<Value, AdditionalProps> = ComponentType<
-  Partial<FieldProps<Value> & AdditionalProps>
->;
+export type AnyFieldProps = FieldProps<any, unknown>;
 
-export interface FieldProps<Value = any> {
+export interface FieldProps<Value = unknown, FieldValues = unknown> {
   name?: string;
   value?: Value;
   required?: boolean;
+  fieldValues?: FieldValues;
   errors?: AnyError[];
   onChange?: (newValue?: Value) => unknown;
   onBlur?: () => unknown;
@@ -93,7 +102,9 @@ export interface FieldProps<Value = any> {
 export type FieldFor<
   Schema extends FormSchema,
   FieldName extends FieldNames<Schema> = FieldNames<Schema>,
-> = ComponentType<FieldProps<inferFieldValue<Schema, FieldName>>>;
+> = ComponentType<
+  FieldProps<inferFieldValue<Schema, FieldName>, inferValue<Schema>>
+>;
 
 export type NamedComponents = Record<string, AnyComponent>;
 
