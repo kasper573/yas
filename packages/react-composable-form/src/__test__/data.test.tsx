@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom";
 import { z } from "zod";
+import { render } from "@testing-library/react";
 import type { ComponentProps, ComponentType } from "react";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
-import { render } from "./utils";
 import { silenceErrorLogs } from "./utils";
 
 describe("data", () => {
@@ -305,7 +305,7 @@ describe("data", () => {
     const fooBefore = Foo.getCount();
     const barBefore = Bar.getCount();
     await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
-    expect(Foo.getCount() - fooBefore).toBe(6);
+    expect(Foo.getCount() - fooBefore).toBe(3);
     expect(Bar.getCount() - barBefore).toBe(0);
   });
 
@@ -331,7 +331,7 @@ describe("data", () => {
     const fooBefore = Foo.getCount();
     const barBefore = Bar.getCount();
     await userEvent.type(getByRole("textbox", { name: "foo" }), "baz");
-    expect(Foo.getCount() - fooBefore).toBe(6);
+    expect(Foo.getCount() - fooBefore).toBe(3);
     expect(Bar.getCount() - barBefore).toBe(0);
   });
 });

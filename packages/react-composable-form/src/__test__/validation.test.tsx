@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom";
 import { z } from "zod";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
 import type { ErrorList, FormValidationMode } from "../types/commonTypes";
-import { render } from "./utils";
 import { silenceErrorLogs } from "./utils";
 
 describe("validation", () => {

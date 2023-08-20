@@ -1,6 +1,6 @@
+import { render } from "@testing-library/react";
 import { z } from "zod";
 import { createForm } from "../createForm";
-import { render } from "./utils";
 
 describe("schema", () => {
   it("defines which fields are rendered", () => {
