@@ -35,6 +35,7 @@ export function RadioGroupField<Value>({
   required,
   sx,
   size,
+  fieldValues,
   ...rest
 }: RadioGroupFieldProps<Value>) {
   const id = useId();

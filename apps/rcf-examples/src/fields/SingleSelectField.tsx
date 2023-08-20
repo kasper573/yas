@@ -24,6 +24,7 @@ export function SingleSelectField<Value>({
   value,
   errors = [],
   onChange,
+  fieldValues,
   ...rest
 }: SingleSelectFieldProps<Value>) {
   const id = useId();

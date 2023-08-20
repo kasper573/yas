@@ -27,6 +27,7 @@ export function MultiSelectField<Value>({
   value,
   errors = [],
   onChange,
+  fieldValues,
   ...rest
 }: MultiSelectFieldProps<Value>) {
   const id = useId();
