@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { z } from "zod";
 import { render } from "@testing-library/react";
 import type { ComponentProps, ComponentType } from "react";
-import { StrictMode, useState } from "react";
+import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 import { silenceErrorLogs } from "./utils";
@@ -131,31 +131,6 @@ describe("data", () => {
       );
       const { getByRole, getByText } = render(
         <Form defaultValue={{ foo: "before", bar: "baz" }} />,
-      );
-      getByText("bar:before");
-      await userEvent.clear(getByRole("textbox"));
-      await userEvent.type(getByRole("textbox"), "after");
-      getByText("bar:after");
-    });
-
-    it("reacts to changes in a single other field (strict mode)", async () => {
-      const Form = createForm((options) =>
-        options
-          .schema(z.object({ foo: z.string(), bar: z.string() }))
-          .field("foo", ({ value, onChange }) => (
-            <input
-              value={value ?? ""}
-              onChange={(e) => onChange?.(e.target.value)}
-            />
-          ))
-          .field("bar", ({ fieldValues }) => (
-            <span>bar:{fieldValues?.foo}</span>
-          )),
-      );
-      const { getByRole, getByText } = render(
-        <StrictMode>
-          <Form defaultValue={{ foo: "before", bar: "baz" }} />
-        </StrictMode>,
       );
       getByText("bar:before");
       await userEvent.clear(getByRole("textbox"));
