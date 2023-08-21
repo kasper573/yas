@@ -16,7 +16,7 @@ type safety, testing and code sharing between packages.
 
 It's important that each package uses the same script names for the same use cases. If a package is in need any of these use cases, it must use these exact script names:
 
-- `dev` Starts any and all tools required during development (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
+- `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
 - `build` Builds the app or package for production
 - `lint` Checks for code style errors.
 - `lint:fix` Fixes code style errors (where possible)
