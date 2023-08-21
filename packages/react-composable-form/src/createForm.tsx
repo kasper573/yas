@@ -11,13 +11,19 @@ import { createFieldComponentFactory } from "./createFieldComponentFactory";
 import { FormContext } from "./FormContext";
 import type {
   EmptyFormOptionsGenerics,
-  FormOptionsBuilder,
   FormOptionsBuilderFactory,
 } from "./FormOptionsBuilder";
-import { emptyFormOptionsBuilder } from "./FormOptionsBuilder";
+import {
+  emptyFormOptionsBuilder,
+  FormOptionsBuilder,
+} from "./FormOptionsBuilder";
 import type { FormStoreFor } from "./FormStore";
 import { FormStore } from "./FormStore";
-import type { AnyFormLayoutProps, AnyRCFGenerics } from "./types/optionTypes";
+import type {
+  AnyFormLayoutProps,
+  AnyRCFGenerics,
+  FormOptions,
+} from "./types/optionTypes";
 import { determineFields } from "./utils/determineFields";
 
 export interface FormProps<G extends AnyRCFGenerics> {
@@ -48,11 +54,13 @@ export function createForm<G extends AnyRCFGenerics = EmptyFormOptionsGenerics>(
     G
   >,
 ): FormComponent<G> {
-  return createFormImpl(reduceOptions(emptyFormOptionsBuilder));
+  return createFormForOptions(
+    FormOptionsBuilder.build(reduceOptions(emptyFormOptionsBuilder)),
+  );
 }
 
-function createFormImpl<G extends AnyRCFGenerics>(
-  optionsBuilder: FormOptionsBuilder<G>,
+function createFormForOptions<G extends AnyRCFGenerics>(
+  options: FormOptions<G>,
 ): FormComponent<G> {
   const {
     schema,
@@ -61,7 +69,7 @@ function createFormImpl<G extends AnyRCFGenerics>(
     externalErrorParser,
     modes: prebuiltModes,
     fieldConditionsSelector,
-  } = optionsBuilder.build();
+  } = options;
 
   const fieldList = determineFields(schema, fieldConditionsSelector);
   const resolveFieldComponents = createFieldComponentFactory(
@@ -166,7 +174,10 @@ function createFormImpl<G extends AnyRCFGenerics>(
     );
   }) as FormComponent<G>;
 
-  ComposableForm.extend = (extend) => createFormImpl(extend(optionsBuilder));
+  ComposableForm.extend = (extend) =>
+    createFormForOptions(
+      FormOptionsBuilder.build(extend(new FormOptionsBuilder(options))),
+    );
 
   return ComposableForm;
 }
