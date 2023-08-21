@@ -7,7 +7,7 @@ import type {
   FormValidationMode,
   ValueType,
   FormErrorsParser,
-  FormErrors,
+  FormErrorState,
   inferFieldValue,
   inferValue,
 } from "./types/commonTypes";
@@ -235,7 +235,7 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
   ZodObject<{}>,
   {},
   FieldComponentGenerics<{}, []>,
-  Partial<FormErrors<ZodObject<{}>>> | undefined
+  Partial<FormErrorState<ZodObject<{}>>> | undefined
 >;
 
 function NoLayout<

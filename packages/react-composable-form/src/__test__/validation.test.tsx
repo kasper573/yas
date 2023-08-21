@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { createForm } from "../createForm";
-import type { ErrorList, FormValidationMode } from "../types/commonTypes";
+import type { FormErrorList, FormValidationMode } from "../types/commonTypes";
 import { silenceErrorLogs } from "./utils";
 
 describe("validation", () => {
@@ -446,10 +446,12 @@ describe("validation", () => {
     it("can customize error format", async () => {
       const Form = createForm((options) =>
         options
-          .customExternalErrors(([general, foo]: [ErrorList, ErrorList]) => ({
-            general,
-            field: { foo },
-          }))
+          .customExternalErrors(
+            ([general, foo]: [FormErrorList, FormErrorList]) => ({
+              general,
+              field: { foo },
+            }),
+          )
           .schema(z.object({ foo: z.string() }))
           .layout(({ generalErrors, fieldErrors }) => (
             <>

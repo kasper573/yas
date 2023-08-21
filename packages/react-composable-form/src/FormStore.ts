@@ -8,8 +8,8 @@ import type {
   inferValue,
 } from "./types/commonTypes";
 import type { FieldErrors } from "./types/commonTypes";
-import type { AnyError } from "./types/commonTypes";
-import type { FormErrors } from "./types/commonTypes";
+import type { FormError } from "./types/commonTypes";
+import type { FormErrorState } from "./types/commonTypes";
 import type { AnyRCFGenerics } from "./types/optionTypes";
 import type { FieldInfo } from "./utils/determineFields";
 
@@ -24,7 +24,7 @@ export class FormStore<Schema extends FormSchema> {
     return this._state.data;
   }
 
-  get generalErrors(): AnyError[] {
+  get generalErrors(): FormError[] {
     return this._state.combinedErrors.general;
   }
 
@@ -90,7 +90,7 @@ export class FormStore<Schema extends FormSchema> {
     });
   }
 
-  setExternalErrors(errors?: FormErrors<Schema>) {
+  setExternalErrors(errors?: FormErrorState<Schema>) {
     this.mutate((draft) => {
       draft.externalErrors.field = errors?.field ?? {};
       draft.externalErrors.general = errors?.general ?? [];
@@ -211,13 +211,13 @@ export class FormStore<Schema extends FormSchema> {
 function getFormErrorState<Schema extends FormSchema>(
   schema: Schema,
   value: inferValue<Schema>,
-): FormErrors<Schema> {
+): FormErrorState<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
     return emptyFormErrorState();
   }
   const { formErrors: general, fieldErrors: field } = res.error.flatten();
-  return { general, field } as FormErrors<Schema>;
+  return { general, field } as FormErrorState<Schema>;
 }
 
 export type StoreUnsubscriber = () => void;
@@ -226,7 +226,9 @@ export type StoreListener<Schema extends FormSchema> = (
   state: FormState<Schema>,
 ) => void;
 
-function emptyFormErrorState<Schema extends FormSchema>(): FormErrors<Schema> {
+function emptyFormErrorState<
+  Schema extends FormSchema,
+>(): FormErrorState<Schema> {
   return {
     general: [],
     field: {},

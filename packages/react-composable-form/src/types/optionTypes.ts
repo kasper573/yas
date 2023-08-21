@@ -4,7 +4,7 @@ import type { GetTypedComponent } from "../utils/typedComponents";
 import type { TypedComponentTuple } from "../utils/typedComponents";
 import type { AnyComponent, AnyProps } from "./utilityTypes";
 import type {
-  AnyError,
+  FormError,
   FormErrorsParser,
   FieldErrors,
   FieldNames,
@@ -64,7 +64,7 @@ export interface FormLayoutProps<
   Schema extends FormSchema,
   Components extends FieldComponentGenerics,
 > {
-  generalErrors: AnyError[];
+  generalErrors: FormError[];
   fieldErrors: FieldErrors<Schema>;
   fieldValues: inferValue<Schema>;
   fields: FieldComponentsPassedToLayout<Schema, Components>;
@@ -101,7 +101,7 @@ export interface FieldProps<Value = unknown, FieldValues = unknown> {
   value?: Value;
   required?: boolean;
   fieldValues?: FieldValues;
-  errors?: AnyError[];
+  errors?: FormError[];
   onChange?: (newValue?: Value) => unknown;
   onBlur?: () => unknown;
   onFocus?: () => unknown;

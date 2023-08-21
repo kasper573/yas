@@ -5,9 +5,9 @@ export type FormSchema = ValueType;
 
 export type ValueType<T = any> = ZodType<T>;
 
-export type AnyError = unknown;
+export type FormError = unknown;
 
-export type ErrorList = AnyError[];
+export type FormErrorList = FormError[];
 
 export const formValidationModes = [
   "focus",
@@ -19,9 +19,9 @@ export const formValidationModes = [
 export type FormValidationMode = (typeof formValidationModes)[number];
 
 export interface FormState<Schema extends FormSchema> {
-  localErrors: FormErrors<Schema>;
-  externalErrors: FormErrors<Schema>;
-  combinedErrors: FormErrors<Schema>;
+  localErrors: FormErrorState<Schema>;
+  externalErrors: FormErrorState<Schema>;
+  combinedErrors: FormErrorState<Schema>;
   data: inferValue<Schema>;
 }
 
@@ -31,15 +31,15 @@ export type FieldNames<Schema extends FormSchema> = `${string &
 export type FieldErrors<Schema extends FormSchema> =
   // Falls back to anonymous record when no fields are specified to avoid defining as {} which would match any type
   keyof FieldNames<Schema> extends never
-    ? Record<string, ErrorList>
-    : { [K in FieldNames<Schema>]?: ErrorList };
+    ? Record<string, FormErrorList>
+    : { [K in FieldNames<Schema>]?: FormErrorList };
 
 export type FormErrorsParser<CustomError, Schema extends FormSchema> = (
   error: CustomError,
-) => FormErrors<Schema>;
+) => FormErrorState<Schema>;
 
-export interface FormErrors<Schema extends FormSchema> {
-  general: ErrorList;
+export interface FormErrorState<Schema extends FormSchema> {
+  general: FormErrorList;
   field: FieldErrors<Schema>;
 }
 
