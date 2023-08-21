@@ -12,7 +12,14 @@ This project is also a demonstration of how I like to run monorepos,
 showcasing strict conventions, type safety and testing,
 with a heavy focus of code sharing between packages.
 
-## Monorepo script convention
+## Monorepo conventions
+
+- The repository root should only hold global tooling and configuration files.
+- Decouple your apps and packages.
+- Keep packages small and focused.
+- For shared configuration, create a package (e.g. [@yas/tsconfig](packages/yas-tsconfig)).
+
+### Scripts
 
 It's important that each package uses the same script names for the same use cases. If a package is in need any of these use cases, it must use these exact script names:
 
@@ -48,9 +55,3 @@ How you run scripts is a matter of preference. You can do any of the following:
 - Run `pnpm <script>` in the root of a package to run the given script for that package.
 
 </details>
-
-## How to use internal packages
-
-One of the primary benefits of a monorepo is that we can import from packages without having to publish them to npm first.
-
-See Turbos [docs](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages) for more information.
