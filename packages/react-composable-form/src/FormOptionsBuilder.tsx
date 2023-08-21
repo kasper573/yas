@@ -206,8 +206,14 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     } as never);
   }
 
-  build(): FormOptions<G> {
-    return this.options;
+  // build is static as a quick and dirty way to hide the build function from the library consumer,
+  // since it's not really needed for anything other than the form factory itself.
+  // Makes the API a bit nicer.
+
+  static build<G extends AnyRCFGenerics>(
+    builder: FormOptionsBuilder<G>,
+  ): FormOptions<G> {
+    return builder.options;
   }
 }
 
