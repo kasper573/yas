@@ -23,6 +23,6 @@ It's important that each package uses the same script names for the same use cas
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
 
-A general rule of thumb is that scripts should exit with a non-zero exit code if they fail.
+Each script should exit with a non-zero exit code if they fail.
 
-> Each package may implement these scripts differently, as long as they solve the given use case.
+Each package may implement these scripts differently, as long as they solve the given use case.
