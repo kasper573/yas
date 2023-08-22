@@ -121,9 +121,9 @@ importers:
       '@docusaurus/module-type-aliases':
         specifier: 2.4.1
         version: 2.4.1(react-dom@17.0.2)(react@17.0.2)
-      '@yas/build-tools':
-        specifier: workspace:*
-        version: link:../../packages/yas-build-tools
+      '@tsconfig/docusaurus':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../packages/yas-tsconfig
@@ -6837,6 +6837,10 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
     dev: false
+
+  /@tsconfig/docusaurus@2.0.0:
+    resolution: {integrity: sha512-X5wptT7pXA/46/IRFTW76oR5GNjoy9qjNM/1JGhFV4QAsmLh3YUpJJA+Vpx7Ds6eEBxSxz1QrgoNEBy6rLVs8w==}
+    dev: true
 
   /@tsconfig/node10@1.0.9:
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
