@@ -3,30 +3,19 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const sidebars = require("./sidebars");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "YAS",
+  tagline: "Yet Another Stack",
   favicon: "img/favicon.ico",
-
-  // Set the production url of your site here
   url: "https://your-docusaurus-test-site.com",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
-
+  organizationName: "ksandin",
+  projectName: "yas",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -39,17 +28,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+            "https://github.com/ksandin/yas/tree/main/packages/docusaurus/",
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+            "https://github.com/ksandin/yas/tree/main/packages/docusaurus/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -70,21 +55,21 @@ const config = {
       // Replace with your project's social card
       image: "img/docusaurus-social-card.jpg",
       navbar: {
-        title: "My Site",
+        title: "YAS",
         logo: {
-          alt: "My Site Logo",
+          alt: "Yet Another Stack Logo",
           src: "img/logo.svg",
         },
         items: [
-          {
+          ...Object.keys(sidebars).map((sidebarId) => ({
             type: "docSidebar",
-            sidebarId: "tutorialSidebar",
+            sidebarId,
             position: "left",
-            label: "Tutorial",
-          },
+            label: sidebarId,
+          })),
           { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
+            href: "https://github.com/ksandin/yas",
             label: "GitHub",
             position: "right",
           },
