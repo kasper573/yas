@@ -1,42 +1,57 @@
-import React from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
+import React from "react";
+import clsx from "clsx";
+import Mountain from "@site/static/img/undraw_docusaurus_mountain.svg";
+import Tree from "@site/static/img/undraw_docusaurus_tree.svg";
 import styles from "./index.module.css";
 
-function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
+export default function Home() {
+  const {
+    siteConfig: { title, tagline },
+  } = useDocusaurusContext();
   return (
-    <header className={clsx("hero hero--primary", styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro"
-          >
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
+    <Layout title={title} description={tagline}>
+      <header className={clsx("hero hero--primary", styles.heroBanner)}>
+        <div className="container">
+          <h1 className="hero__title">{title}</h1>
+          <p className="hero__subtitle">{tagline}</p>
         </div>
-      </div>
-    </header>
+      </header>
+      <main>
+        <section className={styles.features}>
+          <div className="container">
+            <div className="row">
+              <Feature title="react-composable-form" image={Tree}>
+                Form library for React with focus on composition, convention and
+                type safety.
+              </Feature>
+              <Feature title="react-imperative-hook" image={Mountain}>
+                The declarative nature of React is great for most use cases, but
+                not always. When working with async UI flows that has
+                resolutions, like modals, toasts, drawers, etc. {"you'd"} much
+                rather want an imperative and promise based interface, which is
+                what this library provides.
+              </Feature>
+            </div>
+          </div>
+        </section>
+      </main>
+    </Layout>
   );
 }
 
-export default function Home() {
-  const { siteConfig } = useDocusaurusContext();
+function Feature({ image: Image, title, children }) {
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
-    >
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
-    </Layout>
+    <div className={clsx("col col--6")}>
+      <div className="text--center">
+        <Image className={styles.featureSvg} role="img" />
+      </div>
+      <div className="text--center padding-horiz--md">
+        <h3>{title}</h3>
+        <p>{children}</p>
+      </div>
+    </div>
   );
 }
