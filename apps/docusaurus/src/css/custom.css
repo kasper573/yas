@@ -36,3 +36,8 @@
 [data-theme="dark"] .shiki.min-light {
   display: none;
 }
+
+.navbar__logo {
+  width: 32px;
+  height: 32px;
+}
