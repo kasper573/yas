@@ -10,12 +10,6 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
 .buttons {
   display: flex;
   align-items: center;
@@ -24,9 +18,9 @@
 
 .features {
   display: flex;
-  align-items: center;
-  padding: 2rem 0;
   width: 100%;
+  padding: 2rem 0;
+  position: relative;
 }
 
 .featureImage {
@@ -34,4 +28,14 @@
   width: 200px;
   object-fit: contain;
   margin-bottom: 1em;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+
+  .feature + .feature {
+    margin-top: 24px;
+  }
 }
