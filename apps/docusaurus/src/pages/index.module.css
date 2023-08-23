@@ -16,6 +16,10 @@
   justify-content: center;
 }
 
+.feature {
+  padding: 2rem 2rem;
+}
+
 .features {
   display: flex;
   width: 100%;
