@@ -14,7 +14,7 @@ type safety, testing and code sharing between packages.
 
 ### Scripts
 
-It's important that each package uses the same script names for the same use cases. If a package is in need any of these use cases, it must use these exact script names:
+The following scripts are available in the root of the repository and will run the same script in each package.
 
 - `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
 - `build` Builds the app or package for production
@@ -23,6 +23,8 @@ It's important that each package uses the same script names for the same use cas
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
 
-Each script should exit with a non-zero exit code if they fail.
+#### Script conventions
 
-Each package may implement these scripts differently, as long as they solve the given use case.
+- Each script should exit with a non-zero exit code if they fail.
+- Each package may implement these scripts differently, as long as they satisfy the given use case.
+- A package may opt out of these scripts, but you must not rename them. This is to ensure consistency across packages.
