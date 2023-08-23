@@ -3,7 +3,7 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-const sidebars = require("./sidebars");
+const { projects } = require("./fixtures/projects");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -27,7 +27,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve("./fixtures/sidebars.js"),
           editUrl:
             "https://github.com/ksandin/yas/tree/main/packages/docusaurus/",
         },
@@ -60,12 +60,14 @@ const config = {
           src: "img/logo.png",
         },
         items: [
-          ...Object.keys(sidebars).map((sidebarId) => ({
-            type: "docSidebar",
-            sidebarId,
-            position: "left",
-            label: sidebarId,
-          })),
+          ...projects
+            .filter((p) => p.sidebar)
+            .map(({ sidebar: [sidebarId], title }) => ({
+              type: "docSidebar",
+              sidebarId,
+              position: "left",
+              label: title,
+            })),
           {
             href: "https://github.com/ksandin/yas",
             label: "GitHub",

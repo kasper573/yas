@@ -3,8 +3,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import React from "react";
 import clsx from "clsx";
-import jigsawUrl from "@site/static/img/jigsaw.png";
-import stepsUrl from "@site/static/img/steps.png";
+import { projects } from "@site/fixtures/projects";
 import styles from "./index.module.css";
 
 export default function Home() {
@@ -23,22 +22,16 @@ export default function Home() {
         <section className={styles.features}>
           <div className="container">
             <div className="row">
-              <Feature
-                title="react-composable-form"
-                image={jigsawUrl}
-                href="/docs/react-composable-form/intro"
-              >
-                Form library for React with focus on composition, convention and
-                type safety.
-              </Feature>
-              <Feature
-                title="react-imperative-hook"
-                image={stepsUrl}
-                href="/docs/react-imperative-hook/intro"
-              >
-                React hook for improved DX with async UI flows like modals,
-                toasts, drawers, etc.
-              </Feature>
+              {projects.map((project, index) => (
+                <Feature
+                  key={index}
+                  title={project.title}
+                  image={project.imageUrl}
+                  href={project.href}
+                >
+                  {project.description}
+                </Feature>
+              ))}
             </div>
           </div>
         </section>
@@ -47,9 +40,17 @@ export default function Home() {
   );
 }
 
+const columnSizeClass =
+  {
+    1: "col--12",
+    2: "col--6",
+  }[projects.length] ?? "col--4";
+
 function Feature({ image, title, children, href }) {
   return (
-    <div className={clsx("col col--6 text--center", styles.feature)}>
+    <div
+      className={clsx(`col ${columnSizeClass} text--center`, styles.feature)}
+    >
       <Link to={href} style={{ display: "block" }}>
         <img
           src={image}
