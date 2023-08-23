@@ -3,8 +3,8 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import React from "react";
 import clsx from "clsx";
-import Mountain from "@site/static/img/undraw_docusaurus_mountain.svg";
-import Tree from "@site/static/img/undraw_docusaurus_tree.svg";
+import jigsawUrl from "@site/static/img/jigsaw.png";
+import stepsUrl from "@site/static/img/steps.png";
 import styles from "./index.module.css";
 
 export default function Home() {
@@ -23,16 +23,21 @@ export default function Home() {
         <section className={styles.features}>
           <div className="container">
             <div className="row">
-              <Feature title="react-composable-form" image={Tree}>
+              <Feature
+                title="react-composable-form"
+                image={jigsawUrl}
+                href="/docs/react-composable-form/"
+              >
                 Form library for React with focus on composition, convention and
                 type safety.
               </Feature>
-              <Feature title="react-imperative-hook" image={Mountain}>
-                The declarative nature of React is great for most use cases, but
-                not always. When working with async UI flows that has
-                resolutions, like modals, toasts, drawers, etc. {"you'd"} much
-                rather want an imperative and promise based interface, which is
-                what this library provides.
+              <Feature
+                title="react-imperative-hook"
+                image={stepsUrl}
+                href="/docs/react-imperative-hook/"
+              >
+                React hook for improved DX with async UI flows like modals,
+                toasts, drawers, etc.
               </Feature>
             </div>
           </div>
@@ -42,12 +47,17 @@ export default function Home() {
   );
 }
 
-function Feature({ image: Image, title, children }) {
+function Feature({ image, title, children, href }) {
   return (
     <div className={clsx("col col--6")}>
-      <div className="text--center">
-        <Image className={styles.featureSvg} role="img" />
-      </div>
+      <Link to={href} className="text--center" style={{ display: "block" }}>
+        <img
+          src={image}
+          className={styles.featureImage}
+          role="img"
+          alt={`${title} image`}
+        />
+      </Link>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{children}</p>
