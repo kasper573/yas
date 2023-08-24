@@ -1,5 +1,4 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
@@ -21,6 +20,8 @@ const config = {
     locales: ["en"],
   },
 
+  themes: ["@docusaurus/theme-live-codeblock"],
+
   presets: [
     [
       "classic",
@@ -40,12 +41,6 @@ const config = {
           customCss: require.resolve("./src/css/custom.css"),
         },
       }),
-    ],
-    [
-      "docusaurus-preset-shiki-twoslash",
-      {
-        themes: ["min-light", "nord"],
-      },
     ],
   ],
 
@@ -78,6 +73,10 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        defaultLanguage: "typescript",
+      },
+      liveCodeBlock: {
+        playgroundPosition: "bottom",
       },
     }),
 };
