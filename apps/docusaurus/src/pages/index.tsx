@@ -10,12 +10,16 @@ export default function Home() {
     siteConfig: { title, tagline },
   } = useDocusaurusContext();
   return (
-    <Layout title={title} description={tagline}>
-      <header className={clsx("hero hero--primary", styles.heroBanner)}>
-        <div className="container">
-          <h1 className="hero__title">{title}</h1>
-          <p className="hero__subtitle">{tagline}</p>
-        </div>
+    <Layout description={tagline}>
+      <header className={styles.hero}>
+        <h1 className={styles.title}>
+          {title.split(/\s+/).map((word, index) => (
+            <span key={index} className={styles.titleWord}>
+              {word}
+            </span>
+          ))}
+        </h1>
+        <p className={styles.tagline}>{tagline}</p>
       </header>
       <main>
         <section className={styles.features}>
@@ -63,5 +67,3 @@ function Feature({ image, title, children, href }) {
     </div>
   );
 }
-
-const H3 = (props) => <h3 {...props} />;

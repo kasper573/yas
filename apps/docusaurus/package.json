@@ -26,6 +26,7 @@
     "@docusaurus/module-type-aliases": "3.0.0-alpha.0",
     "@tsconfig/docusaurus": "^2.0.0",
     "@yas/tsconfig": "workspace:*",
+    "current-git-branch": "^1.1.0",
     "eslint": "^8.35.0",
     "eslint-config-yas": "workspace:*",
     "raw-loader": "^4.0.2",

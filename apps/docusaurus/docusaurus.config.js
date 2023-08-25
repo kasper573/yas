@@ -1,8 +1,17 @@
 // @ts-check
 
+const path = require("path");
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const getGitBranchName = require("current-git-branch");
 const { projects } = require("./fixtures/projects");
+
+const branchName = getGitBranchName();
+const yasGithubUrl = "https://github.com/ksandin/yas";
+const rootDir = path.resolve(__dirname, "..", "..");
+const pathToAppRelativeToRoot = __dirname
+  .replace(rootDir, "")
+  .replaceAll("\\", "/");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -29,13 +38,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./fixtures/sidebars.js"),
-          editUrl:
-            "https://github.com/ksandin/yas/tree/main/packages/docusaurus/",
-        },
-        blog: {
-          showReadingTime: true,
-          editUrl:
-            "https://github.com/ksandin/yas/tree/main/packages/docusaurus/",
+          editUrl: `${yasGithubUrl}/tree/${branchName}${pathToAppRelativeToRoot}`,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -64,7 +67,7 @@ const config = {
               label: title,
             })),
           {
-            href: "https://github.com/ksandin/yas",
+            href: yasGithubUrl,
             label: "GitHub",
             position: "right",
           },
@@ -77,6 +80,9 @@ const config = {
       },
       liveCodeBlock: {
         playgroundPosition: "bottom",
+      },
+      footer: {
+        copyright: `Made by <a href="https://github.com/ksandin">@ksandin</a> using <a href="https://docusaurus.io/">Docusaurus</a>.`,
       },
     }),
 };
