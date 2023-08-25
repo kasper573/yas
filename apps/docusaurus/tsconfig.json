@@ -2,7 +2,6 @@
   "extends": "@tsconfig/docusaurus/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "react-jsx",
     "lib": ["dom", "esnext"]
   }
 }
