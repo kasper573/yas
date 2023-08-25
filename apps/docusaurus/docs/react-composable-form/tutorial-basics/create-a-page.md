@@ -15,7 +15,7 @@ Add **Markdown or React** files to `src/pages` to create a **standalone page**:
 Create a file at `src/pages/my-react-page.js`:
 
 ```jsx title="src/pages/my-react-page.js"
-import Layout from '@theme/Layout';
+import Layout from "@theme/Layout";
 
 export default function MyReactPage() {
   return (

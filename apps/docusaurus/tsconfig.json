@@ -3,6 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "esnext"]
   }
 }

@@ -14,11 +14,14 @@
   --ifm-color-primary-lighter: #2f7abb;
   --ifm-color-primary-lightest: #3b89ce;
   --ifm-background-color: #fafcff;
-  --ifm-background-gradient: linear-gradient(rgb(237, 245, 255), rgb(250, 252, 255));
+  --ifm-background-gradient: linear-gradient(
+    rgb(237, 245, 255),
+    rgb(250, 252, 255)
+  );
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ifm-color-primary: #9aabfe;
   --ifm-color-primary-dark: #7289fe;
   --ifm-color-primary-darker: #5d79fd;
