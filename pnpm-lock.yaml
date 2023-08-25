@@ -88,16 +88,16 @@ importers:
   apps/docusaurus:
     dependencies:
       '@docusaurus/core':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(@docusaurus/types@2.4.1)(eslint@8.35.0)(react-dom@17.0.2)(react@17.0.2)(typescript@5.1.3)
       '@docusaurus/preset-classic':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(@algolia/client-search@4.19.1)(eslint@8.35.0)(react-dom@17.0.2)(react@17.0.2)(search-insights@2.7.0)(typescript@5.1.3)
       '@docusaurus/theme-classic':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(eslint@8.35.0)(react-dom@17.0.2)(react@17.0.2)(typescript@5.1.3)
       '@docusaurus/theme-live-codeblock':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(eslint@8.35.0)(react-dom@17.0.2)(react@17.0.2)(typescript@5.1.3)
       '@mdx-js/react':
         specifier: 1.6.22
@@ -109,8 +109,8 @@ importers:
         specifier: ^10.0.2
         version: 10.0.2
       prism-react-renderer:
-        specifier: ^2.0.6
-        version: 2.0.6(react@17.0.2)
+        specifier: 1.3.5
+        version: 1.3.5(react@17.0.2)
       react:
         specifier: 17.0.2
         version: 17.0.2
@@ -125,10 +125,10 @@ importers:
         version: 3.21.4
     devDependencies:
       '@docusaurus/module-type-aliases':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(react-dom@17.0.2)(react@17.0.2)
       '@tsconfig/docusaurus':
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0
       '@yas/tsconfig':
         specifier: workspace:*
@@ -384,13 +384,6 @@ importers:
         version: 3.21.4
 
   packages/react-imperative-hook:
-    dependencies:
-      immer:
-        specifier: ^10.0.2
-        version: 10.0.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
     devDependencies:
       '@testing-library/react':
         specifier: ^14.0.0
@@ -404,6 +397,9 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
       jest:
         specifier: ^29.5.0
         version: 29.6.1(@types/node@20.5.6)
@@ -413,6 +409,9 @@ importers:
       publicize-package-json:
         specifier: workspace:*
         version: link:../publicize-package-json
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       tsup:
         specifier: ^7.1.0
         version: 7.1.0(typescript@5.1.3)
@@ -767,7 +766,7 @@ packages:
       '@babel/parser': 7.22.11
       '@babel/template': 7.22.5
       '@babel/traverse': 7.22.11
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.11
       convert-source-map: 1.9.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
@@ -803,7 +802,7 @@ packages:
     resolution: {integrity: sha512-F3fZga2uv09wFdEjEQIJxXALXfz0+JaOb7SabvVMmjHxeVTuGW8wgE8Vp1Hd7O+zMTYtcfEISGRzPkeiaPPsvg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.11
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
       jsesc: 2.5.2
@@ -1119,7 +1118,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.11
     dev: true
 
   /@babel/parser@7.22.11:
@@ -1301,7 +1300,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
       '@babel/plugin-transform-parameters': 7.22.5(@babel/core@7.12.9)
     dev: false
@@ -2796,7 +2795,7 @@ packages:
       '@babel/plugin-transform-unicode-escapes': 7.22.10(@babel/core@7.21.8)
       '@babel/plugin-transform-unicode-regex': 7.22.5(@babel/core@7.21.8)
       '@babel/preset-modules': 0.1.6(@babel/core@7.21.8)
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.11
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.21.8)
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.21.8)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.21.8)
@@ -2917,7 +2916,7 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-proposal-unicode-property-regex': 7.18.6(@babel/core@7.21.8)
       '@babel/plugin-transform-dotall-regex': 7.22.5(@babel/core@7.21.8)
-      '@babel/types': 7.21.5
+      '@babel/types': 7.22.11
       esutils: 2.0.3
     dev: true
 
@@ -3003,13 +3002,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.22.10
-      '@babel/generator': 7.21.9
+      '@babel/generator': 7.22.10
       '@babel/helper-environment-visitor': 7.22.5
       '@babel/helper-function-name': 7.22.5
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
-      '@babel/parser': 7.21.9
-      '@babel/types': 7.21.5
+      '@babel/parser': 7.22.11
+      '@babel/types': 7.22.11
       debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
@@ -6133,7 +6132,7 @@ packages:
   /@storybook/expect@27.5.2-0:
     resolution: {integrity: sha512-cP99mhWN/JeCp7VSIiymvj5tmuMY050iFohvp8Zq+kewKsBSZ6/qpTJAGCCZk6pneTcp4S0Fm5BSqyxzbyJ3gw==}
     dependencies:
-      '@types/jest': 29.5.3
+      '@types/jest': 29.5.4
     dev: true
 
   /@storybook/global@5.0.0:
@@ -7009,7 +7008,7 @@ packages:
     resolution: {integrity: sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==}
     dependencies:
       '@types/jsonfile': 6.1.1
-      '@types/node': 16.18.46
+      '@types/node': 20.5.6
     dev: true
 
   /@types/glob@7.2.0:
@@ -7023,7 +7022,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 16.18.46
+      '@types/node': 20.5.6
     dev: true
 
   /@types/graceful-fs@4.1.6:
@@ -7074,6 +7073,13 @@ packages:
       pretty-format: 29.6.3
     dev: true
 
+  /@types/jest@29.5.4:
+    resolution: {integrity: sha512-PhglGmhWeD46FYOVLt3X7TiWjzwuVGW9wG/4qocPevXMjCmrIc5b6db9WjeGE4QYVpUAWMDv3v0IiBwObY289A==}
+    dependencies:
+      expect: 29.6.4
+      pretty-format: 29.6.3
+    dev: true
+
   /@types/jsdom@20.0.1:
     resolution: {integrity: sha512-d0r18sZPmMQr1eG35u12FZfhIXNrnsPU/g5wvRKCUf/tOGilKKwYMYGqh33BNR6ba+2gkHw1EUiHoN3mn7E5IQ==}
     dependencies:
@@ -7092,7 +7098,7 @@ packages:
   /@types/jsonfile@6.1.1:
     resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
     dependencies:
-      '@types/node': 16.18.46
+      '@types/node': 20.5.6
     dev: true
 
   /@types/keyv@3.1.4:
@@ -7138,7 +7144,7 @@ packages:
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 16.18.46
+      '@types/node': 20.5.6
       form-data: 3.0.1
     dev: true
 
@@ -7176,10 +7182,6 @@ packages:
   /@types/pretty-hrtime@1.0.1:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}
     dev: true
-
-  /@types/prismjs@1.26.0:
-    resolution: {integrity: sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==}
-    dev: false
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -7261,7 +7263,7 @@ packages:
   /@types/sax@1.2.4:
     resolution: {integrity: sha512-pSAff4IAxJjfAXUG6tFkO7dsSbTmf8CtUpfhhZ5VhkRpC4628tJhh3+V6H1E+/Gs9piSzYKT5yzHO5M4GG9jkw==}
     dependencies:
-      '@types/node': 17.0.45
+      '@types/node': 20.5.6
     dev: false
 
   /@types/scheduler@0.16.3:
@@ -7311,7 +7313,7 @@ packages:
   /@types/testing-library__jest-dom@5.14.9:
     resolution: {integrity: sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw==}
     dependencies:
-      '@types/jest': 29.5.3
+      '@types/jest': 29.5.4
     dev: true
 
   /@types/tough-cookie@4.0.2:
@@ -15424,16 +15426,6 @@ packages:
     peerDependencies:
       react: '>=0.14.9'
     dependencies:
-      react: 17.0.2
-    dev: false
-
-  /prism-react-renderer@2.0.6(react@17.0.2):
-    resolution: {integrity: sha512-ERzmAI5UvrcTw5ivfEG20/dYClAsC84eSED5p9X3oKpm0xPV4A5clFK1mp7lPIdKmbLnQYsPTGiOI7WS6gWigw==}
-    peerDependencies:
-      react: '>=16.0.0'
-    dependencies:
-      '@types/prismjs': 1.26.0
-      clsx: 1.2.1
       react: 17.0.2
     dev: false
 
