@@ -3,15 +3,12 @@ description: "Checkout repository and install dependencies"
 runs:
   using: "composite"
   steps:
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
         node-version-file: "package.json"
-        cache: "pnpm"
+        cache: "yarn"
 
     - name: Install Packages
       shell: bash
-      run: pnpm install
+      run: yarn install --frozen-lockfile

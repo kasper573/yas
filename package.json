@@ -17,12 +17,12 @@
     "test:watch": "turbo run test:watch"
   },
   "devDependencies": {
-    "eslint-config-yas": "workspace:*",
+    "eslint-config-yas": "*",
     "prettier": "latest",
     "turbo": "1.8.3"
   },
   "engines": {
     "node": "^18.16.0"
   },
-  "packageManager": "pnpm@8.6.3"
+  "packageManager": "yarn@1.22.17"
 }

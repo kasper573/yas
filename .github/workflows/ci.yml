@@ -10,16 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
-      - run: pnpm lint
-      - run: pnpm format
+      - run: yarn lint
+      - run: yarn format
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
-      - run: pnpm exec playwright install --with-deps
-      - run: pnpm test
+      - run: npx playwright install --with-deps
+      - run: yarn test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -31,4 +31,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
-      - run: pnpm build
+      - run: yarn build
