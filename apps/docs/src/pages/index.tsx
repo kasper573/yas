@@ -1,9 +1,9 @@
-import React from "react";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
 import { projects } from "@site/fixtures/projects";
+import type { ReactNode } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
@@ -48,9 +48,19 @@ const columnSizeClass =
   {
     1: "col--12",
     2: "col--6",
-  }[projects.length] ?? "col--4";
+  }[projects.length as number] ?? "col--4";
 
-function Feature({ image, title, children, href }) {
+function Feature({
+  image,
+  title,
+  children,
+  href,
+}: {
+  image: string;
+  title: string;
+  children: ReactNode;
+  href: string;
+}) {
   return (
     <div
       className={clsx(`col ${columnSizeClass} text--center`, styles.feature)}
