@@ -7,7 +7,7 @@
     "publicize-package-json": "bin/publicize-package-json.ts"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*",
+    "@yas/tsconfig": "*",
     "execa": "^7.1.1",
     "immer": "^10.0.2",
     "tsx": "^3.12.7",
