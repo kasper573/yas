@@ -7,7 +7,12 @@
     "build": "tsc --noEmit && docusaurus build",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
-    "serve": "docusaurus serve"
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
     "@docusaurus/core": "3.0.0-alpha.0",
