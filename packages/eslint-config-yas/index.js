@@ -65,9 +65,9 @@ module.exports = {
     {
       // Enforcing the convention of centralized type safe environment variables for all apps
       files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
-      excludedFiles: ["**/src/env.ts"],
+      excludedFiles: ["**/src/env.ts", "**/src/env.js"],
       rules: rulesForBanningEnvUsage(
-        "Environment variables may only be accessed via the env.ts file in the root of each app.",
+        "Environment variables may only be accessed via the env.ts/env.js file in the root of each app.",
       ),
     },
     {
