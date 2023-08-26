@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext, useSyncExternalStore } from "react";
+import { memo, useCallback, useContext } from "react";
 import type {
   FieldNames,
   FormSchema,
@@ -19,6 +19,7 @@ import type {
 import { getFirstPartyType } from "./utils/isMatchingType";
 import type { FieldInfo } from "./utils/determineFields";
 import { useDeferredFieldValues } from "./useDeferredFieldValues";
+import { useSyncIsomorphicStore } from "./useSyncIsomorphicStore";
 
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: FieldComponentRegistry<G["components"]>,
@@ -79,9 +80,12 @@ function enhanceFieldComponent<
     ...props
   }: Partial<Props>) {
     const store: FormStore<Schema> = useContext(FormContext);
-    const value = useSyncExternalStore(store.subscribe, () => store.data[name]);
+    const value = useSyncIsomorphicStore(
+      store.subscribe,
+      () => store.data[name],
+    );
     const fieldValues = useDeferredFieldValues(allFieldNames, store);
-    const errors = useSyncExternalStore(
+    const errors = useSyncIsomorphicStore(
       store.subscribe,
       () => store.fieldErrors[name],
     );

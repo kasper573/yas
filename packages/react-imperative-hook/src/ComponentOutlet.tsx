@@ -27,7 +27,11 @@ export interface ComponentOutletProps {
 
 export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   const store = useContext(context);
-  const state = useSyncExternalStore(store.subscribe, () => store.state);
+  const state = useSyncExternalStore(
+    store.subscribe,
+    () => store.state,
+    () => store.state,
+  );
   const entries = useMemo(() => collectEntries(state), [state]);
   return createElement(renderer, { entries });
 }
