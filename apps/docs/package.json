@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "docusaurus start",
+    "dev": "docusaurus start --no-open",
     "build": "tsc --noEmit && docusaurus build",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
