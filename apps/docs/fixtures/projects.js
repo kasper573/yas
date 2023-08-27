@@ -1,3 +1,5 @@
+// @ts-check
+
 const projects = [
   defineProjectByConvention("react-composable-form", {
     description:
@@ -11,10 +13,12 @@ const projects = [
   }),
 ];
 
-function defineProjectByConvention(
-  packageName,
-  { imageUrl, description } = {},
-) {
+/**
+ * @param {string} packageName
+ * @param {{imageUrl: string, description: string}} options
+ * @returns {{sidebar: (string|[{type: string, dirName: string}])[], imageUrl: string, description: string, packageName: string, href: string, title: string}}
+ */
+function defineProjectByConvention(packageName, { imageUrl, description }) {
   return {
     packageName,
     title: packageName,

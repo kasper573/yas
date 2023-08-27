@@ -1,0 +1,43 @@
+.stack {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.gap1 {
+  gap: 8px;
+}
+
+.gap2 {
+  gap: 16px;
+}
+
+.gap3 {
+  gap: 24px;
+}
+
+.gap4 {
+  gap: 32px;
+}
+
+.gap5 {
+  gap: 40px;
+}
+
+.gap6 {
+  gap: 48px;
+}
+
+.gap7 {
+  gap: 56px;
+}
+
+.gap8 {
+  gap: 64px;
+}

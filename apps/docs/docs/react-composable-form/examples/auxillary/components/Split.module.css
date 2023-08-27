@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col + .col {
+  margin-left: 24px;
+}
+
+@media screen and (max-width: 1630px) {
+  .row {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1630px) {
+  .tabs {
+    display: none;
+  }
+}
