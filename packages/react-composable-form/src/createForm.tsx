@@ -39,7 +39,7 @@ export type FormComponent<G extends AnyRCFGenerics = AnyRCFGenerics> =
     FormProps<G> & Omit<G["layoutProps"], keyof AnyFormLayoutProps>
   > & {
     extend<NewG extends AnyRCFGenerics>(
-      options: FormOptionsBuilderFactory<G, NewG>
+      options: FormOptionsBuilderFactory<G, NewG>,
     ): FormComponent<NewG>;
   };
 
@@ -47,15 +47,15 @@ export function createForm<G extends AnyRCFGenerics = EmptyFormOptionsGenerics>(
   reduceOptions = passThrough as FormOptionsBuilderFactory<
     EmptyFormOptionsGenerics,
     G
-  >
+  >,
 ): FormComponent<G> {
   return createFormForOptions(
-    FormOptionsBuilder.build(reduceOptions(emptyFormOptionsBuilder))
+    FormOptionsBuilder.build(reduceOptions(emptyFormOptionsBuilder)),
   );
 }
 
 function createFormForOptions<G extends AnyRCFGenerics>(
-  options: FormOptions<G>
+  options: FormOptions<G>,
 ): FormComponent<G> {
   const {
     schema,
@@ -69,7 +69,7 @@ function createFormForOptions<G extends AnyRCFGenerics>(
   const fieldList = determineFields(schema, fieldConditionsSelector);
   const resolveFieldComponents = createFieldComponentFactory(
     components,
-    fieldList
+    fieldList,
   );
 
   function extractActiveFieldsData(allData: inferValue<G["schema"]>) {
@@ -84,7 +84,7 @@ function createFormForOptions<G extends AnyRCFGenerics>(
   const ComposableForm: FormComponent<G> = ((props) => {
     if ("value" in props && "defaultValue" in props) {
       throw new Error(
-        "Cannot set both defaultValue and value, please use one or the other"
+        "Cannot set both defaultValue and value, please use one or the other",
       );
     }
 
@@ -101,37 +101,37 @@ function createFormForOptions<G extends AnyRCFGenerics>(
     } = props;
 
     const [store] = useState(
-      (): FormStoreFor<G> => new FormStore(schema, data, modes, fieldList)
+      (): FormStoreFor<G> => new FormStore(schema, data, modes, fieldList),
     );
 
     const fieldValues = useSyncIsomorphicStore(
       store.subscribe,
-      () => store.data
+      () => store.data,
     );
 
     const selectedFields = useMemo(
       () => resolveFieldComponents(fieldValues),
-      [fieldValues]
+      [fieldValues],
     );
 
     const generalErrors = useSyncIsomorphicStore(
       store.subscribe,
-      () => store.generalErrors
+      () => store.generalErrors,
     );
 
     const fieldErrors = useSyncIsomorphicStore(
       store.subscribe,
-      () => store.fieldErrors
+      () => store.fieldErrors,
     );
 
     useEffect(
       () => store.subscribeToSlice(() => store.data, onChange),
-      [store, onChange]
+      [store, onChange],
     );
 
     useEffect(
       () => store.setExternalErrors(externalErrorParser(externalErrors)),
-      [store, externalErrors]
+      [store, externalErrors],
     );
 
     useEffect(() => {
@@ -150,7 +150,7 @@ function createFormForOptions<G extends AnyRCFGenerics>(
           onSubmit?.(extractActiveFieldsData(store.data));
         }
       },
-      [store, onSubmit]
+      [store, onSubmit],
     );
 
     const handleReset = useCallback(
@@ -158,7 +158,7 @@ function createFormForOptions<G extends AnyRCFGenerics>(
         e?.preventDefault();
         store.reset();
       },
-      [store]
+      [store],
     );
 
     return (
@@ -180,7 +180,7 @@ function createFormForOptions<G extends AnyRCFGenerics>(
 
   ComposableForm.extend = (extend) =>
     createFormForOptions(
-      FormOptionsBuilder.build(extend(new FormOptionsBuilder(options)))
+      FormOptionsBuilder.build(extend(new FormOptionsBuilder(options))),
     );
 
   return ComposableForm;

@@ -21,7 +21,7 @@ describe("validation", () => {
               <Foo />
               <button onClick={handleSubmit}>submit</button>
             </>
-          ))
+          )),
       );
       const { getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
@@ -49,7 +49,7 @@ describe("validation", () => {
               <Foo />
               <button onClick={handleSubmit}>submit</button>
             </>
-          ))
+          )),
       );
       const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
@@ -76,8 +76,8 @@ describe("validation", () => {
                   errors.length ? errors.join(",") : "No errors"
                 }`}</span>
               </>
-            )
-          )
+            ),
+          ),
       );
       const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
@@ -104,11 +104,11 @@ describe("validation", () => {
                   {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
                 </span>
               </>
-            )
-          )
+            ),
+          ),
       );
       const { getByRole, getByText } = render(
-        <Form value={{ foo: "", bar: "" }} />
+        <Form value={{ foo: "", bar: "" }} />,
       );
       getByText("foo: No errors");
       getByText("bar: No errors");
@@ -138,10 +138,10 @@ describe("validation", () => {
                 {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
               </span>
             </>
-          ))
+          )),
       );
       const { getByRole, getByText } = render(
-        <Form value={{ foo: "", bar: "" }} />
+        <Form value={{ foo: "", bar: "" }} />,
       );
       getByText("foo: No errors");
       getByText("bar: No errors");
@@ -172,11 +172,11 @@ describe("validation", () => {
                   {`${name}: ${errors.length ? errors.join(",") : "No errors"}`}
                 </span>
               </>
-            )
-          )
+            ),
+          ),
       );
       const { getByRole, getByText } = render(
-        <Form value={{ foo: "", bar: "" }} />
+        <Form value={{ foo: "", bar: "" }} />,
       );
       getByText("foo: No errors");
       getByText("bar: No errors");
@@ -203,7 +203,7 @@ describe("validation", () => {
               />
               {errors.length ? errors.join(",") : "No errors"}
             </>
-          ))
+          )),
       );
       const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
       getByText("No errors");
@@ -232,7 +232,7 @@ describe("validation", () => {
               <Foo />
               <button onClick={reset}>reset</button>
             </>
-          ))
+          )),
       );
       const { getByRole, getByText } = render(<Form />);
 
@@ -255,7 +255,7 @@ describe("validation", () => {
               />
               <span>{`${errors.length ? errors.join(",") : "No errors"}`}</span>
             </>
-          ))
+          )),
       );
       function App() {
         const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
@@ -288,10 +288,10 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string().min(3) }))
           .layout(({ handleSubmit }) => (
             <button onClick={handleSubmit}>submit</button>
-          ))
+          )),
       );
       const { getByText } = render(
-        <Form value={{ foo: "" }} onSubmit={onSubmit} />
+        <Form value={{ foo: "" }} onSubmit={onSubmit} />,
       );
       await userEvent.click(getByText("submit"));
       expect(onSubmit).not.toHaveBeenCalled();
@@ -321,14 +321,14 @@ describe("validation", () => {
               />
               {errors.join(",")}
             </>
-          ))
+          )),
       );
 
       const { getByRole, getByText } = render(<Form />);
       await userEvent.type(getByRole("textbox", { name: "password" }), "foo");
       await userEvent.type(
         getByRole("textbox", { name: "passwordConfirm" }),
-        "bar"
+        "bar",
       );
       getByText("Passwords do not match");
     });
@@ -340,14 +340,14 @@ describe("validation", () => {
             z
               .object({})
               .refine(() => false, { message: "Error 1" })
-              .refine(() => false, { message: "Error 2" })
+              .refine(() => false, { message: "Error 2" }),
           )
           .layout(({ generalErrors, handleSubmit }) => (
             <>
               <span>{generalErrors?.join(", ")}</span>
               <button onClick={handleSubmit}>submit</button>
             </>
-          ))
+          )),
       );
 
       const { getByRole, getByText } = render(<Form />);
@@ -372,7 +372,7 @@ describe("validation", () => {
               <Foo />
               {fieldErrors.foo?.join(",")}
             </>
-          ))
+          )),
       );
       const { getByRole, getByText } = render(<Form value={{ foo: "" }} />);
       await userEvent.type(getByRole("textbox", { name: "foo" }), "b");
@@ -385,11 +385,11 @@ describe("validation", () => {
       const Form = createForm((options) =>
         options.layout(({ generalErrors }) => (
           <span>{generalErrors?.join(", ")}</span>
-        ))
+        )),
       );
 
       const { getByText } = render(
-        <Form errors={{ general: ["External error"] }} />
+        <Form errors={{ general: ["External error"] }} />,
       );
       getByText("External error");
     });
@@ -398,7 +398,7 @@ describe("validation", () => {
       const Form = createForm((options) =>
         options.layout(({ generalErrors }) => (
           <span>{generalErrors?.join(", ")}</span>
-        ))
+        )),
       );
 
       function TestApp() {
@@ -426,7 +426,7 @@ describe("validation", () => {
           .type(z.string(), () => <span />)
           .layout(({ handleSubmit }) => (
             <button onClick={handleSubmit}>submit</button>
-          ))
+          )),
       );
 
       const { getByRole } = render(
@@ -437,7 +437,7 @@ describe("validation", () => {
             general: ["External error"],
             field: { foo: ["External foo"] },
           }}
-        />
+        />,
       );
       await userEvent.click(getByRole("button", { name: "submit" }));
       expect(onSubmit).toHaveBeenCalledWith({ foo: "" });
@@ -450,7 +450,7 @@ describe("validation", () => {
             ([general, foo]: [FormErrorList, FormErrorList]) => ({
               general,
               field: { foo },
-            })
+            }),
           )
           .schema(z.object({ foo: z.string() }))
           .layout(({ generalErrors, fieldErrors }) => (
@@ -458,7 +458,7 @@ describe("validation", () => {
               <span>general: {generalErrors.join(", ")}</span>
               <span>field: {fieldErrors.foo?.join(", ")}</span>
             </>
-          ))
+          )),
       );
 
       const { getByText } = render(
@@ -467,7 +467,7 @@ describe("validation", () => {
             ["1", "2"],
             ["a", "b"],
           ]}
-        />
+        />,
       );
       getByText("general: 1, 2");
       getByText("field: a, b");
@@ -479,10 +479,10 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string() }))
           .type(z.string(), ({ name, errors = [] }) => (
             <span>{errors.join(",")}</span>
-          ))
+          )),
       );
       const { getByText } = render(
-        <Form errors={{ field: { foo: ["External error"] } }} />
+        <Form errors={{ field: { foo: ["External error"] } }} />,
       );
       getByText("External error");
     });
@@ -493,10 +493,10 @@ describe("validation", () => {
           .schema(z.object({ foo: z.string() }))
           .layout(({ fieldErrors }) => (
             <span>{fieldErrors.foo?.join(",")}</span>
-          ))
+          )),
       );
       const { getByText } = render(
-        <Form errors={{ field: { foo: ["External error"] } }} />
+        <Form errors={{ field: { foo: ["External error"] } }} />,
       );
       getByText("External error");
     });
@@ -505,7 +505,7 @@ describe("validation", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string() }))
-          .type(z.string(), () => <span />)
+          .type(z.string(), () => <span />),
       );
       const restoreErrorLogs = silenceErrorLogs();
       expect(() =>
@@ -514,10 +514,10 @@ describe("validation", () => {
             errors={{
               field: { bar: ["External error"], baz: ["External error 2"] },
             }}
-          />
-        )
+          />,
+        ),
       ).toThrow(
-        `Invalid external field error, field(s) doesn't exist in schema: bar, baz`
+        `Invalid external field error, field(s) doesn't exist in schema: bar, baz`,
       );
       restoreErrorLogs();
     });
@@ -531,7 +531,7 @@ describe("validation", () => {
               <span>{JSON.stringify(fieldErrors)}</span>
               <button onClick={handleSubmit}>submit</button>
             </>
-          ))
+          )),
       );
       const { getByText } = render(
         <Form
@@ -539,7 +539,7 @@ describe("validation", () => {
           errors={{
             field: { foo: ["External error"] },
           }}
-        />
+        />,
       );
       await userEvent.click(getByText("submit"));
       getByText(
@@ -549,7 +549,7 @@ describe("validation", () => {
             "String must contain at least 5 character(s)",
           ],
           bar: ["String must contain at least 3 character(s)"],
-        })
+        }),
       );
     });
 
@@ -559,17 +559,17 @@ describe("validation", () => {
           .schema(
             z
               .object({ foo: z.string() })
-              .refine(() => false, { message: "Local error" })
+              .refine(() => false, { message: "Local error" }),
           )
           .layout(({ generalErrors, handleSubmit }) => (
             <>
               <span>{generalErrors?.join(", ")}</span>
               <button onClick={handleSubmit}>submit</button>
             </>
-          ))
+          )),
       );
       const { getByText } = render(
-        <Form value={{ foo: "" }} errors={{ general: ["External error"] }} />
+        <Form value={{ foo: "" }} errors={{ general: ["External error"] }} />,
       );
       await userEvent.click(getByText("submit"));
       getByText("External error, Local error");

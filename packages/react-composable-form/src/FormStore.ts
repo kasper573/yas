@@ -43,7 +43,7 @@ export class FormStore<Schema extends FormSchema> {
     public readonly schema: Schema,
     private _initialData: inferValue<Schema>,
     private _modes: readonly FormValidationMode[],
-    private _fieldList: FieldInfo<Schema>[]
+    private _fieldList: FieldInfo<Schema>[],
   ) {
     this._state = initialFormState(_initialData);
   }
@@ -62,7 +62,7 @@ export class FormStore<Schema extends FormSchema> {
 
   changeField<FieldName extends FieldNames<Schema>>(
     name: FieldName,
-    value: inferValue<Schema>[FieldName]
+    value: inferValue<Schema>[FieldName],
   ) {
     this.mutate((draft) => {
       draft.data[name] = value;
@@ -110,7 +110,7 @@ export class FormStore<Schema extends FormSchema> {
         combined.field = { ...local.field };
 
         const remainingExternalNames = new Set<string>(
-          Object.keys(external.field)
+          Object.keys(external.field),
         );
 
         for (const field of this._fieldList) {
@@ -127,10 +127,10 @@ export class FormStore<Schema extends FormSchema> {
           throw new Error(
             `Invalid external field error, field(s) doesn't exist in schema: ${[
               ...remainingExternalNames,
-            ].join(", ")}`
+            ].join(", ")}`,
           );
         }
-      }
+      },
     );
   }
 
@@ -195,7 +195,7 @@ export class FormStore<Schema extends FormSchema> {
   subscribeToSlice<Slice>(
     selectSlice: () => Slice,
     onChange?: (slice: Slice) => void,
-    isEqual = (a: Slice, b: Slice) => a === b
+    isEqual = (a: Slice, b: Slice) => a === b,
   ) {
     let prevSlice = selectSlice();
     return this.subscribe(() => {
@@ -210,7 +210,7 @@ export class FormStore<Schema extends FormSchema> {
 
 function getFormErrorState<Schema extends FormSchema>(
   schema: Schema,
-  value: inferValue<Schema>
+  value: inferValue<Schema>,
 ): FormErrorState<Schema> {
   const res = schema.safeParse(value);
   if (res.success) {
@@ -223,11 +223,11 @@ function getFormErrorState<Schema extends FormSchema>(
 export type StoreUnsubscriber = () => void;
 
 export type StoreListener<Schema extends FormSchema> = (
-  state: FormState<Schema>
+  state: FormState<Schema>,
 ) => void;
 
 function emptyFormErrorState<
-  Schema extends FormSchema
+  Schema extends FormSchema,
 >(): FormErrorState<Schema> {
   return {
     general: [],
@@ -236,7 +236,7 @@ function emptyFormErrorState<
 }
 
 function initialFormState<Schema extends FormSchema>(
-  data: inferValue<Schema>
+  data: inferValue<Schema>,
 ): FormState<Schema> {
   return {
     localErrors: emptyFormErrorState(),

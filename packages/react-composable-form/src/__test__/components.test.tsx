@@ -53,7 +53,7 @@ describe("components", () => {
     function testType(
       correctType: ZodType,
       wrongType: ZodType,
-      schemaType?: ZodType
+      schemaType?: ZodType,
     ) {
       it("alone", () => testTypeAlone(correctType, schemaType));
       it("among others", () =>
@@ -64,7 +64,7 @@ describe("components", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: schemaType }))
-          .type(type, () => <span>found</span>)
+          .type(type, () => <span>found</span>),
       );
       const { getByText } = render(<Form />);
       getByText("found");
@@ -73,13 +73,13 @@ describe("components", () => {
     function testTypeCollision(
       correctType: ZodType,
       wrongType: ZodType,
-      schemaType = correctType
+      schemaType = correctType,
     ) {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: schemaType }))
           .type(correctType, () => <span>correct</span>)
-          .type(wrongType, () => <span>incorrect</span>)
+          .type(wrongType, () => <span>incorrect</span>),
       );
       const { getByText } = render(<Form />);
       getByText("correct");
@@ -90,7 +90,7 @@ describe("components", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ bar: z.number() }))
-        .field("bar", () => <span>bar</span>)
+        .field("bar", () => <span>bar</span>),
     );
     const { getByText } = render(<Form />);
     getByText("bar");
@@ -107,7 +107,7 @@ describe("components", () => {
             <Foo prop={123} />
             <Bar prop="two" />
           </>
-        ))
+        )),
     );
 
     function FieldImpl({ prop }: { prop?: number } & FieldProps<string>) {
@@ -128,7 +128,7 @@ describe("components", () => {
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
         .field("foo", FieldImpl, { prop: 123 })
-        .type(z.string(), TypeImpl, { prop: "two" })
+        .type(z.string(), TypeImpl, { prop: "two" }),
     );
 
     function FieldImpl({ prop }: { prop: number } & FieldProps<string>) {
@@ -146,7 +146,7 @@ describe("components", () => {
 
   it("shows error when trying to render a form with a field that has no component defined", () => {
     const Form = createForm((options) =>
-      options.schema(z.object({ foo: z.string() }))
+      options.schema(z.object({ foo: z.string() })),
     );
     const { getByText } = render(<Form />);
     getByText('No component available for field "foo" or type ZodString');
@@ -170,11 +170,11 @@ describe("components", () => {
               base,
               brand1,
               brand2,
-            })
+            }),
           )
           .type(base, Field, { param: 1 })
           .type(brand1, Field, { param: 2 })
-          .type(brand2, Field, { param: 3 })
+          .type(brand2, Field, { param: 3 }),
       );
 
       function Field({ name, param }: FieldProps & { param: number }) {
@@ -195,7 +195,7 @@ describe("components", () => {
           .schema(type)
           .type(z.string(), ({ required }) => (
             <span>{required ? "required" : "optional"}</span>
-          ))
+          )),
       );
       return render(<Form />);
     }
@@ -205,19 +205,19 @@ describe("components", () => {
     });
     it(".optional() makes optional", () => {
       const { getByText } = renderOptional(
-        z.object({ foo: z.string().optional() })
+        z.object({ foo: z.string().optional() }),
       );
       getByText("optional");
     });
     it(".nullish() counts as optional", () => {
       const { getByText } = renderOptional(
-        z.object({ foo: z.string().nullish() })
+        z.object({ foo: z.string().nullish() }),
       );
       getByText("optional");
     });
     it(".nullable() does not count as optional", () => {
       const { getByText } = renderOptional(
-        z.object({ foo: z.string().nullable() })
+        z.object({ foo: z.string().nullable() }),
       );
       getByText("required");
     });
@@ -228,7 +228,7 @@ describe("components", () => {
             .string()
             .optional()
             .transform((v) => v?.repeat(2)),
-        })
+        }),
       );
       getByText("optional");
     });
@@ -239,10 +239,10 @@ describe("components", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string(), bar: z.number() }))
-          .type(z.string(), () => <span>text</span>)
+          .type(z.string(), () => <span>text</span>),
       );
       const ExtendedForm = Form.extend((options) =>
-        options.type(z.number(), () => <span>number</span>)
+        options.type(z.number(), () => <span>number</span>),
       );
       const { getByText } = render(<ExtendedForm />);
       getByText("number");
@@ -253,10 +253,10 @@ describe("components", () => {
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string(), bar: z.number() }))
-          .field("foo", () => <span>foo</span>)
+          .field("foo", () => <span>foo</span>),
       );
       const ExtendedForm = Form.extend((options) =>
-        options.field("bar", () => <span>bar</span>)
+        options.field("bar", () => <span>bar</span>),
       );
       const { getByText } = render(<ExtendedForm />);
       getByText("foo");
@@ -339,7 +339,7 @@ describe("overriding built-in props", () => {
   function createFieldPropForm(
     name: FieldPropNamesAvailableInDefaults,
     defaultValue?: unknown,
-    layoutValue?: unknown
+    layoutValue?: unknown,
   ) {
     const Form = createForm((options) =>
       options
@@ -349,9 +349,9 @@ describe("overriding built-in props", () => {
           (props) => <input onChange={() => {}} {...{ [name]: props[name] }} />,
           {
             [name]: defaultValue,
-          }
+          },
         )
-        .layout(({ fields: { Foo } }) => <Foo {...{ [name]: layoutValue }} />)
+        .layout(({ fields: { Foo } }) => <Foo {...{ [name]: layoutValue }} />),
     );
     return render(<Form />);
   }

@@ -15,7 +15,7 @@ export function monkeyPatchZodBranded() {
 }
 
 export function getBrand<T extends ZodTypeAny, B extends PropertyKey>(
-  type: ZodBranded<T, B>
+  type: ZodBranded<T, B>,
 ): B {
   // @ts-expect-error Reading a property that is not part of the zod API
   return type._def[brandStorageProperty];
@@ -25,7 +25,7 @@ const brandStorageProperty = Symbol("brandStorageProperty");
 
 function setBrand<T extends ZodTypeAny, B extends PropertyKey>(
   type: ZodBranded<T, B>,
-  brand?: B
+  brand?: B,
 ) {
   // @ts-expect-error Writing a property that is not part of the zod API
   type._def[brandStorageProperty] = brand;

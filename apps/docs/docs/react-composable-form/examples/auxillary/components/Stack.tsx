@@ -23,7 +23,7 @@ export function Stack({
         styles.stack,
         styles[direction],
         styles[`gap${gap}`],
-        className
+        className,
       )}
       style={{
         [directionToCssAlignProperty[direction]]: align,

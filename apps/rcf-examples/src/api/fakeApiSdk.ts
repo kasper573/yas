@@ -95,10 +95,10 @@ async function generateMetrics(filter?: Filter) {
     Price: new Map([[0, newMetric(5, 2)]]),
     Discount: new Map(discountType.options.map((d, i) => [d, newMetric(3, i)])),
     Manufacturer: new Map(
-      (await fetchManufacturers()).map((m, i) => [m.id, newMetric(6, i)])
+      (await fetchManufacturers()).map((m, i) => [m.id, newMetric(6, i)]),
     ),
     Resolution: new Map(
-      (await fetchResolutions()).map((r, i) => [r.id, newMetric(9, i)])
+      (await fetchResolutions()).map((r, i) => [r.id, newMetric(9, i)]),
     ),
   } satisfies SearchResultMetrics;
 }
@@ -118,7 +118,7 @@ export type Metrics<Key = unknown> = Map<Key, number>;
 
 export function paginate(
   entries: unknown[],
-  { page, size }: PaginationData
+  { page, size }: PaginationData,
 ): unknown[] {
   return entries.slice(page * size, (page + 1) * size);
 }

@@ -50,7 +50,7 @@ describe("reactFastRefresh", () => {
               <Field key={index} />
             ))}
           </>
-        ))
+        )),
     );
   }
 
@@ -79,14 +79,14 @@ function withControlledState<C extends ComponentType>(Component: C) {
 let idCounter = 0;
 function prepare<Props extends Record<string, unknown>>(
   Original: ComponentType<Props>,
-  props: Partial<Props> = {}
+  props: Partial<Props> = {},
 ) {
   const id = (idCounter++).toString();
   const OriginalWithProps = wrapAndRegister(Original, props, id);
   const result = render(<OriginalWithProps />);
   async function patch(
     Updated: ComponentType<Props>,
-    props: Partial<Props> = {}
+    props: Partial<Props> = {},
   ) {
     wrapAndRegister(Updated, props, id);
     await act(() => RefreshRuntime.performReactRefresh());
@@ -97,7 +97,7 @@ function prepare<Props extends Record<string, unknown>>(
 function wrapAndRegister<Props extends Record<string, unknown>>(
   Inner: ComponentType<Props>,
   props: Partial<Props>,
-  id = (idCounter++).toString()
+  id = (idCounter++).toString(),
 ) {
   function Outer() {
     return <Inner {...(props as Props)} />;

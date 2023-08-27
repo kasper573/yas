@@ -30,7 +30,7 @@ export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   const state = useSyncExternalStore(
     store.subscribe,
     () => store.state,
-    () => store.state
+    () => store.state,
   );
   const entries = useMemo(() => collectEntries(state), [state]);
   return createElement(renderer, { entries });

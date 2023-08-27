@@ -12,16 +12,16 @@ const LoginForm = createForm((options) =>
       z.object({
         email: z.string().email(),
         password: z.string().min(8),
-      })
+      }),
     )
     .type(z.string(), TextField)
     .type(z.number(), NumberField)
     .field("password", TextField, { password: true })
-    .layout(CardFormLayout)
+    .layout(CardFormLayout),
 );
 
 const InlineLoginForm = LoginForm.extend((options) =>
-  options.layout(InlineFormLayout)
+  options.layout(InlineFormLayout),
 );
 
 const SpecializedLoginForm = LoginForm.extend((options) =>
@@ -38,7 +38,7 @@ const SpecializedLoginForm = LoginForm.extend((options) =>
         </button>
       </Stack>
     </form>
-  ))
+  )),
 );
 
 export function LayoutExample() {

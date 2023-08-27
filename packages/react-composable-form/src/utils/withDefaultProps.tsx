@@ -4,14 +4,14 @@ import type { MakeOptional } from "../types/utilityTypes";
 
 export function withDefaultProps<
   Props extends object,
-  DefaultProps extends Partial<Props>
+  DefaultProps extends Partial<Props>,
 >(WrappedComponent: ComponentType<Props>, defaultProps: DefaultProps) {
   return function WithDefaultProps(
-    props: MakeOptional<Props, keyof DefaultProps>
+    props: MakeOptional<Props, keyof DefaultProps>,
   ) {
     return createElement(
       WrappedComponent,
-      mergeProps(defaultProps, props) as Props
+      mergeProps(defaultProps, props) as Props,
     );
   };
 }

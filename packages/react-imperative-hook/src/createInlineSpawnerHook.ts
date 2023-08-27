@@ -29,7 +29,7 @@ export function createInlineSpawnerHook(context: Context<ComponentStore>) {
           store.markComponentsForRemoval(componentIds.current);
         }
       },
-      []
+      [],
     );
 
     return function spawnComponentAndInstance<
@@ -42,11 +42,11 @@ export function createInlineSpawnerHook(context: Context<ComponentStore>) {
       AdditionalComponentProps = Omit<
         ComponentProps<Component>,
         keyof ImperativeComponentProps
-      >
+      >,
     >(
       component: Component,
       props?: InstanceProps<ResolutionValue, AdditionalComponentProps>,
-      { componentId = store.nextId(), instanceId = store.nextId() } = {}
+      { componentId = store.nextId(), instanceId = store.nextId() } = {},
     ): Promise<ResolutionValue> {
       componentIds.current.push(componentId);
       store.upsertComponent(componentId, { component });

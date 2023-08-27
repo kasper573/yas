@@ -34,7 +34,7 @@ export function RangeField<T extends Range>({
       { value: min, label: min },
       { value: max, label: max },
     ],
-    [min, max]
+    [min, max],
   );
   return (
     <FormControl sx={sx} fullWidth>

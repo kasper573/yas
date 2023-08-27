@@ -33,14 +33,14 @@ import type { FieldPropNamesNotAvailableInDefaults } from "./types/optionTypes";
 
 export type FormOptionsBuilderFactory<
   Input extends AnyRCFGenerics,
-  Output extends AnyRCFGenerics
+  Output extends AnyRCFGenerics,
 > = (input: FormOptionsBuilder<Input>) => FormOptionsBuilder<Output>;
 
 export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   constructor(private options: FormOptions<G>) {}
 
   schema<NewSchema extends FormSchema>(
-    schema: NewSchema
+    schema: NewSchema,
   ): FormOptionsBuilder<
     RCFGenerics<
       G["baseFieldProps"],
@@ -57,7 +57,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   }
 
   customExternalErrors<NewCustomError>(
-    externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>
+    externalErrorParser: FormErrorsParser<NewCustomError, G["schema"]>,
   ): FormOptionsBuilder<
     RCFGenerics<
       G["baseFieldProps"],
@@ -75,12 +75,12 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
 
   layout<
     NewLayoutProps extends AnyProps = {},
-    DefaultProps extends Partial<NewLayoutProps> = {}
+    DefaultProps extends Partial<NewLayoutProps> = {},
   >(
     layout: ComponentType<
       FormLayoutProps<G["schema"], G["components"]> & NewLayoutProps
     >,
-    defaultProps?: DefaultProps
+    defaultProps?: DefaultProps,
   ): FormOptionsBuilder<
     RCFGenerics<
       G["baseFieldProps"],
@@ -191,7 +191,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   }
 
   conditions(
-    fieldConditionSelector: FieldConditionsSelector<G["schema"]>
+    fieldConditionSelector: FieldConditionsSelector<G["schema"]>,
   ): FormOptionsBuilder<G> {
     return new FormOptionsBuilder({
       ...this.options,
@@ -211,7 +211,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
   // Makes the API a bit nicer.
 
   static build<G extends AnyRCFGenerics>(
-    builder: FormOptionsBuilder<G>
+    builder: FormOptionsBuilder<G>,
   ): FormOptions<G> {
     return builder.options;
   }
@@ -240,7 +240,7 @@ export type EmptyFormOptionsGenerics = RCFGenerics<
 
 function NoLayout<
   Schema extends FormSchema,
-  Components extends FieldComponentGenerics
+  Components extends FieldComponentGenerics,
 >({ fields }: FormLayoutProps<Schema, Components>) {
   return (
     <>

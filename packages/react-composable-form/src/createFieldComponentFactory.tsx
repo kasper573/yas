@@ -23,11 +23,11 @@ import { useSyncIsomorphicStore } from "./useSyncIsomorphicStore";
 
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: FieldComponentRegistry<G["components"]>,
-  fieldList: FieldInfo<G["schema"]>[]
+  fieldList: FieldInfo<G["schema"]>[],
 ) {
   const allFieldNames = fieldList.reduce(
     (map, field) => map.set(field.name, true),
-    new Map<FieldNames<G["schema"]>, true>()
+    new Map<FieldNames<G["schema"]>, true>(),
   );
   const enhancedComponents = fieldList.reduce((map, field) => {
     const Component =
@@ -38,7 +38,7 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
       Component ?? createMissingFieldComponent(field.name, field.type),
       field.name,
       field.type,
-      allFieldNames
+      allFieldNames,
     );
 
     return map.set(field, EnhancedComponent);
@@ -64,12 +64,12 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
 
 function enhanceFieldComponent<
   Schema extends FormSchema,
-  FieldName extends FieldNames<Schema>
+  FieldName extends FieldNames<Schema>,
 >(
   Component: FieldFor<Schema, FieldName>,
   name: FieldName,
   type: ValueType,
-  allFieldNames: Map<FieldNames<Schema>, boolean>
+  allFieldNames: Map<FieldNames<Schema>, boolean>,
 ) {
   type Props = FieldProps<inferFieldValue<Schema, FieldName>>;
   const required = !type.isOptional();
@@ -82,12 +82,12 @@ function enhanceFieldComponent<
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncIsomorphicStore(
       store.subscribe,
-      () => store.data[name]
+      () => store.data[name],
     );
     const fieldValues = useDeferredFieldValues(allFieldNames, store);
     const errors = useSyncIsomorphicStore(
       store.subscribe,
-      () => store.fieldErrors[name]
+      () => store.fieldErrors[name],
     );
 
     const changeHandler: Props["onChange"] = useCallback(
@@ -95,7 +95,7 @@ function enhanceFieldComponent<
         store.changeField(name, newValue);
         onChange?.(newValue);
       },
-      [store, onChange]
+      [store, onChange],
     );
 
     const blurHandler: Props["onBlur"] = useCallback(() => {
@@ -126,7 +126,7 @@ function enhanceFieldComponent<
 
 function createMissingFieldComponent(name: string, type: ValueType) {
   const errorMessage = `No component available for field "${name}" or type ${getFirstPartyType(
-    type
+    type,
   )}`;
   return function MissingFieldComponent() {
     return <span>{errorMessage}</span>;

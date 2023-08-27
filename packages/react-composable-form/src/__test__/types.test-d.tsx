@@ -7,7 +7,7 @@ import type { FieldProps } from "../types/optionTypes";
 
 it("inferFormValue resolves to the correct type", () => {
   const Form = createForm((options) =>
-    options.schema(z.object({ foo: z.string(), bar: z.number() }))
+    options.schema(z.object({ foo: z.string(), bar: z.number() })),
   );
 
   expectTypeOf<inferFormValue<typeof Form>>().toEqualTypeOf<{
@@ -35,7 +35,7 @@ it("Layout fields have the correct names", () => {
           Bar: any;
         }>();
         return null;
-      })
+      }),
   );
 });
 
@@ -63,7 +63,7 @@ describe("Type associated components have the correct property types in layout",
             >
           >();
           return null;
-        })
+        }),
     );
   });
 
@@ -91,7 +91,7 @@ describe("Type associated components have the correct property types in layout",
             >
           >();
           return null;
-        })
+        }),
     );
   });
 
@@ -123,7 +123,7 @@ describe("Type associated components have the correct property types in layout",
             >
           >();
           return null;
-        })
+        }),
     );
   });
 
@@ -152,7 +152,7 @@ describe("Type associated components have the correct property types in layout",
             >
           >();
           return null;
-        })
+        }),
     );
   });
 });
@@ -180,7 +180,7 @@ it("Field associated components have the correct property types in layout", () =
           >
         >();
         return null;
-      })
+      }),
   );
 });
 
@@ -193,7 +193,7 @@ describe("Layout cannot access unknown fields", () => {
           // @ts-expect-error Should not be able to access unknown properties
           const { SomeUnknownProperty } = fields;
           return null;
-        })
+        }),
     );
   });
 
@@ -201,13 +201,13 @@ describe("Layout cannot access unknown fields", () => {
     createForm((options) =>
       options
         .schema(
-          z.object({ foo: z.string() }).and(z.object({ bar: z.number() }))
+          z.object({ foo: z.string() }).and(z.object({ bar: z.number() })),
         )
         .layout(({ fields }) => {
           // @ts-expect-error Should not be able to access unknown properties
           const { SomeUnknownProperty } = fields;
           return null;
-        })
+        }),
     );
   });
 
@@ -218,13 +218,13 @@ describe("Layout cannot access unknown fields", () => {
           z.discriminatedUnion("type", [
             z.object({ type: z.literal("foo"), foo: z.string() }),
             z.object({ type: z.literal("bar"), bar: z.number() }),
-          ])
+          ]),
         )
         .layout(({ fields }) => {
           // @ts-expect-error Should not be able to access unknown properties
           const { SomeUnknownProperty } = fields;
           return null;
-        })
+        }),
     );
   });
 });
@@ -246,7 +246,7 @@ describe("Form with custom layout does not accept unknown properties ", () => {
 
   it("with explicit layout props type", () => {
     const Form = createForm(({ layout }) =>
-      layout<{ foo: string }>(() => null)
+      layout<{ foo: string }>(() => null),
     );
 
     // @ts-expect-error Should not accept unknown properties
