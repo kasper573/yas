@@ -2,12 +2,33 @@
 hide_table_of_contents: true
 ---
 
-import { LayoutExample } from "./LayoutExample.component";
-import LayoutExampleCode from "!!raw-loader!./LayoutExample.component";
+import {
+  InlineLoginForm,
+  LoginForm,
+  SpecializedLoginForm,
+} from "./LayoutExample.component";
+import code from "!!slice-loader!./LayoutExample.component";
+
 import { Split } from "./auxillary/components/Split";
 import CodeBlock from "@theme/CodeBlock";
 
+## Card layout
+
 <Split names={["Code", "Form"]}>
-  <CodeBlock>{LayoutExampleCode}</CodeBlock>
-  <LayoutExample />
+  <CodeBlock language="tsx">{code.LoginForm}</CodeBlock>
+  <LoginForm />
+</Split>
+
+## Inline layout
+
+<Split names={["Code", "Form"]}>
+  <CodeBlock language="tsx">{code.InlineLoginForm}</CodeBlock>
+  <InlineLoginForm />
+</Split>
+
+## Specialized layout
+
+<Split names={["Code", "Form"]}>
+  <CodeBlock language="tsx">{code.SpecializedLoginForm}</CodeBlock>
+  <SpecializedLoginForm />
 </Split>

@@ -1,0 +1,25 @@
+{
+  "name": "slice-loader",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./src/slice-loader.js",
+      "require": "./src/slice-loader.js"
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/node"
+  },
+  "devDependencies": {
+    "@types/acorn": "^6.0.0",
+    "@yas/jest": "*",
+    "@yas/tsconfig": "*",
+    "jest": "^29.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2"
+  }
+}
