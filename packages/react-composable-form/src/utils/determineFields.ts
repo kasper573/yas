@@ -14,7 +14,7 @@ import type { inferFieldValue, ValueType } from "../types/commonTypes";
 
 export interface FieldInfo<
   Schema extends FormSchema = FormSchema,
-  FieldName extends FieldNames<Schema> = FieldNames<Schema>,
+  FieldName extends FieldNames<Schema> = FieldNames<Schema>
 > {
   name: FieldName;
   type: ValueType<inferFieldValue<Schema, FieldName>>;
@@ -24,7 +24,7 @@ export interface FieldInfo<
 
 export function determineFields<Schema extends FormSchema>(
   schema: Schema,
-  realSelectConditions: FieldConditionsSelector<Schema>,
+  realSelectConditions: FieldConditionsSelector<Schema>
 ): FieldInfo<Schema>[] {
   const fields: FieldInfo<Schema>[] = [];
   const selectConditions = memoize(realSelectConditions);
@@ -50,7 +50,7 @@ export function determineFields<Schema extends FormSchema>(
             return d._def.value;
           }
           throw new Error("Discriminator must be a literal.");
-        }) as [string, ...string[]],
+        }) as [string, ...string[]]
       );
 
       fields.push({
@@ -102,7 +102,7 @@ function capitalize<S extends string>(str: S): Capitalize<S> {
 }
 
 function memoize<Fn extends (input: Input) => Output, Input, Output>(
-  fn: Fn,
+  fn: Fn
 ): Fn {
   let hasInitialized = false;
   let memoizedInput: Input;

@@ -77,7 +77,7 @@ export function isMatchingType(_a: ZodType, _b?: ZodType): boolean {
 function isSameSet<T>(
   a: T[],
   b: T[],
-  isEqual: (i1: T, i2?: T) => boolean,
+  isEqual: (i1: T, i2?: T) => boolean
 ): boolean {
   return (
     a.length === b.length && a.every((item, index) => isEqual(item, b[index]))
@@ -86,7 +86,7 @@ function isSameSet<T>(
 
 function isStructuralIntersection(a: AnyZodObject, b: AnyZodObject): boolean {
   return Object.keys(b.shape).every((key) =>
-    isMatchingType(b.shape[key], a.shape[key]),
+    isMatchingType(b.shape[key], a.shape[key])
   );
 }
 
@@ -123,7 +123,7 @@ function normalizeType(type: ZodType): ZodType {
 }
 
 function flattenObjectIntersection(
-  type: ZodIntersection<any, any>,
+  type: ZodIntersection<any, any>
 ): AnyZodObject {
   const { left, right } = type._def;
   if (left instanceof ZodObject && right instanceof ZodObject) {

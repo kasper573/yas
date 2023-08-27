@@ -15,9 +15,9 @@ import type { AnyRCFGenericsForFieldProps } from "./types/optionTypes";
 
 export function createRCF<FieldProps extends AnyProps = {}>() {
   return function createFormForFieldProps<
-    G extends AnyRCFGenericsForFieldProps<FieldProps>,
+    G extends AnyRCFGenericsForFieldProps<FieldProps>
   >(
-    reduceOptions?: FormOptionsBuilderFactory<EmptyFormOptionsGenerics, G>,
+    reduceOptions?: FormOptionsBuilderFactory<EmptyFormOptionsGenerics, G>
   ): FormComponent<G> {
     return createForm(reduceOptions);
   };
@@ -27,7 +27,7 @@ type FormFactoryLike<G extends AnyRCFGenerics> = () => FormComponent<G>;
 
 export type inferFieldProps<
   FormFactory,
-  Value = unknown,
+  Value = unknown
 > = FormFactory extends FormFactoryLike<infer G>
   ? FieldProps<Value> & G["baseFieldProps"]
   : never;

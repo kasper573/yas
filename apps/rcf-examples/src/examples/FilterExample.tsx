@@ -76,7 +76,7 @@ export const FilterForm = BaseForm.extend((options) =>
           ),
         }}
       />
-    )),
+    ))
 );
 
 function SearchPage() {

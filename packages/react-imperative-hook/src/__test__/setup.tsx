@@ -9,18 +9,18 @@ import type { AnyComponent } from "../utilityTypes";
 
 export type AbstractHookTestFactory<T extends AnyComponent> = (
   useHook: (options?: GeneralHookOptions) => InstanceSpawnerFor<T>,
-  render: (Content: ComponentType) => ReturnType<typeof renderReact>,
+  render: (Content: ComponentType) => ReturnType<typeof renderReact>
 ) => void;
 
 export function defineAbstractHookTest<T extends AnyComponent>(
   component: T,
   defineTest: AbstractHookTestFactory<T>,
-  { imp, render } = setupImperative(),
+  { imp, render } = setupImperative()
 ) {
   test("usePredefinedSpawner", () =>
     defineTest(
       (options) => imp.usePredefinedSpawner(component, {}, options),
-      render,
+      render
     ));
 
   test("useInlineSpawner", () =>

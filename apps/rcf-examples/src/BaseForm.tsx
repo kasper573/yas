@@ -8,5 +8,5 @@ export const BaseForm = createForm((options) =>
   options
     .type(z.string(), TextField)
     .type(z.number(), NumberField)
-    .layout(BasicFormLayout),
+    .layout(BasicFormLayout)
 );

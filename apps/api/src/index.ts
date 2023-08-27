@@ -10,7 +10,7 @@ switch (env.runtime.type) {
   case "server":
     const { port } = env.runtime;
     createServer().listen(port, () =>
-      console.log(`API available on http://localhost:${port}${env.trpcPath}`),
+      console.log(`API available on http://localhost:${port}${env.trpcPath}`)
     );
     break;
 }

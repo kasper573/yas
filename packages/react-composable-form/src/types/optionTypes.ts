@@ -28,7 +28,7 @@ export interface RCFGenerics<
   Schema extends FormSchema,
   LayoutProps extends AnyProps,
   Components extends FieldComponentGenerics,
-  CustomExternalError,
+  CustomExternalError
 > {
   schema: Schema;
   layoutProps: LayoutProps;
@@ -47,7 +47,7 @@ export interface FormOptions<G extends AnyRCFGenerics> {
 }
 
 export type FieldConditionsSelector<Schema extends FormSchema> = (
-  fieldValues: inferValue<Schema>,
+  fieldValues: inferValue<Schema>
 ) => FieldConditions<Schema>;
 
 export type FieldConditions<Schema extends FormSchema> = {
@@ -62,7 +62,7 @@ export type AnyFormLayoutProps = FormLayoutProps<any, any>;
 
 export interface FormLayoutProps<
   Schema extends FormSchema,
-  Components extends FieldComponentGenerics,
+  Components extends FieldComponentGenerics
 > {
   generalErrors: FormError[];
   fieldErrors: FieldErrors<Schema>;
@@ -75,13 +75,13 @@ export interface FormLayoutProps<
 export type InputFieldComponent<
   Schema extends FormSchema,
   Value,
-  AdditionalProps,
+  AdditionalProps
 > = ComponentType<FieldProps<Value, inferValue<Schema>> & AdditionalProps>;
 
 export type ComposedFieldComponent<
   Schema extends FormSchema,
   Value,
-  AdditionalProps,
+  AdditionalProps
 > = ComponentType<
   Partial<FieldProps<Value, inferValue<Schema>> & AdditionalProps>
 >;
@@ -109,7 +109,7 @@ export interface FieldProps<Value = unknown, FieldValues = unknown> {
 
 export type FieldFor<
   Schema extends FormSchema,
-  FieldName extends FieldNames<Schema> = FieldNames<Schema>,
+  FieldName extends FieldNames<Schema> = FieldNames<Schema>
 > = ComponentType<
   FieldProps<inferFieldValue<Schema, FieldName>, inferValue<Schema>>
 >;
@@ -118,7 +118,7 @@ export type NamedComponents = Record<string, AnyComponent>;
 
 export interface FieldComponentGenerics<
   Named extends NamedComponents = any,
-  Typed extends TypedComponents = any,
+  Typed extends TypedComponents = any
 > {
   named: Named;
   typed: Typed;
@@ -135,7 +135,7 @@ export type TypedComponentRegistry<Tuples extends TypedComponents> = {
 
 export type TypedComponentRegistryEntry<Tuple extends TypedComponentTuple> = [
   ValueType<Tuple[0]>,
-  Tuple[1],
+  Tuple[1]
 ];
 
 export type FieldComponentsForProps<BaseFieldProps extends AnyProps> =
@@ -146,7 +146,7 @@ export type FieldComponentsForProps<BaseFieldProps extends AnyProps> =
 
 export type FieldComponentsPassedToLayout<
   Schema extends FormSchema,
-  Components extends FieldComponentGenerics,
+  Components extends FieldComponentGenerics
 > = {
   [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
     Partial<

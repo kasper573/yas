@@ -13,9 +13,7 @@ describe("data", () => {
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
-        .type(z.string(), ({ value }) => (
-          <input defaultValue={String(value)} />
-        )),
+        .type(z.string(), ({ value }) => <input defaultValue={String(value)} />)
     );
     const { getByRole } = render(<Form value={{ foo: "bar" }} />);
     expect(getByRole("textbox")).toHaveValue("bar");
@@ -33,12 +31,12 @@ describe("data", () => {
             <Foo />
             <button onClick={handleSubmit}>submit</button>
           </>
-        )),
+        ))
     );
 
     const fn = jest.fn();
     const { getByRole } = render(
-      <Form defaultValue={{ foo: "default" }} onSubmit={fn} />,
+      <Form defaultValue={{ foo: "default" }} onSubmit={fn} />
     );
     expect(getByRole("textbox")).toHaveValue("default");
     await userEvent.clear(getByRole("textbox"));
@@ -49,14 +47,14 @@ describe("data", () => {
 
   it("cannot use both value and defaultValue", () => {
     const Form = createForm((options) =>
-      options.schema(z.object({ foo: z.string() })),
+      options.schema(z.object({ foo: z.string() }))
     );
 
     const restoreErrorLogs = silenceErrorLogs();
     expect(() =>
-      render(<Form value={{ foo: "default" }} defaultValue={{ foo: "baz" }} />),
+      render(<Form value={{ foo: "default" }} defaultValue={{ foo: "baz" }} />)
     ).toThrow(
-      "Cannot set both defaultValue and value, please use one or the other",
+      "Cannot set both defaultValue and value, please use one or the other"
     );
     restoreErrorLogs();
   });
@@ -67,7 +65,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value }) => (
           <input value={value} onChange={(e) => onChange?.(e.target.value)} />
-        )),
+        ))
     );
     function App() {
       const [data, setData] = useState({ foo: "default" });
@@ -91,7 +89,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "" }) => (
           <input onChange={(e) => onChange?.(e.target.value)} value={value} />
-        )),
+        ))
     );
     const { getByRole } = render(<Form />);
 
@@ -103,7 +101,7 @@ describe("data", () => {
   describe("external field value access", () => {
     describe("strict mode", () => {
       testStrictModeSensitiveCases((element) =>
-        render(<StrictMode>{element}</StrictMode>),
+        render(<StrictMode>{element}</StrictMode>)
       );
     });
 
@@ -129,10 +127,10 @@ describe("data", () => {
             ))
             .field("val", ({ fieldValues }) => (
               <span>{`val:${fieldValues?.a},renders:${++valRenders}`}</span>
-            )),
+            ))
         );
         const { getByRole, getByText } = render(
-          <Form defaultValue={{ a: 0, b: 0, val: "baz" }} />,
+          <Form defaultValue={{ a: 0, b: 0, val: "baz" }} />
         );
         getByText("val:0,renders:1");
         await userEvent.type(getByRole("textbox", { name: "a" }), "2");
@@ -157,10 +155,10 @@ describe("data", () => {
               const val = valRenders.length < 5 ? fieldValues?.a : "unknown";
               valRenders.push(val);
               return null;
-            }),
+            })
         );
         const { getByRole } = render(
-          <Form defaultValue={{ a: "", val: "baz" }} />,
+          <Form defaultValue={{ a: "", val: "baz" }} />
         );
         expect(valRenders).toEqual([""]);
         await userEvent.type(getByRole("textbox"), "hello world");
@@ -171,7 +169,7 @@ describe("data", () => {
     });
 
     function testStrictModeSensitiveCases(
-      render: (element: JSX.Element) => RenderResult,
+      render: (element: JSX.Element) => RenderResult
     ) {
       it("can access initial value of another field", () => {
         const Form = createForm((options) =>
@@ -180,10 +178,10 @@ describe("data", () => {
             .field("foo", () => <></>)
             .field("bar", ({ fieldValues }) => (
               <span>bar:{fieldValues?.foo}</span>
-            )),
+            ))
         );
         const { getByText } = render(
-          <Form value={{ foo: "hello", bar: "world" }} />,
+          <Form value={{ foo: "hello", bar: "world" }} />
         );
         getByText("bar:hello");
       });
@@ -200,7 +198,7 @@ describe("data", () => {
             ))
             .field("bar", ({ fieldValues }) => (
               <span>bar:{fieldValues?.foo}</span>
-            )),
+            ))
         );
         const { getByText, getByRole } = render(<Form />);
         await userEvent.type(getByRole("textbox"), "A");
@@ -219,10 +217,10 @@ describe("data", () => {
             ))
             .field("bar", ({ fieldValues }) => (
               <span>bar:{fieldValues?.foo}</span>
-            )),
+            ))
         );
         const { getByRole, getByText } = render(
-          <Form defaultValue={{ foo: "before", bar: "baz" }} />,
+          <Form defaultValue={{ foo: "before", bar: "baz" }} />
         );
         getByText("bar:before");
         await userEvent.clear(getByRole("textbox"));
@@ -250,10 +248,10 @@ describe("data", () => {
             ))
             .field("sum", ({ fieldValues }) => (
               <span>sum:{fieldValues?.a! + fieldValues?.b!}</span>
-            )),
+            ))
         );
         const { getByRole, getByText } = render(
-          <Form defaultValue={{ a: 0, b: 0, sum: "baz" }} />,
+          <Form defaultValue={{ a: 0, b: 0, sum: "baz" }} />
         );
         getByText("sum:0");
         await userEvent.type(getByRole("textbox", { name: "a" }), "2");
@@ -274,7 +272,7 @@ describe("data", () => {
             ))
             .field("bar", ({ fieldValues }) => (
               <span>bar:{fieldValues?.foo}</span>
-            )),
+            ))
         );
         const { getByText, getByRole } = render(<Form />);
         await userEvent.type(getByRole("textbox"), "hello");
@@ -295,7 +293,7 @@ describe("data", () => {
             <Foo />
             <button onClick={reset}>reset</button>
           </>
-        )),
+        ))
     );
     const { getByRole } = render(<Form />);
 
@@ -311,7 +309,7 @@ describe("data", () => {
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ onChange, value = "" }) => (
           <input onChange={(e) => onChange?.(e.target.value)} value={value} />
-        )),
+        ))
     );
 
     let data: unknown;
@@ -333,7 +331,7 @@ describe("data", () => {
       options
         .schema(z.object({ foo: z.string(), bar: z.string() }))
         .field("foo", Foo)
-        .field("bar", Bar),
+        .field("bar", Bar)
     );
     const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
     const fooBefore = Foo.getCount();
@@ -356,10 +354,10 @@ describe("data", () => {
         .schema(
           z
             .object({ foo: z.string().min(3), bar: z.string().min(3) })
-            .refine(() => false, { message: "Some error" }),
+            .refine(() => false, { message: "Some error" })
         )
         .field("foo", Foo)
-        .field("bar", Bar),
+        .field("bar", Bar)
     );
     const { getByRole } = render(<Form value={{ foo: "", bar: "" }} />);
     const fooBefore = Foo.getCount();

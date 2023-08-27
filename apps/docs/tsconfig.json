@@ -2,6 +2,10 @@
   "extends": "@yas/tsconfig/react-library.json",
   "compilerOptions": {
     "allowJs": true,
-    "types": ["node", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"],
+    "types": [
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic"
+    ]
   }
 }

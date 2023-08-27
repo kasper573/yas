@@ -6,7 +6,7 @@ import { createForm } from "../createForm";
 describe("layout", () => {
   it("can be defined", () => {
     const Form = createForm((options) =>
-      options.layout(() => <span>default</span>),
+      options.layout(() => <span>default</span>)
     );
     const { getByText } = render(<Form />);
     getByText("default");
@@ -15,7 +15,7 @@ describe("layout", () => {
   it("can be given default props", () => {
     const Layout = ({ foo }: { foo: string }) => <span>{`foo:${foo}`}</span>;
     const Form = createForm((options) =>
-      options.layout(Layout, { foo: "bar" }),
+      options.layout(Layout, { foo: "bar" })
     );
 
     const { getByText, rerender } = render(<Form />);
@@ -27,7 +27,7 @@ describe("layout", () => {
   it("can be extended from predefined forms", () => {
     const Form = createForm();
     const ExtendedForm = Form.extend((options) =>
-      options.layout(() => <span>extended</span>),
+      options.layout(() => <span>extended</span>)
     );
     const { getByText } = render(<ExtendedForm />);
     getByText("extended");
@@ -47,11 +47,11 @@ describe("layout", () => {
               <Bar />
             </section>
           </main>
-        )),
+        ))
     );
     const { baseElement } = render(<Form />);
     expect(baseElement.innerHTML).toBe(
-      `<div><main><section><span>foo</span></section><section><span>bar</span></section></main></div>`,
+      `<div><main><section><span>foo</span></section><section><span>bar</span></section></main></div>`
     );
   });
 
@@ -60,7 +60,7 @@ describe("layout", () => {
       options
         .schema(z.object({ foo: z.string() }))
         .type(z.string(), ({ name }) => <span>{name}</span>)
-        .layout(({ fields: { Foo } }) => <Foo name="bar" />),
+        .layout(({ fields: { Foo } }) => <Foo name="bar" />)
     );
     const { getByText } = render(<Form />);
     getByText("bar");
@@ -68,7 +68,7 @@ describe("layout", () => {
 
   it("inherits the form props", () => {
     const Form = createForm((options) =>
-      options.layout(({ foo }: { foo: string }) => <main>{foo}</main>),
+      options.layout(({ foo }: { foo: string }) => <main>{foo}</main>)
     );
     const { getByText } = render(<Form foo="bar" />);
     getByText("bar");
@@ -81,10 +81,10 @@ describe("layout", () => {
         .schema(z.object({ foo: z.string() }))
         .layout(({ handleSubmit }) => (
           <button onClick={handleSubmit}>submit</button>
-        )),
+        ))
     );
     const { getByText } = render(
-      <Form value={{ foo: "hello" }} onSubmit={onSubmit} />,
+      <Form value={{ foo: "hello" }} onSubmit={onSubmit} />
     );
     await userEvent.click(getByText("submit"));
     expect(onSubmit).toHaveBeenCalledWith({ foo: "hello" });
@@ -97,7 +97,7 @@ describe("layout", () => {
         .schema(z.object({ foo: z.string() }))
         .layout(({ handleSubmit }) => (
           <button onClick={handleSubmit}>submit</button>
-        )),
+        ))
     );
     const { getByText, rerender } = render(<Form value={{ foo: "hello" }} />);
 

@@ -35,7 +35,7 @@ export type FieldErrors<Schema extends FormSchema> =
     : { [K in FieldNames<Schema>]?: FormErrorList };
 
 export type FormErrorsParser<CustomError, Schema extends FormSchema> = (
-  error: CustomError,
+  error: CustomError
 ) => FormErrorState<Schema>;
 
 export interface FormErrorState<Schema extends FormSchema> {
@@ -49,5 +49,5 @@ export type inferValue<Type extends ValueType> = output<Type>;
 
 export type inferFieldValue<
   Schema extends FormSchema,
-  FieldName extends string,
+  FieldName extends string
 > = inferValue<Schema>[FieldName];

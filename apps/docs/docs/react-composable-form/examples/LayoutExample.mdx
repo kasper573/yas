@@ -1,0 +1,13 @@
+---
+hide_table_of_contents: true
+---
+
+import { LayoutExample } from "./LayoutExample.component";
+import LayoutExampleCode from "!!raw-loader!./LayoutExample.component";
+import { Split } from "./auxillary/components/Split";
+import CodeBlock from "@theme/CodeBlock";
+
+<Split names={["Code", "Form"]}>
+  <CodeBlock>{LayoutExampleCode}</CodeBlock>
+  <LayoutExample />
+</Split>

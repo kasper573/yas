@@ -30,7 +30,7 @@ export function SingleSelectField<Value>({
   const id = useId();
   const valueAsOptionIndex = useMemo(
     () => options.findIndex((o) => o.value === value),
-    [value, options],
+    [value, options]
   );
   return (
     <FormControl fullWidth>
@@ -57,7 +57,7 @@ export function SingleSelectField<Value>({
 }
 
 export function valueOptions<Value>(
-  values: Value[],
+  values: Value[]
 ): SingleSelectOption<Value>[] {
   return values.map((value) => ({ value, label: `${value}` }));
 }

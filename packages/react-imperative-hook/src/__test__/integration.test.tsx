@@ -128,7 +128,7 @@ describe("removeOnUnmount", () => {
   const setupUnmountTest = <T extends AnyComponent>(
     useHook: Parameters<AbstractHookTestFactory<T>>[0],
     render: Parameters<AbstractHookTestFactory<T>>[1],
-    hookOptions?: GeneralHookOptions,
+    hookOptions?: GeneralHookOptions
   ) => {
     function Source() {
       const spawn = useHook(hookOptions);
@@ -195,7 +195,7 @@ describe("can resolve instance", () => {
         });
         expect(screen.queryByRole("dialog")).toBeNull();
       },
-      { imp, render },
+      { imp, render }
     );
   });
 

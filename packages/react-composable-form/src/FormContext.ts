@@ -6,5 +6,5 @@ export const FormContext = createContext<FormStore<any>>(
     get() {
       throw new Error("FormContext not initialized");
     },
-  }),
+  })
 );

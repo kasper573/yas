@@ -8,7 +8,7 @@ expand(
   config({
     path: path.resolve(__dirname, "../../.."),
     default_node_env: "development",
-  }),
+  })
 );
 
 const schema = z.object({

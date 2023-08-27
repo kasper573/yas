@@ -20,14 +20,14 @@ const UserRegistrationForm = BaseForm.extend((options) =>
         email: z.string().email(),
         password: z.string().min(1),
         passwordConfirm: z.string().min(1),
-      }),
+      })
     )
     .field("password", TextField, { password: true })
     .field("passwordConfirm", TextField, { password: true })
     .customExternalErrors((error?: CustomRemoteErrors) => ({
       general: error?.generalErrors ?? [],
       field: Object.fromEntries(error?.fieldErrors ?? []),
-    })),
+    }))
 );
 
 function RemoteExampleImpl() {
@@ -35,7 +35,7 @@ function RemoteExampleImpl() {
 
   const endpoint = useMemo(
     () => createSimulatedRemoteEndpoint(errorType),
-    [errorType],
+    [errorType]
   );
 
   const { mutate, error, isLoading, reset } = useMutation<

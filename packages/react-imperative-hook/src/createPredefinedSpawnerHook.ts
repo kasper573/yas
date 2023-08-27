@@ -17,14 +17,14 @@ export interface PredefinedSpawnerHookOptions extends GeneralHookOptions {
 export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
   return function useInstanceSpawner<
     Component extends AnyComponent,
-    DefaultProps extends Partial<ComponentProps<Component>>,
+    DefaultProps extends Partial<ComponentProps<Component>>
   >(
     component: Component,
     defaultProps?: DefaultProps,
     {
       fixedId,
       removeOnUnmount = removeOnUnmountDefault,
-    }: PredefinedSpawnerHookOptions = {},
+    }: PredefinedSpawnerHookOptions = {}
   ): InstanceSpawnerFor<Component, DefaultProps> {
     const store = useContext(context);
     const id = useMemo(() => fixedId ?? store.nextId(), [store, fixedId]);
@@ -34,7 +34,7 @@ export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
 
     useEffect(
       () => store.upsertComponent(id, { component, defaultProps }),
-      [store, id, component, defaultProps],
+      [store, id, component, defaultProps]
     );
 
     useEffect(
@@ -46,7 +46,7 @@ export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
           store.markComponentsForRemoval([id]);
         }
       },
-      [],
+      []
     );
 
     return useMemo(
@@ -61,7 +61,7 @@ export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
         }
         return store.spawnInstance(id, store.nextId(), props);
       },
-      [store, id],
+      [store, id]
     );
   };
 }
@@ -69,16 +69,16 @@ export function createPredefinedSpawnerHook(context: Context<ComponentStore>) {
 export type InstanceSpawner<
   ResolutionValue,
   AdditionalComponentProps,
-  DefaultProps extends Partial<AdditionalComponentProps>,
+  DefaultProps extends Partial<AdditionalComponentProps>
 > = (
-  props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>,
+  props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>
 ) => Promise<ResolutionValue>;
 
 export type InstanceSpawnerFor<
   Component extends AnyComponent,
   DefaultProps extends Partial<ComponentProps<Component>> = Partial<
     ComponentProps<Component>
-  >,
+  >
 > = InstanceSpawner<
   ComponentProps<Component> extends ResolvingComponentProps<infer R>
     ? R

@@ -7,11 +7,11 @@ import type { FormStore } from "./FormStore";
 
 export function useDeferredFieldValues<Schema extends FormSchema>(
   allFieldNames: Map<FieldNames<Schema>, boolean>,
-  store: FormStore<Schema>,
+  store: FormStore<Schema>
 ): inferValue<Schema> {
   const [, forceRefresh] = useReducer((n) => n + 1, 0);
   const [touchedFields] = useState(
-    () => new Map<FieldNames<Schema>, (() => void) | undefined>(),
+    () => new Map<FieldNames<Schema>, (() => void) | undefined>()
   );
 
   const unsubscribeAll = useCallback(
@@ -25,7 +25,7 @@ export function useDeferredFieldValues<Schema extends FormSchema>(
         }
       }
     },
-    [touchedFields],
+    [touchedFields]
   );
 
   const valuesProxy = useMemo(
@@ -51,7 +51,7 @@ export function useDeferredFieldValues<Schema extends FormSchema>(
           return store.data[fieldName];
         },
       }),
-    [allFieldNames, store, touchedFields],
+    [allFieldNames, store, touchedFields]
   );
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function useDeferredFieldValues<Schema extends FormSchema>(
       if (!isSubbed) {
         touchedFields.set(
           fieldName,
-          store.subscribeToSlice(() => store.data[fieldName], forceRefresh),
+          store.subscribeToSlice(() => store.data[fieldName], forceRefresh)
         );
       }
     }

@@ -33,7 +33,7 @@ export function MultiSelectField<Value>({
   const id = useId();
   const valueIndexes = useMemo(
     () => valueAsOptionIndexes(options, value),
-    [value, options],
+    [value, options]
   );
   function optionValuesForIndexes(indexes: number[]) {
     return indexes.map((index) => options[index].value);
@@ -67,7 +67,7 @@ export function MultiSelectField<Value>({
 
 function valueAsOptionIndexes<Value>(
   options: MultiSelectOption<Value>[],
-  values?: readonly Value[],
+  values?: readonly Value[]
 ) {
   if (!values) {
     return [];

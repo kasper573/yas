@@ -10,9 +10,7 @@ describe("discriminated union schema", () => {
       const Form = createDiscriminatorForm();
 
       const { getByText, getAllByTestId } = render(
-        <Form
-          value={{ base: "foo", type: undefined as never, str: "hello" }}
-        />,
+        <Form value={{ base: "foo", type: undefined as never, str: "hello" }} />
       );
 
       expect(getAllByTestId("field")).toHaveLength(2);
@@ -24,7 +22,7 @@ describe("discriminated union schema", () => {
       const Form = createDiscriminatorForm();
 
       const { getByText, getAllByTestId, rerender } = render(
-        <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+        <Form value={{ base: "foo", type: "string", str: "hello" }} />
       );
 
       expect(getAllByTestId("field")).toHaveLength(3);
@@ -49,11 +47,11 @@ describe("discriminated union schema", () => {
             <Str />
             <Num />
           </>
-        )),
+        ))
       );
 
       const { getByText, getAllByTestId } = render(
-        <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+        <Form value={{ base: "foo", type: "string", str: "hello" }} />
       );
 
       expect(getAllByTestId("field")).toHaveLength(3);
@@ -69,10 +67,10 @@ describe("discriminated union schema", () => {
       options.layout(({ fields, fieldErrors, handleSubmit }) => {
         lastFieldErrors = fieldErrors;
         return <button onClick={handleSubmit}>submit</button>;
-      }),
+      })
     );
     const { getByRole } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+      <Form value={{ base: "foo", type: "string", str: "hello" }} />
     );
 
     await userEvent.click(getByRole("button"));
@@ -85,14 +83,14 @@ describe("discriminated union schema", () => {
     const Form = createDiscriminatorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
         <button onClick={handleSubmit}>submit</button>
-      )),
+      ))
     );
     const handleSubmit = jest.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "this is a long string" }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     await userEvent.click(getByRole("button"));
@@ -103,14 +101,14 @@ describe("discriminated union schema", () => {
     const Form = createDiscriminatorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
         <button onClick={handleSubmit}>submit</button>
-      )),
+      ))
     );
     const handleSubmit = jest.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "this is a long string" }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     await userEvent.click(getByRole("button"));
@@ -125,7 +123,7 @@ describe("discriminated union schema", () => {
     const Form = createDiscriminatorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
         <button onClick={handleSubmit}>submit</button>
-      )),
+      ))
     );
 
     const handleSubmit = jest.fn();
@@ -139,14 +137,14 @@ describe("discriminated union schema", () => {
           num: 123,
         }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     rerender(
       <Form
         value={{ base: "foo", type: "number", num: 20 }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     await userEvent.click(getByRole("button"));
@@ -171,14 +169,14 @@ describe("discriminated union schema", () => {
                 type: z.literal("number"),
                 num: z.number().min(10),
               }),
-            ]),
-          ),
+            ])
+          )
         )
         .type(z.any(), ({ name, value }) => (
           <span data-testid="field">
             {name}:{`${value}`}
           </span>
-        )),
+        ))
     );
   }
 });
@@ -187,7 +185,7 @@ describe("conditional fields selector", () => {
   it("renders the correct fields", () => {
     const Form = createSelectorForm();
     const { getByText, rerender } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />,
+      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />
     );
 
     getByText("base:foo");
@@ -195,7 +193,7 @@ describe("conditional fields selector", () => {
     getByText("str:hello");
 
     rerender(
-      <Form value={{ base: "bar", type: "number", num: 42, str: "" }} />,
+      <Form value={{ base: "bar", type: "number", num: 42, str: "" }} />
     );
 
     getByText("base:bar");
@@ -209,10 +207,10 @@ describe("conditional fields selector", () => {
       options.layout(({ fields, fieldErrors, handleSubmit }) => {
         lastFieldErrors = fieldErrors;
         return <button onClick={handleSubmit}>submit</button>;
-      }),
+      })
     );
     const { getByRole } = render(
-      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />,
+      <Form value={{ base: "foo", type: "string", str: "hello", num: 0 }} />
     );
 
     await userEvent.click(getByRole("button"));
@@ -225,14 +223,14 @@ describe("conditional fields selector", () => {
     const Form = createSelectorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
         <button onClick={handleSubmit}>submit</button>
-      )),
+      ))
     );
     const handleSubmit = jest.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "a long string", num: 0 }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     await userEvent.click(getByRole("button"));
@@ -243,14 +241,14 @@ describe("conditional fields selector", () => {
     const Form = createSelectorForm().extend((options) =>
       options.layout(({ handleSubmit }) => (
         <button onClick={handleSubmit}>submit</button>
-      )),
+      ))
     );
     const handleSubmit = jest.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "a long string", num: 0 }}
         onSubmit={handleSubmit}
-      />,
+      />
     );
 
     await userEvent.click(getByRole("button"));
@@ -270,7 +268,7 @@ describe("conditional fields selector", () => {
             type: z.enum(["string", "number"]),
             str: z.string().min(10),
             num: z.number().min(10),
-          }),
+          })
         )
         .type(z.any(), ({ name, value }) => (
           <span>
@@ -280,7 +278,7 @@ describe("conditional fields selector", () => {
         .conditions((values) => ({
           str: values.type === "string",
           num: values.type === "number",
-        })),
+        }))
     );
   }
 });
@@ -294,7 +292,7 @@ it("can conditionally render using field values in layout", () => {
           type: z.enum(["string", "number"]),
           str: z.string().optional(),
           num: z.number().optional(),
-        }),
+        })
       )
       .type(z.any(), ({ name, value }) => (
         <span>
@@ -311,15 +309,15 @@ it("can conditionally render using field values in layout", () => {
         return (
           <>
             {Object.values(fields).map((Component, index) =>
-              Component ? <Component key={index} /> : null,
+              Component ? <Component key={index} /> : null
             )}
           </>
         );
-      }),
+      })
   );
 
   const { getByText, rerender } = render(
-    <Form value={{ base: "foo", type: "string", str: "hello" }} />,
+    <Form value={{ base: "foo", type: "string", str: "hello" }} />
   );
 
   getByText("base:foo");

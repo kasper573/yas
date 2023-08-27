@@ -4,7 +4,7 @@ import { produce } from "immer";
 export function createMutableResource<T>(
   filePath: string,
   parse: (contents: string) => T,
-  format: (contents: T) => string,
+  format: (contents: T) => string
 ) {
   const original = load();
   let current = original;
@@ -22,7 +22,7 @@ export function createMutableResource<T>(
     fs.writeFileSync(
       filePath,
       format(produce(original, discard(mutator))),
-      "utf-8",
+      "utf-8"
     );
   }
 

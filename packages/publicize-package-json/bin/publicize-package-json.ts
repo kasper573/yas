@@ -26,7 +26,7 @@ async function run({
   const pkg = createMutableResource(
     packageJsonPath,
     (str) => JSON.parse(str) as PackageJson,
-    (json) => JSON.stringify(json, null, 2) + "\n",
+    (json) => JSON.stringify(json, null, 2) + "\n"
   );
 
   if (preview) {
@@ -37,7 +37,7 @@ async function run({
   }
 
   const ok = pkg.update((pkg) =>
-    makePackageReleaseReady(pkg, relativeDistFolder),
+    makePackageReleaseReady(pkg, relativeDistFolder)
   );
 
   try {
@@ -54,7 +54,7 @@ async function run({
     return 0;
   } catch (e) {
     console.error(
-      `Error while running command "${command}":\n` + (e as Error).message,
+      `Error while running command "${command}":\n` + (e as Error).message
     );
     return 1;
   } finally {
@@ -64,7 +64,7 @@ async function run({
         original.version = pkg.contents.version;
         console.log(
           "Retaining new package version before restoring original package.json: " +
-            pkg.contents.version,
+            pkg.contents.version
         );
       }
     });
@@ -102,7 +102,7 @@ function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
 function handleInternalPackageDependencies(
   pkg: PackageJson,
   prop: "dependencies" | "peerDependencies" | "devDependencies",
-  action: "delete" | "error",
+  action: "delete" | "error"
 ): boolean {
   let ok = true;
   const deps = pkg[prop] ?? {};
@@ -112,7 +112,7 @@ function handleInternalPackageDependencies(
       if (action === "error") {
         ok = false;
         console.error(
-          `${prop} may not reference internal packages. Found: ${key}: ${value}`,
+          `${prop} may not reference internal packages. Found: ${key}: ${value}`
         );
       } else {
         delete deps[key];

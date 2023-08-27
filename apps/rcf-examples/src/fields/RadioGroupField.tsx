@@ -41,7 +41,7 @@ export function RadioGroupField<Value>({
   const id = useId();
   const valueAsOptionIndex = useMemo(
     () => options.findIndex((o) => o.value === value),
-    [value, options],
+    [value, options]
   );
   return (
     <FormControl fullWidth error={errors.length > 0} sx={sx}>

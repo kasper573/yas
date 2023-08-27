@@ -10,7 +10,7 @@ if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <App />
-    </StrictMode>,
+    </StrictMode>
   );
 } else {
   document.writeln("Could not find root element");

@@ -17,5 +17,5 @@ export const Stack = forwardRef<ElementRef<typeof Flex>, StackProps>(
         ref={ref}
       />
     );
-  },
+  }
 );

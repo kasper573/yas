@@ -47,7 +47,7 @@ export function CheckboxGroupField<Value>({
                   onChange?.(
                     e.target.checked
                       ? checkedValues.concat(option.value)
-                      : checkedValues.filter((v) => v !== option.value),
+                      : checkedValues.filter((v) => v !== option.value)
                   )
                 }
                 size={size}

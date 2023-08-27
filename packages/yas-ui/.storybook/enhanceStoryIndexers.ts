@@ -3,7 +3,7 @@ import * as path from "path";
 
 export function enhanceStoryIndexers(
   indexers: StoryIndexer[],
-  options: Options,
+  options: Options
 ): StoryIndexer[] {
   if (options.ci) {
     // The below implementation breaks when running the storybook test runner.

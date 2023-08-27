@@ -70,7 +70,7 @@ export class ComponentStore {
   spawnInstance<Props extends InstanceProps, Resolution>(
     componentId: ComponentId,
     instanceId: InstanceId,
-    props: Props,
+    props: Props
   ) {
     const resolveSpawnCall = deferPromise<Resolution>();
 
@@ -82,7 +82,7 @@ export class ComponentStore {
 
       if (component.instances[instanceId]) {
         throw new Error(
-          `Instance ${instanceId} of component ${componentId} already exists`,
+          `Instance ${instanceId} of component ${componentId} already exists`
         );
       }
 
@@ -96,7 +96,7 @@ export class ComponentStore {
             const removeDelay = this.removeDelays.get(instanceId);
             if (removeDelay) {
               removeDelay.then(() =>
-                this.removeInstance(componentId, instanceId),
+                this.removeInstance(componentId, instanceId)
               );
             } else {
               this.removeInstance(componentId, instanceId);
@@ -157,7 +157,7 @@ export type InstanceState<ResolutionValue = unknown> =
 export type InstanceProps<
   ResolutionValue = unknown,
   AdditionalComponentProps = {},
-  DefaultProps extends Partial<AdditionalComponentProps> = {},
+  DefaultProps extends Partial<AdditionalComponentProps> = {}
 > = MakeOptionalIfEmptyObject<
   Omit<
     PartialByKeys<

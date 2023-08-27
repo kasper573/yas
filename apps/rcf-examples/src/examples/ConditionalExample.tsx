@@ -44,7 +44,7 @@ const DiscriminatedForm = BaseForm.extend((options) =>
     })
     .type(kindType, SingleSelectField, {
       options: valueOptions(kindType.options),
-    }),
+    })
 );
 
 const ConditionsForm = BaseForm.extend((options) =>
@@ -54,7 +54,7 @@ const ConditionsForm = BaseForm.extend((options) =>
         type: kindType,
         foo: z.string(),
         bar: z.number(),
-      }),
+      })
     )
     .conditions((data) => ({
       foo: data.type === "foo",
@@ -62,7 +62,7 @@ const ConditionsForm = BaseForm.extend((options) =>
     }))
     .type(kindType, SingleSelectField, {
       options: valueOptions(kindType.options),
-    }),
+    })
 );
 
 const currencyType = z.enum(["USD", "EUR", "SEK"]);
@@ -72,7 +72,7 @@ const RelatedForm = BaseForm.extend((options) =>
       z.object({
         currency: currencyType,
         amount: z.number(),
-      }),
+      })
     )
     .type(currencyType, SingleSelectField, {
       options: valueOptions(currencyType.options),
@@ -88,7 +88,7 @@ const RelatedForm = BaseForm.extend((options) =>
           ),
         }}
       />
-    )),
+    ))
 );
 
 export function ConditionalExample() {

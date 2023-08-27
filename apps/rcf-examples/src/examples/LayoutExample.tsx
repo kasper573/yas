@@ -15,13 +15,13 @@ const LoginForm = BaseForm.extend((options) =>
       z.object({
         email: z.string().email(),
         password: z.string().min(8),
-      }),
+      })
     )
-    .field("password", TextField, { password: true }),
+    .field("password", TextField, { password: true })
 );
 
 const InlineLoginForm = LoginForm.extend((options) =>
-  options.layout(InlineFormLayout),
+  options.layout(InlineFormLayout)
 );
 
 const SpecializedLoginForm = LoginForm.extend((options) =>
@@ -43,7 +43,7 @@ const SpecializedLoginForm = LoginForm.extend((options) =>
         </Button>
       </form>
     </Box>
-  )),
+  ))
 );
 
 export function LayoutExample() {
