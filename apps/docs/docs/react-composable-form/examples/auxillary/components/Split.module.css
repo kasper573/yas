@@ -1,6 +1,11 @@
 .row {
   display: flex;
   flex-direction: row;
+  width: 100%;
+}
+
+.col {
+  flex: 1;
 }
 
 .col + .col {

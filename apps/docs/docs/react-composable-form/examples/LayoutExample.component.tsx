@@ -6,7 +6,7 @@ import { createForm } from "./auxillary/rcf";
 import { NumberField } from "./auxillary/fields/NumberField";
 import { CardFormLayout } from "./auxillary/layouts/CardFormLayout";
 
-const LoginForm = createForm((options) =>
+export const LoginForm = createForm((options) =>
   options
     .schema(
       z.object({
@@ -20,11 +20,11 @@ const LoginForm = createForm((options) =>
     .layout(CardFormLayout),
 );
 
-const InlineLoginForm = LoginForm.extend((options) =>
-  options.layout(InlineFormLayout),
+export const InlineLoginForm = LoginForm.extend(
+  (options) => options.layout(InlineFormLayout),
 );
 
-const SpecializedLoginForm = LoginForm.extend((options) =>
+export const SpecializedLoginForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
       <Stack>
@@ -40,22 +40,3 @@ const SpecializedLoginForm = LoginForm.extend((options) =>
     </form>
   )),
 );
-
-export function LayoutExample() {
-  return (
-    <Stack gap={4}>
-      <div>
-        <h4>Card layout</h4>
-        <LoginForm />
-      </div>
-      <div>
-        <h4>Inline layout</h4>
-        <InlineLoginForm />
-      </div>
-      <div>
-        <h4>Specialized layout</h4>
-        <SpecializedLoginForm />
-      </div>
-    </Stack>
-  );
-}
