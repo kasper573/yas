@@ -1,11 +1,5 @@
 import type { FormEvent, ComponentType } from "react";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FormValidationMode, inferValue } from "./types/commonTypes";
 import { createFieldComponentFactory } from "./createFieldComponentFactory";
 import { FormContext } from "./FormContext";
@@ -25,6 +19,7 @@ import type {
   FormOptions,
 } from "./types/optionTypes";
 import { determineFields } from "./utils/determineFields";
+import { useSyncIsomorphicStore } from "./useSyncIsomorphicStore";
 
 export interface FormProps<G extends AnyRCFGenerics> {
   value?: inferValue<G["schema"]>;
@@ -109,19 +104,22 @@ function createFormForOptions<G extends AnyRCFGenerics>(
       (): FormStoreFor<G> => new FormStore(schema, data, modes, fieldList),
     );
 
-    const fieldValues = useSyncExternalStore(store.subscribe, () => store.data);
+    const fieldValues = useSyncIsomorphicStore(
+      store.subscribe,
+      () => store.data,
+    );
 
     const selectedFields = useMemo(
       () => resolveFieldComponents(fieldValues),
       [fieldValues],
     );
 
-    const generalErrors = useSyncExternalStore(
+    const generalErrors = useSyncIsomorphicStore(
       store.subscribe,
       () => store.generalErrors,
     );
 
-    const fieldErrors = useSyncExternalStore(
+    const fieldErrors = useSyncIsomorphicStore(
       store.subscribe,
       () => store.fieldErrors,
     );
@@ -155,7 +153,13 @@ function createFormForOptions<G extends AnyRCFGenerics>(
       [store, onSubmit],
     );
 
-    const handleReset = useCallback(() => store.reset(), [store]);
+    const handleReset = useCallback(
+      (e?: MouseEvent) => {
+        e?.preventDefault();
+        store.reset();
+      },
+      [store],
+    );
 
     return (
       <FormContext.Provider value={store}>

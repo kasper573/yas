@@ -1,9 +1,9 @@
 {
-  "name": "docusaurus",
+  "name": "@yas/docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "docusaurus start",
+    "dev": "docusaurus start --no-open",
     "build": "tsc --noEmit && docusaurus build",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
@@ -32,9 +32,11 @@
     "@docusaurus/module-type-aliases": "3.0.0-alpha.0",
     "@tsconfig/docusaurus": "2.0.0",
     "@yas/tsconfig": "*",
+    "slice-loader": "*",
     "current-git-branch": "^1.1.0",
     "eslint": "^8.35.0",
     "eslint-config-yas": "*",
+    "raw-loader": "^4.0.2",
     "webpack": "^5.88.2"
   },
   "browserslist": {

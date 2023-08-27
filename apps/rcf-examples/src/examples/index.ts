@@ -59,4 +59,12 @@ export const examples = [
       import("./CheckoutExample").then((m) => ({ default: m.CheckoutExample })),
     ),
   },
+  {
+    name: "Property Explorer",
+    component: lazy(() =>
+      import("./PropertyExplorerExample").then((m) => ({
+        default: m.PropertyExplorerExample,
+      })),
+    ),
+  },
 ];
