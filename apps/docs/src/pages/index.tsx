@@ -2,8 +2,8 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
-import { projects } from "@site/fixtures/projects";
 import type { ReactNode } from "react";
+import { projects } from "../../fixtures/projects";
 import styles from "./index.module.css";
 
 export default function Home() {
