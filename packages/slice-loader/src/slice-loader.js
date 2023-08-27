@@ -1,5 +1,4 @@
 const ts = require("typescript");
-const { getModifiers } = require("typescript");
 
 module.exports = function sliceLoader(fileContent) {
   const scriptFile = ts.createSourceFile(
@@ -30,7 +29,7 @@ function toSerializedModule(exports) {
  */
 function getExportName(rootStatement) {
   if (ts.isVariableStatement(rootStatement)) {
-    const mods = getModifiers(rootStatement);
+    const mods = ts.getModifiers(rootStatement);
     const isExport = mods?.find((m) => m.kind === ts.SyntaxKind.ExportKeyword);
     if (isExport) {
       const nameNode = rootStatement.declarationList.declarations[0].name;
