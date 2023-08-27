@@ -3,7 +3,7 @@ hide_table_of_contents: true
 ---
 
 import {InlineLoginForm, LoginForm, SpecializedLoginForm} from "./LayoutExample.component";
-import code from "!!slice-loader!./LayoutExample.component?names=InlineLoginForm,LoginForm,SpecializedLoginForm";
+import code from "!!slice-loader!./LayoutExample.component";
 
 import { Split } from "./auxillary/components/Split";
 import CodeBlock from "@theme/CodeBlock";
@@ -11,7 +11,7 @@ import CodeBlock from "@theme/CodeBlock";
 ## Card layout
 
 <Split names={["Code", "Form"]}>
-  <CodeBlock>
+  <CodeBlock language="tsx">
     {code.LoginForm}
   </CodeBlock>
   <LoginForm/>
@@ -20,7 +20,7 @@ import CodeBlock from "@theme/CodeBlock";
 ## Inline layout
 
 <Split names={["Code", "Form"]}>
-  <CodeBlock>
+  <CodeBlock language="tsx">
     {code.InlineLoginForm}
   </CodeBlock>
   <InlineLoginForm/>
@@ -29,7 +29,7 @@ import CodeBlock from "@theme/CodeBlock";
 ## Specialized layout
 
 <Split names={["Code", "Form"]}>
-  <CodeBlock>
+  <CodeBlock language="tsx">
     {code.SpecializedLoginForm}
   </CodeBlock>
   <SpecializedLoginForm/>

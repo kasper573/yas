@@ -20,8 +20,8 @@ export const LoginForm = createForm((options) =>
     .layout(CardFormLayout),
 );
 
-export const InlineLoginForm = LoginForm.extend(
-  (options) => options.layout(InlineFormLayout),
+export const InlineLoginForm = LoginForm.extend((options) =>
+  options.layout(InlineFormLayout),
 );
 
 export const SpecializedLoginForm = LoginForm.extend((options) =>
