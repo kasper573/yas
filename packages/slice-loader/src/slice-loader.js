@@ -20,7 +20,11 @@ module.exports = function sliceLoader(fileContent) {
 };
 
 function toSerializedModule(exports) {
-  return `export default ${JSON.stringify(exports)}`;
+  let str = "";
+  for (const [exportName, slice] of Object.entries(exports)) {
+    str += `export const ${exportName} = ${JSON.stringify(slice)};\n`;
+  }
+  return str;
 }
 
 /**

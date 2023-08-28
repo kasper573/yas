@@ -16,5 +16,9 @@ export const bar: string = "foo";`,
 });
 
 function toSerializedModule(exports: Record<string, string>) {
-  return `export default ${JSON.stringify(exports)}`;
+  let str = "";
+  for (const [exportName, slice] of Object.entries(exports)) {
+    str += `export const ${exportName} = ${JSON.stringify(slice)};\n`;
+  }
+  return str;
 }
