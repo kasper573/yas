@@ -2,11 +2,7 @@
 hide_table_of_contents: true
 ---
 
-import {
-  InlineLoginForm,
-  LoginForm,
-  SpecializedLoginForm,
-} from "./LayoutExample.component";
+import * as component from "./LayoutExample.component";
 import * as code from "!!slice-loader!./LayoutExample.component";
 
 import { Split } from "./auxillary/components/Split";
@@ -16,19 +12,19 @@ import CodeBlock from "@theme/CodeBlock";
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.LoginForm}</CodeBlock>
-  <LoginForm />
+  <component.LoginForm />
 </Split>
 
 ## Inline layout
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.InlineLoginForm}</CodeBlock>
-  <InlineLoginForm />
+  <component.InlineLoginForm />
 </Split>
 
 ## Specialized layout
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.SpecializedLoginForm}</CodeBlock>
-  <SpecializedLoginForm />
+  <component.SpecializedLoginForm />
 </Split>
