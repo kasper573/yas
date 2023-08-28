@@ -3,7 +3,6 @@ import { InlineFormLayout } from "./auxillary/layouts/InlineFormLayout";
 import { TextField } from "./auxillary/fields/TextField";
 import { Stack } from "./auxillary/components/Stack";
 import { createForm } from "./auxillary/rcf";
-import { NumberField } from "./auxillary/fields/NumberField";
 import { CardFormLayout } from "./auxillary/layouts/CardFormLayout";
 
 export const LoginForm = createForm((options) =>
@@ -15,8 +14,7 @@ export const LoginForm = createForm((options) =>
       }),
     )
     .type(z.string(), TextField)
-    .type(z.number(), NumberField)
-    .field("password", TextField, { password: true })
+    .field("password", TextField, { type: "password" })
     .layout(CardFormLayout),
 );
 

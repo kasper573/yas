@@ -7,10 +7,10 @@ import { Stack } from "../components/Stack";
 export interface TextFieldProps
   extends FieldProps<string>,
     Omit<
-      HTMLAttributes<HTMLDivElement>,
+      HTMLAttributes<HTMLInputElement>,
       "value" | "onChange" | "onFocus" | "onBlur" | "type"
     > {
-  password?: boolean;
+  type?: "text" | "number" | "password";
 }
 
 export function TextField({
@@ -20,22 +20,24 @@ export function TextField({
   onChange,
   onBlur,
   onFocus,
-  password,
   required,
   fieldValues,
+  className,
+  style,
+  type,
   ...rest
 }: TextFieldProps) {
   const id = useId();
   return (
-    <Stack {...rest}>
+    <Stack className={className} style={style} {...rest}>
       <label htmlFor={id}>{name}</label>
       <input
         id={id}
         value={value ?? ""}
-        onChange={(e) => onChange?.(e.target.value || undefined)}
+        onChange={(e) => onChange?.(e.target.value)}
         onFocus={onFocus}
         onBlur={onBlur}
-        type={password ? "password" : "text"}
+        type={type}
       />
       {errors.length > 0 && <Alert variant="danger">{errors.join(", ")}</Alert>}
     </Stack>

@@ -1,43 +1,21 @@
-import type { HTMLAttributes } from "react";
-import { useId } from "react";
 import type { FieldProps } from "../rcf";
-import { Alert } from "../components/Alert";
-import { Stack } from "../components/Stack";
+import type { TextFieldProps } from "./TextField";
+import { TextField } from "./TextField";
 
 export interface NumberFieldProps
   extends FieldProps<number>,
-    Omit<
-      HTMLAttributes<HTMLDivElement>,
-      "value" | "onChange" | "onFocus" | "onBlur" | "type"
-    > {}
+    Omit<TextFieldProps, keyof FieldProps<unknown> | "type"> {}
 
-export function NumberField({
-  name,
-  value,
-  errors = [],
-  onChange,
-  onFocus,
-  onBlur,
-  required,
-  fieldValues,
-  ...rest
-}: NumberFieldProps) {
-  const id = useId();
+export function NumberField({ value, onChange, ...rest }: NumberFieldProps) {
   return (
-    <Stack {...rest}>
-      <label htmlFor={id}>{name}</label>
-      <input
-        id={id}
-        value={value ?? ""}
-        onChange={(e) => {
-          const num = parseFloat(e.target.value);
-          onChange?.(isNaN(num) ? undefined : num);
-        }}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        type="number"
-      />
-      {errors.length > 0 && <Alert variant="danger">{errors.join(", ")}</Alert>}
-    </Stack>
+    <TextField
+      {...rest}
+      type="number"
+      value={value?.toString()}
+      onChange={(text) => {
+        const num = parseFloat(text ?? "");
+        onChange?.(isNaN(num) ? undefined : num);
+      }}
+    />
   );
 }
