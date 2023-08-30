@@ -2,11 +2,13 @@
 hide_table_of_contents: true
 ---
 
-import * as component from "./LayoutExample.component";
-import * as code from "!!slice-loader!./LayoutExample.component";
-
-import { Split } from "./auxillary/components/Split";
+import * as component from "./Layout.components";
+import * as code from "!!slice-loader!./Layout.components";
+import {Split} from "../../../src/components/Split";
 import CodeBlock from "@theme/CodeBlock";
+
+Layout is a fundamental concept of this library. They allow you to reuse an existing form and
+recompose its fields using a layout of your choice.
 
 ## Card layout
 
