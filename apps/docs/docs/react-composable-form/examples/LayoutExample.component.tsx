@@ -26,13 +26,10 @@ export const SpecializedLoginForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
       <Stack>
-        <Email style={{ border: "5px solid #0b3c2b" }} />
-        <Password
-          name="PWD (I am special)"
-          style={{ border: "5px solid #3c2674" }}
-        />
-        <button className="button button--primary" type="submit">
-          Submit
+        <Email style={{ background: "#5b1111" }} />
+        <Password name="PWD (I am special)" style={{ background: "#272878" }} />
+        <button className="button button--warning" type="submit">
+          Very special submit
         </button>
       </Stack>
     </form>
