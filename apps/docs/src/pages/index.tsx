@@ -4,7 +4,7 @@ import Layout from "@theme/Layout";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
-import styles from "./index.module.css";
+import styles from "./index.module.scss";
 
 export default function Home() {
   const {

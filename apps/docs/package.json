@@ -32,11 +32,14 @@
     "@docusaurus/module-type-aliases": "3.0.0-alpha.0",
     "@tsconfig/docusaurus": "2.0.0",
     "@yas/tsconfig": "*",
-    "slice-loader": "*",
     "current-git-branch": "^1.1.0",
+    "docusaurus-plugin-sass": "^0.2.5",
     "eslint": "^8.35.0",
     "eslint-config-yas": "*",
     "raw-loader": "^4.0.2",
+    "sass": "^1.66.1",
+    "sass-loader": "^13.3.2",
+    "slice-loader": "*",
     "webpack": "^5.88.2"
   },
   "browserslist": {

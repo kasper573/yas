@@ -9,14 +9,12 @@
 
 .titleWord {
   display: inline-block;
-}
-
-.titleWord::first-letter {
-  color: var(--ifm-color-primary);
-}
-
-.titleWord + .titleWord {
-  margin-left: 0.25em;
+  &::first-letter {
+    color: var(--ifm-color-primary);
+  }
+  + .titleWord {
+    margin-left: 0.25em;
+  }
 }
 
 .tagline {
