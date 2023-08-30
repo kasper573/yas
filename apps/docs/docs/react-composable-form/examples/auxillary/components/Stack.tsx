@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 import clsx from "clsx";
-import styles from "./Stack.module.css";
+import styles from "./Stack.module.scss";
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
   direction?: "row" | "column";
