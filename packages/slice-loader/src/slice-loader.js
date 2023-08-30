@@ -41,5 +41,14 @@ function getExportName(rootStatement) {
         return nameNode.escapedText;
       }
     }
+  } else if (ts.isFunctionDeclaration(rootStatement)) {
+    const mods = ts.getModifiers(rootStatement);
+    const isExport = mods?.find((m) => m.kind === ts.SyntaxKind.ExportKeyword);
+    if (isExport) {
+      const nameNode = rootStatement.name;
+      if (ts.isIdentifier(nameNode)) {
+        return nameNode.escapedText;
+      }
+    }
   }
 }
