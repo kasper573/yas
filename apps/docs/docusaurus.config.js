@@ -31,8 +31,6 @@ const config = {
 
   plugins: ["docusaurus-plugin-sass"],
 
-  themes: ["@docusaurus/theme-live-codeblock"],
-
   presets: [
     [
       "classic",
