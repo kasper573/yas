@@ -31,8 +31,6 @@ const config = {
 
   plugins: ["docusaurus-plugin-sass"],
 
-  themes: ["@docusaurus/theme-live-codeblock"],
-
   presets: [
     [
       "classic",
@@ -43,7 +41,7 @@ const config = {
           editUrl: `${yasGithubUrl}/tree/${branchName}${pathToAppRelativeToRoot}`,
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve("./src/main.css"),
         },
       }),
     ],

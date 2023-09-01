@@ -2,69 +2,41 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# react-composable-form
 
-```jsx live
-function Clock(props) {
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    var timerID = setInterval(() => tick(), 1000);
+## Factory
 
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
+react-composable-form is a _configuration first_ form library. You create your forms using a factory:
 
-  function tick() {
-    setDate(new Date());
-  }
+```jsx
+import { createForm } from "react-composable-form";
 
-  return (
-    <div>
-      <h2>It is {date.toLocaleTimeString()}.</h2>
-    </div>
-  );
-}
+const Form = createForm();
+//     ^?
 ```
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## Options
 
-## Getting Started
-
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```jsx
+createForm(
+  options => options.
+//                  ^|
+);
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+# Type Mappings
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+At the core of react-composable-form is `type mapping`, associating field components with runtime available types:
 
-## Start your site
+```jsx
+import { createForm } from "react-composable-form";
 
-Run the development server:
-
-```bash
-cd my-website
-npm run start
+const MyForm = createForm((options) =>
+  options
+    // TextField, NumberField and SwitchField are all react components.
+    // Ignore where they come from for now, we'll explain how to create them later.
+    .type(z.string(), TextField)
+    .type(z.number(), NumberField)
+    .type(z.boolean(), SwitchField),
+);
 ```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
