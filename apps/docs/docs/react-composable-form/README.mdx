@@ -6,10 +6,10 @@ sidebar_position: 1
 
 ## Factory
 
-react-composable-form is a *configuration first* form library. You create your forms using a factory:
+react-composable-form is a _configuration first_ form library. You create your forms using a factory:
 
 ```jsx
-import {createForm} from "react-composable-form";
+import { createForm } from "react-composable-form";
 
 const Form = createForm();
 //     ^?
@@ -29,7 +29,7 @@ createForm(
 At the core of react-composable-form is `type mapping`, associating field components with runtime available types:
 
 ```jsx
-import {createForm} from "react-composable-form";
+import { createForm } from "react-composable-form";
 
 const MyForm = createForm((options) =>
   options
@@ -40,5 +40,3 @@ const MyForm = createForm((options) =>
     .type(z.boolean(), SwitchField),
 );
 ```
-
-
