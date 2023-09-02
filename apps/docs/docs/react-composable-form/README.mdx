@@ -8,7 +8,7 @@ sidebar_position: 1
 
 react-composable-form is a _configuration first_ form library. You create your forms using a factory:
 
-```jsx
+```jsx twoslash
 import { createForm } from "react-composable-form";
 
 const Form = createForm();
@@ -17,10 +17,14 @@ const Form = createForm();
 
 ## Options
 
-```jsx
+```jsx twoslash
+import { createForm } from "react-composable-form";
+// ---cut---
+
+// @noErrors
 createForm(
-  options => options.
-//                  ^|
+  (options) => options.s,
+  //                    ^|
 );
 ```
 

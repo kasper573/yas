@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "bin": {
-    "yas-jest": "./jest.js"
-  },
   "devDependencies": {
     "@swc/jest": "^0.2.27",
     "@swc/core": "^1.3.70",
