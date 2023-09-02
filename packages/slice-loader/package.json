@@ -16,10 +16,8 @@
   },
   "devDependencies": {
     "@types/acorn": "^6.0.0",
-    "@yas/jest": "*",
-    "@yas/tsconfig": "*",
-    "jest": "^29.5.0",
-    "typescript": "^5.2.2",
+    "@yas/jest": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
     "webpack": "^5.88.2"
   }
 }

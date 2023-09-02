@@ -1,8 +1,8 @@
 // @ts-check
 
 const path = require("path");
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+// @ts-expect-error Prisms types seem to not play well with Docusaurus, but they work. Just silence this error.
+const { themes: prismThemes } = require("prism-react-renderer");
 const getGitBranchName = require("current-git-branch");
 const { projects } = require("./fixtures/projects");
 
@@ -74,8 +74,8 @@ const config = {
         ],
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.github,
+        darkTheme: prismThemes.dracula,
         defaultLanguage: "typescript",
       },
       liveCodeBlock: {

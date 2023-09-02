@@ -22,16 +22,16 @@ storybook-static
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.yarn-debug.log*
+pnpm-debug.log*
+pnpm-error.log*
+.pnpm-debug.log*
 
 # Local files for common editors
 .idea
 .vscode
 
-# Disallow non-yarn lockfiles
-yarn-lock.yaml
+# Disallow non-pnpm lockfiles
+yarn.lock
 package-lock.json
 
 # local env files
