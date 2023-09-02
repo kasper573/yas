@@ -1,10 +1,5 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+@import "./shiki-twoslash.css";
 
-/* Light mode is the default */
 :root {
   --ifm-color-primary: #296aa3;
   --ifm-color-primary-dark: #255f93;
