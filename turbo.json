@@ -4,7 +4,7 @@
     "build": {
       "env": ["PUBLIC_*"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", "build/**"]
     },
     "lint": {
       "cache": false
