@@ -312,6 +312,9 @@ importers:
 
   packages/publicize-package-json:
     devDependencies:
+      '@types/node':
+        specifier: ^20.5.8
+        version: 20.5.8
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig

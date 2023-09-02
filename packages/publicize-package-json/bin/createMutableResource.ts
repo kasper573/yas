@@ -44,7 +44,6 @@ export function createMutableResource<T>(
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function discard<T extends (...args: any[]) => any>(fn: T) {
   return (...args: Parameters<T>) => {
     fn(...args);
