@@ -17,7 +17,7 @@ module.exports = {
     // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
     "import/order": ["error"],
   },
-  ignorePatterns: ["node_modules", ".turbo", "dist"],
+  ignorePatterns: ["node_modules", ".turbo", "dist", "build"],
   // Rules only applied to specific files or file types
   overrides: [
     {

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { t } from "../../trpc";
 
 export function createExampleRouter() {

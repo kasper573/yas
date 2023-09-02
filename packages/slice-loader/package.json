@@ -18,8 +18,6 @@
     "@types/acorn": "^6.0.0",
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "jest": "^29.5.0",
-    "typescript": "^5.2.2",
     "webpack": "^5.88.2"
   }
 }

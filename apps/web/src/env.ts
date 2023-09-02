@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { mode } from "@yas/zod";
+import { z, mode } from "@yas/zod";
 
 const schema = z.object({
   mode: mode.default("development"),
