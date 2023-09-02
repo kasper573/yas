@@ -46,7 +46,9 @@ module.exports = async function createConfig() {
           docs: {
             sidebarPath: require.resolve("./fixtures/sidebars.js"),
             editUrl: `${yasGithubUrl}/tree/${branchName}${pathToAppRelativeToRoot}`,
-            remarkPlugins: [[remarkShikiTwoslash, { theme: "dark-plus" }]],
+            remarkPlugins: [
+              [remarkShikiTwoslash, { themes: ["min-light", "nord"] }],
+            ],
             // Using rehype-raw to make remark-shiki-twoslash work with mdx v2
             // (Works around this error: https://github.com/shikijs/twoslash/issues/125)
             rehypePlugins: [[rehypeRaw, { passThrough: nodeTypes }]],
