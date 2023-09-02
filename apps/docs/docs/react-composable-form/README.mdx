@@ -23,8 +23,8 @@ import { createForm } from "react-composable-form";
 
 // @noErrors
 createForm(
-  options => options.s
-//                    ^|
+  (options) => options.s,
+  //                    ^|
 );
 ```
 
