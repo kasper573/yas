@@ -54,7 +54,7 @@ module.exports = async function createConfig() {
             rehypePlugins: [[rehypeRaw, { passThrough: nodeTypes }]],
           },
           theme: {
-            customCss: require.resolve("./src/styles/global.css"),
+            customCss: require.resolve("./src/styles/global.scss"),
           },
         }),
       ],
