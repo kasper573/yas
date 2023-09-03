@@ -9,9 +9,13 @@ module.exports = function shikiTwoslashLoader(code) {
   const vfsRoot = path.dirname(this.resourcePath);
   const settings = { vfsRoot, ...getUserSettingsFromEnv() };
 
-  shikiTwoslashCodeToHTML(code, settings).then((html) =>
-    callback(null, htmlStringToReactElementModule(html)),
-  );
+  shikiTwoslashCodeToHTML(code, settings).then((result) => {
+    if (result.type === "error") {
+      callback(new Error(result.message));
+    } else {
+      callback(null, htmlStringToReactElementModule(result.html));
+    }
+  });
 };
 
 function htmlStringToReactElementModule(html) {
@@ -27,9 +31,15 @@ async function shikiTwoslashCodeToHTML(code, settings) {
   const lang = "tsx";
   const { themes = [] } = settings;
 
-  const twoslash = st.runTwoSlash(code, lang, settings);
-  if (twoslash) {
-    code = twoslash.code;
+  let twoslash;
+
+  try {
+    twoslash = st.runTwoSlash(code, lang, settings);
+    if (twoslash) {
+      code = twoslash.code;
+    }
+  } catch (e) {
+    return { type: "error", message: e.message };
   }
 
   const highlighters = await Promise.all(themes.map(getHighlighter));
@@ -48,7 +58,7 @@ async function shikiTwoslashCodeToHTML(code, settings) {
     );
   }
 
-  return html;
+  return { type: "success", html };
 }
 
 const highlighterMap = new Map();
