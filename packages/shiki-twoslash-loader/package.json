@@ -1,0 +1,29 @@
+{
+  "name": "shiki-twoslash-loader",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./src/shiki-twoslash-loader.js",
+      "require": "./src/shiki-twoslash-loader.js"
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix"
+  },
+  "jest": {
+    "preset": "@yas/jest/presets/node"
+  },
+  "peerDependencies": {
+    "shiki": "^0.14.4",
+    "shiki-twoslash": "^3.1.2"
+  },
+  "devDependencies": {
+    "@yas/jest": "workspace:*",
+    "shiki": "^0.14.4",
+    "shiki-twoslash": "^3.1.2",
+    "webpack": "^5.88.2"
+  }
+}

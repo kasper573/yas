@@ -1,7 +1,15 @@
-import { createForm } from "react-composable-form";
-import { z } from "zod";
+---
+sidebar_position: 1
+---
 
-export const MyForm = createForm((options) =>
+# Type Mapping
+
+At the core of react-composable-form is `type mapping`, associating field components with runtime available types:
+
+```jsx
+import { createForm } from "react-composable-form";
+
+const MyForm = createForm((options) =>
   options
     // TextField, NumberField and SwitchField are all react components.
     // Ignore where they come from for now, we'll explain how to create them later.
@@ -9,15 +17,4 @@ export const MyForm = createForm((options) =>
     .type(z.number(), NumberField)
     .type(z.boolean(), SwitchField),
 );
-
-export function TextField() {
-  return null;
-}
-
-function NumberField() {
-  return null;
-}
-
-function SwitchField() {
-  return null;
-}
+```

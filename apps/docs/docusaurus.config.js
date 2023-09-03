@@ -1,11 +1,16 @@
 // @ts-check
 
 const path = require("path");
+
 // @ts-expect-error Prisms types seem to not play well with Docusaurus, but they work. Just silence this error.
 const { themes: prismThemes } = require("prism-react-renderer");
 const getGitBranchName = require("current-git-branch");
 const remarkShikiTwoslash = require("remark-shiki-twoslash").default;
 const { projects } = require("./fixtures/projects");
+const shikiTwoslashOptionsPath = require.resolve("./shiki-twoslash.config");
+
+// eslint-disable-next-line no-restricted-syntax
+process.env.SHIKI_TWOSLASH_SETTINGS_PATH = shikiTwoslashOptionsPath;
 
 const branchName = getGitBranchName();
 const yasGithubUrl = "https://github.com/ksandin/yas";
@@ -47,14 +52,14 @@ module.exports = async function createConfig() {
             sidebarPath: require.resolve("./fixtures/sidebars.js"),
             editUrl: `${yasGithubUrl}/tree/${branchName}${pathToAppRelativeToRoot}`,
             remarkPlugins: [
-              [remarkShikiTwoslash, { themes: ["min-light", "nord"] }],
+              [remarkShikiTwoslash, require(shikiTwoslashOptionsPath)],
             ],
             // Using rehype-raw to make remark-shiki-twoslash work with mdx v2
             // (Works around this error: https://github.com/shikijs/twoslash/issues/125)
             rehypePlugins: [[rehypeRaw, { passThrough: nodeTypes }]],
           },
           theme: {
-            customCss: require.resolve("./src/styles/global.css"),
+            customCss: require.resolve("./src/styles/global.scss"),
           },
         }),
       ],

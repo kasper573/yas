@@ -3,6 +3,6 @@
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "Important high level concepts you need to be aware of before using the library"
+    "description": "Important high level concepts you need to be aware of when using React Composable Form"
   }
 }

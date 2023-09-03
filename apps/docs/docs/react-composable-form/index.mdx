@@ -1,0 +1,36 @@
+---
+sidebar_position: 1
+---
+
+import { UserForm } from "./index.components";
+import { Split } from "../../src/components/Split";
+import codeElements from "!!shiki-twoslash-loader!./index.components";
+
+# Overview
+
+## Motivation
+
+Most form libraries for React does one thing really well: State management.
+However, when working with forms at scale, that is often not enough.
+
+Things like reusing existing forms, but with a different layout, or enforcing conventions
+like shared props for all fields (i.e. a size option), often remains entirely up to the developer.
+
+[Here are a few examples with common form libraries that come short when used at scale](motivation-examples).
+
+That's why React Composable Form has first class support for not only [state management](concepts/state-management),
+but also [composition](concepts/composition) and [convention](concepts/convention).
+
+## Quick Start
+
+React Composable Form is a _configuration first_ form library.
+You create your forms using a factory that returns a React component.
+
+Here's a comprehensive example to give you an idea of what it looks like:
+
+> See the [high level concepts](/docs/category/concepts) for a more detailed breakdown.
+
+<Split names={["Code", "Form"]}>
+  {codeElements}
+  <UserForm />
+</Split>

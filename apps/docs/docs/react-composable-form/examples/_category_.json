@@ -3,6 +3,6 @@
   "position": 3,
   "link": {
     "type": "generated-index",
-    "description": "Example code for common form scenarios"
+    "description": "Code examples showcasing common use cases of React Composable Form."
   }
 }

@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "tsnd src/index.ts",
     "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
     "test": "jest --detectOpenHandles"
   },
   "jest": {
