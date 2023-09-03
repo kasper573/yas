@@ -4,9 +4,11 @@ import type { inferFormValue } from "react-composable-form";
 import { createForm } from "react-composable-form";
 import { TextField } from "../../src/fields/TextField";
 import { NumberField } from "../../src/fields/NumberField";
+// ---cut---
 
 const BaseForm = createForm((options) =>
   options
+    // ^?
     .validateOn("blur", "submit")
     .type(z.string(), TextField)
     .type(z.number(), NumberField)
@@ -38,6 +40,8 @@ const UserForm = BaseForm.extend((options) =>
       </form>
     )),
 );
+
+// ---cut-after---
 
 export function App() {
   type FormState = inferFormValue<typeof UserForm>;

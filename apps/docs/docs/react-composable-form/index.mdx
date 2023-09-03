@@ -4,9 +4,8 @@ hide_table_of_contents: true
 ---
 
 import { App } from "./index.components";
-import code from "!!raw-loader!./index.components";
 import { Split } from "../../src/components/Split";
-import CodeBlock from "@theme/CodeBlock";
+import codeElements from "!!shiki-twoslash-loader!./index.components";
 
 # Overview
 
@@ -26,6 +25,6 @@ Here's a comprehensive example to give you an idea of what it looks like:
 > See the [high level concepts](concepts) for a more detailed breakdown.
 
 <Split names={["Code", "Form"]}>
-  <CodeBlock language="tsx">{code}</CodeBlock>
+  {codeElements}
   <App />
 </Split>
