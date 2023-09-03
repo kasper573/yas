@@ -1,12 +1,10 @@
 import { z } from "zod";
-import { useState } from "react";
-import type { inferFormValue } from "react-composable-form";
 import { createForm } from "react-composable-form";
 import { TextField } from "../../src/fields/TextField";
 import { NumberField } from "../../src/fields/NumberField";
 // ---cut---
 
-const UserForm = createForm((options) =>
+export const UserForm = createForm((options) =>
   options
     .validateOn("blur", "submit")
     .type(z.string(), TextField)
@@ -37,24 +35,6 @@ const UserForm = createForm((options) =>
 );
 
 // ---cut-after---
-
-export function App() {
-  type FormState = inferFormValue<typeof UserForm>;
-  const [current, setCurrent] = useState<FormState>();
-  const [submitted, submit] = useState<FormState>();
-  return (
-    <>
-      <h3>Form</h3>
-      <UserForm value={current} onChange={setCurrent} onSubmit={submit} />
-
-      <h3 style={{ marginTop: "1rem" }}>Current state</h3>
-      <pre>{JSON.stringify(current, null, 2)}</pre>
-
-      <h3 style={{ marginTop: "1rem" }}>Last submit</h3>
-      <pre>{JSON.stringify(submitted, null, 2)}</pre>
-    </>
-  );
-}
 
 const styles = {
   grid: { display: "grid" },
