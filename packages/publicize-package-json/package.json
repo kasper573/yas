@@ -6,8 +6,12 @@
   "bin": {
     "publicize-package-json": "bin/publicize-package-json.ts"
   },
+  "peerDependencies": {
+    "tsx": "^3.12.7"
+  },
   "devDependencies": {
     "@types/node": "^20.5.8",
+    "@types/yargs": "^17.0.24",
     "@yas/tsconfig": "workspace:*",
     "execa": "^7.1.1",
     "immer": "^10.0.2",
