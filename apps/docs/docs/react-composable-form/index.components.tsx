@@ -6,17 +6,12 @@ import { TextField } from "../../src/fields/TextField";
 import { NumberField } from "../../src/fields/NumberField";
 // ---cut---
 
-const BaseForm = createForm((options) =>
+const UserForm = createForm((options) =>
   options
-    // ^?
     .validateOn("blur", "submit")
     .type(z.string(), TextField)
     .type(z.number(), NumberField)
-    .type(z.string().brand("password"), TextField, { type: "password" }),
-);
-
-const UserForm = BaseForm.extend((options) =>
-  options
+    .type(z.string().brand("password"), TextField, { type: "password" })
     .schema(
       z.object({
         email: z.string().email(),
