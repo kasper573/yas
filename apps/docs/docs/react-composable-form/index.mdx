@@ -1,6 +1,5 @@
 ---
 sidebar_position: 1
-hide_table_of_contents: true
 ---
 
 import { UserForm } from "./index.components";
@@ -11,13 +10,20 @@ import codeElements from "!!shiki-twoslash-loader!./index.components";
 
 ## Motivation
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies ultrices,
-nunc nisl ultricies nunc, quis ultricies nisl nunc eget nisl. Donec auctor, nisl eget ultricies ultrices,
-nunc nisl ultricies nunc, quis ultricies nisl nunc eget nisl.
+Most form libraries for React does one thing really well: State management.
+However, when working with forms at scale, that is often not enough.
+
+Things like reusing existing forms, but with a different layout, or enforcing conventions
+like shared props for all fields (ie. a size option), often remains entirely up to the developer.
+
+[Here's a few demonstrations of common form libraries falling apart at scale](motivation-examples).
+
+That's why React Composable Form has first class support for not only [state management](concepts/state-management),
+but also [composition](concepts/composition) and [convention](concepts/convention).
 
 ## Quick Start
 
-react-composable-form is a _configuration first_ form library.
+React Composable Form is a _configuration first_ form library.
 You create your forms using a factory that returns a React component.
 
 Here's a comprehensive example to give you an idea of what it looks like:
