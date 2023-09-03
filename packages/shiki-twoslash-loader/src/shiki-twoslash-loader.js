@@ -1,15 +1,15 @@
 const path = require("path");
 const shiki = require("shiki");
 const st = require("shiki-twoslash");
+const { env } = require("./env");
 
 module.exports = function shikiTwoslashLoader(code) {
   const { resourcePath } = this;
   const callback = this.async();
-  const lang = "tsx";
   const vfsRoot = path.dirname(resourcePath);
-  const settings = { vfsRoot, themes: ["nord", "min-light"] };
+  const settings = { vfsRoot, ...getUserSettingsFromEnv() };
 
-  shikiTwoslashCodeToHTML(code, lang, settings).then((html) =>
+  shikiTwoslashCodeToHTML(code, settings).then((html) =>
     callback(null, htmlStringToReactElementModule(html)),
   );
 };
@@ -23,8 +23,9 @@ function htmlStringToReactElementModule(html) {
   `;
 }
 
-async function shikiTwoslashCodeToHTML(code, lang, settings) {
-  const { themes } = settings;
+async function shikiTwoslashCodeToHTML(code, settings) {
+  const lang = "tsx";
+  const { themes = [] } = settings;
   const twoslash = st.runTwoSlash(code, lang, settings);
   if (twoslash) {
     code = twoslash.code;
@@ -48,4 +49,8 @@ async function shikiTwoslashCodeToHTML(code, lang, settings) {
   }
 
   return html;
+}
+
+function getUserSettingsFromEnv() {
+  return env.userSettingsPath ? require(env.userSettingsPath) ?? {} : {};
 }
