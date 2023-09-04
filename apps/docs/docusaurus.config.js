@@ -1,5 +1,7 @@
-// @ts-check
+// Using environment variables via process.env is okay since docusaurus is kind of an edge case for now.
+/* eslint-disable no-restricted-syntax */
 
+// @ts-check
 const path = require("path");
 
 // @ts-expect-error Prisms types seem to not play well with Docusaurus, but they work. Just silence this error.
@@ -9,7 +11,7 @@ const remarkShikiTwoslash = require("remark-shiki-twoslash").default;
 const { projects } = require("./fixtures/projects");
 const shikiTwoslashOptionsPath = require.resolve("./shiki-twoslash.config");
 
-// eslint-disable-next-line no-restricted-syntax
+// A bit unconventional, but it's how we pass options to shiki-twoslash-loader.
 process.env.SHIKI_TWOSLASH_SETTINGS_PATH = shikiTwoslashOptionsPath;
 
 const branchName = getGitBranchName();
@@ -30,7 +32,7 @@ module.exports = async function createConfig() {
     title: "Yet Another Stack",
     tagline: "A collection of React and Typescript libraries",
     favicon: "img/favicon.ico",
-    url: "https://your-docusaurus-test-site.com",
+    url: getSiteUrl(),
     baseUrl: "/",
     organizationName: "ksandin",
     projectName: "yas",
@@ -41,7 +43,12 @@ module.exports = async function createConfig() {
       locales: ["en"],
     },
 
-    plugins: ["docusaurus-plugin-sass"],
+    plugins: [
+      "docusaurus-plugin-sass",
+      process.env.VERCEL
+        ? "@gracefullight/docusaurus-plugin-vercel-analytics"
+        : false,
+    ],
 
     presets: [
       [
@@ -106,3 +113,13 @@ module.exports = async function createConfig() {
   };
   return config;
 };
+
+function getSiteUrl() {
+  if (process.env.VERCEL) {
+    if (process.env.VERCEL_ENV === "production") {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    return `https://${process.env.VERCEL_BRANCH_URL}`;
+  }
+  return `http://localhost:3000`;
+}
