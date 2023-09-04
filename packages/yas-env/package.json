@@ -1,0 +1,12 @@
+{
+  "name": "@yas/env",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "yas-env": "./cli.js"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.3.0"
+  }
+}
