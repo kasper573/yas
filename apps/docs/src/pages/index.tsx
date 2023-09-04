@@ -72,7 +72,7 @@ function Feature({
           role="img"
           alt={`${title} image`}
         />
-        <h3>{title}</h3>
+        <h2>{title}</h2>
       </Link>
       <p>{children}</p>
     </div>
