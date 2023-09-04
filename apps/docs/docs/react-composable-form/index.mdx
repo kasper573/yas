@@ -13,13 +13,16 @@ import codeElements from "!!shiki-twoslash-loader!./index.components";
 
 ## Motivation
 
-Most form libraries for React does one thing really well: State management.
-However, when working with forms at scale, that is often not enough.
+Most form libraries for React does one thing really well: **state management**.
+However, at scale, that is often not enough.
 
-Things like reusing existing forms, but with a different layout, or enforcing conventions
-like shared props for all fields (i.e. a size option), often remains entirely up to the developer.
+Things like reusing forms with a different layout, reusing forms with a subset of its fields, enforcing conventions
+like consistent use of components per field data type, or allowing shared props for all fields (i.e. a size option),
+often remains entirely up to the developer to solve on their own.
 
-[Here are a few examples with common form libraries that come short when used at scale](motivation-examples).
+These things are hard to get right and require a lot of boilerplate code, especially when you want it to be typesafe.
+
+[Here are a few examples that demonstrate these problems](motivation-examples).
 
 That's why React Composable Form has first class support for not only [state management](concepts/state-management),
 but also [composition](concepts/composition) and [convention](concepts/convention).
