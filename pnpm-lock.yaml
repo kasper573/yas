@@ -26,12 +26,6 @@ importers:
       '@yas/zod':
         specifier: workspace:*
         version: link:../../packages/yas-zod
-      dotenv-expand:
-        specifier: ^10.0.0
-        version: 10.0.0
-      dotenv-flow:
-        specifier: ^3.2.0
-        version: 3.3.0
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -42,9 +36,6 @@ importers:
       '@types/cors':
         specifier: ^2.8.13
         version: 2.8.13
-      '@types/dotenv-flow':
-        specifier: ^3.2.0
-        version: 3.3.1
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
@@ -60,6 +51,9 @@ importers:
       '@yas/build-tools':
         specifier: workspace:*
         version: link:../../packages/yas-build-tools
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../../packages/yas-env
       '@yas/jest':
         specifier: workspace:*
         version: link:../../packages/yas-jest
@@ -136,6 +130,9 @@ importers:
       '@types/react':
         specifier: 18.2.21
         version: 18.2.21
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../../packages/yas-env
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../packages/yas-tsconfig
@@ -145,9 +142,6 @@ importers:
       docusaurus-plugin-sass:
         specifier: ^0.2.5
         version: 0.2.5(@docusaurus/core@3.0.0-alpha.0)(sass@1.66.1)(webpack@5.88.2)
-      dotenv-cli:
-        specifier: ^7.3.0
-        version: 7.3.0
       eslint-config-yas:
         specifier: workspace:*
         version: link:../../packages/eslint-config-yas
@@ -270,6 +264,9 @@ importers:
       '@yas/build-tools':
         specifier: workspace:*
         version: link:../../packages/yas-build-tools
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../../packages/yas-env
       '@yas/jest':
         specifier: workspace:*
         version: link:../../packages/yas-jest
@@ -466,9 +463,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.0.1
         version: 4.0.4(vite@4.4.9)
-      dotenv-expand:
-        specifier: ^10.0.0
-        version: 10.0.0
       rollup-plugin-visualizer:
         specifier: ^5.9.0
         version: 5.9.2
@@ -478,6 +472,12 @@ importers:
       vite-plugin-checker:
         specifier: ^0.5.6
         version: 0.5.6(vite@4.4.9)
+
+  packages/yas-env:
+    devDependencies:
+      dotenv-cli:
+        specifier: ^7.3.0
+        version: 7.3.0
 
   packages/yas-jest:
     devDependencies:
@@ -6334,10 +6334,6 @@ packages:
     resolution: {integrity: sha512-w5jZ0ee+HaPOaX25X2/2oGR/7rgAQSYII7X7pp0m9KgBfMP7uKfMfTvcpl5Dj+eDBbpxKGiqE+flqDr6XTd2RA==}
     dev: true
 
-  /@types/dotenv-flow@3.3.1:
-    resolution: {integrity: sha512-z4W5zC6mx9j1OGV+cUDoyLqYkh09BCUq64+TPwnmWpqXQs39DpegWtFQBzvNDdjeXhzW9Xvuy+z1Fn2RSkfTfA==}
-    dev: true
-
   /@types/ejs@3.1.2:
     resolution: {integrity: sha512-ZmiaE3wglXVWBM9fyVC17aGPkLo/UgaOjEiI2FXQfyczrCefORPxIe+2dVmnmk3zkVIbizjrlQzmPGhSYGXG5g==}
     dev: true
@@ -9297,23 +9293,12 @@ packages:
   /dotenv-expand@10.0.0:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
-
-  /dotenv-flow@3.3.0:
-    resolution: {integrity: sha512-GLSvRqDZ1TGhloS6ZCZ5chdqqv/3XMqZxAnX9rliJiHn6uyJLguKeu+3M2kcagBkoVCnLWYfbR4rfFe1xSU39A==}
-    engines: {node: '>= 8.0.0'}
-    dependencies:
-      dotenv: 8.6.0
-    dev: false
+    dev: true
 
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
     dev: true
-
-  /dotenv@8.6.0:
-    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
-    engines: {node: '>=10'}
-    dev: false
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}

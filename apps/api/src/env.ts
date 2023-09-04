@@ -1,14 +1,4 @@
-import * as path from "path";
 import { z, mode, numeric } from "@yas/zod";
-import { expand } from "dotenv-expand";
-import { config } from "dotenv-flow";
-
-expand(
-  config({
-    path: path.resolve(__dirname, "../../.."),
-    default_node_env: "development",
-  }),
-);
 
 const schema = z.object({
   mode: mode.default("development"),

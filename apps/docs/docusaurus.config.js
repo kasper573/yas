@@ -32,7 +32,7 @@ module.exports = async function createConfig() {
     title: "Yet Another Stack",
     tagline: "A collection of React and Typescript libraries",
     favicon: "img/favicon.ico",
-    url: process.env.DOCS_URL ?? "http://localhost:3000",
+    url: process.env.DOCS_URL ?? "http://localhost",
     baseUrl: "/",
     organizationName: "ksandin",
     projectName: "yas",
