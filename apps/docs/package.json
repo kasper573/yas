@@ -29,7 +29,6 @@
     "@types/react": "18.2.21",
     "@yas/tsconfig": "workspace:*",
     "@yas/env": "workspace:*",
-    "current-git-branch": "^1.1.0",
     "docusaurus-plugin-sass": "^0.2.5",
     "eslint-config-yas": "workspace:*",
     "prism-react-renderer": "2.0.6",
