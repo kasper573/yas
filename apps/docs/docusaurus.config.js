@@ -80,7 +80,7 @@ module.exports = async function createConfig() {
           title: "YAS",
           logo: {
             alt: "YAS Logo",
-            src: "img/logo.png",
+            src: "img/logo.webp",
           },
           items: [
             ...projects
