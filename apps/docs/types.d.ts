@@ -12,8 +12,3 @@ declare module "*.scss" {
   const classNames: Record<string, string>;
   export default classNames;
 }
-
-declare module "current-git-branch" {
-  function currentGitBranch(): string;
-  export = currentGitBranch;
-}
