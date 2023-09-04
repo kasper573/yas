@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "docusaurus start --no-open --port 3000",
-    "build": "tsc --noEmit && docusaurus build",
+    "dev": "dotenv -- docusaurus start --no-open --port 3000",
+    "build": "dotenv -- tsc --noEmit && docusaurus build",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix"
   },
@@ -31,6 +31,7 @@
     "@yas/tsconfig": "workspace:*",
     "current-git-branch": "^1.1.0",
     "docusaurus-plugin-sass": "^0.2.5",
+    "dotenv-cli": "^7.3.0",
     "eslint-config-yas": "workspace:*",
     "prism-react-renderer": "2.0.6",
     "rehype-raw": "^7.0.0",

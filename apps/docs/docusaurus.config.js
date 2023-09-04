@@ -32,7 +32,7 @@ module.exports = async function createConfig() {
     title: "Yet Another Stack",
     tagline: "A collection of React and Typescript libraries",
     favicon: "img/favicon.ico",
-    url: getSiteUrl(),
+    url: process.env.DOCS_URL ?? "http://localhost:3000",
     baseUrl: "/",
     organizationName: "ksandin",
     projectName: "yas",
@@ -113,13 +113,3 @@ module.exports = async function createConfig() {
   };
   return config;
 };
-
-function getSiteUrl() {
-  if (process.env.VERCEL) {
-    if (process.env.VERCEL_ENV === "production") {
-      return `https://${process.env.VERCEL_URL}`;
-    }
-    return `https://${process.env.VERCEL_BRANCH_URL}`;
-  }
-  return `http://localhost:3000`;
-}

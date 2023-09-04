@@ -145,6 +145,9 @@ importers:
       docusaurus-plugin-sass:
         specifier: ^0.2.5
         version: 0.2.5(@docusaurus/core@3.0.0-alpha.0)(sass@1.66.1)(webpack@5.88.2)
+      dotenv-cli:
+        specifier: ^7.3.0
+        version: 7.3.0
       eslint-config-yas:
         specifier: workspace:*
         version: link:../../packages/eslint-config-yas
@@ -9279,6 +9282,16 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /dotenv-cli@7.3.0:
+    resolution: {integrity: sha512-314CA4TyK34YEJ6ntBf80eUY+t1XaFLyem1k9P0sX1gn30qThZ5qZr/ZwE318gEnzyYP9yj9HJk6SqwE0upkfw==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.3.1
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
     dev: true
 
   /dotenv-expand@10.0.0:
