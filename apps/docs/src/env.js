@@ -24,7 +24,7 @@ const env = schema.parse({
   analytics: process.env.VERCEL === "1",
   docsUrl: process.env.DOCS_URL ?? "http://localhost:3000",
   git: {
-    owner: process.env.VERCEL_REPO_OWNER ?? "unknown-owner",
+    owner: process.env.VERCEL_GIT_REPO_OWNER ?? "unknown-owner",
     project: process.env.VERCEL_GIT_REPO_SLUG ?? "unknown-project",
     branch: process.env.VERCEL_GIT_COMMIT_REF ?? "unknown-branch",
   },
