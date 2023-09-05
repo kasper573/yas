@@ -1,3 +1,5 @@
+// @ts-check
+
 const envFiles = require("./validEnvFiles");
 
 const requireEnvFile = {
@@ -19,6 +21,9 @@ const disallowEnvEntirely = {
 
 module.exports = [requireEnvFile, disallowEnvEntirely];
 
+/**
+ * @param {string} conventionMessage
+ */
 function rulesForBanningEnvUsage(conventionMessage) {
   return {
     "no-restricted-syntax": [

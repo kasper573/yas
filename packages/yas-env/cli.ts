@@ -20,17 +20,18 @@ function main() {
     }),
   );
 
-  const result = validateEnv(getEnvFile(projectRoot));
+  const envFile = getEnvFile(projectRoot);
+  const result = validateEnv(envFile);
 
   if (result?.valid === false) {
-    console.log(`❌  Invalid env file: ${result.filepath}`);
+    console.log(`❌  Invalid env file: ${envFile}`);
     console.error(errorToString(result.error));
     process.exit(1);
     return;
   }
 
   if (result?.valid) {
-    console.log(`✅  Validated env file: ${result.filepath}`);
+    console.log(`✅  Validated env file: ${envFile}`);
   }
 
   const spawnArgs = process.argv.slice(2);
