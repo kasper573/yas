@@ -1,12 +1,11 @@
 #!/usr/bin/env tsx
 
-import * as path from "path";
-import * as fs from "fs";
 import * as process from "process";
 import { ZodError } from "@yas/zod";
 import dotEnvFlow from "dotenv-flow";
 import dotEnvExpand from "dotenv-expand";
 import { execaCommandSync } from "execa";
+import { getEnvFile, validateEnv } from "./utils";
 
 main();
 
@@ -21,7 +20,7 @@ function main() {
     }),
   );
 
-  const result = validateEnv(projectRoot);
+  const result = validateEnv(getEnvFile(projectRoot));
 
   if (result?.valid === false) {
     console.log(`❌  Invalid env file: ${result.filepath}`);
@@ -39,20 +38,6 @@ function main() {
     execaCommandSync(spawnArgs.join(" "), { stdio: "inherit" });
   } else {
     console.log("No command to run. Exiting.");
-  }
-}
-
-function validateEnv(projectRoot: string) {
-  for (const projectRelativeEnvFile of require("./validEnvFiles")) {
-    const filepath = path.resolve(projectRoot, projectRelativeEnvFile);
-    if (fs.existsSync(filepath)) {
-      try {
-        require(path.relative(__dirname, filepath));
-        return { valid: true, filepath };
-      } catch (error) {
-        return { valid: false, filepath, error };
-      }
-    }
   }
 }
 

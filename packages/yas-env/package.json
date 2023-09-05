@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "yas-env": "./src/cli.ts"
+    "yas-env": "./cli.ts"
   },
   "peerDependencies": {
     "tsx": "^3.12.7"

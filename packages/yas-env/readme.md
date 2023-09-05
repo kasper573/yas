@@ -2,7 +2,7 @@
 
 Monorepo specific env convention:
 
-`process.env` and `import.meta.env` is not allowed to be used outside of `<packageRoot>/src/env.{ts|js}`.
+Environment variables may not be accessed outside of `<packageRoot>/src/env.{ts|js}`.
 Instead, read from the environment only in those files and store the values in a variable that you export.
 It's recommended you also validate/parse/transform your env values in those files.
 It's okay to throw validation errors. yas-env will catch the errors and print them to the console.

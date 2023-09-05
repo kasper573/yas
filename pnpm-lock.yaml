@@ -454,6 +454,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.0.1
         version: 4.0.4(vite@4.4.9)
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../yas-env
       rollup-plugin-visualizer:
         specifier: ^5.9.0
         version: 5.9.2

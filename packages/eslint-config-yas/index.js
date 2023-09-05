@@ -66,7 +66,7 @@ module.exports = {
         ],
       },
     },
-    ...require("@yas/env/src/eslintOverrides"),
+    ...require("@yas/env/eslintOverrides"),
     {
       files: ["*.js", "*.jsx"],
       rules: {
