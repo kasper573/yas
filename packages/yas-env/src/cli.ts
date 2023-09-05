@@ -43,14 +43,13 @@ function main() {
 }
 
 function validateEnv(projectRoot: string) {
-  for (const envFile of require("./validEnvFiles")) {
-    const filepath = path.resolve(projectRoot, envFile);
+  for (const projectRelativeEnvFile of require("./validEnvFiles")) {
+    const filepath = path.resolve(projectRoot, projectRelativeEnvFile);
     if (fs.existsSync(filepath)) {
-      const envFileImportPath = path.relative(__dirname, filepath);
       try {
         // We need to normalize the env file to use process.env instead of import.meta.env
-        normalizeModule(envFileImportPath, (normalizedEnvFilePath) => {
-          require(normalizedEnvFilePath);
+        normalizeModule(filepath, (normalizedFilepath) => {
+          require(path.relative(__dirname, normalizedFilepath));
         });
         return { valid: true, filepath };
       } catch (error) {

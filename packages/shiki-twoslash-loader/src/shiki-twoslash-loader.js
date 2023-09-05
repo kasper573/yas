@@ -1,7 +1,7 @@
+const fs = require("fs");
 const path = require("path");
 const shiki = require("shiki");
 const st = require("shiki-twoslash");
-const { env } = require("./env");
 
 module.exports = function shikiTwoslashLoader(code) {
   const callback = this.async();
