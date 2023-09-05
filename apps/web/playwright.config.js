@@ -1,14 +1,21 @@
 import { defineConfig } from "@yas/playwright/preset";
 import { env } from "./src/env";
 
+const baseURL = "http://localhost:3002";
 export default defineConfig({
-  baseURL: "http://localhost:3002",
+  baseURL,
   isCI: env.CI,
   webServers: [
-    { command: "pnpm dev", url: "http://localhost:3002" },
+    { command: "pnpm dev", url: baseURL },
     {
       command: "pnpm --filter @yas/api dev",
-      url: "http://localhost:1234/healthz",
+      url: getApiHealthUrl(),
     },
   ],
 });
+
+function getApiHealthUrl() {
+  const url = new URL(env.apiUrl);
+  url.pathname = "/healthz";
+  return url.toString();
+}
