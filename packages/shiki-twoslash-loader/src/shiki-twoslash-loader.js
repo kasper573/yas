@@ -18,6 +18,8 @@ module.exports = function shikiTwoslashLoader(code) {
   });
 };
 
+function getProjectDirForWebpackLoaderInstance(loaderInstance) {}
+
 function htmlStringToReactElementModule(html) {
   return `
     import React from 'react';
@@ -72,5 +74,9 @@ function getHighlighter(theme) {
 }
 
 function getUserSettingsFromEnv() {
-  return env.userSettingsPath ? require(env.userSettingsPath) ?? {} : {};
+  const configFile = path.join(process.cwd(), "shiki-twoslash.config.js");
+  if (fs.existsSync(configFile)) {
+    return require(configFile) ?? {};
+  }
+  return {};
 }

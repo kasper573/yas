@@ -14,8 +14,6 @@
     "build": "yas-env pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "yas-env tsnd src/index.ts",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix",
     "test": "jest --detectOpenHandles"
   },
   "jest": {
@@ -38,7 +36,6 @@
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "cors": "^2.8.5",
-    "eslint-config-yas": "workspace:*",
     "morgan": "^1.10.0",
     "ts-node-dev": "^2.0.0",
     "tsup": "^7.0.0"

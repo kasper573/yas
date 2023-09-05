@@ -6,7 +6,7 @@ import {
 
 function defineConfig({
   baseURL,
-  isCI = !!process.env.CI,
+  isCI,
   testAllProjects = isCI,
   webServers = [],
 }) {

@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "yas-env": "./cli.ts"
+    "yas-env": "./src/cli.ts"
   },
   "peerDependencies": {
     "tsx": "^3.12.7"
@@ -16,7 +16,6 @@
     "@yas/zod": "workspace:*",
     "dotenv-expand": "^10.0.0",
     "dotenv-flow": "^3.3.0",
-    "eslint-config-yas": "workspace:*",
     "execa": "^7.1.1",
     "tsx": "^3.12.7"
   }

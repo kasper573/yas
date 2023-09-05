@@ -21,7 +21,12 @@ export function createMutableResource<T>(
   function restore(mutator: (contents: T) => void) {
     fs.writeFileSync(
       filePath,
-      format(produce(original, discard(mutator))),
+      format(
+        produce(original, (draft) => {
+          mutator(draft as T);
+          // Discard output
+        }),
+      ),
       "utf-8",
     );
   }
@@ -41,11 +46,5 @@ export function createMutableResource<T>(
     update,
     restore,
     reload,
-  };
-}
-
-function discard<T extends (...args: any[]) => any>(fn: T) {
-  return (...args: Parameters<T>) => {
-    fn(...args);
   };
 }

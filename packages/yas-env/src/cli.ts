@@ -43,7 +43,7 @@ function main() {
 }
 
 function validateEnv(projectRoot: string) {
-  for (const envFile of require("eslint-config-yas/validEnvFiles")) {
+  for (const envFile of require("./validEnvFiles")) {
     const filepath = path.resolve(projectRoot, envFile);
     if (fs.existsSync(filepath)) {
       const envFileImportPath = path.relative(__dirname, filepath);

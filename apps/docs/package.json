@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yas-env docusaurus start --no-open --port 3000",
-    "build": "yas-env tsc --noEmit && docusaurus build",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix"
+    "build": "yas-env tsc --noEmit && docusaurus build"
   },
   "dependencies": {
     "@gracefullight/docusaurus-plugin-vercel-analytics": "^0.1.0",
@@ -30,7 +28,6 @@
     "@yas/tsconfig": "workspace:*",
     "@yas/env": "workspace:*",
     "docusaurus-plugin-sass": "^0.2.5",
-    "eslint-config-yas": "workspace:*",
     "prism-react-renderer": "2.0.6",
     "rehype-raw": "^7.0.0",
     "remark-shiki-twoslash": "^3.1.3",

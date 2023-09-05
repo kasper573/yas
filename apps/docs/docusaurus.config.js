@@ -5,12 +5,7 @@ const path = require("path");
 const { themes: prismThemes } = require("prism-react-renderer");
 const remarkShikiTwoslash = require("remark-shiki-twoslash").default;
 const { projects } = require("./fixtures/projects");
-const shikiTwoslashOptionsPath = require.resolve("./shiki-twoslash.config");
 const { env } = require("./src/env");
-
-// A bit unconventional, but it's how we pass options to shiki-twoslash-loader.
-// eslint-disable-next-line no-restricted-syntax
-process.env.SHIKI_TWOSLASH_SETTINGS_PATH = shikiTwoslashOptionsPath;
 
 const rootDir = path.resolve(__dirname, "..", "..");
 const pathToAppRelativeToRoot = __dirname
@@ -55,7 +50,7 @@ module.exports = async function createConfig() {
             sidebarPath: require.resolve("./fixtures/sidebars.js"),
             editUrl: env.git.sourceUrl(pathToAppRelativeToRoot),
             remarkPlugins: [
-              [remarkShikiTwoslash, require(shikiTwoslashOptionsPath)],
+              [remarkShikiTwoslash, require("./shiki-twoslash.config")],
             ],
             // Using rehype-raw to make remark-shiki-twoslash work with mdx v2
             // (Works around this error: https://github.com/shikijs/twoslash/issues/125)

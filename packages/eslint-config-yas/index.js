@@ -12,7 +12,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "prettier",
   ],
-  settings: { react: { version: "detect" } },
+  settings: { react: { version: "18.2.0" } },
   rules: {
     // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
     "import/order": ["error"],
@@ -62,14 +62,7 @@ module.exports = {
         ],
       },
     },
-    {
-      // Enforcing the convention of centralized type safe environment variables for all apps
-      files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
-      excludedFiles: require("./validEnvFiles").map((file) => `**/${file}`),
-      rules: rulesForBanningEnvUsage(
-        "Environment variables may only be accessed via the env.ts/env.js file in the root of each app.",
-      ),
-    },
+    ...require("@yas/env/src/eslintOverrides"),
     {
       files: ["*.js", "*.jsx"],
       rules: {
@@ -106,28 +99,6 @@ module.exports = {
     },
   ],
 };
-
-function rulesForBanningEnvUsage(message) {
-  return {
-    "no-restricted-syntax": [
-      "error",
-      // Disallow import.meta.env
-      {
-        selector: `MemberExpression[object.type="MetaProperty"][object.meta.name="import"][property.name="env"]`,
-        message,
-      },
-      // Disallow process.env
-      {
-        selector: `MemberExpression[object.type="process"][property.name="env"]`,
-        message,
-      },
-      {
-        selector: `MemberExpression[object.name="process"][property.name="env"]`,
-        message,
-      },
-    ],
-  };
-}
 
 function getMonorepoAppNames() {
   return fs
