@@ -32,3 +32,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
       - run: pnpm build
+        env:
+          # We can only build for development in CI,
+          # since production settings and builds are handled externally (e.g. by Vercel).
+          # This CI job is only for sanity testing the build process in the CI.
+          NODE_ENV: development

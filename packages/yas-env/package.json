@@ -4,9 +4,20 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "yas-env": "./cli.js"
+    "yas-env": "./cli.ts"
+  },
+  "peerDependencies": {
+    "tsx": "^3.12.7"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.3.0"
+    "@types/dotenv-flow": "^3.3.1",
+    "@types/node": "^20.5.9",
+    "@yas/tsconfig": "workspace:*",
+    "@yas/zod": "workspace:*",
+    "dotenv-expand": "^10.0.0",
+    "dotenv-flow": "^3.3.0",
+    "eslint-config-yas": "workspace:*",
+    "execa": "^7.1.1",
+    "tsx": "^3.12.7"
   }
 }

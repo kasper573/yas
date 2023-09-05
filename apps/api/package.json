@@ -11,9 +11,9 @@
     }
   },
   "scripts": {
-    "build": "yas-env -- pnpm typecheck && tsup",
+    "build": "yas-env pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env -- tsnd src/index.ts",
+    "dev": "yas-env tsnd src/index.ts",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "jest --detectOpenHandles"
