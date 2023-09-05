@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires,import/order,no-var */
 import "@testing-library/jest-dom";
 import type { ComponentProps, ComponentType, ReactNode } from "react";
 import { z } from "zod";
@@ -10,8 +9,7 @@ import { createForm } from "../createForm";
 
 // React refresh runtime must inject global hook before importing testing-library
 RefreshRuntime.injectIntoGlobalHook(window);
-import rtl = require("@testing-library/react");
-const { act, render } = rtl;
+const { act, render } = require("@testing-library/react");
 
 describe("reactFastRefresh", () => {
   it("controlled + same form component instance", async () => {

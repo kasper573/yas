@@ -47,10 +47,7 @@ function validateEnv(projectRoot: string) {
     const filepath = path.resolve(projectRoot, projectRelativeEnvFile);
     if (fs.existsSync(filepath)) {
       try {
-        // We need to normalize the env file to use process.env instead of import.meta.env
-        normalizeModule(filepath, (normalizedFilepath) => {
-          require(path.relative(__dirname, normalizedFilepath));
-        });
+        require(path.relative(__dirname, filepath));
         return { valid: true, filepath };
       } catch (error) {
         return { valid: false, filepath, error };
@@ -66,26 +63,4 @@ function errorToString(error: unknown): string {
       .join("\n");
   }
   return String(error);
-}
-
-function normalizeModule(
-  filepath: string,
-  handleNormalizedFile: (normalizedFilePath: string) => void,
-) {
-  // Hacky, but works really well. You'd have to go out of your way to break this. Not worth the effort doing it with ASTs.
-  const original = fs.readFileSync(filepath, "utf8");
-  const normalized = original.replaceAll("import.meta.env.", "process.env.");
-
-  if (original === normalized) {
-    handleNormalizedFile(filepath);
-    return;
-  }
-
-  const normalizedFilePath = filepath + ".normalized" + path.extname(filepath);
-  fs.writeFileSync(normalizedFilePath, normalized);
-  try {
-    handleNormalizedFile(normalizedFilePath);
-  } finally {
-    fs.unlinkSync(normalizedFilePath);
-  }
 }

@@ -8,5 +8,7 @@ module.exports = {
       "error",
       { types: { "{}": false }, extendDefaults: true },
     ],
+    // Required for reactFastRefresh test
+    "@typescript-eslint/no-var-requires": "off",
   },
 };

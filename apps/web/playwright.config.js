@@ -1,10 +1,9 @@
 import { defineConfig } from "@yas/playwright/preset";
+import { env } from "./src/env";
 
 export default defineConfig({
   baseURL: "http://localhost:3002",
-  // Remove this eslint-disable when this is fixed: https://github.com/ksandin/yas/issues/58
-  // eslint-disable-next-line no-restricted-syntax
-  isCI: !!process.env.CI,
+  isCI: env.CI,
   webServers: [
     { command: "pnpm dev", url: "http://localhost:3002" },
     {

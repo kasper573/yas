@@ -10,12 +10,16 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
+    "plugin:eslint-comments/recommended",
     "prettier",
   ],
   settings: { react: { version: "18.2.0" } },
   rules: {
     // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
     "import/order": ["error"],
+
+    // Disallow the use of eslint comments to disable rules
+    "eslint-comments/no-use": ["error", { allow: [] }],
   },
   ignorePatterns: ["node_modules", ".turbo", "dist", "build"],
   // Rules only applied to specific files or file types
