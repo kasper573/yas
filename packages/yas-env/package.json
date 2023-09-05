@@ -4,9 +4,19 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "yas-env": "./cli.js"
+    "yas-env": "./cli.ts"
+  },
+  "peerDependencies": {
+    "tsx": "^3.12.7"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.3.0"
+    "@yas/tsconfig": "workspace:*",
+    "@types/node": "^20.5.9",
+    "@types/cross-spawn": "^6.0.3",
+    "eslint-config-yas": "workspace:*",
+    "dotenv-cli": "^7.3.0",
+    "cross-spawn": "^7.0.3",
+    "tsx": "^3.12.7",
+    "zod": "^3.22.2"
   }
 }
