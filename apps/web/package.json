@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "yas-env -- vite build",
-    "dev": "yas-env -- vite --host 0.0.0.0 --port 3002 --clearScreen false",
+    "build": "yas-env vite build",
+    "dev": "yas-env vite --host 0.0.0.0 --port 3002 --clearScreen false",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "pnpm test:unit && pnpm test:e2e",

@@ -3,57 +3,55 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as process from "process";
-import { ZodError } from "zod";
-import { sync as spawnSync } from "cross-spawn";
+import { ZodError } from "@yas/zod";
+import dotEnvFlow from "dotenv-flow";
+import dotEnvExpand from "dotenv-expand";
+import { execaCommandSync } from "execa";
 
-// This is an encapsulation of dotenv-cli embedded with the default flags of our liking.
-// It also contains an extra step to validate env vars at build time.
+main();
 
-// This is the default set of flags that we want to run dotenv-cli with.
-const yasConventionArgs = ["-c", "development"];
+function main() {
+  const projectRoot = process.cwd();
 
-const exitCode = main();
-process.exit(exitCode);
+  // Load env flow files and apply variable expansion
+  dotEnvExpand.expand(
+    dotEnvFlow.config({
+      path: projectRoot,
+      default_node_env: "development",
+    }),
+  );
 
-function main(): number {
-  // Run dotenv-cli without spawning any child processes
-  // This allows us to load the env so that we can validate it
-  runDotenvCLI(["--", "echo"]);
-
-  const result = validateEnv();
+  const result = validateEnv(projectRoot);
 
   if (result?.valid === false) {
     console.log(`❌  Invalid env file: ${result.filepath}`);
     console.error(errorToString(result.error));
-    return 1;
+    process.exit(1);
+    return;
   }
 
   if (result?.valid) {
     console.log(`✅  Validated env file: ${result.filepath}`);
   }
 
-  // Now that we know the env is valid,
-  // we can run dotenv-cli with the original arguments to spawn the child process
-  const userArgs = process.argv.slice(2);
-  runDotenvCLI(userArgs);
-  return 0;
+  const spawnArgs = process.argv.slice(2);
+  if (spawnArgs.length) {
+    execaCommandSync(spawnArgs.join(" "), { stdio: "inherit" });
+  } else {
+    console.log("No command to run. Exiting.");
+  }
 }
 
-function runDotenvCLI(args: string[]) {
-  const nodePath = process.argv[0];
-  const cliPath = require.resolve("dotenv-cli/cli");
-  const argsWithConvention = [...yasConventionArgs, ...args];
-  spawnSync(`"${nodePath}" "${cliPath}" ${argsWithConvention.join(" ")}`, {
-    stdio: "inherit",
-  });
-}
-
-function validateEnv() {
+function validateEnv(projectRoot: string) {
   for (const envFile of require("eslint-config-yas/validEnvFiles")) {
-    const filepath = path.resolve(process.cwd(), envFile);
+    const filepath = path.resolve(projectRoot, envFile);
     if (fs.existsSync(filepath)) {
+      const envFileImportPath = path.relative(__dirname, filepath);
       try {
-        require(path.relative(__dirname, filepath));
+        // We need to normalize the env file to use process.env instead of import.meta.env
+        normalizeModule(envFileImportPath, (normalizedEnvFilePath) => {
+          require(normalizedEnvFilePath);
+        });
         return { valid: true, filepath };
       } catch (error) {
         return { valid: false, filepath, error };
@@ -69,4 +67,26 @@ function errorToString(error: unknown): string {
       .join("\n");
   }
   return String(error);
+}
+
+function normalizeModule(
+  filepath: string,
+  handleNormalizedFile: (normalizedFilePath: string) => void,
+) {
+  // Hacky, but works really well. You'd have to go out of your way to break this. Not worth the effort doing it with ASTs.
+  const original = fs.readFileSync(filepath, "utf8");
+  const normalized = original.replaceAll("import.meta.env.", "process.env.");
+
+  if (original === normalized) {
+    handleNormalizedFile(filepath);
+    return;
+  }
+
+  const normalizedFilePath = filepath + ".normalized" + path.extname(filepath);
+  fs.writeFileSync(normalizedFilePath, normalized);
+  try {
+    handleNormalizedFile(normalizedFilePath);
+  } finally {
+    fs.unlinkSync(normalizedFilePath);
+  }
 }

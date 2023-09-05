@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "yas-env -- docusaurus start --no-open --port 3000",
-    "build": "yas-env -- tsc --noEmit && docusaurus build",
+    "dev": "yas-env docusaurus start --no-open --port 3000",
+    "build": "yas-env tsc --noEmit && docusaurus build",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix"
   },
