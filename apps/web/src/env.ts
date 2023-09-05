@@ -1,7 +1,6 @@
-import { z, mode, truthy } from "@yas/zod";
+import { z, mode } from "@yas/zod";
 
 const schema = z.object({
-  CI: truthy.default(false),
   mode: mode.default("development"),
   apiUrl: z.string(),
 });
