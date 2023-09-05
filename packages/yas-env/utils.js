@@ -31,15 +31,15 @@ function getReferencesInEnvFile(envFile) {
 
 /**
  * @param {string|undefined} envFile
- * @returns {{valid: false, error: unknown}|{valid: true}|undefined}
+ * @returns {{valid: false, error: unknown}|{valid: true, module: unknown}|undefined}
  */
 function validateEnv(envFile) {
   if (envFile) {
     try {
       // Import env file to validate the env var values.
       // Our convention is to parse and throw errors when invalid.
-      require(path.relative(__dirname, envFile));
-      return { valid: true };
+      const module = require(path.relative(__dirname, envFile));
+      return { valid: true, module };
     } catch (error) {
       return { valid: false, error };
     }
