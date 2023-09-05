@@ -6,13 +6,14 @@ import * as process from "process";
 import { ZodError } from "zod";
 import { sync as spawnSync } from "cross-spawn";
 
-// This is the default set of flags that we want to run dotenv-cli with.
-const yasConventionArgs = ["-c", "development"];
-
 // This is an encapsulation of dotenv-cli embedded with the default flags of our liking.
 // It also contains an extra step to validate env vars at build time.
 
-process.exit(main());
+// This is the default set of flags that we want to run dotenv-cli with.
+const yasConventionArgs = ["-c", "development"];
+
+const exitCode = main();
+process.exit(exitCode);
 
 function main(): number {
   // Run dotenv-cli without spawning any child processes
