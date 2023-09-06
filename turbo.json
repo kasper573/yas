@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "env": ["foo"],
+      "env": ["fooz"],
       "dotEnv": [".env", ".env.local", ".env.development", ".env.production"],
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**"]
