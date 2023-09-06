@@ -13,30 +13,25 @@ function main() {
   const projectRoot = process.cwd();
 
   const { env } = process;
-  const default_node_env = "development";
-  const node_env = env.NODE_ENV || env.VERCEL_ENV;
-  console.log(
-    `📝  Loading env files for NODE_ENV=${node_env}${
-      node_env ? "" : ` (fallback: ${default_node_env})`
-    }`,
-  );
 
-  // Load env flow files and apply variable expansion
-  dotEnvFlow.config({ path: projectRoot, node_env, default_node_env });
+  // Load env flow and apply variable expansion
+  const node_env = env.NODE_ENV || env.VERCEL_ENV || "development";
+  console.log(`🚀  Loading env flow for ${node_env}`);
+  dotEnvFlow.config({ path: projectRoot, node_env });
   dotEnvExpand.expand({ parsed: env as Record<string, string> });
 
   const envFile = getEnvFile(projectRoot);
   const result = validateEnv(envFile);
 
   if (result?.valid === false) {
-    console.log(`❌  Invalid env file: ${envFile}`);
+    console.log(`❌  Invalid env according to: ${envFile}`);
     console.error(errorToString(result.error));
     process.exit(1);
     return;
   }
 
   if (result?.valid) {
-    console.log(`✅  Validated env file: ${envFile}`);
+    console.log(`✅  Validated env using: ${envFile}`);
     console.log(JSON.stringify(result.module, unknownToString, 2));
   }
 
