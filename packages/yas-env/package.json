@@ -6,6 +6,10 @@
   "bin": {
     "yas-env": "./cli.ts"
   },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "peerDependencies": {
     "tsx": "^3.12.7"
   },
@@ -17,6 +21,7 @@
     "dotenv-expand": "^10.0.0",
     "dotenv-flow": "^3.3.0",
     "execa": "^7.1.1",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "vitest": "^0.34.3"
   }
 }

@@ -2,7 +2,7 @@
  * @type {import('@jest/types').Config.InitialOptions}
  */
 module.exports = ({ swcOptions = {} } = {}) => ({
-  testMatch: ["<rootDir>/src/**/*.test.ts*"],
+  testMatch: ["<rootDir>/**/*.test.ts*"],
   roots: ["<rootDir>"],
   testEnvironment: "node",
   passWithNoTests: true,

@@ -56,7 +56,8 @@ function validateEnv(envFile) {
     try {
       // Import env file to validate the env var values.
       // Our convention is to parse and throw errors when invalid.
-      const module = require(path.relative(__dirname, envFile));
+      // path.relative(__dirname, envFile)
+      const module = require(envFile);
       return { valid: true, module };
     } catch (error) {
       return { valid: false, error };

@@ -2,9 +2,13 @@
 
 const envFiles = require("./validEnvFiles");
 
+const ext = ".{js,jsx,ts,tsx}";
+
+const testFiles = [`**/__test__/**/*${ext}`, `**/*.test${ext}`];
+
 const requireEnvFile = {
-  files: ["apps/**/*.{js,jsx,ts,tsx}"],
-  excludedFiles: envFiles.map((file) => `**/${file}`),
+  files: [`apps/**/*${ext}`],
+  excludedFiles: [...envFiles.map((file) => `**/${file}`), ...testFiles],
   rules: rulesForBanningEnvUsage(
     `yas-env: Apps must only read from the environment inside their env file (${envFiles.join(
       ", ",
@@ -14,6 +18,7 @@ const requireEnvFile = {
 
 const disallowEnvEntirely = {
   files: ["packages/**/*.{js,jsx,ts,tsx}"],
+  excludedFiles: testFiles,
   rules: rulesForBanningEnvUsage(
     "yas-env: Packages may not access environment variables at all and should instead rely on dependency injection.",
   ),

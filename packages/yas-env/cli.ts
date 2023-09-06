@@ -23,7 +23,7 @@ function main() {
 
   // Load env flow files and apply variable expansion
   dotEnvFlow.config({ path: projectRoot, node_env, default_node_env });
-  dotEnvExpand.expand(env as Record<string, string>);
+  dotEnvExpand.expand({ parsed: env as Record<string, string> });
 
   const envFile = getEnvFile(projectRoot);
   const result = validateEnv(envFile);
@@ -54,7 +54,7 @@ function errorToString(error: unknown): string {
       .map((issue) => `  ${issue.path.join(".")}: ${issue.message}`)
       .join("\n");
   }
-  return String(error);
+  return String(error) + "\n" + (error as Error)?.stack ?? "";
 }
 
 function unknownToString(key: string, value: unknown): unknown {
