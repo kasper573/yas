@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "build": "yas-env pnpm typecheck && tsup",
+    "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "yas-env tsnd src/index.ts",
     "test": "jest --detectOpenHandles"

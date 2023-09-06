@@ -17,6 +17,24 @@ function getEnvFile(projectRoot) {
 }
 
 /**
+ * @param {string} projectRoot
+ * @param {((key: string, value: unknown) => [string, unknown]) | undefined} transform
+ * @returns {Record<string, unknown>}
+ */
+function loadEnv(projectRoot, transform = (key, value) => [key, value]) {
+  const { env } = process;
+  /**
+   * @type {Record<string, unknown>}
+   */
+  const loaded = {};
+  for (const name of getReferencesInEnvFile(getEnvFile(projectRoot))) {
+    const [key, value] = transform(name, env[name]);
+    loaded[key] = value;
+  }
+  return loaded;
+}
+
+/**
  * @param {string|undefined} envFile
  * @returns {string[]}
  */
@@ -46,4 +64,4 @@ function validateEnv(envFile) {
   }
 }
 
-module.exports = { getEnvFile, getReferencesInEnvFile, validateEnv };
+module.exports = { getEnvFile, loadEnv, getReferencesInEnvFile, validateEnv };

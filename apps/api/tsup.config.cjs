@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import { loadEnv } from "@yas/env/utils";
 
 export default defineConfig({
   outExtension: () => ({ js: `.js` }),
@@ -6,4 +7,5 @@ export default defineConfig({
   format: "esm",
   clean: true,
   noExternal: [/^@yas\//],
+  env: loadEnv(process.cwd(), (key, value) => [key, value ?? ""])
 });
