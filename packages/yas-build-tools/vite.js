@@ -20,7 +20,7 @@ function createYasViteConfig({ analyze } = {}) {
     // This is to simplify tooling that need to import from our env file convention (see yas-env).
     // We automatically expose all env variables that are referenced in the env file.
     define: loadEnv(process.cwd(), (key, value) => [
-      `process.env.${envVarName}`,
+      `process.env.${key}`,
       JSON.stringify(value),
     ]),
   });
