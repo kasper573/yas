@@ -6,5 +6,6 @@
     "lib": ["es2018", "esnext.asynciterable"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-  }
+  },
+  "exclude": ["src/__test__"]
 }
