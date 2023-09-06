@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@yas/env": "workspace:*",
     "@vitejs/plugin-react": "4.0.1",
     "tsup": "7.2.0",
