@@ -22,13 +22,8 @@ function main() {
   );
 
   // Load env flow files and apply variable expansion
-  dotEnvExpand.expand(
-    dotEnvFlow.config({
-      path: projectRoot,
-      node_env,
-      default_node_env,
-    }),
-  );
+  dotEnvFlow.config({ path: projectRoot, node_env, default_node_env });
+  dotEnvExpand.expand(env as Record<string, string>);
 
   const envFile = getEnvFile(projectRoot);
   const result = validateEnv(envFile);
