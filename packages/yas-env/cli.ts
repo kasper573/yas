@@ -16,7 +16,7 @@ function main() {
 
   // Load env flow and apply variable expansion
   const node_env = env.NODE_ENV || env.VERCEL_ENV || "development";
-  console.log(`🚀  Loading env flow for ${node_env}`);
+  console.log(`🚀 Loading env flow for ${node_env}`);
   dotEnvFlow.config({ path: projectRoot, node_env });
   dotEnvExpand.expand({ parsed: env as Record<string, string> });
 
