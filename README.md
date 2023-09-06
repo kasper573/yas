@@ -18,8 +18,6 @@ The following scripts are available in the root of the repository and will run t
 
 - `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
 - `build` Builds the app or package for production
-- `lint` Checks for code style errors.
-- `lint:fix` Fixes code style errors (where possible)
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
 
@@ -28,3 +26,12 @@ The following scripts are available in the root of the repository and will run t
 - Each script should exit with a non-zero exit code if they fail.
 - Each package may implement these scripts differently, as long as they satisfy the given use case.
 - A package may opt out of these scripts, but you must not rename them. This is to ensure consistency across packages.
+
+#### Global scripts
+
+The following scripts are only available in the root of the repository and will affect all packages.
+
+- `lint` Checks for code style errors.
+- `lint:fix` Fixes code style errors (where possible)
+- `format` Formats code.
+- `format:fix` Formats code and fixes code style errors (where possible)

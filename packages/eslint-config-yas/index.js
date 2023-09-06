@@ -10,12 +10,16 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
+    "plugin:eslint-comments/recommended",
     "prettier",
   ],
-  settings: { react: { version: "detect" } },
+  settings: { react: { version: "18.2.0" } },
   rules: {
     // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
     "import/order": ["error"],
+
+    // Disallow the use of eslint comments to disable rules
+    "eslint-comments/no-use": ["error", { allow: [] }],
   },
   ignorePatterns: ["node_modules", ".turbo", "dist", "build"],
   // Rules only applied to specific files or file types
@@ -62,14 +66,7 @@ module.exports = {
         ],
       },
     },
-    {
-      // Enforcing the convention of centralized type safe environment variables for all apps
-      files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
-      excludedFiles: require("./validEnvFiles").map((file) => `**/${file}`),
-      rules: rulesForBanningEnvUsage(
-        "Environment variables may only be accessed via the env.ts/env.js file in the root of each app.",
-      ),
-    },
+    ...require("@yas/env/eslintOverrides"),
     {
       files: ["*.js", "*.jsx"],
       rules: {
@@ -106,28 +103,6 @@ module.exports = {
     },
   ],
 };
-
-function rulesForBanningEnvUsage(message) {
-  return {
-    "no-restricted-syntax": [
-      "error",
-      // Disallow import.meta.env
-      {
-        selector: `MemberExpression[object.type="MetaProperty"][object.meta.name="import"][property.name="env"]`,
-        message,
-      },
-      // Disallow process.env
-      {
-        selector: `MemberExpression[object.type="process"][property.name="env"]`,
-        message,
-      },
-      {
-        selector: `MemberExpression[object.name="process"][property.name="env"]`,
-        message,
-      },
-    ],
-  };
-}
 
 function getMonorepoAppNames() {
   return fs

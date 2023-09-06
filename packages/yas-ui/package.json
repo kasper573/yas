@@ -13,8 +13,6 @@
   "scripts": {
     "build": "storybook build -o dist",
     "dev": "storybook dev -p 6006 --no-open",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix",
     "test": "pnpm test:components && pnpm test:unit",
     "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
     "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
@@ -46,8 +44,6 @@
     "@yas/jest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "^8.0.1",
-    "eslint-config-yas": "workspace:*",
-    "eslint-plugin-storybook": "^0.6.12",
     "prop-types": "15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

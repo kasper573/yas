@@ -9,8 +9,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency 20",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "eslint-config-yas": "workspace:*",
-    "prettier": "3.0.2",
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3",
     "turbo": "1.10.13"
   },
   "engines": {

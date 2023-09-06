@@ -9,9 +9,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix"
+    "test:watch": "jest --watch"
   },
   "jest": {
     "preset": "@yas/jest/presets/node"
