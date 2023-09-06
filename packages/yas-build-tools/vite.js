@@ -4,6 +4,7 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
 const { loadEnv } = require("@yas/env/utils");
+const { serializeValue } = require("./utils");
 
 // NOTE This is a JS file because it was much simpler than configuring
 // Vite & node to load non-prebuilt ESM files via the workspace:* monorepo directive.
@@ -21,7 +22,7 @@ function createYasViteConfig({ analyze } = {}) {
     // We automatically expose all env variables that are referenced in the env file.
     define: loadEnv(process.cwd(), (key, value) => [
       `process.env.${key}`,
-      JSON.stringify(value),
+      serializeValue(value),
     ]),
   });
 }
