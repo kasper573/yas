@@ -12,11 +12,21 @@ main();
 function main() {
   const projectRoot = process.cwd();
 
+  const { env } = process;
+  const default_node_env = "development";
+  const node_env = env.NODE_ENV;
+  console.log(
+    `📝  Loading env files for NODE_ENV=${node_env}${
+      node_env ? "" : ` (fallback: ${default_node_env})`
+    }`,
+  );
+
   // Load env flow files and apply variable expansion
   dotEnvExpand.expand(
     dotEnvFlow.config({
       path: projectRoot,
-      default_node_env: "development",
+      node_env,
+      default_node_env,
     }),
   );
 
