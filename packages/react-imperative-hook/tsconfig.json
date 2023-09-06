@@ -1,6 +1,4 @@
 {
   "extends": "@yas/tsconfig/react-library.json",
-  "compilerOptions": {
-    "types": ["node", "jest"]
-  }
+  "exclude": ["src/__test__"]
 }

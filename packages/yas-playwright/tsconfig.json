@@ -1,0 +1,7 @@
+// Use this tsconfig in your playwright test folder as soon as playwright
+{
+  "extends": "@yas/tsconfig/node.json",
+  "compilerOptions": {
+    "types": ["jest"]
+  }
+}

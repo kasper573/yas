@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { z } from "zod";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -282,7 +281,7 @@ describe("validation", () => {
     });
 
     it("does not trigger submit for invalid data", async () => {
-      const onSubmit = jest.fn();
+      const onSubmit = vi.fn();
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string().min(3) }))
@@ -419,7 +418,7 @@ describe("validation", () => {
     });
 
     it("can submit while having errors", async () => {
-      const onSubmit = jest.fn();
+      const onSubmit = vi.fn();
       const Form = createForm((options) =>
         options
           .schema(z.object({ foo: z.string() }))

@@ -75,7 +75,7 @@ describe("layout", () => {
   });
 
   it("can submit the form", async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))
@@ -91,7 +91,7 @@ describe("layout", () => {
   });
 
   it("can submit the form when adding submit handler after mount", async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     const Form = createForm((options) =>
       options
         .schema(z.object({ foo: z.string() }))

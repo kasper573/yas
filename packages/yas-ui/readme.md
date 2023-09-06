@@ -69,6 +69,6 @@ function GoodComponent({ query: useQuery }) {
 
 Stories should be defined in a file next to their related component, ie. `Button.stories.tsx`
 
-### Unit testing should rarely be necessary, but is allowed via [Jest](https://jestjs.io/).
+### Unit testing should rarely be necessary, but is allowed via [Vitest](https://vitest.dev/).
 
-Never test components with jest. Use storybook instead.
+Never test components with vitest. Use storybook instead.

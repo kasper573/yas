@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { z } from "zod";
 import type { RenderResult } from "@testing-library/react";
 import { render } from "@testing-library/react";
@@ -36,7 +35,7 @@ describe("data", () => {
         )),
     );
 
-    const fn = jest.fn();
+    const fn = vi.fn();
     const { getByRole } = render(
       <Form defaultValue={{ foo: "default" }} onSubmit={fn} />,
     );

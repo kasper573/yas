@@ -76,7 +76,6 @@ function makePackageReleaseReady(pkg: PackageJson, distFolder: string) {
   delete pkg.private;
   delete pkg.scripts;
   delete pkg.devDependencies;
-  delete pkg.jest;
   bindPackageToDistFolder(pkg, distFolder);
   return (
     handleInternalPackageDependencies(pkg, "dependencies", "error") &&

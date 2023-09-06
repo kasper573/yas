@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { getBrand, monkeyPatchZodBranded } from "./monkeyPatchZodBranded";
+import {
+  getBrand,
+  monkeyPatchZodBranded,
+} from "../utils/monkeyPatchZodBranded";
 
 it("can monkey patch zod branded", () => {
   const restore = monkeyPatchZodBranded();

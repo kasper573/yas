@@ -6,12 +6,10 @@
     "build": "yas-env vite build",
     "dev": "yas-env vite --host 0.0.0.0 --port 3002 --clearScreen false",
     "test": "pnpm test:unit && pnpm test:e2e",
-    "test:watch": "concurrently -n unit,e2e \"pnpm test:unit --watch\" \"pnpm test:e2e --ui\"",
-    "test:unit": "yas-env jest",
+    "test:watch": "concurrently -n unit,e2e \"pnpm test:unit:watch\" \"pnpm test:e2e --ui\"",
+    "test:unit": "yas-env vitest run",
+    "test:unit:watch": "yas-env vitest",
     "test:e2e": "yas-env yas-playwright test"
-  },
-  "jest": {
-    "preset": "@yas/jest/presets/node"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.15",
@@ -25,15 +23,13 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
     "@yas/env": "workspace:*",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/playwright": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "^8.0.1",
-    "vite": "^4.3.9"
+    "concurrently": "^8.0.1"
   }
 }

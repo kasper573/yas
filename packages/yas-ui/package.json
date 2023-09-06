@@ -17,11 +17,8 @@
     "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
     "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
     "test:components:watch": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 \"test-storybook --watch\"",
-    "test:unit": "jest",
-    "test:unit:watch": "jest --watch"
-  },
-  "jest": {
-    "preset": "@yas/jest/presets/node"
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "dependencies": {
     "@stitches/react": "^1.2.8",
@@ -37,18 +34,16 @@
     "@storybook/react-vite": "^7.0.23",
     "@storybook/test-runner": "0.11.0",
     "@storybook/testing-library": "0.2.0",
-    "@types/jest": "^29.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "^8.0.1",
     "prop-types": "15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "start-server-and-test": "^2.0.0",
-    "storybook": "^7.0.23",
-    "vite": "^4.3.9"
+    "storybook": "^7.0.23"
   }
 }
