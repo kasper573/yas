@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { z } from "zod";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -87,7 +86,7 @@ describe("discriminated union schema", () => {
         <button onClick={handleSubmit}>submit</button>
       )),
     );
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "this is a long string" }}
@@ -105,7 +104,7 @@ describe("discriminated union schema", () => {
         <button onClick={handleSubmit}>submit</button>
       )),
     );
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "this is a long string" }}
@@ -128,7 +127,7 @@ describe("discriminated union schema", () => {
       )),
     );
 
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const { getByRole, rerender } = render(
       <Form
         value={{
@@ -227,7 +226,7 @@ describe("conditional fields selector", () => {
         <button onClick={handleSubmit}>submit</button>
       )),
     );
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "a long string", num: 0 }}
@@ -245,7 +244,7 @@ describe("conditional fields selector", () => {
         <button onClick={handleSubmit}>submit</button>
       )),
     );
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const { getByRole } = render(
       <Form
         value={{ base: "foo", type: "string", str: "a long string", num: 0 }}

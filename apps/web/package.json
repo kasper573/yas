@@ -10,9 +10,6 @@
     "test:unit": "yas-env jest",
     "test:e2e": "yas-env yas-playwright test"
   },
-  "jest": {
-    "preset": "@yas/jest/presets/node"
-  },
   "dependencies": {
     "@tanstack/react-query": "^4.29.15",
     "@trpc/client": "^10.32.0",
@@ -25,12 +22,11 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
     "@yas/env": "workspace:*",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/playwright": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "^8.0.1"

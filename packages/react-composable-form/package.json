@@ -31,12 +31,9 @@
     "typecheck": "tsc --noEmit --project tsconfig.build.json",
     "test": "pnpm test:unit && pnpm test:types --run",
     "test:watch": "concurrently -n unit,types \"pnpm test:unit --watch\" \"pnpm test:types\"",
-    "test:unit": "jest",
+    "test:unit": "vitest run",
     "test:types": "vitest typecheck",
     "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
-  },
-  "jest": {
-    "preset": "@yas/jest/presets/react"
   },
   "peerDependencies": {
     "immer": "^10.0.2",
@@ -47,16 +44,13 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/react-refresh": "^0.14.0",
     "@types/react": "^18.2.21",
-    "@types/jest": "^29.5.4",
     "@yas/build-tools": "workspace:*",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "^8.0.1",
     "publicize-package-json": "workspace:*",
     "react": "^18.2.0",
-    "react-refresh": "^0.14.0",
     "zod": "^3.21.4"
   }
 }

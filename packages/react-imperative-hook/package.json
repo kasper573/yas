@@ -32,16 +32,13 @@
     "test:watch": "jest --watch",
     "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
   },
-  "jest": {
-    "preset": "@yas/jest/presets/react"
-  },
   "peerDependencies": {
     "react": "^18.2.0",
     "immer": "^10.0.2"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/build-tools": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.21",
