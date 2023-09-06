@@ -26,7 +26,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
-    "@yas/tsconfig": "workspace:*",
-    "vite": "^4.3.9"
+    "@yas/tsconfig": "workspace:*"
   }
 }

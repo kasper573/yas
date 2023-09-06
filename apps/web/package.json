@@ -33,7 +33,6 @@
     "@yas/jest": "workspace:*",
     "@yas/playwright": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "^8.0.1",
-    "vite": "^4.3.9"
+    "concurrently": "^8.0.1"
   }
 }
