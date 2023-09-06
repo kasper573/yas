@@ -3,7 +3,7 @@
 import * as path from "path";
 import { mergeConfig } from "vitest/config";
 import { defineConfig as defineConfigImpl } from "../node/index.mjs";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 import react from "@vitejs/plugin-react";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +20,7 @@ export function defineConfig(options = {}) {
     plugins: [react()],
     test: {
       environment: "jsdom",
-      setupFiles: path.resolve(__dirname, "setup.mjs")
+      setupFiles: path.resolve(__dirname, "setup.mjs"),
     },
   };
 
