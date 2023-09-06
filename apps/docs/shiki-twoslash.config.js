@@ -1,5 +1,5 @@
 /**
- * @type {import("remark-shiki-twoslash").Options}
+ * @type {import("remark-ast-shiki-twoslash").Options}
  */
 const options = {
   themes: ["min-light", "nord"],

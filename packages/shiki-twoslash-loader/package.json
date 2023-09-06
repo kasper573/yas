@@ -1,16 +1,7 @@
 {
   "name": "shiki-twoslash-loader",
   "version": "0.0.1",
-  "exports": {
-    ".": {
-      "import": "./src/shiki-twoslash-loader.js",
-      "require": "./src/shiki-twoslash-loader.js"
-    }
-  },
-  "peerDependencies": {
-    "shiki": "^0.14.4",
-    "shiki-twoslash": "^3.1.2"
-  },
+  "main": "./loader.js",
   "devDependencies": {
     "shiki": "^0.14.4",
     "shiki-twoslash": "^3.1.2",
