@@ -7,5 +7,5 @@ export default defineConfig({
   format: "esm",
   clean: true,
   noExternal: [/^@yas\//],
-  env: loadEnv(process.cwd(), (key, value) => [key, value ?? ""])
+  env: loadEnv(process.cwd(), (key, value) => [key, value ?? ""]),
 });
