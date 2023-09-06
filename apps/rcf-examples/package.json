@@ -6,9 +6,6 @@
     "build": "vite build",
     "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false"
   },
-  "jest": {
-    "preset": "@yas/jest/presets/node"
-  },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -26,7 +23,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@yas/build-tools": "workspace:*",
-    "@yas/tsconfig": "workspace:*",
-    "vite": "^4.3.9"
+    "@yas/tsconfig": "workspace:*"
   }
 }

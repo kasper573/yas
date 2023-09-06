@@ -1,4 +1,4 @@
-import sliceLoader from "./slice-loader";
+import sliceLoader from "../slice-loader";
 
 describe("slice-loader", () => {
   it(`should return the correct slices for "export const"`, () => {

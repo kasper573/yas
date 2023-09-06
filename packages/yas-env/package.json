@@ -18,10 +18,10 @@
     "@types/node": "^20.5.9",
     "@yas/tsconfig": "workspace:*",
     "@yas/zod": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "dotenv-expand": "^10.0.0",
     "dotenv-flow": "^3.3.0",
     "execa": "^7.1.1",
-    "tsx": "^3.12.7",
-    "vitest": "^0.34.3"
+    "tsx": "^3.12.7"
   }
 }

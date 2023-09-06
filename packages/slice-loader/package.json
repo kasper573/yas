@@ -8,15 +8,12 @@
     }
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
-  },
-  "jest": {
-    "preset": "@yas/jest/presets/node"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/acorn": "^6.0.0",
-    "@yas/jest": "workspace:*",
+    "@yas/vitest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "webpack": "^5.88.2"
   }

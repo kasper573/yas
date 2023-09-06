@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import type { AnyZodObject, ZodType } from "zod";
 import { z } from "zod";
 import { render } from "@testing-library/react";
@@ -273,20 +272,20 @@ describe("overriding built-in props", () => {
         expect(getByRole("textbox")).toHaveValue("default");
       },
       async onBlur() {
-        const fn = jest.fn();
+        const fn = vi.fn();
         const { getByRole } = createFieldPropForm("onBlur", fn);
         await userEvent.click(getByRole("textbox"));
         await userEvent.tab();
         expect(fn).toHaveBeenCalled();
       },
       async onChange() {
-        const fn = jest.fn();
+        const fn = vi.fn();
         const { getByRole } = createFieldPropForm("onChange", fn);
         await userEvent.type(getByRole("textbox"), "hello");
         expect(fn).toHaveBeenCalledTimes(5);
       },
       async onFocus() {
-        const fn = jest.fn();
+        const fn = vi.fn();
         const { getByRole } = createFieldPropForm("onFocus", fn);
         await userEvent.click(getByRole("textbox"));
         expect(fn).toHaveBeenCalled();
@@ -305,8 +304,8 @@ describe("overriding built-in props", () => {
         expect(getByRole("textbox")).toHaveValue("inline");
       },
       async onBlur() {
-        const fn = jest.fn();
-        const fn2 = jest.fn();
+        const fn = vi.fn();
+        const fn2 = vi.fn();
         const { getByRole } = createFieldPropForm("onBlur", fn, fn2);
         await userEvent.click(getByRole("textbox"));
         await userEvent.tab();
@@ -314,16 +313,16 @@ describe("overriding built-in props", () => {
         expect(fn2).toHaveBeenCalled();
       },
       async onChange() {
-        const fn = jest.fn();
-        const fn2 = jest.fn();
+        const fn = vi.fn();
+        const fn2 = vi.fn();
         const { getByRole } = createFieldPropForm("onChange", fn, fn2);
         await userEvent.type(getByRole("textbox"), "hello");
         expect(fn).toHaveBeenCalledTimes(5);
         expect(fn2).toHaveBeenCalledTimes(5);
       },
       async onFocus() {
-        const fn = jest.fn();
-        const fn2 = jest.fn();
+        const fn = vi.fn();
+        const fn2 = vi.fn();
         const { getByRole } = createFieldPropForm("onFocus", fn, fn2);
         await userEvent.click(getByRole("textbox"));
         expect(fn).toHaveBeenCalled();
