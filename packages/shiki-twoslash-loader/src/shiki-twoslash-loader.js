@@ -3,11 +3,13 @@ const path = require("path");
 const shiki = require("shiki");
 const st = require("shiki-twoslash");
 
+const userSettings = getUserSettings();
+
 module.exports = function shikiTwoslashLoader(code) {
   const callback = this.async();
 
   const vfsRoot = path.dirname(this.resourcePath);
-  const settings = { vfsRoot, ...getUserSettingsFromEnv() };
+  const settings = { vfsRoot, ...userSettings };
 
   shikiTwoslashCodeToHTML(code, settings).then((result) => {
     if (result.type === "error") {
@@ -17,8 +19,6 @@ module.exports = function shikiTwoslashLoader(code) {
     }
   });
 };
-
-function getProjectDirForWebpackLoaderInstance(loaderInstance) {}
 
 function htmlStringToReactElementModule(html) {
   return `
@@ -73,7 +73,7 @@ function getHighlighter(theme) {
   return existing;
 }
 
-function getUserSettingsFromEnv() {
+function getUserSettings() {
   const configFile = path.join(process.cwd(), "shiki-twoslash.config.js");
   if (fs.existsSync(configFile)) {
     return require(configFile) ?? {};
