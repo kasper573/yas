@@ -14,7 +14,7 @@ function main() {
 
   const { env } = process;
   const default_node_env = "development";
-  const node_env = env.NODE_ENV;
+  const node_env = env.NODE_ENV ?? env.VERCEL_ENV;
   console.log(
     `📝  Loading env files for NODE_ENV=${node_env}${
       node_env ? "" : ` (fallback: ${default_node_env})`
