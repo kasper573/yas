@@ -17,7 +17,7 @@ function main() {
   const node_env = env.NODE_ENV;
   console.log(
     `📝  Loading env files for NODE_ENV=${node_env}${
-      node_env ? "" : ` (falling back to ${default_node_env})`
+      node_env ? "" : ` (fallback: ${default_node_env})`
     }`,
   );
 
