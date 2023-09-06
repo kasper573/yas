@@ -1,6 +1,1 @@
-{
-  "extends": "@yas/tsconfig/react-library.json",
-  "compilerOptions": {
-    "types": ["node", "jest"]
-  }
-}
+{ "extends": "@yas/tsconfig/react-library.json" }

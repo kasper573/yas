@@ -1,5 +1,5 @@
-import * as path from "path";
-import { defineConfig } from "@yas/vitest/presets/react/index.mjs";
+import { defineConfig } from "@yas/vitest/presets/react";
+import path from "path";
 
 export default defineConfig({
   test: {

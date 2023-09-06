@@ -14,7 +14,8 @@
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "yas-env tsnd src/index.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@trpc/server": "^10.32.0",

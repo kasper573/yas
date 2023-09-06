@@ -20,7 +20,7 @@ export function defineConfig(options = {}) {
     plugins: [react()],
     test: {
       environment: "jsdom",
-      setupFiles: path.resolve(__dirname, "setup.mjs"),
+      setupFiles: path.resolve(__dirname, "setup.mjs")
     },
   };
 

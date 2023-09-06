@@ -8,8 +8,8 @@
     }
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/acorn": "^6.0.0",

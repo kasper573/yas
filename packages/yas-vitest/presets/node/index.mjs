@@ -10,6 +10,7 @@ export function defineConfig(options = {}) {
   const baseOptions = {
     test: {
       globals: true,
+      include: ["**/__test__/**/*.test.{js,jsx,ts,tsx}"]
     },
   };
   return defineConfigImpl(mergeConfig(baseOptions, options));

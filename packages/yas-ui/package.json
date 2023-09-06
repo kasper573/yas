@@ -17,8 +17,8 @@
     "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
     "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
     "test:components:watch": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 \"test-storybook --watch\"",
-    "test:unit": "jest",
-    "test:unit:watch": "jest --watch"
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "dependencies": {
     "@stitches/react": "^1.2.8",

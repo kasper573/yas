@@ -1,6 +1,1 @@
-{
-  "extends": "@yas/tsconfig/vite.json",
-  "compilerOptions": {
-    "types": ["vite/client", "jest"]
-  }
-}
+{ "extends": "@yas/tsconfig/vite.json" }

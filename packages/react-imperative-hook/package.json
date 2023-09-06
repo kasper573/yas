@@ -28,8 +28,8 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
   },
   "peerDependencies": {

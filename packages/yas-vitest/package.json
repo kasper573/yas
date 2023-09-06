@@ -6,8 +6,8 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@vitejs/plugin-react": "^4.0.4",
     "@yas/tsconfig": "workspace:*",
-    "@yas/build-tools": "workspace:*",
     "jsdom": "^22.1.0",
     "vitest": "0.34.3"
   }
