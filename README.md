@@ -17,7 +17,7 @@ type safety, testing and code sharing between packages.
 The following scripts are available in the root of the repository and will run the same script in each package.
 
 - `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
-- `build` Builds the app or package for production
+- `build` Builds the app or package
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
 
@@ -35,3 +35,17 @@ The following scripts are only available in the root of the repository and will 
 - `lint:fix` Fixes code style errors (where possible)
 - `format` Formats code.
 - `format:fix` Formats code and fixes code style errors (where possible)
+
+### Applications
+
+- Located in <projectRoot>/apps/
+- Folder names needs no prefixes
+- package.json name must have `@yas/` prefix
+- `build` script must output deployable artifacts (preferably using some standard)
+
+### Packages
+
+- Located in <projectRoot>/packages/
+- For `YAS` specific packages (i.e. encapsulations, shared config, etc):
+  - Folder names must have `yas-` prefix
+  - package.json name must have `@yas/` prefix
