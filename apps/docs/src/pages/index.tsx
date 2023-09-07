@@ -70,6 +70,8 @@ function Feature({
           src={image}
           className={styles.featureImage}
           role="img"
+          width={200}
+          height={150}
           alt={`${title} image`}
         />
         <h2>{title}</h2>
