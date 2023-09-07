@@ -1,0 +1,11 @@
+{
+  "name": "remark-html-to-jsx",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "devDependencies": {
+    "unist-util-visit": "^5.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-from-markdown": "^2.0.0",
+    "micromark-extension-mdxjs": "^2.0.0"
+  }
+}
