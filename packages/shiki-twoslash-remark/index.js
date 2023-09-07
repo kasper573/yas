@@ -7,12 +7,14 @@ const { getHighlighters } = require("shiki-twoslash-loader/getHighlighters");
  * @param {import("shiki-twoslash").UserConfigSettings} settings
  */
 function remarkPlugin(settings = {}) {
-  async function transform(ast) {
+  async function transform(ast, file) {
     // Async import since these packages are all in ESM
     const { visit, SKIP } = await import("unist-util-visit");
     const { mdxFromMarkdown } = await import("mdast-util-mdx");
     const { fromMarkdown } = await import("mdast-util-from-markdown");
     const { mdxjs } = await import("micromark-extension-mdxjs");
+
+    settings.vfsRoot = file.dirname;
 
     const { themes = [] } = settings;
     const highlighters = await getHighlighters(themes);

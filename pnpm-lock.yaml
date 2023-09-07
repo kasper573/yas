@@ -93,6 +93,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-imperative-hook:
+        specifier: workspace:*
+        version: link:../../packages/react-imperative-hook
       zod:
         specifier: ^3.21.4
         version: 3.22.2
