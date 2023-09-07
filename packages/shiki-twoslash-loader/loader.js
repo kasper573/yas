@@ -48,7 +48,7 @@ function getUserSettings() {
 async function getHighlighter(theme) {
   let existing = highlighterMap.get(theme);
   if (!existing) {
-    existing = shiki.getHighlighter(theme);
+    existing = shiki.getHighlighter({ theme });
     highlighterMap.set(theme, existing);
   }
   return existing;
@@ -72,8 +72,6 @@ function getHighlighters(themes) {
  * @return {{type: "error", message: string}|{type: "success", html: string}}
  */
 function renderHtml(lang, code, settings, highlightersByTheme) {
-  const { themes = [] } = settings;
-
   let twoslash;
 
   try {
@@ -85,18 +83,19 @@ function renderHtml(lang, code, settings, highlightersByTheme) {
     return { type: "error", message: e.message };
   }
 
-  if (!themes.length) {
+  const entries = Object.entries(highlightersByTheme);
+  if (!entries.length) {
     return { type: "error", message: "Cannot render twoslash without themes" };
   }
 
   let html = "";
-  for (const themeName of themes) {
+  for (const [themeName, highlighter] of entries) {
     html += st.renderCodeToHTML(
       code,
       lang,
       { twoslash: true },
       { ...settings, themeName },
-      highlightersByTheme[themeName],
+      highlighter,
       twoslash,
     );
   }
