@@ -12,6 +12,7 @@
     "immer": "^10.0.2",
     "react": "18.2.0",
     "react-composable-form": "workspace:*",
+    "react-imperative-hook": "workspace:*",
     "react-dom": "18.2.0",
     "zod": "^3.21.4"
   },
