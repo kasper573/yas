@@ -1,4 +1,3 @@
-// @ts-check
 const path = require("path");
 const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
@@ -39,7 +38,7 @@ const config = {
           editUrl: env.git.sourceUrl(pathToAppRelativeToRoot),
           remarkPlugins: [
             [
-              require("remark-shiki-twoslash"),
+              require("shiki-twoslash-remark"),
               require("./shiki-twoslash.config"),
             ],
           ],

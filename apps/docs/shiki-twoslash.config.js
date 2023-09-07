@@ -1,8 +1,3 @@
-/**
- * @type {import("remark-ast-shiki-twoslash").Options}
- */
-const options = {
+module.exports = {
   themes: ["min-light", "nord"],
 };
-
-module.exports = options;

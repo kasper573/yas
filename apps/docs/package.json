@@ -28,7 +28,7 @@
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "docusaurus-plugin-sass": "^0.2.5",
-    "remark-shiki-twoslash": "workspace:*",
+    "shiki-twoslash-remark": "workspace:*",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",
     "shiki-twoslash-loader": "workspace:*",

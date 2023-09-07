@@ -1,8 +1,0 @@
-{
-  "name": "remark-shiki-twoslash",
-  "version": "0.0.1",
-  "main": "./index.js",
-  "devDependencies": {
-    "shiki-twoslash-loader": "workspace:*"
-  }
-}
