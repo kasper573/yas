@@ -1,13 +1,8 @@
 {
-  "name": "shiki-twoslash-remark",
+  "name": "remark-html-to-jsx",
   "version": "0.0.1",
-  "main": "index.js",
-  "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
+  "main": "./index.js",
   "devDependencies": {
-    "shiki-twoslash-loader": "workspace:*",
     "unist-util-visit": "^5.0.0",
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.0",

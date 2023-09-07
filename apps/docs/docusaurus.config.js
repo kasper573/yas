@@ -38,9 +38,10 @@ const config = {
           editUrl: env.git.sourceUrl(pathToAppRelativeToRoot),
           remarkPlugins: [
             [
-              require("shiki-twoslash-remark"),
+              require("remark-shiki-twoslash").default,
               require("./shiki-twoslash.config"),
             ],
+            require("remark-html-to-jsx"), // Transforms HTML nodes output by shiki-twoslash into JSX nodes
           ],
         },
         theme: {

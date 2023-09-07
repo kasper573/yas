@@ -136,6 +136,12 @@ importers:
       docusaurus-plugin-sass:
         specifier: ^0.2.5
         version: 0.2.5(@docusaurus/core@3.0.0-alpha.0)(sass@1.66.1)(webpack@5.88.2)
+      remark-html-to-jsx:
+        specifier: workspace:*
+        version: link:../../packages/remark-html-to-jsx
+      remark-shiki-twoslash:
+        specifier: ^3.1.3
+        version: 3.1.3(typescript@5.2.2)
       sass:
         specifier: ^1.66.1
         version: 1.66.1
@@ -145,9 +151,6 @@ importers:
       shiki-twoslash-loader:
         specifier: workspace:*
         version: link:../../packages/shiki-twoslash-loader
-      shiki-twoslash-remark:
-        specifier: workspace:*
-        version: link:../../packages/shiki-twoslash-remark
       slice-loader:
         specifier: workspace:*
         version: link:../../packages/slice-loader
@@ -380,6 +383,21 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
 
+  packages/remark-html-to-jsx:
+    devDependencies:
+      mdast-util-from-markdown:
+        specifier: ^2.0.0
+        version: 2.0.0
+      mdast-util-mdx:
+        specifier: ^3.0.0
+        version: 3.0.0
+      micromark-extension-mdxjs:
+        specifier: ^2.0.0
+        version: 2.0.0
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+
   packages/shiki-twoslash-loader:
     devDependencies:
       shiki:
@@ -391,24 +409,6 @@ importers:
       webpack:
         specifier: ^5.88.2
         version: 5.88.2
-
-  packages/shiki-twoslash-remark:
-    devDependencies:
-      mdast-util-from-markdown:
-        specifier: ^2.0.0
-        version: 2.0.0
-      mdast-util-mdx:
-        specifier: ^3.0.0
-        version: 3.0.0
-      micromark-extension-mdxjs:
-        specifier: ^2.0.0
-        version: 2.0.0
-      shiki-twoslash-loader:
-        specifier: workspace:*
-        version: link:../shiki-twoslash-loader
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
 
   packages/slice-loader:
     devDependencies:
@@ -15799,6 +15799,10 @@ packages:
   /regenerate@1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
 
+  /regenerator-runtime@0.13.11:
+    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: true
+
   /regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
 
@@ -15941,6 +15945,25 @@ packages:
       '@types/mdast': 3.0.12
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
+    dev: true
+
+  /remark-shiki-twoslash@3.1.3(typescript@5.2.2):
+    resolution: {integrity: sha512-4e8OH3ySOCw5wUbDcPszokOKjKuebOqlP2WlySvC7ITBOq27BiGsFlq+FNWhxppZ+JzhTWah4gQrnMjX3KDbAQ==}
+    peerDependencies:
+      typescript: '>3'
+    dependencies:
+      '@types/unist': 2.0.8
+      '@typescript/twoslash': 3.1.0
+      '@typescript/vfs': 1.3.4
+      fenceparser: 1.1.1
+      regenerator-runtime: 0.13.11
+      shiki: 0.10.1
+      shiki-twoslash: 3.1.2(typescript@5.2.2)
+      tslib: 2.1.0
+      typescript: 5.2.2
+      unist-util-visit: 2.0.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /remark-slug@6.1.0:
@@ -17376,6 +17399,10 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: true
+
+  /tslib@2.1.0:
+    resolution: {integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==}
     dev: true
 
   /tslib@2.6.2:
