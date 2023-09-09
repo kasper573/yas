@@ -10,8 +10,9 @@ type safety, testing and code sharing between packages.
 - The repository root should only hold global tooling and configuration files.
 - Decouple your apps and packages.
 - Keep packages small and focused.
-- For shared configuration, create a package (e.g. [@yas/tsconfig](packages/yas-tsconfig)).
-- If a convention **can** be enforced by tooling (i.e. eslint, prettier, etc.), it **has to be**.
+- Utilize shared configuration (e.g. [@yas/tsconfig](packages/yas-tsconfig)).
+- Encapsulate heavily used functionality (e.g. [@yas/zod](packages/yas-zod)).
+- Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 
 ### Scripts
 
