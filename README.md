@@ -11,6 +11,7 @@ type safety, testing and code sharing between packages.
 - Decouple your apps and packages.
 - Keep packages small and focused.
 - For shared configuration, create a package (e.g. [@yas/tsconfig](packages/yas-tsconfig)).
+- If a convention **can** be enforced by tooling (i.e. eslint, prettier, etc.), it **has to be**.
 
 ### Scripts
 
