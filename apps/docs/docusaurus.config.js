@@ -1,4 +1,5 @@
 const path = require("path");
+const { createYasWebpackConfig } = require("@yas/build-tools/webpack");
 const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
 
@@ -26,6 +27,10 @@ const config = {
   plugins: [
     "docusaurus-plugin-sass",
     env.analytics ? "@gracefullight/docusaurus-plugin-vercel-analytics" : false,
+    () => ({
+      name: "webpack-customization-plugin",
+      configureWebpack: createYasWebpackConfig,
+    }),
   ],
 
   presets: [

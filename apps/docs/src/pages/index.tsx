@@ -5,6 +5,7 @@ import clsx from "clsx";
 import type { ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
 import styles from "./index.module.scss";
+import * as styles2 from "./index.css";
 
 export default function Home() {
   const {
@@ -68,7 +69,7 @@ function Feature({
       <Link to={href} style={{ display: "block" }}>
         <img
           src={image}
-          className={styles.featureImage}
+          className={styles2.featureImage}
           role="img"
           width={200}
           height={150}

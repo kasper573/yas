@@ -6,6 +6,7 @@
   "devDependencies": {
     "@vanilla-extract/esbuild-plugin": "^2.3.0",
     "@vanilla-extract/vite-plugin": "^3.9.0",
+    "@vanilla-extract/webpack-plugin": "^2.3.0",
     "@vitejs/plugin-react": "4.0.1",
     "@yas/env": "workspace:*",
     "rollup-plugin-visualizer": "5.9.0",
