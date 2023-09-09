@@ -49,6 +49,10 @@ const config = {
             require("remark-html-to-jsx"), // Transforms HTML nodes output by shiki-twoslash into JSX nodes
           ],
         },
+        pages: {
+          // Don't treat typesafe css files as pages
+          exclude: ["*.css.ts"],
+        },
         theme: {
           customCss: require.resolve("./src/styles/global.scss"),
         },
