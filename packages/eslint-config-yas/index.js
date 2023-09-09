@@ -66,7 +66,6 @@ module.exports = {
         ],
       },
     },
-    ...require("@yas/env/eslintOverrides"),
     {
       files: ["*.js", "*.jsx"],
       rules: {
@@ -101,6 +100,8 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
       },
     },
+    ...require("@yas/env/eslintOverrides"),
+    ...require("@yas/ui/eslintOverrides"),
   ],
 };
 

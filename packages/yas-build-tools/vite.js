@@ -3,6 +3,7 @@ const react = require("@vitejs/plugin-react");
 const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
+const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
 const { defineEnv } = require("./defineEnv");
 
 // NOTE This is a JS file because it was much simpler than configuring
@@ -12,6 +13,7 @@ function createYasViteConfig(projectRoot, { analyze } = {}) {
   return defineConfig({
     envPrefix: "_SOMETHING_RIDICULOUS_TO_DISABLE_VITE_ENV_VARS",
     plugins: [
+      vanillaExtractPlugin(),
       react(),
       checker({ typescript: true }),
       determineVisualizerPlugin(analyze),
