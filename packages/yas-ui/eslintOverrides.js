@@ -1,6 +1,6 @@
 const whatShouldIDoInstead = `Use import {css} from "@yas/ui" instead`;
 
-const disallowDirectUseOfVanillaExtractCss = {
+const disallowDirectUseOfVanillaExtractPackage = {
   files: ["*.ts", "*.tsx"],
   excludedFiles: ["**/yas-ui/src/css.ts"],
   rules: {
@@ -29,6 +29,6 @@ const disallowUseOfNonTypescriptCSSFiles = {
 };
 
 module.exports = [
-  disallowDirectUseOfVanillaExtractCss,
+  disallowDirectUseOfVanillaExtractPackage,
   disallowUseOfNonTypescriptCSSFiles,
 ];

@@ -33,7 +33,7 @@ const rule = {
         if (node.importKind !== "type") {
           const message = assertNoInvalidFileExtension(
             filename,
-            node.source.value,
+            node.source?.value,
             options,
           );
           if (message) {
@@ -43,16 +43,33 @@ const rule = {
       },
 
       CallExpression(node) {
-        const [requirePath] = node.arguments ?? [];
-        if (node.callee.name === "require") {
+        const isRequireOrResolve =
+          node.callee.name === "require" ||
+          (node.callee.object?.name === "require" &&
+            node.callee.property?.name === "resolve");
+
+        if (isRequireOrResolve) {
+          const [requirePath] = node.arguments ?? [];
           const message = assertNoInvalidFileExtension(
             filename,
-            requirePath.value,
+            requirePath?.value,
             options,
           );
           if (message) {
             report({ node, message });
           }
+        }
+      },
+
+      'MetaProperty[meta.name="import"][property.name="resolve"]': (node) => {
+        const [importPath] = node.parent.arguments;
+        const message = assertNoInvalidFileExtension(
+          filename,
+          importPath?.value,
+          options,
+        );
+        if (message) {
+          report({ node, message });
         }
       },
     };
@@ -91,7 +108,7 @@ function assertNoInvalidFileExtension(
 
 function tryResolve(sourceFile, importPath) {
   try {
-    return require.resolve(importPath, { paths: [sourceFile] });
+    return require.resolve(importPath, { paths: [path.dirname(sourceFile)] });
   } catch {}
 }
 
