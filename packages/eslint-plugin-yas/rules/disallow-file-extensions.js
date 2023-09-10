@@ -106,6 +106,11 @@ function assertNoInvalidFileExtension(
   return errorWithMessage;
 }
 
+/**
+ * @param {string} sourceFile
+ * @param {string} importPath
+ * @return {string | undefined}
+ */
 function tryResolve(sourceFile, importPath) {
   try {
     return require.resolve(importPath, { paths: [path.dirname(sourceFile)] });
