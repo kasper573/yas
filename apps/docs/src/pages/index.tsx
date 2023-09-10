@@ -4,15 +4,14 @@ import Layout from "@theme/Layout";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
-import styles from "./index.module.scss";
-import * as styles2 from "./index.css";
+import * as styles from "./index.css";
 
 export default function Home() {
   const {
     siteConfig: { title, tagline },
   } = useDocusaurusContext();
   return (
-    <Layout description={tagline}>
+    <Layout wrapperClassName={styles.container} description={tagline}>
       <header className={styles.hero}>
         <h1 className={styles.title}>
           {title.split(/\s+/).map((word, index) => (
@@ -69,7 +68,7 @@ function Feature({
       <Link to={href} style={{ display: "block" }}>
         <img
           src={image}
-          className={styles2.featureImage}
+          className={styles.featureImage}
           role="img"
           width={200}
           height={150}
