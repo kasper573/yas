@@ -1,5 +1,7 @@
 const path = require("path");
-const { createYasWebpackConfig } = require("@yas/build-tools/webpack");
+const {
+  configureDocusaurusWebpackConfig,
+} = require("@yas/build-tools/webpack");
 const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
 
@@ -29,7 +31,7 @@ const config = {
     env.analytics ? "@gracefullight/docusaurus-plugin-vercel-analytics" : false,
     () => ({
       name: "webpack-customization-plugin",
-      configureWebpack: createYasWebpackConfig,
+      configureWebpack: configureDocusaurusWebpackConfig,
     }),
   ],
 
