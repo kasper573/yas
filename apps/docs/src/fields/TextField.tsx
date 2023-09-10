@@ -1,10 +1,9 @@
 import type { HTMLAttributes } from "react";
 import { useId } from "react";
-import clsx from "clsx";
 import type { FieldProps } from "../rcf";
 import { Alert } from "../components/Alert";
 import { Stack } from "../components/Stack";
-import styles from "./TextField.module.scss";
+import * as styles from "./TextField.css";
 
 export interface TextFieldProps
   extends FieldProps<string>,
@@ -24,15 +23,15 @@ export function TextField({
   onFocus,
   required,
   fieldValues,
-  className,
   type,
   ...rest
 }: TextFieldProps) {
   const id = useId();
   return (
-    <Stack className={clsx(styles.textField, className)} {...rest}>
+    <Stack {...rest}>
       <label htmlFor={id}>{name}</label>
       <input
+        className={styles.input}
         id={id}
         value={value ?? ""}
         onChange={(e) => onChange?.(e.target.value)}

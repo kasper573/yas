@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import styles from "./Split.module.css";
+import * as styles from "./Split.css";
 
 export interface SplitProps {
   children: [ReactNode, ReactNode];
