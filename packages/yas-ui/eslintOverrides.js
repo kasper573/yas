@@ -17,15 +17,12 @@ const disallowDirectUseOfVanillaExtractCss = {
 const disallowUseOfNonTypescriptCSSFiles = {
   files: ["*.{ts,tsx,js,jsx}"],
   rules: {
-    "no-restricted-imports": [
+    "yas/disallow-file-extensions": [
       "error",
       {
-        patterns: [
-          {
-            group: ["*.scss", "*.css", "*.sass"],
-            message: `Non-typesafe CSS is not allowed. ${whatShouldIDoInstead}`,
-          },
-        ],
+        extensions: [".scss", ".css", ".sass", ".less"],
+        exceptions: ["node_modules"],
+        message: `Non-typesafe CSS is not allowed. ${whatShouldIDoInstead}`,
       },
     ],
   },
