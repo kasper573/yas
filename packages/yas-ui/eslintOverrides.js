@@ -17,7 +17,7 @@ const disallowDirectUseOfVanillaExtractPackage = {
 const disallowUseOfNonTypescriptCSSFiles = {
   files: ["*.{ts,tsx,js,jsx}"],
   rules: {
-    "yas/disallow-file-extensions": [
+    "yas/illegal-file-extensions": [
       "error",
       {
         extensions: [".scss", ".css", ".sass", ".less"],

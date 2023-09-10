@@ -101,7 +101,7 @@ function assertNoInvalidFileExtension(
   if (exceptions.some((exp) => new RegExp(exp).test(resolvedPath))) {
     return; // Allowed exception
   }
-  const error = `import of "${resolvedPath}" uses disallowed file extension`;
+  const error = `import of "${resolvedPath}" uses illegal file extension`;
   const errorWithMessage = [error, message].filter(Boolean).join(". ");
   return errorWithMessage;
 }
