@@ -1,4 +1,7 @@
 const path = require("path");
+const {
+  configureDocusaurusWebpackConfig,
+} = require("@yas/build-tools/webpack");
 const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
 
@@ -24,8 +27,11 @@ const config = {
   },
 
   plugins: [
-    "docusaurus-plugin-sass",
     env.analytics ? "@gracefullight/docusaurus-plugin-vercel-analytics" : false,
+    () => ({
+      name: "webpack-customization-plugin",
+      configureWebpack: configureDocusaurusWebpackConfig,
+    }),
   ],
 
   presets: [
@@ -44,8 +50,12 @@ const config = {
             require("remark-html-to-jsx"), // Transforms HTML nodes output by shiki-twoslash into JSX nodes
           ],
         },
+        pages: {
+          // Don't treat typesafe css files as pages
+          exclude: ["*.css.ts"],
+        },
         theme: {
-          customCss: require.resolve("./src/styles/global.scss"),
+          customCss: require.resolve("./src/styles/global.css.ts"),
         },
       }),
     ],

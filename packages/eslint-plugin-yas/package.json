@@ -1,0 +1,13 @@
+{
+  "name": "eslint-plugin-yas",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "scripts": {
+    "test": "mocha __test__/**/*.test.js",
+    "test:watch": "mocha __test__/**/*.test.js --watch"
+  },
+  "dependencies": {
+    "requireindex": "^1.2.0",
+    "mocha": "^10.2.0"
+  }
+}

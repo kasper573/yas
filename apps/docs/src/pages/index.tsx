@@ -4,14 +4,14 @@ import Layout from "@theme/Layout";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
-import styles from "./index.module.scss";
+import * as styles from "./index.css";
 
 export default function Home() {
   const {
     siteConfig: { title, tagline },
   } = useDocusaurusContext();
   return (
-    <Layout description={tagline}>
+    <Layout wrapperClassName={styles.container} description={tagline}>
       <header className={styles.hero}>
         <h1 className={styles.title}>
           {title.split(/\s+/).map((word, index) => (

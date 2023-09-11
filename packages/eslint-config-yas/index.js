@@ -3,7 +3,14 @@ const path = require("path");
 
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["import", "unused-imports", "monorepo-cop", "react", "react-hooks"],
+  plugins: [
+    "import",
+    "unused-imports",
+    "monorepo-cop",
+    "react",
+    "react-hooks",
+    "yas",
+  ],
   extends: [
     "plugin:monorepo-cop/recommended",
     "plugin:storybook/recommended",
@@ -66,7 +73,6 @@ module.exports = {
         ],
       },
     },
-    ...require("@yas/env/eslintOverrides"),
     {
       files: ["*.js", "*.jsx"],
       rules: {
@@ -101,6 +107,8 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
       },
     },
+    ...require("@yas/env/eslintOverrides"),
+    ...require("@yas/ui/eslintOverrides"),
   ],
 };
 

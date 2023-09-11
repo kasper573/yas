@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 import clsx from "clsx";
-import styles from "./Stack.module.scss";
+import * as styles from "./Stack.css";
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
   direction?: "row" | "column";
@@ -22,7 +22,7 @@ export function Stack({
       className={clsx(
         styles.stack,
         styles[direction],
-        styles[`gap${gap}`],
+        styles.gap[gap],
         className,
       )}
       style={{
