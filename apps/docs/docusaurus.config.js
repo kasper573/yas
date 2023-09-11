@@ -27,7 +27,6 @@ const config = {
   },
 
   plugins: [
-    "docusaurus-plugin-sass",
     env.analytics ? "@gracefullight/docusaurus-plugin-vercel-analytics" : false,
     () => ({
       name: "webpack-customization-plugin",
