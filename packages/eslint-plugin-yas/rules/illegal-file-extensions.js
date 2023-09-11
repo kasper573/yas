@@ -6,7 +6,8 @@ const path = require("path");
 const rule = {
   meta: {
     docs: {
-      description: "Prevent imports of specific file extensions",
+      description:
+        "Prevent imports of specific file types. File must exist to be considered invalid.",
       category: "Best Practices",
       recommended: true,
     },
@@ -101,7 +102,9 @@ function assertNoInvalidFileExtension(
   if (exceptions.some((exp) => new RegExp(exp).test(resolvedPath))) {
     return; // Allowed exception
   }
-  const error = `import of "${resolvedPath}" uses illegal file extension`;
+  const error = `import of "${path.basename(
+    importPath,
+  )}" uses illegal file extension`;
   const errorWithMessage = [error, message].filter(Boolean).join(". ");
   return errorWithMessage;
 }

@@ -1,0 +1,6 @@
+{
+  "options": {
+    "extensions": [".bad"]
+  },
+  "error": "import of \"foo.bad\" uses illegal file extension"
+}
