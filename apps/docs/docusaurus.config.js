@@ -56,7 +56,7 @@ const config = {
           exclude: ["*.css.ts"],
         },
         theme: {
-          customCss: require.resolve("./src/styles/global.scss"),
+          customCss: require.resolve("./src/styles/global.css.ts"),
         },
       }),
     ],
