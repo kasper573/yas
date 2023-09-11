@@ -1,4 +1,5 @@
 import { css } from "@yas/ui";
+import "./shiki-twoslash.css";
 
 css.globalStyle(":root", {
   vars: {
