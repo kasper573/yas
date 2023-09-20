@@ -1,7 +1,9 @@
-import { styled } from "../stitches";
+import { recipe } from "../styling/css";
 
-export const Flex = styled("div", {
-  display: "flex",
+export const stackRecipe = recipe({
+  base: {
+    display: "flex",
+  },
   variants: {
     direction: {
       row: {

@@ -11,9 +11,26 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const CanUseThemeSpaceAsGap: Story = {
+export const Row: Story = {
   args: {
-    gap: "3",
+    variants: {
+      direction: "row",
+    },
+    children: (
+      <>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+      </>
+    ),
+  },
+};
+
+export const Column: Story = {
+  args: {
+    variants: {
+      direction: "column",
+    },
     children: (
       <>
         <span>1</span>

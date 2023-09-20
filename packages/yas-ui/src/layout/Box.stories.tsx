@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const AcceptsAnyInlineCSS: Story = {
   args: {
-    css: { backgroundColor: "red", color: "white" },
+    sx: { backgroundColor: "blue-50", color: "gray-700" },
     children: "Hello world",
   },
 };

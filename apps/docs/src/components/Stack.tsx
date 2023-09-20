@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import clsx from "clsx";
+import { css } from "@yas/ui";
 import * as styles from "./Stack.css";
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
@@ -19,7 +19,7 @@ export function Stack({
 }: StackProps) {
   return (
     <div
-      className={clsx(
+      className={css.clsx(
         styles.stack,
         styles[direction],
         styles.gap[gap],
