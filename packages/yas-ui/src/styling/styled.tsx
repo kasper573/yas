@@ -19,7 +19,7 @@ interface RecipeImplementationProps {
   children?: ReactNode;
 }
 
-type RecipeComponentProps<Recipe extends RuntimeFn<VariantGroups>> =
+type RecipeComponentProps<Recipe extends RecipeLike> =
   RecipeImplementationProps &
     RecipeVariants<Recipe> & {
       sx?: Atoms;
@@ -27,40 +27,30 @@ type RecipeComponentProps<Recipe extends RuntimeFn<VariantGroups>> =
 
 /**
  * Syntax sugar for creating a @vanilla-extract based
- * component without having to do the type and props wiring.
+ * react component without having to do the type and props wiring.
  */
 export function styled<
   Implementation extends ElementType<RecipeImplementationProps>,
-  Recipe extends RuntimeFn<VariantGroups>,
+  Recipe extends RecipeLike = RuntimeFn<{}>,
 >(implementation: Implementation, recipe?: Recipe) {
-  type AdditionalProps = Omit<
-    ComponentProps<Implementation>,
-    keyof RecipeComponentProps<Recipe>
-  >;
   return function RecipeComponent({
     className: inlineClassName,
     sx,
-    ...additionalProps
-  }: RecipeComponentProps<Recipe> & AdditionalProps): ReactElement {
+    ...props
+  }: RecipeComponentProps<Recipe> &
+    ComponentProps<Implementation>): ReactElement {
+    const [variantProps, remainingProps] = separateVariantProps(props, recipe);
     const className = clsx(
-      recipe?.(variantProps(additionalProps, recipe)),
+      recipe?.(variantProps),
       sx ? atoms(sx) : undefined,
       inlineClassName,
     );
     return createElement(implementation, {
       className,
-      ...additionalProps,
+      ...remainingProps,
     });
-  }
+  };
 }
-
-type RecipeVariants<Recipe extends RecipeLike> = Exclude<
-  RecipeVariantsImpl<Recipe>,
-  undefined
->;
-
-type VariantName<Recipe extends RecipeLike> = `${string &
-  keyof RecipeVariants<Recipe>}`;
 
 /**
  * Selects the props corresponding to the variant names of the given recipe
@@ -69,16 +59,47 @@ export function variantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike,
 >(props: Props, recipe: Recipe): Pick<Props, VariantName<Recipe>> {
-  const selected = {} as Pick<Props, VariantName<Recipe>>;
-  for (const variant of recipe.variants() as VariantName<Recipe>[]) {
-    selected[variant] = props[variant];
-  }
-  return selected;
+  return separateVariantProps(props, recipe)[0];
 }
 
+/**
+ * Separates the props into variants and remaining props
+ */
+export function separateVariantProps<
+  Props extends Record<string, unknown>,
+  Recipe extends RecipeLike = RuntimeFn<{}>,
+>(props: Props, recipe?: Recipe) {
+  const picked = {} as Pick<Props, VariantName<Recipe>>;
+  const other = {} as Omit<Props, VariantName<Recipe>>;
+  if (recipe) {
+    for (const variant of recipe.variants() as VariantName<Recipe>[]) {
+      picked[variant] = props[variant];
+    }
+  }
+  return [picked, other] as const;
+}
+
+// Vanilla extract type utilities
+type RecipeLike = RuntimeFn<VariantGroups>;
+type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
+  Exclude<RecipeVariantsImpl<Recipe>, undefined>
+>;
+type VariantName<Recipe extends RecipeLike> = `${string &
+  keyof RecipeVariants<Recipe>}`;
+
 // Since vanilla-extract doesn't export these types we'll
-// redefine them to be able to construct a RecipeLike type
+// redefine them to be able to construct improved type utilities
 type RecipeStyleRule = ComplexStyleRule | string;
 type VariantDefinitions = Record<string, RecipeStyleRule>;
 type VariantGroups = Record<string, VariantDefinitions>;
-type RecipeLike = RuntimeFn<VariantGroups>;
+
+// Typescript specific utilities
+type StripIndexes<T> = {
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+    ? never
+    : symbol extends K
+    ? never
+    : K]: T[K];
+};
