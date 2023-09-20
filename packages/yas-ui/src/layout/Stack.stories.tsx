@@ -13,9 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Row: Story = {
   args: {
-    variants: {
-      direction: "row",
-    },
+    direction: "row",
     children: (
       <>
         <span>1</span>
@@ -28,9 +26,7 @@ export const Row: Story = {
 
 export const Column: Story = {
   args: {
-    variants: {
-      direction: "column",
-    },
+    direction: "column",
     children: (
       <>
         <span>1</span>
