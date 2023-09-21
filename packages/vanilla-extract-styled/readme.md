@@ -1,6 +1,8 @@
 # vanilla-extract-styled
 
-Syntax sugar for creating a @vanilla-extract based react component without having to do the type and props wiring.
+Tiny utility for creating typesafe [Recipes](https://vanilla-extract.style/documentation/packages/recipes/)
+and [Sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/) based [React](https://reactjs.org/)
+components without having to do the type and props wiring.
 
 ## Usage
 
