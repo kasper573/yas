@@ -11,44 +11,46 @@ import type {
 } from "@vanilla-extract/recipes";
 import { createElement } from "react";
 import clsx from "clsx";
-import type { Atoms } from "./atoms.css";
-import { atoms } from "./atoms.css";
 
 interface RecipeImplementationProps {
   className?: string;
   children?: ReactNode;
 }
 
-type RecipeComponentProps<Recipe extends RecipeLike> =
-  RecipeImplementationProps &
-    RecipeVariants<Recipe> & {
-      sx?: Atoms;
-    };
+export function createStyledFactory<
+  Sprinkles extends Record<string, ComplexStyleRule>,
+>(sprinkles?: (sx: Sprinkles) => string | undefined) {
+  type RecipeComponentProps<Recipe extends RecipeLike> =
+    RecipeImplementationProps &
+      RecipeVariants<Recipe> & {
+        sx?: Sprinkles;
+      };
 
-/**
- * Syntax sugar for creating a @vanilla-extract based
- * react component without having to do the type and props wiring.
- */
-export function styled<
-  Implementation extends ElementType<RecipeImplementationProps>,
-  Recipe extends RecipeLike = RuntimeFn<{}>,
->(implementation: Implementation, recipe?: Recipe) {
-  return function RecipeComponent({
-    className: inlineClassName,
-    sx,
-    ...props
-  }: RecipeComponentProps<Recipe> &
-    ComponentProps<Implementation>): ReactElement {
-    const [variantProps, remainingProps] = separateVariantProps(props, recipe);
-    const className = clsx(
-      recipe?.(variantProps),
-      sx ? atoms(sx) : undefined,
-      inlineClassName,
-    );
-    return createElement(implementation, {
-      className,
-      ...remainingProps,
-    });
+  return function styled<
+    Implementation extends ElementType<RecipeImplementationProps>,
+    Recipe extends RecipeLike = RuntimeFn<{}>,
+  >(implementation: Implementation, recipe?: Recipe) {
+    return function RecipeComponent({
+      className: inlineClassName,
+      sx,
+      ...props
+    }: RecipeComponentProps<Recipe> &
+      ComponentProps<Implementation>): ReactElement {
+      const [variantProps, remainingProps] = separateVariantProps(
+        props,
+        recipe,
+      );
+      const className =
+        clsx(
+          recipe?.(variantProps),
+          sx ? sprinkles?.(sx) : undefined,
+          inlineClassName,
+        ) || undefined;
+      return createElement(implementation, {
+        className,
+        ...remainingProps,
+      });
+    };
   };
 }
 
@@ -68,15 +70,19 @@ export function variantProps<
 export function separateVariantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike = RuntimeFn<{}>,
->(props: Props, recipe?: Recipe) {
+>(
+  props: Props,
+  recipe?: Recipe,
+): [Pick<Props, VariantName<Recipe>>, Omit<Props, VariantName<Recipe>>] {
   const picked = {} as Pick<Props, VariantName<Recipe>>;
-  const other = {} as Omit<Props, VariantName<Recipe>>;
+  const other = { ...props };
   if (recipe) {
     for (const variant of recipe.variants() as VariantName<Recipe>[]) {
       picked[variant] = props[variant];
+      delete other[variant];
     }
   }
-  return [picked, other] as const;
+  return [picked, other];
 }
 
 // Vanilla extract type utilities
@@ -93,7 +99,8 @@ type RecipeStyleRule = ComplexStyleRule | string;
 type VariantDefinitions = Record<string, RecipeStyleRule>;
 type VariantGroups = Record<string, VariantDefinitions>;
 
-// Typescript specific utilities
+// We must strip plain indexes since recipes without variants
+// will have their VariantGroups type resolved to { [key: string]: unknown }
 type StripIndexes<T> = {
   [K in keyof T as string extends K
     ? never

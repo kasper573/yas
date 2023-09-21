@@ -1,0 +1,6 @@
+{
+  "extends": "@yas/vitest/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true
+  }
+}

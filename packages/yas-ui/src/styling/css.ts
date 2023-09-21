@@ -6,6 +6,9 @@ export * from "@vanilla-extract/css";
 export * from "@vanilla-extract/recipes";
 export * from "clsx";
 
-// Re-export our custom utilities, but keep their implementation details hidden
+// Export our custom utilities
 export * from "./atoms.css";
-export * from "./styled";
+import { createStyledFactory } from "vanilla-extract-styled";
+import { atoms } from "./atoms.css";
+export const styled = createStyledFactory(atoms);
+export { separateVariantProps, variantProps } from "vanilla-extract-styled";

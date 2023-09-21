@@ -1,0 +1,4 @@
+{
+  "extends": "@yas/tsconfig/react-library.json",
+  "exclude": ["src/__test__"]
+}
