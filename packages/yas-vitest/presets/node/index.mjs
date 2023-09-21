@@ -5,7 +5,7 @@ import path from "path";
  * @param {string} projectDir
  * @param {import("vitest/config").UserWorkspaceConfig} options
  */
-export function defineConfig(projectDir = process.cwd(), options = {}) {
+export function defineConfig(projectDir, options = {}) {
   /**
    * @type {import("vitest/config").UserWorkspaceConfig}
    */
