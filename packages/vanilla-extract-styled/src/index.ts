@@ -11,7 +11,7 @@ import type {
 } from "@vanilla-extract/recipes";
 import type { createSprinkles } from "@vanilla-extract/sprinkles";
 import { createElement } from "react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { SprinklesProperties } from "@vanilla-extract/sprinkles";
 
 export function createStyledFactory<
