@@ -1,8 +1,12 @@
 import { expectTypeOf } from "vitest";
 import type { ComponentProps, HTMLAttributes } from "react";
 import { createStyledFactory } from "../index";
-import type { Color } from "./test.css";
-import { sprinkles } from "./test.css";
+import type { Color, Variants } from "./test.css";
+import {
+  recipeWithoutVariants,
+  sprinkles,
+  recipeWithVariants,
+} from "./test.css";
 
 it("inherits props of element", () => {
   const styled = createStyledFactory();
@@ -44,13 +48,12 @@ it("component does not cause excess props to be accepted", () => {
   <Component thisPropDoesNotExist={123} />;
 });
 
-it("sx prop is unavailable when not providing atoms", () => {
+it("empty recipe does not cause excess props to be accepted", () => {
   const styled = createStyledFactory();
-  const Component = styled("div");
+  const Component = styled("div", recipeWithoutVariants);
 
-  expectTypeOf<ComponentProps<typeof Component>>().not.toMatchTypeOf<{
-    sx?: unknown;
-  }>();
+  // @ts-expect-error Prop should error
+  <Component thisPropDoesNotExist={123} />;
 });
 
 it("sx prop is derived from atoms", () => {
@@ -62,7 +65,14 @@ it("sx prop is derived from atoms", () => {
 
 it("variants is derived from recipe", () => {
   const styled = createStyledFactory();
-  const Component = styled("div");
-  type Sx = ComponentProps<typeof Component>["sx"];
-  expectTypeOf<Sx>().toEqualTypeOf<{ color?: Color } | undefined>();
+  const Component = styled("div", recipeWithVariants);
+  type VariantProps = Pick<ComponentProps<typeof Component>, keyof Variants>;
+  expectTypeOf<VariantProps>().toEqualTypeOf<Variants>();
+});
+
+it("variants can be derived from recipe while using atoms", () => {
+  const styled = createStyledFactory(sprinkles);
+  const Component = styled("div", recipeWithVariants);
+  type VariantProps = Pick<ComponentProps<typeof Component>, keyof Variants>;
+  expectTypeOf<VariantProps>().toEqualTypeOf<Variants>();
 });

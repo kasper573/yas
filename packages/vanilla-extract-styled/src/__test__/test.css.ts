@@ -1,4 +1,5 @@
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
+import type { RecipeVariants } from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
 
 export type Color = (typeof colors)[number];
@@ -10,7 +11,12 @@ export const sprinkles = createSprinkles(
   }),
 );
 
-export const testRecipe = recipe({
+export type Variants = Exclude<
+  RecipeVariants<typeof recipeWithVariants>,
+  undefined
+>;
+
+export const recipeWithVariants = recipe({
   variants: {
     foo: {
       1: {},
@@ -27,5 +33,11 @@ export const testRecipe = recipe({
   },
   defaultVariants: {
     baz: "b",
+  },
+});
+
+export const recipeWithoutVariants = recipe({
+  base: {
+    color: "red",
   },
 });

@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import type { ElementType } from "react";
 import { createStyledFactory } from "../index";
 import { recipeClassName } from "./fixtures";
-import { testRecipe, sprinkles } from "./test.css";
+import { recipeWithVariants, sprinkles } from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -60,7 +60,7 @@ function testComponent(
 
   it("variants", () => {
     const styled = createStyledFactory();
-    const Component = styled(component, testRecipe);
+    const Component = styled(component, recipeWithVariants);
     const { container } = render(<Component foo={2} bar="y" />);
     expect(container.innerHTML).toEqual(
       toHtml({ attrs: { class: `${recipeClassName} baz_b foo_2 bar_y` } }),
@@ -69,7 +69,7 @@ function testComponent(
 
   it("combination of everything", () => {
     const styled = createStyledFactory(sprinkles);
-    const Component = styled(component, testRecipe);
+    const Component = styled(component, recipeWithVariants);
     const { container } = render(
       <Component
         className="foo"
