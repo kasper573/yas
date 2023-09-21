@@ -2,7 +2,7 @@ import { defineConfig } from "@yas/vitest/presets/react";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import { recipeClassName } from "./src/__test__/fixtures";
 
-export default defineConfig({
+export default defineConfig(__dirname, {
   plugins: [
     vanillaExtractPlugin({
       // When a debugId is missing it's not technically always a recipe, but in our test suite it is.
