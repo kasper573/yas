@@ -1,8 +1,13 @@
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 import { recipe } from "@vanilla-extract/recipes";
 
+export type Color = (typeof colors)[number];
+const colors = ["red", "green", "blue"] as const;
+
 export const sprinkles = createSprinkles(
-  defineProperties({ properties: { color: ["red", "green", "blue"] } }),
+  defineProperties({
+    properties: { color: colors },
+  }),
 );
 
 export const testRecipe = recipe({

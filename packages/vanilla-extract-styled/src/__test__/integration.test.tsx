@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import type { ElementType } from "react";
 import { createStyledFactory } from "../index";
 import { recipeClassName } from "./fixtures";
-import { testRecipe, sprinkles } from "./integration.css";
+import { testRecipe, sprinkles } from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));

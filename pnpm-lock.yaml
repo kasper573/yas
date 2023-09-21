@@ -467,6 +467,9 @@ importers:
       '@yas/vitest':
         specifier: workspace:*
         version: link:../yas-vitest
+      concurrently:
+        specifier: ^8.2.1
+        version: 8.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
