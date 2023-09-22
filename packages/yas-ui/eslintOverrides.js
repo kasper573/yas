@@ -7,8 +7,12 @@ const disallowDirectUseOfVanillaExtractPackage = {
     "no-restricted-imports": [
       "error",
       {
-        name: "@vanilla-extract",
-        message: whatShouldIDoInstead,
+        patterns: [
+          {
+            group: ["@vanilla-extract/*"],
+            message: whatShouldIDoInstead,
+          },
+        ],
       },
     ],
   },
