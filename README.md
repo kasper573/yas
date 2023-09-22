@@ -1,4 +1,4 @@
-# Yet Another Stack
+# Yet Another Stack &middot; [![status](https://github.com/ksandin/yas/actions/workflows/ci.yml/badge.svg)](https://github.com/ksandin/yas/actions)
 
 My personal stack of apps and libraries.
 
