@@ -49,6 +49,15 @@ function testComponent(
     );
   });
 
+  it("inline style object", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component);
+    const { container } = render(<Component style={{ color: "red" }} />);
+    expect(container.innerHTML).toEqual(
+      toHtml({ attrs: { style: `color: red;` } }),
+    );
+  });
+
   it("sprinkles", () => {
     const styled = createStyledFactory(sprinkles);
     const Component = styled(component);
@@ -77,6 +86,7 @@ function testComponent(
         bar="y"
         sx={{ color: "red" }}
         data-foo="bar"
+        style={{ color: "blue" }}
       >
         Hello
       </Component>,
@@ -86,6 +96,7 @@ function testComponent(
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y color_red foo`,
           "data-foo": "bar",
+          style: "color: blue;",
         },
         content: "Hello",
       }),
