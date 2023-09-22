@@ -1,8 +1,8 @@
 import { z } from "zod";
+import { Stack } from "@yas/ui";
 import type { FormLayoutProps } from "../../../src/rcf";
 import { createForm } from "../../../src/rcf";
 import { TextField } from "../../../src/fields/TextField";
-import { Stack } from "../../../src/components/Stack";
 import { Alert } from "../../../src/components/Alert";
 
 export const LoginForm = createForm((options) =>

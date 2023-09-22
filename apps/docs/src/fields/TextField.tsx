@@ -1,9 +1,8 @@
 import type { HTMLAttributes } from "react";
 import { useId } from "react";
-import { css } from "@yas/ui";
+import { css, Stack } from "@yas/ui";
 import type { FieldProps } from "../rcf";
 import { Alert } from "../components/Alert";
-import { Stack } from "../components/Stack";
 import { inputRecipe } from "./TextField.css";
 
 export interface TextFieldProps

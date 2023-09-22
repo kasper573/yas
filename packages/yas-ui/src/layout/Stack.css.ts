@@ -13,5 +13,39 @@ export const stackRecipe = recipe({
         flexDirection: "column",
       },
     },
+    align: {
+      start: {},
+      center: {},
+      end: {},
+    },
+  },
+  compoundVariants: [
+    {
+      variants: { direction: "row", align: "start" },
+      style: { alignItems: "start" },
+    },
+    {
+      variants: { direction: "row", align: "center" },
+      style: { alignItems: "center" },
+    },
+    {
+      variants: { direction: "row", align: "end" },
+      style: { alignItems: "end" },
+    },
+    {
+      variants: { direction: "column", align: "start" },
+      style: { justifyContent: "start" },
+    },
+    {
+      variants: { direction: "column", align: "center" },
+      style: { justifyContent: "center" },
+    },
+    {
+      variants: { direction: "column", align: "end" },
+      style: { justifyContent: "end" },
+    },
+  ],
+  defaultVariants: {
+    direction: "column",
   },
 });
