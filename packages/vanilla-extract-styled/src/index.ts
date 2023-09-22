@@ -34,10 +34,9 @@ export function createStyledFactory<
       ...props
     }: RecipeComponentProps<Recipe> &
       ComponentProps<Implementation>): ReactElement {
-      const [variantProps, remainingProps] = separateVariantProps(
-        props,
-        recipe,
-      );
+      const [variantProps, remainingProps] = recipe
+        ? destructureVariantProps(props, recipe)
+        : [emptyObject, props];
       const className =
         clsx(
           recipe?.(variantProps),
@@ -52,6 +51,8 @@ export function createStyledFactory<
   };
 }
 
+const emptyObject = Object.freeze({});
+
 /**
  * Selects the props corresponding to the variant names of the given recipe
  */
@@ -59,31 +60,33 @@ export function variantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike,
 >(props: Props, recipe: Recipe): Pick<Props, VariantName<Recipe>> {
-  return separateVariantProps(props, recipe)[0];
+  return destructureVariantProps(props, recipe)[0];
 }
 
 /**
- * Separates the props into variants and remaining props
+ * Separates the props into variant props and remaining props based on the given recipe
  */
-export function separateVariantProps<
+export function destructureVariantProps<
   Props extends Record<string, unknown>,
-  Recipe extends RecipeLike = RuntimeFn<{}>,
->(
-  props: Props,
-  recipe?: Recipe,
-): [Pick<Props, VariantName<Recipe>>, Omit<Props, VariantName<Recipe>>] {
-  const picked = {} as Pick<Props, VariantName<Recipe>>;
-  const other = { ...props };
-  if (recipe) {
-    for (const variant of recipe.variants() as VariantName<Recipe>[]) {
-      picked[variant] = props[variant];
-      delete other[variant];
+  Recipe extends RecipeLike,
+>(allProps: Props, recipe: Recipe) {
+  const variantProps: Record<string, unknown> = {};
+  const remainingProps: Record<string, unknown> = {};
+  const variants = recipe.variants();
+  for (const prop in allProps) {
+    if (variants.includes(prop)) {
+      variantProps[prop] = allProps[prop];
+    } else {
+      remainingProps[prop] = allProps[prop];
     }
   }
-  return [picked, other];
+  return [
+    variantProps as Pick<Props, VariantName<Recipe>>,
+    remainingProps as Omit<Props, VariantName<Recipe>>,
+  ] as const;
 }
 
-// Vanilla extract type utilities
+// Improved vanilla extract type utilities
 type RecipeLike = RuntimeFn<VariantGroups>;
 type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
   Exclude<RecipeVariantsImpl<Recipe>, undefined>

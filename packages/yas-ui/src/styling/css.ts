@@ -11,4 +11,4 @@ export * from "./atoms.css";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { atoms } from "./atoms.css";
 export const styled = createStyledFactory(atoms);
-export { separateVariantProps, variantProps } from "vanilla-extract-styled";
+export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
