@@ -1,9 +1,10 @@
 import type { HTMLAttributes } from "react";
 import { useId } from "react";
+import { css } from "@yas/ui";
 import type { FieldProps } from "../rcf";
 import { Alert } from "../components/Alert";
 import { Stack } from "../components/Stack";
-import * as styles from "./TextField.css";
+import { inputRecipe } from "./TextField.css";
 
 export interface TextFieldProps
   extends FieldProps<string>,
@@ -30,8 +31,7 @@ export function TextField({
   return (
     <Stack {...rest}>
       <label htmlFor={id}>{name}</label>
-      <input
-        className={styles.input}
+      <Input
         id={id}
         value={value ?? ""}
         onChange={(e) => onChange?.(e.target.value)}
@@ -43,3 +43,5 @@ export function TextField({
     </Stack>
   );
 }
+
+const Input = css.styled("input", inputRecipe);

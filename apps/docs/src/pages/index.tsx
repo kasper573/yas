@@ -1,7 +1,6 @@
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import clsx from "clsx";
 import type { ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
 import * as styles from "./index.css";
@@ -23,7 +22,7 @@ export default function Home() {
         <p className={styles.tagline}>{tagline}</p>
       </header>
       <main>
-        <section className={styles.features}>
+        <section>
           <div className="container">
             <div className="row">
               {projects.map((project, index) => (
@@ -44,12 +43,6 @@ export default function Home() {
   );
 }
 
-const columnSizeClass =
-  {
-    1: "col--12",
-    2: "col--6",
-  }[projects.length as number] ?? "col--4";
-
 function Feature({
   image,
   title,
@@ -62,9 +55,7 @@ function Feature({
   href: string;
 }) {
   return (
-    <div
-      className={clsx(`col ${columnSizeClass} text--center`, styles.feature)}
-    >
+    <div className={styles.feature({ columns: projects.length })}>
       <Link to={href} style={{ display: "block" }}>
         <img
           src={image}

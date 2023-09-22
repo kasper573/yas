@@ -41,6 +41,12 @@ module.exports = {
       },
       extends: ["plugin:@typescript-eslint/recommended"],
       rules: {
+        // For a lot of our libraries, we actually want to use {} as the empty set when working with generics.
+        "@typescript-eslint/ban-types": [
+          "error",
+          { types: { "{}": false }, extendDefaults: true },
+        ],
+
         // This one is too excessive. Basic use of plenty of libraries causes this one to fail, so it's not worth having it enabled.
         "@typescript-eslint/no-misused-promises": "off",
 

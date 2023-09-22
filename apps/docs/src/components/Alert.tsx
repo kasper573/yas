@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import clsx from "clsx";
+import { css } from "@yas/ui";
 
 export type AlertVariant =
   | "primary"
@@ -21,7 +21,7 @@ export function Alert({
 }: AlertProps) {
   return (
     <div
-      className={clsx(`alert alert--${variant}`, className)}
+      className={css.clsx(`alert alert--${variant}`, className)}
       role="alert"
       {...rest}
     >

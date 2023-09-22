@@ -1,3 +1,3 @@
-import { styled } from "../stitches";
+import { styled } from "../styling/css";
 
-export const Box = styled("div", {});
+export const Box = styled("div");

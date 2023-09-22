@@ -2,13 +2,17 @@ const whatShouldIDoInstead = `Use import {css} from "@yas/ui" instead`;
 
 const disallowDirectUseOfVanillaExtractPackage = {
   files: ["*.ts", "*.tsx"],
-  excludedFiles: ["**/yas-ui/src/css.ts"],
+  excludedFiles: ["**/yas-ui/src/styling/**"],
   rules: {
     "no-restricted-imports": [
       "error",
       {
-        name: "@vanilla-extract",
-        message: whatShouldIDoInstead,
+        patterns: [
+          {
+            group: ["@vanilla-extract/*"],
+            message: whatShouldIDoInstead,
+          },
+        ],
       },
     ],
   },

@@ -5,8 +5,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "import": "./src/index.ts"
     },
     "./eslintOverrides": {
       "import": "./eslintOverrides.js",
@@ -25,7 +24,10 @@
     "test:unit:watch": "vitest"
   },
   "dependencies": {
-    "@stitches/react": "^1.2.8",
+    "@vanilla-extract/recipes": "^0.5.0",
+    "@vanilla-extract/sprinkles": "^1.6.1",
+    "vanilla-extract-styled": "workspace:*",
+    "clsx": "^1.2.1",
     "react-imperative-hook": "workspace:*"
   },
   "devDependencies": {

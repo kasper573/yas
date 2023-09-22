@@ -1,5 +1,19 @@
 // @ts-check
 
+/**
+ * @typedef {{
+ *  sidebar: (string|[{type: string, dirName: string}])[],
+ *  imageUrl: string,
+ *  description: string,
+ *  packageName: string,
+ *  href: string,
+ *  title: string
+ *  }} Project
+ */
+
+/**
+ * @type {[Project, Project]}
+ */
 const projects = [
   defineProjectByConvention("react-composable-form", {
     description:
@@ -16,7 +30,7 @@ const projects = [
 /**
  * @param {string} packageName
  * @param {{imageUrl: string, description: string}} options
- * @returns {{sidebar: (string|[{type: string, dirName: string}])[], imageUrl: string, description: string, packageName: string, href: string, title: string}}
+ * @returns {Project}
  */
 function defineProjectByConvention(packageName, { imageUrl, description }) {
   return {

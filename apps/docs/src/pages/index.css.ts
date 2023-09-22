@@ -28,8 +28,22 @@ export const tagline = css.style({
 
 export const features = css.style({});
 
-export const feature = css.style({
+const featureBase = css.style({
   padding: "2rem 2rem",
+});
+
+export const feature = css.recipe({
+  base: ["col", "text--center", featureBase],
+  variants: {
+    columns: {
+      1: "col--12",
+      2: "col--6",
+      3: "col--4",
+    },
+  },
+  defaultVariants: {
+    columns: 3,
+  },
 });
 
 export const featureImage = css.style({
@@ -56,7 +70,7 @@ export const container = css.style({
       [`.${titleWord} + .${titleWord}`]: {
         margin: 0,
       },
-      [`.${feature} + .${feature}`]: {
+      [`.${feature.classNames.base} + .${feature.classNames.base}`]: {
         marginTop: "24px",
       },
     },
