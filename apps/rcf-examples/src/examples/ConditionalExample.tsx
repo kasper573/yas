@@ -1,9 +1,8 @@
 import { z } from "zod";
 import { InputAdornment, Stack } from "@mui/material";
+import { SingleSelectField, NumberField } from "@yas/ui";
 import { BaseForm } from "../BaseForm";
 import { ExampleContent } from "../ExampleContent";
-import { SingleSelectField, valueOptions } from "../fields/SingleSelectField";
-import { NumberField } from "../fields/NumberField";
 
 const kindType = z.enum(["foo", "bar"]);
 const paymentType = z.enum(["card", "paypal"]);
@@ -40,10 +39,10 @@ const DiscriminatedForm = BaseForm.extend((options) =>
   options
     .schema(createDiscriminatingSchema())
     .type(paymentType, SingleSelectField, {
-      options: valueOptions(paymentType.options),
+      options: SingleSelectField.valueOptions(paymentType.options),
     })
     .type(kindType, SingleSelectField, {
-      options: valueOptions(kindType.options),
+      options: SingleSelectField.valueOptions(kindType.options),
     }),
 );
 
@@ -61,7 +60,7 @@ const ConditionsForm = BaseForm.extend((options) =>
       bar: data.type === "bar",
     }))
     .type(kindType, SingleSelectField, {
-      options: valueOptions(kindType.options),
+      options: SingleSelectField.valueOptions(kindType.options),
     }),
 );
 
@@ -75,7 +74,7 @@ const RelatedForm = BaseForm.extend((options) =>
       }),
     )
     .type(currencyType, SingleSelectField, {
-      options: valueOptions(currencyType.options),
+      options: SingleSelectField.valueOptions(currencyType.options),
     })
     .field("amount", ({ fieldValues, ...props }) => (
       <NumberField

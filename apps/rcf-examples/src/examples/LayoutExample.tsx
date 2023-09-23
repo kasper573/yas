@@ -2,8 +2,8 @@ import { z } from "zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { Box, Button, Typography } from "@mui/material";
+import { TextField } from "@yas/ui";
 import { BaseForm } from "../BaseForm";
-import { TextField } from "../fields/TextField";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
 import { ExampleContent } from "../ExampleContent";
 

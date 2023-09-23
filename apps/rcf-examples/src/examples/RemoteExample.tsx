@@ -2,9 +2,8 @@ import { z } from "zod";
 import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
+import { TextField, SingleSelectField } from "@yas/ui";
 import { BaseForm } from "../BaseForm";
-import { TextField } from "../fields/TextField";
-import { SingleSelectField } from "../fields/SingleSelectField";
 import { ExampleContent } from "../ExampleContent";
 
 interface CustomRemoteErrors {

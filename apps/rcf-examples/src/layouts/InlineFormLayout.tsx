@@ -1,5 +1,5 @@
 import { Button, Stack } from "@mui/material";
-import type { FormLayoutProps } from "../rcf";
+import type { FormLayoutProps } from "@yas/ui";
 
 export function InlineFormLayout({ fields, handleSubmit }: FormLayoutProps) {
   return (

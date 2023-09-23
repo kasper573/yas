@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { TextField } from "./fields/TextField";
-import { NumberField } from "./fields/NumberField";
+import { TextField, NumberField } from "@yas/ui";
 import { BasicFormLayout } from "./layouts/BasicFormLayout";
 import { createForm } from "./rcf";
 

@@ -3,7 +3,7 @@ import type { FormValidationMode } from "react-composable-form";
 import { formValidationModes } from "react-composable-form";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { MultiSelectField } from "./fields/MultiSelectField";
+import { MultiSelectField } from "@yas/ui";
 
 export type ExampleContentRenderer = (props: {
   validateOn: FormValidationMode[];

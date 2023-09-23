@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react";
 import { useId } from "react";
 import { css, Stack } from "@yas/ui";
 import type { FieldProps } from "../rcf";
-import { Alert } from "../components/Alert";
+import { Alert } from "../atoms/Alert";
 import { inputRecipe } from "./TextField.css";
 
 export interface TextFieldProps

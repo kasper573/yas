@@ -56,8 +56,8 @@ export function SingleSelectField<Value>({
   );
 }
 
-export function valueOptions<Value>(
-  values: Value[],
-): SingleSelectOption<Value>[] {
+function valueOptions<Value>(values: Value[]): SingleSelectOption<Value>[] {
   return values.map((value) => ({ value, label: `${value}` }));
 }
+
+SingleSelectField.valueOptions = valueOptions;
