@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { Box, Button, Typography } from "@mui/material";

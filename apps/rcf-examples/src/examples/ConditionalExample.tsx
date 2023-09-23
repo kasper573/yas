@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { InputAdornment, Stack } from "@mui/material";
 import { SingleSelectField, NumberField } from "@yas/ui";
 import { BaseForm } from "../BaseForm";

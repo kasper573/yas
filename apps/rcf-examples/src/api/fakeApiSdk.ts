@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 
 export type Range = z.infer<typeof rangeType>;
 export const rangeType = z.tuple([z.number(), z.number()]);

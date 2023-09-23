@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { TextField, NumberField } from "@yas/ui";
 import { BasicFormLayout } from "./layouts/BasicFormLayout";
 import { createForm } from "./rcf";

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { createForm } from "react-composable-form";
 import { TextField, NumberField } from "@yas/ui";
 // ---cut---
