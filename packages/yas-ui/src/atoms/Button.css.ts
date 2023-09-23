@@ -28,6 +28,11 @@ export const buttonRecipe = recipe({
       },
     },
     variant: {
+      contained: {
+        backgroundColor: "$blue",
+        color: "$white",
+        borderRadius: "$1",
+      },
       outlined: {
         backgroundColor: "$blue",
         color: "$white",

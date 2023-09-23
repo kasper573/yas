@@ -1,4 +1,4 @@
-import { recipe } from "../styling/css";
+import { recipe, tokens } from "../styling/css";
 
 export const stackRecipe = recipe({
   base: {
@@ -17,6 +17,12 @@ export const stackRecipe = recipe({
       start: {},
       center: {},
       end: {},
+    },
+    gap: {
+      0: { gap: tokens.space[0] },
+      1: { gap: tokens.space[1] },
+      2: { gap: tokens.space[2] },
+      3: { gap: tokens.space[3] },
     },
   },
   compoundVariants: [

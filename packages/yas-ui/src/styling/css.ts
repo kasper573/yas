@@ -10,5 +10,8 @@ export * from "clsx";
 export * from "./atoms.css";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { atoms } from "./atoms.css";
+import * as tokens from "./tokens";
+
+export { tokens };
 export const styled = createStyledFactory(atoms);
 export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
