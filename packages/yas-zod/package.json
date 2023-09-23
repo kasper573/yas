@@ -9,6 +9,10 @@
     ".": {
       "import": "./src/index.ts",
       "require": "./src/index.ts"
+    },
+    "./eslintOverrides": {
+      "import": "./eslintOverrides.js",
+      "require": "./eslintOverrides.js"
     }
   },
   "dependencies": {

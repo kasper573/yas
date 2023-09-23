@@ -6,5 +6,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     // Required for reactFastRefresh test
     "@typescript-eslint/no-var-requires": "off",
+    // We disable this to allow using zod in this library
+    "no-restricted-imports": "off",
   },
 };
