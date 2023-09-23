@@ -8,10 +8,10 @@ import {
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import { Delete } from "@mui/icons-material";
-import type { FieldProps } from "../rcf";
 import type { Metrics } from "../api/fakeApiSdk";
 import { FormControlLabelWithAdornment } from "../components/FormControlLabelWithAdornment";
 import { FormLabelWithActions } from "../components/FormLabelWithActions";
+import type { FieldProps } from "./rcf";
 
 export interface RadioGroupOption<Value> {
   value: Value;

@@ -572,6 +572,9 @@ importers:
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
+      react-composable-form:
+        specifier: workspace:*
+        version: link:../react-composable-form
       react-imperative-hook:
         specifier: workspace:*
         version: link:../react-imperative-hook

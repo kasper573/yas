@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
-import type { FieldProps } from "../rcf";
+import type { FieldProps } from "./rcf";
 
 export interface SingleSelectOption<Value> {
   value: Value;

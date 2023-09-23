@@ -1,8 +1,8 @@
 import { FormHelperText, Checkbox, FormGroup, InputLabel } from "@mui/material";
 import type { ReactNode } from "react";
-import type { FieldProps } from "../rcf";
 import type { Metrics } from "../api/fakeApiSdk";
 import { FormControlLabelWithAdornment } from "../components/FormControlLabelWithAdornment";
+import type { FieldProps } from "./rcf";
 
 export interface CheckboxGroupOption<Value> {
   value: Value;

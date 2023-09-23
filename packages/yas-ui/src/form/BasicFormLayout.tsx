@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import type { ReactNode } from "react";
-import type { FormLayoutProps } from "../rcf";
+import type { FormLayoutProps } from "./rcf";
 
 export function BasicFormLayout({
   title,

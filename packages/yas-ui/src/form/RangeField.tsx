@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useId, useMemo } from "react";
-import type { FieldProps } from "../rcf";
+import type { FieldProps } from "./rcf";
 
 export type Range = [number, number];
 
