@@ -29,9 +29,9 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.build.json",
-    "test": "pnpm test:unit && pnpm test:types --run",
-    "test:watch": "concurrently -n unit,types \"pnpm test:unit --watch\" \"pnpm test:types\"",
-    "test:unit": "vitest run",
+    "test": "pnpm test:unit run && pnpm test:types --run",
+    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
+    "test:unit": "vitest",
     "test:types": "vitest typecheck",
     "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
   },
