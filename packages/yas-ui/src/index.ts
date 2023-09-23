@@ -4,6 +4,7 @@ export * from "./atoms/Text";
 export * from "./layout/Stack";
 export * from "./layout/Box";
 export * from "./layout/Stack";
+export * from "./form/BaseForm";
 export * from "./form/rcf";
 
 // Clunky import-and-then-export pattern for wider editor support
