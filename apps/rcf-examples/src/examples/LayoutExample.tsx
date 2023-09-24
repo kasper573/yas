@@ -1,8 +1,7 @@
 import { z } from "@yas/zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
-import { Box, Button, Typography } from "@mui/material";
-import { TextField, BaseForm } from "@yas/ui";
+import { Box, Button, Text, TextField, BaseForm } from "@yas/ui";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
 import { ExampleContent } from "../ExampleContent";
 
@@ -60,18 +59,18 @@ export function LayoutExample() {
             onChange={setData}
             onSubmit={showData}
           />
-          <Typography variant="h4" sx={{ my: 4 }}>
+          <Text variant="h4" sx={{ my: 4 }}>
             Inline layout
-          </Typography>
+          </Text>
           <InlineLoginForm
             {...props}
             value={data}
             onChange={setData}
             onSubmit={showData}
           />
-          <Typography variant="h4" sx={{ my: 4 }}>
+          <Text variant="h4" sx={{ my: 4 }}>
             Specialized layout
-          </Typography>
+          </Text>
           <SpecializedLoginForm {...props} value={data} onChange={setData} />
         </>
       )}

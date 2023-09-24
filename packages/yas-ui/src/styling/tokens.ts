@@ -4,6 +4,7 @@ export const space = {
   2: 8,
   3: 16,
   4: 24,
+  5: 32,
 };
 
 export const colors = {
