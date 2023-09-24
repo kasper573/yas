@@ -1,10 +1,8 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
-import { BaseForm } from "../BaseForm";
-import { TextField } from "../fields/TextField";
-import { SingleSelectField } from "../fields/SingleSelectField";
+import { TextField, SingleSelectField, BaseForm } from "@yas/ui";
 import { ExampleContent } from "../ExampleContent";
 
 interface CustomRemoteErrors {
@@ -22,8 +20,8 @@ const UserRegistrationForm = BaseForm.extend((options) =>
         passwordConfirm: z.string().min(1),
       }),
     )
-    .field("password", TextField, { password: true })
-    .field("passwordConfirm", TextField, { password: true })
+    .field("password", TextField, { type: "password" })
+    .field("passwordConfirm", TextField, { type: "password" })
     .customExternalErrors((error?: CustomRemoteErrors) => ({
       general: error?.generalErrors ?? [],
       field: Object.fromEntries(error?.fieldErrors ?? []),

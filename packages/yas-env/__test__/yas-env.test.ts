@@ -2,24 +2,24 @@ import * as path from "path";
 import { execaCommand } from "execa";
 
 describe("yas-env", () => {
-  it.concurrent("can load value via environment", async () => {
+  it("can load value via environment", async () => {
     const output = await testApp("env-string-min-10", { foo: "input-value" });
     expect(output).toContain("received:input-value");
   });
 
-  it.concurrent("can load value via flow", async () => {
+  it("can load value via flow", async () => {
     const output = await testApp("flow-string-min-10");
     expect(output).toContain("received:flow-value");
   });
 
-  it.concurrent("prefers value in environment over flow", async () => {
+  it("prefers value in environment over flow", async () => {
     const output = await testApp("flow-string-min-10", {
       foo: "input-value",
     });
     expect(output).toContain("received:input-value");
   });
 
-  it.concurrent("errors on invalid value", async () => {
+  it("errors on invalid value", async () => {
     const output = await testApp("env-string-min-10", {
       foo: "input",
     });
@@ -28,7 +28,7 @@ describe("yas-env", () => {
     );
   });
 
-  it.concurrent("can expand using external environment variables", async () => {
+  it("can expand using external environment variables", async () => {
     const output = await testApp("env-string-min-10", {
       external: "two",
       foo: "one-${external}-three",
@@ -36,7 +36,7 @@ describe("yas-env", () => {
     expect(output).toContain("received:one-two-three");
   });
 
-  it.concurrent("can expand using internal environment variables", async () => {
+  it("can expand using internal environment variables", async () => {
     const output = await testApp("env-foo-bar", {
       bar: "two",
       foo: "one-${bar}-three",

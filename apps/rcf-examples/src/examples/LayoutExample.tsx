@@ -1,9 +1,8 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { Box, Button, Typography } from "@mui/material";
-import { BaseForm } from "../BaseForm";
-import { TextField } from "../fields/TextField";
+import { TextField, BaseForm } from "@yas/ui";
 import { InlineFormLayout } from "../layouts/InlineFormLayout";
 import { ExampleContent } from "../ExampleContent";
 
@@ -17,7 +16,7 @@ const LoginForm = BaseForm.extend((options) =>
         password: z.string().min(8),
       }),
     )
-    .field("password", TextField, { password: true }),
+    .field("password", TextField, { type: "password" }),
 );
 
 const InlineLoginForm = LoginForm.extend((options) =>
@@ -28,16 +27,17 @@ const SpecializedLoginForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <Box sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
-        <Email sx={{ transform: `rotateZ(-10deg)` }} size="small" />
+        <Email style={{ transform: `rotateZ(-10deg)` }} />
         <Password
           name="PWD"
-          helperText="I'm so special!"
-          sx={{ transform: `rotateZ(10deg)`, mx: 3 }}
+          info="I'm so special!"
+          sx={{ mx: 3 }}
+          style={{ transform: `rotateZ(10deg)` }}
         />
         <Button
           type="submit"
           variant="outlined"
-          sx={{ transform: `rotateZ(-10deg)` }}
+          style={{ transform: `rotateZ(-10deg)` }}
         >
           Submit
         </Button>

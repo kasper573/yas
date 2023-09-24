@@ -1,7 +1,6 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { createForm } from "react-composable-form";
-import { TextField } from "../../src/fields/TextField";
-import { NumberField } from "../../src/fields/NumberField";
+import { TextField, NumberField } from "@yas/ui";
 // ---cut---
 
 export const UserForm = createForm((options) =>

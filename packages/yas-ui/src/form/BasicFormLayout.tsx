@@ -1,13 +1,10 @@
-import {
-  Alert,
-  Button,
-  CircularProgress,
-  Fade,
-  Stack,
-  Typography,
-} from "@mui/material";
 import type { ReactNode } from "react";
-import type { FormLayoutProps } from "../rcf";
+import { Alert } from "../atoms/Alert";
+import { Stack } from "../layout/Stack";
+import { Button } from "../atoms/Button";
+import { Text } from "../atoms/Text";
+import { CircularProgress } from "../atoms/CircularProgress";
+import type { FormLayoutProps } from "./rcf";
 
 export function BasicFormLayout({
   title,
@@ -20,11 +17,9 @@ export function BasicFormLayout({
   return (
     <form onSubmit={handleSubmit}>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 3 }}>
-        <Typography variant="h4">{title}</Typography>
-        <Stack direction="row" gap={2} alignItems="center">
-          <Fade in={isLoading}>
-            <CircularProgress size={24} />
-          </Fade>
+        <Text variant="h2">{title}</Text>
+        <Stack direction="row" gap={2} align="center">
+          {isLoading && <CircularProgress />}
           <Button variant="outlined" onClick={reset}>
             Reset
           </Button>

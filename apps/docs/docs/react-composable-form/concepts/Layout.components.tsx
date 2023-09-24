@@ -1,9 +1,7 @@
-import { z } from "zod";
+import { z } from "@yas/zod";
 import { Stack } from "@yas/ui";
-import type { FormLayoutProps } from "../../../src/rcf";
-import { createForm } from "../../../src/rcf";
-import { TextField } from "../../../src/fields/TextField";
-import { Alert } from "../../../src/components/Alert";
+import type { FormLayoutProps } from "@yas/ui";
+import { createForm, TextField, Alert } from "@yas/ui";
 
 export const LoginForm = createForm((options) =>
   options
@@ -36,7 +34,7 @@ export function CardLayout({
           <Component key={index} />
         ))}
         {generalErrors.length > 0 && (
-          <Alert variant="danger" className="card__footer">
+          <Alert variant="error" className="card__footer">
             {generalErrors.join(", ")}
           </Alert>
         )}
@@ -86,7 +84,7 @@ export function InlineLayout({
         </div>
       </Stack>
       {generalErrors.length > 0 && (
-        <Alert variant="danger">{generalErrors.join(", ")}</Alert>
+        <Alert variant="error">{generalErrors.join(", ")}</Alert>
       )}
     </form>
   );

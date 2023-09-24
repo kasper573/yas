@@ -17,8 +17,11 @@ import type { SprinklesProperties } from "@vanilla-extract/sprinkles";
 export function createStyledFactory<
   CreateSprinklesArgs extends ReadonlyArray<SprinklesProperties>,
 >(sprinklesFn?: SprinklesFn<CreateSprinklesArgs>) {
-  type RecipeComponentProps<Recipe extends RecipeLike> =
-    RecipeVariants<Recipe> & {
+  type RecipeComponentProps<
+    Recipe extends RecipeLike,
+    Implementation extends ElementType,
+  > = RecipeVariants<Recipe> &
+    ComponentProps<Implementation> & {
       sx?: SprinklesFnArgs<CreateSprinklesArgs>;
       className?: string;
       children?: ReactNode;
@@ -27,13 +30,17 @@ export function createStyledFactory<
   return function styled<
     Implementation extends ElementType,
     Recipe extends RecipeLike = RuntimeFn<{}>,
-  >(implementation: Implementation, recipe?: Recipe) {
-    return function RecipeComponent({
+  >(
+    implementation: Implementation,
+    recipe?: Recipe,
+    defaultProps?: Partial<RecipeComponentProps<Recipe, Implementation>>,
+  ) {
+    function RecipeComponent({
       className: inlineClassName,
       sx,
-      ...props
-    }: RecipeComponentProps<Recipe> &
-      ComponentProps<Implementation>): ReactElement {
+      ...inlineProps
+    }: RecipeComponentProps<Recipe, Implementation>): ReactElement {
+      const props = { ...defaultProps, ...inlineProps };
       const [variantProps, remainingProps] = recipe
         ? destructureVariantProps(props, recipe)
         : [emptyObject, props];
@@ -47,7 +54,9 @@ export function createStyledFactory<
         className,
         ...remainingProps,
       });
-    };
+    }
+
+    return RecipeComponent;
   };
 }
 

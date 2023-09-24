@@ -76,9 +76,26 @@ function testComponent(
     );
   });
 
+  it("default prop", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, undefined, { role: "alert" });
+    const { container } = render(<Component />);
+    expect(container.innerHTML).toEqual(toHtml({ attrs: { role: "alert" } }));
+  });
+
+  it("default prop and inline override", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, undefined, { role: "default" });
+    const { container } = render(<Component role="other" />);
+    expect(container.innerHTML).toEqual(toHtml({ attrs: { role: "other" } }));
+  });
+
   it("combination of everything", () => {
     const styled = createStyledFactory(sprinkles);
-    const Component = styled(component, recipeWithVariants);
+    const Component = styled(component, recipeWithVariants, {
+      "data-foo": "default",
+      role: "alert",
+    });
     const { container } = render(
       <Component
         className="foo"
@@ -96,6 +113,7 @@ function testComponent(
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y color_red foo`,
           "data-foo": "bar",
+          role: "alert",
           style: "color: blue;",
         },
         content: "Hello",

@@ -2,7 +2,12 @@ import { Pagination } from "@mui/material";
 import { useMemo, useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { BaseForm } from "../BaseForm";
+import {
+  RangeField,
+  RadioGroupField,
+  CheckboxGroupField,
+  BaseForm,
+} from "@yas/ui";
 import { ExampleContent } from "../ExampleContent";
 import { AccordionGroup } from "../components/AccordionGroup";
 import { FieldGroup } from "../components/FieldGroup";
@@ -20,9 +25,6 @@ import {
   search,
   filterType,
 } from "../api/fakeApiSdk";
-import { RangeField } from "../fields/RangeField";
-import { RadioGroupField } from "../fields/RadioGroupField";
-import { CheckboxGroupField } from "../fields/CheckboxGroupField";
 
 export const FilterForm = BaseForm.extend((options) =>
   options

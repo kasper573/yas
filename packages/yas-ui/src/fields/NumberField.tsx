@@ -1,5 +1,5 @@
 import type { KeyboardEvent } from "react";
-import type { FieldProps } from "../rcf";
+import type { FieldProps } from "../form/rcf";
 import type { TextFieldProps } from "./TextField";
 import { TextField } from "./TextField";
 

@@ -1,46 +1,5 @@
 import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
-
-// Design tokens
-
-const space = {
-  none: 0,
-  small: "4px",
-  medium: "8px",
-  large: "16px",
-};
-
-const colors = {
-  "blue-50": "#eff6ff",
-  "blue-100": "#dbeafe",
-  "blue-200": "#bfdbfe",
-  "gray-700": "#374151",
-  "gray-800": "#1f2937",
-  "gray-900": "#111827",
-};
-
-const fontSizes = {
-  1: "12px",
-  2: "13px",
-  3: "15px",
-};
-
-const fontFamilies = {
-  mono: "Söhne Mono, menlo, monospace",
-};
-
-const fonts = {
-  caption: "",
-};
-
-const radii = {
-  small: "5px",
-  medium: "10px",
-  large: "15px",
-};
-
-const shadows = {};
-
-const transitions = {};
+import * as tokens from "./tokens";
 
 // Atomic properties
 
@@ -63,14 +22,15 @@ const responsiveProperties = defineProperties({
       "space-between",
     ],
     alignItems: ["stretch", "flex-start", "center", "flex-end"],
-    paddingTop: space,
-    paddingRight: space,
-    paddingBottom: space,
-    paddingLeft: space,
-    marginTop: space,
-    marginRight: space,
-    marginBottom: space,
-    marginLeft: space,
+    paddingTop: tokens.space,
+    paddingRight: tokens.space,
+    paddingBottom: tokens.space,
+    paddingLeft: tokens.space,
+    marginTop: tokens.space,
+    marginRight: tokens.space,
+    marginBottom: tokens.space,
+    marginLeft: tokens.space,
+    gap: tokens.space,
   },
   shorthands: {
     padding: ["paddingTop", "paddingBottom", "paddingLeft", "paddingRight"],
@@ -80,6 +40,12 @@ const responsiveProperties = defineProperties({
     pr: ["paddingRight"],
     pb: ["paddingBottom"],
     pl: ["paddingLeft"],
+    mx: ["marginLeft", "marginRight"],
+    my: ["marginTop", "marginBottom"],
+    mt: ["marginTop"],
+    mr: ["marginRight"],
+    mb: ["marginBottom"],
+    ml: ["marginLeft"],
   },
 });
 
@@ -90,8 +56,8 @@ const colorProperties = defineProperties({
   },
   defaultCondition: "lightMode",
   properties: {
-    color: colors,
-    backgroundColor: colors,
+    color: tokens.colors,
+    backgroundColor: tokens.colors,
   },
 });
 
