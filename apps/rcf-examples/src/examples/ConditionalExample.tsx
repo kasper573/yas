@@ -1,7 +1,6 @@
 import { z } from "@yas/zod";
-import { InputAdornment, Stack } from "@mui/material";
-import { SingleSelectField, NumberField } from "@yas/ui";
-import { BaseForm } from "../BaseForm";
+import { Stack } from "@mui/material";
+import { SingleSelectField, NumberField, BaseForm } from "@yas/ui";
 import { ExampleContent } from "../ExampleContent";
 
 const kindType = z.enum(["foo", "bar"]);
@@ -76,17 +75,8 @@ const RelatedForm = BaseForm.extend((options) =>
     .type(currencyType, SingleSelectField, {
       options: SingleSelectField.valueOptions(currencyType.options),
     })
-    .field("amount", ({ fieldValues, ...props }) => (
-      <NumberField
-        {...props}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {fieldValues?.currency}
-            </InputAdornment>
-          ),
-        }}
-      />
+    .field("amount", ({ fieldValues, name, ...props }) => (
+      <NumberField name={`${name} ${fieldValues?.currency ?? ""}`} {...props} />
     )),
 );
 

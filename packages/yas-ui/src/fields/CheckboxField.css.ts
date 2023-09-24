@@ -1,6 +1,6 @@
-import { css } from "@yas/ui";
+import { recipe } from "../styling/css";
 
-export const inputRecipe = css.recipe({
+export const checkboxRecipe = recipe({
   base: {
     padding: 10,
     border: "1px solid var(--ifm-color-primary-lightest)",

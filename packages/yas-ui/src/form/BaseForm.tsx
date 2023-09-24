@@ -1,7 +1,7 @@
 import { z } from "@yas/zod";
+import { TextField } from "../fields/TextField";
+import { NumberField } from "../fields/NumberField";
 import { createForm } from "./rcf";
-import { TextField } from "./TextField";
-import { NumberField } from "./NumberField";
 import { BasicFormLayout } from "./BasicFormLayout";
 
 export const BaseForm = createForm((options) =>

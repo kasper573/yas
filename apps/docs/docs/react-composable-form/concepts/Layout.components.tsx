@@ -34,7 +34,7 @@ export function CardLayout({
           <Component key={index} />
         ))}
         {generalErrors.length > 0 && (
-          <Alert variant="danger" className="card__footer">
+          <Alert variant="error" className="card__footer">
             {generalErrors.join(", ")}
           </Alert>
         )}
@@ -84,7 +84,7 @@ export function InlineLayout({
         </div>
       </Stack>
       {generalErrors.length > 0 && (
-        <Alert variant="danger">{generalErrors.join(", ")}</Alert>
+        <Alert variant="error">{generalErrors.join(", ")}</Alert>
       )}
     </form>
   );

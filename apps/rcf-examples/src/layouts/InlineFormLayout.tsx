@@ -6,7 +6,7 @@ export function InlineFormLayout({ fields, handleSubmit }: FormLayoutProps) {
     <form onSubmit={handleSubmit}>
       <Stack direction="row" gap={2}>
         {Object.values(fields).map((Component, index) => (
-          <Component key={index} size="small" />
+          <Component key={index} />
         ))}
         <Button type="submit" size="small" variant="contained">
           Submit
