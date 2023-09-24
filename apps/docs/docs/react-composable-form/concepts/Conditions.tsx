@@ -1,7 +1,6 @@
 import { z } from "@yas/zod";
-import { Stack } from "@mui/material";
-import { SingleSelectField, NumberField, BaseForm } from "@yas/ui";
-import { ExampleContent } from "../ExampleContent";
+import { SingleSelectField, NumberField, BaseForm, Stack } from "@yas/ui";
+import { ExampleContent } from "../../../src/components/ExampleContent";
 
 const kindType = z.enum(["foo", "bar"]);
 const paymentType = z.enum(["card", "paypal"]);
@@ -80,11 +79,11 @@ const RelatedForm = BaseForm.extend((options) =>
     )),
 );
 
-export function ConditionalExample() {
+export default function ConditionalExample() {
   return (
     <ExampleContent>
       {(props) => (
-        <Stack direction="column" gap={4}>
+        <Stack direction="column" gap={3}>
           <DiscriminatedForm title="Discriminated" {...props} />
 
           <ConditionsForm title="Conditions" {...props} />

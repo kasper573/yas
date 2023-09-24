@@ -3,7 +3,7 @@ import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
 import { TextField, SingleSelectField, BaseForm } from "@yas/ui";
-import { ExampleContent } from "../ExampleContent";
+import { ExampleContent } from "../../../src/components/ExampleContent";
 
 interface CustomRemoteErrors {
   generalErrors?: string[];
@@ -68,7 +68,7 @@ function RemoteExampleImpl() {
   );
 }
 
-export function RemoteExample() {
+export default function RemoteExample() {
   const queryClient = useMemo(() => new QueryClient(), []);
   return (
     <QueryClientProvider client={queryClient}>

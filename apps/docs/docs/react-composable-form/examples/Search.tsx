@@ -1,5 +1,5 @@
-import { Pagination } from "@mui/material";
-import { useMemo, useState } from "react";
+import type { ComponentProps } from "react";
+import { Children, Fragment, useMemo, useState } from "react";
 import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import {
@@ -7,11 +7,13 @@ import {
   RadioGroupField,
   CheckboxGroupField,
   BaseForm,
+  Pagination,
+  Stack,
+  Divider,
+  Box,
 } from "@yas/ui";
-import { ExampleContent } from "../ExampleContent";
-import { AccordionGroup } from "../components/AccordionGroup";
-import { FieldGroup } from "../components/FieldGroup";
-import type { SearchResultMetrics } from "../api/fakeApiSdk";
+import { ExampleContent } from "../../../src/components/ExampleContent";
+import type { SearchResultMetrics } from "./Search.api";
 import {
   manufacturerType,
   discountType,
@@ -24,9 +26,9 @@ import {
   fetchScreenSizeRange,
   search,
   filterType,
-} from "../api/fakeApiSdk";
+} from "./Search.api";
 
-export const FilterForm = BaseForm.extend((options) =>
+const FilterForm = BaseForm.extend((options) =>
   options
     .schema(filterType)
     .type(priceType, (props) => {
@@ -62,22 +64,11 @@ export const FilterForm = BaseForm.extend((options) =>
       return <RangeField {...props} min={data?.[0]} max={data?.[1]} />;
     })
     .layout<{ metrics?: SearchResultMetrics }>(({ fields, metrics = {} }) => (
-      <AccordionGroup
-        defaultExpanded
-        sx={{ p: 0 }}
-        entries={{
-          Main: (
-            <FieldGroup>
-              {Object.entries(fields).map(([componentName, Component]) => (
-                <Component
-                  key={componentName}
-                  metrics={metrics[componentName]}
-                />
-              ))}
-            </FieldGroup>
-          ),
-        }}
-      />
+      <FieldGroup>
+        {Object.entries(fields).map(([componentName, Component]) => (
+          <Component key={componentName} metrics={metrics[componentName]} />
+        ))}
+      </FieldGroup>
     )),
 );
 
@@ -105,19 +96,32 @@ function SearchPage() {
       <pre>{JSON.stringify(response?.entries, null, 2)}</pre>
 
       <Pagination
-        count={response?.total}
-        page={pagination.page}
-        onChange={(e, page) => setPagination({ ...pagination, page })}
+        totalPages={response?.total ?? 0}
+        currentPage={pagination.page}
+        onChange={(page) => setPagination({ ...pagination, page })}
       />
     </ExampleContent>
   );
 }
 
-export function FilterExample() {
+export default function SearchExample() {
   const queryClient = useMemo(() => new QueryClient(), []);
   return (
     <QueryClientProvider client={queryClient}>
       <SearchPage />
     </QueryClientProvider>
+  );
+}
+
+function FieldGroup({ children, ...props }: ComponentProps<typeof Stack>) {
+  return (
+    <Stack gap={2} {...props}>
+      {Children.map(children, (child, index) => (
+        <Fragment key={index}>
+          {index > 0 && <Divider />}
+          <Box sx={{ px: 2 }}>{child}</Box>
+        </Fragment>
+      ))}
+    </Stack>
   );
 }

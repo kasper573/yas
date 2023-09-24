@@ -1,9 +1,8 @@
-import { Box, Stack } from "@mui/material";
 import type { FormValidationMode } from "react-composable-form";
 import { formValidationModes } from "react-composable-form";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { MultiSelectField } from "@yas/ui";
+import { MultiSelectField, Box, Stack } from "@yas/ui";
 
 export type ExampleContentRenderer = (props: {
   validateOn: FormValidationMode[];
@@ -33,9 +32,9 @@ export function ExampleContent({
   }
 
   return (
-    <Stack direction="row" gap={4}>
-      <Box sx={{ flex: 1 }}>{normalizeContent(children)}</Box>
-      <Box sx={{ width: 250 }}>
+    <Stack direction="row" gap={3}>
+      <Box style={{ flex: 1 }}>{normalizeContent(children)}</Box>
+      <Box style={{ width: 250 }}>
         <MultiSelectField
           sx={{ mb: 4 }}
           name="Validate on"

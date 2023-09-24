@@ -17,6 +17,14 @@ export const textRecipe = recipe({
         display: "block",
         fontSize: "$2",
       },
+      h3: {
+        display: "block",
+        fontSize: "$1",
+      },
+      h4: {
+        display: "block",
+        fontSize: "$1",
+      },
     },
     paragraph: {
       true: {
