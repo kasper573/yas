@@ -155,43 +155,6 @@ importers:
         specifier: workspace:*
         version: link:../../packages/slice-loader
 
-  apps/rcf-examples:
-    dependencies:
-      '@yas/ui':
-        specifier: workspace:*
-        version: link:../../packages/yas-ui
-      '@yas/zod':
-        specifier: workspace:*
-        version: link:../../packages/yas-zod
-      immer:
-        specifier: ^10.0.2
-        version: 10.0.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-composable-form:
-        specifier: workspace:*
-        version: link:../../packages/react-composable-form
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-query:
-        specifier: ^3.39.3
-        version: 3.39.3(react-dom@18.2.0)(react@18.2.0)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.0.28
-        version: 18.2.21
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.2.7
-      '@yas/build-tools':
-        specifier: workspace:*
-        version: link:../../packages/yas-build-tools
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../packages/yas-tsconfig
-
   apps/web:
     dependencies:
       '@tanstack/react-query':
