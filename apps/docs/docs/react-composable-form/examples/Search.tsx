@@ -12,8 +12,8 @@ import {
   Divider,
   Box,
 } from "@yas/ui";
-import { ExampleContent } from "../ExampleContent";
-import type { SearchResultMetrics } from "../api/fakeApiSdk";
+import { ExampleContent } from "../../../src/components/ExampleContent";
+import type { SearchResultMetrics } from "./Search.api";
 import {
   manufacturerType,
   discountType,
@@ -26,9 +26,9 @@ import {
   fetchScreenSizeRange,
   search,
   filterType,
-} from "../api/fakeApiSdk";
+} from "./Search.api";
 
-export const FilterForm = BaseForm.extend((options) =>
+const FilterForm = BaseForm.extend((options) =>
   options
     .schema(filterType)
     .type(priceType, (props) => {
@@ -104,7 +104,7 @@ function SearchPage() {
   );
 }
 
-export function FilterExample() {
+export default function SearchExample() {
   const queryClient = useMemo(() => new QueryClient(), []);
   return (
     <QueryClientProvider client={queryClient}>
