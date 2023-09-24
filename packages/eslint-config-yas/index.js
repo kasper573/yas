@@ -39,7 +39,7 @@ module.exports = {
         alwaysTryTypes: true,
         project: true,
       },
-      extends: ["plugin:@typescript-eslint/recommended"],
+      extends: ["plugin:@typescript-eslint/strict"],
       rules: {
         // For a lot of our libraries, we actually want to use {} as the empty set when working with generics.
         "@typescript-eslint/ban-types": [
@@ -77,6 +77,13 @@ module.exports = {
             })),
           },
         ],
+
+        // void is still useful in generics and type utilities
+        "@typescript-eslint/no-invalid-void-type": "off",
+
+        // This rule is too strict. Why would dynamic deletes on objects be bad,
+        // and dynamic deletes on Maps and Arrays be fine?
+        "@typescript-eslint/no-dynamic-delete": "off",
       },
     },
     {
