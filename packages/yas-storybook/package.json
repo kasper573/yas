@@ -1,0 +1,22 @@
+{
+  "name": "@yas/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.4.5",
+    "@storybook/addon-interactions": "^7.4.5",
+    "@storybook/addon-links": "^7.4.5",
+    "@storybook/blocks": "^7.4.5",
+    "@storybook/jest": "^0.2.2",
+    "@storybook/react": "^7.4.5",
+    "@storybook/react-vite": "^7.4.5",
+    "@storybook/test-runner": "^0.13.0",
+    "@storybook/testing-library": "^0.2.1",
+    "@storybook/types": "^7.4.5",
+    "@yas/tsconfig": "workspace:*",
+    "storybook": "^7.4.5"
+  }
+}

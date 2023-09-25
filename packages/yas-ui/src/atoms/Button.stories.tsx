@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { within } from "@storybook/testing-library";
+import type { Meta, StoryObj } from "@yas/storybook";
+import { TestingLibrary } from "@yas/storybook";
 import { useState } from "react";
 import { Button } from "./Button";
+const { within } = TestingLibrary;
 
 const meta = {
   title: "Button",
