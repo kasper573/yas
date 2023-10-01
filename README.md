@@ -14,7 +14,7 @@ type safety, testing and code sharing between packages.
 - Encapsulate heavily used functionality (e.g. [@yas/zod](packages/yas-zod)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 
-### Scripts
+## Scripts
 
 The following scripts are available in the root of the repository and will run the same script in each package.
 
@@ -23,13 +23,13 @@ The following scripts are available in the root of the repository and will run t
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
 
-#### Script conventions
+### Script conventions
 
 - Each script should exit with a non-zero exit code if they fail.
 - Each package may implement these scripts differently, as long as they satisfy the given use case.
 - A package may opt out of these scripts, but you must not rename them. This is to ensure consistency across packages.
 
-#### Global scripts
+### Global scripts
 
 The following scripts are only available in the root of the repository and will affect all packages.
 
@@ -38,16 +38,20 @@ The following scripts are only available in the root of the repository and will 
 - `format` Formats code.
 - `format:fix` Formats code and fixes code style errors (where possible)
 
-### Applications
+## Monorepo packages
 
-- Located in <projectRoot>/apps/
-- Folder names needs no prefixes
-- package.json name must have `@yas/` prefix
-- `build` script must output deployable artifacts (preferably using some standard)
-
-### Packages
-
-- Located in <projectRoot>/packages/
 - For `YAS` specific packages (i.e. encapsulations, shared config, etc):
   - Folder names must have `yas-` prefix
   - package.json name must have `@yas/` prefix
+
+### [apps](apps)
+
+Deployables (`build` script must output deployable artifacts, preferably using some standard)
+
+### [libs](libs)
+
+Building blocks for creating apps.
+
+### [tools](tools)
+
+Low level tooling for building apps and libs. Should mostly be out of your way and not something you interact with directly.
