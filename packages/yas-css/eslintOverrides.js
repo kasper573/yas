@@ -1,4 +1,4 @@
-const whatShouldIDoInstead = `Use import {css} from "@yas/ui" instead`;
+const whatShouldIDoInstead = `Use import {<something>} from "@yas/css" instead`;
 
 const disallowDirectUseOfVanillaExtractPackage = {
   files: ["*.ts", "*.tsx"],

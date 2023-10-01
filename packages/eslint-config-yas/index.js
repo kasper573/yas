@@ -121,7 +121,7 @@ module.exports = {
       },
     },
     ...require("@yas/env/eslintOverrides"),
-    ...require("@yas/ui/eslintOverrides"),
+    ...require("@yas/css/eslintOverrides"),
     ...require("@yas/zod/eslintOverrides"),
   ],
 };

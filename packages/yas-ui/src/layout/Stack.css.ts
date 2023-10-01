@@ -1,4 +1,4 @@
-import { recipe, tokens } from "../styling/css";
+import { recipe, tokens } from "@yas/css";
 
 export const stackRecipe = recipe({
   base: {

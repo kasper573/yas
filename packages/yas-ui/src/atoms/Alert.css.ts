@@ -1,4 +1,4 @@
-import { recipe } from "../styling/css";
+import { recipe } from "@yas/css";
 
 export const alertRecipe = recipe({
   variants: {

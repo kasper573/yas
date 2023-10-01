@@ -1,7 +1,8 @@
-import { css } from "@yas/ui";
+import { globalStyle } from "@yas/css";
+
 import "./shiki-twoslash.css";
 
-css.globalStyle(":root", {
+globalStyle(":root", {
   vars: {
     "--ifm-color-primary": "#296aa3",
     "--ifm-color-primary-dark": "#255f93",
@@ -17,7 +18,7 @@ css.globalStyle(":root", {
   },
 });
 
-css.globalStyle(":root[data-theme='dark']", {
+globalStyle(":root[data-theme='dark']", {
   vars: {
     "--ifm-color-primary": "#9aabfe",
     "--ifm-color-primary-dark": "#7289fe",
@@ -34,12 +35,12 @@ css.globalStyle(":root[data-theme='dark']", {
   },
 });
 
-css.globalStyle("html", {
+globalStyle("html", {
   background: "var(--ifm-background-gradient)",
   backgroundRepeat: "no-repeat",
   backgroundAttachment: "fixed",
 });
 
-css.globalStyle(".footer", {
+globalStyle(".footer", {
   background: "transparent",
 });

@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
+import { styled } from "@yas/css";
 import type { FieldProps } from "../form/rcf";
 import { BaseField } from "../form/BaseField";
-import { styled } from "../styling/css";
 import { inputRecipe } from "./TextField.css";
 
 export interface TextFieldProps

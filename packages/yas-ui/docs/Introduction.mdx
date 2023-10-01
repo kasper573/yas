@@ -14,32 +14,32 @@ Component files must be placed in a folder named after the atomic design level t
 
 All styling must be done using typesafe `css.ts` files.
 
-Vanilla Extract is encapsulated in the `@yas/ui` package, so you don't need to install it yourself.
+Vanilla Extract is encapsulated in the `@yas/css` package, so you don't need to install it yourself.
 
 ```tsx
-import {css} from "@yas/ui";
+import { style, recipe } from "@yas/css";
 
-const myStyle = css.style(...); // Equivalent of using {style} from vanilla-extract/css
-const myRecipe = css.recipe(...); // Equivalent of using {recipe} from vanilla-extract/recipes
+const myStyle = style(...); // Equivalent of using {style} from vanilla-extract/css
+const myRecipe = recipe(...); // Equivalent of using {recipe} from vanilla-extract/recipes
 ```
 
-Our [Atomic CSS framework](https://vanilla-extract.style/documentation/packages/sprinkles/) is available as `css.atoms`:
+Our [Atomic CSS framework](https://vanilla-extract.style/documentation/packages/sprinkles/) is available as `atoms`:
 
 ```tsx
-import { css } from "@yas/ui";
-const myStyle = css.atoms({
+import { atoms } from "@yas/css";
+const myStyle = atoms({
   color: "red",
   fontSize: 16,
 });
 ```
 
-A convenience react component factory is available as `css.styled`:
+A convenience react component factory is available as `styled`:
 
 ```tsx
-import { css } from "@yas/ui";
+import { styled } from "@yas/css";
 import { myRecipe } from "./myStyles.css";
 
-const MyComponent = css.styled("div", myRecipe);
+const MyComponent = styled("div", myRecipe);
 ```
 
 ### Component primitives provided by [Radix UI](https://www.radix-ui.com/)
