@@ -81,6 +81,9 @@ importers:
       '@gracefullight/docusaurus-plugin-vercel-analytics':
         specifier: ^0.1.0
         version: 0.1.0(@docusaurus/types@3.0.0-alpha.0)
+      '@yas/css':
+        specifier: workspace:*
+        version: link:../../packages/yas-css
       '@yas/ui':
         specifier: workspace:*
         version: link:../../packages/yas-ui
@@ -172,6 +175,9 @@ importers:
       '@yas/api':
         specifier: workspace:*
         version: link:../api
+      '@yas/css':
+        specifier: workspace:*
+        version: link:../../packages/yas-css
       '@yas/ui':
         specifier: workspace:*
         version: link:../../packages/yas-ui
@@ -218,12 +224,12 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.6.0
         version: 6.6.0(eslint@8.49.0)(typescript@5.2.2)
+      '@yas/css':
+        specifier: workspace:*
+        version: link:../yas-css
       '@yas/env':
         specifier: workspace:*
         version: link:../yas-env
-      '@yas/ui':
-        specifier: workspace:*
-        version: link:../yas-ui
       '@yas/zod':
         specifier: workspace:*
         version: link:../yas-zod
@@ -464,6 +470,25 @@ importers:
         specifier: ^0.5.6
         version: 0.5.6(eslint@8.48.0)(vite@4.4.9)
 
+  packages/yas-css:
+    dependencies:
+      '@vanilla-extract/recipes':
+        specifier: ^0.5.0
+        version: 0.5.0(@vanilla-extract/css@1.13.0)
+      '@vanilla-extract/sprinkles':
+        specifier: ^1.6.1
+        version: 1.6.1(@vanilla-extract/css@1.13.0)
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
+      vanilla-extract-styled:
+        specifier: workspace:*
+        version: link:../vanilla-extract-styled
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+
   packages/yas-env:
     devDependencies:
       '@types/dotenv-flow':
@@ -514,27 +539,18 @@ importers:
 
   packages/yas-ui:
     dependencies:
-      '@vanilla-extract/recipes':
-        specifier: ^0.5.0
-        version: 0.5.0(@vanilla-extract/css@1.13.0)
-      '@vanilla-extract/sprinkles':
-        specifier: ^1.6.1
-        version: 1.6.1(@vanilla-extract/css@1.13.0)
+      '@yas/css':
+        specifier: workspace:*
+        version: link:../yas-css
       '@yas/zod':
         specifier: workspace:*
         version: link:../yas-zod
-      clsx:
-        specifier: ^1.2.1
-        version: 1.2.1
       react-composable-form:
         specifier: workspace:*
         version: link:../react-composable-form
       react-imperative-hook:
         specifier: workspace:*
         version: link:../react-imperative-hook
-      vanilla-extract-styled:
-        specifier: workspace:*
-        version: link:../vanilla-extract-styled
     devDependencies:
       '@storybook/addon-essentials':
         specifier: ^7.0.23
@@ -5879,6 +5895,7 @@ packages:
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.5.16
+      escape: 1.5.1
       lodash: 4.17.21
       redent: 3.0.0
     dev: true
@@ -9545,6 +9562,10 @@ packages:
   /escape-string-regexp@5.0.0:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
+    dev: true
+
+  /escape@1.5.1:
+    resolution: {integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==}
     dev: true
 
   /escodegen@2.1.0:

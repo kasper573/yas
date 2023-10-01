@@ -1,15 +1,15 @@
-import { css } from "@yas/ui";
+import { style, recipe } from "@yas/css";
 
-export const hero = css.style({
+export const hero = style({
   padding: "8rem 0",
   textAlign: "center",
 });
 
-export const title = css.style({
+export const title = style({
   fontSize: "5rem",
 });
 
-export const titleWord = css.style({
+export const titleWord = style({
   display: "inline-block",
   selectors: {
     "&::first-letter": {
@@ -21,18 +21,18 @@ export const titleWord = css.style({
   },
 });
 
-export const tagline = css.style({
+export const tagline = style({
   fontSize: "2rem",
   margin: 0,
 });
 
-export const features = css.style({});
+export const features = style({});
 
-const featureBase = css.style({
+const featureBase = style({
   padding: "2rem 2rem",
 });
 
-export const feature = css.recipe({
+export const feature = recipe({
   base: ["col", "text--center", featureBase],
   variants: {
     columns: {
@@ -46,12 +46,12 @@ export const feature = css.recipe({
   },
 });
 
-export const featureImage = css.style({
+export const featureImage = style({
   objectFit: "contain",
   marginBottom: "1em",
 });
 
-export const container = css.style({
+export const container = style({
   "@media": {
     "screen and (max-width: 996px)": {
       [`.${hero}`]: {

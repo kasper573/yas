@@ -1,5 +1,5 @@
-import { css } from "@yas/ui";
+import { style } from "@yas/css";
 
-export const container = css.style({
+export const container = style({
   color: "red",
 });

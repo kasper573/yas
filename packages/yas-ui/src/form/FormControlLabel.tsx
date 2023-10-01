@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { useId } from "react";
-import { styled } from "../styling/css";
+import { styled } from "@yas/css";
 
 export type ControlFactory = (labelId: string) => ReactNode;
 

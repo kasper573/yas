@@ -1,5 +1,5 @@
 import { keyframes } from "@vanilla-extract/css";
-import { recipe } from "../styling/css";
+import { recipe } from "@yas/css";
 
 const spin = keyframes({
   "0%": { transform: "rotate(0deg)" },

@@ -1,6 +1,6 @@
 import { createImperative } from "react-imperative-hook";
 import type { ComponentProps } from "react";
-import { styled, variantProps } from "../styling/css";
+import { styled, variantProps } from "@yas/css";
 import { dialogRecipe, overlayRecipe } from "./Modal.css";
 
 const Overlay = styled("div", overlayRecipe);

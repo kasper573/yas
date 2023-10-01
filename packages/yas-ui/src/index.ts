@@ -23,7 +23,3 @@ export * from "./fields/RadioGroupField";
 export * from "./fields/RangeField";
 export * from "./fields/SingleSelectField";
 export * from "./fields/TextField";
-
-// Clunky import-and-then-export pattern for wider editor support
-import * as css from "./styling/css";
-export { css };

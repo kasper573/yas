@@ -1,6 +1,6 @@
-import { css } from "@yas/ui";
+import { style } from "@yas/css";
 
-export const tabs = css.style({
+export const tabs = style({
   "@media": {
     "screen and (min-width: 1630px)": {
       display: "none",
@@ -8,7 +8,7 @@ export const tabs = css.style({
   },
 });
 
-export const row = css.style({
+export const row = style({
   display: "flex",
   flexDirection: "row",
   width: "100%",
@@ -19,7 +19,7 @@ export const row = css.style({
   },
 });
 
-export const col = css.style({
+export const col = style({
   selectors: {
     "& + &": {
       marginLeft: 24,

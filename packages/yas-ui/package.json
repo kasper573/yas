@@ -6,10 +6,6 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
-    },
-    "./eslintOverrides": {
-      "import": "./eslintOverrides.js",
-      "require": "./eslintOverrides.js"
     }
   },
   "license": "MIT",
@@ -24,13 +20,10 @@
     "test:unit:watch": "vitest"
   },
   "dependencies": {
-    "@vanilla-extract/recipes": "^0.5.0",
-    "@vanilla-extract/sprinkles": "^1.6.1",
     "@yas/zod": "workspace:*",
-    "clsx": "^1.2.1",
+    "@yas/css": "workspace:*",
     "react-composable-form": "workspace:*",
-    "react-imperative-hook": "workspace:*",
-    "vanilla-extract-styled": "workspace:*"
+    "react-imperative-hook": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.23",
