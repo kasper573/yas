@@ -11,7 +11,7 @@ export function Home() {
       <Text variant="h1">Yet Another Stack</Text>
       <Text paragraph>Mode: {env.mode}</Text>
       <Text paragraph>{response}</Text>
-      <div className={foo.container}>Testing vanilla-extract css</div>
+      <div className={foo.container()}>Testing vanilla-extract css</div>
     </>
   );
 }
