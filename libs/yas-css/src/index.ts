@@ -3,15 +3,19 @@
 
 // Re-export our chosen styling libraries as-is
 export * from "@vanilla-extract/css";
-export * from "@vanilla-extract/recipes";
 export * from "clsx";
 
 // Export our custom utilities
-export * from "./atoms.css";
+import { recipe } from "@vanilla-extract/recipes";
 import { createStyledFactory } from "vanilla-extract-styled";
-import { atoms } from "./atoms.css";
+import type { AtomicRecipeFn } from "vanilla-extract-atomic-recipe";
 import * as tokens from "./tokens";
+import type { AtomicClassName } from "./atoms.css";
+import { atoms } from "./atoms.css";
 
-export { tokens };
-export const styled = createStyledFactory(atoms);
+const styled = createStyledFactory(atoms);
+const atomicRecipe = recipe as AtomicRecipeFn<AtomicClassName>;
+
+export { tokens, styled, recipe, atomicRecipe };
 export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
+export * from "./atoms.css";
