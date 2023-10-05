@@ -6,15 +6,15 @@ import { recipe as unsafeRecipe } from "@vanilla-extract/recipes";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import * as tokens from "./tokens";
+import type { Atoms } from "./atoms.css";
 import { atoms } from "./atoms.css";
 
 // Our convention is to prioritize relying on our atomic CSS framework.
-const styled = createStyledFactory(atoms);
-const recipe = createRecipeFactory(atoms);
+export const styled = createStyledFactory(atoms);
+export const recipe = createRecipeFactory(atoms);
+export { tokens, atoms };
+export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
+export type { Atoms };
 
 // But we provide non-atomic escape hatches via a clear naming convention.
-const unsafe = { style, recipe: unsafeRecipe };
-
-export { tokens, styled, atoms, recipe, unsafe };
-export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
-export * from "./atoms.css";
+export const unsafe = { style, recipe: unsafeRecipe };

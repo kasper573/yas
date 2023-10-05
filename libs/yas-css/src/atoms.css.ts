@@ -64,7 +64,5 @@ const colorProperties = defineProperties({
   },
 });
 
-// Public interface
-
 export const atoms = createSprinkles(responsiveProperties, colorProperties);
 export type Atoms = Parameters<typeof atoms>[0];
