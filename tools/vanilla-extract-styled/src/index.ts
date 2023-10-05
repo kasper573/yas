@@ -9,20 +9,16 @@ import type {
   RuntimeFn,
   RecipeVariants as RecipeVariantsImpl,
 } from "@vanilla-extract/recipes";
-import type { createSprinkles } from "@vanilla-extract/sprinkles";
 import { createElement } from "react";
 import { clsx } from "clsx";
-import type { SprinklesProperties } from "@vanilla-extract/sprinkles";
 
-export function createStyledFactory<
-  CreateSprinklesArgs extends ReadonlyArray<SprinklesProperties>,
->(sprinklesFn?: SprinklesFn<CreateSprinklesArgs>) {
+export function createStyledFactory<Sx>(sxToClassName?: SxToClassName<Sx>) {
   type RecipeComponentProps<
     Recipe extends RecipeLike,
     Implementation extends ElementType,
   > = RecipeVariants<Recipe> &
     ComponentProps<Implementation> & {
-      sx?: SprinklesFnArgs<CreateSprinklesArgs>;
+      sx?: Sx;
       className?: string;
       children?: ReactNode;
     };
@@ -47,7 +43,7 @@ export function createStyledFactory<
       const className =
         clsx(
           recipe?.(variantProps),
-          sx ? sprinklesFn?.(sx) : undefined,
+          sx ? sxToClassName?.(sx) : undefined,
           inlineClassName,
         ) || undefined;
       return createElement(implementation, {
@@ -95,6 +91,10 @@ export function destructureVariantProps<
   ] as const;
 }
 
+// The most abstract representation of a sprinkles fn
+// This makes the factory compatible without being limited to sprinkles
+type SxToClassName<Sx> = (sx: Sx) => string | undefined;
+
 // Improved vanilla extract type utilities
 type RecipeLike = RuntimeFn<VariantGroups>;
 type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
@@ -108,10 +108,6 @@ type VariantName<Recipe extends RecipeLike> = `${string &
 type RecipeStyleRule = ComplexStyleRule | string;
 type VariantDefinitions = Record<string, RecipeStyleRule>;
 type VariantGroups = Record<string, VariantDefinitions>;
-type SprinklesFn<CreateArgs extends ReadonlyArray<SprinklesProperties>> =
-  ReturnType<typeof createSprinkles<CreateArgs>>;
-type SprinklesFnArgs<CreateArgs extends ReadonlyArray<SprinklesProperties>> =
-  Parameters<SprinklesFn<CreateArgs>>[0];
 
 // We must strip plain indexes since recipes without variants
 // will have their VariantGroups type resolved to { [key: string]: unknown }
