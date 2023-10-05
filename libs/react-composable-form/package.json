@@ -38,7 +38,7 @@
   "peerDependencies": {
     "immer": "^10.0.2",
     "react": "^18.2.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
@@ -48,6 +48,6 @@
     "concurrently": "^8.0.1",
     "publicize-package-json": "workspace:*",
     "react": "^18.2.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   }
 }
