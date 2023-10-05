@@ -11,8 +11,10 @@
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json"
   },
+  "peerDependencies": {
+    "@vanilla-extract/recipes": "^0.5.0"
+  },
   "devDependencies": {
-    "@vanilla-extract/recipes": "^0.5.0",
     "@types/node": "^20.8.2",
     "@yas/tsconfig": "workspace:*"
   }
