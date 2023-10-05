@@ -8,12 +8,12 @@ export * from "clsx";
 // Export our custom utilities
 import { recipe } from "@vanilla-extract/recipes";
 import { createStyledFactory } from "vanilla-extract-styled";
-import { createAtomicRecipeFactory } from "vanilla-extract-atomic-recipe";
+import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import * as tokens from "./tokens";
 import { atoms } from "./atoms.css";
 
 const styled = createStyledFactory(atoms);
-const atomicRecipe = createAtomicRecipeFactory(atoms);
+const atomicRecipe = createRecipeFactory(atoms);
 
 export { tokens, styled, recipe, atomicRecipe };
 export { destructureVariantProps, variantProps } from "vanilla-extract-styled";

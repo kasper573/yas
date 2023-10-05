@@ -1,51 +1,51 @@
 import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
 
-export function createAtomicRecipeFactory<AtomInputs, AtomId extends string>(
-  compileAtom: AtomCompiler<AtomInputs, AtomId>,
+export function createRecipeFactory<Style, CompiledStyle extends string>(
+  compileStyle: StyleCompiler<Style, CompiledStyle>,
 ) {
-  return function atomicRecipe<V extends Variants<AtomInputs>>(
-    options: PatternOptions<V, AtomInputs>,
+  return function specializedRecipe<V extends Variants<Style>>(
+    options: PatternOptions<V, Style>,
     debugId?: string,
-  ): RuntimeFn<mapVariants<V, AtomId>> {
-    return recipe(compileOptions(options, compileAtom), debugId);
+  ): RuntimeFn<mapVariants<V, CompiledStyle>> {
+    return recipe(compileOptions(options, compileStyle), debugId);
   };
 }
 
 function compileOptions<
-  V extends Variants<AtomInputs>,
-  AtomInputs,
-  AtomId extends string,
+  V extends Variants<Style>,
+  Style,
+  CompiledStyle extends string,
 >(
-  options: PatternOptions<V, AtomInputs, V>,
-  compileAtom: AtomCompiler<AtomInputs, AtomId>,
-): PatternOptions<V, AtomId> {
+  options: PatternOptions<V, Style, V>,
+  compileStyle: StyleCompiler<Style, CompiledStyle>,
+): PatternOptions<V, CompiledStyle> {
   const { base, variants, defaultVariants, compoundVariants } = options;
 
   return {
-    base: invokeOneOrMany(compileAtom, base),
-    variants: compileVariants(variants, compileAtom),
+    base: invokeOneOrMany(compileStyle, base),
+    variants: compileVariants(variants, compileStyle),
     defaultVariants,
     compoundVariants: compoundVariants?.map(({ variants, style }) => ({
       variants,
-      style: invokeOneOrMany(compileAtom, style) ?? [],
+      style: invokeOneOrMany(compileStyle, style) ?? [],
     })),
   };
 }
 
 function compileVariants<
-  V extends Variants<AtomInputs>,
-  AtomInputs,
-  AtomId extends string,
+  V extends Variants<Style>,
+  Style,
+  CompiledStyle extends string,
 >(
   variants: V | undefined = {} as V,
-  compileAtom: AtomCompiler<AtomInputs, AtomId>,
-): mapVariants<V, AtomId> {
-  const map = {} as mapVariants<V, AtomId>;
+  compileStyle: StyleCompiler<Style, CompiledStyle>,
+): mapVariants<V, CompiledStyle> {
+  const map = {} as mapVariants<V, CompiledStyle>;
   for (const [groupName, groupVariants] of typedEntries(variants)) {
     const group = (map[groupName] ??= {} as never);
     for (const [variantName, variantValue] of typedEntries(groupVariants)) {
-      const value = invokeOneOrMany(compileAtom, variantValue);
+      const value = invokeOneOrMany(compileStyle, variantValue);
       if (value !== undefined) {
         group[variantName] = value;
       }
@@ -54,9 +54,9 @@ function compileVariants<
   return map;
 }
 
-export type AtomCompiler<AtomInputs, AtomId extends string> = (
-  inputs: AtomInputs,
-) => AtomId;
+export type StyleCompiler<Style, CompiledStyle extends string> = (
+  style: Style,
+) => CompiledStyle;
 
 type Groups<T = unknown> = Record<string, Record<string, T>>;
 type Variants<T> = Groups<OneOrMany<T>>;

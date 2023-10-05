@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-extract-atomic-recipe",
+  "name": "vanilla-extract-recipe-factory",
   "main": "src/index.ts",
   "types": "./src/index.ts",
   "exports": {

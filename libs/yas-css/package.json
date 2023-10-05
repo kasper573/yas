@@ -18,7 +18,7 @@
     "@vanilla-extract/recipes": "^0.5.0",
     "@vanilla-extract/sprinkles": "^1.6.1",
     "clsx": "^1.2.1",
-    "vanilla-extract-atomic-recipe": "workspace:*",
+    "vanilla-extract-recipe-factory": "workspace:*",
     "vanilla-extract-styled": "workspace:*"
   },
   "devDependencies": {
