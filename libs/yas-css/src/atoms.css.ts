@@ -60,7 +60,7 @@ const colorProperties = defineProperties({
   defaultCondition: "lightMode",
   properties: {
     color: tokens.colors,
-    backgroundColor: tokens.colors,
+    background: tokens.colors,
   },
 });
 

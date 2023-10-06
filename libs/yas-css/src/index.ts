@@ -1,7 +1,7 @@
 // This is an encapsulation of vanilla-extract modules.
 // You should never use vanilla-extract directly (enforced via linting).
 
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle, keyframes } from "@vanilla-extract/css";
 import { recipe as unsafeRecipe } from "@vanilla-extract/recipes";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
@@ -17,4 +17,4 @@ export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
 export type { Atoms };
 
 // But we provide non-atomic escape hatches via a clear naming convention.
-export const unsafe = { style, recipe: unsafeRecipe };
+export const unsafe = { style, keyframes, globalStyle, recipe: unsafeRecipe };

@@ -7,7 +7,7 @@ export const space = {
   5: 32,
 };
 
-export const colors = {
+export const palette = {
   "green-50": "#ecfdf5",
   "green-100": "#d1fae5",
   "green-200": "#a7f3d0",
@@ -60,6 +60,16 @@ export const colors = {
   "gray-900": "#111827",
   white: "#ffffff",
   black: "#000000",
+};
+
+export const colors = {
+  ...palette,
+  primary: palette["blue-500"],
+  secondary: palette["gray-500"],
+  success: palette["green-500"],
+  info: palette["blue-500"],
+  warning: palette["yellow-500"],
+  error: palette["red-500"],
 };
 
 export const fontSizes = {
