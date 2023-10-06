@@ -1,6 +1,6 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const textRecipe = recipe({
+export const textRecipe = unsafe.recipe({
   base: {
     fontFamily: "$mono",
   },

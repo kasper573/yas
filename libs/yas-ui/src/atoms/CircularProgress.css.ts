@@ -1,12 +1,11 @@
-import { keyframes } from "@vanilla-extract/css";
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-const spin = keyframes({
+const spin = unsafe.keyframes({
   "0%": { transform: "rotate(0deg)" },
   "100%": { transform: "rotate(360deg)" },
 });
 
-export const circularProgressRecipe = recipe({
+export const circularProgressRecipe = unsafe.recipe({
   base: {
     display: "inline-block",
     borderRadius: "50%",

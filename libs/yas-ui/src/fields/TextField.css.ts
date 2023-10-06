@@ -1,6 +1,6 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const inputRecipe = recipe({
+export const inputRecipe = unsafe.recipe({
   base: {
     padding: 10,
     border: "1px solid black",

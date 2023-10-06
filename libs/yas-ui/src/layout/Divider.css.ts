@@ -1,6 +1,6 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const dividerRecipe = recipe({
+export const dividerRecipe = unsafe.recipe({
   base: {
     height: "1px",
     backgroundColor: "gray",

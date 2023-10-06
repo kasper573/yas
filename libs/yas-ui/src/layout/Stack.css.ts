@@ -1,6 +1,6 @@
-import { recipe, tokens } from "@yas/css";
+import { unsafe, tokens } from "@yas/css";
 
-export const stackRecipe = recipe({
+export const stackRecipe = unsafe.recipe({
   base: {
     display: "flex",
   },

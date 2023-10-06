@@ -1,15 +1,15 @@
-import { style, recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const hero = style({
+export const hero = unsafe.style({
   padding: "8rem 0",
   textAlign: "center",
 });
 
-export const title = style({
+export const title = unsafe.style({
   fontSize: "5rem",
 });
 
-export const titleWord = style({
+export const titleWord = unsafe.style({
   display: "inline-block",
   selectors: {
     "&::first-letter": {
@@ -21,18 +21,18 @@ export const titleWord = style({
   },
 });
 
-export const tagline = style({
+export const tagline = unsafe.style({
   fontSize: "2rem",
   margin: 0,
 });
 
-export const features = style({});
+export const features = unsafe.style({});
 
-const featureBase = style({
+const featureBase = unsafe.style({
   padding: "2rem 2rem",
 });
 
-export const feature = recipe({
+export const feature = unsafe.recipe({
   base: ["col", "text--center", featureBase],
   variants: {
     columns: {
@@ -46,12 +46,12 @@ export const feature = recipe({
   },
 });
 
-export const featureImage = style({
+export const featureImage = unsafe.style({
   objectFit: "contain",
   marginBottom: "1em",
 });
 
-export const container = style({
+export const container = unsafe.style({
   "@media": {
     "screen and (max-width: 996px)": {
       [`.${hero}`]: {

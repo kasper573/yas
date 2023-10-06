@@ -1,6 +1,6 @@
-import { style } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const tabs = style({
+export const tabs = unsafe.style({
   "@media": {
     "screen and (min-width: 1630px)": {
       display: "none",
@@ -8,7 +8,7 @@ export const tabs = style({
   },
 });
 
-export const row = style({
+export const row = unsafe.style({
   display: "flex",
   flexDirection: "row",
   width: "100%",
@@ -19,7 +19,7 @@ export const row = style({
   },
 });
 
-export const col = style({
+export const col = unsafe.style({
   selectors: {
     "& + &": {
       marginLeft: 24,

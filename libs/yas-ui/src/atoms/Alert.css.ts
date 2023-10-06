@@ -4,16 +4,16 @@ export const alertRecipe = recipe({
   variants: {
     variant: {
       success: {
-        backgroundColor: "green",
+        background: "success",
       },
       info: {
-        backgroundColor: "blue",
+        background: "info",
       },
       warning: {
-        backgroundColor: "yellow",
+        background: "warning",
       },
       error: {
-        backgroundColor: "red",
+        background: "error",
       },
     },
   },

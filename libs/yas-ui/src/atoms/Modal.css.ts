@@ -1,6 +1,6 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const overlayRecipe = recipe({
+export const overlayRecipe = unsafe.recipe({
   base: {
     backgroundColor: "hsl(0 0% 0% / 0.5)",
     position: "fixed",
@@ -15,7 +15,7 @@ export const overlayRecipe = recipe({
   },
 });
 
-export const dialogRecipe = recipe({
+export const dialogRecipe = unsafe.recipe({
   base: {
     backgroundColor: "white",
     borderRadius: 6,
