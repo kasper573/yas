@@ -1,8 +1,7 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const buttonRecipe = recipe({
+export const buttonRecipe = unsafe.recipe({
   base: {
-    appearance: "none",
     border: "none",
     margin: 0,
     padding: 0,

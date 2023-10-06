@@ -1,6 +1,6 @@
-import { recipe } from "@yas/css";
+import { unsafe } from "@yas/css";
 
-export const checkboxRecipe = recipe({
+export const checkboxRecipe = unsafe.recipe({
   base: {
     padding: 10,
     border: "1px solid var(--ifm-color-primary-lightest)",

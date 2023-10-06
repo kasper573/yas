@@ -60,27 +60,9 @@ const colorProperties = defineProperties({
   defaultCondition: "lightMode",
   properties: {
     color: tokens.colors,
-    backgroundColor: tokens.colors,
+    background: tokens.colors,
   },
 });
 
-// Public interface
-
-// We use sprinkles as-is, except we cast the returned class name to a branded type to improve type safety
-const sprinklesFn = createSprinkles(responsiveProperties, colorProperties);
+export const atoms = createSprinkles(responsiveProperties, colorProperties);
 export type Atoms = Parameters<typeof atoms>[0];
-export const atoms = sprinklesFn as unknown as ReplaceReturnType<
-  typeof sprinklesFn,
-  AtomicClassName
->;
-
-/**
- * A branded type for atomic class names.
- * Behaves just like a string, but also allows us to identify that the string came from the atoms function.
- */
-export type AtomicClassName = string & { [brand]: "AtomicClassName" };
-const brand = Symbol("AtomicClassName");
-
-type ReplaceReturnType<T, TNewReturn> = T extends (...a: infer Args) => infer _
-  ? (...a: Args) => TNewReturn
-  : never;
