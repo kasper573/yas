@@ -4,21 +4,19 @@ import type {
   ReactElement,
   ComponentProps,
 } from "react";
-import type { ComplexStyleRule } from "@vanilla-extract/css";
-import type {
-  RuntimeFn,
-  RecipeVariants as RecipeVariantsImpl,
-} from "@vanilla-extract/recipes";
+import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { createElement } from "react";
 import { clsx } from "clsx";
 
-export function createStyledFactory<Sx>(sxToClassName?: SxToClassName<Sx>) {
+export function createStyledFactory<Style>(
+  compileStyle?: StyleCompiler<Style>,
+) {
   type RecipeComponentProps<
     Recipe extends RecipeLike,
     Implementation extends ElementType,
   > = RecipeVariants<Recipe> &
     ComponentProps<Implementation> & {
-      sx?: Sx;
+      sx?: Style;
       className?: string;
       children?: ReactNode;
     };
@@ -43,7 +41,7 @@ export function createStyledFactory<Sx>(sxToClassName?: SxToClassName<Sx>) {
       const className =
         clsx(
           recipe?.(variantProps),
-          sx ? sxToClassName?.(sx) : undefined,
+          sx ? compileStyle?.(sx) : undefined,
           inlineClassName,
         ) || undefined;
       return createElement(implementation, {
@@ -93,21 +91,15 @@ export function destructureVariantProps<
 
 // The most abstract representation of a sprinkles fn
 // This makes the factory compatible without being limited to sprinkles
-type SxToClassName<Sx> = (sx: Sx) => string | undefined;
+type StyleCompiler<Style> = (style: Style) => string | undefined;
 
 // Improved vanilla extract type utilities
-type RecipeLike = RuntimeFn<VariantGroups>;
+type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
 type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
-  Exclude<RecipeVariantsImpl<Recipe>, undefined>
+  Exclude<Parameters<Recipe>[0], undefined>
 >;
 type VariantName<Recipe extends RecipeLike> = `${string &
   keyof RecipeVariants<Recipe>}`;
-
-// Since vanilla-extract doesn't export these types we'll
-// redefine them to be able to construct improved type utilities
-type RecipeStyleRule = ComplexStyleRule | string;
-type VariantDefinitions = Record<string, RecipeStyleRule>;
-type VariantGroups = Record<string, VariantDefinitions>;
 
 // We must strip plain indexes since recipes without variants
 // will have their VariantGroups type resolved to { [key: string]: unknown }
