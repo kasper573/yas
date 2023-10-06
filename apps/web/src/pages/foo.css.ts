@@ -1,8 +1,8 @@
-import { atomicRecipe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const container = atomicRecipe({
+export const container = recipe({
   base: {
-    backgroundColor: "blue-200",
+    background: "blue-200",
     color: "gray-900",
   },
 });
