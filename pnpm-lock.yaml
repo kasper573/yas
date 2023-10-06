@@ -523,6 +523,9 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
+      '@yas/vitest':
+        specifier: workspace:*
+        version: link:../yas-vitest
 
   tools/vanilla-extract-styled:
     dependencies:
