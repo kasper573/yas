@@ -1,23 +1,3 @@
-const whatShouldIDoInstead = `Use import {<something>} from "@yas/css" instead`;
-
-const disallowDirectUseOfVanillaExtractPackage = {
-  files: ["*.ts", "*.tsx"],
-  excludedFiles: ["**/yas-ui/src/styling/**"],
-  rules: {
-    "no-restricted-imports": [
-      "error",
-      {
-        patterns: [
-          {
-            group: ["@vanilla-extract/*"],
-            message: whatShouldIDoInstead,
-          },
-        ],
-      },
-    ],
-  },
-};
-
 const disallowUseOfNonTypescriptCSSFiles = {
   files: ["*.{ts,tsx,js,jsx}"],
   rules: {
@@ -26,13 +6,10 @@ const disallowUseOfNonTypescriptCSSFiles = {
       {
         extensions: [".scss", ".css", ".sass", ".less"],
         exceptions: ["node_modules"],
-        message: `Non-typesafe CSS is not allowed. ${whatShouldIDoInstead}`,
+        message: `Non-typesafe CSS is not allowed. Use @yas/css instead.`,
       },
     ],
   },
 };
 
-module.exports = [
-  disallowDirectUseOfVanillaExtractPackage,
-  disallowUseOfNonTypescriptCSSFiles,
-];
+module.exports = [disallowUseOfNonTypescriptCSSFiles];
