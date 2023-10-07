@@ -1,6 +1,6 @@
 import { createImperative } from "react-imperative-hook";
 import type { ComponentProps } from "react";
-import { styled, variantProps } from "@yas/css";
+import { styled, destructureVariantProps } from "@yas/css";
 import { dialogRecipe, overlayRecipe } from "./Modal.css";
 
 const Overlay = styled("div", overlayRecipe);
@@ -10,10 +10,14 @@ export function Modal({
   onClose,
   ...dialogProps
 }: ComponentProps<typeof Dialog> & { onClose?: () => void }) {
+  const [variantProps, remainingProps] = destructureVariantProps(
+    dialogProps,
+    dialogRecipe,
+  );
   return (
     <>
-      <Overlay {...variantProps(dialogProps, dialogRecipe)} onClick={onClose} />
-      <Dialog {...dialogProps} />
+      <Overlay {...variantProps} onClick={onClose} />
+      <Dialog {...variantProps} {...remainingProps} />
     </>
   );
 }

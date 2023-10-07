@@ -1,18 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "./Text";
 
-const meta = {
+export default {
   title: "Text",
   component: Text,
   tags: ["autodocs"],
 } satisfies Meta<typeof Text>;
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const CanDisplayText: Story = {
-  args: {
-    children: "Hello World",
-  },
+export const Default: StoryObj<Meta<typeof Text>> = {
+  args: { children: "Hello World" },
 };
