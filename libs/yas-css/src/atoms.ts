@@ -1,4 +1,4 @@
-import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
+import { createAtomFactory } from "vanilla-extract-atoms";
 import * as tokens from "./tokens";
 import { fontFamilies } from "./tokens";
 
@@ -6,13 +6,7 @@ import { fontFamilies } from "./tokens";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
-const responsiveProperties = defineProperties({
-  conditions: {
-    mobile: {},
-    tablet: { "@media": "screen and (min-width: 768px)" },
-    desktop: { "@media": "screen and (min-width: 1024px)" },
-  },
-  defaultCondition: "mobile",
+export const atoms = createAtomFactory({
   properties: {
     cursor: ["pointer", "default"],
     display: ["none", "flex", "inline-flex", "grid", "inline-grid"],
@@ -48,6 +42,9 @@ const responsiveProperties = defineProperties({
     textAlign: ["left", "center", "right", "inherit"],
     fontFamily: fontFamilies,
     fontSize: tokens.fontSizes,
+    color: tokens.colors,
+    background: tokens.colors,
+    borderColor: tokens.colors,
   },
   shorthands: {
     p: ["padding"],
@@ -68,18 +65,4 @@ const responsiveProperties = defineProperties({
   },
 });
 
-const colorProperties = defineProperties({
-  conditions: {
-    lightMode: {},
-    darkMode: { "@media": "(prefers-color-scheme: dark)" },
-  },
-  defaultCondition: "lightMode",
-  properties: {
-    color: tokens.colors,
-    background: tokens.colors,
-    borderColor: tokens.colors,
-  },
-});
-
-export const atoms = createSprinkles(responsiveProperties, colorProperties);
 export type Atoms = Parameters<typeof atoms>[0];
