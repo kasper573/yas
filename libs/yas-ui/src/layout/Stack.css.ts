@@ -20,9 +20,9 @@ export const stackRecipe = unsafe.recipe({
     },
     gap: {
       0: { gap: tokens.space[0] },
-      1: { gap: tokens.space[1] },
-      2: { gap: tokens.space[2] },
-      3: { gap: tokens.space[3] },
+      1: { gap: tokens.space["#1"] },
+      2: { gap: tokens.space["#2"] },
+      3: { gap: tokens.space["#3"] },
     },
   },
   compoundVariants: [
