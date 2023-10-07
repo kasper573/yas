@@ -17,18 +17,18 @@ export const buttonRecipe = recipe({
     size: {
       small: {
         fontSize: "#1",
-        px: "x1",
-        py: "x2",
+        px: "#1",
+        py: "#2",
       },
       medium: {
         fontSize: "#2",
-        px: "x2",
-        py: "x3",
+        px: "#2",
+        py: "#3",
       },
       large: {
         fontSize: "#3",
-        px: "x3",
-        py: "x4",
+        px: "#3",
+        py: "#4",
       },
     },
     color: {

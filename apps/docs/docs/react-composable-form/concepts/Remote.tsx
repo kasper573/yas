@@ -46,7 +46,7 @@ function RemoteExampleImpl() {
     <ExampleContent
       menu={
         <SingleSelectField
-          sx={{ mb: 4 }}
+          sx={{ mb: "#4" }}
           name="Select error type to simulate"
           value={errorType}
           options={simulatedErrorTypes.map((x) => ({ label: x, value: x }))}
