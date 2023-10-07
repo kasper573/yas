@@ -1,10 +1,16 @@
 export const space = {
   0: 0,
-  1: 4,
-  2: 8,
-  3: 16,
-  4: 24,
-  5: 32,
+  x0: 0,
+  x1: 4,
+  x2: 8,
+  x3: 12,
+  x4: 16,
+  x5: 20,
+  x6: 24,
+  x7: 28,
+  x8: 32,
+  x9: 36,
+  x10: 40,
 };
 
 export const palette = {
@@ -60,12 +66,17 @@ export const palette = {
   "gray-900": "#111827",
   white: "#ffffff",
   black: "#000000",
+  transparent: "transparent",
 };
 
 export const colors = {
   ...palette,
   primary: palette["blue-500"],
+  primaryDark: palette["blue-700"],
+  primaryDarkest: palette["blue-900"],
   secondary: palette["gray-500"],
+  secondaryDark: palette["gray-700"],
+  secondaryDarkest: palette["gray-900"],
   success: palette["green-500"],
   info: palette["blue-500"],
   warning: palette["yellow-500"],
@@ -73,9 +84,15 @@ export const colors = {
 };
 
 export const fontSizes = {
-  1: 12,
-  2: 13,
-  3: 15,
+  "#1": 12,
+  "#2": 14,
+  "#3": 16,
+};
+
+export const borderSizes = {
+  "#1": 1,
+  "#2": 2,
+  "#3": 3,
 };
 
 export const fontFamilies = {
@@ -87,9 +104,10 @@ export const fonts = {
 };
 
 export const radii = {
-  1: 5,
-  2: 10,
-  3: 15,
+  0: 0,
+  "#1": 5,
+  "#2": 10,
+  "#3": 15,
 };
 
 export const shadows = {};

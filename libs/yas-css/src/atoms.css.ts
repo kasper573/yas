@@ -1,7 +1,10 @@
 import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
 import * as tokens from "./tokens";
+import { fontFamilies } from "./tokens";
 
 // Atomic properties
+
+const overflows = ["visible", "hidden", "scroll"] as const;
 
 const responsiveProperties = defineProperties({
   conditions: {
@@ -11,7 +14,12 @@ const responsiveProperties = defineProperties({
   },
   defaultCondition: "mobile",
   properties: {
-    display: ["none", "flex", "block", "inline"],
+    cursor: ["pointer", "default"],
+    display: ["none", "flex", "inline-flex", "grid", "inline-grid"],
+    border: ["none"],
+    borderSize: tokens.borderSizes,
+    borderStyle: ["solid", "dashed", "dotted"],
+    borderRadius: tokens.radii,
     flexDirection: ["row", "column"],
     justifyContent: [
       "stretch",
@@ -33,6 +41,13 @@ const responsiveProperties = defineProperties({
     marginLeft: tokens.space,
     margin: tokens.space,
     gap: tokens.space,
+    width: ["auto"],
+    height: ["auto"],
+    overflowX: overflows,
+    overflowY: overflows,
+    textAlign: ["left", "center", "right", "inherit"],
+    fontFamily: fontFamilies,
+    fontSize: tokens.fontSizes,
   },
   shorthands: {
     p: ["padding"],
@@ -49,6 +64,7 @@ const responsiveProperties = defineProperties({
     mr: ["marginRight"],
     mb: ["marginBottom"],
     ml: ["marginLeft"],
+    overflow: ["overflowX", "overflowY"],
   },
 });
 
@@ -61,6 +77,7 @@ const colorProperties = defineProperties({
   properties: {
     color: tokens.colors,
     background: tokens.colors,
+    borderColor: tokens.colors,
   },
 });
 
