@@ -11,7 +11,7 @@ export const atoms = createAtomFactory({
     cursor: ["pointer", "default"],
     pointerEvents: ["none", "all"],
     opacity: tokens.opacities,
-    display: ["none", "flex", "inline-flex", "grid", "inline-grid"],
+    display: ["none", "flex", "inline-flex", "grid", "inline-grid", "block"],
     border: ["none"],
     borderSize: tokens.borderSizes,
     borderStyle: ["solid", "dashed", "dotted"],
