@@ -1,6 +1,6 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const buttonRecipe = unsafe.recipe({
+export const buttonRecipe = recipe({
   base: {
     border: "none",
     margin: 0,
@@ -9,52 +9,63 @@ export const buttonRecipe = unsafe.recipe({
     overflow: "visible",
     textAlign: "inherit",
     background: "transparent",
-    fontFamily: "$mono",
+    fontFamily: "mono",
+    borderRadius: "#1",
+    cursor: "pointer",
   },
   variants: {
     size: {
       small: {
-        fontSize: "0.75rem",
-        padding: "0.25rem 0.5rem",
+        fontSize: "#1",
+        px: "x1",
+        py: "x2",
       },
       medium: {
-        fontSize: "1rem",
-        padding: "0.5rem 1rem",
+        fontSize: "#2",
+        px: "x2",
+        py: "x3",
       },
       large: {
-        fontSize: "1.25rem",
-        padding: "0.75rem 1.5rem",
+        fontSize: "#3",
+        px: "x3",
+        py: "x4",
+      },
+    },
+    color: {
+      primary: {
+        background: "primary",
+        color: "white",
+        ":hover": { background: "primaryDark" },
+        ":active": { background: "primaryDarkest" },
+      },
+      secondary: {
+        background: "secondary",
+        color: "white",
+        ":hover": { background: "secondaryDark" },
+        ":active": { background: "secondaryDarkest" },
       },
     },
     variant: {
       contained: {
-        backgroundColor: "$blue",
-        color: "$white",
-        borderRadius: "$1",
+        borderRadius: "#1",
       },
       outlined: {
-        backgroundColor: "$blue",
-        color: "$white",
-        borderRadius: "$1",
-
-        "&:hover": {
-          backgroundColor: "$blueDark",
-          cursor: "pointer",
-        },
-
-        "&:active": {
-          backgroundColor: "$blueDarker",
-        },
+        background: "transparent",
+        color: "black",
+        borderSize: "#1",
+        borderStyle: "solid",
+        borderColor: "black",
       },
     },
     disabled: {
-      true: {},
+      true: { pointerEvents: "none", opacity: "#1" },
       false: {},
     },
   },
   defaultVariants: {
     size: "small",
-    variant: "outlined",
+    variant: "contained",
+    color: "primary",
     disabled: false,
   },
 });

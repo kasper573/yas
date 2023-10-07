@@ -9,6 +9,8 @@ const overflows = ["visible", "hidden", "scroll"] as const;
 export const atoms = createAtomFactory({
   properties: {
     cursor: ["pointer", "default"],
+    pointerEvents: ["none", "all"],
+    opacity: tokens.opacities,
     display: ["none", "flex", "inline-flex", "grid", "inline-grid"],
     border: ["none"],
     borderSize: tokens.borderSizes,

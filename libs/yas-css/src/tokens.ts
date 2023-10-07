@@ -95,6 +95,12 @@ export const borderSizes = {
   "#3": 3,
 };
 
+export const opacities = {
+  "#0": 0,
+  "#1": 0.5,
+  "#2": 1,
+};
+
 export const fontFamilies = {
   mono: "Söhne Mono, menlo, monospace",
 };
