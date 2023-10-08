@@ -72,8 +72,6 @@ const colors = {
 
 const colorProperties = defineProperties({
   conditions: {
-    lightMode: { "@media": "(prefers-color-scheme: light)" },
-    darkMode: { "@media": "(prefers-color-scheme: dark)" },
     default: {},
     hover: { selector: "&:hover" },
     active: { selector: "&:active" },
