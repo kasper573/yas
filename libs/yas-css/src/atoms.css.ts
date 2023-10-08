@@ -13,11 +13,12 @@ const responsiveProperties = defineProperties({
     pointerEvents: ["none", "all"],
     opacity: tokens.opacities,
     display: ["none", "flex", "inline-flex", "grid", "inline-grid", "block"],
+    flex: [1, 2, 3, 4],
+    flexDirection: ["row", "column"],
     border: ["none"],
     borderSize: tokens.borderSizes,
     borderStyle: ["solid", "dashed", "dotted"],
     borderRadius: tokens.radii,
-    flexDirection: ["row", "column"],
     justifyContent: [
       "stretch",
       "flex-start",

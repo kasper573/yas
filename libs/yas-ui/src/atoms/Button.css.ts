@@ -12,6 +12,7 @@ export const buttonRecipe = recipe({
     fontFamily: "mono",
     borderRadius: "#1",
     cursor: "pointer",
+    color: "text",
   },
   variants: {
     size: {
@@ -38,7 +39,6 @@ export const buttonRecipe = recipe({
           hover: "primaryDark",
           active: "primaryDarkest",
         },
-        color: "textOnDark",
       },
       secondary: {
         background: {
@@ -46,7 +46,6 @@ export const buttonRecipe = recipe({
           hover: "secondaryDark",
           active: "secondaryDarkest",
         },
-        color: "textOnDark",
       },
     },
     variant: {
@@ -55,7 +54,6 @@ export const buttonRecipe = recipe({
       },
       outlined: {
         background: "transparent",
-        color: "textOnBright",
         borderSize: "#1",
         borderStyle: "solid",
         borderColor: "border",

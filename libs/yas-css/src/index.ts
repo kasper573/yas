@@ -7,13 +7,16 @@ import { createStyledFactory } from "vanilla-extract-styled";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import * as tokens from "./tokens";
 import { atoms } from "./atoms.css";
-import { themeClassNames } from "./theme.css";
 
-// Our convention is to prioritize relying on our atomic CSS framework.
+// Re-export common css utilities
+export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
+export { clsx } from "clsx";
+
+// Our own design system specific atomic CSS Framework utilities
 export const styled = createStyledFactory(atoms);
 export const recipe = createRecipeFactory(atoms);
-export { tokens, atoms, themeClassNames };
-export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
+export { tokens, atoms };
+export * from "./theme.css";
 export type { Atoms } from "./atoms.css";
 export type { ThemeName } from "./theme.css";
 
