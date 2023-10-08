@@ -66,8 +66,8 @@ const responsiveProperties = defineProperties({
 });
 
 const colors = {
-  ...themeVars.color,
   transparent: "transparent",
+  ...themeVars.color,
 };
 
 const colorProperties = defineProperties({
