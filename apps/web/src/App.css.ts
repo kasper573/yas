@@ -6,6 +6,6 @@ unsafe.globalStyle("html, body, #root", {
 });
 
 export const app = unsafe.style([
-  atoms({ background: "background", }),
-  { minHeight: "100vh", },
+  atoms({ background: "background" }),
+  { minHeight: "100vh" },
 ]);
