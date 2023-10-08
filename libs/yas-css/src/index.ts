@@ -6,8 +6,8 @@ import { recipe as unsafeRecipe } from "@vanilla-extract/recipes";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import * as tokens from "./tokens";
-import type { Atoms } from "./atoms";
-import { atoms } from "./atoms";
+import type { Atoms } from "./atoms.css";
+import { atoms } from "./atoms.css";
 
 // Our convention is to prioritize relying on our atomic CSS framework.
 export const styled = createStyledFactory(atoms);

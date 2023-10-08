@@ -33,16 +33,20 @@ export const buttonRecipe = recipe({
     },
     color: {
       primary: {
-        background: "primary",
+        background: {
+          default: "primary",
+          hover: "primaryDark",
+          active: "primaryDarkest",
+        },
         color: "white",
-        ":hover": { background: "primaryDark" },
-        ":active": { background: "primaryDarkest" },
       },
       secondary: {
-        background: "secondary",
+        background: {
+          default: "secondary",
+          hover: "secondaryDark",
+          active: "secondaryDarkest",
+        },
         color: "white",
-        ":hover": { background: "secondaryDark" },
-        ":active": { background: "secondaryDarkest" },
       },
     },
     variant: {
