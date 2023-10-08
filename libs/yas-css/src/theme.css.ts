@@ -55,7 +55,8 @@ const light = createTheme(themeVars, {
   },
 });
 
-export const themes = {
+export type ThemeName = keyof typeof themeClassNames;
+export const themeClassNames = {
   dark,
   light,
 };
