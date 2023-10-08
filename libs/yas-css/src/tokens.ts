@@ -65,21 +65,6 @@ export const palette = {
   "gray-900": "#111827",
   white: "#ffffff",
   black: "#000000",
-  transparent: "transparent",
-};
-
-export const colors = {
-  ...palette,
-  primary: palette["blue-500"],
-  primaryDark: palette["blue-700"],
-  primaryDarkest: palette["blue-900"],
-  secondary: palette["gray-500"],
-  secondaryDark: palette["gray-700"],
-  secondaryDarkest: palette["gray-900"],
-  success: palette["green-500"],
-  info: palette["blue-500"],
-  warning: palette["yellow-500"],
-  error: palette["red-500"],
 };
 
 export const fontSizes = {

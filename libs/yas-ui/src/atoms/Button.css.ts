@@ -38,7 +38,7 @@ export const buttonRecipe = recipe({
           hover: "primaryDark",
           active: "primaryDarkest",
         },
-        color: "white",
+        color: "textOnDark",
       },
       secondary: {
         background: {
@@ -46,7 +46,7 @@ export const buttonRecipe = recipe({
           hover: "secondaryDark",
           active: "secondaryDarkest",
         },
-        color: "white",
+        color: "textOnDark",
       },
     },
     variant: {
@@ -55,10 +55,10 @@ export const buttonRecipe = recipe({
       },
       outlined: {
         background: "transparent",
-        color: "black",
+        color: "textOnBright",
         borderSize: "#1",
         borderStyle: "solid",
-        borderColor: "black",
+        borderColor: "border",
       },
     },
     disabled: {

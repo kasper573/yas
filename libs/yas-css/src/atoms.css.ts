@@ -1,6 +1,7 @@
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 import * as tokens from "./tokens";
 import { fontFamilies } from "./tokens";
+import { themeVars } from "./theme.css";
 
 // Atomic properties
 
@@ -64,6 +65,11 @@ const responsiveProperties = defineProperties({
   },
 });
 
+const colors = {
+  ...themeVars.color,
+  transparent: "transparent",
+};
+
 const colorProperties = defineProperties({
   conditions: {
     lightMode: { "@media": "(prefers-color-scheme: light)" },
@@ -74,9 +80,9 @@ const colorProperties = defineProperties({
   },
   defaultCondition: "default",
   properties: {
-    color: tokens.colors,
-    background: tokens.colors,
-    borderColor: tokens.colors,
+    color: colors,
+    background: colors,
+    borderColor: colors,
   },
 });
 
