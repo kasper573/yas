@@ -60,7 +60,7 @@ export const buttonRecipe = recipe({
       },
     },
     disabled: {
-      true: { pointerEvents: "none", opacity: "#1" },
+      true: { pointerEvents: "none", opacity: 1 },
       false: {},
     },
   },
