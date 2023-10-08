@@ -79,7 +79,7 @@ export const borderSizes = {
   "#3": 3,
 };
 
-export const surfaceSizes = ["auto", "100vh", "100%", 0] as const;
+export const surfaceSizes = ["auto", "100vh", "100vw", "100%", 0] as const;
 
 export const fontFamilies = {
   mono: "Söhne Mono, menlo, monospace",
