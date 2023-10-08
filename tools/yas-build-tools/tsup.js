@@ -6,7 +6,7 @@ const { defineEnv } = require("./defineEnv");
 
 /**
  * @param {string} projectRoot
- * @param {Partial<import("packages/yas-build-tools/tsup").Options>} options
+ * @param {Partial<import("tools/yas-build-tools/tsup").Options>} options
  */
 function createYasTsupConfig(projectRoot, options) {
   return defineConfig({

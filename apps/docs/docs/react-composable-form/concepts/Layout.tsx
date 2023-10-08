@@ -1,5 +1,5 @@
 import { z } from "@yas/zod";
-import { Stack } from "@yas/ui";
+import { Button, Stack } from "@yas/ui";
 import type { FormLayoutProps } from "@yas/ui";
 import { createForm, TextField, Alert } from "@yas/ui";
 
@@ -41,12 +41,12 @@ export function CardLayout({
       </Stack>
       <Stack className="card__footer" direction="row">
         <span style={{ flex: 1 }}>{isLoading && <>Loading...</>}</span>
-        <button className="button button--secondary" onClick={reset}>
+        <Button variant="outlined" onClick={reset}>
           Reset
-        </button>
-        <button className="button button--primary" disabled={isLoading}>
+        </Button>
+        <Button variant="contained" disabled={isLoading}>
           Submit
-        </button>
+        </Button>
       </Stack>
     </form>
   );
@@ -58,9 +58,7 @@ export const SpecializedLoginForm = LoginForm.extend((options) =>
       <Stack>
         <Email style={{ background: "#5b1111" }} />
         <Password name="PWD (I am special)" style={{ background: "#272878" }} />
-        <button className="button button--warning" type="submit">
-          Very special submit
-        </button>
+        <Button type="submit">Very special submit</Button>
       </Stack>
     </form>
   )),
@@ -78,9 +76,7 @@ export function InlineLayout({
           <Component key={index} />
         ))}
         <div>
-          <button className="button button--primary" type="submit">
-            Submit
-          </button>
+          <Button type="submit">Submit</Button>
         </div>
       </Stack>
       {generalErrors.length > 0 && (

@@ -36,7 +36,7 @@ export function ExampleContent({
       <Box style={{ flex: 1 }}>{normalizeContent(children)}</Box>
       <Box style={{ width: 250 }}>
         <MultiSelectField
-          sx={{ mb: 4 }}
+          sx={{ mb: "#4" }}
           name="Validate on"
           value={validateOn}
           options={formValidationModes.map((x) => ({ label: x, value: x }))}

@@ -1,18 +1,24 @@
-import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
+import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 import * as tokens from "./tokens";
+import { fontFamilies } from "./tokens";
+import { themeVars } from "./themeVars.css";
 
 // Atomic properties
 
-const responsiveProperties = defineProperties({
-  conditions: {
-    mobile: {},
-    tablet: { "@media": "screen and (min-width: 768px)" },
-    desktop: { "@media": "screen and (min-width: 1024px)" },
-  },
-  defaultCondition: "mobile",
+const overflows = ["visible", "hidden", "scroll"] as const;
+
+const staticProperties = defineProperties({
   properties: {
-    display: ["none", "flex", "block", "inline"],
+    cursor: ["pointer", "default"],
+    pointerEvents: ["none", "all"],
+    opacity: tokens.opacities,
+    display: ["none", "flex", "inline-flex", "grid", "inline-grid", "block"],
+    flex: [1, 2, 3, 4],
     flexDirection: ["row", "column"],
+    border: ["none"],
+    borderSize: tokens.borderSizes,
+    borderStyle: ["solid", "dashed", "dotted"],
+    borderRadius: tokens.radii,
     justifyContent: [
       "stretch",
       "flex-start",
@@ -33,6 +39,13 @@ const responsiveProperties = defineProperties({
     marginLeft: tokens.space,
     margin: tokens.space,
     gap: tokens.space,
+    width: ["auto"],
+    height: ["auto"],
+    overflowX: overflows,
+    overflowY: overflows,
+    textAlign: ["left", "center", "right", "inherit"],
+    fontFamily: fontFamilies,
+    fontSize: tokens.fontSizes,
   },
   shorthands: {
     p: ["padding"],
@@ -49,20 +62,29 @@ const responsiveProperties = defineProperties({
     mr: ["marginRight"],
     mb: ["marginBottom"],
     ml: ["marginLeft"],
+    overflow: ["overflowX", "overflowY"],
   },
 });
+
+const colors = {
+  transparent: "transparent",
+  ...themeVars.color,
+};
 
 const colorProperties = defineProperties({
   conditions: {
-    lightMode: {},
-    darkMode: { "@media": "(prefers-color-scheme: dark)" },
+    default: {},
+    hover: { selector: "&:hover" },
+    active: { selector: "&:active" },
   },
-  defaultCondition: "lightMode",
+  defaultCondition: "default",
   properties: {
-    color: tokens.colors,
-    background: tokens.colors,
+    color: colors,
+    background: colors,
+    borderColor: colors,
   },
 });
 
-export const atoms = createSprinkles(responsiveProperties, colorProperties);
+export const atoms = createSprinkles(staticProperties, colorProperties);
+
 export type Atoms = Parameters<typeof atoms>[0];

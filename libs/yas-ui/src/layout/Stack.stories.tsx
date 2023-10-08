@@ -11,22 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Row: Story = {
+export const Default: Story = {
   args: {
-    direction: "row",
-    children: (
-      <>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-      </>
-    ),
-  },
-};
-
-export const Column: Story = {
-  args: {
-    direction: "column",
     children: (
       <>
         <span>1</span>

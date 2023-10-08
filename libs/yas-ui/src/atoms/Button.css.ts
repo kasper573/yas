@@ -1,6 +1,6 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const buttonRecipe = unsafe.recipe({
+export const buttonRecipe = recipe({
   base: {
     border: "none",
     margin: 0,
@@ -9,52 +9,65 @@ export const buttonRecipe = unsafe.recipe({
     overflow: "visible",
     textAlign: "inherit",
     background: "transparent",
-    fontFamily: "$mono",
+    fontFamily: "mono",
+    borderRadius: "#1",
+    cursor: "pointer",
+    color: "text",
   },
   variants: {
     size: {
       small: {
-        fontSize: "0.75rem",
-        padding: "0.25rem 0.5rem",
+        fontSize: "#1",
+        px: "#1",
+        py: "#2",
       },
       medium: {
-        fontSize: "1rem",
-        padding: "0.5rem 1rem",
+        fontSize: "#2",
+        px: "#2",
+        py: "#3",
       },
       large: {
-        fontSize: "1.25rem",
-        padding: "0.75rem 1.5rem",
+        fontSize: "#3",
+        px: "#3",
+        py: "#4",
+      },
+    },
+    color: {
+      primary: {
+        background: {
+          default: "primary",
+          hover: "primaryDark",
+          active: "primaryDarkest",
+        },
+      },
+      secondary: {
+        background: {
+          default: "secondary",
+          hover: "secondaryDark",
+          active: "secondaryDarkest",
+        },
       },
     },
     variant: {
       contained: {
-        backgroundColor: "$blue",
-        color: "$white",
-        borderRadius: "$1",
+        borderRadius: "#1",
       },
       outlined: {
-        backgroundColor: "$blue",
-        color: "$white",
-        borderRadius: "$1",
-
-        "&:hover": {
-          backgroundColor: "$blueDark",
-          cursor: "pointer",
-        },
-
-        "&:active": {
-          backgroundColor: "$blueDarker",
-        },
+        background: "transparent",
+        borderSize: "#1",
+        borderStyle: "solid",
+        borderColor: "border",
       },
     },
     disabled: {
-      true: {},
+      true: { pointerEvents: "none", opacity: "#1" },
       false: {},
     },
   },
   defaultVariants: {
     size: "small",
-    variant: "outlined",
+    variant: "contained",
+    color: "primary",
     disabled: false,
   },
 });

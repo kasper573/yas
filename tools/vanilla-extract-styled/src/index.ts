@@ -15,7 +15,7 @@ export function createStyledFactory<Style>(
     Recipe extends RecipeLike,
     Implementation extends ElementType,
   > = RecipeVariants<Recipe> &
-    ComponentProps<Implementation> & {
+    Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
       sx?: Style;
       className?: string;
       children?: ReactNode;

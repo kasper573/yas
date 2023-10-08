@@ -119,7 +119,7 @@ function FieldGroup({ children, ...props }: ComponentProps<typeof Stack>) {
       {Children.map(children, (child, index) => (
         <Fragment key={index}>
           {index > 0 && <Divider />}
-          <Box sx={{ px: 2 }}>{child}</Box>
+          <Box sx={{ px: "#2" }}>{child}</Box>
         </Fragment>
       ))}
     </Stack>

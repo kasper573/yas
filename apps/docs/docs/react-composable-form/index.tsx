@@ -1,6 +1,6 @@
 import { z } from "@yas/zod";
 import { createForm } from "react-composable-form";
-import { TextField, NumberField } from "@yas/ui";
+import { TextField, NumberField, Button } from "@yas/ui";
 // ---cut---
 
 export const UserForm = createForm((options) =>
@@ -22,12 +22,12 @@ export const UserForm = createForm((options) =>
         <Password style={styles.leanRight} />
         <Age />
         <div className="button-group padding-top--md" style={styles.dockRight}>
-          <button className="button button--secondary" type="reset">
+          <Button color="secondary" type="reset">
             Reset
-          </button>
-          <button className="button button--primary" type="submit">
+          </Button>
+          <Button color="primary" type="submit">
             Submit
-          </button>
+          </Button>
         </div>
       </form>
     )),

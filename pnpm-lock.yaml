@@ -347,9 +347,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.11
         version: 18.2.8
-      '@vanilla-extract/css':
-        specifier: ^1.13.0
-        version: 1.13.0
       '@yas/build-tools':
         specifier: workspace:*
         version: link:../../tools/yas-build-tools

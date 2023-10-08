@@ -1,8 +1,9 @@
-import { unsafe } from "@yas/css";
+import { themeVars, unsafe } from "@yas/css";
 
 export const textRecipe = unsafe.recipe({
   base: {
     fontFamily: "$mono",
+    color: themeVars.color.text,
   },
   variants: {
     variant: {
