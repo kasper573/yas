@@ -1,11 +1,18 @@
 import { useMemo, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Button, ModalOutlet } from "@yas/ui";
-import type { ThemeName } from "@yas/css";
-import { clsx, themeClassNames } from "@yas/css";
+import { clsx } from "@yas/css";
+import dark from "@yas/css/themes/dark.css";
+import light from "@yas/css/themes/light.css";
 import { createQueryClient, createTRPCClient, trpc } from "./trpc";
 import { Home } from "./pages/Home";
 import * as styles from "./App.css";
+
+type ThemeName = keyof typeof themeClassNames;
+const themeClassNames = {
+  dark,
+  light,
+};
 
 export function App() {
   const queryClient = useMemo(createQueryClient, []);

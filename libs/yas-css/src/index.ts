@@ -16,9 +16,8 @@ export { clsx } from "clsx";
 export const styled = createStyledFactory(atoms);
 export const recipe = createRecipeFactory(atoms);
 export { tokens, atoms };
-export * from "./theme.css";
+export * from "./themeVars.css";
 export type { Atoms } from "./atoms.css";
-export type { ThemeName } from "./theme.css";
 
 // But we provide non-atomic escape hatches via a clear naming convention.
 export const unsafe = { style, keyframes, globalStyle, recipe: unsafeRecipe };

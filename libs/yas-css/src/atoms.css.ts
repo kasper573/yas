@@ -1,13 +1,13 @@
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 import * as tokens from "./tokens";
 import { fontFamilies } from "./tokens";
-import { themeVars } from "./theme.css";
+import { themeVars } from "./themeVars.css";
 
 // Atomic properties
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
-const responsiveProperties = defineProperties({
+const staticProperties = defineProperties({
   properties: {
     cursor: ["pointer", "default"],
     pointerEvents: ["none", "all"],
@@ -85,6 +85,6 @@ const colorProperties = defineProperties({
   },
 });
 
-export const atoms = createSprinkles(responsiveProperties, colorProperties);
+export const atoms = createSprinkles(staticProperties, colorProperties);
 
 export type Atoms = Parameters<typeof atoms>[0];

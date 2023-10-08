@@ -9,6 +9,9 @@
     ".": {
       "import": "./src/index.ts"
     },
+    "./themes/*": {
+      "import": "./themes/*"
+    },
     "./eslintOverrides": {
       "import": "./eslintOverrides.js",
       "require": "./eslintOverrides.js"
