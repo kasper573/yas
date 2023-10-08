@@ -20,8 +20,8 @@
     "test:unit:watch": "vitest"
   },
   "dependencies": {
-    "@yas/zod": "workspace:*",
     "@yas/css": "workspace:*",
+    "@yas/zod": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-imperative-hook": "workspace:*"
   },
@@ -45,6 +45,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "start-server-and-test": "^2.0.0",
-    "storybook": "^7.0.23"
+    "storybook": "^7.0.23",
+    "storybook-addon-themes": "^6.1.0"
   }
 }
