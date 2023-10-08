@@ -1,25 +1,32 @@
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import dark from "@yas/css/themes/dark.css";
 import light from "@yas/css/themes/light.css";
 
-const themeClassNames = new Map<string | undefined | null, string>([
-  ["dark", dark],
-  ["light", light],
-]);
+if (ExecutionEnvironment.canUseDOM) {
+  initialize();
+}
 
-const rootElement = document.documentElement;
-const setThemeClass = createClassChanger(rootElement);
-const themeAttribute = "data-theme";
-const observer = new MutationObserver(onThemeOrClassChanged);
+function initialize() {
+  const themeClassNames = new Map<string | undefined | null, string>([
+    ["dark", dark],
+    ["light", light],
+  ]);
 
-observer.observe(rootElement, {
-  attributeFilter: [themeAttribute, "class"],
-  subtree: false,
-});
+  const rootElement = document.documentElement;
+  const setThemeClass = createClassChanger(rootElement);
+  const themeAttribute = "data-theme";
+  const observer = new MutationObserver(onThemeOrClassChanged);
 
-function onThemeOrClassChanged() {
-  const themeName = rootElement.getAttribute(themeAttribute);
-  const themeClass = themeClassNames.get(themeName);
-  setThemeClass(themeClass);
+  observer.observe(rootElement, {
+    attributeFilter: [themeAttribute, "class"],
+    subtree: false,
+  });
+
+  function onThemeOrClassChanged() {
+    const themeName = rootElement.getAttribute(themeAttribute);
+    const themeClass = themeClassNames.get(themeName);
+    setThemeClass(themeClass);
+  }
 }
 
 function createClassChanger(element: HTMLElement) {
