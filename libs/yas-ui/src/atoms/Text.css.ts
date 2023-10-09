@@ -3,7 +3,7 @@ import { themeVars, unsafe } from "@yas/css";
 export const textRecipe = unsafe.recipe({
   base: {
     fontFamily: "$mono",
-    color: themeVars.color.text,
+    color: themeVars.color.surfaceText,
   },
   variants: {
     variant: {
