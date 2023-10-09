@@ -5,7 +5,7 @@ unsafe.globalStyle("html, body, #root", {
   margin: 0,
 });
 
-export const app = unsafe.style([
-  atoms({ background: "background" }),
-  { minHeight: "100vh" },
-]);
+export const app = atoms({
+  background: "surfaceMain",
+  minHeight: "100vh",
+});

@@ -34,6 +34,8 @@ const config = {
     }),
   ],
 
+  clientModules: [require.resolve("./src/synchronizeYasCSSTheme.ts")],
+
   presets: [
     [
       "classic",

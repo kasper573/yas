@@ -8,11 +8,9 @@ export const buttonRecipe = recipe({
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
-    background: "transparent",
     fontFamily: "mono",
     borderRadius: "#1",
     cursor: "pointer",
-    color: "text",
   },
   variants: {
     size: {
@@ -35,17 +33,19 @@ export const buttonRecipe = recipe({
     color: {
       primary: {
         background: {
-          default: "primary",
-          hover: "primaryDark",
-          active: "primaryDarkest",
+          default: "primaryMain",
+          hover: "primaryAlt1",
+          active: "primaryAlt2",
         },
+        color: "primaryText",
       },
       secondary: {
         background: {
-          default: "secondary",
-          hover: "secondaryDark",
-          active: "secondaryDarkest",
+          default: "secondaryMain",
+          hover: "secondaryAlt1",
+          active: "secondaryAlt2",
         },
+        color: "secondaryText",
       },
     },
     variant: {
@@ -60,7 +60,7 @@ export const buttonRecipe = recipe({
       },
     },
     disabled: {
-      true: { pointerEvents: "none", opacity: "#1" },
+      true: { pointerEvents: "none", opacity: 1 },
       false: {},
     },
   },

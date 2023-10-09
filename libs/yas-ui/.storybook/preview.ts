@@ -1,4 +1,6 @@
 import type { Preview } from "@storybook/react";
+import dark from "@yas/css/themes/dark.css";
+import light from "@yas/css/themes/light.css";
 
 const preview: Preview = {
   parameters: {
@@ -8,6 +10,13 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+    themes: {
+      default: "light",
+      list: [
+        { name: "dark", class: dark },
+        { name: "light", class: light },
+      ],
     },
   },
 };
