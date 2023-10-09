@@ -49,6 +49,7 @@ const staticProperties = defineProperties({
     textAlign: ["left", "center", "right", "inherit"],
     fontFamily: tokens.fontFamilies,
     fontSize: tokens.fontSizes,
+    fontWeight: ["normal", "bold"],
   },
   shorthands: {
     p: ["padding"],

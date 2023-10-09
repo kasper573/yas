@@ -1,36 +1,33 @@
-import { themeVars, unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const textRecipe = unsafe.recipe({
+export const textRecipe = recipe({
   base: {
-    fontFamily: "$mono",
-    color: themeVars.color.surfaceText,
+    fontFamily: "mono",
+    fontWeight: "normal",
+    color: "surfaceText",
   },
   variants: {
     variant: {
       body: {
-        fontSize: "$1",
+        fontSize: "#2",
       },
       h1: {
-        display: "block",
-        fontSize: "$3",
+        fontSize: "#5",
       },
       h2: {
-        display: "block",
-        fontSize: "$2",
+        fontSize: "#4",
       },
       h3: {
-        display: "block",
-        fontSize: "$1",
+        fontSize: "#3",
       },
-      h4: {
-        display: "block",
-        fontSize: "$1",
+      caption: {
+        fontSize: "#1",
       },
     },
     paragraph: {
       true: {
         display: "block",
-        marginBottom: "$2",
+        marginBottom: "#2",
       },
     },
   },

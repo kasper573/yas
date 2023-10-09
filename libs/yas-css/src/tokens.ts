@@ -71,6 +71,8 @@ export const fontSizes = {
   "#1": 12,
   "#2": 14,
   "#3": 16,
+  "#4": 18,
+  "#5": 20,
 };
 
 export const borderSizes = {
