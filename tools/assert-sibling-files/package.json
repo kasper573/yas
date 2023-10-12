@@ -1,0 +1,20 @@
+{
+  "name": "assert-sibling-files",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "assert-sibling-files": "./bin/cli.ts"
+  },
+  "peerDependencies": {
+    "tsx": "^3.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.8",
+    "@types/yargs": "^17.0.24",
+    "@yas/tsconfig": "workspace:*",
+    "glob": "^10.3.10",
+    "tsx": "^3.12.7",
+    "yargs": "^17.7.2"
+  }
+}

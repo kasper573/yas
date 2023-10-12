@@ -356,6 +356,9 @@ importers:
       '@yas/vitest':
         specifier: workspace:*
         version: link:../../tools/yas-vitest
+      assert-sibling-files:
+        specifier: workspace:*
+        version: link:../../tools/assert-sibling-files
       concurrently:
         specifier: ^8.0.1
         version: 8.2.1
@@ -387,6 +390,27 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../tools/yas-tsconfig
+
+  tools/assert-sibling-files:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.5.8
+        version: 20.8.2
+      '@types/yargs':
+        specifier: ^17.0.24
+        version: 17.0.26
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      glob:
+        specifier: ^10.3.10
+        version: 10.3.10
+      tsx:
+        specifier: ^3.12.7
+        version: 3.13.0
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
 
   tools/eslint-config-yas:
     devDependencies:
