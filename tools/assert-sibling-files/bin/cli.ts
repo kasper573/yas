@@ -19,10 +19,18 @@ async function run(
 
   const hasSiblings = await Promise.all(targetFiles.map(hasSibling));
   const missingSiblings = targetFiles.filter((_, i) => !hasSiblings[i]);
+  const foundSiblings = targetFiles.filter((_, i) => hasSiblings[i]);
 
   if (missingSiblings.length) {
     console.error(
-      `❌  Missing ${siblingSuffix} files for:\n${missingSiblings
+      `❌  Missing ${siblingSuffix} sibling files for:\n${missingSiblings
+        .map((file) => `  ${file}`)
+        .join("\n")}`,
+    );
+    console.log(
+      `📂  Found ${
+        foundSiblings.length
+      } ${siblingSuffix} sibling files for:\n${foundSiblings
         .map((file) => `  ${file}`)
         .join("\n")}`,
     );
@@ -33,9 +41,11 @@ async function run(
 
   return 0;
 
-  async function hasSibling(targetFIle: string): Promise<boolean> {
-    const target = path.parse(targetFIle);
-    const siblingGlob = path.join(target.dir, target.name + siblingSuffix);
+  async function hasSibling(targetFile: string): Promise<boolean> {
+    const target = path.parse(targetFile);
+    const siblingGlob = path
+      .join(target.dir, target.name + siblingSuffix + "*")
+      .replaceAll("\\", "/"); // Globify
     return (await glob(siblingGlob)).length > 0;
   }
 }
