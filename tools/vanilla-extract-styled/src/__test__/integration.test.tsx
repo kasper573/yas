@@ -76,6 +76,32 @@ function testComponent(
     );
   });
 
+  it("variant props and not forward by default", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, recipeWithVariants);
+    const { container } = render(<Component foo={2} bar="y" />);
+    expect(container.getAttribute("foo")).toBeNull();
+    expect(container.getAttribute("bar")).toBeNull();
+  });
+
+  it("non-variant props and forward by default", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, recipeWithVariants);
+    const { container } = render(<Component data-a={1} data-b={2} />);
+    expect(container.getAttribute("data-a")).not.toBeNull();
+    expect(container.getAttribute("data-b")).not.toBeNull();
+  });
+
+  it("props while customizing which props should be forwarded", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, recipeWithVariants).forwardProps(
+      ({ name }) => name === "foo",
+    );
+    const { container } = render(<Component foo={2} bar="y" />);
+    expect(container.getAttribute("foo")).not.toBeNull();
+    expect(container.getAttribute("bar")).toBeNull();
+  });
+
   it("default prop", () => {
     const styled = createStyledFactory();
     const Component = styled(component).defaultProps({ role: "alert" });
