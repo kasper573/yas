@@ -11,35 +11,29 @@ import { clsx } from "clsx";
 export function createStyledFactory<Style>(
   compileStyle?: StyleCompiler<Style>,
 ) {
-  type RecipeComponentProps<
-    Recipe extends RecipeLike,
+  return function createRecipeComponent<
     Implementation extends ElementType,
-  > = RecipeVariants<Recipe> &
-    Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
-      sx?: Style;
-      className?: string;
-      children?: ReactNode;
-    };
+    Recipe extends RecipeLike = RuntimeFn<{}>,
+  >(implementation: Implementation, recipe?: Recipe) {
+    return createRecipeComponentImpl(implementation, recipe);
+  };
 
-  return function styled<
+  function createRecipeComponentImpl<
     Implementation extends ElementType,
     Recipe extends RecipeLike = RuntimeFn<{}>,
   >(
     implementation: Implementation,
     recipe?: Recipe,
-    defaultProps?: Partial<RecipeComponentProps<Recipe, Implementation>>,
-    shouldForwardProp?: PropForwardTester<
-      keyof RecipeComponentProps<Recipe, Implementation>
-    >,
+    options?: RecipeComponentOptions<Implementation, Recipe, Style>,
   ) {
     function RecipeComponent({
       className: inlineClassName,
       sx,
       ...inlineProps
-    }: RecipeComponentProps<Recipe, Implementation>): ReactElement {
-      const props = { ...defaultProps, ...inlineProps };
+    }: RecipeComponentProps<Implementation, Recipe, Style>): ReactElement {
+      const props = { ...options?.defaultProps, ...inlineProps };
       const [variantProps, forwardedProps] = recipe
-        ? destructureVariantProps(props, recipe, shouldForwardProp)
+        ? destructureVariantProps(props, recipe, options?.forwardProps)
         : [emptyObject, props];
       const className =
         clsx(
@@ -53,8 +47,53 @@ export function createStyledFactory<Style>(
       });
     }
 
+    RecipeComponent.defaultProps = (
+      defaultProps: Partial<
+        RecipeComponentProps<Implementation, Recipe, Style>
+      >,
+    ) =>
+      createRecipeComponentImpl(implementation, recipe, {
+        ...options,
+        defaultProps: {
+          ...options?.defaultProps,
+          ...defaultProps,
+        },
+      });
+
+    RecipeComponent.forwardProps = (
+      forwardProps: PropForwardTester<
+        keyof RecipeComponentProps<Implementation, Recipe, Style>
+      >,
+    ) =>
+      createRecipeComponentImpl(implementation, recipe, {
+        ...options,
+        forwardProps,
+      });
+
     return RecipeComponent;
+  }
+}
+
+type RecipeComponentProps<
+  Implementation extends ElementType,
+  Recipe extends RecipeLike,
+  Style,
+> = RecipeVariants<Recipe> &
+  Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
+    sx?: Style;
+    className?: string;
+    children?: ReactNode;
   };
+
+interface RecipeComponentOptions<
+  Implementation extends ElementType,
+  Recipe extends RecipeLike,
+  Style,
+> {
+  defaultProps?: Partial<RecipeComponentProps<Implementation, Recipe, Style>>;
+  forwardProps?: PropForwardTester<
+    keyof RecipeComponentProps<Implementation, Recipe, Style>
+  >;
 }
 
 const emptyObject = Object.freeze({});
