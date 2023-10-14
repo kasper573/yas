@@ -1,20 +1,28 @@
 import { createImperative } from "react-imperative-hook";
 import type { ComponentProps } from "react";
-import { styled } from "@yas/css";
+import { destructureVariantProps, styled } from "@yas/css";
 import { dialogRecipe, overlayRecipe } from "./Modal.css";
 
 const Overlay = styled("div", overlayRecipe);
-const Dialog = styled("dialog", dialogRecipe);
+const Dialog = styled(
+  "dialog",
+  dialogRecipe,
+  undefined,
+  ({ isVariant, name }) => !isVariant || name === "open",
+);
 
 export function Modal({
   onClose,
-  open,
-  ...remainingProps
+  ...allProps
 }: ComponentProps<typeof Dialog> & { onClose?: () => void }) {
+  const [variantProps, forwardedProps] = destructureVariantProps(
+    allProps,
+    dialogRecipe,
+  );
   return (
     <>
-      <Overlay open={open} onClick={onClose} />
-      <Dialog open={open} {...remainingProps} />
+      <Overlay {...variantProps} onClick={onClose} />
+      <Dialog {...variantProps} {...forwardedProps} />
     </>
   );
 }
