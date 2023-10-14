@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render as renderRoot } from "@testing-library/react";
 import type { ElementType } from "react";
 import { createStyledFactory } from "../index";
 import { recipeClassName } from "./fixtures";
@@ -21,21 +21,21 @@ function testComponent(
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component />);
-    expect(container.innerHTML).toEqual(toHtml());
+    expect(container.outerHTML).toEqual(toHtml());
   });
 
   it("children", () => {
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component>Hello</Component>);
-    expect(container.innerHTML).toEqual(toHtml({ content: "Hello" }));
+    expect(container.outerHTML).toEqual(toHtml({ content: "Hello" }));
   });
 
   it("prop", () => {
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component data-foo="bar">Hello</Component>);
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({ attrs: { "data-foo": "bar" }, content: "Hello" }),
     );
   });
@@ -44,7 +44,7 @@ function testComponent(
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component className="foo">Hello</Component>);
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({ attrs: { class: "foo" }, content: "Hello" }),
     );
   });
@@ -53,7 +53,7 @@ function testComponent(
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component style={{ color: "red" }} />);
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({ attrs: { style: `color: red;` } }),
     );
   });
@@ -62,7 +62,7 @@ function testComponent(
     const styled = createStyledFactory(sprinkles);
     const Component = styled(component);
     const { container } = render(<Component sx={{ color: "red" }} />);
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({ attrs: { class: "color_red" } }),
     );
   });
@@ -71,28 +71,28 @@ function testComponent(
     const styled = createStyledFactory();
     const Component = styled(component, recipeWithVariants);
     const { container } = render(<Component foo={2} bar="y" />);
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({ attrs: { class: `${recipeClassName} baz_b foo_2 bar_y` } }),
     );
   });
 
   it("default prop", () => {
     const styled = createStyledFactory();
-    const Component = styled(component, undefined, { role: "alert" });
+    const Component = styled(component).defaultProps({ role: "alert" });
     const { container } = render(<Component />);
-    expect(container.innerHTML).toEqual(toHtml({ attrs: { role: "alert" } }));
+    expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "alert" } }));
   });
 
   it("default prop and inline override", () => {
     const styled = createStyledFactory();
-    const Component = styled(component, undefined, { role: "default" });
+    const Component = styled(component).defaultProps({ role: "default" });
     const { container } = render(<Component role="other" />);
-    expect(container.innerHTML).toEqual(toHtml({ attrs: { role: "other" } }));
+    expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "other" } }));
   });
 
   it("combination of everything", () => {
     const styled = createStyledFactory(sprinkles);
-    const Component = styled(component, recipeWithVariants, {
+    const Component = styled(component, recipeWithVariants).defaultProps({
       "data-foo": "default",
       role: "alert",
     });
@@ -108,7 +108,7 @@ function testComponent(
         Hello
       </Component>,
     );
-    expect(container.innerHTML).toEqual(
+    expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y color_red foo`,
@@ -137,3 +137,15 @@ type HtmlProps = {
   attrs?: Record<string, unknown>;
   content?: string;
 };
+
+function render(...args: Parameters<typeof renderRoot>) {
+  const { container, ...rest } = renderRoot(...args);
+  const { firstElementChild } = container;
+  if (!firstElementChild) {
+    throw new Error("No first element child");
+  }
+  return {
+    container: firstElementChild,
+    ...rest,
+  };
+}
