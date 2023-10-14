@@ -9,7 +9,6 @@ import * as tokens from "./tokens";
 import { atoms } from "./atoms.css";
 
 // Re-export common css utilities
-export { destructureVariantProps, variantProps } from "vanilla-extract-styled";
 export { clsx } from "clsx";
 
 // Our own design system specific atomic CSS Framework utilities

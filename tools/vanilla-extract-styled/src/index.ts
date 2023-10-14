@@ -57,19 +57,9 @@ export function createStyledFactory<Style>(
 const emptyObject = Object.freeze({});
 
 /**
- * Selects the props corresponding to the variant names of the given recipe
- */
-export function variantProps<
-  Props extends Record<string, unknown>,
-  Recipe extends RecipeLike,
->(props: Props, recipe: Recipe): Pick<Props, VariantName<Recipe>> {
-  return destructureVariantProps(props, recipe)[0];
-}
-
-/**
  * Separates the props into variant props and remaining props based on the given recipe
  */
-export function destructureVariantProps<
+function destructureVariantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike,
 >(allProps: Props, recipe: Recipe) {
