@@ -28,6 +28,9 @@ export function createStyledFactory<Style>(
     implementation: Implementation,
     recipe?: Recipe,
     defaultProps?: Partial<RecipeComponentProps<Recipe, Implementation>>,
+    shouldForwardProp?: PropForwardTester<
+      keyof RecipeComponentProps<Recipe, Implementation>
+    >,
   ) {
     function RecipeComponent({
       className: inlineClassName,
@@ -35,8 +38,8 @@ export function createStyledFactory<Style>(
       ...inlineProps
     }: RecipeComponentProps<Recipe, Implementation>): ReactElement {
       const props = { ...defaultProps, ...inlineProps };
-      const [variantProps, remainingProps] = recipe
-        ? destructureVariantProps(props, recipe)
+      const [variantProps, forwardedProps] = recipe
+        ? destructureVariantProps(props, recipe, shouldForwardProp)
         : [emptyObject, props];
       const className =
         clsx(
@@ -46,7 +49,7 @@ export function createStyledFactory<Style>(
         ) || undefined;
       return createElement(implementation, {
         className,
-        ...remainingProps,
+        ...forwardedProps,
       });
     }
 
@@ -59,25 +62,37 @@ const emptyObject = Object.freeze({});
 /**
  * Separates the props into variant props and remaining props based on the given recipe
  */
-function destructureVariantProps<
+export function destructureVariantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike,
->(allProps: Props, recipe: Recipe) {
+>(
+  allProps: Props,
+  recipe: Recipe,
+  shouldForwardProp: PropForwardTester<keyof Props> = ({ isVariant }) =>
+    !isVariant,
+) {
   const variantProps: Record<string, unknown> = {};
-  const remainingProps: Record<string, unknown> = {};
+  const forwardedProps: Record<string, unknown> = {};
   const variants = recipe.variants();
   for (const prop in allProps) {
-    if (variants.includes(prop)) {
+    const isVariant = variants.includes(prop);
+    if (isVariant) {
       variantProps[prop] = allProps[prop];
-    } else {
-      remainingProps[prop] = allProps[prop];
+    }
+    if (shouldForwardProp({ name: prop, isVariant })) {
+      forwardedProps[prop] = allProps[prop];
     }
   }
   return [
     variantProps as Pick<Props, VariantName<Recipe>>,
-    remainingProps as Omit<Props, VariantName<Recipe>>,
+    forwardedProps as Omit<Props, VariantName<Recipe>>,
   ] as const;
 }
+
+export type PropForwardTester<PropName extends PropertyKey> = (info: {
+  name: PropName;
+  isVariant: boolean;
+}) => boolean;
 
 // The most abstract representation of a sprinkles fn
 // This makes the factory compatible without being limited to sprinkles
