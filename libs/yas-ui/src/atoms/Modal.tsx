@@ -4,10 +4,7 @@ import { destructureVariantProps, styled } from "@yas/css";
 import { dialogRecipe, overlayRecipe } from "./Modal.css";
 
 const Overlay = styled("div", overlayRecipe);
-const Dialog = styled(
-  "dialog",
-  dialogRecipe,
-  undefined,
+const Dialog = styled("dialog", dialogRecipe).forwardProps(
   ({ isVariant, name }) => !isVariant || name === "open",
 );
 
