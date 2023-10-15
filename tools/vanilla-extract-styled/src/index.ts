@@ -10,45 +10,51 @@ import { clsx } from "clsx";
 
 export function createStyledFactory<Style>(
   compileStyle?: StyleCompiler<Style>,
-) {
-  type RecipeComponentProps<
-    Recipe extends RecipeLike,
-    Implementation extends ElementType,
-  > = RecipeVariants<Recipe> &
-    Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
-      sx?: Style;
-      className?: string;
-      children?: ReactNode;
-    };
-
-  return function styled<
+): StyledComponentFactory<Style> {
+  return function createRecipeComponent<
     Implementation extends ElementType,
     Recipe extends RecipeLike = RuntimeFn<{}>,
   >(
     implementation: Implementation,
     recipe?: Recipe,
-    defaultProps?: Partial<RecipeComponentProps<Recipe, Implementation>>,
+    options?: RecipeComponentOptions<Implementation, Recipe, Style>,
   ) {
-    function RecipeComponent({
-      className: inlineClassName,
-      sx,
-      ...inlineProps
-    }: RecipeComponentProps<Recipe, Implementation>): ReactElement {
-      const props = { ...defaultProps, ...inlineProps };
-      const [variantProps, remainingProps] = recipe
-        ? destructureVariantProps(props, recipe)
-        : [emptyObject, props];
-      const className =
-        clsx(
-          recipe?.(variantProps),
-          sx ? compileStyle?.(sx) : undefined,
-          inlineClassName,
-        ) || undefined;
-      return createElement(implementation, {
-        className,
-        ...remainingProps,
+    const RecipeComponent: RecipeComponent<Implementation, Recipe, Style> =
+      function RecipeComponent({
+        className: inlineClassName,
+        sx,
+        ...inlineProps
+      }) {
+        const props = { ...options?.defaultProps, ...inlineProps };
+        const [variantProps, forwardedProps] = recipe
+          ? destructureVariantProps(props, recipe, options?.forwardProps)
+          : [emptyObject, props];
+        const className =
+          clsx(
+            recipe?.(variantProps),
+            sx ? compileStyle?.(sx) : undefined,
+            inlineClassName,
+          ) || undefined;
+        return createElement(implementation, {
+          className,
+          ...forwardedProps,
+        });
+      };
+
+    RecipeComponent.attrs = (defaultProps) =>
+      createRecipeComponent(implementation, recipe, {
+        ...options,
+        defaultProps: {
+          ...options?.defaultProps,
+          ...defaultProps,
+        },
       });
-    }
+
+    RecipeComponent.shouldForwardProp = (forwardProps) =>
+      createRecipeComponent(implementation, recipe, {
+        ...options,
+        forwardProps,
+      });
 
     return RecipeComponent;
   };
@@ -57,37 +63,89 @@ export function createStyledFactory<Style>(
 const emptyObject = Object.freeze({});
 
 /**
- * Selects the props corresponding to the variant names of the given recipe
- */
-export function variantProps<
-  Props extends Record<string, unknown>,
-  Recipe extends RecipeLike,
->(props: Props, recipe: Recipe): Pick<Props, VariantName<Recipe>> {
-  return destructureVariantProps(props, recipe)[0];
-}
-
-/**
  * Separates the props into variant props and remaining props based on the given recipe
  */
 export function destructureVariantProps<
   Props extends Record<string, unknown>,
   Recipe extends RecipeLike,
->(allProps: Props, recipe: Recipe) {
+>(
+  allProps: Props,
+  recipe: Recipe,
+  shouldForwardProp: PropForwardTester<keyof Props> = ({ isVariant }) =>
+    !isVariant,
+) {
   const variantProps: Record<string, unknown> = {};
-  const remainingProps: Record<string, unknown> = {};
+  const forwardedProps: Record<string, unknown> = {};
   const variants = recipe.variants();
   for (const prop in allProps) {
-    if (variants.includes(prop)) {
+    const isVariant = variants.includes(prop);
+    if (isVariant) {
       variantProps[prop] = allProps[prop];
-    } else {
-      remainingProps[prop] = allProps[prop];
+    }
+    if (shouldForwardProp({ name: prop, isVariant })) {
+      forwardedProps[prop] = allProps[prop];
     }
   }
   return [
     variantProps as Pick<Props, VariantName<Recipe>>,
-    remainingProps as Omit<Props, VariantName<Recipe>>,
+    forwardedProps as Omit<Props, VariantName<Recipe>>,
   ] as const;
 }
+
+interface StyledComponentFactory<Style> {
+  <
+    Implementation extends ElementType,
+    Recipe extends RecipeLike = RuntimeFn<{}>,
+  >(
+    implementation: Implementation,
+    recipe?: Recipe,
+  ): RecipeComponent<Implementation, Recipe, Style>;
+}
+
+interface RecipeComponent<
+  Implementation extends ElementType,
+  Recipe extends RecipeLike,
+  Style,
+> {
+  (props: RecipeComponentProps<Implementation, Recipe, Style>): ReactElement;
+
+  attrs: (
+    props: Partial<RecipeComponentProps<Implementation, Recipe, Style>>,
+  ) => RecipeComponent<Implementation, Recipe, Style>;
+
+  shouldForwardProp: (
+    tester: PropForwardTester<
+      keyof RecipeComponentProps<Implementation, Recipe, Style>
+    >,
+  ) => RecipeComponent<Implementation, Recipe, Style>;
+}
+
+type RecipeComponentProps<
+  Implementation extends ElementType,
+  Recipe extends RecipeLike,
+  Style,
+> = RecipeVariants<Recipe> &
+  Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
+    sx?: Style;
+    className?: string;
+    children?: ReactNode;
+  };
+
+interface RecipeComponentOptions<
+  Implementation extends ElementType,
+  Recipe extends RecipeLike,
+  Style,
+> {
+  defaultProps?: Partial<RecipeComponentProps<Implementation, Recipe, Style>>;
+  forwardProps?: PropForwardTester<
+    keyof RecipeComponentProps<Implementation, Recipe, Style>
+  >;
+}
+
+export type PropForwardTester<PropName extends PropertyKey> = (info: {
+  name: PropName;
+  isVariant: boolean;
+}) => boolean;
 
 // The most abstract representation of a sprinkles fn
 // This makes the factory compatible without being limited to sprinkles

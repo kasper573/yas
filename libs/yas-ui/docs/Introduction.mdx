@@ -6,55 +6,9 @@ import { Meta } from "@storybook/blocks";
 
 Please follow the conventions outlined below when developing components for Yas UI.
 
-### We use the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) methodology.
+### Styling is done using `@yas/css`
 
-Component files must be placed in a folder named after the atomic design level they belong to, ie. `atoms/Button.tsx`.
-
-### Styling is done using [Vanilla Extract](https://vanilla-extract.style)
-
-All styling must be done using typesafe `css.ts` files.
-
-Vanilla Extract is encapsulated in the `@yas/css` package, so you don't need to install it yourself.
-
-```tsx
-import { style, recipe } from "@yas/css";
-
-const myStyle = style(...); // Equivalent of using {style} from vanilla-extract/css
-const myRecipe = recipe(...); // Equivalent of using {recipe} from vanilla-extract/recipes
-```
-
-Our [Atomic CSS framework](https://vanilla-extract.style/documentation/packages/sprinkles/) is available as `atoms`:
-
-```tsx
-import { atoms } from "@yas/css";
-const myStyle = atoms({
-  color: "red",
-  fontSize: 16,
-});
-```
-
-A convenience react component factory is available as `styled`:
-
-```tsx
-import { styled } from "@yas/css";
-import { myRecipe } from "./myStyles.css";
-
-const MyComponent = styled("div", myRecipe);
-```
-
-### Component primitives provided by [Radix UI](https://www.radix-ui.com/)
-
-Radix UI primitives are unstyled react components with logic and accessibility compatibility provided out of the box.
-
-All we need to do when implementing a new component is to add our own styling and re-export them:
-
-1. First, add the new primitive package dependency from `@radix-ui/react-*`.
-2. Create your new component file, style and re-export the new primitive(s). [See Radix UI docs for example](https://www.radix-ui.com/docs/primitives/overview/styling#styling-with-css-in-js).
-
-> If radix does not provide a primitive for your use case, it's either:
->
-> - So simple that we easily can create our own, in which case go ahead and do it.
-> - So complicated that we _have_ to create our own, in which case discuss it with the team.
+[@yas/css docs](https://github.com/ksandin/yas/tree/master/libs/yas-css)
 
 ### Components must be data agnostic
 

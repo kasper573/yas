@@ -59,4 +59,4 @@ export function RadioGroupField<Value>({
 }
 
 const RadioGroup = styled("fieldset");
-const Radio = styled("input", undefined, { type: "radio" });
+const Radio = styled("input").attrs({ type: "radio" });

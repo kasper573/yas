@@ -29,6 +29,7 @@
     "@storybook/addon-essentials": "^7.0.23",
     "@storybook/addon-interactions": "^7.0.23",
     "@storybook/addon-links": "^7.0.23",
+    "@storybook/addon-themes": "^7.4.6",
     "@storybook/blocks": "^7.0.23",
     "@storybook/jest": "0.1.0",
     "@storybook/react": "^7.0.23",
@@ -40,12 +41,12 @@
     "@yas/build-tools": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "@yas/vitest": "workspace:*",
+    "assert-sibling-files": "workspace:*",
     "concurrently": "^8.0.1",
     "prop-types": "15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "start-server-and-test": "^2.0.0",
-    "storybook": "^7.0.23",
-    "storybook-addon-themes": "^6.1.0"
+    "storybook": "^7.0.23"
   }
 }
