@@ -32,6 +32,6 @@ export function CheckboxField({
   );
 }
 
-const Checkbox = styled("input", checkboxRecipe).defaultProps({
+const Checkbox = styled("input", checkboxRecipe).attrs({
   type: "checkbox",
 });

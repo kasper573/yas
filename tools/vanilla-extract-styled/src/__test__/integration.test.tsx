@@ -94,7 +94,7 @@ function testComponent(
 
   it("props while customizing which props should be forwarded", () => {
     const styled = createStyledFactory();
-    const Component = styled(component, recipeWithVariants).forwardProps(
+    const Component = styled(component, recipeWithVariants).shouldForwardProp(
       ({ name }) => name === "foo",
     );
     const { container } = render(<Component foo={2} bar="y" />);
@@ -104,21 +104,21 @@ function testComponent(
 
   it("default prop", () => {
     const styled = createStyledFactory();
-    const Component = styled(component).defaultProps({ role: "alert" });
+    const Component = styled(component).attrs({ role: "alert" });
     const { container } = render(<Component />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "alert" } }));
   });
 
   it("default prop and inline override", () => {
     const styled = createStyledFactory();
-    const Component = styled(component).defaultProps({ role: "default" });
+    const Component = styled(component).attrs({ role: "default" });
     const { container } = render(<Component role="other" />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "other" } }));
   });
 
   it("combination of everything", () => {
     const styled = createStyledFactory(sprinkles);
-    const Component = styled(component, recipeWithVariants).defaultProps({
+    const Component = styled(component, recipeWithVariants).attrs({
       "data-foo": "default",
       role: "alert",
     });

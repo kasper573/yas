@@ -41,7 +41,7 @@ export function createStyledFactory<Style>(
         });
       };
 
-    RecipeComponent.defaultProps = (defaultProps) =>
+    RecipeComponent.attrs = (defaultProps) =>
       createRecipeComponent(implementation, recipe, {
         ...options,
         defaultProps: {
@@ -50,7 +50,7 @@ export function createStyledFactory<Style>(
         },
       });
 
-    RecipeComponent.forwardProps = (forwardProps) =>
+    RecipeComponent.shouldForwardProp = (forwardProps) =>
       createRecipeComponent(implementation, recipe, {
         ...options,
         forwardProps,
@@ -109,12 +109,12 @@ interface RecipeComponent<
 > {
   (props: RecipeComponentProps<Implementation, Recipe, Style>): ReactElement;
 
-  defaultProps: (
-    defaultProps: Partial<RecipeComponentProps<Implementation, Recipe, Style>>,
+  attrs: (
+    props: Partial<RecipeComponentProps<Implementation, Recipe, Style>>,
   ) => RecipeComponent<Implementation, Recipe, Style>;
 
-  forwardProps: (
-    forwardProps: PropForwardTester<
+  shouldForwardProp: (
+    tester: PropForwardTester<
       keyof RecipeComponentProps<Implementation, Recipe, Style>
     >,
   ) => RecipeComponent<Implementation, Recipe, Style>;
