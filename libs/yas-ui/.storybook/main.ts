@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import { enhanceStoryIndexers } from "./enhanceStoryIndexers";
 
 const config: StorybookConfig = {
   stories: ["../docs/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -19,7 +18,6 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
   },
-  storyIndexers: enhanceStoryIndexers,
 };
 
 export default config;
