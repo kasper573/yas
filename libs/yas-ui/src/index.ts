@@ -11,7 +11,6 @@ export * from "./form/BaseForm";
 export * from "./form/BaseField";
 export * from "./form/BasicFormLayout";
 export * from "./form/FormControl";
-export * from "./form/FormControlInfo";
 export * from "./form/FormControlLabel";
 export * from "./form/Pagination";
 export * from "./form/rcf";
