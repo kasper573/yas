@@ -1,6 +1,6 @@
 import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
-import dark from "@yas/css/themes/dark.css";
-import light from "@yas/css/themes/light.css";
+import { dark } from "@yas/css/themes/dark.css";
+import { light } from "@yas/css/themes/light.css";
 
 if (ExecutionEnvironment.canUseDOM) {
   initialize();

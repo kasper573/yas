@@ -2,7 +2,7 @@ import { createTheme } from "@vanilla-extract/css";
 import { palette } from "../src/tokens";
 import { themeVars } from "../src/themeVars.css";
 
-export default createTheme(themeVars, {
+export const light: string = createTheme(themeVars, {
   color: {
     surfaceMain: palette["gray-100"],
     surfaceText: palette.black,
