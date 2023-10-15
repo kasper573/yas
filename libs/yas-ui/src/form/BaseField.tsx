@@ -3,7 +3,6 @@ import { styled } from "@yas/css";
 import { Alert } from "../atoms/Alert";
 import type { ControlFactory } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";
-import { FormControl } from "./FormControl";
 import type { FieldProps } from "./rcf";
 
 export type BaseFieldProps = Pick<
@@ -56,3 +55,4 @@ export function BaseField({
 }
 
 const FieldInfo = styled("div");
+const FormControl = styled("div");
