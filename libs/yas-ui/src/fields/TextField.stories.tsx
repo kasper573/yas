@@ -4,7 +4,7 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { TextField } from "./TextField";
 
 export default {
-  title: "TextField",
+  title: "fields/TextField",
   component: TextField,
   tags: ["autodocs"],
 } satisfies Meta<typeof TextField>;

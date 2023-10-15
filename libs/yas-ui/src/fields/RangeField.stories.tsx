@@ -5,7 +5,7 @@ import type { Range } from "./RangeField";
 import { RangeField } from "./RangeField";
 
 export default {
-  title: "RangeField",
+  title: "fields/RangeField",
   component: RangeField,
   tags: ["autodocs"],
 } satisfies Meta<typeof RangeField>;

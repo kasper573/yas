@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Modal } from "./Modal";
 
 export default {
-  title: "Modal",
+  title: "atoms/Modal",
   component: Modal,
   tags: ["autodocs"],
 } satisfies Meta<typeof Modal>;

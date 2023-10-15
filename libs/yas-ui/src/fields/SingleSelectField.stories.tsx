@@ -4,7 +4,7 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { SingleSelectField } from "./SingleSelectField";
 
 export default {
-  title: "SingleSelectField",
+  title: "fields/SingleSelectField",
   component: SingleSelectField,
   tags: ["autodocs"],
 } satisfies Meta<typeof SingleSelectField<number>>;
