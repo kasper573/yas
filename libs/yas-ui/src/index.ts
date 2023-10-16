@@ -2,6 +2,7 @@ export * from "./atoms/Alert";
 export * from "./atoms/Button";
 export * from "./atoms/Modal";
 export * from "./atoms/Text";
+export * from "./atoms/ExampleImage";
 export * from "./atoms/CircularProgress";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
