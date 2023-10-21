@@ -4,24 +4,24 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
 const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
+const { dataUrlFilePlugin } = require("esbuild-file-plugin");
 const { defineEnv } = require("./defineEnv");
-
-// NOTE This is a JS file because it was much simpler than configuring
-// Vite & node to load non-prebuilt ESM files via the workspace:* monorepo directive.
 
 function createYasViteConfig(projectRoot, { analyze } = {}) {
   return defineConfig({
-    envPrefix: "_SOMETHING_RIDICULOUS_TO_DISABLE_VITE_ENV_VARS",
     plugins: [
-      vanillaExtractPlugin(),
+      vanillaExtractPlugin({
+        esbuildOptions: {
+          plugins: [dataUrlFilePlugin()],
+        },
+      }),
       react(),
       checker({ typescript: true }),
       determineVisualizerPlugin(analyze),
     ].filter(Boolean),
 
-    // We use define to normalize and use process.env even in vite apps.
-    // This is to simplify tooling that need to import from our env file convention (see yas-env).
-    // We automatically expose all env variables that are referenced in the env file.
+    // We use define to opt-out of vite env convention in favor of our own (see yas-env).
+    envPrefix: "_SOMETHING_RIDICULOUS_TO_DISABLE_VITE_ENV_VARS",
     define: defineEnv(projectRoot),
   });
 }
