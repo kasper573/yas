@@ -1,6 +1,8 @@
 const esbuild = require("@vanilla-extract/esbuild-plugin");
 const vite = require("@vanilla-extract/vite-plugin");
-const { filePlugin } = require("esbuild-file-plugin");
+const { fileUrlPlugin } = require("esbuild-file-url-plugin");
+
+const filter = /\.(gif|jpe?g|tiff?|png|webp|bmp|svg|woff2?)$/;
 
 // Vanilla Extract almost works entirely out of the box,
 // but needs to be configured per bundler to instruct it how to handle assets,
@@ -8,20 +10,14 @@ const { filePlugin } = require("esbuild-file-plugin");
 
 function viteVanillaExtractPlugin() {
   return vite.vanillaExtractPlugin({
-    esbuildOptions: esbuildOptionsWithAssetLoaders(),
+    esbuildOptions: { plugins: [fileUrlPlugin({ filter })] },
   });
 }
 
 function esbuildVanillaExtractPlugin() {
   return esbuild.vanillaExtractPlugin({
-    esbuildOptions: esbuildOptionsWithAssetLoaders(),
+    esbuildOptions: { plugins: [fileUrlPlugin({ filter })] },
   });
-}
-
-function esbuildOptionsWithAssetLoaders() {
-  return {
-    plugins: [filePlugin()],
-  };
 }
 
 module.exports = { viteVanillaExtractPlugin, esbuildVanillaExtractPlugin };
