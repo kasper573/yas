@@ -3,18 +3,13 @@ const react = require("@vitejs/plugin-react");
 const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
-const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
-const { dataUrlFilePlugin } = require("esbuild-file-plugin");
 const { defineEnv } = require("./defineEnv");
+const { viteVanillaExtractPlugin } = require("./vanillaExtractPlugin");
 
 function createYasViteConfig(projectRoot, { analyze } = {}) {
   return defineConfig({
     plugins: [
-      vanillaExtractPlugin({
-        esbuildOptions: {
-          plugins: [dataUrlFilePlugin()],
-        },
-      }),
+      viteVanillaExtractPlugin(),
       react(),
       checker({ typescript: true }),
       determineVisualizerPlugin(analyze),
