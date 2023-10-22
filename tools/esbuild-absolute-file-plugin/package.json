@@ -1,5 +1,5 @@
 {
-  "name": "esbuild-file-url-plugin",
+  "name": "esbuild-absolute-file-plugin",
   "version": "0.0.0",
   "main": "src/index.js",
   "devDependencies": {

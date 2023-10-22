@@ -412,7 +412,7 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
 
-  tools/esbuild-file-url-plugin:
+  tools/esbuild-absolute-file-plugin:
     devDependencies:
       esbuild:
         specifier: ^0.19.4
@@ -620,9 +620,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(esbuild@0.18.20)(webpack@5.88.2)
-      esbuild-file-url-plugin:
+      esbuild-absolute-file-plugin:
         specifier: workspace:*
-        version: link:../esbuild-file-url-plugin
+        version: link:../esbuild-absolute-file-plugin
       rollup-plugin-visualizer:
         specifier: 5.9.0
         version: 5.9.0

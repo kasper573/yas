@@ -1,16 +1,16 @@
 const path = require("path");
 
 /**
- * Transforms files matching the given filter to urls relative to the project root.
- * Takes monorepo structures into consideration.
+ * Transforms files matching the given filter to absolute paths from the project root.
  * Intended to be used in combination with css url() statements.
+ * Takes monorepo structures into consideration.
  */
-function fileUrlPlugin({ filter = defaultFileFilter }) {
+function absoluteFilePlugin({ filter }) {
   /**
    * @type {import("esbuild").Plugin}
    */
   const config = {
-    name: "esbuild-file-plugin",
+    name: "esbuild-absolute-file-plugin",
     setup({ onLoad, initialOptions: { absWorkingDir } }) {
       onLoad({ filter }, async (args) => {
         const url = await translatePath(
@@ -51,4 +51,4 @@ async function translatePath(filePath, workingDir) {
   return translatedPath;
 }
 
-module.exports = { fileUrlPlugin };
+module.exports = { absoluteFilePlugin };

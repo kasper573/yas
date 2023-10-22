@@ -1,6 +1,6 @@
 const esbuild = require("@vanilla-extract/esbuild-plugin");
 const vite = require("@vanilla-extract/vite-plugin");
-const { fileUrlPlugin } = require("esbuild-file-url-plugin");
+const { absoluteFilePlugin } = require("esbuild-absolute-file-plugin");
 
 const filter = /\.(gif|jpe?g|tiff?|png|webp|bmp|svg|woff2?)$/;
 
@@ -10,13 +10,13 @@ const filter = /\.(gif|jpe?g|tiff?|png|webp|bmp|svg|woff2?)$/;
 
 function viteVanillaExtractPlugin() {
   return vite.vanillaExtractPlugin({
-    esbuildOptions: { plugins: [fileUrlPlugin({ filter })] },
+    esbuildOptions: { plugins: [absoluteFilePlugin({ filter })] },
   });
 }
 
 function esbuildVanillaExtractPlugin() {
   return esbuild.vanillaExtractPlugin({
-    esbuildOptions: { plugins: [fileUrlPlugin({ filter })] },
+    esbuildOptions: { plugins: [absoluteFilePlugin({ filter })] },
   });
 }
 
