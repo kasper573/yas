@@ -7,10 +7,6 @@ export default {
   tags: ["autodocs"],
 } satisfies Meta<typeof Modal>;
 
-export const Open: StoryObj<Meta<typeof Modal>> = {
+export const Default: StoryObj<Meta<typeof Modal>> = {
   args: { children: "Hello World!", open: true },
-};
-
-export const Closed: StoryObj<Meta<typeof Modal>> = {
-  args: { children: "Hello World!", open: false },
 };
