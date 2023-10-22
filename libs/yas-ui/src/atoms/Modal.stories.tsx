@@ -12,5 +12,5 @@ export const Open: StoryObj<Meta<typeof Modal>> = {
 };
 
 export const Closed: StoryObj<Meta<typeof Modal>> = {
-  args: { children: "Hello World!", open: true },
+  args: { children: "Hello World!", open: false },
 };
