@@ -11,14 +11,14 @@ function fileUrlPlugin({ filter = defaultFileFilter }) {
    */
   const config = {
     name: "esbuild-file-plugin",
-    setup(build) {
-      build.onLoad({ filter }, async (args) => {
-        const relativeUrl = await translatePath(
-          args.path,
-          build.initialOptions.absWorkingDir,
+    setup({ onLoad, initialOptions: { absWorkingDir } }) {
+      onLoad({ filter }, async (args) => {
+        const url = await translatePath(
+          path.normalize(args.path),
+          path.normalize(absWorkingDir),
         );
         return {
-          contents: `export default ${JSON.stringify(relativeUrl)};`,
+          contents: `export default ${JSON.stringify(url)};`,
           loader: "js",
         };
       });
@@ -29,12 +29,9 @@ function fileUrlPlugin({ filter = defaultFileFilter }) {
 }
 
 async function translatePath(filePath, workingDir) {
-  filePath = path.normalize(filePath);
-  workingDir = path.normalize(workingDir);
-
   const { pkgUp } = await import("pkg-up");
   const packageJsonPath = await pkgUp({ cwd: path.dirname(filePath) });
-  const fileUrl = path.relative(workingDir, filePath).replace(/\\/g, "/");
+  const fileUrl = path.relative(workingDir, filePath).replaceAll(/\\/g, "/");
   if (!packageJsonPath) {
     // File is not inside a package. Use path as-is.
     return `/${fileUrl}`;
@@ -49,7 +46,7 @@ async function translatePath(filePath, workingDir) {
   // File is in another package. Prefix to load through the correct package in node_modules.
   const packageName = require(packageJsonPath).name;
   const packageRelativeFilePath = path.relative(packagePath, filePath);
-  const packageRelativeUrl = packageRelativeFilePath.replace(/\\/g, "/");
+  const packageRelativeUrl = packageRelativeFilePath.replaceAll(/\\/g, "/");
   const translatedPath = `/node_modules/${packageName}/${packageRelativeUrl}`;
   return translatedPath;
 }
