@@ -1,0 +1,27 @@
+{
+  "name": "vanilla-extract-constrained",
+  "main": "src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit --project tsconfig.json",
+    "test": "pnpm test:unit run && pnpm test:types --run",
+    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
+    "test:unit": "vitest",
+    "test:types": "vitest typecheck"
+  },
+  "peerDependencies": {
+    "@vanilla-extract/sprinkles": "^1.6.1",
+    "@vanilla-extract/vite-plugin": "^3.9.0"
+  },
+  "devDependencies": {
+    "@yas/tsconfig": "workspace:*",
+    "@yas/vitest": "workspace:*",
+    "concurrently": "^8.2.1"
+  }
+}

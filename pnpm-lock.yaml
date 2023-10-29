@@ -547,6 +547,25 @@ importers:
         specifier: ^5.88.2
         version: 5.88.2
 
+  tools/vanilla-extract-constrained:
+    dependencies:
+      '@vanilla-extract/sprinkles':
+        specifier: ^1.6.1
+        version: 1.6.1(@vanilla-extract/css@1.13.0)
+      '@vanilla-extract/vite-plugin':
+        specifier: ^3.9.0
+        version: 3.9.0(@types/node@20.8.0)(vite@4.4.9)
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      '@yas/vitest':
+        specifier: workspace:*
+        version: link:../yas-vitest
+      concurrently:
+        specifier: ^8.2.1
+        version: 8.2.1
+
   tools/vanilla-extract-recipe-factory:
     dependencies:
       '@vanilla-extract/recipes':
