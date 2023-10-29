@@ -1,4 +1,5 @@
 import { defineProperties, createConstrained } from "../../index";
+import { colors } from "./tokens";
 
 const props = defineProperties({
   conditions: {
@@ -8,10 +9,10 @@ const props = defineProperties({
   },
   defaultCondition: "default",
   properties: {
-    color: ["red", "blue"],
+    color: [colors.red, colors.blue],
     background: {
-      success: "green",
-      failure: "red",
+      success: colors.green,
+      failure: colors.red,
     },
   },
 });
