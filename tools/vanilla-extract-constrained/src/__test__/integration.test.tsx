@@ -28,6 +28,18 @@ describe("vanilla-extract-constrained", () => {
     expect(getByText("Hello World")).toHaveStyle({ background: colors.red });
   });
 
+  it("conditional value is correct when condition is active", async () => {
+    const { conditionalRedColor } = await import(
+      "./fixtures/conditionalRedColor.css"
+    );
+    const { getByText } = render(
+      <div className={conditionalRedColor} data-condition>
+        Hello World
+      </div>,
+    );
+    expect(getByText("Hello World")).toBe(colors.red);
+  });
+
   it("can define multiple properties", async () => {
     const { validRedColorAndGreenBackground } = await import(
       "./fixtures/validRedColorAndGreenBackground.css"
@@ -35,8 +47,7 @@ describe("vanilla-extract-constrained", () => {
     const { getByText } = render(
       <div className={validRedColorAndGreenBackground}>Hello World</div>,
     );
-    const element = getByText("Hello World");
-    expect(element).toHaveStyle({
+    expect(getByText("Hello World")).toHaveStyle({
       color: colors.red,
       backgroundColor: colors.green,
     });

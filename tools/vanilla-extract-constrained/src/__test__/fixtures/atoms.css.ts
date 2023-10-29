@@ -4,8 +4,7 @@ import { colors } from "./tokens";
 const props = defineProperties({
   conditions: {
     default: {},
-    hover: { selector: "&:hover" },
-    active: { selector: "&:active" },
+    condition: { selector: `&[data-condition]` },
   },
   defaultCondition: "default",
   properties: {
