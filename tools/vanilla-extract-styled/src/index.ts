@@ -152,11 +152,11 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
 type StyleCompiler<Style> = (style: Style) => string | undefined;
 
 // Improved vanilla extract type utilities
-type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
-type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
+export type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
+export type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
   Exclude<Parameters<Recipe>[0], undefined>
 >;
-type VariantName<Recipe extends RecipeLike> = `${string &
+export type VariantName<Recipe extends RecipeLike> = `${string &
   keyof RecipeVariants<Recipe>}`;
 
 // We must strip plain indexes since recipes without variants

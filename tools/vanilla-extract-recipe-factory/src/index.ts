@@ -64,9 +64,8 @@ type Variants<Groups, T> = {
   };
 };
 
-type BooleanMap<T> = T extends "true" | "false" ? boolean : T;
 type VariantSelection<Groups> = {
-  [Group in keyof Groups]?: BooleanMap<keyof Groups[Group]>;
+  [Group in keyof Groups]?: TreatBooleanStringAsBoolean<keyof Groups[Group]>;
 };
 
 interface CompoundVariant<Groups, T> {
@@ -82,10 +81,13 @@ type PatternOptions<
   base?: OneOrMany<T>;
   variants?: Variants<Groups, T>;
   defaultVariants?: DefaultVariants;
-  compoundVariants?: Array<CompoundVariant<Groups, T>>;
+  compoundVariants?: Array<CompoundVariant<NoInfer<Groups>, T>>;
 };
 
 type OneOrMany<T> = T | T[];
+type NoInfer<T> = [T][T extends any ? 0 : never];
+type TreatBooleanStringAsBoolean<T> = T extends "true" | "false" ? boolean : T;
+
 function invokeOneOrMany<I, O>(
   fn: (i: I) => O,
   input?: OneOrMany<I>,
