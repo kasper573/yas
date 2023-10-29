@@ -41,4 +41,12 @@ describe("vanilla-extract-constrained", () => {
       backgroundColor: colors.green,
     });
   });
+
+  it("defining multiple properties yield a single class name", async () => {
+    const { validRedColorAndGreenBackground } = await import(
+      "./fixtures/validRedColorAndGreenBackground.css"
+    );
+    const classNames = validRedColorAndGreenBackground.split(" ");
+    expect(classNames).toHaveLength(1);
+  });
 });
