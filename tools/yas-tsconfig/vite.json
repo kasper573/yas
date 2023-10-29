@@ -2,8 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./react-library.json",
   "compilerOptions": {
-    "esModuleInterop": false,
-    "noEmit": true,
-    "types": ["vite/client"]
+    "esModuleInterop": false
   }
 }

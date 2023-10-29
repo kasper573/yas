@@ -4,6 +4,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM"],
-    "module": "ESNext"
+    "module": "ESNext",
+    "types": ["vite/client"]
   }
 }

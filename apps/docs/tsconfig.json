@@ -4,6 +4,7 @@
     "allowJs": true,
     "types": [
       "node",
+      "vite/client",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic"
     ]

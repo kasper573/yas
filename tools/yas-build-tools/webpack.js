@@ -45,14 +45,4 @@ function configureDocusaurusWebpackConfig(config) {
   });
 }
 
-/**
- *
- * @param {import("webpack").RuleSetRule} rule
- * @returns string
- */
-function describeRule(rule) {
-  const { test, use, loader } = rule;
-  return [test.toString(), loader ?? use];
-}
-
 module.exports = { configureDocusaurusWebpackConfig };
