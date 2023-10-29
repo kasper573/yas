@@ -16,4 +16,14 @@ describe("vanilla-extract-constrained", () => {
       `"color" has no value "yellow". Possible values are "red", "blue"`,
     );
   });
+
+  it("can define valid aliased value", async () => {
+    const { validAliasedRedColor } = await import(
+      "./fixtures/validAliasedRedColor.css"
+    );
+    const { getByText } = render(
+      <div className={validAliasedRedColor}>Hello World</div>,
+    );
+    expect(getByText("Hello World")).toHaveStyle({ color: "rgb(255, 0, 0)" });
+  });
 });
