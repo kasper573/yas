@@ -1,9 +1,9 @@
 import { render as renderRoot } from "@testing-library/react";
-import { colors } from "./fixtures/tokens";
+import { colors } from "./styles/tokens";
 
 describe("vanilla-extract-constrained", () => {
   it("can define valid value", async () => {
-    const { validRedColor } = await import("./fixtures/validRedColor.css");
+    const { validRedColor } = await import("./styles/validRedColor.css");
     const { container } = render(
       <div className={validRedColor}>Hello World</div>,
     );
@@ -12,7 +12,7 @@ describe("vanilla-extract-constrained", () => {
 
   it("can detect invalid value", async () => {
     await expect(
-      () => import("./fixtures/invalidYellowColor.css"),
+      () => import("./styles/invalidYellowColor.css"),
     ).rejects.toThrow(
       `"color" has no value "${colors.yellow}". Possible values are "${colors.red}", "${colors.blue}"`,
     );
@@ -20,7 +20,7 @@ describe("vanilla-extract-constrained", () => {
 
   it("can define valid aliased value", async () => {
     const { validAliasedRedBackground } = await import(
-      "./fixtures/validAliasedRedBackground.css"
+      "./styles/validAliasedRedBackground.css"
     );
     const { container } = render(
       <div className={validAliasedRedBackground}>Hello World</div>,
@@ -30,7 +30,7 @@ describe("vanilla-extract-constrained", () => {
 
   it("conditional value is correct when condition is active", async () => {
     const { conditionalRedColor } = await import(
-      "./fixtures/conditionalRedColor.css"
+      "./styles/conditionalRedColor.css"
     );
     const { container } = render(
       <div className={conditionalRedColor} data-condition>
@@ -42,7 +42,7 @@ describe("vanilla-extract-constrained", () => {
 
   it("can define multiple properties", async () => {
     const { validRedColorAndGreenBackground } = await import(
-      "./fixtures/validRedColorAndGreenBackground.css"
+      "./styles/validRedColorAndGreenBackground.css"
     );
     const { container } = render(
       <div className={validRedColorAndGreenBackground}>Hello World</div>,
@@ -55,7 +55,7 @@ describe("vanilla-extract-constrained", () => {
 
   it("defining multiple properties yield a single class name", async () => {
     const { validRedColorAndGreenBackground } = await import(
-      "./fixtures/validRedColorAndGreenBackground.css"
+      "./styles/validRedColorAndGreenBackground.css"
     );
     const classNames = validRedColorAndGreenBackground.split(" ");
     expect(classNames).toHaveLength(1);
