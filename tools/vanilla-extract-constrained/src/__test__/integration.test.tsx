@@ -25,7 +25,7 @@ describe("vanilla-extract-constrained", () => {
     const { getByText } = render(
       <div className={validAliasedRedBackground}>Hello World</div>,
     );
-    expect(getByText("Hello World")).toHaveStyle({ color: colors.red });
+    expect(getByText("Hello World")).toHaveStyle({ background: colors.red });
   });
 
   it("can define multiple properties", async () => {
