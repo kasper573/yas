@@ -1,10 +1,9 @@
 import type { ComponentProps, ReactNode } from "react";
+import { styled } from "@yas/css";
 import { Alert } from "../atoms/Alert";
 import type { ControlFactory } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";
-import { FormControl } from "./FormControl";
 import type { FieldProps } from "./rcf";
-import { FormControlInfo } from "./FormControlInfo";
 
 export type BaseFieldProps = Pick<
   FieldProps<unknown>,
@@ -45,7 +44,7 @@ export function BaseField({
       }}
     >
       <FormControlLabel control={controlFactory}>{label}</FormControlLabel>
-      {info && <FormControlInfo>{info}</FormControlInfo>}
+      {info && <FieldInfo>{info}</FieldInfo>}
       {actions}
       {controlChildren}
       {errors && errors.length > 0 && (
@@ -54,3 +53,6 @@ export function BaseField({
     </FormControl>
   );
 }
+
+const FieldInfo = styled("div");
+const FormControl = styled("div");

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "./Alert";
 
 export default {
-  title: "Alert",
+  title: "atoms/Alert",
   component: Alert,
   tags: ["autodocs"],
 } satisfies Meta<typeof Alert>;

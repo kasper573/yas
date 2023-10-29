@@ -37,6 +37,7 @@ export type inferLayoutProps<FormFactory> = FormFactory extends FormFactoryLike<
 >
   ? FormLayoutProps<
       G["schema"],
-      FieldComponentsForProps<inferFieldProps<FormFactory>>
+      FieldComponentsForProps<inferFieldProps<FormFactory>>,
+      true
     >
   : never;

@@ -2,7 +2,7 @@ import { recipe } from "@yas/css";
 
 export const textRecipe = recipe({
   base: {
-    fontFamily: "mono",
+    fontFamily: "inter",
     fontWeight: "normal",
     color: "surfaceText",
   },

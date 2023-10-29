@@ -63,11 +63,14 @@ export type AnyFormLayoutProps = FormLayoutProps<any, any>;
 export interface FormLayoutProps<
   Schema extends FormSchema,
   Components extends FieldComponentGenerics,
+  AnonymousFields extends boolean = false,
 > {
   generalErrors: FormError[];
   fieldErrors: FieldErrors<Schema>;
   fieldValues: inferValue<Schema>;
-  fields: FieldComponentsPassedToLayout<Schema, Components>;
+  fields: AnonymousFields extends true
+    ? AnonymousFieldComponentsPassedToLayout<Schema, Components>
+    : FieldComponentsPassedToLayout<Schema, Components>;
   handleSubmit: (e?: FormEvent) => unknown;
   reset: () => unknown;
 }
@@ -148,15 +151,36 @@ export type FieldComponentsPassedToLayout<
   Schema extends FormSchema,
   Components extends FieldComponentGenerics,
 > = {
-  [K in FieldNames<Schema> as Capitalize<K>]: ComponentType<
-    Partial<
-      K extends keyof Components["named"]
-        ? ComponentProps<Components["named"][K]>
-        : inferComponentProps<
-            GetTypedComponent<Components["typed"], inferFieldValue<Schema, K>>
-          >
-    >
+  [K in FieldNames<Schema> as Capitalize<K>]: ComponentPassedToLayout<
+    Schema,
+    Components,
+    K
   >;
 };
+
+export type AnonymousFieldComponentsPassedToLayout<
+  Schema extends FormSchema,
+  Components extends FieldComponentGenerics,
+> = Record<
+  string,
+  ComponentPassedToLayout<Schema, Components, FieldNames<Schema>>
+>;
+
+type ComponentPassedToLayout<
+  Schema extends FormSchema,
+  Components extends FieldComponentGenerics,
+  FieldName extends string,
+> = ComponentType<
+  Partial<
+    FieldName extends keyof Components["named"]
+      ? ComponentProps<Components["named"][FieldName]>
+      : inferComponentProps<
+          GetTypedComponent<
+            Components["typed"],
+            inferFieldValue<Schema, FieldName>
+          >
+        >
+  >
+>;
 
 type inferComponentProps<T> = T extends AnyComponent ? ComponentProps<T> : T;

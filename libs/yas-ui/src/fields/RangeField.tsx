@@ -13,7 +13,7 @@ export function RangeField<T extends Range>({
   min = 0,
   max = 1,
   name,
-  label,
+  label = name,
   value: [fromValue, toValue] = [min, max] as T,
   onChange,
   ...rest
@@ -21,7 +21,7 @@ export function RangeField<T extends Range>({
   return (
     <>
       <BaseField
-        name={`${name} (from)`}
+        name={`${label} (from)`}
         {...rest}
         control={(id) => (
           <Stack direction="row">
@@ -38,7 +38,7 @@ export function RangeField<T extends Range>({
         )}
       />
       <BaseField
-        name={`${name} (to)`}
+        name={`${label} (to)`}
         {...rest}
         control={(id) => (
           <Stack direction="row">

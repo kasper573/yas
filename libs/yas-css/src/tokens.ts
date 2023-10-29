@@ -1,3 +1,5 @@
+export * as fonts from "./fonts.css";
+
 export const spaces = {
   0: 0,
   "#1": 4,
@@ -73,6 +75,11 @@ export const fontSizes = {
   "#3": 16,
   "#4": 18,
   "#5": 20,
+  "#6": 24,
+  "#7": 30,
+  "#8": 36,
+  "#9": 48,
+  "#10": 60,
 };
 
 export const borderSizes = {
@@ -82,10 +89,6 @@ export const borderSizes = {
 };
 
 export const surfaceSizes = ["auto", "100vh", "100vw", "100%", 0] as const;
-
-export const fontFamilies = {
-  mono: "Söhne Mono, menlo, monospace",
-};
 
 export const opacities = [0, 0.25, 0.5, 0.75, 1];
 

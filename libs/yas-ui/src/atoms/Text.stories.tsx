@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "./Text";
 
 export default {
-  title: "Text",
+  title: "atoms/Text",
   component: Text,
   tags: ["autodocs"],
 } satisfies Meta<typeof Text>;

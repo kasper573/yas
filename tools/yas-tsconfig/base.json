@@ -16,7 +16,9 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "noEmit": true,
+    "outDir": "notReallyUsedButHasToBeHereToSatsifyVSCode"
   },
   "exclude": ["node_modules"]
 }

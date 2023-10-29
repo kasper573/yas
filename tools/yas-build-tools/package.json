@@ -9,8 +9,12 @@
     "@vanilla-extract/webpack-plugin": "^2.3.0",
     "@vitejs/plugin-react": "4.0.1",
     "@yas/env": "workspace:*",
-    "rollup-plugin-visualizer": "5.9.0",
+    "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
+    "esbuild-absolute-file-plugin": "workspace:*",
+    "file-loader": "^6.2.0",
+    "rollup-plugin-visualizer": "5.9.0",
+    "style-loader": "^3.3.3",
     "tsup": "7.2.0",
     "vite": "4.4.9",
     "vite-plugin-checker": "^0.5.6"

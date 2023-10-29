@@ -8,7 +8,7 @@ export const buttonRecipe = recipe({
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
-    fontFamily: "mono",
+    fontFamily: "inter",
     borderRadius: "#1",
     cursor: "pointer",
   },

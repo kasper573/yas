@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { CircularProgress } from "./CircularProgress";
 
 export default {
-  title: "CircularProgress",
+  title: "atoms/CircularProgress",
   component: CircularProgress,
   tags: ["autodocs"],
 } satisfies Meta<typeof CircularProgress>;

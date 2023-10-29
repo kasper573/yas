@@ -47,7 +47,7 @@ const staticProperties = defineProperties({
     overflowX: overflows,
     overflowY: overflows,
     textAlign: ["left", "center", "right", "inherit"],
-    fontFamily: tokens.fontFamilies,
+    fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
     fontWeight: ["normal", "bold"],
   },

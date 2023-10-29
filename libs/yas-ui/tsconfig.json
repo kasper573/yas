@@ -1,4 +1,7 @@
 {
-  "extends": "@yas/tsconfig/react-library.json",
-  "exclude": ["src/__test__"]
+  "extends": "@yas/tsconfig/vite.json",
+  "exclude": ["src/__test__"],
+  "compilerOptions": {
+    "types": ["@testing-library/jest-dom", "vite/client"]
+  }
 }

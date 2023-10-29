@@ -1,7 +1,8 @@
 {
   "extends": "@yas/tsconfig/vite.json",
   "compilerOptions": {
-    "types": ["jest"] // Must be manually added since playwright doesn't have full support for __test__/tsconfig.json
+    // jest Must be manually added since playwright doesn't have full support for __test__/tsconfig.json
+    "types": ["vite/client", "jest"]
   },
   "exclude": ["src/__test__"]
 }

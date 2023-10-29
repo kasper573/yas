@@ -23,7 +23,9 @@ async function run(
 
   if (missingSiblings.length) {
     console.error(
-      `❌  Missing ${siblingSuffix} sibling files for:\n${missingSiblings
+      `❌  Missing ${
+        missingSiblings.length
+      } ${siblingSuffix} sibling files for:\n${missingSiblings
         .map((file) => `  ${file}`)
         .join("\n")}`,
     );
