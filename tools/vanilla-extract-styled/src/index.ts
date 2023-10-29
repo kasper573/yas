@@ -8,7 +8,7 @@ import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { createElement } from "react";
 
 export function createStyledFactory<Style>(
-  compileStyle?: StyleCompiler<Style>
+  compileStyle?: StyleCompiler<Style>,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -16,7 +16,7 @@ export function createStyledFactory<Style>(
   >(
     implementation: Implementation,
     recipe?: Recipe,
-    options?: RecipeComponentOptions<Implementation, Recipe, Style>
+    options?: RecipeComponentOptions<Implementation, Recipe, Style>,
   ) {
     const RecipeComponent: RecipeComponent<Implementation, Recipe, Style> =
       function RecipeComponent({
@@ -72,7 +72,7 @@ export function destructureVariantProps<
   allProps: Props,
   recipe: Recipe,
   shouldForwardProp: PropForwardTester<keyof Props> = ({ isVariant }) =>
-    !isVariant
+    !isVariant,
 ) {
   const variantProps: Record<string, unknown> = {};
   const forwardedProps: Record<string, unknown> = {};
@@ -98,7 +98,7 @@ interface StyledComponentFactory<Style> {
     Recipe extends RecipeLike = RuntimeFn<{}>,
   >(
     implementation: Implementation,
-    recipe?: Recipe
+    recipe?: Recipe,
   ): RecipeComponent<Implementation, Recipe, Style>;
 }
 
@@ -110,13 +110,13 @@ interface RecipeComponent<
   (props: RecipeComponentProps<Implementation, Recipe, Style>): ReactElement;
 
   attrs: (
-    props: Partial<RecipeComponentProps<Implementation, Recipe, Style>>
+    props: Partial<RecipeComponentProps<Implementation, Recipe, Style>>,
   ) => RecipeComponent<Implementation, Recipe, Style>;
 
   shouldForwardProp: (
     tester: PropForwardTester<
       keyof RecipeComponentProps<Implementation, Recipe, Style>
-    >
+    >,
   ) => RecipeComponent<Implementation, Recipe, Style>;
 }
 
