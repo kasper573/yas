@@ -4,9 +4,7 @@ import { colors } from "./styles/tokens";
 describe("vanilla-extract-constrained", () => {
   it("can define valid value", async () => {
     const { validRedColor } = await import("./styles/validRedColor.css");
-    const { container } = render(
-      <div className={validRedColor}>Hello World</div>,
-    );
+    const { container } = render(<div className={validRedColor} />);
     expect(container).toHaveStyle({ color: colors.red });
   });
 
@@ -22,10 +20,16 @@ describe("vanilla-extract-constrained", () => {
     const { validAliasedRedBackground } = await import(
       "./styles/validAliasedRedBackground.css"
     );
-    const { container } = render(
-      <div className={validAliasedRedBackground}>Hello World</div>,
-    );
+    const { container } = render(<div className={validAliasedRedBackground} />);
     expect(container).toHaveStyle({ background: colors.red });
+  });
+
+  it("conditional value uses default when condition is inactive", async () => {
+    const { conditionalRedColor } = await import(
+      "./styles/conditionalRedColor.css"
+    );
+    const { container } = render(<div className={conditionalRedColor} />);
+    expect(container).toHaveStyle({ color: colors.blue });
   });
 
   it("conditional value is correct when condition is active", async () => {
@@ -33,9 +37,7 @@ describe("vanilla-extract-constrained", () => {
       "./styles/conditionalRedColor.css"
     );
     const { container } = render(
-      <div className={conditionalRedColor} data-condition>
-        Hello World
-      </div>,
+      <div className={conditionalRedColor} data-condition />,
     );
     expect(container).toHaveStyle({ color: colors.red });
   });
@@ -45,7 +47,7 @@ describe("vanilla-extract-constrained", () => {
       "./styles/validRedColorAndGreenBackground.css"
     );
     const { container } = render(
-      <div className={validRedColorAndGreenBackground}>Hello World</div>,
+      <div className={validRedColorAndGreenBackground} />,
     );
     expect(container).toHaveStyle({
       color: colors.red,
