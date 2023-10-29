@@ -1,7 +1,36 @@
 const { VanillaExtractPlugin } = require("@vanilla-extract/webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-function configureDocusaurusWebpackConfig({ plugins, optimization }) {
+const vanillaCssFile = /\.vanilla\.css$/i;
+
+/**
+ * @param {import("webpack").Configuration} config
+ */
+function configureDocusaurusWebpackConfig(config) {
+  const {
+    plugins,
+    optimization,
+    module: { rules },
+  } = config;
+
+  // Make built-in css rules ignore css files output byvanilla extract
+  for (const rule of rules.filter((rule) => rule.test.test(".css"))) {
+    const { test } = rule;
+    rule.test = (path) => test.test(path) && !vanillaCssFile.test(path);
+  }
+
+  config.module.rules.push({
+    test: vanillaCssFile,
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
+        loader: require.resolve("css-loader"),
+        options: { url: false }, // Required as image imports should be handled via JS/TS import statements
+      },
+    ],
+  });
+
   plugins.push(new VanillaExtractPlugin());
 
   // Update to latest version of css minifier because 4.2.2 and down crashes:
@@ -14,6 +43,16 @@ function configureDocusaurusWebpackConfig({ plugins, optimization }) {
       optimization.minimizer[index] = new CssMinimizerPlugin();
     }
   });
+}
+
+/**
+ *
+ * @param {import("webpack").RuleSetRule} rule
+ * @returns string
+ */
+function describeRule(rule) {
+  const { test, use, loader } = rule;
+  return [test.toString(), loader ?? use];
 }
 
 module.exports = { configureDocusaurusWebpackConfig };
