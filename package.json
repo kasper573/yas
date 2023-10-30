@@ -10,14 +10,16 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency 30",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix",
+    "lint": "pnpm eslint . --max-warnings=0",
+    "lint:fix": "pnpm eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
-    "test:watch": "turbo run test:watch"
+    "test:watch": "turbo run test:watch",
+    "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=4096 eslint"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "eslint-config-yas": "workspace:*",
     "eslint-plugin-yas": "workspace:*",
     "eslint": "^8.48.0",
