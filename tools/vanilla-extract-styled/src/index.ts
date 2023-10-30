@@ -28,13 +28,11 @@ export function createStyledFactory<Style>(
         const [variantProps, forwardedProps] = recipe
           ? destructureVariantProps(props, recipe, options?.forwardProps)
           : [emptyObject, props];
-        const className = [
+        const className = clsx(
           recipe?.(variantProps),
           sx ? compileStyle?.(sx) : undefined,
           inlineClassName,
-        ]
-          .filter(Boolean)
-          .join(" ");
+        );
         return createElement(implementation, {
           className,
           ...forwardedProps,
@@ -170,3 +168,8 @@ type StripIndexes<T> = {
     ? never
     : K]: T[K];
 };
+
+function clsx(...classNames: Array<string | undefined>) {
+  const defined = classNames.filter(Boolean);
+  return defined.length ? defined.join(" ") : undefined;
+}
