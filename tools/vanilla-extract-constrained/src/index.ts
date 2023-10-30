@@ -1,6 +1,6 @@
 import { createSprinkles } from "@vanilla-extract/sprinkles";
 
-export function createConstrained(options: unknown) {
+export function createConstrained(options: any) {
   return createSprinkles(options);
 }
 

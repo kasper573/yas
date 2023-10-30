@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
+      - uses: cypress-io/github-action@v6
       - run: npx playwright install --with-deps
       - run: pnpm test
       - uses: actions/upload-artifact@v3

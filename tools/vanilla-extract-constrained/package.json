@@ -10,21 +10,21 @@
   },
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
-    "test": "pnpm test:unit run && pnpm test:types --run",
-    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
-    "test:unit": "vitest",
-    "test:types": "vitest typecheck"
+    "test": "cypress run --component",
+    "test:watch": "cypress open"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "^3.9.0"
   },
   "devDependencies": {
+    "@types/node": "^20.8.9",
+    "@types/react": "18.2.33",
     "@vanilla-extract/css": "^1.6.1",
     "@vanilla-extract/sprinkles": "1.6.1",
+    "@yas/build-tools": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "@yas/vitest": "workspace:*",
-    "@types/react": "18.2.33",
-    "concurrently": "^8.2.1",
-    "react": "^18.2.0"
+    "cypress": "^13.3.3",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

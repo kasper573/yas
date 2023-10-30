@@ -1,4 +1,4 @@
-import { defineProperties, createConstrained } from "../../index";
+import { defineProperties, createConstrained } from "../../../src/index";
 import { colors } from "./tokens";
 
 const props = defineProperties({
