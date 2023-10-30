@@ -1,3 +1,4 @@
+import { mount } from "cypress/react18";
 import { colors } from "./styles/tokens";
 import {
   validRedColor,
@@ -46,6 +47,6 @@ it("defining multiple properties yield a single class name", () => {
 });
 
 function render(element: JSX.Element) {
-  cy.mount(element);
+  mount(element);
   return cy.get(":root");
 }

@@ -4,6 +4,7 @@ const { createYasViteConfig } = require("@yas/build-tools/vite");
 module.exports = defineConfig({
   component: {
     specPattern: "**/*.cy.{ts,tsx}",
+    supportFile: false,
     screenshotsFolder: false,
     devServer: {
       framework: "react",
