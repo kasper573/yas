@@ -6,6 +6,7 @@ module.exports = defineConfig({
     specPattern: "**/*.cy.{ts,tsx}",
     supportFile: false,
     screenshotsFolder: false,
+    trashAssetsBeforeRuns: false,
     devServer: {
       framework: "react",
       bundler: "vite",
