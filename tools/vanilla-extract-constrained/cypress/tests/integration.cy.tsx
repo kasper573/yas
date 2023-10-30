@@ -1,4 +1,5 @@
 import { mount } from "cypress/react18";
+import { cloneElement } from "react";
 import { colors } from "./styles/tokens";
 import {
   validRedColor,
@@ -42,11 +43,12 @@ it("can define multiple properties", () => {
 });
 
 it("defining multiple properties yield a single class name", () => {
-  const classNames = validRedColorAndGreenBackground.split(" ");
-  cy.wrap(classNames).should("have.length", 1);
+  render(<div className={validRedColorAndGreenBackground} />)
+    .then(([el]) => el.classList.length)
+    .should("eq", 1);
 });
 
 function render(element: JSX.Element) {
-  mount(element);
-  return cy.get(":root");
+  mount(cloneElement(element, { "data-testid": "root" }));
+  return cy.get(`[data-testid="root"]`);
 }
