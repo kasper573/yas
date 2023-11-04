@@ -10,6 +10,7 @@ module.exports = {
     "react",
     "react-hooks",
     "yas",
+    "neverthrow",
   ],
   extends: [
     "plugin:monorepo-cop/recommended",
@@ -123,6 +124,7 @@ module.exports = {
     ...require("@yas/env/eslintOverrides"),
     ...require("@yas/css/eslintOverrides"),
     ...require("@yas/zod/eslintOverrides"),
+    ...require("@yas/result/eslintOverrides"),
   ],
 };
 

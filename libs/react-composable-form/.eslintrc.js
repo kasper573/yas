@@ -8,5 +8,7 @@ module.exports = {
     "@typescript-eslint/no-var-requires": "off",
     // We disable this to allow using zod in this library
     "no-restricted-imports": "off",
+    // This rule is too strict for this library
+    "yas/disallow-exceptions": "off",
   },
 };

@@ -31,6 +31,7 @@
     "@yas/build-tools": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
+    "@yas/result": "workspace:*",
     "mini-css-extract-plugin": "^2.7.6",
     "remark-html-to-jsx": "workspace:*",
     "remark-shiki-twoslash": "^3.1.3",

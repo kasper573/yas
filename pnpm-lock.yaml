@@ -145,6 +145,9 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../../tools/yas-env
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libs/result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../tools/yas-tsconfig
@@ -282,6 +285,16 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+
+  libs/result:
+    dependencies:
+      neverthrow:
+        specifier: 6.1.0
+        version: 6.1.0
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../tools/yas-tsconfig
 
   libs/yas-css:
     dependencies:
@@ -441,6 +454,9 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../yas-env
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libs/result
       '@yas/zod':
         specifier: workspace:*
         version: link:../../libs/yas-zod
@@ -459,6 +475,9 @@ importers:
       eslint-plugin-monorepo-cop:
         specifier: ^1.0.2
         version: 1.0.2
+      eslint-plugin-neverthrow:
+        specifier: 1.1.4
+        version: 1.1.4(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
       eslint-plugin-react:
         specifier: ^7.33.2
         version: 7.33.2(eslint@8.50.0)
@@ -6559,6 +6578,13 @@ packages:
       '@types/eslint': 8.44.3
       '@types/estree': 1.0.2
 
+  /@types/eslint-utils@3.0.4:
+    resolution: {integrity: sha512-UBwDhLhIW39LHAbSmDLEepR5+8EFv6M/+lKxVRzQO9fugzvMWW3noBkxXuAONFVuHQ2KGS0X9Js2MET0Xlc47A==}
+    dependencies:
+      '@types/eslint': 8.44.3
+      '@types/estree': 1.0.2
+    dev: true
+
   /@types/eslint@8.44.3:
     resolution: {integrity: sha512-iM/WfkwAhwmPff3wZuPLYiHX18HI24jU8k1ZSH7P8FHwxTjZ2P6CoX2wnF43oprR+YXJM6UUxATkNvyv/JHd+g==}
     dependencies:
@@ -10469,6 +10495,22 @@ packages:
       requireindex: 1.1.0
     dev: true
 
+  /eslint-plugin-neverthrow@1.1.4(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-+8zsE5rDqsDfKYAOq0Fr2jbuxHXTmntIWWJqJA3ms1GAKcVCjl0ycetzOu/hTxot9ctr+WYQpCBgB3F2HATR7A==}
+    engines: {node: '>=14.17'}
+    peerDependencies:
+      '@typescript-eslint/parser': '>=4.20.0'
+      eslint: '>=5.16.0'
+    dependencies:
+      '@types/eslint-utils': 3.0.4
+      '@typescript-eslint/parser': 6.7.3(eslint@8.50.0)(typescript@5.2.2)
+      eslint: 8.50.0
+      eslint-utils: 3.0.0(eslint@8.50.0)
+      tsutils: 3.21.0(typescript@5.2.2)
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
   /eslint-plugin-react-hooks@4.6.0(eslint@8.50.0):
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
     engines: {node: '>=10'}
@@ -10552,6 +10594,21 @@ packages:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
+    dev: true
+
+  /eslint-utils@3.0.0(eslint@8.50.0):
+    resolution: {integrity: sha512-uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==}
+    engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
+    peerDependencies:
+      eslint: '>=5'
+    dependencies:
+      eslint: 8.50.0
+      eslint-visitor-keys: 2.1.0
+    dev: true
+
+  /eslint-visitor-keys@2.1.0:
+    resolution: {integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==}
+    engines: {node: '>=10'}
     dev: true
 
   /eslint-visitor-keys@3.4.3:
@@ -15110,6 +15167,10 @@ packages:
 
   /neverthrow@6.0.0:
     resolution: {integrity: sha512-kPZKRs4VkdloCGQXPoP84q4sT/1Z+lYM61AXyV8wWa2hnuo5KpPBF2S3crSFnMrOgUISmEBP8Vo/ngGZX60NhA==}
+    dev: false
+
+  /neverthrow@6.1.0:
+    resolution: {integrity: sha512-xNbNjp/6M5vUV+mststgneJN9eJeJCDSYSBTaf3vxgvcKooP+8L0ATFpM8DGfmH7UWKJeoa24Qi33tBP9Ya3zA==}
     dev: false
 
   /no-case@3.0.4:
