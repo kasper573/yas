@@ -49,6 +49,17 @@ it("defining multiple properties yield a single class name", () => {
 });
 
 function render(element: JSX.Element) {
-  mount(cloneElement(element, { "data-testid": "root" }));
+  mount(
+    cloneElement(element, {
+      "data-testid": "root",
+      style: testElementDefaultStyle,
+    }),
+  );
   return cy.get(`[data-testid="root"]`);
 }
+
+const testElementDefaultStyle = {
+  width: 50,
+  height: 50,
+  border: "1px solid black",
+};
