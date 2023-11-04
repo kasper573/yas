@@ -19,6 +19,7 @@
     "neverthrow": "6.1.0"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*"
+    "@yas/tsconfig": "workspace:*",
+    "@types/node": "20.8.10"
   }
 }

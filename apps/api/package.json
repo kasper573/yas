@@ -20,8 +20,8 @@
   "dependencies": {
     "@trpc/server": "^10.32.0",
     "@yas/zod": "workspace:*",
-    "express": "^4.18.2",
-    "neverthrow": "^6.0.0"
+    "@yas/result": "workspace:*",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
