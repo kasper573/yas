@@ -1,6 +1,6 @@
 import type { ZodObject } from "zod";
 import { z } from "zod";
-import type { ComponentType } from "react";
+import type { ComponentProps, ComponentType } from "react";
 import type {
   FieldNames,
   FormSchema,
@@ -154,7 +154,10 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       ...rest
     } = this.options;
     if (initProps) {
-      component = withDefaultProps(component, initProps as never);
+      component = withDefaultProps(
+        component,
+        initProps as ComponentProps<typeof component>,
+      );
     }
     return new FormOptionsBuilder({
       ...rest,
@@ -219,7 +222,10 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       ...rest
     } = this.options;
     if (initProps) {
-      component = withDefaultProps(component, initProps as never);
+      component = withDefaultProps(
+        component,
+        initProps as ComponentProps<typeof component>,
+      );
     }
     return new FormOptionsBuilder({
       ...rest,
