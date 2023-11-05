@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@types/dotenv-flow": "^3.3.1",
-    "@types/node": "^20.5.9",
     "@yas/tsconfig": "workspace:*",
     "@yas/zod": "workspace:*",
     "@yas/test": "workspace:*",

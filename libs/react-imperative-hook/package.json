@@ -42,7 +42,6 @@
     "@yas/build": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.21",
-    "@types/node": "^20.5.9",
     "publicize-package-json": "workspace:*",
     "react": "^18.2.0",
     "immer": "^10.0.2"

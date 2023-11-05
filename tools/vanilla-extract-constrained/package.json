@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
-    "@types/node": "^20.8.9",
     "@types/react": "18.2.33",
     "@vanilla-extract/css": "^1.6.1",
     "@vanilla-extract/sprinkles": "1.6.1",

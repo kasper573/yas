@@ -26,7 +26,6 @@
     "@yas/test": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.21",
-    "@types/node": "^20.5.9",
     "concurrently": "^8.2.1",
     "react": "^18.2.0"
   }
