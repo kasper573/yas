@@ -43,7 +43,7 @@ function compileVariants<Groups, Style, CompiledStyle extends string>(
 ): Variants<Groups, CompiledStyle> {
   const map = {} as Variants<Groups, CompiledStyle>;
   for (const [groupName, groupVariants] of typedEntries(variants)) {
-    const group = (map[groupName] ??= {} as never);
+    const group = (map[groupName] ??= {} as (typeof map)[typeof groupName]);
     for (const [variantName, variantValue] of typedEntries(groupVariants)) {
       const value = invokeOneOrMany(compileStyle, variantValue);
       if (value !== undefined) {

@@ -26,7 +26,10 @@ export function defineAbstractHookTest<T extends AnyComponent>(
   test("useInlineSpawner", () =>
     defineTest((options) => {
       const spawnModal = imp.useInlineSpawner(options);
-      return (props) => spawnModal(component, props as never);
+      return (props) => {
+        // @ts-expect-error lazy avoidance of having to specify the correct generic argument for test convenience. It's okay to pass in empty object.
+        return spawnModal(component, props);
+      };
     }, render));
 }
 

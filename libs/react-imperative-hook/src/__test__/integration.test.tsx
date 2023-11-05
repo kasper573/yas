@@ -132,7 +132,17 @@ describe("removeOnUnmount", () => {
   ) => {
     function Source() {
       const spawn = useHook(hookOptions);
-      return <button onClick={() => spawn({} as never)}>Open dialog</button>;
+
+      return (
+        <button
+          onClick={() => {
+            // @ts-expect-error lazy avoidance of having to specify the correct generic argument for test convenience. It's okay to pass in empty object.
+            spawn({});
+          }}
+        >
+          Open dialog
+        </button>
+      );
     }
     render(() => {
       const [visible, setVisible] = useState(true);

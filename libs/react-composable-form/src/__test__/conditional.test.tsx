@@ -10,7 +10,12 @@ describe("discriminated union schema", () => {
 
       const { getByText, getAllByTestId } = render(
         <Form
-          value={{ base: "foo", type: undefined as never, str: "hello" }}
+          value={{
+            base: "foo",
+            str: "hello",
+            // @ts-expect-error Intentionally assigning invalid value to test what happens if discriminator is not set
+            type: undefined,
+          }}
         />,
       );
 
