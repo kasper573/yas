@@ -1,3 +1,4 @@
+import type { ComponentType } from "react";
 import { memo, useCallback, useContext } from "react";
 import type {
   FieldNames,
@@ -48,17 +49,16 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
    * Resolves the enhanced components that should be active for the given values.
    */
   return function resolveFieldComponents(values: inferValue<G["schema"]>) {
-    const resolved = {} as FieldComponentsPassedToLayout<
-      G["schema"],
-      G["components"]
-    >;
+    const resolved = {} as Record<string, ComponentType>;
     for (const [field, component] of enhancedComponents.entries()) {
-      // @ts-expect-error Typescript won't allow using Capitalized as key, which is silly, so we ignore it.
       resolved[field.componentName] = field.isActive(values)
         ? component
         : NullComponent;
     }
-    return resolved;
+    return resolved as FieldComponentsPassedToLayout<
+      G["schema"],
+      G["components"]
+    >;
   };
 }
 
