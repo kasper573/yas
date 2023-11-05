@@ -10,9 +10,8 @@
   },
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
-    "test": "cypress run --component",
-    "test:watch": "cypress open",
-    "test-ct": "playwright test -c playwright-ct.config.js"
+    "test": "playwright test -c playwright-ct.config.js",
+    "test:watch": "pnpm test --ui"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "^3.9.0"
@@ -25,7 +24,6 @@
     "@vanilla-extract/sprinkles": "1.6.1",
     "@yas/build-tools": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "cypress": "^13.3.3",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   }
