@@ -53,15 +53,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       schema,
-    } as FormOptions<
-      RCFGenerics<
-        G["baseFieldProps"],
-        NewSchema,
-        G["layoutProps"],
-        G["components"],
-        G["customExternalError"]
-      >
-    >);
+    }) as ReturnType<typeof this.schema<NewSchema>>;
   }
 
   customExternalErrors<NewCustomError>(
@@ -78,15 +70,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       externalErrorParser,
-    } as FormOptions<
-      RCFGenerics<
-        G["baseFieldProps"],
-        G["schema"],
-        G["layoutProps"],
-        G["components"],
-        NewCustomError
-      >
-    >);
+    }) as ReturnType<typeof this.customExternalErrors<NewCustomError>>;
   }
 
   layout<
@@ -112,15 +96,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       layout,
-    } as FormOptions<
-      RCFGenerics<
-        G["baseFieldProps"],
-        G["schema"],
-        MakeOptional<NewLayoutProps, keyof DefaultProps>,
-        G["components"],
-        G["customExternalError"]
-      >
-    >);
+    }) as ReturnType<typeof this.layout<NewLayoutProps, DefaultProps>>;
   }
 
   type<Type extends ValueType, AdditionalProps>(
@@ -165,26 +141,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
         named,
         typed: setTypedComponent(typed, type, component),
       },
-    } as FormOptions<
-      RCFGenerics<
-        G["baseFieldProps"],
-        G["schema"],
-        G["layoutProps"],
-        {
-          named: G["components"]["named"];
-          typed: SetTypedComponent<
-            G["components"]["typed"],
-            inferValue<Type>,
-            ComposedFieldComponent<
-              G["schema"],
-              inferValue<Type>,
-              AdditionalProps
-            >
-          >;
-        },
-        G["customExternalError"]
-      >
-    >);
+    }) as ReturnType<typeof this.type<Type, AdditionalProps>>;
   }
 
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
@@ -236,26 +193,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
           [name]: component,
         },
       },
-    } as FormOptions<
-      RCFGenerics<
-        G["baseFieldProps"],
-        G["schema"],
-        G["layoutProps"],
-        {
-          typed: G["components"]["typed"];
-          named: Omit<G["components"]["named"], FieldName> &
-            Record<
-              FieldName,
-              ComposedFieldComponent<
-                G["schema"],
-                inferFieldValue<G["schema"], FieldName>,
-                AdditionalProps
-              >
-            >;
-        },
-        G["customExternalError"]
-      >
-    >);
+    }) as ReturnType<typeof this.field<FieldName, AdditionalProps>>;
   }
 
   conditions(
