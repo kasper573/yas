@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
     "test": "playwright test -c playwright-ct.config.js",
-    "test:watch": "pnpm test --ui"
+    "test:watch": "pnpm run test --ui"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "^3.9.0"
