@@ -8,18 +8,6 @@ export default defineConfig({
     ctPort: 3100,
     ctViteConfig: createYasViteConfig(__dirname),
   },
-  projects: [
-    {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-  ],
+  // No need to test multiple browsers as there's no runtime differences
+  projects: [{ name: "chromium", use: devices["Desktop Chrome"] }],
 });
