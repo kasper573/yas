@@ -1,10 +1,10 @@
 // @ts-check
 
 import * as path from "path";
-import { mergeConfig } from "vitest/config";
-import { defineConfig as defineConfigNode } from "../node/index.mjs";
 import { fileURLToPath } from "url";
+import { mergeConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import { defineConfig as defineConfigNode } from "../node/index.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
