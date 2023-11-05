@@ -1,13 +1,18 @@
 {
-  "name": "@yas/vitest",
+  "name": "@yas/test",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "bin": {
+    "yas-playwright": "./playwright-cli-fix.js"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@vitejs/plugin-react": "^4.0.4",
     "@yas/tsconfig": "workspace:*",
+    "@playwright/test": "^1.36.1",
+    "@types/jest": "^29.5.4",
     "jsdom": "^22.1.0",
     "vitest": "0.34.3"
   }

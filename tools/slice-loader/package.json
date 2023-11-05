@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/acorn": "^6.0.0",
-    "@yas/vitest": "workspace:*",
+    "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "webpack": "^5.88.2"
   }

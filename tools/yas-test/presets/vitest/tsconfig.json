@@ -1,5 +1,5 @@
 {
-  "extends": "@yas/tsconfig/react-library.json",
+  "extends": "@yas/tsconfig/vite.json",
   "compilerOptions": {
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   }

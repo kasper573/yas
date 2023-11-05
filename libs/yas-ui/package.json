@@ -41,7 +41,7 @@
     "@types/react-dom": "^18.0.11",
     "@yas/build": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "@yas/vitest": "workspace:*",
+    "@yas/test": "workspace:*",
     "assert-sibling-files": "workspace:*",
     "concurrently": "^8.0.1",
     "prop-types": "15.8.1",

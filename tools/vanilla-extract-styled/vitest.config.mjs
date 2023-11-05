@@ -1,4 +1,4 @@
-import { defineConfig } from "@yas/vitest/presets/react";
+import { defineConfig } from "@yas/test/presets/vitest/react";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import { recipeClassName } from "./src/__test__/fixtures";
 
