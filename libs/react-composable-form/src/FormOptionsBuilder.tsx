@@ -53,7 +53,15 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       schema,
-    } as never);
+    } as FormOptions<
+      RCFGenerics<
+        G["baseFieldProps"],
+        NewSchema,
+        G["layoutProps"],
+        G["components"],
+        G["customExternalError"]
+      >
+    >);
   }
 
   customExternalErrors<NewCustomError>(
@@ -70,7 +78,15 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       externalErrorParser,
-    } as never);
+    } as FormOptions<
+      RCFGenerics<
+        G["baseFieldProps"],
+        G["schema"],
+        G["layoutProps"],
+        G["components"],
+        NewCustomError
+      >
+    >);
   }
 
   layout<
@@ -96,7 +112,15 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       layout,
-    } as never);
+    } as FormOptions<
+      RCFGenerics<
+        G["baseFieldProps"],
+        G["schema"],
+        MakeOptional<NewLayoutProps, keyof DefaultProps>,
+        G["components"],
+        G["customExternalError"]
+      >
+    >);
   }
 
   type<Type extends ValueType, AdditionalProps>(
@@ -138,7 +162,26 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
         named,
         typed: setTypedComponent(typed, type, component),
       },
-    } as never);
+    } as FormOptions<
+      RCFGenerics<
+        G["baseFieldProps"],
+        G["schema"],
+        G["layoutProps"],
+        {
+          named: G["components"]["named"];
+          typed: SetTypedComponent<
+            G["components"]["typed"],
+            inferValue<Type>,
+            ComposedFieldComponent<
+              G["schema"],
+              inferValue<Type>,
+              AdditionalProps
+            >
+          >;
+        },
+        G["customExternalError"]
+      >
+    >);
   }
 
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
@@ -187,23 +230,42 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
           [name]: component,
         },
       },
-    } as never);
+    } as FormOptions<
+      RCFGenerics<
+        G["baseFieldProps"],
+        G["schema"],
+        G["layoutProps"],
+        {
+          typed: G["components"]["typed"];
+          named: Omit<G["components"]["named"], FieldName> &
+            Record<
+              FieldName,
+              ComposedFieldComponent<
+                G["schema"],
+                inferFieldValue<G["schema"], FieldName>,
+                AdditionalProps
+              >
+            >;
+        },
+        G["customExternalError"]
+      >
+    >);
   }
 
   conditions(
-    fieldConditionSelector: FieldConditionsSelector<G["schema"]>,
+    fieldConditionsSelector: FieldConditionsSelector<G["schema"]>,
   ): FormOptionsBuilder<G> {
-    return new FormOptionsBuilder({
+    return new FormOptionsBuilder<G>({
       ...this.options,
-      fieldConditionsSelector: fieldConditionSelector,
-    } as never);
+      fieldConditionsSelector,
+    } as FormOptions<G>);
   }
 
   validateOn(...modes: FormValidationMode[]): FormOptionsBuilder<G> {
     return new FormOptionsBuilder({
       ...this.options,
       modes,
-    } as never);
+    } as FormOptions<G>);
   }
 
   // build is static as a quick and dirty way to hide the build function from the library consumer,
