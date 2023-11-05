@@ -34,7 +34,7 @@ importers:
         version: 10.38.5
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libs/result
+        version: link:../../libs/yas-result
       '@yas/zod':
         specifier: workspace:*
         version: link:../../libs/yas-zod
@@ -147,7 +147,7 @@ importers:
         version: link:../../tools/yas-env
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libs/result
+        version: link:../../libs/yas-result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../tools/yas-tsconfig
@@ -286,19 +286,6 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
 
-  libs/result:
-    dependencies:
-      neverthrow:
-        specifier: 6.1.0
-        version: 6.1.0
-    devDependencies:
-      '@types/node':
-        specifier: 20.8.10
-        version: 20.8.10
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../tools/yas-tsconfig
-
   libs/yas-css:
     dependencies:
       '@vanilla-extract/recipes':
@@ -317,6 +304,19 @@ importers:
         specifier: workspace:*
         version: link:../../tools/vanilla-extract-styled
     devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../tools/yas-tsconfig
+
+  libs/yas-result:
+    dependencies:
+      neverthrow:
+        specifier: 6.1.0
+        version: 6.1.0
+    devDependencies:
+      '@types/node':
+        specifier: 20.8.10
+        version: 20.8.10
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../tools/yas-tsconfig
@@ -459,7 +459,7 @@ importers:
         version: link:../yas-env
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libs/result
+        version: link:../../libs/yas-result
       '@yas/zod':
         specifier: workspace:*
         version: link:../../libs/yas-zod
