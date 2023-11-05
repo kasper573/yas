@@ -11,12 +11,14 @@
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
     "test": "cypress run --component",
-    "test:watch": "cypress open"
+    "test:watch": "cypress open",
+    "test-ct": "playwright test -c playwright-ct.config.js"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "^3.9.0"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "1.40.0-alpha-nov-5-2023",
     "@types/node": "^20.8.9",
     "@types/react": "18.2.33",
     "@vanilla-extract/css": "^1.6.1",
