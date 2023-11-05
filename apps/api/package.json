@@ -28,7 +28,7 @@
     "@types/express": "^4.17.17",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.5.8",
-    "@yas/build-tools": "workspace:*",
+    "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/vitest": "workspace:*",
     "@yas/tsconfig": "workspace:*",

@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-const { createYasViteConfig } = require("@yas/build-tools/vite");
+const { createYasViteConfig } = require("@yas/build/vite");
 
 module.exports = defineConfig({
   component: {

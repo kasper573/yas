@@ -39,7 +39,7 @@
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
     "@yas/vitest": "workspace:*",
-    "@yas/build-tools": "workspace:*",
+    "@yas/build": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.21",
     "@types/node": "^20.5.9",

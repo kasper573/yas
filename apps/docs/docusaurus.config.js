@@ -1,7 +1,5 @@
 const path = require("path");
-const {
-  configureDocusaurusWebpackConfig,
-} = require("@yas/build-tools/webpack");
+const { configureDocusaurusWebpackConfig } = require("@yas/build/webpack");
 const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
 

@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
-    "@yas/build-tools": "workspace:*",
+    "@yas/build": "workspace:*",
     "@yas/vitest": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "^8.0.1",

@@ -1,5 +1,5 @@
 const { defineConfig, devices } = require("@playwright/experimental-ct-react");
-const { createYasViteConfig } = require("@yas/build-tools/vite");
+const { createYasViteConfig } = require("@yas/build/vite");
 
 export default defineConfig({
   testDir: "./",

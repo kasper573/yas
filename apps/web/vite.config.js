@@ -1,3 +1,3 @@
-import { createYasViteConfig } from "@yas/build-tools/vite";
+import { createYasViteConfig } from "@yas/build/vite";
 
 export default createYasViteConfig(process.cwd());
