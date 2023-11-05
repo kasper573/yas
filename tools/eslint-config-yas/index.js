@@ -42,6 +42,9 @@ module.exports = {
       },
       extends: ["plugin:@typescript-eslint/strict"],
       rules: {
+        // Disabling the type system is a bad ieda
+        "yas/no-as-never": "error",
+
         // For a lot of our libraries, we actually want to use {} as the empty set when working with generics.
         "@typescript-eslint/ban-types": [
           "error",
