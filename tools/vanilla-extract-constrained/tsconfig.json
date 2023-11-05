@@ -1,4 +1,1 @@
-{
-  "extends": "@yas/tsconfig/react-library.json",
-  "exclude": ["cypress"]
-}
+{ "extends": "@yas/tsconfig/react-library.json" }
