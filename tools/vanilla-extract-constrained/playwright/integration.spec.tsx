@@ -16,6 +16,20 @@ test("can define valid aliased value", async ({ mount }) => {
   await expect(component).toHaveCSS("background-color", colors.red);
 });
 
+test("can define valid shorthand value", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="validShorthandRedColor" />,
+  );
+  await expect(component).toHaveCSS("color", colors.red);
+});
+
+test("can define valid aliased shorthand value", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="validAliasedShorthandRedBackground" />,
+  );
+  await expect(component).toHaveCSS("background-color", colors.red);
+});
+
 test("conditional value uses default when condition is inactive", async ({
   mount,
 }) => {

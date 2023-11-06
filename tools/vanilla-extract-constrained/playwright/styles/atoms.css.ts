@@ -14,6 +14,10 @@ const props = defineProperties({
       failure: colors.red,
     },
   },
+  shorthands: {
+    bg: ["background"],
+    clr: ["color"],
+  },
 });
 
 export const atoms = createConstrained(props);
