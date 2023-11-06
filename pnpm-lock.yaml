@@ -71,7 +71,7 @@ importers:
         version: 1.10.0
       ts-node-dev:
         specifier: ^2.0.0
-        version: 2.0.0(@types/node@20.8.0)(typescript@5.2.2)
+        version: 2.0.0(@types/node@20.8.10)(typescript@5.2.2)
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(typescript@5.2.2)
@@ -460,9 +460,6 @@ importers:
       eslint-plugin-monorepo-cop:
         specifier: ^1.0.2
         version: 1.0.2
-      eslint-plugin-neverthrow:
-        specifier: 1.1.4
-        version: 1.1.4(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
       eslint-plugin-react:
         specifier: ^7.33.2
         version: 7.33.2(eslint@8.50.0)
@@ -572,6 +569,9 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../yas-build
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libs/yas-result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
@@ -6549,13 +6549,6 @@ packages:
       '@types/eslint': 8.44.3
       '@types/estree': 1.0.2
 
-  /@types/eslint-utils@3.0.4:
-    resolution: {integrity: sha512-UBwDhLhIW39LHAbSmDLEepR5+8EFv6M/+lKxVRzQO9fugzvMWW3noBkxXuAONFVuHQ2KGS0X9Js2MET0Xlc47A==}
-    dependencies:
-      '@types/eslint': 8.44.3
-      '@types/estree': 1.0.2
-    dev: true
-
   /@types/eslint@8.44.3:
     resolution: {integrity: sha512-iM/WfkwAhwmPff3wZuPLYiHX18HI24jU8k1ZSH7P8FHwxTjZ2P6CoX2wnF43oprR+YXJM6UUxATkNvyv/JHd+g==}
     dependencies:
@@ -6743,10 +6736,6 @@ packages:
 
   /@types/node@17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
-    dev: true
-
-  /@types/node@20.8.0:
-    resolution: {integrity: sha512-LzcWltT83s1bthcvjBmiBvGJiiUe84NWRHkw+ZV6Fr41z2FbIzvc815dk2nQ3RAKMuN2fkenM/z3Xv2QzEpYxQ==}
     dev: true
 
   /@types/node@20.8.10:
@@ -10207,22 +10196,6 @@ packages:
       requireindex: 1.1.0
     dev: true
 
-  /eslint-plugin-neverthrow@1.1.4(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-+8zsE5rDqsDfKYAOq0Fr2jbuxHXTmntIWWJqJA3ms1GAKcVCjl0ycetzOu/hTxot9ctr+WYQpCBgB3F2HATR7A==}
-    engines: {node: '>=14.17'}
-    peerDependencies:
-      '@typescript-eslint/parser': '>=4.20.0'
-      eslint: '>=5.16.0'
-    dependencies:
-      '@types/eslint-utils': 3.0.4
-      '@typescript-eslint/parser': 6.7.3(eslint@8.50.0)(typescript@5.2.2)
-      eslint: 8.50.0
-      eslint-utils: 3.0.0(eslint@8.50.0)
-      tsutils: 3.21.0(typescript@5.2.2)
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-
   /eslint-plugin-react-hooks@4.6.0(eslint@8.50.0):
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
     engines: {node: '>=10'}
@@ -10306,21 +10279,6 @@ packages:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
-    dev: true
-
-  /eslint-utils@3.0.0(eslint@8.50.0):
-    resolution: {integrity: sha512-uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==}
-    engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
-    peerDependencies:
-      eslint: '>=5'
-    dependencies:
-      eslint: 8.50.0
-      eslint-visitor-keys: 2.1.0
-    dev: true
-
-  /eslint-visitor-keys@2.1.0:
-    resolution: {integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==}
-    engines: {node: '>=10'}
     dev: true
 
   /eslint-visitor-keys@3.4.3:
@@ -18376,7 +18334,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-node-dev@2.0.0(@types/node@20.8.0)(typescript@5.2.2):
+  /ts-node-dev@2.0.0(@types/node@20.8.10)(typescript@5.2.2):
     resolution: {integrity: sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==}
     engines: {node: '>=0.8.0'}
     hasBin: true
@@ -18395,7 +18353,7 @@ packages:
       rimraf: 2.7.1
       source-map-support: 0.5.21
       tree-kill: 1.2.2
-      ts-node: 10.9.1(@types/node@20.8.0)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@20.8.10)(typescript@5.2.2)
       tsconfig: 7.0.0
       typescript: 5.2.2
     transitivePeerDependencies:
@@ -18404,7 +18362,7 @@ packages:
       - '@types/node'
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.8.0)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@20.8.10)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -18423,7 +18381,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.8.0
+      '@types/node': 20.8.10
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3

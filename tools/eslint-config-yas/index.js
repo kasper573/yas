@@ -10,7 +10,6 @@ module.exports = {
     "react",
     "react-hooks",
     "yas",
-    "neverthrow",
   ],
   extends: [
     "plugin:monorepo-cop/recommended",
