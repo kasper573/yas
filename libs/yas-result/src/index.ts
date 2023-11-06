@@ -1,2 +1,2 @@
 export * from "neverthrow";
-export * from "./throw_unsafe";
+export * from "./unwrap";

@@ -1,5 +1,6 @@
 import type { StyleRule } from "@vanilla-extract/css";
 import { style } from "@vanilla-extract/css";
+import { unwrapUnsafeFor3rdPartyIntegration as unwrap } from "@yas/result";
 import type { AnyPropertySetDefinition } from "./defineProperties";
 import type { ConstrainedStyle } from "./resolveStyle";
 import { createStyleResolver, layerProperty } from "./resolveStyle";
@@ -7,14 +8,14 @@ import { createStyleResolver, layerProperty } from "./resolveStyle";
 export function createConstrained<
   Definitions extends AnyPropertySetDefinition[],
 >(...definitions: Definitions): ConstrainedStyleFn<Definitions> {
-  // We use unsafeUnwrap because we need to integrate with
+  // We use unwrap because we need to integrate with
   // the VanillaExtract build system that relies on exceptions
 
-  const resolve = createStyleResolver(definitions)._unsafeUnwrap();
+  const resolve = unwrap(createStyleResolver(definitions));
   return function createConstrainedStyle({ [layerProperty]: layer, ...rest }) {
     return style({
-      [layerProperty]: layer ? resolve(layer)._unsafeUnwrap() : undefined,
-      ...resolve(rest)._unsafeUnwrap(),
+      [layerProperty]: layer ? unwrap(resolve(layer)) : undefined,
+      ...unwrap(resolve(rest)),
     } as StyleRule);
   };
 }
