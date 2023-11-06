@@ -9,10 +9,11 @@ import * as tokens from "./tokens";
 import { atoms } from "./atoms.css";
 
 // Re-export common css utilities
-export * from "vanilla-extract-styled";
+export { destructureVariantProps } from "vanilla-extract-styled";
 export { clsx } from "clsx";
 
 // Our own design system specific atomic CSS Framework utilities
+export { constrainedStyle } from "./constrained.css";
 export const styled = createStyledFactory(atoms);
 export const recipe = createRecipeFactory(atoms);
 export { tokens, atoms };

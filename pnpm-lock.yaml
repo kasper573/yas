@@ -285,6 +285,9 @@ importers:
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
+      vanilla-extract-constrained:
+        specifier: workspace:*
+        version: link:../../tools/vanilla-extract-constrained
       vanilla-extract-recipe-factory:
         specifier: workspace:*
         version: link:../../tools/vanilla-extract-recipe-factory

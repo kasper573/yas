@@ -4,8 +4,11 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "import": "./src/index.ts"
+    },
+    "./src/createConstrained": {
+      "import": "./src/createConstrained.ts",
+      "require": "./src/createConstrained.ts"
     }
   },
   "scripts": {
@@ -23,6 +26,7 @@
     "@vanilla-extract/sprinkles": "1.6.1",
     "@yas/build": "workspace:*",
     "@yas/tsconfig": "workspace:*",
+    "@yas/result": "workspace:*",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   }
