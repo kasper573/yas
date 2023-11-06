@@ -20,6 +20,7 @@ interface PropertySetDefinition<
   conditions: Conditions;
   defaultCondition: DefaultConditionName;
   properties: Properties;
+  shorthands?: Record<string, readonly string[]>;
 }
 
 export type PropertyDefinition<PropertyName extends keyof Style = keyof Style> =

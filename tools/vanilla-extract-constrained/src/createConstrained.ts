@@ -23,9 +23,7 @@ export function createConstrained<
 export type ConstrainedStyleFn<Definitions extends AnyPropertySetDefinition[]> =
   (props: ConstrainedStyleWithLayer<Definitions>) => string;
 
-type LayerAssociation<Definitions extends AnyPropertySetDefinition[]> = Partial<
-  Record<typeof layerProperty, Record<string, ConstrainedStyle<Definitions>>>
->;
-
 type ConstrainedStyleWithLayer<Definitions extends AnyPropertySetDefinition[]> =
-  LayerAssociation<Definitions> & ConstrainedStyle<Definitions>;
+  {
+    [K in typeof layerProperty]?: Record<string, ConstrainedStyle<Definitions>>;
+  } & ConstrainedStyle<Definitions>;

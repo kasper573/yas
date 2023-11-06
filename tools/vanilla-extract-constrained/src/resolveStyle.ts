@@ -8,52 +8,91 @@ import type {
 
 export function createStyleResolver<
   Definitions extends AnyPropertySetDefinition[],
->(definitions: Definitions): Result<StyleResolver<Definitions>, string> {
-  const definitionLookup = new Map<
+>(
+  propertySetDefinitions: Definitions,
+): Result<StyleResolver<Definitions>, string> {
+  const lookup = new Map<
     string,
     [PropertyDefinition, AnyPropertySetDefinition]
   >();
 
-  for (const definition of definitions) {
-    for (const [name, propertyDef] of Object.entries(definition.properties)) {
-      if (definitionLookup.has(name)) {
+  const shorthands = new Map<string, readonly string[]>();
+
+  for (const propertySetDef of propertySetDefinitions) {
+    for (const [name, propertyDef] of Object.entries(
+      propertySetDef.properties,
+    )) {
+      if (lookup.has(name)) {
         return err(`Duplicate property is not allowed: ${name}`);
       }
-      definitionLookup.set(name, [propertyDef, definition]);
+      lookup.set(name, [propertyDef, propertySetDef]);
     }
+    if (propertySetDef.shorthands) {
+      for (const [short, propertyNames] of Object.entries(
+        propertySetDef.shorthands,
+      )) {
+        if (shorthands.has(short)) {
+          return err(`Duplicate shorthand is not allowed: ${short}`);
+        }
+        shorthands.set(short, propertyNames);
+      }
+    }
+  }
+
+  function getOperationsForPropertyNameOrShorthand(
+    propertyNameOrShorthand: string,
+  ) {
+    lookup.get(propertyNameOrShorthand);
   }
 
   const resolveStyle: StyleResolver<Definitions> = (constrainedStyle) => {
     const style = {} as Record<string, unknown>;
+    const errors: Array<[string, string]> = [];
 
-    for (const [propertyName, propertyValue] of Object.entries(
+    for (const [propertyNameOrShorthand, propertyValue] of Object.entries(
       constrainedStyle,
     )) {
-      const definition = definitionLookup.get(propertyName);
-      if (!definition) {
-        return err(`No definition found for property ${propertyName}`);
-      }
-      const [options, { conditions, defaultCondition }] = definition;
-      if (typeof propertyValue === "object") {
+      const propertyNames = shorthands.get(propertyNameOrShorthand) ?? [
+        propertyNameOrShorthand,
+      ];
+      for (const propertyName of propertyNames) {
+        const definitions = lookup.get(propertyName);
+        if (!definitions?.length) {
+          errors.push([propertyNameOrShorthand, "Unknown property"]);
+          continue;
+        }
+
+        const [options, { conditions, defaultCondition }] = definitions;
+
+        if (typeof propertyValue !== "object") {
+          const res = resolveValue(options, propertyValue);
+          if (res.isErr()) {
+            errors.push([propertyName, res.error]);
+            continue;
+          }
+          style[propertyName] = res.value;
+          continue;
+        }
+
         for (const [conditionName, conditionValue] of Object.entries(
           propertyValue,
         )) {
           const condition = conditions[conditionName];
           if (!condition) {
-            return err(
-              `Invalid condition ${conditionName} for property ${propertyName}`,
-            );
+            errors.push([propertyName, `Unknown condition: ${conditionName}`]);
+            continue;
           }
+
           const res = resolveValue(options, conditionValue);
           if (res.isErr()) {
-            return res.mapErr(
-              (err) => `Error for property ${propertyName}: ${err}`,
-            );
+            errors.push([propertyName, res.error]);
+            continue;
           }
+
           if (defaultCondition === conditionName) {
             style[propertyName] = res.value;
           }
-          const logs: unknown[] = [];
+
           for (const [conditionKey, conditionAlias] of Object.entries(
             condition,
           )) {
@@ -65,19 +104,16 @@ export function createStyleResolver<
               propertyName,
             );
           }
-          if (logs.length > 0) {
-            return err(JSON.stringify(logs, null, 2));
-          }
         }
-      } else {
-        const res = resolveValue(options, propertyValue);
-        if (res.isErr()) {
-          return res.mapErr(
-            (err) => `Error for property ${propertyName}: ${err}`,
-          );
-        }
-        style[propertyName] = res.value;
       }
+    }
+
+    if (errors.length) {
+      return err(
+        errors
+          .map(([name, error]) => `Invalid property "${name}": ${error}`)
+          .join("\n"),
+      );
     }
 
     return ok(style);
