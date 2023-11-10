@@ -707,8 +707,8 @@ importers:
   tools/yas-test:
     devDependencies:
       '@playwright/test':
-        specifier: ^1.36.1
-        version: 1.38.1
+        specifier: 1.39.0
+        version: 1.39.0
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.17.0
@@ -4247,12 +4247,12 @@ packages:
       - vite
     dev: true
 
-  /@playwright/test@1.38.1:
-    resolution: {integrity: sha512-NqRp8XMwj3AK+zKLbZShl0r/9wKgzqI/527bkptKXomtuo+dOjU9NdMASQ8DNC9z9zLOMbG53T4eihYr3XR+BQ==}
+  /@playwright/test@1.39.0:
+    resolution: {integrity: sha512-3u1iFqgzl7zr004bGPYiN/5EZpRUSFddQBra8Rqll5N0/vfpqlP9I9EXqAoGacuAbX6c9Ulg/Cjqglp5VkK6UQ==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright: 1.38.1
+      playwright: 1.39.0
     dev: true
 
   /@pnpm/config.env-replace@1.1.0:
