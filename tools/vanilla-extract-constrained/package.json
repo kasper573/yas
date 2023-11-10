@@ -27,7 +27,6 @@
     "@yas/build": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "@yas/result": "workspace:*",
-    "@yas/test": "workspace:*",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   }
