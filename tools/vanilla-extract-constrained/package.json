@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
-    "test": "yas-playwright test -c playwright-ct.config.js",
+    "test": "pnpm playwright test -c playwright-ct.config.js",
     "test:watch": "pnpm run test --ui"
   },
   "peerDependencies": {
