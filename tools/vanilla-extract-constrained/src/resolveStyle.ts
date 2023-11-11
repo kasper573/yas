@@ -39,12 +39,6 @@ export function createStyleResolver<
     }
   }
 
-  function getOperationsForPropertyNameOrShorthand(
-    propertyNameOrShorthand: string,
-  ) {
-    lookup.get(propertyNameOrShorthand);
-  }
-
   const resolveStyle: StyleResolver<Definitions> = (constrainedStyle) => {
     const style = {} as Record<string, unknown>;
     const errors: Array<[string, string]> = [];
@@ -77,7 +71,7 @@ export function createStyleResolver<
         for (const [conditionName, conditionValue] of Object.entries(
           propertyValue,
         )) {
-          const condition = conditions[conditionName];
+          const condition = conditions?.[conditionName];
           if (!condition) {
             errors.push([propertyName, `Unknown condition: ${conditionName}`]);
             continue;
