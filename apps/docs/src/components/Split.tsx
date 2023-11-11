@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+import DocusaurusTabItem from "@theme/TabItem";
 import * as styles from "./Split.css";
 
 export interface SplitProps {
@@ -27,11 +27,9 @@ export function Split({
 
       <div className={styles.tabs}>
         <Tabs>
-          {/* @ts-expect-error Typescript doesn't seem to resolve the types for TabItem */}
           <TabItem value="left" label={leftName} default>
             {left}
           </TabItem>
-          {/* @ts-expect-error Typescript doesn't seem to resolve the types for TabItem */}
           <TabItem value="right" label={rightName}>
             {right}
           </TabItem>
@@ -40,3 +38,11 @@ export function Split({
     </>
   );
 }
+
+// This assertion could possibly be removed when docusaurus is updated to stable version 3
+const TabItem = DocusaurusTabItem as (props: {
+  value?: ReactNode;
+  label?: ReactNode;
+  default?: boolean;
+  children?: ReactNode;
+}) => JSX.Element;

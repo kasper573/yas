@@ -1,7 +1,7 @@
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { projects } from "../../fixtures/projects";
 import * as styles from "./index.css";
 
@@ -54,18 +54,24 @@ function Feature({
   children: ReactNode;
   href: string;
 }) {
+  const linkContent = (
+    <>
+      <img
+        src={image}
+        className={styles.featureImage}
+        role="img"
+        width={200}
+        height={150}
+        alt={`${title} image`}
+      />
+
+      <h2>{title}</h2>
+    </>
+  ) as ComponentProps<typeof Link>["children"];
   return (
     <div className={styles.feature({ columns: projects.length })}>
       <Link to={href} style={{ display: "block" }}>
-        <img
-          src={image}
-          className={styles.featureImage}
-          role="img"
-          width={200}
-          height={150}
-          alt={`${title} image`}
-        />
-        <h2>{title}</h2>
+        {linkContent}
       </Link>
       <p>{children}</p>
     </div>

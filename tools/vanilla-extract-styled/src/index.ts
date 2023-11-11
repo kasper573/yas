@@ -3,13 +3,13 @@ import type {
   ElementType,
   ReactElement,
   ComponentProps,
+  CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement } from "react";
-import { clsx } from "clsx";
+import { createElement, useMemo } from "react";
 
 export function createStyledFactory<Style>(
-  compileStyle?: StyleCompiler<Style>,
+  compileInlineStyle?: StyleCompiler<Style>,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -22,6 +22,7 @@ export function createStyledFactory<Style>(
     const RecipeComponent: RecipeComponent<Implementation, Recipe, Style> =
       function RecipeComponent({
         className: inlineClassName,
+        style: inlineStyle,
         sx,
         ...inlineProps
       }) {
@@ -29,15 +30,18 @@ export function createStyledFactory<Style>(
         const [variantProps, forwardedProps] = recipe
           ? destructureVariantProps(props, recipe, options?.forwardProps)
           : [emptyObject, props];
-        const className =
-          clsx(
-            recipe?.(variantProps),
-            sx ? compileStyle?.(sx) : undefined,
-            inlineClassName,
-          ) || undefined;
+        const className = clsx(recipe?.(variantProps), inlineClassName);
+        const style = useMemo(
+          () => ({
+            ...(sx ? compileInlineStyle?.(sx) : undefined),
+            ...inlineStyle,
+          }),
+          [sx, inlineStyle],
+        );
         return createElement(implementation, {
           className,
           ...forwardedProps,
+          style,
         });
       };
 
@@ -128,6 +132,7 @@ type RecipeComponentProps<
   Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
     sx?: Style;
     className?: string;
+    style?: CSSProperties;
     children?: ReactNode;
   };
 
@@ -147,16 +152,14 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
   isVariant: boolean;
 }) => boolean;
 
-// The most abstract representation of a sprinkles fn
-// This makes the factory compatible without being limited to sprinkles
-type StyleCompiler<Style> = (style: Style) => string | undefined;
+type StyleCompiler<Style> = (style: Style) => CSSProperties | undefined;
 
 // Improved vanilla extract type utilities
-type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
-type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
+export type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
+export type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
   Exclude<Parameters<Recipe>[0], undefined>
 >;
-type VariantName<Recipe extends RecipeLike> = `${string &
+export type VariantName<Recipe extends RecipeLike> = `${string &
   keyof RecipeVariants<Recipe>}`;
 
 // We must strip plain indexes since recipes without variants
@@ -170,3 +173,8 @@ type StripIndexes<T> = {
     ? never
     : K]: T[K];
 };
+
+function clsx(...classNames: Array<string | undefined>) {
+  const defined = classNames.filter(Boolean);
+  return defined.length ? defined.join(" ") : undefined;
+}

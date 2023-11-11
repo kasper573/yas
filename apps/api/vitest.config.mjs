@@ -1,3 +1,3 @@
-import { defineConfig } from "@yas/vitest/presets/node";
+import { defineConfig } from "@yas/test/vitest/node/config";
 
 export default defineConfig(__dirname);

@@ -1,1 +1,1 @@
-{ "extends": "@yas/vitest/tsconfig.json" }
+{ "extends": "@yas/test/vitest/tsconfig.json" }

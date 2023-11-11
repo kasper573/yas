@@ -1,4 +1,4 @@
-import { ExampleImage, Text } from "@yas/ui";
+import { Box, ExampleImage, Text } from "@yas/ui";
 import { env } from "../env";
 import { hello } from "../hello";
 import { trpc } from "../trpc";
@@ -12,6 +12,8 @@ export function Home() {
       <Text paragraph>Mode: {env.mode}</Text>
       <Text paragraph>{response}</Text>
       <div className={foo.container()}>Testing vanilla-extract css</div>
+
+      <Box sx={{ px: "#10" }}>Testing Box sx prop</Box>
 
       <Text variant="h1">Image from apps/web</Text>
       <div className={foo.projectImage} />

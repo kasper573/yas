@@ -20,17 +20,16 @@
   "dependencies": {
     "@trpc/server": "^10.32.0",
     "@yas/zod": "workspace:*",
-    "express": "^4.18.2",
-    "neverthrow": "^6.0.0"
+    "@yas/result": "workspace:*",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/morgan": "^1.9.4",
-    "@types/node": "^20.5.8",
-    "@yas/build-tools": "workspace:*",
+    "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
-    "@yas/vitest": "workspace:*",
+    "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "cors": "^2.8.5",
     "morgan": "^1.10.0",

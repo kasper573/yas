@@ -1,6 +1,6 @@
 import type { ZodObject } from "zod";
 import { z } from "zod";
-import type { ComponentType } from "react";
+import type { ComponentProps, ComponentType } from "react";
 import type {
   FieldNames,
   FormSchema,
@@ -53,7 +53,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       schema,
-    } as never);
+    }) as ReturnType<typeof this.schema<NewSchema>>;
   }
 
   customExternalErrors<NewCustomError>(
@@ -70,7 +70,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       externalErrorParser,
-    } as never);
+    }) as ReturnType<typeof this.customExternalErrors<NewCustomError>>;
   }
 
   layout<
@@ -96,7 +96,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder({
       ...this.options,
       layout,
-    } as never);
+    }) as ReturnType<typeof this.layout<NewLayoutProps, DefaultProps>>;
   }
 
   type<Type extends ValueType, AdditionalProps>(
@@ -130,7 +130,10 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       ...rest
     } = this.options;
     if (initProps) {
-      component = withDefaultProps(component, initProps as never);
+      component = withDefaultProps(
+        component,
+        initProps as ComponentProps<typeof component>,
+      );
     }
     return new FormOptionsBuilder({
       ...rest,
@@ -138,7 +141,7 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
         named,
         typed: setTypedComponent(typed, type, component),
       },
-    } as never);
+    }) as ReturnType<typeof this.type<Type, AdditionalProps>>;
   }
 
   field<FieldName extends FieldNames<G["schema"]>, AdditionalProps>(
@@ -176,7 +179,10 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
       ...rest
     } = this.options;
     if (initProps) {
-      component = withDefaultProps(component, initProps as never);
+      component = withDefaultProps(
+        component,
+        initProps as ComponentProps<typeof component>,
+      );
     }
     return new FormOptionsBuilder({
       ...rest,
@@ -187,23 +193,23 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
           [name]: component,
         },
       },
-    } as never);
+    }) as ReturnType<typeof this.field<FieldName, AdditionalProps>>;
   }
 
   conditions(
-    fieldConditionSelector: FieldConditionsSelector<G["schema"]>,
+    fieldConditionsSelector: FieldConditionsSelector<G["schema"]>,
   ): FormOptionsBuilder<G> {
-    return new FormOptionsBuilder({
+    return new FormOptionsBuilder<G>({
       ...this.options,
-      fieldConditionsSelector: fieldConditionSelector,
-    } as never);
+      fieldConditionsSelector,
+    } as FormOptions<G>);
   }
 
   validateOn(...modes: FormValidationMode[]): FormOptionsBuilder<G> {
     return new FormOptionsBuilder({
       ...this.options,
       modes,
-    } as never);
+    } as FormOptions<G>);
   }
 
   // build is static as a quick and dirty way to hide the build function from the library consumer,

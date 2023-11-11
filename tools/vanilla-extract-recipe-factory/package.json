@@ -17,8 +17,7 @@
     "@vanilla-extract/vite-plugin": "^3.9.0"
   },
   "devDependencies": {
-    "@types/node": "^20.8.2",
     "@yas/tsconfig": "workspace:*",
-    "@yas/vitest": "workspace:*"
+    "@yas/test": "workspace:*"
   }
 }

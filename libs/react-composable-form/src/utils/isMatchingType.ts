@@ -1,4 +1,5 @@
-import type { AnyZodObject, ZodFirstPartyTypeKind, ZodType } from "zod";
+import type { ZodFirstPartyTypeKind } from "zod";
+import { type AnyZodObject, type ZodType } from "zod";
 import {
   z,
   ZodAny,

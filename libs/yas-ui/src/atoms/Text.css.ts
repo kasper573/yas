@@ -5,6 +5,9 @@ export const textRecipe = recipe({
     fontFamily: "inter",
     fontWeight: "normal",
     color: "surfaceText",
+    margin: 0,
+    padding: 0,
+    display: "block",
   },
   variants: {
     variant: {
@@ -26,11 +29,22 @@ export const textRecipe = recipe({
     },
     paragraph: {
       true: {
-        display: "block",
         marginBottom: "#2",
       },
+      false: {},
     },
   },
+  compoundVariants: [
+    {
+      variants: {
+        variant: "caption",
+        paragraph: false,
+      },
+      style: {
+        display: "inline",
+      },
+    },
+  ],
   defaultVariants: {
     variant: "body",
   },

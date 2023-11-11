@@ -1,5 +1,5 @@
-import { defineConfig as defineConfigImpl, mergeConfig } from "vitest/config";
 import path from "path";
+import { defineConfig as defineConfigImpl, mergeConfig } from "vitest/config";
 
 /**
  * @param {string} projectDir

@@ -1,7 +1,6 @@
 import type { AnyZodObject, ZodType } from "zod";
 import { z } from "zod";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, userEvent } from "@yas/test/vitest/react";
 import { createForm } from "../createForm";
 import type { FieldProps } from "../types/optionTypes";
 import type { FieldPropNamesAvailableInDefaults } from "../types/optionTypes";

@@ -41,6 +41,20 @@ module.exports = {
       },
       extends: ["plugin:@typescript-eslint/strict"],
       rules: {
+        // Disabling the type system is a bad ieda
+        "yas/no-as-never": "error",
+
+        // It's okay to enable the type checker, but not to disable it
+        "@typescript-eslint/ban-ts-comment": [
+          "error",
+          {
+            "ts-check": false,
+            "ts-expect-error": true,
+            "ts-ignore": true,
+            "ts-nocheck": true,
+          },
+        ],
+
         // For a lot of our libraries, we actually want to use {} as the empty set when working with generics.
         "@typescript-eslint/ban-types": [
           "error",
@@ -94,11 +108,29 @@ module.exports = {
       },
     },
     {
-      files: ["*.test.ts", "*.test.tsx", "*.stories.tsx"],
+      files: [
+        "*.test.ts",
+        "*.test.tsx",
+        "*.test-d.ts",
+        "*.test-d.tsx",
+        "*.stories.tsx",
+        "**/__test__/**",
+      ],
       rules: {
         // Tests are allowed to use non-null assertions since failures in tests are acceptable
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+
+        // Allow ts-expect-error comments in test files, but require descriptions
+        "@typescript-eslint/ban-ts-comment": [
+          "error",
+          {
+            "ts-check": false,
+            "ts-expect-error": "allow-with-description",
+            "ts-ignore": true,
+            "ts-nocheck": true,
+          },
+        ],
       },
     },
     {
@@ -123,6 +155,7 @@ module.exports = {
     ...require("@yas/env/eslintOverrides"),
     ...require("@yas/css/eslintOverrides"),
     ...require("@yas/zod/eslintOverrides"),
+    ...require("@yas/result/eslintOverrides"),
   ],
 };
 

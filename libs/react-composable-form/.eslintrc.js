@@ -1,5 +1,4 @@
 module.exports = {
-  extends: ["yas"],
   rules: {
     // Due to frequent use of generics in this library we need to disable these rules
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
@@ -8,5 +7,7 @@ module.exports = {
     "@typescript-eslint/no-var-requires": "off",
     // We disable this to allow using zod in this library
     "no-restricted-imports": "off",
+    // This rule is too strict for this library
+    "yas/disallow-exceptions": "off",
   },
 };
