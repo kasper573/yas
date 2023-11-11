@@ -27,7 +27,7 @@ export type PropertyDefinition<PropertyName extends keyof Style = keyof Style> =
   DirectPropertyOptions<PropertyName> | AliasedPropertyOptions<PropertyName>;
 
 type DirectPropertyOptions<PropertyName extends keyof Style> =
-  Style[PropertyName][];
+  readonly Style[PropertyName][];
 
 type AliasedPropertyOptions<
   PropertyName extends keyof Style,

@@ -1,8 +1,15 @@
 import { expectTypeOf } from "vitest";
+import { defineProperties } from "../index";
+import type { ConstrainedPropertyValue } from "../resolveStyle";
 
-it("inherits props of element", () => {
-  type A = number;
-  type B = string;
+it("can infer direct property value types", () => {
+  const props = defineProperties({
+    properties: {
+      color: ["red", "green"],
+    },
+  } as const);
 
-  expectTypeOf<A>().not.toMatchTypeOf<B>();
+  type Value = ConstrainedPropertyValue<[typeof props], "color">;
+
+  expectTypeOf<Value>().toMatchTypeOf<"red" | "green">();
 });
