@@ -32,7 +32,7 @@ export function ExampleContent({
   }
 
   return (
-    <Stack direction="row" gap={3}>
+    <Stack direction="row" gap="3">
       <Box style={{ flex: 1 }}>{normalizeContent(children)}</Box>
       <Box style={{ width: 250 }}>
         <MultiSelectField

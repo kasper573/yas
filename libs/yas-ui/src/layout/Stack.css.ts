@@ -1,6 +1,6 @@
-import { unsafe, tokens } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const stackRecipe = unsafe.recipe({
+export const stackRecipe = recipe({
   base: {
     display: "flex",
   },
@@ -19,10 +19,10 @@ export const stackRecipe = unsafe.recipe({
       end: {},
     },
     gap: {
-      0: { gap: tokens.spaces[0] },
-      1: { gap: tokens.spaces["#1"] },
-      2: { gap: tokens.spaces["#2"] },
-      3: { gap: tokens.spaces["#3"] },
+      0: { gap: 0 },
+      1: { gap: "#1" },
+      2: { gap: "#2" },
+      3: { gap: "#3" },
     },
   },
   compoundVariants: [

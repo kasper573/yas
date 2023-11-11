@@ -20,6 +20,7 @@ export const keyframes = (keyframedConstrainedStyles: Record<string, Atoms>) =>
   );
 
 export const styled = createStyledFactory(resolveAtoms);
+export { destructureVariantProps } from "vanilla-extract-styled";
 
 export const recipe = createRecipeFactory(style);
 
