@@ -1,14 +1,15 @@
-import type { Result } from "@yas/result";
-import { err, ok } from "@yas/result";
-import type { CSSProperties } from "react";
-import type { PropertyDefinition, inferShorthands } from "./createConstrained";
-import type { AnyConstrainedDefinition } from "./createConstrained";
+import { ok, err } from "@yas/result";
+import type { ConditionKey } from "./types";
+import {
+  type PropertyDefinition,
+  type AnyConstrainedDefinition,
+  type StyleResolver,
+  conditionKeyMap,
+} from "./types";
 
 export function createStyleResolver<
   Definition extends AnyConstrainedDefinition,
->(
-  constrainedDefinition: Definition,
-): Result<StyleResolver<Definition>, string> {
+>(constrainedDefinition: Definition): StyleResolver<Definition> {
   const lookup = new Map<
     string,
     [PropertyDefinition, AnyConstrainedDefinition]
@@ -20,7 +21,7 @@ export function createStyleResolver<
     constrainedDefinition.properties,
   )) {
     if (lookup.has(propertyName)) {
-      return err(`Duplicate property is not allowed: ${propertyName}`);
+      throw new Error(`Duplicate property is not allowed: ${propertyName}`);
     }
     lookup.set(propertyName, [propertyDefinition, constrainedDefinition]);
   }
@@ -29,7 +30,7 @@ export function createStyleResolver<
       constrainedDefinition.shorthands,
     )) {
       if (shorthands.has(short)) {
-        return err(`Duplicate shorthand is not allowed: ${short}`);
+        throw new Error(`Duplicate shorthand is not allowed: ${short}`);
       }
       shorthands.set(short, propertyNames);
     }
@@ -102,17 +103,17 @@ export function createStyleResolver<
     }
 
     if (errors.length) {
-      return err(
+      throw new Error(
         errors
           .map(([name, error]) => `Invalid property "${name}": ${error}`)
           .join("\n"),
       );
     }
 
-    return ok(style);
+    return style;
   };
 
-  return ok(resolveStyle);
+  return resolveStyle;
 }
 
 function resolveValue<T>(options: PropertyDefinition, value: T) {
@@ -147,65 +148,3 @@ function assignPath(
   }
   target[path[lastIndex]] = value;
 }
-
-type StyleResolver<
-  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
-> = (constrainedStyle: ConstrainedStyle<Definition>) => Result<Style, string>;
-
-type ConditionKey = keyof typeof conditionKeyMap;
-const conditionKeyMap = {
-  // constrained name -> vanilla-extract style() call name
-  "@media": "@media",
-  "@supports": "@supports",
-  "@container": "@container",
-  selector: "selectors",
-};
-
-export type Style = CSSProperties;
-
-export type Condition = Partial<Record<ConditionKey, string>>;
-
-export type ConstrainedStyle<
-  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
-> = {
-  [PropertyName in keyof Style]?: ConstrainedPropertyInput<
-    Definition,
-    PropertyName
-  >;
-} & {
-  [K in keyof inferShorthands<Definition>]?: ConstrainedPropertyInput<
-    Definition,
-    inferShorthands<Definition>[K]
-  >;
-};
-
-type ConstrainedPropertyInput<
-  Definition extends AnyConstrainedDefinition,
-  PropertyName,
-> = WithConditions<
-  ConstrainedPropertyValue<Definition, PropertyName>,
-  Exclude<Definition["conditions"], undefined>
->;
-
-type ConstrainedPropertyValue<
-  Definition extends AnyConstrainedDefinition,
-  PropertyName,
-> = PropertyName extends PropertyKey
-  ? Definition["properties"] extends Record<PropertyName, unknown>
-    ? inferPropertyValue<Definition["properties"][PropertyName]>
-    : never
-  : never;
-
-type inferPropertyValue<Definition extends PropertyDefinition> = Exclude<
-  Definition extends readonly (infer DirectValue)[]
-    ? DirectValue
-    : Definition extends Record<infer AliasName, unknown>
-    ? AliasName
-    : never,
-  undefined
->;
-
-type WithConditions<
-  T,
-  Conditions extends Record<string, unknown>,
-> = keyof Conditions extends never ? T : T | { [K in keyof Conditions]?: T };

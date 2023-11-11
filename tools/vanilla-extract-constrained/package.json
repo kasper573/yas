@@ -6,9 +6,9 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./src/createConstrained": {
-      "import": "./src/createConstrained.ts",
-      "require": "./src/createConstrained.ts"
+    "./src/styleResolver": {
+      "import": "./src/styleResolver.ts",
+      "require": "./src/styleResolver.ts"
     }
   },
   "scripts": {
