@@ -17,8 +17,8 @@ interface PropertySetDefinition<
   DefaultConditionName extends keyof Conditions,
   Properties extends Record<string, PropertyDefinition>,
 > {
-  conditions: Conditions;
-  defaultCondition: DefaultConditionName;
+  conditions?: Conditions;
+  defaultCondition?: DefaultConditionName;
   properties: Properties;
   shorthands?: Record<string, readonly string[]>;
 }
