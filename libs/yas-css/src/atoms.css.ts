@@ -1,4 +1,4 @@
-import { createConstrained } from "vanilla-extract-constrained";
+import { createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { themeVars } from "./themeVars.css";
 
@@ -9,8 +9,8 @@ const colors = {
   ...themeVars.color,
 };
 
-export type ConstrainedStyle = Parameters<typeof style>[0];
-export const [style, inlineStyle] = createConstrained({
+export type Atoms = Parameters<typeof resolveAtoms>[0];
+export const resolveAtoms = createStyleResolver({
   conditions: {
     default: {},
     hover: { selector: "&:hover" },
