@@ -13,3 +13,18 @@ it("can infer direct property value types", () => {
 
   expectTypeOf<Value>().toMatchTypeOf<"red" | "green">();
 });
+
+it("can infer aliased property value types", () => {
+  const props = defineProperties({
+    properties: {
+      color: {
+        failure: "red",
+        success: "green",
+      },
+    },
+  });
+
+  type Value = ConstrainedPropertyValue<[typeof props], "color">;
+
+  expectTypeOf<Value>().toMatchTypeOf<"failure" | "success">();
+});
