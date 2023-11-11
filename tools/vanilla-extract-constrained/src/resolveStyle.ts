@@ -1,45 +1,41 @@
 import type { Result } from "@yas/result";
 import { err, ok } from "@yas/result";
 import type { CSSProperties } from "react";
-import type {
-  AnyPropertySetDefinition,
-  PropertyDefinition,
-} from "./defineProperties";
+import type { PropertyDefinition } from "./createConstrained";
+import type { AnyConstrainedDefinition } from "./createConstrained";
 
 export function createStyleResolver<
-  Definitions extends AnyPropertySetDefinition[],
+  Definition extends AnyConstrainedDefinition,
 >(
-  propertySetDefinitions: Definitions,
-): Result<StyleResolver<Definitions>, string> {
+  constrainedDefinition: Definition,
+): Result<StyleResolver<Definition>, string> {
   const lookup = new Map<
     string,
-    [PropertyDefinition, AnyPropertySetDefinition]
+    [PropertyDefinition, AnyConstrainedDefinition]
   >();
 
   const shorthands = new Map<string, readonly string[]>();
 
-  for (const propertySetDef of propertySetDefinitions) {
-    for (const [name, propertyDef] of Object.entries(
-      propertySetDef.properties,
-    )) {
-      if (lookup.has(name)) {
-        return err(`Duplicate property is not allowed: ${name}`);
-      }
-      lookup.set(name, [propertyDef, propertySetDef]);
+  for (const [propertyName, propertyDefinition] of Object.entries(
+    constrainedDefinition.properties,
+  )) {
+    if (lookup.has(propertyName)) {
+      return err(`Duplicate property is not allowed: ${propertyName}`);
     }
-    if (propertySetDef.shorthands) {
-      for (const [short, propertyNames] of Object.entries(
-        propertySetDef.shorthands,
-      )) {
-        if (shorthands.has(short)) {
-          return err(`Duplicate shorthand is not allowed: ${short}`);
-        }
-        shorthands.set(short, propertyNames);
+    lookup.set(propertyName, [propertyDefinition, constrainedDefinition]);
+  }
+  if (constrainedDefinition.shorthands) {
+    for (const [short, propertyNames] of Object.entries(
+      constrainedDefinition.shorthands,
+    )) {
+      if (shorthands.has(short)) {
+        return err(`Duplicate shorthand is not allowed: ${short}`);
       }
+      shorthands.set(short, propertyNames);
     }
   }
 
-  const resolveStyle: StyleResolver<Definitions> = (constrainedStyle) => {
+  const resolveStyle: StyleResolver<Definition> = (constrainedStyle) => {
     const style = {} as Record<string, unknown>;
     const errors: Array<[string, string]> = [];
 
@@ -149,8 +145,8 @@ function assignPath(
   target[path[lastIndex]] = value;
 }
 
-type StyleResolver<Definitions extends AnyPropertySetDefinition[]> = (
-  constrainedStyle: ConstrainedStyle<Definitions>,
+type StyleResolver<Definition extends AnyConstrainedDefinition> = (
+  constrainedStyle: ConstrainedStyle<Definition>,
 ) => Result<Style, string>;
 
 export const layerProperty = "@layer" as const;
@@ -168,58 +164,42 @@ export type Style = CSSProperties;
 
 export type Condition = Partial<Record<ConditionKey, string>>;
 
-export type ConstrainedStyle<Definitions extends AnyPropertySetDefinition[]> = {
-  [PropertyName in keyof Style]: ConstrainedPropertyInput<
-    Definitions,
+export type ConstrainedStyle<Definition extends AnyConstrainedDefinition> = {
+  [PropertyName in keyof Style]?: ConstrainedPropertyInput<
+    Definition,
     PropertyName
   >;
+} & {
+  // [ShorthandName in keyof Definition["shorthands"]]?: ConstrainedPropertyInput<
+  //   Definition,
+  //   Definition["shorthands"][ShorthandName][number]
+  // >;
 };
 
 export type ConstrainedPropertyInput<
-  Definitions extends AnyPropertySetDefinition[] = AnyPropertySetDefinition[],
+  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
   PropertyName extends keyof Style = keyof Style,
-> = HasConditions<Definitions> extends true
+> = HasProperties<Definition["conditions"]> extends true
   ?
-      | ConstrainedPropertyValue<Definitions, PropertyName>
+      | ConstrainedPropertyValue<Definition, PropertyName>
       | {
-          [K in AllConditionNames<Definitions>]?: ConstrainedPropertyValue<
-            Definitions,
+          [K in keyof Definition["conditions"]]?: ConstrainedPropertyValue<
+            Definition,
             PropertyName
           >;
         }
-  : ConstrainedPropertyValue<Definitions, PropertyName>;
+  : ConstrainedPropertyValue<Definition, PropertyName>;
 
 export type ConstrainedPropertyValue<
-  Definitions extends AnyPropertySetDefinition[] = AnyPropertySetDefinition[],
+  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
   PropertyName extends keyof Style = keyof Style,
-> = Definitions extends [AnyPropertySetDefinition, ...infer Rest]
-  ? Definitions[0]["properties"] extends Record<PropertyName, infer Options>
-    ? OptionUnion<Definitions[0]["properties"][PropertyName]>
-    : Rest extends AnyPropertySetDefinition[]
-    ? ConstrainedPropertyInput<Rest, PropertyName>
-    : never
-  : never;
+> = inferPropertyValue<Definition["properties"][PropertyName]>;
 
-type OptionUnion<Options> = Options extends readonly (infer DirectValue)[]
-  ? DirectValue
-  : Options extends Record<infer AliasName, unknown>
-  ? AliasName
-  : never;
-
-type AllConditionNames<Definitions> = Definitions extends [
-  AnyPropertySetDefinition,
-  ...infer Rest,
-]
-  ? keyof Definitions[0]["conditions"] | AllConditionNames<Rest>
-  : never;
-
-type HasConditions<Definitions> = Definitions extends [
-  AnyPropertySetDefinition,
-  ...infer Rest,
-]
-  ? HasProperties<Definitions[0]["conditions"]> extends true
-    ? true
-    : HasConditions<Rest>
-  : false;
+type inferPropertyValue<Definition extends PropertyDefinition> =
+  Definition extends readonly (infer DirectValue)[]
+    ? DirectValue
+    : Definition extends Record<infer AliasName, unknown>
+    ? AliasName
+    : never;
 
 type HasProperties<T> = keyof T extends never ? false : true;

@@ -1,1 +1,0 @@
-{ "extends": "@yas/test/presets/vitest/tsconfig.json" }

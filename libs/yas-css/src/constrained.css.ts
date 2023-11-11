@@ -1,4 +1,3 @@
-import { defineProperties } from "vanilla-extract-constrained";
 import { createConstrained } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { themeVars } from "./themeVars.css";
@@ -7,7 +6,18 @@ import { themeVars } from "./themeVars.css";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
-const staticProperties = defineProperties({
+const colors = {
+  transparent: "transparent",
+  ...themeVars.color,
+};
+
+export const constrainedStyle = createConstrained({
+  conditions: {
+    default: {},
+    hover: { selector: "&:hover" },
+    active: { selector: "&:active" },
+  },
+  defaultCondition: "default",
   properties: {
     cursor: ["pointer", "default"],
     pointerEvents: ["none", "all"],
@@ -59,6 +69,9 @@ const staticProperties = defineProperties({
     fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
     fontWeight: ["normal", "bold"],
+    color: colors,
+    background: colors,
+    borderColor: colors,
   },
   shorthands: {
     p: ["padding"],
@@ -78,27 +91,3 @@ const staticProperties = defineProperties({
     overflow: ["overflowX", "overflowY"],
   },
 });
-
-const colors = {
-  transparent: "transparent",
-  ...themeVars.color,
-};
-
-const colorProperties = defineProperties({
-  conditions: {
-    default: {},
-    hover: { selector: "&:hover" },
-    active: { selector: "&:active" },
-  },
-  defaultCondition: "default",
-  properties: {
-    color: colors,
-    background: colors,
-    borderColor: colors,
-  },
-});
-
-export const constrainedStyle = createConstrained(
-  staticProperties,
-  colorProperties,
-);

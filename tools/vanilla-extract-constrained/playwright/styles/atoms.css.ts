@@ -1,7 +1,7 @@
-import { defineProperties, createConstrained } from "../../src";
+import { createConstrained } from "../../src";
 import { colors } from "./tokens";
 
-const props = defineProperties({
+export const atoms = createConstrained({
   conditions: {
     default: {},
     condition: { selector: `&[data-condition]` },
@@ -19,5 +19,3 @@ const props = defineProperties({
     clr: ["color"],
   },
 });
-
-export const atoms = createConstrained(props);
