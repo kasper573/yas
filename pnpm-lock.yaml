@@ -569,9 +569,15 @@ importers:
       '@yas/result':
         specifier: workspace:*
         version: link:../../libs/yas-result
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../yas-test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
+      concurrently:
+        specifier: ^8.2.1
+        version: 8.2.1
       react:
         specifier: 18.2.0
         version: 18.2.0

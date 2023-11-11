@@ -13,8 +13,10 @@
   },
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
-    "test": "pnpm playwright test -c playwright-ct.config.js",
-    "test:watch": "pnpm run test --ui"
+    "test": "pnpm test:unit && pnpm test:types --run",
+    "test:watch": "concurrently -n unit,types \"pnpm test:unit --ui\" \"pnpm test:types\"",
+    "test:unit": "pnpm playwright test -c playwright-ct.config.js",
+    "test:types": "vitest typecheck"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "^3.9.0"
@@ -26,6 +28,8 @@
     "@yas/build": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "@yas/result": "workspace:*",
+    "@yas/test": "workspace:*",
+    "concurrently": "^8.2.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   }
