@@ -11,7 +11,7 @@ export function createStyleResolver<
   const resolver = implementation[importName](definition);
 
   addFunctionSerializer(resolver, {
-    importPath: "vanilla-extract-constrained/src/resolveStyle",
+    importPath: "vanilla-extract-constrained/src/styleResolver",
     importName,
     args: [definition] as unknown as Serializable,
   });
