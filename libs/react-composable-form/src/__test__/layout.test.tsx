@@ -1,6 +1,6 @@
+import { describe, it } from "vitest";
 import { z } from "zod";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, userEvent } from "@yas/test/testing-library";
 import { createForm } from "../createForm";
 
 describe("layout", () => {

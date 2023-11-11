@@ -5,7 +5,7 @@ import {
   fireEvent as userEvent,
   screen,
   within,
-} from "@testing-library/react";
+} from "@yas/test/testing-library";
 import type { Deferred } from "../deferPromise";
 import type { GeneralHookOptions } from "../constants";
 import type { ImperativeComponentProps } from "../ComponentStore";

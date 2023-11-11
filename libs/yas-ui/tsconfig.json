@@ -1,8 +1,5 @@
 {
   "extends": "@yas/tsconfig/vite.json",
   "exclude": ["src/__test__"],
-  "include": ["src/**/*", ".storybook/**/*"],
-  "compilerOptions": {
-    "types": ["@testing-library/jest-dom", "vite/client"]
-  }
+  "include": ["src/**/*", ".storybook/**/*"]
 }

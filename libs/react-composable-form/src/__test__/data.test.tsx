@@ -1,9 +1,8 @@
 import { z } from "zod";
-import type { RenderResult } from "@testing-library/react";
-import { render } from "@testing-library/react";
+import type { RenderResult } from "@yas/test/testing-library";
+import { render, userEvent } from "@yas/test/testing-library";
 import type { ComponentProps, ComponentType } from "react";
 import { StrictMode, useState } from "react";
-import userEvent from "@testing-library/user-event";
 import { createForm } from "../createForm";
 import { silenceErrorLogs } from "./utils";
 
