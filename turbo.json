@@ -4,13 +4,10 @@
     "build": {
       "dotEnv": [".env", ".env.local", ".env.development", ".env.production"],
       "dependsOn": ["^build"],
-      "outputs": [
-        "dist/**",
-        "build/**",
-        "some-change-to-trigger-turbo-cache-bust"
-      ]
+      "outputs": ["dist/**", "build/**"]
     },
     "test": {
+      "cache": false,
       "dependsOn": ["^test"]
     },
     "test:watch": {
