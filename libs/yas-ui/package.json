@@ -27,16 +27,16 @@
     "react-imperative-hook": "workspace:*"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "7.0.23",
-    "@storybook/addon-interactions": "7.0.23",
-    "@storybook/addon-links": "7.0.23",
-    "@storybook/addon-themes": "7.4.6",
-    "@storybook/blocks": "7.0.23",
-    "@storybook/jest": "0.1.0",
-    "@storybook/react": "7.0.23",
-    "@storybook/react-vite": "7.0.23",
-    "@storybook/test-runner": "0.11.0",
-    "@storybook/testing-library": "0.2.0",
+    "@storybook/addon-essentials": "7.5.3",
+    "@storybook/addon-interactions": "7.5.3",
+    "@storybook/addon-links": "7.5.3",
+    "@storybook/addon-themes": "7.5.3",
+    "@storybook/blocks": "7.5.3",
+    "@storybook/jest": "0.2.3",
+    "@storybook/react": "7.5.3",
+    "@storybook/react-vite": "7.5.3",
+    "@storybook/test-runner": "0.14.0",
+    "@storybook/testing-library": "0.2.2",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@yas/build": "workspace:*",
@@ -48,6 +48,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "start-server-and-test": "2.0.0",
-    "storybook": "7.0.23"
+    "storybook": "7.5.3"
   }
 }
