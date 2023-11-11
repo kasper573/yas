@@ -1,6 +1,10 @@
 import { atoms } from "./atoms.css";
 import { colors } from "./tokens";
 
+export const unconstrainedFontSize42px = atoms({
+  fontSize: "42px",
+});
+
 export const conditionalRedColor = atoms({
   color: {
     default: colors.blue,

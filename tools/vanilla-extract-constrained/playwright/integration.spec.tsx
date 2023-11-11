@@ -56,6 +56,13 @@ test("can define multiple properties", async ({ mount }) => {
   await expect(component).toHaveCSS("background-color", colors.green);
 });
 
+test("can define unconstrained value", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="unconstrainedFontSize42px" />,
+  );
+  await expect(component).toHaveCSS("font-size", "42px");
+});
+
 test("defining multiple properties yield a single class name", async ({
   mount,
 }) => {

@@ -39,7 +39,10 @@ export interface ConstrainedDefinition<
 }
 
 export type PropertyDefinition<PropertyName extends keyof Style = keyof Style> =
-  DirectPropertyOptions<PropertyName> | AliasedPropertyOptions<PropertyName>;
+
+    | DirectPropertyOptions<PropertyName>
+    | AliasedPropertyOptions<PropertyName>
+    | true;
 
 export type DirectPropertyOptions<PropertyName extends keyof Style> =
   readonly Style[PropertyName][];
@@ -79,31 +82,27 @@ export type ConstrainedStyle<
 } & {
   [K in keyof inferShorthands<Definition>]?: ConstrainedPropertyInput<
     Definition,
-    inferShorthands<Definition>[K]
+    Extract<inferShorthands<Definition>[K], keyof Style>
   >;
 };
 
 type ConstrainedPropertyInput<
   Definition extends AnyConstrainedDefinition,
-  PropertyName,
+  PropertyName extends keyof Style,
 > = WithConditions<
-  ConstrainedPropertyValue<Definition, PropertyName>,
+  inferPropertyValue<Definition["properties"], PropertyName>,
   Exclude<Definition["conditions"], undefined>
 >;
 
-type ConstrainedPropertyValue<
-  Definition extends AnyConstrainedDefinition,
-  PropertyName,
-> = PropertyName extends PropertyKey
-  ? Definition["properties"] extends Record<PropertyName, unknown>
-    ? inferPropertyValue<Definition["properties"][PropertyName]>
-    : never
-  : never;
-
-type inferPropertyValue<Definition extends PropertyDefinition> = Exclude<
-  Definition extends readonly (infer DirectValue)[]
+type inferPropertyValue<
+  Properties extends Record<string, PropertyDefinition>,
+  PropertyName extends keyof Style,
+> = Exclude<
+  Properties[PropertyName] extends true
+    ? any
+    : Properties[PropertyName] extends readonly (infer DirectValue)[]
     ? DirectValue
-    : Definition extends Record<infer AliasName, unknown>
+    : Properties[PropertyName] extends Record<infer AliasName, unknown>
     ? AliasName
     : never,
   undefined

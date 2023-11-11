@@ -36,7 +36,7 @@ export function createStyleResolver<
     }
   }
 
-  const resolveStyle: StyleResolver = (constrainedStyle) => {
+  return function resolveStyle(constrainedStyle) {
     const style = {} as Record<string, unknown>;
     const errors: Array<[string, string]> = [];
 
@@ -112,11 +112,12 @@ export function createStyleResolver<
 
     return style;
   };
-
-  return resolveStyle;
 }
 
 function resolveValue<T>(options: PropertyDefinition, value: T) {
+  if (options === true) {
+    return ok(value);
+  }
   if (Array.isArray(options)) {
     if (!options.includes(value as string)) {
       return err(
