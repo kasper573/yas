@@ -1,6 +1,6 @@
-import { style, unsafe } from "@yas/css";
+import { globalStyle, style } from "@yas/css";
 
-unsafe.globalStyle("html, body, #root", {
+globalStyle("html, body, #root", {
   minHeight: "100vh",
   margin: 0,
 });
