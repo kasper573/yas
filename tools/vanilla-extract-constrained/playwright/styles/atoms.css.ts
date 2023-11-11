@@ -1,7 +1,7 @@
 import { createConstrained } from "../../src";
 import { colors } from "./tokens";
 
-export const atoms = createConstrained({
+export const [atoms] = createConstrained({
   conditions: {
     default: {},
     condition: { selector: `&[data-condition]` },

@@ -1,24 +1,33 @@
 import { addFunctionSerializer } from "@vanilla-extract/css/functionSerializer";
-import type { ConstrainedStyleFn } from "./createConstrained";
+import type {
+  ConstrainedInlineStyleFn,
+  ConstrainedStyleFn,
+} from "./createConstrained";
 import type { AnyConstrainedDefinition } from "./createConstrained";
 import * as implementation from "./createConstrained";
 
-const importName = "createConstrained" as const;
+const import1Name = "createConstrained" as const;
+const import2Name = "createConstrainedInline" as const;
 
 export function createConstrained<Definition extends AnyConstrainedDefinition>(
   definition: Definition,
-): ConstrainedStyleFn<Definition> {
-  const constrainedStyleFn = implementation[importName](definition);
+): [ConstrainedStyleFn<Definition>, ConstrainedInlineStyleFn<Definition>] {
+  const constrainedStyleFn = implementation[import1Name](definition);
+  const constrainedStyleInlineFn = implementation[import2Name](definition);
 
   addFunctionSerializer(constrainedStyleFn, {
     importPath: "vanilla-extract-constrained/src/createConstrained",
-    importName,
-    // We assert because our data type is generic and not compatible with the built-in type,
-    // but is actually serializable at runtime.
+    importName: import1Name,
     args: [definition] as unknown as Serializable,
   });
 
-  return constrainedStyleFn;
+  addFunctionSerializer(constrainedStyleInlineFn, {
+    importPath: "vanilla-extract-constrained/src/createConstrained",
+    importName: import2Name,
+    args: [definition] as unknown as Serializable,
+  });
+
+  return [constrainedStyleFn, constrainedStyleInlineFn];
 }
 
 type Serializable = Parameters<typeof addFunctionSerializer>[1]["args"];

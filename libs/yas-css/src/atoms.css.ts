@@ -10,7 +10,7 @@ const colors = {
 };
 
 export type Atoms = Parameters<typeof atoms>[0];
-export const atoms = createConstrained({
+export const [atoms, inlineAtoms] = createConstrained({
   conditions: {
     default: {},
     hover: { selector: "&:hover" },

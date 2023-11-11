@@ -3,21 +3,34 @@ import { unwrapUnsafeFor3rdPartyIntegration as unwrap } from "@yas/result";
 import type { Condition, ConstrainedStyle, Style } from "./resolveStyle";
 import { createStyleResolver } from "./resolveStyle";
 
+// We use unwrap because we need to integrate with
+// the VanillaExtract build system that relies on exceptions
+
 export function createConstrained<Definition extends AnyConstrainedDefinition>(
   definition: Definition,
 ): ConstrainedStyleFn<Definition> {
-  // We use unwrap because we need to integrate with
-  // the VanillaExtract build system that relies on exceptions
-
   const resolve = unwrap(createStyleResolver(definition));
   return function createConstrainedStyle(constrainedStyle) {
     return style(unwrap(resolve(constrainedStyle)));
   };
 }
 
+export function createConstrainedInline<
+  Definition extends AnyConstrainedDefinition,
+>(definition: Definition): ConstrainedInlineStyleFn<Definition> {
+  const resolve = unwrap(createStyleResolver(definition));
+  return function createConstrainedStyle(constrainedStyle) {
+    return unwrap(resolve(constrainedStyle));
+  };
+}
+
 export type ConstrainedStyleFn<Definition extends AnyConstrainedDefinition> = (
   props: ConstrainedStyle<Definition>,
 ) => string;
+
+export type ConstrainedInlineStyleFn<
+  Definition extends AnyConstrainedDefinition,
+> = (props: ConstrainedStyle<Definition>) => Style;
 
 export type AnyConstrainedDefinition = ConstrainedDefinition<
   Record<string, Condition>,
