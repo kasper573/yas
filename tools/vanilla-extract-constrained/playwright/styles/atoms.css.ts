@@ -18,4 +18,4 @@ export const atoms = createConstrained({
     bg: ["background"],
     clr: ["color"],
   },
-});
+} as const);

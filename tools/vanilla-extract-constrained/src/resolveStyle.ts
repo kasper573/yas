@@ -1,7 +1,7 @@
 import type { Result } from "@yas/result";
 import { err, ok } from "@yas/result";
 import type { CSSProperties } from "react";
-import type { PropertyDefinition } from "./createConstrained";
+import type { PropertyDefinition, inferShorthands } from "./createConstrained";
 import type { AnyConstrainedDefinition } from "./createConstrained";
 
 export function createStyleResolver<
@@ -35,13 +35,16 @@ export function createStyleResolver<
     }
   }
 
-  const resolveStyle: StyleResolver<Definition> = (constrainedStyle) => {
+  const resolveStyle: StyleResolver = (constrainedStyle) => {
     const style = {} as Record<string, unknown>;
     const errors: Array<[string, string]> = [];
 
     for (const [propertyNameOrShorthand, propertyValue] of Object.entries(
       constrainedStyle,
     )) {
+      if (propertyValue === undefined || propertyValue === null) {
+        continue;
+      }
       const propertyNames = shorthands.get(propertyNameOrShorthand) ?? [
         propertyNameOrShorthand,
       ];
@@ -145,11 +148,9 @@ function assignPath(
   target[path[lastIndex]] = value;
 }
 
-type StyleResolver<Definition extends AnyConstrainedDefinition> = (
-  constrainedStyle: ConstrainedStyle<Definition>,
-) => Result<Style, string>;
-
-export const layerProperty = "@layer" as const;
+type StyleResolver<
+  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
+> = (constrainedStyle: ConstrainedStyle<Definition>) => Result<Style, string>;
 
 type ConditionKey = keyof typeof conditionKeyMap;
 const conditionKeyMap = {
@@ -164,42 +165,47 @@ export type Style = CSSProperties;
 
 export type Condition = Partial<Record<ConditionKey, string>>;
 
-export type ConstrainedStyle<Definition extends AnyConstrainedDefinition> = {
+export type ConstrainedStyle<
+  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
+> = {
   [PropertyName in keyof Style]?: ConstrainedPropertyInput<
     Definition,
     PropertyName
   >;
 } & {
-  // [ShorthandName in keyof Definition["shorthands"]]?: ConstrainedPropertyInput<
-  //   Definition,
-  //   Definition["shorthands"][ShorthandName][number]
-  // >;
+  [K in keyof inferShorthands<Definition>]?: ConstrainedPropertyInput<
+    Definition,
+    inferShorthands<Definition>[K]
+  >;
 };
 
-export type ConstrainedPropertyInput<
-  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
-  PropertyName extends keyof Style = keyof Style,
-> = HasProperties<Definition["conditions"]> extends true
-  ?
-      | ConstrainedPropertyValue<Definition, PropertyName>
-      | {
-          [K in keyof Definition["conditions"]]?: ConstrainedPropertyValue<
-            Definition,
-            PropertyName
-          >;
-        }
-  : ConstrainedPropertyValue<Definition, PropertyName>;
+type ConstrainedPropertyInput<
+  Definition extends AnyConstrainedDefinition,
+  PropertyName,
+> = WithConditions<
+  ConstrainedPropertyValue<Definition, PropertyName>,
+  Exclude<Definition["conditions"], undefined>
+>;
 
-export type ConstrainedPropertyValue<
-  Definition extends AnyConstrainedDefinition = AnyConstrainedDefinition,
-  PropertyName extends keyof Style = keyof Style,
-> = inferPropertyValue<Definition["properties"][PropertyName]>;
+type ConstrainedPropertyValue<
+  Definition extends AnyConstrainedDefinition,
+  PropertyName,
+> = PropertyName extends PropertyKey
+  ? Definition["properties"] extends Record<PropertyName, unknown>
+    ? inferPropertyValue<Definition["properties"][PropertyName]>
+    : never
+  : never;
 
-type inferPropertyValue<Definition extends PropertyDefinition> =
+type inferPropertyValue<Definition extends PropertyDefinition> = Exclude<
   Definition extends readonly (infer DirectValue)[]
     ? DirectValue
     : Definition extends Record<infer AliasName, unknown>
     ? AliasName
-    : never;
+    : never,
+  undefined
+>;
 
-type HasProperties<T> = keyof T extends never ? false : true;
+type WithConditions<
+  T,
+  Conditions extends Record<string, unknown>,
+> = keyof Conditions extends never ? T : T | { [K in keyof Conditions]?: T };
