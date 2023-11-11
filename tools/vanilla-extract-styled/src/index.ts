@@ -145,8 +145,6 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
   isVariant: boolean;
 }) => boolean;
 
-// The most abstract representation of a sprinkles fn
-// This makes the factory compatible without being limited to sprinkles
 type StyleCompiler<Style> = (style: Style) => string | undefined;
 
 // Improved vanilla extract type utilities
