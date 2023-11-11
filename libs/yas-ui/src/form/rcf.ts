@@ -1,14 +1,14 @@
 import { createRCF } from "react-composable-form";
 import type { inferFieldProps, inferLayoutProps } from "react-composable-form";
 import type { ReactNode } from "react";
-import type { Atoms } from "@yas/css";
+import type { ConstrainedStyle } from "@yas/css";
 
 interface SharedFieldProps {
   isLoading?: boolean;
   label?: ReactNode;
   info?: ReactNode;
   metrics?: Map<unknown, number>;
-  sx?: Atoms;
+  sx?: ConstrainedStyle;
 }
 
 export const createForm = createRCF<SharedFieldProps>();
