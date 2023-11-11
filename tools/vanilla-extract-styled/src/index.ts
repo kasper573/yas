@@ -3,12 +3,13 @@ import type {
   ElementType,
   ReactElement,
   ComponentProps,
+  CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement } from "react";
+import { createElement, useMemo } from "react";
 
 export function createStyledFactory<Style>(
-  compileStyle?: StyleCompiler<Style>,
+  compileInlineStyle?: StyleCompiler<Style>,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -21,6 +22,7 @@ export function createStyledFactory<Style>(
     const RecipeComponent: RecipeComponent<Implementation, Recipe, Style> =
       function RecipeComponent({
         className: inlineClassName,
+        style: inlineStyle,
         sx,
         ...inlineProps
       }) {
@@ -28,14 +30,18 @@ export function createStyledFactory<Style>(
         const [variantProps, forwardedProps] = recipe
           ? destructureVariantProps(props, recipe, options?.forwardProps)
           : [emptyObject, props];
-        const className = clsx(
-          recipe?.(variantProps),
-          sx ? compileStyle?.(sx) : undefined,
-          inlineClassName,
+        const className = clsx(recipe?.(variantProps), inlineClassName);
+        const style = useMemo(
+          () => ({
+            ...(sx ? compileInlineStyle?.(sx) : undefined),
+            ...inlineStyle,
+          }),
+          [sx, inlineStyle],
         );
         return createElement(implementation, {
           className,
           ...forwardedProps,
+          style,
         });
       };
 
@@ -126,6 +132,7 @@ type RecipeComponentProps<
   Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
     sx?: Style;
     className?: string;
+    style?: CSSProperties;
     children?: ReactNode;
   };
 
@@ -145,7 +152,7 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
   isVariant: boolean;
 }) => boolean;
 
-type StyleCompiler<Style> = (style: Style) => string | undefined;
+type StyleCompiler<Style> = (style: Style) => CSSProperties | undefined;
 
 // Improved vanilla extract type utilities
 export type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;

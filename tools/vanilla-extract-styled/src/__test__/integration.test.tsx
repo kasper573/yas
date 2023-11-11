@@ -1,8 +1,8 @@
 import { render as renderRoot } from "@yas/test/testing-library";
-import type { ElementType } from "react";
+import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../index";
 import { recipeClassName } from "./fixtures";
-import { recipeWithVariants, sprinkles } from "./test.css";
+import { recipeWithVariants } from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -58,12 +58,12 @@ function testComponent(
     );
   });
 
-  it("sprinkles", () => {
-    const styled = createStyledFactory(sprinkles);
+  it("sx", () => {
+    const styled = createStyledFactory((style: CSSProperties) => style);
     const Component = styled(component);
     const { container } = render(<Component sx={{ color: "red" }} />);
     expect(container.outerHTML).toEqual(
-      toHtml({ attrs: { class: "color_red" } }),
+      toHtml({ attrs: { style: `color: red;` } }),
     );
   });
 
@@ -117,7 +117,7 @@ function testComponent(
   });
 
   it("combination of everything", () => {
-    const styled = createStyledFactory(sprinkles);
+    const styled = createStyledFactory((style: CSSProperties) => style);
     const Component = styled(component, recipeWithVariants).attrs({
       "data-foo": "default",
       role: "alert",
@@ -127,7 +127,7 @@ function testComponent(
         className="foo"
         foo={2}
         bar="y"
-        sx={{ color: "red" }}
+        sx={{ background: "red" }}
         data-foo="bar"
         style={{ color: "blue" }}
       >
@@ -137,10 +137,10 @@ function testComponent(
     expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
-          class: `${recipeClassName} baz_b foo_2 bar_y color_red foo`,
+          class: `${recipeClassName} baz_b foo_2 bar_y foo`,
           "data-foo": "bar",
           role: "alert",
-          style: "color: blue;",
+          style: "background: red; color: blue;",
         },
         content: "Hello",
       }),
