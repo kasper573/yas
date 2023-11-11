@@ -1,4 +1,4 @@
-import { defineConfig } from "@yas/test/presets/vitest/node";
+import { defineConfig } from "@yas/test/vitest/node/config";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
 export default defineConfig(__dirname, {

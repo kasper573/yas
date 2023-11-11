@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { render, userEvent } from "@yas/test/testing-library";
+import { render, userEvent } from "@yas/test/vitest/react";
 import { useState } from "react";
 import { createForm } from "../createForm";
 import type { FormErrorList, FormValidationMode } from "../types/commonTypes";

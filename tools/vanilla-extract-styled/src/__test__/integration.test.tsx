@@ -1,4 +1,4 @@
-import { render as renderRoot } from "@yas/test/testing-library";
+import { render as renderRoot } from "@yas/test/vitest/react";
 import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../index";
 import { recipeClassName } from "./fixtures";

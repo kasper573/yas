@@ -1,5 +1,5 @@
 {
-  "extends": "@yas/test/presets/vitest/tsconfig.json",
+  "extends": "@yas/test/vitest/tsconfig.json",
   "compilerOptions": {
     "allowJs": true
   }

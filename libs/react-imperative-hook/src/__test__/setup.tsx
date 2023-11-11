@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
-import { render as renderReact } from "@yas/test/testing-library";
+import { render as renderReact } from "@yas/test/vitest/react";
 import { useMemo } from "react";
 import type { InstanceSpawnerFor } from "../createPredefinedSpawnerHook";
 import type { GeneralHookOptions } from "../constants";

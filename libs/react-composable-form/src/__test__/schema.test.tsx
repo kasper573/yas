@@ -1,4 +1,4 @@
-import { render } from "@yas/test/testing-library";
+import { render } from "@yas/test/vitest/react";
 import { z } from "zod";
 import { createForm } from "../createForm";
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { render, userEvent } from "@yas/test/testing-library";
+import { render, userEvent } from "@yas/test/vitest/react";
 import { createForm } from "../createForm";
 
 describe("discriminated union schema", () => {

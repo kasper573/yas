@@ -1,4 +1,4 @@
-import { defineConfig } from "@yas/test/presets/playwright";
+import { defineConfig } from "@yas/test/playwright/config";
 import { env } from "./src/env";
 
 const baseURL = "http://localhost:3002";
