@@ -175,7 +175,7 @@ export type ConstrainedStyle<Definitions extends AnyPropertySetDefinition[]> = {
   >;
 };
 
-type ConstrainedPropertyValue<
+export type ConstrainedPropertyValue<
   Definitions = AnyPropertySetDefinition[],
   PropertyName extends keyof Style = keyof Style,
 > = Definitions extends [AnyPropertySetDefinition, ...infer Rest]
