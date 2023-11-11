@@ -1,12 +1,22 @@
-import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
+import { createConstrained } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { themeVars } from "./themeVars.css";
 
-// Atomic properties
-
 const overflows = ["visible", "hidden", "scroll"] as const;
 
-const staticProperties = defineProperties({
+const colors = {
+  transparent: "transparent",
+  ...themeVars.color,
+};
+
+export type Atoms = Parameters<typeof atoms>[0];
+export const atoms = createConstrained({
+  conditions: {
+    default: {},
+    hover: { selector: "&:hover" },
+    active: { selector: "&:active" },
+  },
+  defaultCondition: "default",
   properties: {
     cursor: ["pointer", "default"],
     pointerEvents: ["none", "all"],
@@ -23,7 +33,7 @@ const staticProperties = defineProperties({
     flex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     flexDirection: ["row", "column"],
     border: ["none"],
-    borderSize: tokens.borderSizes,
+    borderWidth: tokens.borderSizes,
     borderStyle: ["solid", "dashed", "dotted"],
     borderRadius: tokens.radii,
     justifyContent: [
@@ -58,6 +68,9 @@ const staticProperties = defineProperties({
     fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
     fontWeight: ["normal", "bold"],
+    color: colors,
+    background: colors,
+    borderColor: colors,
   },
   shorthands: {
     p: ["padding"],
@@ -76,27 +89,4 @@ const staticProperties = defineProperties({
     ml: ["marginLeft"],
     overflow: ["overflowX", "overflowY"],
   },
-});
-
-const colors = {
-  transparent: "transparent",
-  ...themeVars.color,
-};
-
-const colorProperties = defineProperties({
-  conditions: {
-    default: {},
-    hover: { selector: "&:hover" },
-    active: { selector: "&:active" },
-  },
-  defaultCondition: "default",
-  properties: {
-    color: colors,
-    background: colors,
-    borderColor: colors,
-  },
-});
-
-export const atoms = createSprinkles(staticProperties, colorProperties);
-
-export type Atoms = Parameters<typeof atoms>[0];
+} as const);

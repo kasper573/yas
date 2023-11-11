@@ -54,7 +54,7 @@ export const buttonRecipe = recipe({
       },
       outlined: {
         background: "transparent",
-        borderSize: "#1",
+        borderWidth: "#1",
         borderStyle: "solid",
         borderColor: "border",
       },
