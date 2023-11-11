@@ -1,6 +1,6 @@
 import { expectTypeOf } from "vitest";
 import { defineProperties } from "../index";
-import type { ConstrainedPropertyValue } from "../resolveStyle";
+import type { ConstrainedPropertyInput } from "../resolveStyle";
 
 it("can infer direct property value types", () => {
   const props = defineProperties({
@@ -9,9 +9,9 @@ it("can infer direct property value types", () => {
     },
   } as const);
 
-  type Value = ConstrainedPropertyValue<[typeof props], "color">;
+  type Value = ConstrainedPropertyInput<[typeof props], "color">;
 
-  expectTypeOf<Value>().toMatchTypeOf<"red" | "green">();
+  expectTypeOf<Value>().toEqualTypeOf<"red" | "green">();
 });
 
 it("can infer aliased property value types", () => {
@@ -24,7 +24,50 @@ it("can infer aliased property value types", () => {
     },
   });
 
-  type Value = ConstrainedPropertyValue<[typeof props], "color">;
+  type Value = ConstrainedPropertyInput<[typeof props], "color">;
 
-  expectTypeOf<Value>().toMatchTypeOf<"failure" | "success">();
+  expectTypeOf<Value>().toEqualTypeOf<"failure" | "success">();
 });
+
+it("can infer conditional direct property value types", () => {
+  const props = defineProperties({
+    conditions: {
+      default: {},
+      hover: { selector: "&:hover" },
+    },
+    properties: {
+      color: ["red", "green"],
+    },
+  } as const);
+
+  type Value = ConstrainedPropertyInput<[typeof props], "color">;
+
+  expectTypeOf<Value>().toEqualTypeOf<
+    WithConditions<"red" | "green", "default" | "hover">
+  >();
+});
+
+it("can infer conditional aliased property value types", () => {
+  const props = defineProperties({
+    conditions: {
+      default: {},
+      hover: { selector: "&:hover" },
+    },
+    properties: {
+      color: {
+        failure: "red",
+        success: "green",
+      },
+    },
+  });
+
+  type Value = ConstrainedPropertyInput<[typeof props], "color">;
+
+  expectTypeOf<Value>().toEqualTypeOf<
+    WithConditions<"failure" | "success", "default" | "hover">
+  >();
+});
+
+type WithConditions<T, Conditions extends string> =
+  | T
+  | { [K in Conditions]?: T };

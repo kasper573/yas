@@ -132,7 +132,7 @@ function resolveValue<T>(options: PropertyDefinition, value: T) {
       )}`,
     );
   }
-  return ok(options[value as string]);
+  return ok(options[value as keyof typeof options]);
 }
 
 function assignPath(
@@ -169,19 +169,35 @@ export type Style = CSSProperties;
 export type Condition = Partial<Record<ConditionKey, string>>;
 
 export type ConstrainedStyle<Definitions extends AnyPropertySetDefinition[]> = {
-  [PropertyName in keyof Style]: ConstrainedPropertyValue<
+  [PropertyName in keyof Style]: ConstrainedPropertyInput<
     Definitions,
     PropertyName
   >;
 };
 
+export type ConstrainedPropertyInput<
+  Definitions extends AnyPropertySetDefinition[] = AnyPropertySetDefinition[],
+  PropertyName extends keyof Style = keyof Style,
+> = HasConditions<Definitions> extends true
+  ?
+      | ConstrainedPropertyValue<Definitions, PropertyName>
+      | {
+          [K in AllConditionNames<Definitions>]?: ConstrainedPropertyValue<
+            Definitions,
+            PropertyName
+          >;
+        }
+  : ConstrainedPropertyValue<Definitions, PropertyName>;
+
 export type ConstrainedPropertyValue<
-  Definitions = AnyPropertySetDefinition[],
+  Definitions extends AnyPropertySetDefinition[] = AnyPropertySetDefinition[],
   PropertyName extends keyof Style = keyof Style,
 > = Definitions extends [AnyPropertySetDefinition, ...infer Rest]
   ? Definitions[0]["properties"] extends Record<PropertyName, infer Options>
     ? OptionUnion<Definitions[0]["properties"][PropertyName]>
-    : ConstrainedPropertyValue<Rest, PropertyName>
+    : Rest extends AnyPropertySetDefinition[]
+    ? ConstrainedPropertyInput<Rest, PropertyName>
+    : never
   : never;
 
 type OptionUnion<Options> = Options extends readonly (infer DirectValue)[]
@@ -189,3 +205,21 @@ type OptionUnion<Options> = Options extends readonly (infer DirectValue)[]
   : Options extends Record<infer AliasName, unknown>
   ? AliasName
   : never;
+
+type AllConditionNames<Definitions> = Definitions extends [
+  AnyPropertySetDefinition,
+  ...infer Rest,
+]
+  ? keyof Definitions[0]["conditions"] | AllConditionNames<Rest>
+  : never;
+
+type HasConditions<Definitions> = Definitions extends [
+  AnyPropertySetDefinition,
+  ...infer Rest,
+]
+  ? HasProperties<Definitions[0]["conditions"]> extends true
+    ? true
+    : HasConditions<Rest>
+  : false;
+
+type HasProperties<T> = keyof T extends never ? false : true;
