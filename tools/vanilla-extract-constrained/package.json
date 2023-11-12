@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
-    "@types/react": "18.2.33",
+    "@types/react": "18.2.37",
     "@vanilla-extract/css": "^1.6.1",
     "@yas/build": "workspace:*",
     "@yas/result": "workspace:*",
