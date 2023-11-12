@@ -20,6 +20,7 @@
   "peerDependencies": {
     "@vanilla-extract/recipes": "^0.5.0",
     "clsx": "^1.2.1",
+    "shallow-equal": "3.1.0",
     "vanilla-extract-constrained": "workspace:*",
     "vanilla-extract-recipe-factory": "workspace:*",
     "vanilla-extract-styled": "workspace:*"

@@ -10,7 +10,7 @@ import { createElement, useMemo, useRef } from "react";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
-  isEqual: EqualityFn = Object.is,
+  isEqual: EqualityFn<Style | CSSProperties | undefined> = Object.is,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -65,7 +65,7 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
   };
 }
 
-export type EqualityFn = (a: unknown, b: unknown) => boolean;
+export type EqualityFn<T> = (a: T, b: T) => boolean;
 
 const emptyObject = Object.freeze({});
 
@@ -185,7 +185,7 @@ function clsx(...classNames: Array<string | undefined>) {
 function useCompareMemo<Input, Output>(
   memoize: (input: Input) => Output,
   input: Input,
-  isEqual: EqualityFn,
+  isEqual: EqualityFn<Input>,
 ): Output {
   const ref = useRef<[Input, Output]>();
   if (!ref.current || !isEqual(ref.current[0], input)) {

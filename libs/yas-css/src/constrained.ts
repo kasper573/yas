@@ -1,6 +1,7 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "vanilla-extract-styled";
+import { shallowEqual } from "shallow-equal";
 import type { Atoms } from "./atoms.css";
 import { resolveAtoms } from "./atoms.css";
 
@@ -19,7 +20,7 @@ export const keyframes = (keyframedConstrainedStyles: Record<string, Atoms>) =>
     ),
   );
 
-export const styled = createStyledFactory(resolveAtoms);
+export const styled = createStyledFactory(resolveAtoms, shallowEqual);
 
 export const recipe = createRecipeFactory(style);
 

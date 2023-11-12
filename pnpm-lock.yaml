@@ -279,6 +279,9 @@ importers:
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
+      shallow-equal:
+        specifier: 3.1.0
+        version: 3.1.0
       vanilla-extract-constrained:
         specifier: workspace:*
         version: link:../../tools/vanilla-extract-constrained
@@ -17163,6 +17166,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       kind-of: 6.0.3
+
+  /shallow-equal@3.1.0:
+    resolution: {integrity: sha512-pfVOw8QZIXpMbhBWvzBISicvToTiM5WBF1EeAUZDDSb5Dt29yl4AYbyywbJFSEsRUMr7gJaxqCdr4L3tQf9wVg==}
+    dev: false
 
   /shallowequal@1.1.0:
     resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
