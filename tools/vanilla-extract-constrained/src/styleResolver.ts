@@ -6,6 +6,7 @@ import type {
   PropertyDefinitionRecord,
   PropertyShorthandRecord,
   Style,
+  VariableReference,
 } from "./types";
 import {
   conditionKeys,
@@ -145,8 +146,12 @@ export function createStyleResolver<
 export const anyCssValue = Symbol("any_css_value");
 const passThroughProperties: PropertyKey[] = ["containerName"];
 
+function isVariableReference(value: unknown): value is VariableReference {
+  return typeof value === "string" && /^var\(--.*\)$/.test(value);
+}
+
 function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
-  if (Object.is(options, anyCssValue)) {
+  if (Object.is(options, anyCssValue) || isVariableReference(value)) {
     return ok(value);
   }
   if (Array.isArray(options)) {
