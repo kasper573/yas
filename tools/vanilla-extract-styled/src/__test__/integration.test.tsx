@@ -67,6 +67,19 @@ function testComponent(
     );
   });
 
+  it("sx memoized", () => {
+    const compile = vi.fn((style: CSSProperties) => style);
+    const styled = createStyledFactory(compile, isEqual);
+    const Component = styled(component);
+    const { container, rerender } = render(<Component sx={{ color: "red" }} />);
+    rerender(<Component sx={{ color: "red" }} />);
+    rerender(<Component sx={{ color: "blue" }} />);
+    expect(compile).toHaveBeenCalledTimes(2);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { style: `color: blue;` } }),
+    );
+  });
+
   it("variants", () => {
     const styled = createStyledFactory();
     const Component = styled(component, recipeWithVariants);
@@ -174,4 +187,8 @@ function render(...args: Parameters<typeof renderRoot>) {
     container: firstElementChild,
     ...rest,
   };
+}
+
+function isEqual<A, B>(a: A, b: B): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
 }

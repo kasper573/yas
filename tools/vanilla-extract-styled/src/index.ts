@@ -6,10 +6,11 @@ import type {
   CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement, useMemo } from "react";
+import { createElement, useMemo, useRef } from "react";
 
-export function createStyledFactory<Style>(
-  compileInlineStyle?: StyleCompiler<Style>,
+export function createStyledFactory<Style extends Record<string, unknown>>(
+  compileStyle: StyleCompiler<Style> = () => undefined,
+  isEqual: EqualityFn = Object.is,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -23,21 +24,21 @@ export function createStyledFactory<Style>(
       function RecipeComponent({
         className: inlineClassName,
         style: inlineStyle,
-        sx,
+        sx = emptyObject as Style,
         ...inlineProps
       }) {
         const props = { ...options?.defaultProps, ...inlineProps };
         const [variantProps, forwardedProps] = recipe
           ? destructureVariantProps(props, recipe, options?.forwardProps)
           : [emptyObject, props];
+
         const className = clsx(recipe?.(variantProps), inlineClassName);
+        const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
         const style = useMemo(
-          () => ({
-            ...(sx ? compileInlineStyle?.(sx) : undefined),
-            ...inlineStyle,
-          }),
-          [sx, inlineStyle],
+          () => ({ ...sxMemoized, ...inlineStyle }),
+          [sxMemoized, inlineStyle],
         );
+
         return createElement(implementation, {
           className,
           ...forwardedProps,
@@ -63,6 +64,8 @@ export function createStyledFactory<Style>(
     return RecipeComponent;
   };
 }
+
+export type EqualityFn = (a: unknown, b: unknown) => boolean;
 
 const emptyObject = Object.freeze({});
 
@@ -177,4 +180,16 @@ type StripIndexes<T> = {
 function clsx(...classNames: Array<string | undefined>) {
   const defined = classNames.filter(Boolean);
   return defined.length ? defined.join(" ") : undefined;
+}
+
+function useCompareMemo<Input, Output>(
+  memoize: (input: Input) => Output,
+  input: Input,
+  isEqual: EqualityFn,
+): Output {
+  const ref = useRef<[Input, Output]>();
+  if (!ref.current || !isEqual(ref.current[0], input)) {
+    ref.current = [input, memoize(input)];
+  }
+  return ref.current[1];
 }
