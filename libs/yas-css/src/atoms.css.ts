@@ -46,6 +46,7 @@ export const resolveAtoms = createStyleResolver({
     marginLeft: tokens.spaces,
     margin: tokens.spaces,
     gap: tokens.spaces,
+    objectFit: all(),
     width: all(),
     height: all(),
     minWidth: all(),

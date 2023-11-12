@@ -10,27 +10,27 @@ export const title = style({
   fontSize: "#8",
 });
 
-export const titleWord = unsafe.style({
+export const titleWord = style({
   display: "inline-block",
   selectors: {
     "&::first-letter": {
       color: "var(--ifm-color-primary)",
     },
     "& + &": {
-      marginLeft: "0.25em",
+      marginLeft: "#6",
     },
   },
 });
 
-export const tagline = unsafe.style({
-  fontSize: "2rem",
+export const tagline = style({
+  fontSize: "#5",
   margin: 0,
 });
 
-export const features = unsafe.style({});
+export const features = style({});
 
-const featureBase = unsafe.style({
-  padding: "2rem 2rem",
+const featureBase = style({
+  p: "#5",
 });
 
 export const feature = unsafe.recipe({
@@ -47,9 +47,9 @@ export const feature = unsafe.recipe({
   },
 });
 
-export const featureImage = unsafe.style({
+export const featureImage = style({
   objectFit: "contain",
-  marginBottom: "1em",
+  mb: "#2",
 });
 
 export const container = unsafe.style({
