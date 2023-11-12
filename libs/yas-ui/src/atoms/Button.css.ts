@@ -16,18 +16,18 @@ export const buttonRecipe = recipe({
     size: {
       small: {
         fontSize: "#1",
-        px: "#1",
+        px: "#2",
         py: "#2",
       },
       medium: {
         fontSize: "#2",
         px: "#2",
-        py: "#3",
+        py: "#2",
       },
       large: {
         fontSize: "#3",
         px: "#3",
-        py: "#4",
+        py: "#2",
       },
     },
     color: {
@@ -38,6 +38,7 @@ export const buttonRecipe = recipe({
           active: "primaryAlt2",
         },
         color: "primaryText",
+        borderColor: "primaryOutline",
       },
       secondary: {
         background: {
@@ -46,6 +47,7 @@ export const buttonRecipe = recipe({
           active: "secondaryAlt2",
         },
         color: "secondaryText",
+        borderColor: "secondaryOutline",
       },
     },
     variant: {
@@ -53,14 +55,17 @@ export const buttonRecipe = recipe({
         borderRadius: "#1",
       },
       outlined: {
-        background: "transparent",
         borderWidth: "#1",
         borderStyle: "solid",
-        borderColor: "divider",
       },
     },
     disabled: {
-      true: { pointerEvents: "none", opacity: 1 },
+      true: {
+        pointerEvents: "none",
+        background: "disabledMain",
+        color: "disabledText",
+        borderColor: "disabledOutline",
+      },
       false: {},
     },
   },

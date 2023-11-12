@@ -3,6 +3,7 @@ import { createThemeContract } from "@vanilla-extract/css";
 const colorWithText = {
   main: null,
   text: null,
+  outline: null,
 };
 
 const colorWithTextAndAlternatives = {
@@ -16,6 +17,7 @@ export const themeVars = createThemeContract({
     ...flattenAs("surface", colorWithText),
     ...flattenAs("primary", colorWithTextAndAlternatives),
     ...flattenAs("secondary", colorWithTextAndAlternatives),
+    ...flattenAs("disabled", colorWithText),
     success: null,
     info: null,
     warning: null,
