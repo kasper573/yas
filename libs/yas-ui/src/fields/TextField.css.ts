@@ -1,19 +1,22 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const inputRecipe = unsafe.recipe({
+export const inputRecipe = recipe({
   base: {
-    padding: 10,
-    border: "1px solid black",
-    borderRadius: 4,
-    backgroundColor: "white",
-    color: "black",
-    fontSize: 14,
+    padding: "#3",
+    borderStyle: "solid",
+    borderWidth: "#1",
+    borderRadius: "#2",
+    borderColor: "divider",
+    backgroundColor: "surfaceMain",
+    color: "surfaceText",
+    fontSize: "#3",
+    fontFamily: "inter",
 
     selectors: {
       "&:focus": {
         outline: "none",
-        borderColor: "skyblue",
-        boxShadow: "0 0 0 2px rgba(41, 106, 163, 0.2)",
+        borderColor: "primaryMain",
+        boxShadow: "#1",
       },
     },
   },

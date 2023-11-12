@@ -1,10 +1,10 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const dividerRecipe = unsafe.recipe({
+export const dividerRecipe = recipe({
   base: {
     height: "1px",
-    backgroundColor: "gray",
-    marginTop: "1em",
-    marginBottom: "1em",
+    backgroundColor: "divider",
+    marginTop: "#3",
+    marginBottom: "#3",
   },
 });
