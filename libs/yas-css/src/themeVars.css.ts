@@ -20,7 +20,8 @@ export const themeVars = createThemeContract({
     info: null,
     warning: null,
     error: null,
-    border: null,
+    divider: null,
+    dimmer: null,
   },
 });
 

@@ -1,12 +1,13 @@
-import { unsafe } from "@yas/css";
+import { style, unsafe } from "@yas/css";
 
-export const hero = unsafe.style({
-  padding: "8rem 0",
+export const hero = style({
+  px: 0,
+  py: "#10",
   textAlign: "center",
 });
 
-export const title = unsafe.style({
-  fontSize: "5rem",
+export const title = style({
+  fontSize: "#8",
 });
 
 export const titleWord = unsafe.style({

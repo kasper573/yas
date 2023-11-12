@@ -56,7 +56,7 @@ export const buttonRecipe = recipe({
         background: "transparent",
         borderWidth: "#1",
         borderStyle: "solid",
-        borderColor: "border",
+        borderColor: "divider",
       },
     },
     disabled: {

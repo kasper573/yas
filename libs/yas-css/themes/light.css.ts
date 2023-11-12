@@ -18,6 +18,7 @@ export const light: string = createTheme(themeVars, {
     info: palette["blue-500"],
     warning: palette["yellow-500"],
     error: palette["red-500"],
-    border: palette.black,
+    divider: palette.black,
+    dimmer: "hsl(0 0% 0% / 0.5)",
   },
 });

@@ -1,17 +1,17 @@
-import { recipe, unsafe } from "@yas/css";
+import { recipe, style } from "@yas/css";
 import projectImageUrl from "./image.jpg";
 
 export const container = recipe({
   base: {
     color: "success",
     fontFamily: "caveat",
-    fontSize: "#10",
+    fontSize: "#7",
   },
 });
 
-export const projectImage = unsafe.style({
+export const projectImage = style({
   width: 250,
   height: 250,
-  backgroundColor: "skyblue",
+  backgroundColor: "info",
   backgroundImage: `url(${projectImageUrl})`,
 });

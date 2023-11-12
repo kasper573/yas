@@ -1,9 +1,10 @@
 import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
 
-export function createRecipeFactory<Style, CompiledStyle extends string>(
-  compileStyle: StyleCompiler<Style, CompiledStyle>,
-) {
+export function createRecipeFactory<
+  Style,
+  CompiledStyle extends CompiledStyleLike,
+>(compileStyle: StyleCompiler<Style, CompiledStyle>) {
   return function specializedRecipe<
     Groups,
     DefaultVariants extends VariantSelection<Groups>,
@@ -19,7 +20,7 @@ function compileOptions<
   Groups,
   DefaultVariants extends VariantSelection<Groups>,
   Style,
-  CompiledStyle extends string,
+  CompiledStyle extends CompiledStyleLike,
 >(
   options: PatternOptions<Groups, DefaultVariants, Style>,
   compileStyle: StyleCompiler<Style, CompiledStyle>,
@@ -27,17 +28,21 @@ function compileOptions<
   const { base, variants, defaultVariants, compoundVariants } = options;
 
   return {
-    base: invokeOneOrMany(compileStyle, base),
+    base: base ? compileStyle(base) : undefined,
     variants: compileVariants(variants, compileStyle),
     defaultVariants,
     compoundVariants: compoundVariants?.map(({ variants, style }) => ({
       variants,
-      style: invokeOneOrMany(compileStyle, style) ?? [],
+      style: compileStyle(style),
     })),
   };
 }
 
-function compileVariants<Groups, Style, CompiledStyle extends string>(
+function compileVariants<
+  Groups,
+  Style,
+  CompiledStyle extends CompiledStyleLike,
+>(
   variants: Variants<Groups, Style> | undefined = {} as Variants<Groups, Style>,
   compileStyle: StyleCompiler<Style, CompiledStyle>,
 ): Variants<Groups, CompiledStyle> {
@@ -45,7 +50,7 @@ function compileVariants<Groups, Style, CompiledStyle extends string>(
   for (const [groupName, groupVariants] of typedEntries(variants)) {
     const group = (map[groupName] ??= {} as (typeof map)[typeof groupName]);
     for (const [variantName, variantValue] of typedEntries(groupVariants)) {
-      const value = invokeOneOrMany(compileStyle, variantValue);
+      const value = compileStyle(variantValue);
       if (value !== undefined) {
         group[variantName as keyof typeof group] = value;
       }
@@ -54,13 +59,15 @@ function compileVariants<Groups, Style, CompiledStyle extends string>(
   return map;
 }
 
-export type StyleCompiler<Style, CompiledStyle extends string> = (
+export type StyleCompiler<Style, CompiledStyle extends CompiledStyleLike> = (
   style: Style,
 ) => CompiledStyle;
 
+export type CompiledStyleLike = string | string[];
+
 type Variants<Groups, T> = {
   [G in keyof Groups]: {
-    [P in keyof Groups[G]]: OneOrMany<T>;
+    [P in keyof Groups[G]]: T;
   };
 };
 
@@ -70,7 +77,7 @@ type VariantSelection<Groups> = {
 
 interface CompoundVariant<Groups, T> {
   variants: VariantSelection<Groups>;
-  style: OneOrMany<T>;
+  style: T;
 }
 
 type PatternOptions<
@@ -78,25 +85,14 @@ type PatternOptions<
   DefaultVariants extends VariantSelection<Groups>,
   T,
 > = {
-  base?: OneOrMany<T>;
+  base?: T;
   variants?: Variants<Groups, T>;
   defaultVariants?: DefaultVariants;
   compoundVariants?: Array<CompoundVariant<NoInfer<Groups>, T>>;
 };
 
-type OneOrMany<T> = T | T[];
 type NoInfer<T> = [T][T extends any ? 0 : never];
 type TreatBooleanStringAsBoolean<T> = T extends "true" | "false" ? boolean : T;
-
-function invokeOneOrMany<I, O>(
-  fn: (i: I) => O,
-  input?: OneOrMany<I>,
-): OneOrMany<O> | undefined {
-  if (input === undefined) {
-    return;
-  }
-  return Array.isArray(input) ? input.map(fn) : fn(input);
-}
 
 const typedEntries = Object.entries as <T>(
   o: T,

@@ -1,8 +1,8 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const overlayRecipe = unsafe.recipe({
+export const overlayRecipe = recipe({
   base: {
-    backgroundColor: "hsl(0 0% 0% / 0.5)",
+    backgroundColor: "dimmer",
     position: "fixed",
     inset: 0,
     transition: "opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -15,12 +15,11 @@ export const overlayRecipe = unsafe.recipe({
   },
 });
 
-export const dialogRecipe = unsafe.recipe({
+export const dialogRecipe = recipe({
   base: {
-    backgroundColor: "white",
-    borderRadius: 6,
-    boxShadow:
-      "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
+    backgroundColor: "surfaceMain",
+    borderRadius: "#3",
+    boxShadow: "#1",
     position: "fixed",
     top: "50%",
     left: "50%",
@@ -28,9 +27,11 @@ export const dialogRecipe = unsafe.recipe({
     width: "90vw",
     maxWidth: "450px",
     maxHeight: "85vh",
-    padding: 25,
+    padding: "#5",
     transition: "opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-    ":focus": { outline: "none" },
+    selectors: {
+      "&:focus": { outline: "none" },
+    },
   },
   variants: {
     open: {

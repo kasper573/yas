@@ -1,18 +1,18 @@
-import { unsafe } from "@yas/css";
+import { recipe } from "@yas/css";
 
-export const checkboxRecipe = unsafe.recipe({
+export const checkboxRecipe = recipe({
   base: {
-    padding: 10,
-    border: "1px solid var(--ifm-color-primary-lightest)",
-    borderRadius: 4,
-    backgroundColor: "var(--ifm-background-color)",
-    fontSize: 14,
-
+    padding: "#3",
+    borderColor: "divider",
+    borderStyle: "solid",
+    borderRadius: "#2",
+    backgroundColor: "surfaceMain",
+    fontSize: "#2",
     selectors: {
       "&:focus": {
         outline: "none",
-        borderColor: "var(--ifm-color-primary)",
-        boxShadow: "0 0 0 2px rgba(41, 106, 163, 0.2)",
+        borderColor: "primaryMain",
+        boxShadow: "#1",
       },
     },
   },

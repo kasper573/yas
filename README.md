@@ -2,14 +2,14 @@
 
 My personal stack of apps and libraries.
 
-## Monorepo conventions
+Also serves as monorepo template with focus on strict conventions, type safety, testing and easy code sharing between packages.
 
-This is a [turborepo](https://turbo.build/repo) focusing on strict conventions,
-type safety, testing and code sharing between packages.
+## Monorepo conventions
 
 - The repository root should only hold global tooling and configuration files.
 - Decouple your apps and packages.
 - Keep packages small and focused.
+- Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
 - Utilize shared configuration (e.g. [@yas/tsconfig](tools/yas-tsconfig), [@yas/env](tools/yas-env)).
 - Encapsulate packages (e.g. [@yas/css](libs/yas-css), [@yas/zod](libs/yas-zod)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
