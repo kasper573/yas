@@ -88,10 +88,6 @@ export const borderSizes = {
   "#3": 3,
 };
 
-export const surfaceSizes = ["auto", "100vh", "100vw", "100%", 0] as const;
-
-export const opacities = [0, 0.25, 0.5, 0.75, 1];
-
 export const radii = {
   0: 0,
   "#1": 5,
