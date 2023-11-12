@@ -45,16 +45,6 @@ test("can define unconstrained value", async ({ mount }) => {
   await expect(component).toHaveCSS("font-size", "42px");
 });
 
-test("can use variable", async ({ mount }) => {
-  const root = await mount(
-    <VanillaExtract className="variableRedColorSetter">
-      <VanillaExtract className="variableRedColorGetter" data-testid="inner" />
-    </VanillaExtract>,
-  );
-  const inner = root.getByTestId("inner");
-  await expect(inner).toHaveCSS("color", colors.red);
-});
-
 test("defining multiple properties yield a single class name", async ({
   mount,
 }) => {

@@ -1,4 +1,3 @@
-import type { createVar } from "@vanilla-extract/css";
 import type { CSSProperties } from "react";
 
 // Definition types
@@ -94,11 +93,9 @@ type ConstrainedPropertyInput<
   Properties extends PropertyDefinitionRecord,
   PropertyName extends keyof Properties,
 > = WithConditions<
-  ConstrainedPropertyValue<Properties[PropertyName]> | VariableReference,
+  ConstrainedPropertyValue<Properties[PropertyName]>,
   Exclude<Conditions, undefined>
 >;
-
-export type VariableReference = ReturnType<typeof createVar>;
 
 type WithConditions<
   T,
