@@ -10,14 +10,14 @@ export const title = style({
   fontSize: "#8",
 });
 
-export const titleWord = style({
+export const titleWord = unsafe.style({
   display: "inline-block",
   selectors: {
     "&::first-letter": {
       color: "var(--ifm-color-primary)",
     },
     "& + &": {
-      marginLeft: "#6",
+      marginLeft: "2rem",
     },
   },
 });
