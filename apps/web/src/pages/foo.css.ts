@@ -5,7 +5,7 @@ export const container = recipe({
   base: {
     color: "success",
     fontFamily: "caveat",
-    fontSize: "#10",
+    fontSize: "#7",
   },
 });
 
