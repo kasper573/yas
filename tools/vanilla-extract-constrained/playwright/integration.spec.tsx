@@ -59,18 +59,14 @@ test("defining multiple properties yield a single class name", async ({
 
 test.describe("conditional", () => {
   test.describe("inline", () => {
-    test("conditional value uses default when condition is inactive", async ({
-      mount,
-    }) => {
+    test("default", async ({ mount }) => {
       const component = await mount(
         <VanillaExtract className="conditionalRedColor" />,
       );
       await expect(component).toHaveCSS("color", colors.blue);
     });
 
-    test("conditional value is correct when condition is active", async ({
-      mount,
-    }) => {
+    test("active", async ({ mount }) => {
       const component = await mount(
         <VanillaExtract className="conditionalRedColor" data-condition />,
       );
