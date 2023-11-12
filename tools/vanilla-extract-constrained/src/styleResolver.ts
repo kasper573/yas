@@ -15,15 +15,6 @@ export function createStyleResolver<
   defaultCondition,
   shorthands,
 }: Definition): StyleResolver<Definition> {
-  const propertyLookup = new Map<string, PropertyDefinition>();
-
-  for (const [propertyName, propertyDefinition] of Object.entries(properties)) {
-    if (propertyLookup.has(propertyName)) {
-      throw new Error(`Duplicate property is not allowed: ${propertyName}`);
-    }
-    propertyLookup.set(propertyName, propertyDefinition);
-  }
-
   return function resolveStyle(constrainedStyle) {
     const style = {} as Record<string, unknown>;
     const errors: Array<[string, string]> = [];
@@ -38,7 +29,7 @@ export function createStyleResolver<
         propertyNameOrShorthand,
       ];
       for (const propertyName of propertyNames) {
-        const propertyDefinition = propertyLookup.get(propertyName);
+        const propertyDefinition = properties[propertyName];
         if (!propertyDefinition) {
           errors.push([propertyNameOrShorthand, "Unknown property"]);
           continue;
