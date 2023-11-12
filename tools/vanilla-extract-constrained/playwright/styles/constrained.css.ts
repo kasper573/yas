@@ -1,4 +1,4 @@
-import { createContainer, layer, style } from "@vanilla-extract/css";
+import { createContainer, createVar, layer, style } from "@vanilla-extract/css";
 import { atoms } from "./atoms.css";
 import { colors } from "./tokens";
 
@@ -32,6 +32,18 @@ export const validRedColor = atoms({
 export const validRedColorAndGreenBackground = atoms({
   color: colors.red,
   background: "success",
+});
+
+const variable = createVar();
+
+export const variableRedColorSetter = style({
+  vars: {
+    [variable]: colors.red,
+  },
+});
+
+export const variableRedColorGetter = atoms({
+  color: variable,
 });
 
 const layerName = layer();

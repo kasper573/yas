@@ -4,6 +4,7 @@ import * as styles from "./styles/constrained.css";
 export function VanillaExtract({
   className,
   unsafeClassName,
+  children = className,
   ...rest
 }: {
   className: keyof typeof styles;
@@ -14,11 +15,7 @@ export function VanillaExtract({
       className={[styles[className], unsafeClassName].filter(Boolean).join(" ")}
       {...rest}
     >
-      {className}
+      {children}
     </div>
   );
-}
-
-export function Container({ children }: { children: React.ReactNode }) {
-  return <div className={styles.container}>{children}</div>;
 }
