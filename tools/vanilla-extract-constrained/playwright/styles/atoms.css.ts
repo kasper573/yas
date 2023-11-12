@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { createStyleResolver } from "../../src";
+import { createStyleResolver, all } from "../../src";
 import { colors } from "./tokens";
 
 type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
@@ -15,7 +15,7 @@ const resolveStyle = createStyleResolver({
       success: colors.green,
       failure: colors.red,
     },
-    fontSize: true,
+    fontSize: all(),
   },
   shorthands: {
     bg: ["background"],

@@ -1,23 +1,34 @@
 import { ok, err } from "@yas/result";
-import type { ConditionKey } from "./types";
+import type {
+  ConditionKey,
+  ConditionRecord,
+  ConstrainedDefinition,
+  PropertyDefinitionRecord,
+  PropertyShorthandRecord,
+} from "./types";
 import {
   type PropertyDefinition,
-  type AnyConstrainedDefinition,
   type StyleResolver,
   conditionKeyMap,
 } from "./types";
 
 export function createStyleResolver<
-  Definition extends AnyConstrainedDefinition,
+  Conditions extends ConditionRecord,
+  Properties extends PropertyDefinitionRecord,
+  Shorthands extends PropertyShorthandRecord<Properties>,
 >({
   properties,
   conditions,
   defaultCondition,
   shorthands,
-}: Definition): StyleResolver<Definition> {
+}: ConstrainedDefinition<Conditions, Properties, Shorthands>): StyleResolver<
+  Conditions,
+  Properties,
+  Shorthands
+> {
   return function resolveStyle(constrainedStyle) {
-    const style = {} as Record<string, unknown>;
-    const errors: Array<[string, string]> = [];
+    const style = {} as Record<PropertyKey, unknown>;
+    const errors: Array<[PropertyKey, string]> = [];
 
     for (const [propertyNameOrShorthand, propertyValue] of Object.entries(
       constrainedStyle,
@@ -25,9 +36,9 @@ export function createStyleResolver<
       if (propertyValue === undefined || propertyValue === null) {
         continue;
       }
-      const propertyNames = shorthands?.[propertyNameOrShorthand] ?? [
+      const propertyNames = (shorthands?.[propertyNameOrShorthand] ?? [
         propertyNameOrShorthand,
-      ];
+      ]) as Array<keyof Properties>;
       for (const propertyName of propertyNames) {
         const propertyDefinition = properties[propertyName];
         if (!propertyDefinition) {
@@ -82,7 +93,9 @@ export function createStyleResolver<
     if (errors.length) {
       throw new Error(
         errors
-          .map(([name, error]) => `Invalid property "${name}": ${error}`)
+          .map(
+            ([name, error]) => `Invalid property "${String(name)}": ${error}`,
+          )
           .join("\n"),
       );
     }
@@ -91,8 +104,10 @@ export function createStyleResolver<
   };
 }
 
-function resolveValue<T>(options: PropertyDefinition, value: T) {
-  if (options === true) {
+export const anyCssValue = Symbol("any_css_value");
+
+function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
+  if (Object.is(options, anyCssValue)) {
     return ok(value);
   }
   if (Array.isArray(options)) {
@@ -116,7 +131,7 @@ function resolveValue<T>(options: PropertyDefinition, value: T) {
 function assignPath(
   style: Record<string, unknown>,
   value: unknown,
-  ...path: string[]
+  ...path: PropertyKey[]
 ) {
   let target = style;
   const lastIndex = path.length - 1;
@@ -124,5 +139,5 @@ function assignPath(
     const key = path[i] as keyof typeof target;
     target = (target[key] ?? (target[key] = {})) as typeof target;
   }
-  target[path[lastIndex]] = value;
+  target[path[lastIndex] as keyof typeof target] = value;
 }
