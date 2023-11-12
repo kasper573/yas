@@ -1,10 +1,12 @@
-import { createConstrained } from "../../src";
+import { style } from "@vanilla-extract/css";
+import { createStyleResolver, all } from "../../src";
 import { colors } from "./tokens";
 
-export const [atoms] = createConstrained({
+export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
+const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
-    condition: { selector: `&[data-condition]` },
+    condition: { selectors: `&[data-condition]` },
   },
   defaultCondition: "default",
   properties: {
@@ -13,9 +15,13 @@ export const [atoms] = createConstrained({
       success: colors.green,
       failure: colors.red,
     },
+    fontSize: all(),
   },
   shorthands: {
     bg: ["background"],
     clr: ["color"],
   },
-} as const);
+});
+
+export const atoms = (constrainedStyle: ConstrainedStyle) =>
+  style(resolveStyle(constrainedStyle));

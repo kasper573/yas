@@ -41,7 +41,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.21",
+    "@types/react": "18.2.37",
     "@yas/build": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",

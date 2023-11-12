@@ -1,11 +1,12 @@
-import { unsafe, themeVars } from "@yas/css";
+import type { Atoms } from "@yas/css";
+import { globalStyle, style } from "@yas/css";
 
-const surfaceStyle = {
-  background: themeVars.color.surfaceMain as string,
-  color: themeVars.color.surfaceText as string,
+const surfaceStyle: Atoms = {
+  background: "surfaceMain",
+  color: "surfaceText",
 };
 
-export const pageContainer = unsafe.style(surfaceStyle);
+export const pageContainer = style(surfaceStyle);
 
 // Autodocs preview area
-unsafe.globalStyle(".docs-story", surfaceStyle);
+globalStyle(".docs-story", surfaceStyle);

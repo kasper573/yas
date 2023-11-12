@@ -1,11 +1,11 @@
-import { atoms, unsafe } from "@yas/css";
+import { globalStyle, style } from "@yas/css";
 
-unsafe.globalStyle("html, body, #root", {
+globalStyle("html, body, #root", {
   minHeight: "100vh",
   margin: 0,
 });
 
-export const app = atoms({
+export const app = style({
   background: "surfaceMain",
   minHeight: "100vh",
 });

@@ -1,4 +1,4 @@
-import { createConstrained } from "vanilla-extract-constrained";
+import { all, createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { themeVars } from "./themeVars.css";
 
@@ -9,42 +9,27 @@ const colors = {
   ...themeVars.color,
 };
 
-export type ConstrainedStyle = Parameters<typeof style>[0];
-export const [style, inlineStyle] = createConstrained({
+export type Atoms = Parameters<typeof resolveAtoms>[0];
+export const resolveAtoms = createStyleResolver({
   conditions: {
     default: {},
-    hover: { selector: "&:hover" },
-    active: { selector: "&:active" },
+    hover: { selectors: "&:hover" },
+    active: { selectors: "&:active" },
   },
   defaultCondition: "default",
   properties: {
-    cursor: ["pointer", "default"],
-    pointerEvents: ["none", "all"],
-    opacity: tokens.opacities,
-    display: [
-      "none",
-      "flex",
-      "inline",
-      "inline-flex",
-      "grid",
-      "inline-grid",
-      "block",
-    ],
-    flex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-    flexDirection: ["row", "column"],
+    cursor: all(),
+    pointerEvents: all(),
+    opacity: all(),
+    display: all(),
+    flex: all(),
+    flexDirection: all(),
     border: ["none"],
     borderWidth: tokens.borderSizes,
-    borderStyle: ["solid", "dashed", "dotted"],
+    borderStyle: all(),
     borderRadius: tokens.radii,
-    justifyContent: [
-      "stretch",
-      "flex-start",
-      "center",
-      "flex-end",
-      "space-around",
-      "space-between",
-    ],
-    alignItems: ["stretch", "flex-start", "center", "flex-end"],
+    justifyContent: all(),
+    alignItems: all(),
     padding: tokens.spaces,
     paddingTop: tokens.spaces,
     paddingRight: tokens.spaces,
@@ -56,18 +41,18 @@ export const [style, inlineStyle] = createConstrained({
     marginLeft: tokens.spaces,
     margin: tokens.spaces,
     gap: tokens.spaces,
-    width: tokens.surfaceSizes,
-    height: tokens.surfaceSizes,
-    minWidth: tokens.surfaceSizes,
-    minHeight: tokens.surfaceSizes,
-    maxWidth: tokens.surfaceSizes,
-    maxHeight: tokens.surfaceSizes,
+    width: all(),
+    height: all(),
+    minWidth: all(),
+    minHeight: all(),
+    maxWidth: all(),
+    maxHeight: all(),
     overflowX: overflows,
     overflowY: overflows,
-    textAlign: ["left", "center", "right", "inherit"],
+    textAlign: all(),
     fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
-    fontWeight: ["normal", "bold"],
+    fontWeight: all(),
     color: colors,
     background: colors,
     borderColor: colors,
@@ -89,4 +74,4 @@ export const [style, inlineStyle] = createConstrained({
     ml: ["marginLeft"],
     overflow: ["overflowX", "overflowY"],
   },
-} as const);
+});

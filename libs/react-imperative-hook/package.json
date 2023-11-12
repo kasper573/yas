@@ -40,7 +40,7 @@
     "@yas/tsconfig": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/build": "workspace:*",
-    "@types/react": "^18.2.21",
+    "@types/react": "18.2.37",
     "publicize-package-json": "workspace:*",
     "react": "^18.2.0",
     "immer": "^10.0.2"

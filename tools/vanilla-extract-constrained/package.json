@@ -6,9 +6,9 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./src/createConstrained": {
-      "import": "./src/createConstrained.ts",
-      "require": "./src/createConstrained.ts"
+    "./src/styleResolver": {
+      "import": "./src/styleResolver.ts",
+      "require": "./src/styleResolver.ts"
     }
   },
   "scripts": {
@@ -21,11 +21,11 @@
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
-    "@types/react": "18.2.33",
+    "@types/react": "18.2.37",
     "@vanilla-extract/css": "^1.6.1",
     "@yas/build": "workspace:*",
-    "@yas/tsconfig": "workspace:*",
     "@yas/result": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   }
