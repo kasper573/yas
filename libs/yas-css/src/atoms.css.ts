@@ -13,8 +13,8 @@ export type Atoms = Parameters<typeof resolveAtoms>[0];
 export const resolveAtoms = createStyleResolver({
   conditions: {
     default: {},
-    hover: { selector: "&:hover" },
-    active: { selector: "&:active" },
+    hover: { selectors: "&:hover" },
+    active: { selectors: "&:active" },
   },
   defaultCondition: "default",
   properties: {

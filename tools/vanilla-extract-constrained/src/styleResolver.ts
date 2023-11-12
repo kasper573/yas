@@ -1,16 +1,11 @@
 import { ok, err } from "@yas/result";
 import type {
-  ConditionKey,
   ConditionRecord,
   ConstrainedDefinition,
   PropertyDefinitionRecord,
   PropertyShorthandRecord,
 } from "./types";
-import {
-  type PropertyDefinition,
-  type StyleResolver,
-  conditionKeyMap,
-} from "./types";
+import { type PropertyDefinition, type StyleResolver } from "./types";
 
 export function createStyleResolver<
   Conditions extends ConditionRecord,
@@ -83,7 +78,7 @@ export function createStyleResolver<
             assignPath(
               style,
               res.value,
-              conditionKeyMap[conditionKey as ConditionKey],
+              conditionKey,
               conditionAlias,
               propertyName,
             );

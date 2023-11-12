@@ -6,7 +6,7 @@ type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
 const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
-    condition: { selector: `&[data-condition]` },
+    condition: { selectors: `&[data-condition]` },
   },
   defaultCondition: "default",
   properties: {

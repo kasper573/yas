@@ -34,15 +34,16 @@ export type PropertyDefinition<Value> =
 
 export type ConditionRecord = Record<string, Condition>;
 
-export type ConditionKey = keyof typeof conditionKeyMap;
+export type ConditionKey = (typeof conditionKeys)[number];
 
-export const conditionKeyMap = {
-  // constrained name -> vanilla-extract style() call name
-  "@media": "@media",
-  "@supports": "@supports",
-  "@container": "@container",
-  selector: "selectors",
-};
+// Must only contain the keys supported by style() from @vanilla-extract/css
+export const conditionKeys = [
+  "@media",
+  "@supports",
+  "@container",
+  "@layer",
+  "selectors",
+] as const;
 
 export type Style = CSSProperties;
 
