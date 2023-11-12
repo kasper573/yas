@@ -72,7 +72,7 @@ type ConstrainedStyle<
   [ShorthandName in keyof Shorthands]?: ConstrainedPropertyInput<
     Conditions,
     Properties,
-    Extract<ValueOf<Shorthands[ShorthandName]>, keyof Properties>
+    Shorthands[ShorthandName][number]
   >;
 };
 
@@ -100,7 +100,3 @@ type WithConditions<
   T,
   Conditions extends Record<string, unknown>,
 > = keyof Conditions extends never ? T : T | { [K in keyof Conditions]?: T };
-
-type ValueOf<T> = T[keyof T];
-
-type Access<T, K> = K extends keyof T ? T[K] : never;
