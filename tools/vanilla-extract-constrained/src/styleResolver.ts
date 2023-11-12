@@ -47,6 +47,10 @@ export function createStyleResolver<
       ]) as Array<keyof Properties>;
 
       for (const propertyName of propertyNames) {
+        if (passThroughProperties.includes(propertyName)) {
+          style[propertyName] = propertyValue;
+          continue;
+        }
         const propertyDefinition = properties[propertyName];
         if (!propertyDefinition) {
           errors.push([propertyNameOrShorthand, "Unknown property"]);
@@ -139,6 +143,7 @@ export function createStyleResolver<
 }
 
 export const anyCssValue = Symbol("any_css_value");
+const passThroughProperties: PropertyKey[] = ["containerName"];
 
 function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
   if (Object.is(options, anyCssValue)) {

@@ -3,13 +3,22 @@ import * as styles from "./styles/constrained.css";
 
 export function VanillaExtract({
   className,
+  unsafeClassName,
   ...rest
 }: {
   className: keyof typeof styles;
+  unsafeClassName?: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "className">) {
   return (
-    <div className={styles[className]} {...rest}>
+    <div
+      className={[styles[className], unsafeClassName].filter(Boolean).join(" ")}
+      {...rest}
+    >
       {className}
     </div>
   );
+}
+
+export function Container({ children }: { children: React.ReactNode }) {
+  return <div className={styles.container}>{children}</div>;
 }

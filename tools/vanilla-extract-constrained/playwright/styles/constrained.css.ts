@@ -1,3 +1,4 @@
+import { createContainer, layer, style } from "@vanilla-extract/css";
 import type { ConditionKey } from "../../src/types";
 import type { ConstrainedStyle } from "./atoms.css";
 import { atoms } from "./atoms.css";
@@ -35,13 +36,24 @@ export const validRedColorAndGreenBackground = atoms({
   background: "success",
 });
 
-export const layerRedColor = cond("@layer", "layer-name", {
+const layerName = layer();
+export const layerRedColor = cond("@layer", layerName, {
   color: colors.red,
 });
 
-export const containerRedColor = cond("@container", "container-name", {
-  color: colors.red,
+const containerName = createContainer();
+export const container = style({
+  containerType: "inline-size",
+  containerName,
 });
+
+export const containerRedColor = cond(
+  "@container",
+  `${containerName} (max-width: 9999px)`,
+  {
+    color: colors.red,
+  },
+);
 
 export const mediaRedColor = cond("@media", "(max-width: 9999px)", {
   color: colors.red,

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/experimental-ct-react";
-import { VanillaExtract } from "./components";
+import { Container, VanillaExtract } from "./components";
 import { colors } from "./tokens";
 
 test.use({ viewport: { width: 500, height: 500 } });
@@ -78,5 +78,46 @@ test.describe("conditional", () => {
     });
   });
 
-  test.describe("root", () => {});
+  test.describe("root", () => {
+    test("layer", async ({ mount }) => {
+      const component = await mount(
+        <VanillaExtract className="layerRedColor" />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
+
+    test("container", async ({ mount }) => {
+      const root = await mount(
+        <Container>
+          <VanillaExtract className="containerRedColor" data-testid="inner" />,
+        </Container>,
+      );
+      const inner = root.getByTestId("inner");
+      await expect(inner).toHaveCSS("color", colors.red);
+    });
+
+    test("media", async ({ mount }) => {
+      const component = await mount(
+        <VanillaExtract className="mediaRedColor" />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
+
+    test("supports", async ({ mount }) => {
+      const component = await mount(
+        <VanillaExtract className="supportsRedColor" />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
+
+    test("selector", async ({ mount }) => {
+      const component = await mount(
+        <VanillaExtract
+          className="fooSelectorRedColor"
+          unsafeClassName="foo"
+        />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
+  });
 });
