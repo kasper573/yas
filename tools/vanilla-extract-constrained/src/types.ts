@@ -59,7 +59,18 @@ export type StyleResolver<
   constrainedStyle: ConstrainedStyle<Conditions, Properties, Shorthands>,
 ) => Style;
 
-type ConstrainedStyle<
+export type ConstrainedStyle<
+  Conditions extends ConditionRecord,
+  Properties extends PropertyDefinitionRecord,
+  Shorthands extends PropertyShorthandRecord<Properties>,
+> = ConstrainedStyleImpl<Conditions, Properties, Shorthands> & {
+  [K in ConditionKey]?: Record<
+    string,
+    ConstrainedStyle<{}, Properties, Shorthands>
+  >;
+};
+
+type ConstrainedStyleImpl<
   Conditions extends ConditionRecord,
   Properties extends PropertyDefinitionRecord,
   Shorthands extends PropertyShorthandRecord<Properties>,

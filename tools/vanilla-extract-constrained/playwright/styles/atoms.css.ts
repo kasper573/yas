@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { createStyleResolver, all } from "../../src";
 import { colors } from "./tokens";
 
-type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
+export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
 const resolveStyle = createStyleResolver({
   conditions: {
     default: {},

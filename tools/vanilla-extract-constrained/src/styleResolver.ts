@@ -2,10 +2,16 @@ import { ok, err } from "@yas/result";
 import type {
   ConditionRecord,
   ConstrainedDefinition,
+  ConstrainedStyle,
   PropertyDefinitionRecord,
   PropertyShorthandRecord,
+  Style,
 } from "./types";
-import { type PropertyDefinition, type StyleResolver } from "./types";
+import {
+  conditionKeys,
+  type PropertyDefinition,
+  type StyleResolver,
+} from "./types";
 
 export function createStyleResolver<
   Conditions extends ConditionRecord,
@@ -21,9 +27,13 @@ export function createStyleResolver<
   Properties,
   Shorthands
 > {
-  return function resolveStyle(constrainedStyle) {
+  function resolveStyle(
+    constrainedStyle: ConstrainedStyle<Conditions, Properties, Shorthands>,
+  ): Style {
     const style = {} as Record<PropertyKey, unknown>;
     const errors: Array<[PropertyKey, string]> = [];
+
+    consumeRootConditions(constrainedStyle, style);
 
     for (const [propertyNameOrShorthand, propertyValue] of Object.entries(
       constrainedStyle,
@@ -77,10 +87,8 @@ export function createStyleResolver<
           )) {
             assignPath(
               style,
+              [conditionKey, conditionAlias, propertyName],
               res.value,
-              conditionKey,
-              conditionAlias,
-              propertyName,
             );
           }
         }
@@ -98,7 +106,36 @@ export function createStyleResolver<
     }
 
     return style;
-  };
+  }
+
+  function consumeRootConditions(
+    constrainedStyle: ConstrainedStyle<Conditions, Properties, Shorthands>,
+    targetStyle: Record<PropertyKey, unknown>,
+  ) {
+    for (const conditionKey of conditionKeys) {
+      const condition = constrainedStyle[conditionKey];
+      if (!condition) {
+        continue;
+      }
+      delete constrainedStyle[conditionKey];
+      for (const [conditionValue, constrainedConditionStyle] of Object.entries(
+        condition,
+      )) {
+        const conditionStyle = resolveStyle(constrainedConditionStyle);
+        for (const [propertyName, propertyValue] of Object.entries(
+          conditionStyle,
+        )) {
+          assignPath(
+            targetStyle,
+            [conditionKey, conditionValue, propertyName],
+            propertyValue,
+          );
+        }
+      }
+    }
+  }
+
+  return resolveStyle;
 }
 
 export const anyCssValue = Symbol("any_css_value");
@@ -127,8 +164,8 @@ function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
 
 function assignPath(
   style: Record<string, unknown>,
+  path: PropertyKey[],
   value: unknown,
-  ...path: PropertyKey[]
 ) {
   let target = style;
   const lastIndex = path.length - 1;

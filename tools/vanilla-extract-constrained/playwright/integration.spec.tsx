@@ -30,24 +30,6 @@ test("can define valid aliased shorthand value", async ({ mount }) => {
   await expect(component).toHaveCSS("background-color", colors.red);
 });
 
-test("conditional value uses default when condition is inactive", async ({
-  mount,
-}) => {
-  const component = await mount(
-    <VanillaExtract className="conditionalRedColor" />,
-  );
-  await expect(component).toHaveCSS("color", colors.blue);
-});
-
-test("conditional value is correct when condition is active", async ({
-  mount,
-}) => {
-  const component = await mount(
-    <VanillaExtract className="conditionalRedColor" data-condition />,
-  );
-  await expect(component).toHaveCSS("color", colors.red);
-});
-
 test("can define multiple properties", async ({ mount }) => {
   const component = await mount(
     <VanillaExtract className="validRedColorAndGreenBackground" />,
@@ -73,4 +55,28 @@ test("defining multiple properties yield a single class name", async ({
     (node) => node.classList.length,
   );
   expect(classListSize).toBe(1);
+});
+
+test.describe("conditional", () => {
+  test.describe("inline", () => {
+    test("conditional value uses default when condition is inactive", async ({
+      mount,
+    }) => {
+      const component = await mount(
+        <VanillaExtract className="conditionalRedColor" />,
+      );
+      await expect(component).toHaveCSS("color", colors.blue);
+    });
+
+    test("conditional value is correct when condition is active", async ({
+      mount,
+    }) => {
+      const component = await mount(
+        <VanillaExtract className="conditionalRedColor" data-condition />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
+  });
+
+  test.describe("root", () => {});
 });
