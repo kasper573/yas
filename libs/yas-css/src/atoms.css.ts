@@ -99,4 +99,4 @@ export const resolveAtoms = createStyleResolver({
     ml: ["marginLeft"],
     overflow: ["overflowX", "overflowY"],
   },
-} as const);
+});
