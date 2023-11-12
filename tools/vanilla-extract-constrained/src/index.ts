@@ -2,17 +2,18 @@ import { addFunctionSerializer } from "@vanilla-extract/css/functionSerializer";
 import * as implementation from "./styleResolver";
 import type {
   ConditionRecord,
-  ConstrainedDefinition,
-  PropertyDefinitionRecord,
   PropertyShorthandRecord,
+  PropertyDefinition,
+  Style,
   StyleResolver,
+  ConstrainedDefinition,
 } from "./types";
 
 const importName = "createStyleResolver" as const;
 
 export function createStyleResolver<
   Conditions extends ConditionRecord,
-  Properties extends PropertyDefinitionRecord,
+  Properties extends StrictPropertyDefinitionRecord,
   Shorthands extends PropertyShorthandRecord<Properties>,
 >(
   definition: ConstrainedDefinition<Conditions, Properties, Shorthands>,
@@ -39,3 +40,10 @@ export function all<T>(): T[] {
 }
 
 type Serializable = Parameters<typeof addFunctionSerializer>[1]["args"];
+
+// We only apply this stricter constraint in the outermost scope to avoid
+// blowing up the type system with a million variants in the internal
+// implementation code (where it's not needed anyqway).
+type StrictPropertyDefinitionRecord = {
+  [K in keyof Style]?: PropertyDefinition<Style[K]>;
+};

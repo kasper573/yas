@@ -29,8 +29,8 @@ export type PropertyDefinitionRecord = Record<
 >;
 
 export type PropertyDefinition<Value> =
-  | readonly Value[]
-  | Record<string, Value>;
+  | readonly Value[] // Direct set of values
+  | Record<string, Value>; // Aliased values
 
 export type ConditionRecord = Record<string, Condition>;
 
@@ -44,7 +44,7 @@ export const conditionKeyMap = {
   selector: "selectors",
 };
 
-type Style = CSSProperties;
+export type Style = CSSProperties;
 
 type Condition = Partial<Record<ConditionKey, string>>;
 
