@@ -81,22 +81,18 @@ type ConstrainedPropertyInput<
   Properties extends PropertyDefinitionRecord,
   PropertyName extends keyof Properties,
 > = WithConditions<
-  inferPropertyValue<Properties[PropertyName]>,
+  ConstrainedPropertyValue<Properties[PropertyName]>,
   Exclude<Conditions, undefined>
 >;
-
-type inferPropertyValue<Definition> = Exclude<
-  Definition extends readonly (infer DirectValue)[]
-    ? DirectValue
-    : Definition extends Record<infer AliasName, unknown>
-    ? AliasName
-    : never,
-  undefined
->;
-
-// Utility types
 
 type WithConditions<
   T,
   Conditions extends Record<string, unknown>,
 > = keyof Conditions extends never ? T : T | { [K in keyof Conditions]?: T };
+
+type ConstrainedPropertyValue<Definition extends PropertyDefinition<unknown>> =
+  Definition extends readonly (infer DirectValue)[]
+    ? DirectValue
+    : Definition extends Record<infer AliasName, unknown>
+    ? AliasName
+    : never;
