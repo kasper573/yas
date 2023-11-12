@@ -36,9 +36,11 @@ export function createStyleResolver<
       if (propertyValue === undefined || propertyValue === null) {
         continue;
       }
+
       const propertyNames = (shorthands?.[propertyNameOrShorthand] ?? [
         propertyNameOrShorthand,
       ]) as Array<keyof Properties>;
+
       for (const propertyName of propertyNames) {
         const propertyDefinition = properties[propertyName];
         if (!propertyDefinition) {
