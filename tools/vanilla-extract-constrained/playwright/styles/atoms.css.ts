@@ -21,7 +21,7 @@ const resolveStyle = createStyleResolver({
     bg: ["background"],
     clr: ["color"],
   },
-} as const);
+});
 
 export const atoms = (constrainedStyle: ConstrainedStyle) =>
   style(resolveStyle(constrainedStyle));

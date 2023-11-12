@@ -9,31 +9,19 @@ import {
 
 export function createStyleResolver<
   Definition extends AnyConstrainedDefinition,
->(constrainedDefinition: Definition): StyleResolver<Definition> {
-  const lookup = new Map<
-    string,
-    [PropertyDefinition, AnyConstrainedDefinition]
-  >();
+>({
+  properties,
+  conditions,
+  defaultCondition,
+  shorthands,
+}: Definition): StyleResolver<Definition> {
+  const propertyLookup = new Map<string, PropertyDefinition>();
 
-  const shorthands = new Map<string, readonly string[]>();
-
-  for (const [propertyName, propertyDefinition] of Object.entries(
-    constrainedDefinition.properties,
-  )) {
-    if (lookup.has(propertyName)) {
+  for (const [propertyName, propertyDefinition] of Object.entries(properties)) {
+    if (propertyLookup.has(propertyName)) {
       throw new Error(`Duplicate property is not allowed: ${propertyName}`);
     }
-    lookup.set(propertyName, [propertyDefinition, constrainedDefinition]);
-  }
-  if (constrainedDefinition.shorthands) {
-    for (const [short, propertyNames] of Object.entries(
-      constrainedDefinition.shorthands,
-    )) {
-      if (shorthands.has(short)) {
-        throw new Error(`Duplicate shorthand is not allowed: ${short}`);
-      }
-      shorthands.set(short, propertyNames);
-    }
+    propertyLookup.set(propertyName, propertyDefinition);
   }
 
   return function resolveStyle(constrainedStyle) {
@@ -46,20 +34,18 @@ export function createStyleResolver<
       if (propertyValue === undefined || propertyValue === null) {
         continue;
       }
-      const propertyNames = shorthands.get(propertyNameOrShorthand) ?? [
+      const propertyNames = shorthands?.[propertyNameOrShorthand] ?? [
         propertyNameOrShorthand,
       ];
       for (const propertyName of propertyNames) {
-        const definitions = lookup.get(propertyName);
-        if (!definitions?.length) {
+        const propertyDefinition = propertyLookup.get(propertyName);
+        if (!propertyDefinition) {
           errors.push([propertyNameOrShorthand, "Unknown property"]);
           continue;
         }
 
-        const [options, { conditions, defaultCondition }] = definitions;
-
         if (typeof propertyValue !== "object") {
-          const res = resolveValue(options, propertyValue);
+          const res = resolveValue(propertyDefinition, propertyValue);
           if (res.isErr()) {
             errors.push([propertyName, res.error]);
             continue;
@@ -77,7 +63,7 @@ export function createStyleResolver<
             continue;
           }
 
-          const res = resolveValue(options, conditionValue);
+          const res = resolveValue(propertyDefinition, conditionValue);
           if (res.isErr()) {
             errors.push([propertyName, res.error]);
             continue;
