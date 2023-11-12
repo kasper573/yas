@@ -66,7 +66,7 @@ export type ConstrainedStyle<
 > = ConstrainedStyleImpl<Conditions, Properties, Shorthands> & {
   [K in ConditionKey]?: Record<
     string,
-    ConstrainedStyle<{}, Properties, Shorthands>
+    ConstrainedStyleImpl<{}, Properties, Shorthands>
   >;
 };
 
