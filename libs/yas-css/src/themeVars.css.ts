@@ -1,29 +1,26 @@
 import { createThemeContract } from "@vanilla-extract/css";
 
-const colorWithText = {
+const colorGroup = {
   main: null,
-  text: null,
-  outline: null,
-};
-
-const colorWithTextAndAlternatives = {
-  ...colorWithText,
-  alt1: null,
-  alt2: null,
+  light: null,
+  dark: null,
+  contrast: null,
 };
 
 export const themeVars = createThemeContract({
   color: {
-    ...flattenAs("surface", colorWithText),
-    ...flattenAs("primary", colorWithTextAndAlternatives),
-    ...flattenAs("secondary", colorWithTextAndAlternatives),
-    ...flattenAs("disabled", colorWithText),
-    success: null,
-    info: null,
-    warning: null,
-    error: null,
+    // Groups
+    ...flattenAs("surface", colorGroup),
+    ...flattenAs("primary", colorGroup),
+    ...flattenAs("secondary", colorGroup),
+    ...flattenAs("success", colorGroup),
+    ...flattenAs("info", colorGroup),
+    ...flattenAs("warning", colorGroup),
+    ...flattenAs("error", colorGroup),
+    // One-off
     divider: null,
     dimmer: null,
+    highlight: null,
   },
 });
 

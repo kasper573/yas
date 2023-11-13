@@ -1,5 +1,6 @@
 // Utilities
 export { clsx } from "clsx";
+export { palette } from "./tokens";
 
 // Constrained vanilla-extract functions
 export * from "./constrained";
