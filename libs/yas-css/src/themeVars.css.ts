@@ -1,22 +1,31 @@
 import { createThemeContract } from "@vanilla-extract/css";
 
-const colorGroup = {
+const color = {
   main: null,
   light: null,
   dark: null,
+};
+
+const colorWithFullContrast = {
+  ...prefix("base", color),
+  ...prefix("contrast", color),
+};
+
+const colorWithSimpleContrast = {
+  ...color,
   contrast: null,
 };
 
 export const themeVars = createThemeContract({
   color: {
     // Groups
-    ...flattenAs("surface", colorGroup),
-    ...flattenAs("primary", colorGroup),
-    ...flattenAs("secondary", colorGroup),
-    ...flattenAs("success", colorGroup),
-    ...flattenAs("info", colorGroup),
-    ...flattenAs("warning", colorGroup),
-    ...flattenAs("error", colorGroup),
+    ...prefix("surface", colorWithSimpleContrast),
+    ...prefix("primary", colorWithFullContrast),
+    ...prefix("secondary", colorWithFullContrast),
+    ...prefix("success", colorWithSimpleContrast),
+    ...prefix("info", colorWithSimpleContrast),
+    ...prefix("warning", colorWithSimpleContrast),
+    ...prefix("error", colorWithSimpleContrast),
     // One-off
     divider: null,
     dimmer: null,
@@ -24,7 +33,7 @@ export const themeVars = createThemeContract({
   },
 });
 
-function flattenAs<Prefix extends string, Values extends object>(
+function prefix<Prefix extends string, Values extends object>(
   prefix: Prefix,
   values: Values,
 ): Flattened<Prefix, Values> {

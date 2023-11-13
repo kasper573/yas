@@ -15,7 +15,7 @@ export const inputRecipe = recipe({
     selectors: {
       "&:focus": {
         outline: "none",
-        borderColor: "primaryMain",
+        borderColor: "primaryBaseMain",
         boxShadow: "#1",
       },
     },

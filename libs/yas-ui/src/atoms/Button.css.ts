@@ -54,48 +54,48 @@ export const buttonRecipe = recipe({
       variants: { color: "primary", variant: "contained" },
       style: {
         background: {
-          default: "primaryLight",
-          hover: "primaryMain",
-          active: "primaryDark",
+          default: "primaryBaseLight",
+          hover: "primaryBaseMain",
+          active: "primaryBaseDark",
         },
-        color: "primaryContrast",
-        borderColor: "primaryContrast",
+        color: "primaryContrastMain",
+        borderColor: "primaryContrastMain",
       },
     },
     {
       variants: { color: "secondary", variant: "contained" },
       style: {
         background: {
-          default: "secondaryMain",
-          hover: "secondaryLight",
-          active: "secondaryDark",
+          default: "secondaryBaseLight",
+          hover: "secondaryBaseMain",
+          active: "secondaryBaseDark",
         },
-        color: "secondaryContrast",
-        borderColor: "secondaryContrast",
+        color: "secondaryContrastMain",
+        borderColor: "secondaryContrastMain",
       },
     },
     {
       variants: { color: "primary", variant: "outlined" },
       style: {
         background: {
-          default: "primaryContrast",
-          hover: "primaryContrast",
-          active: "primaryContrast",
+          default: "primaryContrastLight",
+          hover: "primaryContrastMain",
+          active: "primaryContrastDark",
         },
-        color: "primaryMain",
-        borderColor: "primaryMain",
+        color: "primaryBaseMain",
+        borderColor: "primaryBaseMain",
       },
     },
     {
       variants: { color: "secondary", variant: "outlined" },
       style: {
         background: {
-          default: "secondaryContrast",
-          hover: "secondaryContrast",
-          active: "secondaryContrast",
+          default: "secondaryContrastLight",
+          hover: "secondaryContrastMain",
+          active: "secondaryContrastDark",
         },
-        color: "secondaryMain",
-        borderColor: "secondaryMain",
+        color: "secondaryBaseMain",
+        borderColor: "secondaryBaseMain",
       },
     },
     {
