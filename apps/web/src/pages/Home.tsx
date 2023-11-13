@@ -16,9 +16,9 @@ export function Home() {
       <Box
         sx={{
           p: "#10",
-          fontFamily: "inter",
+          fontFamily: "default",
           background: "secondaryMain",
-          color: "secondaryText",
+          color: "secondaryContrast",
         }}
       >
         Testing sx prop
