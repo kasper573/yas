@@ -20,7 +20,7 @@ export function BasicFormLayout({
         <Stack direction="row" align="center" gap="2">
           <Text variant="h2">{title}</Text>
           <Stack direction="row" gap="2" align="center">
-            {isLoading && <CircularProgress />}
+            {isLoading ? <CircularProgress /> : null}
             <Button variant="outlined" onClick={reset}>
               Reset
             </Button>

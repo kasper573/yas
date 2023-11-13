@@ -44,12 +44,12 @@ export function BaseField({
       }}
     >
       <FormControlLabel control={controlFactory}>{label}</FormControlLabel>
-      {info && <FieldInfo>{info}</FieldInfo>}
+      {info ? <FieldInfo>{info}</FieldInfo> : null}
       {actions}
       {controlChildren}
-      {errors && errors.length > 0 && (
+      {errors && errors.length > 0 ? (
         <Alert variant="error">{errors.join(", ")}</Alert>
-      )}
+      ) : null}
     </FormControl>
   );
 }

@@ -175,7 +175,7 @@ describe("data", () => {
         const Form = createForm((options) =>
           options
             .schema(z.object({ foo: z.string(), bar: z.string() }))
-            .field("foo", () => <></>)
+            .field("foo", () => null)
             .field("bar", ({ fieldValues }) => (
               <span>bar:{fieldValues?.foo}</span>
             )),

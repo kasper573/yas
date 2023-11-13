@@ -40,7 +40,7 @@ export function CardLayout({
         )}
       </Stack>
       <Stack className="card__footer" direction="row">
-        <span style={{ flex: 1 }}>{isLoading && <>Loading...</>}</span>
+        <span style={{ flex: 1 }}>{isLoading ? <>Loading...</> : null}</span>
         <Button variant="outlined" onClick={reset}>
           Reset
         </Button>

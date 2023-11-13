@@ -24,7 +24,7 @@ export function RadioGroupField<Value>({
   return (
     <BaseField
       actions={
-        !required && <span onClick={() => onChange?.(undefined)}>{`❌`}</span>
+        !required && <span onClick={() => onChange?.(undefined)}>❌</span>
       }
       {...rest}
     >
