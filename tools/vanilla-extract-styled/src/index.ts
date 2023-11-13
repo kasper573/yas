@@ -19,34 +19,37 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
     implementation: Implementation,
     recipe?: Recipe,
     options?: RecipeComponentOptions<Implementation, Recipe, Style>,
-  ) {
-    const RecipeComponent: RecipeComponent<Implementation, Recipe, Style> =
-      function RecipeComponent({
-        className: inlineClassName,
-        style: inlineStyle,
-        sx = emptyObject as Style,
-        ...inlineProps
-      }) {
-        const props = { ...options?.defaultProps, ...inlineProps };
-        const [variantProps, forwardedProps] = recipe
-          ? destructureVariantProps(props, recipe, options?.forwardProps)
-          : [emptyObject, props];
+  ): RecipeComponent<Implementation, Recipe, Style> {
+    function RecipeComponent({
+      className: inlineClassName,
+      style: inlineStyle,
+      sx = emptyObject as Style,
+      ...inlineProps
+    }: RecipeComponentProps<Implementation, Recipe, Style>) {
+      const props = { ...options?.defaultProps, ...inlineProps };
+      const [variantProps, forwardedProps] = recipe
+        ? destructureVariantProps(props, recipe, options?.forwardProps)
+        : [emptyObject, props];
 
-        const className = clsx(recipe?.(variantProps), inlineClassName);
-        const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
-        const style = useMemo(
-          () => ({ ...sxMemoized, ...inlineStyle }),
-          [sxMemoized, inlineStyle],
-        );
+      const className = clsx(recipe?.(variantProps), inlineClassName);
+      const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
+      const style = useMemo(
+        () => ({ ...sxMemoized, ...inlineStyle }),
+        [sxMemoized, inlineStyle],
+      );
 
-        return createElement(implementation, {
-          className,
-          ...forwardedProps,
-          style,
-        });
-      };
+      return createElement(implementation, {
+        className,
+        ...forwardedProps,
+        style,
+      });
+    }
 
-    RecipeComponent.attrs = (defaultProps) =>
+    RecipeComponent.attrs = (
+      defaultProps: Partial<
+        RecipeComponentProps<Implementation, Recipe, Style>
+      >,
+    ) =>
       createRecipeComponent(implementation, recipe, {
         ...options,
         defaultProps: {
@@ -55,7 +58,11 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         },
       });
 
-    RecipeComponent.shouldForwardProp = (forwardProps) =>
+    RecipeComponent.shouldForwardProp = (
+      forwardProps: PropForwardTester<
+        keyof RecipeComponentProps<Implementation, Recipe, Style>
+      >,
+    ) =>
       createRecipeComponent(implementation, recipe, {
         ...options,
         forwardProps,

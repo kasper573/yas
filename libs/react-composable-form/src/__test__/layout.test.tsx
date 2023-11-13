@@ -13,7 +13,10 @@ describe("layout", () => {
   });
 
   it("can be given default props", () => {
-    const Layout = ({ foo }: { foo: string }) => <span>{`foo:${foo}`}</span>;
+    function Layout({ foo }: { foo: string }) {
+      return <span>{`foo:${foo}`}</span>;
+    }
+
     const Form = createForm((options) =>
       options.layout(Layout, { foo: "bar" }),
     );

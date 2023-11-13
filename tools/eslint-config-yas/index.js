@@ -27,6 +27,19 @@ module.exports = {
 
     // Disallow the use of eslint comments to disable rules
     "eslint-comments/no-use": ["error", { allow: [] }],
+
+    // Extra strict react rules
+    "react/function-component-definition": [
+      "error",
+      { namedComponents: "function-declaration" },
+    ],
+    "react/self-closing-comp": ["error"],
+    "react/jsx-boolean-value": ["error"],
+    "react/jsx-curly-brace-presence": ["error"],
+    "react/jsx-fragments": ["error"],
+    "react/jsx-no-leaked-render": ["error"],
+    "react/jsx-no-useless-fragment": ["error"],
+    "react/jsx-pascal-case": ["error"],
   },
   ignorePatterns: ["node_modules", ".turbo", "dist", "build"],
   // Rules only applied to specific files or file types
