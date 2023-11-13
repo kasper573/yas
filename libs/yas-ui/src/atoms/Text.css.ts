@@ -2,9 +2,9 @@ import { recipe } from "@yas/css";
 
 export const textRecipe = recipe({
   base: {
-    fontFamily: "inter",
+    fontFamily: "default",
     fontWeight: "normal",
-    color: "surfaceText",
+    color: "surfaceContrast",
     margin: 0,
     padding: 0,
     display: "block",

@@ -7,7 +7,7 @@ export const hero = style({
 });
 
 export const title = style({
-  fontSize: "#8",
+  fontSize: "#9",
 });
 
 export const titleWord = unsafe.style({

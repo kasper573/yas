@@ -4,21 +4,25 @@ export const alertRecipe = recipe({
   base: {
     padding: "#2",
     borderRadius: "#1",
-    fontFamily: "inter",
+    fontFamily: "default",
   },
   variants: {
     variant: {
       success: {
-        background: "success",
+        background: "successMain",
+        color: "successContrast",
       },
       info: {
-        background: "info",
+        background: "infoMain",
+        color: "infoContrast",
       },
       warning: {
-        background: "warning",
+        background: "warningMain",
+        color: "warningContrast",
       },
       error: {
-        background: "error",
+        background: "errorMain",
+        color: "errorContrast",
       },
     },
   },

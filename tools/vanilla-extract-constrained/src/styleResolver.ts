@@ -142,7 +142,7 @@ export function createStyleResolver<
   return resolveStyle;
 }
 
-export const anyCssValue = Symbol("any_css_value");
+export const anyCssValue = "___placeholder_for_any_css_value___" as const;
 const passThroughProperties: PropertyKey[] = ["containerName"];
 
 function resolveValue<T>(options: PropertyDefinition<T>, value: T) {

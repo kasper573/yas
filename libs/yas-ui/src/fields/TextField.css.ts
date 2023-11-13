@@ -8,14 +8,14 @@ export const inputRecipe = recipe({
     borderRadius: "#2",
     borderColor: "divider",
     backgroundColor: "surfaceMain",
-    color: "surfaceText",
+    color: "surfaceContrast",
     fontSize: "#3",
-    fontFamily: "inter",
+    fontFamily: "default",
 
     selectors: {
       "&:focus": {
         outline: "none",
-        borderColor: "primaryMain",
+        borderColor: "primaryBaseMain",
         boxShadow: "#1",
       },
     },
