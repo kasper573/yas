@@ -22,11 +22,11 @@ module.exports = {
   ],
   settings: { react: { version: "18.2.0" } },
   rules: {
-    // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
-    "import/order": ["error"],
-
     // Disallow the use of eslint comments to disable rules
     "eslint-comments/no-use": ["error", { allow: [] }],
+
+    // Consistent order of imports makes a modules dependencies easier to grasp mentally for humans
+    "import/order": ["error"],
 
     // Extra strict react rules
     "react/function-component-definition": [
@@ -40,6 +40,7 @@ module.exports = {
     "react/jsx-no-leaked-render": ["error"],
     "react/jsx-no-useless-fragment": ["error"],
     "react/jsx-pascal-case": ["error"],
+    "react/no-danger": ["error"],
   },
   ignorePatterns: ["node_modules", ".turbo", "dist", "build"],
   // Rules only applied to specific files or file types
