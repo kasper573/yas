@@ -1,7 +1,7 @@
-import * as fontFamilies from "./fonts.css";
+import { roboto } from "./fonts/roboto/roboto.css";
 
 export const fonts = {
-  default: fontFamilies.roboto,
+  default: roboto,
 };
 
 export const spaces = {

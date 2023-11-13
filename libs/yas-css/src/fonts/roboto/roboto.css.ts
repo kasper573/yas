@@ -1,17 +1,17 @@
 import { fontFace } from "@vanilla-extract/css";
 
-import roboto100italic from "./fonts/roboto/roboto-latin-100-normal.woff2";
-import roboto100normal from "./fonts/roboto/roboto-latin-100-normal.woff2";
-import roboto300italic from "./fonts/roboto/roboto-latin-300-italic.woff2";
-import roboto300normal from "./fonts/roboto/roboto-latin-300-normal.woff2";
-import roboto400italic from "./fonts/roboto/roboto-latin-400-italic.woff2";
-import roboto400normal from "./fonts/roboto/roboto-latin-400-normal.woff2";
-import roboto500italic from "./fonts/roboto/roboto-latin-500-italic.woff2";
-import roboto500normal from "./fonts/roboto/roboto-latin-500-normal.woff2";
-import roboto700italic from "./fonts/roboto/roboto-latin-700-italic.woff2";
-import roboto700normal from "./fonts/roboto/roboto-latin-700-normal.woff2";
-import roboto900italic from "./fonts/roboto/roboto-latin-900-italic.woff2";
-import roboto900normal from "./fonts/roboto/roboto-latin-900-normal.woff2";
+import roboto100italic from "./roboto-latin-100-normal.woff2";
+import roboto100normal from "./roboto-latin-100-normal.woff2";
+import roboto300italic from "./roboto-latin-300-italic.woff2";
+import roboto300normal from "./roboto-latin-300-normal.woff2";
+import roboto400italic from "./roboto-latin-400-italic.woff2";
+import roboto400normal from "./roboto-latin-400-normal.woff2";
+import roboto500italic from "./roboto-latin-500-italic.woff2";
+import roboto500normal from "./roboto-latin-500-normal.woff2";
+import roboto700italic from "./roboto-latin-700-italic.woff2";
+import roboto700normal from "./roboto-latin-700-normal.woff2";
+import roboto900italic from "./roboto-latin-900-italic.woff2";
+import roboto900normal from "./roboto-latin-900-normal.woff2";
 
 export const roboto = fontFace([
   {
