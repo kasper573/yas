@@ -3,7 +3,7 @@ import { globalStyle, style } from "@yas/css";
 
 const surfaceStyle: Atoms = {
   background: "surfaceMain",
-  color: "surfaceText",
+  color: "surfaceContrast",
 };
 
 export const pageContainer = style(surfaceStyle);

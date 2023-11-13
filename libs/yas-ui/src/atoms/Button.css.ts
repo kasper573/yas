@@ -8,8 +8,14 @@ export const buttonRecipe = recipe({
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
-    fontFamily: "inter",
+    fontFamily: "default",
+    fontWeight: 500,
+    fontSize: "#2",
+    textTransform: "uppercase",
+    transition: "background-color 250ms, color 250ms, border-color 250ms",
     borderRadius: "#1",
+    borderWidth: "#1",
+    borderStyle: "solid",
     cursor: "pointer",
   },
   variants: {
@@ -31,44 +37,76 @@ export const buttonRecipe = recipe({
       },
     },
     color: {
-      primary: {
-        background: {
-          default: "primaryMain",
-          hover: "primaryAlt1",
-          active: "primaryAlt2",
-        },
-        color: "primaryText",
-        borderColor: "primaryOutline",
-      },
-      secondary: {
-        background: {
-          default: "secondaryMain",
-          hover: "secondaryAlt1",
-          active: "secondaryAlt2",
-        },
-        color: "secondaryText",
-        borderColor: "secondaryOutline",
-      },
+      primary: {},
+      secondary: {},
     },
     variant: {
-      contained: {
-        borderRadius: "#1",
-      },
-      outlined: {
-        borderWidth: "#1",
-        borderStyle: "solid",
-      },
+      contained: {},
+      outlined: {},
     },
     disabled: {
-      true: {
-        pointerEvents: "none",
-        background: "disabledMain",
-        color: "disabledText",
-        borderColor: "disabledOutline",
-      },
+      true: { pointerEvents: "none" },
       false: {},
     },
   },
+  compoundVariants: [
+    {
+      variants: { color: "primary", variant: "contained" },
+      style: {
+        background: {
+          default: "primaryLight",
+          hover: "primaryMain",
+          active: "primaryDark",
+        },
+        color: "primaryContrast",
+        borderColor: "primaryContrast",
+      },
+    },
+    {
+      variants: { color: "secondary", variant: "contained" },
+      style: {
+        background: {
+          default: "secondaryMain",
+          hover: "secondaryLight",
+          active: "secondaryDark",
+        },
+        color: "secondaryContrast",
+        borderColor: "secondaryContrast",
+      },
+    },
+    {
+      variants: { color: "primary", variant: "outlined" },
+      style: {
+        background: {
+          default: "primaryContrast",
+          hover: "primaryContrast",
+          active: "primaryContrast",
+        },
+        color: "primaryMain",
+        borderColor: "primaryMain",
+      },
+    },
+    {
+      variants: { color: "secondary", variant: "outlined" },
+      style: {
+        background: {
+          default: "secondaryContrast",
+          hover: "secondaryContrast",
+          active: "secondaryContrast",
+        },
+        color: "secondaryMain",
+        borderColor: "secondaryMain",
+      },
+    },
+    {
+      variants: { disabled: true },
+      style: {
+        background: { default: "infoDark" },
+        color: "highlight",
+        borderColor: "surfaceDark",
+      },
+    },
+  ],
   defaultVariants: {
     size: "small",
     variant: "contained",

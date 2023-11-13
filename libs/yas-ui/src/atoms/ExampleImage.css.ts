@@ -5,7 +5,7 @@ export const image = recipe({
   base: {
     width: 250,
     height: 250,
-    backgroundColor: "info",
+    backgroundColor: "infoMain",
     backgroundImage: `url(${imageUrl})`,
   },
 });
