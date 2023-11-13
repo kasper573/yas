@@ -38,8 +38,7 @@ export function SingleSelectField<Value>({
           value={selectedOptionIndex}
           onChange={(e) => handleValueChange(e.target.value)}
         >
-          {!required ||
-            (selectedOptionIndex === -1 && <option value={-1} />)}
+          {!required || (selectedOptionIndex === -1 && <option value={-1} />)}
           {options.map((option, index) => (
             <option key={index} value={index}>
               {option.label}

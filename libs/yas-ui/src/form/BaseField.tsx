@@ -47,7 +47,9 @@ export function BaseField({
       {info ? <FieldInfo>{info}</FieldInfo> : null}
       {actions}
       {controlChildren}
-      {errors && errors.length > 0 ? <Alert variant="error">{errors.join(", ")}</Alert> : null}
+      {errors && errors.length > 0 ? (
+        <Alert variant="error">{errors.join(", ")}</Alert>
+      ) : null}
     </FormControl>
   );
 }
