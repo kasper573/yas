@@ -10,7 +10,7 @@
     "test:watch": "concurrently -n unit,e2e \"pnpm test:unit:watch\" \"pnpm test:e2e --ui\"",
     "test:unit": "yas-env vitest run",
     "test:unit:watch": "yas-env vitest",
-    "test:e2e": "yas-env yas-playwright test"
+    "test:e2e": "yas-env playwright test"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.15",
