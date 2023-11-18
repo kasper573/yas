@@ -1,4 +1,4 @@
-import { palette } from "@yas/css";
+import { palette } from "@yas/style";
 import { Stack } from "../layout/Stack";
 import { Text } from "./Text";
 

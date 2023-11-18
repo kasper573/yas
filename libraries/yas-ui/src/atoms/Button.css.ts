@@ -1,4 +1,4 @@
-import { recipe } from "@yas/css";
+import { recipe } from "@yas/style";
 
 export const buttonRecipe = recipe({
   base: {

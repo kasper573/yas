@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@gracefullight/docusaurus-plugin-vercel-analytics": "^0.1.0",
-    "@yas/css": "workspace:*",
+    "@yas/style": "workspace:*",
     "@yas/ui": "workspace:*",
-    "@yas/zod": "workspace:*",
+    "@yas/validate": "workspace:*",
     "immer": "^10.0.2",
     "react": "18.2.0",
     "react-composable-form": "workspace:*",

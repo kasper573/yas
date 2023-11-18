@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
-import { styled } from "@yas/css";
+import { styled } from "@yas/style";
 import { Alert } from "../atoms/Alert";
 import type { ControlFactory } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";

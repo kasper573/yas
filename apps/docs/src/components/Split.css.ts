@@ -1,4 +1,4 @@
-import { style } from "@yas/css";
+import { style } from "@yas/style";
 
 export const tabs = style({
   "@media": {

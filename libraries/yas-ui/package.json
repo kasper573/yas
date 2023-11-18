@@ -21,8 +21,8 @@
     "test:stories-exist": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\""
   },
   "dependencies": {
-    "@yas/css": "workspace:*",
-    "@yas/zod": "workspace:*",
+    "@yas/style": "workspace:*",
+    "@yas/validate": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-imperative-hook": "workspace:*"
   },

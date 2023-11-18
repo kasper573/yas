@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 
 const schema = z.object({ foo: z.string(), bar: z.string() });
 

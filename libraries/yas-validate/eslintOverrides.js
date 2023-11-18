@@ -1,4 +1,4 @@
-const whatShouldIDoInstead = `Use "@yas/zod" instead`;
+const whatShouldIDoInstead = `Use "@yas/validate" instead`;
 
 const disallowDirectUseOfZodPackage = {
   files: ["*.ts", "*.tsx"],

@@ -1,5 +1,5 @@
-import type { Atoms } from "@yas/css";
-import { globalStyle, style } from "@yas/css";
+import type { Atoms } from "@yas/style";
+import { globalStyle, style } from "@yas/style";
 
 const surfaceStyle: Atoms = {
   background: "surfaceMain",

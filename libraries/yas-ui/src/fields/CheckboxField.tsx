@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { styled } from "@yas/css";
+import { styled } from "@yas/style";
 import type { FieldProps } from "../form/rcf";
 import { BaseField } from "../form/BaseField";
 import { checkboxRecipe } from "./CheckboxField.css";

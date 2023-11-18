@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 import { TextField } from "../fields/TextField";
 import { NumberField } from "../fields/NumberField";
 import { createForm } from "./rcf";

@@ -1,4 +1,4 @@
-import { keyframes, recipe } from "@yas/css";
+import { keyframes, recipe } from "@yas/style";
 
 const spin = keyframes({
   "0%": { transform: "rotate(0deg)" },

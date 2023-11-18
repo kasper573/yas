@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/dotenv-flow": "^3.3.1",
     "@yas/tsconfig": "workspace:*",
-    "@yas/zod": "workspace:*",
+    "@yas/validate": "workspace:*",
     "@yas/test": "workspace:*",
     "dotenv-expand": "^10.0.0",
     "dotenv-flow": "^3.3.0",

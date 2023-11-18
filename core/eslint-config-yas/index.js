@@ -167,8 +167,8 @@ module.exports = {
       },
     },
     ...require("@yas/env/eslintOverrides"),
-    ...require("@yas/css/eslintOverrides"),
-    ...require("@yas/zod/eslintOverrides"),
+    ...require("@yas/style/eslintOverrides"),
+    ...require("@yas/validate/eslintOverrides"),
     ...require("@yas/result/eslintOverrides"),
   ],
 };

@@ -35,9 +35,9 @@ importers:
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/yas-result
-      '@yas/zod':
+      '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-zod
+        version: link:../../libraries/yas-validate
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -81,15 +81,15 @@ importers:
       '@gracefullight/docusaurus-plugin-vercel-analytics':
         specifier: ^0.1.0
         version: 0.1.0(@docusaurus/types@3.0.0-alpha.0)
-      '@yas/css':
+      '@yas/style':
         specifier: workspace:*
-        version: link:../../libraries/yas-css
+        version: link:../../libraries/yas-style
       '@yas/ui':
         specifier: workspace:*
         version: link:../../libraries/yas-ui
-      '@yas/zod':
+      '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-zod
+        version: link:../../libraries/yas-validate
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -178,15 +178,15 @@ importers:
       '@yas/api':
         specifier: workspace:*
         version: link:../api
-      '@yas/css':
+      '@yas/style':
         specifier: workspace:*
-        version: link:../../libraries/yas-css
+        version: link:../../libraries/yas-style
       '@yas/ui':
         specifier: workspace:*
         version: link:../../libraries/yas-ui
-      '@yas/zod':
+      '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-zod
+        version: link:../../libraries/yas-validate
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -251,18 +251,18 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.6.0
         version: 6.7.3(eslint@8.50.0)(typescript@5.2.2)
-      '@yas/css':
-        specifier: workspace:*
-        version: link:../../libraries/yas-css
       '@yas/env':
         specifier: workspace:*
         version: link:../yas-env
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/yas-result
-      '@yas/zod':
+      '@yas/style':
         specifier: workspace:*
-        version: link:../../libraries/yas-zod
+        version: link:../../libraries/yas-style
+      '@yas/validate':
+        specifier: workspace:*
+        version: link:../../libraries/yas-validate
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.50.0)
@@ -494,9 +494,9 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
-      '@yas/zod':
+      '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-zod
+        version: link:../../libraries/yas-validate
       dotenv-expand:
         specifier: ^10.0.0
         version: 10.0.0
@@ -604,7 +604,17 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
 
-  libraries/yas-css:
+  libraries/yas-result:
+    dependencies:
+      neverthrow:
+        specifier: 6.1.0
+        version: 6.1.0
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
+
+  libraries/yas-style:
     dependencies:
       '@vanilla-extract/recipes':
         specifier: ^0.5.0
@@ -629,24 +639,14 @@ importers:
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
 
-  libraries/yas-result:
-    dependencies:
-      neverthrow:
-        specifier: 6.1.0
-        version: 6.1.0
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/yas-tsconfig
-
   libraries/yas-ui:
     dependencies:
-      '@yas/css':
+      '@yas/style':
         specifier: workspace:*
-        version: link:../yas-css
-      '@yas/zod':
+        version: link:../yas-style
+      '@yas/validate':
         specifier: workspace:*
-        version: link:../yas-zod
+        version: link:../yas-validate
       react-composable-form:
         specifier: workspace:*
         version: link:../react-composable-form
@@ -724,7 +724,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@6.5.16)(@storybook/core-events@6.5.16)(@storybook/theming@6.5.16)(react-dom@18.2.0)(react@18.2.0)
 
-  libraries/yas-zod:
+  libraries/yas-validate:
     dependencies:
       zod:
         specifier: ^3.22.3

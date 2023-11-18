@@ -1,8 +1,8 @@
 import type { Preview, ReactRenderer } from "@storybook/react";
-import { dark } from "@yas/css/themes/dark.css";
-import { light } from "@yas/css/themes/light.css";
+import { dark } from "@yas/style/themes/dark.css";
+import { light } from "@yas/style/themes/light.css";
 import { withThemeByClassName } from "@storybook/addon-themes";
-import { clsx } from "@yas/css";
+import { clsx } from "@yas/style";
 import { pageContainer } from "./storybook.css";
 
 const preview: Preview = {

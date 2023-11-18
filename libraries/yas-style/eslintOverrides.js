@@ -6,7 +6,7 @@ const disallowUseOfNonTypescriptCSSFiles = {
       {
         extensions: [".scss", ".css", ".sass", ".less"],
         exceptions: ["node_modules"],
-        message: `Non-typesafe CSS is not allowed. Use @yas/css instead.`,
+        message: `Non-typesafe CSS is not allowed. Use @yas/style instead.`,
       },
     ],
   },

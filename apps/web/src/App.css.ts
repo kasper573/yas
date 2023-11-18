@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@yas/css";
+import { globalStyle, style } from "@yas/style";
 
 globalStyle("html, body, #root", {
   minHeight: "100vh",

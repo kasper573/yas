@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 import * as process from "process";
-import { ZodError } from "@yas/zod";
+import { ZodError } from "@yas/validate";
 import dotEnvFlow from "dotenv-flow";
 import dotEnvExpand from "dotenv-expand";
 import { execaCommandSync } from "execa";

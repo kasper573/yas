@@ -1,4 +1,4 @@
-import { recipe } from "@yas/css";
+import { recipe } from "@yas/style";
 import imageUrl from "./image.jpg";
 
 export const image = recipe({
