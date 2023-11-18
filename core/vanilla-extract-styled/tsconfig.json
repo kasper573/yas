@@ -1,4 +1,6 @@
 {
   "extends": "@yas/tsconfig/react-library.json",
-  "exclude": ["src/__test__"]
+  "compilerOptions": {
+    "allowJs": true
+  }
 }

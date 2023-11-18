@@ -11,10 +11,10 @@ export function defineConfig(projectDir, options = {}) {
    */
   const baseOptions = {
     test: {
-      globals: true,
-      include: ["**/__test__/**/*.test.{js,jsx,ts,tsx}"],
+      globals: false,
+      include: ["**/test/**/*.test.{js,jsx,ts,tsx}"],
       typecheck: {
-        tsconfig: path.resolve(projectDir, "src/__test__/tsconfig.json"),
+        //tsconfig: path.resolve(projectDir, "src/test/tsconfig.json"),
       },
     },
   };

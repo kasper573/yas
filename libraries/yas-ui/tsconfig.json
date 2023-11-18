@@ -1,5 +1,4 @@
 {
   "extends": "@yas/tsconfig/vite.json",
-  "exclude": ["src/__test__"],
-  "include": ["src/**/*", ".storybook/**/*"]
+  "include": ["test/**/*", "src/**/*", ".storybook/**/*"]
 }
