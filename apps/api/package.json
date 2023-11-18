@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@trpc/server": "^10.32.0",
-    "@yas/zod": "workspace:*",
+    "@yas/validate": "workspace:*",
     "@yas/result": "workspace:*",
     "express": "^4.18.2"
   },

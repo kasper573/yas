@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Button, ModalOutlet, Text } from "@yas/ui";
-import { clsx } from "@yas/css";
-import { dark } from "@yas/css/themes/dark.css";
-import { light } from "@yas/css/themes/light.css";
+import { clsx } from "@yas/style";
+import { dark } from "@yas/style/themes/dark.css";
+import { light } from "@yas/style/themes/light.css";
 import { createQueryClient, createTRPCClient, trpc } from "./trpc";
 import { Home } from "./pages/Home";
 import * as styles from "./App.css";

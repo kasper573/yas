@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 import { SingleSelectField, NumberField, BaseForm, Stack } from "@yas/ui";
 import { ExampleContent } from "../../../src/components/ExampleContent";
 

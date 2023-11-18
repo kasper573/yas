@@ -1,0 +1,48 @@
+{
+  "name": "react-imperative-hook",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksandin/yas.git",
+    "directory": "libaries/react-imperative-hook"
+  },
+  "description": "React hook that provides an imperative interface for spawning and resolving components",
+  "keywords": [
+    "react",
+    "hook",
+    "imperative",
+    "async",
+    "component"
+  ],
+  "author": "Kasper Sandin",
+  "version": "0.1.10",
+  "license": "MIT",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "immer": "^10.0.2"
+  },
+  "devDependencies": {
+    "@yas/tsconfig": "workspace:*",
+    "@yas/test": "workspace:*",
+    "@yas/build": "workspace:*",
+    "@types/react": "18.2.37",
+    "publicize-package-json": "workspace:*",
+    "react": "^18.2.0",
+    "immer": "^10.0.2"
+  }
+}

@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";

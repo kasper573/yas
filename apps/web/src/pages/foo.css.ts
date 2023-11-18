@@ -1,4 +1,4 @@
-import { recipe, style } from "@yas/css";
+import { recipe, style } from "@yas/style";
 import projectImageUrl from "./image.jpg";
 
 export const container = recipe({

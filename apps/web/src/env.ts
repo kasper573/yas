@@ -1,4 +1,4 @@
-import { z, mode, truthy } from "@yas/zod";
+import { z, mode, truthy } from "@yas/validate";
 
 const schema = z.object({
   CI: truthy.default(false),

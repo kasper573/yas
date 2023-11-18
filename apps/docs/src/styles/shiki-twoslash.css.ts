@@ -1,4 +1,4 @@
-import { unsafe } from "@yas/css";
+import { unsafe } from "@yas/style";
 
 unsafe.globalStyle("pre.shiki > .code-title", {
   position: "absolute",

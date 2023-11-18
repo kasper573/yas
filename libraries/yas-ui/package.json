@@ -1,0 +1,54 @@
+{
+  "name": "@yas/ui",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "storybook build -o dist",
+    "dev": "storybook dev -p 6006 --no-open",
+    "test": "pnpm test:components && pnpm test:unit && pnpm test:stories-exist",
+    "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
+    "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
+    "test:components:watch": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 \"test-storybook --watch\"",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:stories-exist": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\""
+  },
+  "dependencies": {
+    "@yas/style": "workspace:*",
+    "@yas/validate": "workspace:*",
+    "react-composable-form": "workspace:*",
+    "react-imperative-hook": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "7.5.3",
+    "@storybook/addon-interactions": "7.5.3",
+    "@storybook/addon-links": "7.5.3",
+    "@storybook/addon-themes": "7.5.3",
+    "@storybook/blocks": "7.5.3",
+    "@storybook/jest": "0.2.3",
+    "@storybook/react": "7.5.3",
+    "@storybook/react-vite": "7.5.3",
+    "@storybook/test-runner": "0.14.0",
+    "@storybook/testing-library": "0.2.2",
+    "@types/react": "18.2.37",
+    "@types/react-dom": "18.2.15",
+    "@yas/build": "workspace:*",
+    "@yas/test": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "assert-sibling-files": "workspace:*",
+    "concurrently": "8.0.1",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "start-server-and-test": "2.0.0",
+    "storybook": "7.5.3",
+    "storybook-addon-variants": "^0.2.0"
+  }
+}

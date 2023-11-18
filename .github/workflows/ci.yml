@@ -15,11 +15,14 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.39.0-jammy # Has to be same version as in package.json
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
-      - run: pnpx playwright install --with-deps
       - run: pnpm test
+        env:
+          HOME: /root # Workaround required when using playwright image in ghactions. See https://github.com/microsoft/playwright/issues/6500#issuecomment-845919578
       - uses: actions/upload-artifact@v3
         if: always()
         with:

@@ -1,4 +1,4 @@
-import { z, mode, numeric } from "@yas/zod";
+import { z, mode, numeric } from "@yas/validate";
 
 const schema = z.object({
   mode: mode.default("development"),

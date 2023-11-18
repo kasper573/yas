@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 import { Button, Stack } from "@yas/ui";
 import type { FormLayoutProps } from "@yas/ui";
 import { createForm, TextField, Alert } from "@yas/ui";

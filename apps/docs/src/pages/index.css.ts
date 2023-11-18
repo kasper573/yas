@@ -1,4 +1,4 @@
-import { style, unsafe } from "@yas/css";
+import { style, unsafe } from "@yas/style";
 
 export const hero = style({
   px: 0,

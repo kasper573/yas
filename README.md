@@ -10,8 +10,8 @@ Also serves as monorepo template with focus on strict conventions, type safety, 
 - Decouple your apps and packages.
 - Keep packages small and focused.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
-- Utilize shared configuration (e.g. [@yas/tsconfig](tools/yas-tsconfig), [@yas/env](tools/yas-env)).
-- Encapsulate packages (e.g. [@yas/css](libs/yas-css), [@yas/zod](libs/yas-zod)).
+- Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
+- Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 
 ## Scripts
@@ -48,10 +48,10 @@ The following scripts are only available in the root of the repository and will 
 
 Deployables (`build` script must output deployable artifacts, preferably using some standard)
 
-### [libs](libs)
+### [libraries](libraries)
 
 Building blocks for creating apps.
 
-### [tools](tools)
+### [core](core)
 
-Low level tooling for building apps and libs. Should mostly be out of your way and not something you interact with directly.
+Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.

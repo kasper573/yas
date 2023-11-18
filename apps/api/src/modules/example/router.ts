@@ -1,4 +1,4 @@
-import { z } from "@yas/zod";
+import { z } from "@yas/validate";
 import { t } from "../../trpc";
 
 export function createExampleRouter() {
