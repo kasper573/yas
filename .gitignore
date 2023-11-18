@@ -17,6 +17,7 @@ dist
 storybook-static
 .cache/
 test-results
+*.timestamp*
 
 # misc
 .DS_Store
