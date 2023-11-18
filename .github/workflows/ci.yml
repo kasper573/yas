@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/workflows/composites/install/
       - run: pnpm test
         env:
-          HOME: /root # https://github.com/microsoft/playwright/issues/6500#issuecomment-845919578
+          HOME: /root # Workaround required when using playwright image in ghactions. See https://github.com/microsoft/playwright/issues/6500#issuecomment-845919578
       - uses: actions/upload-artifact@v3
         if: always()
         with:
