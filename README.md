@@ -11,7 +11,7 @@ Also serves as monorepo template with focus on strict conventions, type safety, 
 - Keep packages small and focused.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
 - Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
-- Encapsulate packages (e.g. [@yas/style](libraries/yas-css), [@yas/validate](libraries/yas-zod)).
+- Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 
 ## Scripts

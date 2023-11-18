@@ -2,7 +2,7 @@ const whatShouldIDoInstead = `Use "@yas/validate" instead`;
 
 const disallowDirectUseOfZodPackage = {
   files: ["*.ts", "*.tsx"],
-  excludedFiles: ["**/yas-zod/**"],
+  excludedFiles: ["**/yas-validate/**"],
   rules: {
     "no-restricted-imports": [
       "error",
