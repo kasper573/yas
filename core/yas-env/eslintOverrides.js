@@ -17,7 +17,7 @@ const requireEnvFile = {
 };
 
 const disallowEnvEntirely = {
-  files: ["{libs,tools}/**/*.{js,jsx,ts,tsx}"],
+  files: ["{libraries,core}/**/*.{js,jsx,ts,tsx}"],
   excludedFiles: testFiles,
   rules: rulesForBanningEnvUsage(
     "yas-env: Packages may not access environment variables at all and should instead rely on dependency injection.",
