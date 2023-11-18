@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "bin": {
-    "yas-playwright": "./bin/playwright-cli.js"
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.0",
