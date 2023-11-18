@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json",
-    "test": "vitest typecheck"
+    "test": "vitest typecheck --run"
   },
   "peerDependencies": {
     "@vanilla-extract/recipes": "^0.5.0",
