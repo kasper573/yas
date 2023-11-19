@@ -12,6 +12,7 @@ jobs:
       - uses: ./.github/workflows/composites/install/
       - run: pnpm lint
       - run: pnpm format
+      - run: pnpm depcheck
 
   test:
     runs-on: ubuntu-latest
