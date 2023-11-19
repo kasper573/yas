@@ -29,6 +29,8 @@ The following scripts are available in the root of the repository and will run t
 - Each package may implement these scripts differently, as long as they satisfy the given use case.
 - A package may opt out of these scripts, but you must not rename them. This is to ensure consistency across packages.
 
+Hello
+
 ### Global scripts
 
 The following scripts are only available in the root of the repository and will affect all packages.
