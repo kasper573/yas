@@ -3,7 +3,7 @@ import type { inferFormValue } from "react-composable-form";
 import { QueryClient, QueryClientProvider, useMutation } from "react-query";
 import { useMemo, useState } from "react";
 import { TextField, SingleSelectField, BaseForm } from "@yas/ui";
-import { err, unwrapUnsafeFor3rdPartyIntegration } from "@yas/result";
+import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import { ExampleContent } from "../../../src/components/ExampleContent";
 
 interface CustomRemoteErrors {
@@ -100,7 +100,7 @@ function createSimulatedRemoteEndpoint(errorType?: ErrorType) {
         break;
     }
     if (errors) {
-      unwrapUnsafeFor3rdPartyIntegration(err(errors));
+      unwrapUnsafe_useWithCaution(err(errors));
     }
   };
 }

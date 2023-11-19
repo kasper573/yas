@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { err, unwrapUnsafeFor3rdPartyIntegration } from "@yas/result";
+import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import type { ApiClient } from "./client";
 
 /**
@@ -17,7 +17,7 @@ export const ApiContext = createContext<ApiClient["trpc"]>(
   new Proxy({} as ApiClient["trpc"], {
     get() {
       // Using unsafe unwrap to panic early to clearly indicate that context is misconfigured
-      unwrapUnsafeFor3rdPartyIntegration(
+      unwrapUnsafe_useWithCaution(
         err(
           new Error(
             "You must wrap components using the api with an ApiClientProvider",
