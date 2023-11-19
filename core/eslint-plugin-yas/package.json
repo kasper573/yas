@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "./index.js",
   "scripts": {
-    "test": "mocha __test__/**/*.test.js",
-    "test:watch": "mocha __test__/**/*.test.js --watch"
+    "test": "mocha test/**/*.test.js",
+    "test:watch": "mocha test/**/*.test.js --watch"
   },
   "dependencies": {
     "requireindex": "^1.2.0",

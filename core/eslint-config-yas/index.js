@@ -128,7 +128,7 @@ module.exports = {
         "*.test-d.ts",
         "*.test-d.tsx",
         "*.stories.tsx",
-        "**/__test__/**",
+        "**/test/**",
       ],
       rules: {
         // Tests are allowed to use non-null assertions since failures in tests are acceptable

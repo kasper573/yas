@@ -1,6 +1,6 @@
 const enforceUseOfResultTypes = {
   files: ["*.{ts,tsx}"],
-  excludedFiles: ["**/__test__/**"],
+  excludedFiles: ["**/test/**"],
   rules: {
     "yas/disallow-exceptions": [
       "error",

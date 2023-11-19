@@ -4,7 +4,7 @@ const envFiles = require("./validEnvFiles");
 
 const ext = ".{js,jsx,ts,tsx}";
 
-const testFiles = [`**/__test__/**/*${ext}`, `**/*.test${ext}`];
+const testFiles = [`**/test/**/*${ext}`, `**/*.test${ext}`];
 
 const requireEnvFile = {
   files: [`apps/**/*${ext}`],

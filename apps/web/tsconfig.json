@@ -1,4 +1,3 @@
 {
-  "extends": "@yas/tsconfig/vite.json",
-  "exclude": ["src/__test__"]
+  "extends": "@yas/tsconfig/vite.json"
 }
