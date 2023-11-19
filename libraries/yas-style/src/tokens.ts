@@ -137,8 +137,8 @@ export const radii = {
 };
 
 export const shadows = {
-  0: "none",
-  "#1": "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
+  none: "none",
+  "#1": `0px 4px 8px -3px ${palette.black["87%"]}`,
 };
 
 export const durations = {

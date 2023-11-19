@@ -4,7 +4,6 @@ export const overlayRecipe = recipe({
   base: {
     backgroundColor: "dimmer",
     position: "fixed",
-    inset: 0,
   },
   variants: {
     open: {
@@ -24,11 +23,7 @@ export const overlayRecipe = recipe({
 
 export const dialogRecipe = recipe({
   base: {
-    display: "block",
-    backgroundColor: "surfaceMain",
-    borderRadius: "#3",
-    boxShadow: "#1",
-    position: "fixed",
+    position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -36,9 +31,6 @@ export const dialogRecipe = recipe({
     maxWidth: "450px",
     maxHeight: "85vh",
     padding: "#5",
-    selectors: {
-      "&:focus": { outline: "none" },
-    },
   },
   variants: {
     open: {
