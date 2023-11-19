@@ -32,6 +32,15 @@ importers:
 
   apps/api:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^4.29.15
+        version: 4.35.7(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: ^10.32.0
+        version: 10.38.5(@trpc/server@10.38.5)
+      '@trpc/react-query':
+        specifier: ^10.32.0
+        version: 10.38.5(@tanstack/react-query@4.35.7)(@trpc/client@10.38.5)(@trpc/server@10.38.5)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: ^10.32.0
         version: 10.38.5
@@ -44,6 +53,9 @@ importers:
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
     devDependencies:
       '@types/cors':
         specifier: ^2.8.13
@@ -54,6 +66,9 @@ importers:
       '@types/morgan':
         specifier: ^1.9.4
         version: 1.9.6
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
@@ -166,18 +181,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@tanstack/react-query':
-        specifier: ^4.29.15
-        version: 4.35.7(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.32.0
-        version: 10.38.5(@trpc/server@10.38.5)
-      '@trpc/react-query':
-        specifier: ^10.32.0
-        version: 10.38.5(@tanstack/react-query@4.35.7)(@trpc/client@10.38.5)(@trpc/server@10.38.5)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server':
-        specifier: ^10.32.0
-        version: 10.38.5
       '@yas/api':
         specifier: workspace:*
         version: link:../api

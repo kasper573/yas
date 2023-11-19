@@ -1,11 +1,13 @@
 import { Box, ExampleImage, Text } from "@yas/ui";
+import { ApiContext } from "@yas/api/sdk/client";
+import { useContext } from "react";
 import { env } from "../env";
 import { hello } from "../hello";
-import { trpc } from "../trpc";
 import * as foo from "./foo.css";
 
 export function Home() {
-  const { data: response } = trpc.example.hello.useQuery(hello());
+  const api = useContext(ApiContext);
+  const { data: response } = api.example.hello.useQuery(hello());
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>

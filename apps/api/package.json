@@ -5,9 +5,13 @@
   "main": "./sdk/index.ts",
   "types": "./sdk/index.ts",
   "exports": {
-    ".": {
+    "./sdk": {
       "import": "./sdk/index.ts",
       "require": "./sdk/index.ts"
+    },
+    "./sdk/client": {
+      "import": "./sdk/client.tsx",
+      "require": "./sdk/client.tsx"
     }
   },
   "scripts": {
@@ -18,22 +22,27 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.15",
+    "@trpc/client": "^10.32.0",
+    "@trpc/react-query": "^10.32.0",
     "@trpc/server": "^10.32.0",
-    "@yas/validate": "workspace:*",
     "@yas/result": "workspace:*",
-    "express": "^4.18.2"
+    "@yas/validate": "workspace:*",
+    "express": "^4.18.2",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/morgan": "^1.9.4",
+    "@types/react": "18.2.37",
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "cors": "^2.8.5",
     "morgan": "^1.10.0",
-    "tsup": "^7.2.0",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "tsup": "^7.2.0"
   }
 }

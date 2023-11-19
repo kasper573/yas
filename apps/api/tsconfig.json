@@ -1,5 +1,5 @@
 {
-  "extends": "@yas/tsconfig/node.json",
+  "extends": "@yas/tsconfig/react-library.json",
   "compilerOptions": {
     "target": "es2018",
     "module": "commonjs",
