@@ -7,11 +7,16 @@ import { z } from "@yas/validate";
 import uniqueColor from "uniqolor";
 import chalk from "chalk";
 
+const symbols = {
+  rel: "<",
+  or: "/",
+};
+
 const hierarchy = parseHierarchy(process.argv.slice(2).join(""));
 
 if (!hierarchy.length) {
   console.error(
-    "Usage: assert-workspace-hierarchy.ts workspaceA/workspaceB > workspaceC",
+    `Usage: assert-workspace-hierarchy.ts workspaceA${symbols.or}workspaceB ${symbols.rel} workspaceC`,
   );
   process.exit(1);
 }
@@ -45,7 +50,7 @@ for (let i = 0; i < hierarchy.length; i++) {
           continue;
         }
         const group = `❌  Dependency hierarchy violations in ${colorize(
-          workspace.name + "/" + pkg.name,
+          workspace.name + symbols.or + pkg.name,
         )}:`;
         let list = errors.get(group);
         if (!list) {
@@ -64,8 +69,8 @@ for (let i = 0; i < hierarchy.length; i++) {
 if (!errors.size) {
   console.log(
     `✅  All workspaces follow dependency hierarchy rule: ${hierarchy
-      .map((group) => group.map((name) => colorize(name)).join("/"))
-      .join(" > ")}.`,
+      .map((group) => group.map((name) => colorize(name)).join(symbols.or))
+      .join(` ${symbols.rel} `)}.`,
   );
 } else {
   for (const [group, list] of errors) {
@@ -78,9 +83,15 @@ if (!errors.size) {
 
 function parseHierarchy(rule: string): string[][] {
   return rule
-    .split(/\s*>\s*/)
+    .split(symbols.rel)
+    .map((group) => group.trim())
     .filter(Boolean)
-    .map((group) => group.split(/\s*\/\s*/).filter(Boolean));
+    .map((group) =>
+      group
+        .split(symbols.or)
+        .map((part) => part.trim())
+        .filter(Boolean),
+    );
 }
 
 function loadWorkspace(rootDir: string, name: string) {
