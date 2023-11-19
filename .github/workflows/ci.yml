@@ -5,13 +5,14 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  code-style:
+  convention:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/composites/install/
       - run: pnpm lint
       - run: pnpm format
+      - run: pnpm depcheck
 
   test:
     runs-on: ubuntu-latest
