@@ -1,6 +1,6 @@
 export * from "./atoms/Alert";
 export * from "./atoms/Button";
-export * from "./atoms/Modal";
+export * from "./atoms/Dialog";
 export * from "./atoms/Text";
 export * from "./atoms/ExampleImage";
 export * from "./atoms/CircularProgress";

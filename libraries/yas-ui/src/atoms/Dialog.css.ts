@@ -1,22 +1,30 @@
-import { recipe } from "@yas/style";
+import { createTransition, recipe } from "@yas/style";
 
 export const overlayRecipe = recipe({
   base: {
     backgroundColor: "dimmer",
     position: "fixed",
     inset: 0,
-    transition: "opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)",
   },
   variants: {
     open: {
-      true: { opacity: 1, pointerEvents: "auto" },
-      false: { opacity: 0, pointerEvents: "none" },
+      true: {
+        opacity: 1,
+        pointerEvents: "auto",
+        transition: createTransition([["opacity", "standardEnter"]]),
+      },
+      false: {
+        opacity: 0,
+        pointerEvents: "none",
+        transition: createTransition([["opacity", "standardExit"]]),
+      },
     },
   },
 });
 
 export const dialogRecipe = recipe({
   base: {
+    display: "block",
     backgroundColor: "surfaceMain",
     borderRadius: "#3",
     boxShadow: "#1",
@@ -28,15 +36,20 @@ export const dialogRecipe = recipe({
     maxWidth: "450px",
     maxHeight: "85vh",
     padding: "#5",
-    transition: "opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)",
     selectors: {
       "&:focus": { outline: "none" },
     },
   },
   variants: {
     open: {
-      true: { opacity: 1 },
-      false: { opacity: 0 },
+      true: {
+        opacity: 1,
+        transition: createTransition([["opacity", "standardEnter"]]),
+      },
+      false: {
+        opacity: 0,
+        transition: createTransition([["opacity", "standardExit"]]),
+      },
     },
   },
   defaultVariants: {

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button, ModalOutlet, Text } from "@yas/ui";
+import { Button, DialogOutlet, Text } from "@yas/ui";
 import { createApiClient, ApiClientProvider } from "@yas/api/sdk/client";
 import { clsx } from "@yas/style";
 import { dark } from "@yas/style/themes/dark.css";
@@ -25,7 +25,7 @@ export function App() {
       <Text>Theme: {theme}</Text>
       <ApiClientProvider value={apiClient}>
         <Home />
-        <ModalOutlet />
+        <DialogOutlet />
         <Button onClick={toggleTheme}>Toggle theme</Button>
       </ApiClientProvider>
     </div>

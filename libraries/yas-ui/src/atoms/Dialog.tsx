@@ -1,17 +1,17 @@
 import { createImperative } from "react-imperative-hook";
 import type { ComponentProps } from "react";
 import { destructureVariantProps, styled } from "@yas/style";
-import { dialogRecipe, overlayRecipe } from "./Modal.css";
+import { dialogRecipe, overlayRecipe } from "./Dialog.css";
 
 const Overlay = styled("div", overlayRecipe);
-const Dialog = styled("dialog", dialogRecipe).shouldForwardProp(
+const Paper = styled("dialog", dialogRecipe).shouldForwardProp(
   ({ isVariant, name }) => !isVariant || name === "open",
 );
 
-export function Modal({
+export function Dialog({
   onClose,
   ...allProps
-}: ComponentProps<typeof Dialog> & { onClose?: () => void }) {
+}: ComponentProps<typeof Paper> & { onClose?: () => void }) {
   const [variantProps, forwardedProps] = destructureVariantProps(
     allProps,
     dialogRecipe,
@@ -19,14 +19,14 @@ export function Modal({
   return (
     <>
       <Overlay {...variantProps} onClick={onClose} />
-      <Dialog {...variantProps} {...forwardedProps} />
+      <Paper {...variantProps} {...forwardedProps} />
     </>
   );
 }
 
 export const {
-  usePredefinedSpawner: useModal,
-  useInlineSpawner: useModals,
-  Context: ModalContext,
-  Outlet: ModalOutlet,
+  usePredefinedSpawner: useDialog,
+  useInlineSpawner: useDialogs,
+  Context: DialogContext,
+  Outlet: DialogOutlet,
 } = createImperative();
