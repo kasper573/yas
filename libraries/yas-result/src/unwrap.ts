@@ -8,9 +8,7 @@ import type { Result } from "neverthrow";
  * an arbitrary value, compared to neverthrow which uses an internal error structure.
  * This is sometimes necessary for some 3rd party integrations that require i.e. Error objects.
  */
-export function unwrapUnsafeFor3rdPartyIntegration<T, E>(
-  result: Result<T, E>,
-): T {
+export function unwrapUnsafe_useWithCaution<T, E>(result: Result<T, E>): T {
   if (result.isErr()) {
     throw result.error;
   }

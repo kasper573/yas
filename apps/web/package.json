@@ -13,10 +13,6 @@
     "test:e2e": "yas-env playwright test"
   },
   "dependencies": {
-    "@tanstack/react-query": "^4.29.15",
-    "@trpc/client": "^10.32.0",
-    "@trpc/react-query": "^10.32.0",
-    "@trpc/server": "^10.32.0",
     "@yas/api": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/ui": "workspace:*",

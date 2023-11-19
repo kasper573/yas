@@ -1,11 +1,11 @@
 import { Box, ExampleImage, Text } from "@yas/ui";
+import { api } from "@yas/api/sdk";
 import { env } from "../env";
 import { hello } from "../hello";
-import { trpc } from "../trpc";
 import * as foo from "./foo.css";
 
 export function Home() {
-  const { data: response } = trpc.example.hello.useQuery(hello());
+  const { data: response } = api.example.hello.useQuery(hello());
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>
