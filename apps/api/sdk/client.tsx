@@ -1,9 +1,8 @@
-import { err } from "@yas/result";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
-import { createContext } from "react";
 import type { ApiRouter } from "../src/router";
+import { ApiContext } from "./index";
 
 export type ApiClient = ReturnType<typeof createApiClient>;
 
@@ -29,12 +28,3 @@ export function ApiClientProvider({
     </trpc.Provider>
   );
 }
-
-export const ApiContext = createContext<ApiClient["trpc"]>(
-  new Proxy({} as ApiClient["trpc"], {
-    get() {
-      // Using unsafe unwrap to panic early to clearly indicate that context is misconfigured
-      err(new Error("TRPCContext was not initialized"))._unsafeUnwrap();
-    },
-  }),
-);

@@ -1,12 +1,10 @@
 import { Box, ExampleImage, Text } from "@yas/ui";
-import { ApiContext } from "@yas/api/sdk/client";
-import { useContext } from "react";
+import { api } from "@yas/api/sdk";
 import { env } from "../env";
 import { hello } from "../hello";
 import * as foo from "./foo.css";
 
 export function Home() {
-  const api = useContext(ApiContext);
   const { data: response } = api.example.hello.useQuery(hello());
   return (
     <>
