@@ -24,6 +24,7 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       className: inlineClassName,
       style: inlineStyle,
       sx = emptyObject as Style,
+      as = implementation,
       ...inlineProps
     }: RecipeComponentProps<Implementation, Recipe, Style>) {
       const props = { ...options?.defaultProps, ...inlineProps };
@@ -38,7 +39,7 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         [sxMemoized, inlineStyle],
       );
 
-      return createElement(implementation, {
+      return createElement(as, {
         className,
         ...forwardedProps,
         style,
@@ -144,6 +145,7 @@ type RecipeComponentProps<
     className?: string;
     style?: CSSProperties;
     children?: ReactNode;
+    as?: ElementType;
   };
 
 interface RecipeComponentOptions<

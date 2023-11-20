@@ -5,8 +5,6 @@ export const textRecipe = recipe({
     fontFamily: "default",
     fontWeight: "normal",
     color: "surfaceContrast",
-    margin: 0,
-    padding: 0,
     display: "block",
   },
   variants: {

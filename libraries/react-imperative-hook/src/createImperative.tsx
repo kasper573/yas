@@ -10,6 +10,7 @@ export function createImperative(renderer = DefaultOutletRenderer) {
   const Context = createContext(new ComponentStore());
 
   return {
+    Store: ComponentStore,
     Outlet: () => <ComponentOutlet context={Context} renderer={renderer} />,
     Context,
     usePredefinedSpawner: createPredefinedSpawnerHook(Context),

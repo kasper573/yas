@@ -6,7 +6,13 @@ const overflows = ["visible", "hidden", "scroll"] as const;
 
 const colors = {
   transparent: "transparent",
+  inherit: "inherit",
   ...themeVars.color,
+};
+
+const spaces = {
+  ...tokens.spaces,
+  inherit: "inherit",
 };
 
 export type Atoms = Parameters<typeof resolveAtoms>[0];
@@ -24,9 +30,10 @@ export const resolveAtoms = createStyleResolver({
     pointerEvents: all(),
     opacity: all(),
     display: all(),
+    gridAutoFlow: all(),
     flex: all(),
     flexDirection: all(),
-    border: ["none"],
+    border: ["none", "inherit"],
     inset: all(),
     outline: all(),
     position: all(),
@@ -35,17 +42,17 @@ export const resolveAtoms = createStyleResolver({
     borderRadius: tokens.radii,
     justifyContent: all(),
     alignItems: all(),
-    padding: tokens.spaces,
-    paddingTop: tokens.spaces,
-    paddingRight: tokens.spaces,
-    paddingBottom: tokens.spaces,
-    paddingLeft: tokens.spaces,
-    marginTop: tokens.spaces,
-    marginRight: tokens.spaces,
-    marginBottom: tokens.spaces,
-    marginLeft: tokens.spaces,
-    margin: tokens.spaces,
-    gap: tokens.spaces,
+    padding: spaces,
+    paddingTop: spaces,
+    paddingRight: spaces,
+    paddingBottom: spaces,
+    paddingLeft: spaces,
+    marginTop: spaces,
+    marginRight: spaces,
+    marginBottom: spaces,
+    marginLeft: spaces,
+    margin: spaces,
+    gap: spaces,
     objectFit: all(),
     width: all(),
     height: all(),

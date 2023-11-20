@@ -25,9 +25,9 @@ export function App() {
       <Text>Theme: {theme}</Text>
       <ApiClientProvider value={apiClient}>
         <Home />
-        <DialogOutlet />
         <Button onClick={toggleTheme}>Toggle theme</Button>
       </ApiClientProvider>
+      <DialogOutlet />
     </div>
   );
 }
