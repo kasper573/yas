@@ -41,6 +41,14 @@ export const buttonRecipe = recipe({
       secondary: {},
     },
     variant: {
+      text: {
+        borderColor: "transparent",
+        background: {
+          default: "transparent",
+          hover: "infoDark",
+          active: "infoMain",
+        },
+      },
       contained: {},
       outlined: {},
     },
@@ -50,6 +58,14 @@ export const buttonRecipe = recipe({
     },
   },
   compoundVariants: [
+    {
+      variants: { color: "primary", variant: "text" },
+      style: { color: "primaryBaseMain" },
+    },
+    {
+      variants: { color: "secondary", variant: "text" },
+      style: { color: "secondaryBaseMain" },
+    },
     {
       variants: { color: "primary", variant: "contained" },
       style: {

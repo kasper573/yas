@@ -16,6 +16,12 @@ const colorWithSimpleContrast = {
   contrast: null,
 };
 
+const transition = {
+  beginAndEndOnScreen: null,
+  enter: null,
+  exit: null,
+};
+
 export const themeVars = createThemeContract({
   color: {
     // Groups
@@ -30,6 +36,10 @@ export const themeVars = createThemeContract({
     divider: null,
     dimmer: null,
     highlight: null,
+  },
+  transitions: {
+    ...prefix("emphasized", transition),
+    ...prefix("standard", transition),
   },
 });
 
