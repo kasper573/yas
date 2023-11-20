@@ -16,6 +16,13 @@ test("can define valid aliased value", async ({ mount }) => {
   await expect(component).toHaveCSS("background-color", colors.red);
 });
 
+test("can define valid functional value", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="functional2pxBorder" />,
+  );
+  await expect(component).toHaveCSS("border-width", "2px");
+});
+
 test("can define valid shorthand value", async ({ mount }) => {
   const component = await mount(
     <VanillaExtract className="validShorthandRedColor" />,

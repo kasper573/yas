@@ -57,7 +57,7 @@ export function createStyleResolver<
           continue;
         }
 
-        if (typeof propertyValue !== "object") {
+        if (!isPlainObject(propertyValue)) {
           const res = resolveValue(propertyDefinition, propertyValue);
           if (res.isErr()) {
             errors.push([propertyName, res.error]);
@@ -149,6 +149,20 @@ function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
   if (Object.is(options, anyCssValue)) {
     return ok(value);
   }
+  if (typeof options === "function") {
+    if (!Array.isArray(value)) {
+      return err(
+        `Invalid functional value ${value}. Must be an array of args to pass to property function.`,
+      );
+    }
+    let res;
+    try {
+      res = options(...(value as Parameters<typeof options>));
+    } catch (e) {
+      return err(`Could not resolve functional value ${value}: ${e}`);
+    }
+    return ok(res);
+  }
   if (Array.isArray(options)) {
     if (!options.includes(value as string)) {
       return err(
@@ -179,4 +193,13 @@ function assignPath(
     target = (target[key] ?? (target[key] = {})) as typeof target;
   }
   target[path[lastIndex] as keyof typeof target] = value;
+}
+
+function isPlainObject<T>(value: T): value is T & Record<string, unknown> {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    !Array.isArray(value) &&
+    !(value instanceof Date)
+  );
 }

@@ -13,6 +13,10 @@ export const conditionalRedColor = atoms({
   },
 });
 
+export const functional2pxBorder = atoms({
+  border: [2],
+});
+
 export const validAliasedRedBackground = atoms({
   background: "failure",
 });

@@ -16,6 +16,7 @@ const resolveStyle = createStyleResolver({
       failure: colors.red,
     },
     fontSize: all(),
+    border: (size: 1 | 2) => `${size}px solid black`,
   },
   shorthands: {
     bg: ["background"],
