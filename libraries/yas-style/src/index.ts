@@ -2,7 +2,12 @@ import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "vanilla-extract-styled";
 import { shallowEqual } from "shallow-equal";
-import type { ConstrainedStyle } from "./constraints.css";
+import type { Style } from "vanilla-extract-constrained";
+import type {
+  ConstrainedStyle,
+  ConstrainedStyleWithoutConditions,
+} from "./constraints.css";
+
 import { resolveStyle } from "./constraints.css";
 
 // Utilities
@@ -29,13 +34,18 @@ export const keyframes = (
     ),
   );
 
-export const styled = createStyledFactory(resolveStyle, shallowEqual);
+export const styled = createStyledFactory(
+  resolveStyle as (
+    constrainedStyle: ConstrainedStyleWithoutConditions,
+  ) => Style,
+  shallowEqual,
+);
 
 export const recipe = createRecipeFactory(style);
 
 export { destructureVariantProps } from "vanilla-extract-styled";
 
-export type { ConstrainedStyle };
+export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
 
 // Non-constrained escape hatches
 export * as unsafe from "./unsafe";

@@ -1,4 +1,8 @@
 import type { PropertiesHyphen as CSSProperties } from "csstype";
+import type {
+  ConstrainedStyle as ConstrainedStyleImpl,
+  StyleResolver,
+} from "vanilla-extract-constrained";
 import { all, createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
@@ -17,6 +21,17 @@ const spaces = {
 };
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
+
+export type ConstrainedStyleWithoutConditions = ConstrainedStyleImpl<
+  {},
+  typeof resolveStyle extends StyleResolver<infer _, infer Properties, infer _>
+    ? Properties
+    : never,
+  typeof resolveStyle extends StyleResolver<infer _, infer _, infer Shorthands>
+    ? Shorthands
+    : never
+>;
+
 export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},

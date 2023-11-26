@@ -8,6 +8,7 @@ import type {
   StyleResolver,
   ConstrainedDefinition,
 } from "./types";
+export type { ConstrainedStyle, Style, StyleResolver } from "./types";
 
 const importName = "createStyleResolver" as const;
 
