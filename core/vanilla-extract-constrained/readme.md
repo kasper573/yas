@@ -40,7 +40,7 @@ export const resolveStyle = createStyleResolver({
 
 type Transition = [
   prop: string,
-  time: "1s", "2s",
+  time: "1s" | "2s",
   easing: "ease-out" | "ease-in"
 ]
 ```
