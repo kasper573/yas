@@ -27,11 +27,22 @@ export const resolveStyle = createStyleResolver({
     },
     background: ["yellow", "blue"]
     fontSize: all(), // Infers and accepts all default CSS values for this property
+    transition  (...list: Transition[]) {
+      // Function properties allow you to safely deal with composite and dynamic values
+      // The function should return a valid css value, but may accept ANY argument types.
+      return list.map((parts) => parts.join(" ")).join(", ")
+    }
   },
   shorthands: {
     bg: ["background"],
   },
 });
+
+type Transition = [
+  prop: string,
+  time: "1s", "2s",
+  easing: "ease-out" | "ease-in"
+]
 ```
 
 Using this `resolveStyle` function you can now define new stricter versions of the vanilla extract primitives:
@@ -73,6 +84,11 @@ export foo = style({
     default: 14,
     hover: 18
   }
+  // This is new and unique to vanilla-extract-constrained
+  // Your own custom functions parameters type is what decides goes here
+  transition: [
+    ["font-size", "1s", "ease-out"] // This must match the Transition type (see above)
+  ]
 });
 
 
