@@ -1,7 +1,6 @@
 import { createTheme } from "@vanilla-extract/css";
-import { palette } from "../src/tokens";
+import { palette, transitions } from "../src/tokens";
 import { vars } from "../src/vars.css";
-import { transitions } from "../src/transitions";
 
 export const dark: string = createTheme(vars, {
   color: {
