@@ -1,14 +1,14 @@
 import type { PropertiesHyphen as CSSProperties } from "csstype";
 import { all, createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
-import { themeVars } from "./themeVars.css";
+import { vars } from "./vars.css";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
-  ...themeVars.color,
+  ...vars.color,
 };
 
 const spaces = {
@@ -124,7 +124,7 @@ function transition<Transitions extends Transition[]>(
         ? propertyNameOrNames
         : [propertyNameOrNames];
       return propertyNames.map(
-        (property) => `${property} ${themeVars.transitions[preset]}`,
+        (property) => `${property} ${vars.transitions[preset]}`,
       );
     })
     .join(", ");
@@ -132,5 +132,5 @@ function transition<Transitions extends Transition[]>(
 
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
-  preset: keyof typeof themeVars.transitions,
+  preset: keyof typeof vars.transitions,
 ];

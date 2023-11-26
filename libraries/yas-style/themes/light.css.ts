@@ -1,9 +1,9 @@
 import { createTheme } from "@vanilla-extract/css";
 import { palette } from "../src/tokens";
-import { themeVars } from "../src/themeVars.css";
+import { vars } from "../src/vars.css";
 import { transitions } from "../src/transitions";
 
-export const light: string = createTheme(themeVars, {
+export const light: string = createTheme(vars, {
   color: {
     surfaceLight: palette.gray["100"],
     surfaceMain: palette.gray["200"],
