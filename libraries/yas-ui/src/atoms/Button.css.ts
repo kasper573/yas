@@ -13,9 +13,7 @@ export const buttonRecipe = recipe({
     fontSize: "#2",
     textTransform: "uppercase",
     transition: [
-      ["background-color", "standardEnter"],
-      ["color", "standardEnter"],
-      ["border-color", "standardEnter"],
+      [["background-color", "color", "border-color"], "standardEnter"],
     ],
     borderRadius: "#1",
     borderWidth: "#1",
