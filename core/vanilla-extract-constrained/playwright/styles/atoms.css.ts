@@ -20,7 +20,7 @@ const resolveStyle = createStyleResolver({
   },
   shorthands: {
     bg: ["background"],
-    clr: ["color"],
+    c: ["color"],
   },
 });
 

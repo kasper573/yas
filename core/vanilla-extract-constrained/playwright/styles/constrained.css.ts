@@ -22,7 +22,7 @@ export const validAliasedRedBackground = atoms({
 });
 
 export const validShorthandRedColor = atoms({
-  clr: colors.red,
+  c: colors.red,
 });
 
 export const validAliasedShorthandRedBackground = atoms({
