@@ -119,11 +119,18 @@ function transition<Transitions extends Transition[]>(
   ...transitions: Transitions
 ) {
   return transitions
-    .map(([property, preset]) => `${property} ${themeVars.transitions[preset]}`)
+    .flatMap(([propertyNameOrNames, preset]) => {
+      const propertyNames = Array.isArray(propertyNameOrNames)
+        ? propertyNameOrNames
+        : [propertyNameOrNames];
+      return propertyNames.map(
+        (property) => `${property} ${themeVars.transitions[preset]}`,
+      );
+    })
     .join(", ");
 }
 
 type Transition = [
-  property: keyof CSSProperties,
+  property: keyof CSSProperties | Array<keyof CSSProperties>,
   preset: keyof typeof themeVars.transitions,
 ];
