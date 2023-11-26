@@ -1,7 +1,4 @@
-import { createTransition, recipe } from "@yas/style";
-
-const enter = createTransition([["opacity", "standardEnter"]]);
-const exit = createTransition([["opacity", "standardExit"]]);
+import { recipe } from "@yas/style";
 
 export const overlayRecipe = recipe({
   base: {
@@ -18,12 +15,12 @@ export const overlayRecipe = recipe({
       true: {
         opacity: 1,
         pointerEvents: "auto",
-        transition: enter,
+        transition: [["opacity", "standardEnter"]],
       },
       false: {
         opacity: 0,
         pointerEvents: "none",
-        transition: exit,
+        transition: [["opacity", "standardExit"]],
       },
     },
   },
@@ -51,11 +48,11 @@ export const dialogRecipe = recipe({
     open: {
       true: {
         opacity: 1,
-        transition: enter,
+        transition: [["opacity", "standardEnter"]],
       },
       false: {
         opacity: 0,
-        transition: exit,
+        transition: [["opacity", "standardExit"]],
       },
     },
   },
