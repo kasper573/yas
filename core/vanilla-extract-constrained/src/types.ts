@@ -114,5 +114,3 @@ type ConstrainedPropertyValue<Definition extends PropertyDefinition<unknown>> =
     : Definition extends Record<infer AliasName, unknown>
     ? AliasName
     : never;
-
-type Res = ConstrainedPropertyValue<(size: 1 | 2) => string>;

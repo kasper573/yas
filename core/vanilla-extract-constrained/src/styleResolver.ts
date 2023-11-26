@@ -70,6 +70,13 @@ export function createStyleResolver<
         for (const [conditionName, conditionValue] of Object.entries(
           propertyValue,
         )) {
+          if (isBrowser) {
+            errors.push([
+              propertyName,
+              "Runtime conditions are not supported.",
+            ]);
+            continue;
+          }
           const condition = conditions?.[conditionName];
           if (!condition) {
             errors.push([propertyName, `Unknown condition: ${conditionName}`]);
@@ -206,3 +213,5 @@ function isPlainObject<T>(value: T): value is T & Record<string, unknown> {
     !(value instanceof Date)
   );
 }
+
+const isBrowser = typeof window !== "undefined";

@@ -22,7 +22,7 @@ const transition = {
   exit: null,
 };
 
-export const themeVars = createThemeContract({
+export const vars = createThemeContract({
   color: {
     // Groups
     ...prefix("surface", colorWithSimpleContrast),
