@@ -28,9 +28,13 @@ export type PropertyDefinitionRecord = Record<
   PropertyDefinition<unknown>
 >;
 
-export type PropertyDefinition<Value> =
+export type PropertyDefinition<
+  Value,
+  Args extends readonly never[] = never[],
+> =
   | readonly Value[] // Direct set of values
-  | Record<string, Value>; // Aliased values
+  | Record<string, Value> // Aliased values
+  | ((...args: Args) => Value); // Functional values
 
 export type ConditionRecord = Record<string, Condition>;
 
@@ -103,8 +107,12 @@ type WithConditions<
 > = keyof Conditions extends never ? T : T | { [K in keyof Conditions]?: T };
 
 type ConstrainedPropertyValue<Definition extends PropertyDefinition<unknown>> =
-  Definition extends readonly (infer DirectValue)[]
+  Definition extends (...args: infer Args) => infer R
+    ? Args
+    : Definition extends readonly (infer DirectValue)[]
     ? DirectValue
     : Definition extends Record<infer AliasName, unknown>
     ? AliasName
     : never;
+
+type Res = ConstrainedPropertyValue<(size: 1 | 2) => string>;
