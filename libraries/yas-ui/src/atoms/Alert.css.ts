@@ -9,20 +9,20 @@ export const alertRecipe = recipe({
   variants: {
     variant: {
       success: {
-        background: "successMain",
-        color: "successContrast",
+        background: "success.main",
+        color: "success.contrast",
       },
       info: {
-        background: "infoMain",
-        color: "infoContrast",
+        background: "info.main",
+        color: "info.contrast",
       },
       warning: {
-        background: "warningMain",
-        color: "warningContrast",
+        background: "warning.main",
+        color: "warning.contrast",
       },
       error: {
-        background: "errorMain",
-        color: "errorContrast",
+        background: "error.main",
+        color: "error.contrast",
       },
     },
   },

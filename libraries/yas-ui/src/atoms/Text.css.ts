@@ -4,7 +4,7 @@ export const textRecipe = recipe({
   base: {
     fontFamily: "default",
     fontWeight: "normal",
-    color: "surfaceContrast",
+    color: "surface.contrast",
     display: "block",
   },
   variants: {

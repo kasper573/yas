@@ -6,12 +6,12 @@ export const checkboxRecipe = recipe({
     borderColor: "divider",
     borderStyle: "solid",
     borderRadius: "#2",
-    backgroundColor: "surfaceMain",
+    backgroundColor: "surface.main",
     fontSize: "#2",
     selectors: {
       "&:focus": {
         outline: "none",
-        borderColor: "primaryBaseMain",
+        borderColor: "primary.base.main",
         boxShadow: "#1",
       },
     },

@@ -3,7 +3,7 @@ import projectImageUrl from "./image.jpg";
 
 export const container = recipe({
   base: {
-    color: "successMain",
+    color: "success.main",
     fontFamily: "default",
     fontSize: "#7",
   },
@@ -12,6 +12,6 @@ export const container = recipe({
 export const projectImage = style({
   width: 250,
   height: 250,
-  backgroundColor: "infoMain",
+  backgroundColor: "info.main",
   backgroundImage: `url(${projectImageUrl})`,
 });

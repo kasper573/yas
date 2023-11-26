@@ -11,7 +11,7 @@ export const circle = style({
   cx: viewBoxSize / 2,
   cy: viewBoxSize / 2,
   fill: "none",
-  stroke: "primaryBaseMain",
+  stroke: "primary.base.main",
   strokeWidth: viewBoxSize / 10,
   r: viewBoxSize / 3,
   strokeDasharray: `${0.45 * 360} ${0.15 * 360}`,

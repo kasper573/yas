@@ -15,12 +15,12 @@ export const overlayRecipe = recipe({
       true: {
         opacity: 1,
         pointerEvents: "auto",
-        transition: [["opacity", "standardEnter"]],
+        transition: [["opacity", "standard.enter"]],
       },
       false: {
         opacity: 0,
         pointerEvents: "none",
-        transition: [["opacity", "standardExit"]],
+        transition: [["opacity", "standard.exit"]],
       },
     },
   },
@@ -48,11 +48,11 @@ export const dialogRecipe = recipe({
     open: {
       true: {
         opacity: 1,
-        transition: [["opacity", "standardEnter"]],
+        transition: [["opacity", "standard.enter"]],
       },
       false: {
         opacity: 0,
-        transition: [["opacity", "standardExit"]],
+        transition: [["opacity", "standard.exit"]],
       },
     },
   },

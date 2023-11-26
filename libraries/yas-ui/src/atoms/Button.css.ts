@@ -13,7 +13,7 @@ export const buttonRecipe = recipe({
     fontSize: "#2",
     textTransform: "uppercase",
     transition: [
-      [["background-color", "color", "border-color"], "standardEnter"],
+      [["background-color", "color", "border-color"], "standard.enter"],
     ],
     borderRadius: "#1",
     borderWidth: "#1",
@@ -47,8 +47,8 @@ export const buttonRecipe = recipe({
         borderColor: "transparent",
         background: {
           default: "transparent",
-          hover: "infoDark",
-          active: "infoMain",
+          hover: "info.dark",
+          active: "info.main",
         },
       },
       contained: {},
@@ -62,66 +62,66 @@ export const buttonRecipe = recipe({
   compoundVariants: [
     {
       variants: { color: "primary", variant: "text" },
-      style: { color: "primaryBaseMain" },
+      style: { color: "primary.base.main" },
     },
     {
       variants: { color: "secondary", variant: "text" },
-      style: { color: "secondaryBaseMain" },
+      style: { color: "secondary.base.main" },
     },
     {
       variants: { color: "primary", variant: "contained" },
       style: {
         background: {
-          default: "primaryBaseLight",
-          hover: "primaryBaseMain",
-          active: "primaryBaseDark",
+          default: "primary.base.light",
+          hover: "primary.base.main",
+          active: "primary.base.dark",
         },
-        color: "primaryContrastMain",
-        borderColor: "primaryContrastMain",
+        color: "primary.contrast.main",
+        borderColor: "primary.contrast.main",
       },
     },
     {
       variants: { color: "secondary", variant: "contained" },
       style: {
         background: {
-          default: "secondaryBaseLight",
-          hover: "secondaryBaseMain",
-          active: "secondaryBaseDark",
+          default: "secondary.base.light",
+          hover: "secondary.base.main",
+          active: "secondary.base.dark",
         },
-        color: "secondaryContrastMain",
-        borderColor: "secondaryContrastMain",
+        color: "secondary.contrast.main",
+        borderColor: "secondary.contrast.main",
       },
     },
     {
       variants: { color: "primary", variant: "outlined" },
       style: {
         background: {
-          default: "primaryContrastLight",
-          hover: "primaryContrastMain",
-          active: "primaryContrastDark",
+          default: "primary.contrast.light",
+          hover: "primary.contrast.main",
+          active: "primary.contrast.dark",
         },
-        color: "primaryBaseMain",
-        borderColor: "primaryBaseMain",
+        color: "primary.base.main",
+        borderColor: "primary.base.main",
       },
     },
     {
       variants: { color: "secondary", variant: "outlined" },
       style: {
         background: {
-          default: "secondaryContrastLight",
-          hover: "secondaryContrastMain",
-          active: "secondaryContrastDark",
+          default: "secondary.contrast.light",
+          hover: "secondary.contrast.main",
+          active: "secondary.contrast.dark",
         },
-        color: "secondaryBaseMain",
-        borderColor: "secondaryBaseMain",
+        color: "secondary.base.main",
+        borderColor: "secondary.base.main",
       },
     },
     {
       variants: { disabled: true },
       style: {
-        background: { default: "infoDark" },
+        background: { default: "info.dark" },
         color: "highlight",
-        borderColor: "surfaceDark",
+        borderColor: "surface.dark",
       },
     },
   ],

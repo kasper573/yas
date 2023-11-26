@@ -6,13 +6,15 @@ import type {
 import { all, createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
+import { flattened } from "./flattened";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
-  ...vars.color,
+  // We flatten vars to make them compatible with vanilla-extract-constrained
+  ...flattened(vars.color),
 };
 
 const spaces = {
@@ -127,6 +129,8 @@ export const resolveStyle = createStyleResolver({
   },
 });
 
+const flattenedTransitions = flattened(vars.transitions);
+
 /**
  * Define a transition css string by selecting among theme variable transition presets
  */
@@ -139,7 +143,7 @@ function transition<Transitions extends Transition[]>(
         ? propertyNameOrNames
         : [propertyNameOrNames];
       return propertyNames.map(
-        (property) => `${property} ${vars.transitions[preset]}`,
+        (property) => `${property} ${flattenedTransitions[preset]}`,
       );
     })
     .join(", ");
@@ -147,5 +151,5 @@ function transition<Transitions extends Transition[]>(
 
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
-  preset: keyof typeof vars.transitions,
+  preset: keyof typeof flattenedTransitions,
 ];

@@ -31,8 +31,8 @@ export function Home() {
         sx={{
           p: "#10",
           fontFamily: "default",
-          background: "secondaryBaseMain",
-          color: "secondaryContrastMain",
+          background: "secondary.base.main",
+          color: "secondary.contrast.main",
         }}
       >
         Testing sx prop

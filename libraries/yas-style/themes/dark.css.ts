@@ -1,41 +1,63 @@
 import { createTheme } from "@vanilla-extract/css";
-import { palette, transitions } from "../src/tokens";
 import { vars } from "../src/vars.css";
+import { palette, transitions } from "../src/tokens";
 
 export const dark: string = createTheme(vars, {
   color: {
-    surfaceLight: palette.gray["800"],
-    surfaceMain: palette.gray["900"],
-    surfaceDark: palette.gray["950"],
-    surfaceContrast: palette.gray["100"],
-    primaryBaseLight: palette.blue["400"],
-    primaryBaseMain: palette.blue["500"],
-    primaryBaseDark: palette.blue["600"],
-    primaryContrastLight: palette.blue["900"],
-    primaryContrastMain: palette.blue["950"],
-    primaryContrastDark: palette.blue["900"],
-    secondaryBaseLight: palette.teal["400"],
-    secondaryBaseMain: palette.teal["500"],
-    secondaryBaseDark: palette.teal["600"],
-    secondaryContrastLight: palette.teal["900"],
-    secondaryContrastMain: palette.teal["950"],
-    secondaryContrastDark: palette.teal["900"],
-    successLight: palette.green["400"],
-    successMain: palette.green["500"],
-    successDark: palette.green["600"],
-    successContrast: palette["white"]["87%"],
-    infoLight: palette.gray["400"],
-    infoMain: palette.gray["500"],
-    infoDark: palette.gray["600"],
-    infoContrast: palette["white"]["87%"],
-    warningLight: palette.orange["400"],
-    warningMain: palette.orange["500"],
-    warningDark: palette.orange["600"],
-    warningContrast: palette["white"]["87%"],
-    errorLight: palette.red["400"],
-    errorMain: palette.red["500"],
-    errorDark: palette.red["600"],
-    errorContrast: palette["white"]["87%"],
+    surface: {
+      light: palette.gray["800"],
+      main: palette.gray["900"],
+      dark: palette.gray["950"],
+      contrast: palette.gray["100"],
+    },
+    primary: {
+      base: {
+        light: palette.blue["400"],
+        main: palette.blue["500"],
+        dark: palette.blue["600"],
+      },
+      contrast: {
+        light: palette.blue["900"],
+        main: palette.blue["950"],
+        dark: palette.blue["900"],
+      },
+    },
+    secondary: {
+      base: {
+        light: palette.teal["400"],
+        main: palette.teal["500"],
+        dark: palette.teal["600"],
+      },
+      contrast: {
+        light: palette.teal["900"],
+        main: palette.teal["950"],
+        dark: palette.teal["900"],
+      },
+    },
+    success: {
+      light: palette.green["400"],
+      main: palette.green["500"],
+      dark: palette.green["600"],
+      contrast: palette["white"]["87%"],
+    },
+    info: {
+      light: palette.gray["400"],
+      main: palette.gray["500"],
+      dark: palette.gray["600"],
+      contrast: palette["white"]["87%"],
+    },
+    warning: {
+      light: palette.orange["400"],
+      main: palette.orange["500"],
+      dark: palette.orange["600"],
+      contrast: palette["white"]["87%"],
+    },
+    error: {
+      light: palette.red["400"],
+      main: palette.red["500"],
+      dark: palette.red["600"],
+      contrast: palette["white"]["87%"],
+    },
     divider: palette.black["87%"],
     dimmer: palette.black["50%"],
     highlight: palette.white["50%"],

@@ -7,8 +7,8 @@ const color = {
 };
 
 const colorWithFullContrast = {
-  ...prefix("base", color),
-  ...prefix("contrast", color),
+  base: color,
+  contrast: color,
 };
 
 const colorWithSimpleContrast = {
@@ -25,40 +25,20 @@ const transition = {
 export const vars = createThemeContract({
   color: {
     // Groups
-    ...prefix("surface", colorWithSimpleContrast),
-    ...prefix("primary", colorWithFullContrast),
-    ...prefix("secondary", colorWithFullContrast),
-    ...prefix("success", colorWithSimpleContrast),
-    ...prefix("info", colorWithSimpleContrast),
-    ...prefix("warning", colorWithSimpleContrast),
-    ...prefix("error", colorWithSimpleContrast),
+    surface: colorWithSimpleContrast,
+    primary: colorWithFullContrast,
+    secondary: colorWithFullContrast,
+    success: colorWithSimpleContrast,
+    info: colorWithSimpleContrast,
+    warning: colorWithSimpleContrast,
+    error: colorWithSimpleContrast,
     // One-off
     divider: null,
     dimmer: null,
     highlight: null,
   },
   transitions: {
-    ...prefix("emphasized", transition),
-    ...prefix("standard", transition),
+    emphasized: transition,
+    standard: transition,
   },
 });
-
-function prefix<Prefix extends string, Values extends object>(
-  prefix: Prefix,
-  values: Values,
-): Flattened<Prefix, Values> {
-  return Object.fromEntries(
-    Object.entries(values).map(([key, value]) => [
-      prefix + capitalize(key),
-      value,
-    ]),
-  ) as Flattened<Prefix, Values>;
-}
-
-type Flattened<Prefix extends string, Values extends object> = {
-  [K in keyof Values as `${Prefix}${Capitalize<K & string>}`]: Values[K];
-};
-
-function capitalize<T extends string>(str: T): Capitalize<T> {
-  return (str.charAt(0).toUpperCase() + str.slice(1)) as Capitalize<T>;
-}
