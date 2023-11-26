@@ -662,6 +662,9 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
+      csstype:
+        specifier: 3.1.2
+        version: 3.1.2
 
   libraries/yas-ui:
     dependencies:
