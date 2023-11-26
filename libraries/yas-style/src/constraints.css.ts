@@ -16,8 +16,8 @@ const spaces = {
   inherit: "inherit",
 };
 
-export type Atoms = Parameters<typeof resolveAtoms>[0];
-export const resolveAtoms = createStyleResolver({
+export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
+export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
     hover: { selectors: "&:hover" },

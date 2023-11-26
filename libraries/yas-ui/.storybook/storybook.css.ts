@@ -1,7 +1,7 @@
-import type { Atoms } from "@yas/style";
+import type { ConstrainedStyle } from "@yas/style";
 import { globalStyle, style } from "@yas/style";
 
-const surfaceStyle: Atoms = {
+const surfaceStyle: ConstrainedStyle = {
   background: "surfaceMain",
   color: "surfaceContrast",
 };

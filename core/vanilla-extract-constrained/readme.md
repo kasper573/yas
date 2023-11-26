@@ -38,7 +38,7 @@ export const style = (cStyle: ConstrainedStyle) =>
 export const globalStyle = (selector: string, cStyle: ConstrainedStyle) =>
   vanilla.globalStyle(selector, resolveStyle(cStyle));
 
-export const keyframes = (keyframedStyles: Record<string, Atoms>) =>
+export const keyframes = (keyframedStyles: Record<string, ConstrainedStyle>) =>
   vanilla.keyframes(
     Object.fromEntries(
       Object.entries(keyframedStyles).map(([key, cStyle]) => [
