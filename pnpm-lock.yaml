@@ -706,8 +706,8 @@ importers:
         specifier: 7.5.3
         version: 7.5.3(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)(vite@4.4.9)
       '@storybook/test-runner':
-        specifier: 0.14.0
-        version: 0.14.0
+        specifier: 0.15.2
+        version: 0.15.2
       '@storybook/testing-library':
         specifier: 0.2.2
         version: 0.2.2
@@ -5890,9 +5890,9 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/test-runner@0.14.0:
-    resolution: {integrity: sha512-gqh1q2ac84VE5tU/6Iz5HkvLcfaC91DnhtfeRDoacMlFYJhGs+xu/zjQYyzCr3MPQykm09X3Dol0BjAJtCGmDg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
+  /@storybook/test-runner@0.15.2:
+    resolution: {integrity: sha512-nHwThLvxho9wNAVxtESoAcrQD7UolOAJISwcG9uz3bmtTIm7h5DMlpfX+2DKbJyq5REg8nhcauZv5iFvwBdn1Q==}
+    engines: {node: ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     dependencies:
       '@babel/core': 7.23.0
