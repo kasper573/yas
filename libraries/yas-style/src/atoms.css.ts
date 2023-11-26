@@ -1,3 +1,4 @@
+import type { PropertiesHyphen as CSSProperties } from "csstype";
 import { all, createStyleResolver } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { themeVars } from "./themeVars.css";
@@ -86,7 +87,7 @@ export const resolveAtoms = createStyleResolver({
     strokeDasharray: all(),
 
     // Composites
-    transition: all(),
+    transition,
     animation: all(),
     transform: all(),
     boxShadow: tokens.shadows,
@@ -110,3 +111,19 @@ export const resolveAtoms = createStyleResolver({
     overflow: ["overflowX", "overflowY"],
   },
 });
+
+/**
+ * Define a transition css string by selecting among theme variable transition presets
+ */
+function transition<Transitions extends Transition[]>(
+  ...transitions: Transitions
+) {
+  return transitions
+    .map(([property, preset]) => `${property} ${themeVars.transitions[preset]}`)
+    .join(", ");
+}
+
+type Transition = [
+  property: keyof CSSProperties,
+  preset: keyof typeof themeVars.transitions,
+];

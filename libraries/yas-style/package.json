@@ -26,6 +26,7 @@
     "vanilla-extract-styled": "workspace:*"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*"
+    "@yas/tsconfig": "workspace:*",
+    "csstype": "3.1.2"
   }
 }
