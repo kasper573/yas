@@ -35,7 +35,7 @@
     "@storybook/jest": "0.2.3",
     "@storybook/react": "7.5.3",
     "@storybook/react-vite": "7.5.3",
-    "@storybook/test-runner": "0.14.0",
+    "@storybook/test-runner": "0.15.2",
     "@storybook/testing-library": "0.2.2",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
