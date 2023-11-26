@@ -11,18 +11,22 @@ interface CustomRemoteErrors {
   fieldErrors?: Array<[string, string[]]>;
 }
 
+const passwordType = z.string().min(1).brand("password");
+
 type FormData = inferFormValue<typeof UserRegistrationForm>;
 const UserRegistrationForm = BaseForm.extend((options) =>
   options
     .schema(
       z.object({
         email: z.string().email(),
-        password: z.string().min(1),
-        passwordConfirm: z.string().min(1),
+        password: passwordType,
+        passwordConfirm: passwordType,
       }),
     )
-    .field("password", TextField, { type: "password" })
-    .field("passwordConfirm", TextField, { type: "password" })
+    .type(passwordType, TextField, {
+      type: "password",
+      inputProps: { autoComplete: "off" },
+    })
     .customExternalErrors((error?: CustomRemoteErrors) => ({
       general: error?.generalErrors ?? [],
       field: Object.fromEntries(error?.fieldErrors ?? []),

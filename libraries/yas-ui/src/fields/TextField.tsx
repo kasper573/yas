@@ -1,37 +1,37 @@
-import type { HTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
 import { styled } from "@yas/style";
 import type { FieldProps } from "../form/rcf";
+import type { BaseFieldProps } from "../form/BaseField";
 import { BaseField } from "../form/BaseField";
 import { inputRecipe } from "./TextField.css";
 
 export interface TextFieldProps
   extends FieldProps<string>,
-    Omit<
-      HTMLAttributes<HTMLInputElement>,
-      "value" | "onChange" | "onFocus" | "onBlur" | "type"
-    > {
+    Pick<BaseFieldProps, "sx" | "style"> {
   type?: "text" | "number" | "password";
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "value" | "onChange" | "onFocus" | "onBlur" | "type"
+  >;
 }
 
 export function TextField({
   value,
   onChange,
-  onBlur,
-  onFocus,
   type,
-  ...rest
+  inputProps,
+  ...baseFieldProps
 }: TextFieldProps) {
   return (
     <BaseField
-      {...rest}
+      {...baseFieldProps}
       control={(id) => (
         <Input
           id={id}
           value={value ?? ""}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={onFocus}
-          onBlur={onBlur}
           type={type}
+          {...inputProps}
         />
       )}
     />
