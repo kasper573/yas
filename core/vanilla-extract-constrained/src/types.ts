@@ -28,10 +28,13 @@ export type PropertyDefinitionRecord = Record<
   PropertyDefinition<unknown>
 >;
 
-export type PropertyDefinition<Value> =
+export type PropertyDefinition<
+  Value,
+  Args extends readonly never[] = never[],
+> =
   | readonly Value[] // Direct set of values
   | Record<string, Value> // Aliased values
-  | ((...args: never[]) => Value); // Functional values
+  | ((...args: Args) => Value); // Functional values
 
 export type ConditionRecord = Record<string, Condition>;
 

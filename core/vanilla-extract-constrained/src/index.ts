@@ -26,6 +26,18 @@ export function createStyleResolver<
     args: [definition] as unknown as Serializable,
   });
 
+  // We don't need to serialize the functions in the properties,
+  // but vanilla extract will throw if we don't do this.
+  for (const value of Object.values(definition.properties)) {
+    if (typeof value === "function") {
+      addFunctionSerializer(value, {
+        importPath: "vanilla-extract-constrained/src/functionEvaluator",
+        importName: "functionEvaluator",
+        args: [value.toString() as unknown as Serializable],
+      });
+    }
+  }
+
   return resolver;
 }
 

@@ -142,6 +142,7 @@ export function createStyleResolver<
   return resolveStyle;
 }
 
+// Can unfortunately not be a symbol because it needs to be serializable.
 export const anyCssValue = "___placeholder_for_any_css_value___" as const;
 const passThroughProperties: PropertyKey[] = ["containerName"];
 
@@ -159,7 +160,9 @@ function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
     try {
       res = options(...(value as Parameters<typeof options>));
     } catch (e) {
-      return err(`Could not resolve functional value ${value}: ${e}`);
+      return err(
+        `Could not resolve functional value ${JSON.stringify(value)}:\n\n${e}`,
+      );
     }
     return ok(res);
   }
