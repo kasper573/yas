@@ -5,8 +5,8 @@ import type { ControlFactory } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";
 import type { FieldProps } from "./rcf";
 
-export type BaseFieldProps = Pick<
-  FieldProps<unknown>,
+export type BaseFieldProps<T = unknown> = Pick<
+  FieldProps<T>,
   "label" | "info" | "name" | "errors"
 > &
   Pick<
@@ -18,7 +18,7 @@ export type BaseFieldProps = Pick<
 
 type ControlProps = { children: ReactNode } | { control: ControlFactory };
 
-export function BaseField({
+export function BaseField<T>({
   name,
   label = name,
   info,
@@ -30,7 +30,7 @@ export function BaseField({
   style,
   sx,
   ...rest
-}: BaseFieldProps) {
+}: BaseFieldProps<T>) {
   const controlFactory = "control" in rest ? rest.control : undefined;
   const controlChildren = "children" in rest ? rest.children : undefined;
   return (
