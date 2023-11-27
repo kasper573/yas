@@ -46,3 +46,11 @@ export const layerRedColor = atoms({
     },
   },
 });
+
+export const fooSelectorRedColor = atoms({
+  selectors: {
+    "&.foo": {
+      color: colors.red,
+    },
+  },
+});

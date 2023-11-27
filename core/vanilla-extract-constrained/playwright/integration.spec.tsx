@@ -88,5 +88,15 @@ test.describe("conditional", () => {
       );
       await expect(component).toHaveCSS("color", colors.red);
     });
+
+    test("selectors", async ({ mount }) => {
+      const component = await mount(
+        <VanillaExtract
+          className="fooSelectorRedColor"
+          unsafeClassName="foo"
+        />,
+      );
+      await expect(component).toHaveCSS("color", colors.red);
+    });
   });
 });
