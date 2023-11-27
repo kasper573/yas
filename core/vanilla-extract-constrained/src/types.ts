@@ -42,7 +42,10 @@ export type ConditionKey = (typeof conditionKeys)[number];
 
 export type RootConditionKey = (typeof rootConditionKeys)[number];
 
-export const rootConditionKeys = ["@layer"] satisfies ConditionKey[];
+export const rootConditionKeys = [
+  "@layer",
+  "selectors",
+] satisfies ConditionKey[];
 
 // Must only contain the keys supported by style() from @vanilla-extract/css
 export const conditionKeys = [
