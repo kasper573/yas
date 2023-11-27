@@ -40,6 +40,10 @@ export type ConditionRecord = Record<string, Condition>;
 
 export type ConditionKey = (typeof conditionKeys)[number];
 
+export type RootConditionKey = (typeof rootConditionKeys)[number];
+
+export const rootConditionKeys = ["@layer"] satisfies ConditionKey[];
+
 // Must only contain the keys supported by style() from @vanilla-extract/css
 export const conditionKeys = [
   "@media",
@@ -68,7 +72,7 @@ export type ConstrainedStyle<
   Properties extends PropertyDefinitionRecord,
   Shorthands extends PropertyShorthandRecord<Properties>,
 > = ConstrainedStyleImpl<Conditions, Properties, Shorthands> & {
-  [K in ConditionKey]?: Record<
+  [K in RootConditionKey]?: Record<
     string,
     ConstrainedStyleImpl<{}, Properties, Shorthands>
   >;
