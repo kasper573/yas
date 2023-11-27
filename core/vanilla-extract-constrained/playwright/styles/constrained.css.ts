@@ -1,4 +1,4 @@
-import { createContainer, layer, style } from "@vanilla-extract/css";
+import { layer } from "@vanilla-extract/css";
 import { atoms } from "./atoms.css";
 import { colors } from "./tokens";
 
@@ -42,36 +42,6 @@ const layerName = layer();
 export const layerRedColor = atoms({
   "@layer": {
     [layerName]: {
-      color: colors.red,
-    },
-  },
-});
-
-const containerName = createContainer();
-export const container = style({
-  containerType: "inline-size",
-  containerName,
-});
-
-export const containerRedColor = atoms({
-  "@container": {
-    [`${containerName} (max-width: 9999px)`]: {
-      color: colors.red,
-    },
-  },
-});
-
-export const mediaRedColor = atoms({
-  "@media": {
-    "(max-width: 9999px)": {
-      color: colors.red,
-    },
-  },
-});
-
-export const supportsRedColor = atoms({
-  "@supports": {
-    "(display: grid)": {
       color: colors.red,
     },
   },

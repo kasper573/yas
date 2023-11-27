@@ -8,7 +8,7 @@ import type {
   Style,
 } from "./types";
 import {
-  conditionKeys,
+  rootConditionKeys,
   type PropertyDefinition,
   type StyleResolver,
 } from "./types";
@@ -123,7 +123,7 @@ export function createStyleResolver<
     constrainedStyle: ConstrainedStyle<Conditions, Properties, Shorthands>,
     targetStyle: Record<PropertyKey, unknown>,
   ) {
-    for (const conditionKey of conditionKeys) {
+    for (const conditionKey of rootConditionKeys) {
       const condition = constrainedStyle[conditionKey];
       if (!condition) {
         continue;

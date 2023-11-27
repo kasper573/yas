@@ -38,6 +38,7 @@ export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
     hover: { selectors: "&:hover" },
+    focus: { selectors: "&:focus" },
     active: { selectors: "&:active" },
   },
   defaultCondition: "default",

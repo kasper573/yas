@@ -89,31 +89,7 @@ test.describe("conditional", () => {
       await expect(component).toHaveCSS("color", colors.red);
     });
 
-    test("container", async ({ mount }) => {
-      const root = await mount(
-        <VanillaExtract className="container">
-          <VanillaExtract className="containerRedColor" data-testid="inner" />,
-        </VanillaExtract>,
-      );
-      const inner = root.getByTestId("inner");
-      await expect(inner).toHaveCSS("color", colors.red);
-    });
-
-    test("media", async ({ mount }) => {
-      const component = await mount(
-        <VanillaExtract className="mediaRedColor" />,
-      );
-      await expect(component).toHaveCSS("color", colors.red);
-    });
-
-    test("supports", async ({ mount }) => {
-      const component = await mount(
-        <VanillaExtract className="supportsRedColor" />,
-      );
-      await expect(component).toHaveCSS("color", colors.red);
-    });
-
-    test("selector", async ({ mount }) => {
+    test("selectors", async ({ mount }) => {
       const component = await mount(
         <VanillaExtract
           className="fooSelectorRedColor"

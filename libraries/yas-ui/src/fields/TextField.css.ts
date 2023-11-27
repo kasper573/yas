@@ -6,18 +6,15 @@ export const inputRecipe = recipe({
     borderStyle: "solid",
     borderWidth: "#1",
     borderRadius: "#2",
-    borderColor: "divider",
     backgroundColor: "surface.main",
     color: "surface.contrast",
     fontSize: "#3",
     fontFamily: "default",
-
-    selectors: {
-      "&:focus": {
-        outline: "none",
-        borderColor: "primary.base.main",
-        boxShadow: "#1",
-      },
+    outline: { focus: "none" },
+    boxShadow: { focus: "#1" },
+    borderColor: {
+      default: "divider",
+      focus: "primary.base.main",
     },
   },
 });
