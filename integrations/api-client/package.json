@@ -21,5 +21,12 @@
   "devDependencies": {
     "@types/react": "18.2.37",
     "@yas/tsconfig": "workspace:*"
+  },
+  "depcheck": {
+    "exceptions": {
+      "allow": [
+        "@yas/api"
+      ]
+    }
   }
 }
