@@ -1,6 +1,7 @@
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
+import { transformer } from "@yas/api";
 import type { ApiRouter } from "@yas/api";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
@@ -37,6 +38,7 @@ export function createApiClient(url: string) {
   const queryClient = new QueryClient();
   const trpc = createTRPCReact<ApiRouter>();
   const trpcClient = trpc.createClient({
+    transformer,
     links: [httpBatchLink({ url })],
   });
 
