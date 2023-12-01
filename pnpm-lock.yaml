@@ -32,18 +32,9 @@ importers:
 
   apps/api:
     dependencies:
-      '@tanstack/react-query':
-        specifier: ^4.29.15
-        version: 4.35.7(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.32.0
-        version: 10.38.5(@trpc/server@10.38.5)
-      '@trpc/react-query':
-        specifier: ^10.32.0
-        version: 10.38.5(@tanstack/react-query@4.35.7)(@trpc/client@10.38.5)(@trpc/server@10.38.5)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: ^10.32.0
-        version: 10.38.5
+        specifier: 10.44.1
+        version: 10.44.1
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/yas-result
@@ -51,24 +42,21 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/yas-validate
       express:
-        specifier: ^4.18.2
+        specifier: 4.18.2
         version: 4.18.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
+      superjson:
+        specifier: 1.13.3
+        version: 1.13.3
     devDependencies:
       '@types/cors':
-        specifier: ^2.8.13
-        version: 2.8.14
+        specifier: 2.8.17
+        version: 2.8.17
       '@types/express':
-        specifier: ^4.17.17
-        version: 4.17.18
+        specifier: 4.17.21
+        version: 4.17.21
       '@types/morgan':
-        specifier: ^1.9.4
-        version: 1.9.6
-      '@types/react':
-        specifier: 18.2.37
-        version: 18.2.37
+        specifier: 1.9.9
+        version: 1.9.9
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
@@ -82,17 +70,17 @@ importers:
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
       cors:
-        specifier: ^2.8.5
+        specifier: 2.8.5
         version: 2.8.5
       morgan:
-        specifier: ^1.10.0
+        specifier: 1.10.0
         version: 1.10.0
       ts-node-dev:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0(@types/node@20.8.10)(typescript@5.2.2)
       tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(typescript@5.2.2)
+        specifier: 8.0.1
+        version: 8.0.1(typescript@5.2.2)
 
   apps/docs:
     dependencies:
@@ -181,9 +169,9 @@ importers:
 
   apps/web:
     dependencies:
-      '@yas/api':
+      '@yas/api-client':
         specifier: workspace:*
-        version: link:../api
+        version: link:../../integrations/api-client
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
@@ -221,24 +209,6 @@ importers:
       concurrently:
         specifier: ^8.0.1
         version: 8.2.1
-
-  core/assert-sibling-files:
-    devDependencies:
-      '@types/yargs':
-        specifier: ^17.0.24
-        version: 17.0.26
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
-      glob:
-        specifier: ^10.3.10
-        version: 10.3.10
-      tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
-      yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
 
   core/esbuild-absolute-file-plugin:
     devDependencies:
@@ -308,27 +278,6 @@ importers:
       requireindex:
         specifier: ^1.2.0
         version: 1.2.0
-
-  core/publicize-package-json:
-    devDependencies:
-      '@types/yargs':
-        specifier: ^17.0.24
-        version: 17.0.26
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
-      execa:
-        specifier: ^7.1.1
-        version: 7.2.0
-      immer:
-        specifier: ^10.0.2
-        version: 10.0.2
-      tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
-      yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
 
   core/remark-html-to-jsx:
     devDependencies:
@@ -513,11 +462,14 @@ importers:
         specifier: ^7.1.1
         version: 7.2.0
       tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
+        specifier: 4.6.1
+        version: 4.6.1
 
   core/yas-scripts:
     devDependencies:
+      '@types/yargs':
+        specifier: ^17.0.24
+        version: 17.0.26
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
@@ -527,12 +479,24 @@ importers:
       chalk:
         specifier: 5.3.0
         version: 5.3.0
+      execa:
+        specifier: ^7.1.1
+        version: 7.2.0
+      glob:
+        specifier: ^10.3.10
+        version: 10.3.10
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
       tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
+        specifier: 4.6.1
+        version: 4.6.1
       uniqolor:
         specifier: 1.1.0
         version: 1.1.0
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
 
   core/yas-test:
     devDependencies:
@@ -573,6 +537,37 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  integrations/api-client:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 4.29.15
+        version: 4.29.15(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: 10.44.1
+        version: 10.44.1(@trpc/server@10.44.1)
+      '@trpc/react-query':
+        specifier: 10.44.1
+        version: 10.44.1(@tanstack/react-query@4.29.15)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
+      '@yas/api':
+        specifier: workspace:*
+        version: link:../../apps/api
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libraries/yas-result
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      superjson:
+        specifier: 1.13.3
+        version: 1.13.3
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
+
   libraries/react-composable-form:
     dependencies:
       immer:
@@ -585,6 +580,9 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
@@ -594,9 +592,6 @@ importers:
       concurrently:
         specifier: ^8.0.1
         version: 8.2.1
-      publicize-package-json:
-        specifier: workspace:*
-        version: link:../../core/publicize-package-json
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -612,6 +607,9 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
@@ -621,9 +619,6 @@ importers:
       immer:
         specifier: ^10.0.2
         version: 10.0.2
-      publicize-package-json:
-        specifier: workspace:*
-        version: link:../../core/publicize-package-json
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -720,15 +715,15 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
-      assert-sibling-files:
-        specifier: workspace:*
-        version: link:../../core/assert-sibling-files
       concurrently:
         specifier: 8.0.1
         version: 8.0.1
@@ -4811,6 +4806,102 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /@rollup/rollup-android-arm-eabi@4.6.1:
+    resolution: {integrity: sha512-0WQ0ouLejaUCRsL93GD4uft3rOmB8qoQMU05Kb8CmMtMBe7XUDLAltxVZI1q6byNqEtU7N1ZX1Vw5lIpgulLQA==}
+    cpu: [arm]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-android-arm64@4.6.1:
+    resolution: {integrity: sha512-1TKm25Rn20vr5aTGGZqo6E4mzPicCUD79k17EgTLAsXc1zysyi4xXKACfUbwyANEPAEIxkzwue6JZ+stYzWUTA==}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-darwin-arm64@4.6.1:
+    resolution: {integrity: sha512-cEXJQY/ZqMACb+nxzDeX9IPLAg7S94xouJJCNVE5BJM8JUEP4HeTF+ti3cmxWeSJo+5D+o8Tc0UAWUkfENdeyw==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-darwin-x64@4.6.1:
+    resolution: {integrity: sha512-LoSU9Xu56isrkV2jLldcKspJ7sSXmZWkAxg7sW/RfF7GS4F5/v4EiqKSMCFbZtDu2Nc1gxxFdQdKwkKS4rwxNg==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-linux-arm-gnueabihf@4.6.1:
+    resolution: {integrity: sha512-EfI3hzYAy5vFNDqpXsNxXcgRDcFHUWSx5nnRSCKwXuQlI5J9dD84g2Usw81n3FLBNsGCegKGwwTVsSKK9cooSQ==}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-linux-arm64-gnu@4.6.1:
+    resolution: {integrity: sha512-9lhc4UZstsegbNLhH0Zu6TqvDfmhGzuCWtcTFXY10VjLLUe4Mr0Ye2L3rrtHaDd/J5+tFMEuo5LTCSCMXWfUKw==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-linux-arm64-musl@4.6.1:
+    resolution: {integrity: sha512-FfoOK1yP5ksX3wwZ4Zk1NgyGHZyuRhf99j64I5oEmirV8EFT7+OhUZEnP+x17lcP/QHJNWGsoJwrz4PJ9fBEXw==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-linux-x64-gnu@4.6.1:
+    resolution: {integrity: sha512-DNGZvZDO5YF7jN5fX8ZqmGLjZEXIJRdJEdTFMhiyXqyXubBa0WVLDWSNlQ5JR2PNgDbEV1VQowhVRUh+74D+RA==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-linux-x64-musl@4.6.1:
+    resolution: {integrity: sha512-RkJVNVRM+piYy87HrKmhbexCHg3A6Z6MU0W9GHnJwBQNBeyhCJG9KDce4SAMdicQnpURggSvtbGo9xAWOfSvIQ==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-win32-arm64-msvc@4.6.1:
+    resolution: {integrity: sha512-v2FVT6xfnnmTe3W9bJXl6r5KwJglMK/iRlkKiIFfO6ysKs0rDgz7Cwwf3tjldxQUrHL9INT/1r4VA0n9L/F1vQ==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-win32-ia32-msvc@4.6.1:
+    resolution: {integrity: sha512-YEeOjxRyEjqcWphH9dyLbzgkF8wZSKAKUkldRY6dgNR5oKs2LZazqGB41cWJ4Iqqcy9/zqYgmzBkRoVz3Q9MLw==}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-win32-x64-msvc@4.6.1:
+    resolution: {integrity: sha512-0zfTlFAIhgz8V2G8STq8toAjsYYA6eci1hnXuyOTUFnymrtJwnS6uGKiv3v5UrPZkBlamLvrLV2iiaeqCKzb0A==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@sideway/address@4.1.4:
     resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
     dependencies:
@@ -5974,7 +6065,7 @@ packages:
     dependencies:
       '@storybook/channels': 7.5.3
       '@types/babel__core': 7.20.2
-      '@types/express': 4.17.18
+      '@types/express': 4.17.21
       file-system-cache: 2.3.0
     dev: true
 
@@ -6258,12 +6349,12 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tanstack/query-core@4.35.7:
-    resolution: {integrity: sha512-PgDJtX75ubFS0WCYFM7DqEoJ4QbxU3S5OH3gJSI40xr7UVVax3/J4CM3XUMOTs+EOT5YGEfssi3tfRVGte4DEw==}
+  /@tanstack/query-core@4.29.15:
+    resolution: {integrity: sha512-Recc1d5rjHesKhzlH3Aw66v+vQxtB9OHEXP/vxgEcEJ0DwEpfe3EQ4id20vuBJHY2XRjfgWGmUs6ZgK6PSsTXA==}
     dev: false
 
-  /@tanstack/react-query@4.35.7(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-0MankquP/6EOM2ATfEov6ViiKemey5uTbjGlFMX1xGotwNaqC76YKDMJdHumZupPbZcZPWAeoPGEHQmVKIKoOQ==}
+  /@tanstack/react-query@4.29.15(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1zDkv95ljuJ623hhbYU8YIprPW2x6774kh3IQNEuZav62+S+Zr26uUOrE2zGRp9I1uO5Liw/0uYB3dWXQP5+3Q==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -6274,7 +6365,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.35.7
+      '@tanstack/query-core': 4.29.15
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -6382,32 +6473,33 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@trpc/client@10.38.5(@trpc/server@10.38.5):
-    resolution: {integrity: sha512-tpGUsoAP+3CD/1KRqMdWZ+zebvB68/86SaVPAYHaEDozTFLQdNqTe98DS/T0S4hfh7WCKbMSObj40SCzE8amKQ==}
+  /@trpc/client@10.44.1(@trpc/server@10.44.1):
+    resolution: {integrity: sha512-vTWsykNcgz1LnwePVl2fKZnhvzP9N3GaaLYPkfGINo314ZOS0OBqe9x0ytB2LLUnRVTAAZ2WoONzARd8nHiqrA==}
     peerDependencies:
-      '@trpc/server': 10.38.5
+      '@trpc/server': 10.44.1
     dependencies:
-      '@trpc/server': 10.38.5
+      '@trpc/server': 10.44.1
     dev: false
 
-  /@trpc/react-query@10.38.5(@tanstack/react-query@4.35.7)(@trpc/client@10.38.5)(@trpc/server@10.38.5)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cGpKfiQen3ba3lTII3+Y6Hm3KnC60AS9n2AYt07I7LZx/GknsGHq4h570imdIxr6Qb5LtYe3DFV13kzbm+yGeA==}
+  /@trpc/react-query@10.44.1(@tanstack/react-query@4.29.15)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Sgi/v0YtdunOXjBRi7om9gILGkOCFYXPzn5KqLuEHiZw5dr5w4qGHFwCeMAvndZxmwfblJrl1tk2AznmsVu8MA==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.38.5
-      '@trpc/server': 10.38.5
+      '@trpc/client': 10.44.1
+      '@trpc/server': 10.44.1
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.35.7(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.38.5(@trpc/server@10.38.5)
-      '@trpc/server': 10.38.5
+      '@tanstack/react-query': 4.29.15(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.44.1(@trpc/server@10.44.1)
+      '@trpc/server': 10.44.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@10.38.5:
-    resolution: {integrity: sha512-J0d2Y3Gpt2bMohOshPBfuzDqVrPaE3OKEDtJYgTmLk5t1pZy3kXHQep4rP2LEIr+ELbmkelhcrSvvFLA+4/w/Q==}
+  /@trpc/server@10.44.1:
+    resolution: {integrity: sha512-mF7B+K6LjuboX8I1RZgKE5GA/fJhsJ8tKGK2UBt3Bwik7hepEPb4NJgNr7vO6BK5IYwPdBLRLTctRw6XZx0sRg==}
+    engines: {node: '>=18.0.0'}
     dev: false
 
   /@trysound/sax@0.2.0:
@@ -6512,10 +6604,10 @@ packages:
       '@types/node': 20.8.10
     dev: true
 
-  /@types/cors@2.8.14:
-    resolution: {integrity: sha512-RXHUvNWYICtbP6s18PnOCaqToK8y14DnLd75c6HfyKf228dxy7pHNOQkxPtvXKp/hINFMDjbYzsj63nnpPMSRQ==}
+  /@types/cors@2.8.17:
+    resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
     dependencies:
-      '@types/node': 20.8.2
+      '@types/node': 20.8.10
     dev: true
 
   /@types/cross-spawn@6.0.5:
@@ -6592,8 +6684,8 @@ packages:
       '@types/send': 0.17.2
     dev: true
 
-  /@types/express@4.17.18:
-    resolution: {integrity: sha512-Sxv8BSLLgsBYmcnGdGjjEjqET2U+AKAdCRODmMiq02FgjwuV75Ut85DRpvFjyw/Mk0vgUOliGRU0UUmuuZHByQ==}
+  /@types/express@4.17.21:
+    resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
     dependencies:
       '@types/body-parser': 1.19.3
       '@types/express-serve-static-core': 4.17.37
@@ -6732,10 +6824,10 @@ packages:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: true
 
-  /@types/morgan@1.9.6:
-    resolution: {integrity: sha512-xfKogz5WcKww2DAiVT9zxMgrqQt+Shq8tDVeLT+otoj6dJnkRkyJxMF51mHtUc3JCPKGk5x1EBU0buuGpfftlQ==}
+  /@types/morgan@1.9.9:
+    resolution: {integrity: sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==}
     dependencies:
-      '@types/node': 20.8.2
+      '@types/node': 20.8.10
     dev: true
 
   /@types/ms@0.7.32:
@@ -6763,10 +6855,6 @@ packages:
     resolution: {integrity: sha512-TlgT8JntpcbmKUFzjhsyhGfP2fsiz1Mv56im6enJ905xG1DAYesxJaeSbGqQmAw8OWPdhyJGhGSQGKRNJ45u9w==}
     dependencies:
       undici-types: 5.26.5
-
-  /@types/node@20.8.2:
-    resolution: {integrity: sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==}
-    dev: true
 
   /@types/normalize-package-data@2.4.2:
     resolution: {integrity: sha512-lqa4UEhhv/2sjjIQgjX8B+RBjj47eo0mzGasklVJ78UKGQY1r0VpB9XHDaZZO9qzEFDdy4MrXLuEaSmPrPSe/A==}
@@ -6861,7 +6949,7 @@ packages:
   /@types/serve-index@1.9.2:
     resolution: {integrity: sha512-asaEIoc6J+DbBKXtO7p2shWUpKacZOoMBEGBgPG91P8xhO53ohzHWGCs4ScZo5pQMf5ukQzVT9fhX1WzpHihig==}
     dependencies:
-      '@types/express': 4.17.18
+      '@types/express': 4.17.21
     dev: true
 
   /@types/serve-static@1.15.3:
@@ -8276,6 +8364,16 @@ packages:
       load-tsconfig: 0.2.5
     dev: true
 
+  /bundle-require@4.0.2(esbuild@0.19.4):
+    resolution: {integrity: sha512-jwzPOChofl67PSTW2SGubV9HBQAhhR2i6nskiOThauo9dzwDUgOWQScFVaJkjEfYX+UXiD+LEx8EblQMc2wIag==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    peerDependencies:
+      esbuild: '>=0.17'
+    dependencies:
+      esbuild: 0.19.4
+      load-tsconfig: 0.2.5
+    dev: true
+
   /bytes@3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
     engines: {node: '>= 0.8'}
@@ -8813,6 +8911,13 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+
+  /copy-anything@3.0.5:
+    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.16
+    dev: false
 
   /copy-text-to-clipboard@3.2.0:
     resolution: {integrity: sha512-RnJFp1XR/LOBDckxTib5Qjr/PMfkatD0MUCQgdpqS8MdKiNUzBjAQBEN6oUy+jW7LI93BBG3DtMB2KOOKpGs2Q==}
@@ -11676,7 +11781,7 @@ packages:
       - supports-color
     dev: true
 
-  /http-proxy-middleware@2.0.6(@types/express@4.17.18):
+  /http-proxy-middleware@2.0.6(@types/express@4.17.21):
     resolution: {integrity: sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11685,7 +11790,7 @@ packages:
       '@types/express':
         optional: true
     dependencies:
-      '@types/express': 4.17.18
+      '@types/express': 4.17.21
       '@types/http-proxy': 1.17.12
       http-proxy: 1.18.1
       is-glob: 4.0.3
@@ -12221,6 +12326,11 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
     dev: true
+
+  /is-what@4.1.16:
+    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
+    engines: {node: '>=12.13'}
+    dev: false
 
   /is-windows@0.2.0:
     resolution: {integrity: sha512-n67eJYmXbniZB7RF4I/FTjK1s6RPOCTxhYrVYLRaCt3lF0mpWZPKr3T2LSZAqyjQsxR2qMmGYXXzK0YWwcPM1Q==}
@@ -17107,6 +17217,26 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
+  /rollup@4.6.1:
+    resolution: {integrity: sha512-jZHaZotEHQaHLgKr8JnQiDT1rmatjgKlMekyksz+yk9jt/8z9quNjnKNRoaM0wd9DC2QKXjmWWuDYtM3jfF8pQ==}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      '@rollup/rollup-android-arm-eabi': 4.6.1
+      '@rollup/rollup-android-arm64': 4.6.1
+      '@rollup/rollup-darwin-arm64': 4.6.1
+      '@rollup/rollup-darwin-x64': 4.6.1
+      '@rollup/rollup-linux-arm-gnueabihf': 4.6.1
+      '@rollup/rollup-linux-arm64-gnu': 4.6.1
+      '@rollup/rollup-linux-arm64-musl': 4.6.1
+      '@rollup/rollup-linux-x64-gnu': 4.6.1
+      '@rollup/rollup-linux-x64-musl': 4.6.1
+      '@rollup/rollup-win32-arm64-msvc': 4.6.1
+      '@rollup/rollup-win32-ia32-msvc': 4.6.1
+      '@rollup/rollup-win32-x64-msvc': 4.6.1
+      fsevents: 2.3.3
+    dev: true
+
   /rrweb-cssom@0.6.0:
     resolution: {integrity: sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==}
     dev: true
@@ -17959,6 +18089,13 @@ packages:
       ts-interface-checker: 0.1.13
     dev: true
 
+  /superjson@1.13.3:
+    resolution: {integrity: sha512-mJiVjfd2vokfDxsQPOwJ/PtanO87LhpYY88ubI5dUB1Ab58Txbyje3+jpm+/83R/fevaq/107NNhtYBLuoTrFg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.5
+    dev: false
+
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -18430,15 +18567,18 @@ packages:
       - ts-node
     dev: true
 
-  /tsup@7.2.0(typescript@5.2.2):
-    resolution: {integrity: sha512-vDHlczXbgUvY3rWvqFEbSqmC1L7woozbzngMqTtL2PGBODTtWlRwGDDawhvWzr5c1QjKe4OAKqJGfE1xeXUvtQ==}
-    engines: {node: '>=16.14'}
+  /tsup@8.0.1(typescript@5.2.2):
+    resolution: {integrity: sha512-hvW7gUSG96j53ZTSlT4j/KL0q1Q2l6TqGBFc6/mu/L46IoNWqLLUzLRLP1R8Q7xrJTmkDxxDoojV5uCVs1sVOg==}
+    engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
+      '@microsoft/api-extractor': ^7.36.0
       '@swc/core': ^1
       postcss: ^8.4.12
-      typescript: '>=4.1.0'
+      typescript: '>=4.5.0'
     peerDependenciesMeta:
+      '@microsoft/api-extractor':
+        optional: true
       '@swc/core':
         optional: true
       postcss:
@@ -18446,17 +18586,17 @@ packages:
       typescript:
         optional: true
     dependencies:
-      bundle-require: 4.0.2(esbuild@0.18.20)
+      bundle-require: 4.0.2(esbuild@0.19.4)
       cac: 6.7.14
       chokidar: 3.5.3
       debug: 4.3.4(supports-color@8.1.1)
-      esbuild: 0.18.20
+      esbuild: 0.19.4
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
       postcss-load-config: 4.0.1(postcss@8.4.31)
       resolve-from: 5.0.0
-      rollup: 3.29.4
+      rollup: 4.6.1
       source-map: 0.8.0-beta.0
       sucrase: 3.34.0
       tree-kill: 1.2.2
@@ -18476,13 +18616,13 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /tsx@3.13.0:
-    resolution: {integrity: sha512-rjmRpTu3as/5fjNq/kOkOtihgLxuIz6pbKdj9xwP4J5jOLkBxw/rjN5ANw+KyrrOXV5uB7HC8+SrrSJxT65y+A==}
+  /tsx@4.6.1:
+    resolution: {integrity: sha512-OQ4TAPHXAPUo/NZAmmIybl0o8LFOTlycQxFepLBAp6EV87U88fOKYGCQI2viGAEOVU9UW/cgQcxcOMnfEKVY3Q==}
+    engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
       esbuild: 0.18.20
       get-tsconfig: 4.7.2
-      source-map-support: 0.5.21
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
@@ -19559,7 +19699,7 @@ packages:
     dependencies:
       '@types/bonjour': 3.5.11
       '@types/connect-history-api-fallback': 1.5.1
-      '@types/express': 4.17.18
+      '@types/express': 4.17.21
       '@types/serve-index': 1.9.2
       '@types/serve-static': 1.15.3
       '@types/sockjs': 0.3.34
@@ -19574,7 +19714,7 @@ packages:
       express: 4.18.2
       graceful-fs: 4.2.11
       html-entities: 2.4.0
-      http-proxy-middleware: 2.0.6(@types/express@4.17.18)
+      http-proxy-middleware: 2.0.6(@types/express@4.17.21)
       ipaddr.js: 2.1.0
       launch-editor: 2.6.0
       open: 8.4.2

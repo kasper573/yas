@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Button, DialogOutlet, Text } from "@yas/ui";
-import { createApiClient, ApiClientProvider } from "@yas/api/sdk/client";
+import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { clsx } from "@yas/style";
 import { dark } from "@yas/style/themes/dark.css";
 import { light } from "@yas/style/themes/light.css";

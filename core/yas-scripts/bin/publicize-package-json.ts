@@ -4,7 +4,7 @@ import * as path from "path";
 import { execaCommand } from "execa";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { createMutableResource } from "./createMutableResource";
+import { createMutableResource } from "../src/createMutableResource";
 
 /**
  * Strips internal package details from package.json before running a command.

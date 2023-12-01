@@ -4,7 +4,7 @@ My personal stack of apps and libraries.
 
 Also serves as monorepo template with focus on strict conventions, type safety, testing and easy code sharing between packages.
 
-## Monorepo conventions
+## Conventions
 
 - The repository root should only hold global tooling and configuration files.
 - Decouple your apps and packages.
@@ -13,6 +13,7 @@ Also serves as monorepo template with focus on strict conventions, type safety, 
 - Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
 - Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
+  > A convention that has to be remembered will eventually be forgotten.
 
 ## Scripts
 
@@ -40,20 +41,33 @@ The following scripts are only available in the root of the repository and will 
 - `format` Formats code.
 - `format:fix` Formats code and fixes code style errors (where possible)
 
-## Monorepo packages
+## Packages
 
-- For `YAS` specific packages (i.e. encapsulations, shared config, etc):
-  - Folder names must have `yas-` prefix
-  - package.json name must have `@yas/` prefix
+For `YAS` specific packages (i.e. encapsulations, shared config, etc), the following rules apply:
 
-### [apps](apps)
+- Folder names must have `yas-` prefix
+- package.json name must have `@yas/` prefix
+
+### Package layers
+
+Packages are grouped into categories that represent architectural layers: **Lower layers should not depend on higher layers**.
+
+These are the layers, from top to bottom:
+
+#### [apps](apps)
 
 Deployables (`build` script must output deployable artifacts, preferably using some standard)
 
-### [libraries](libraries)
+#### [integrations](libraries)
+
+Integrations with services (i.e. api clients).
+
+#### [libraries](libraries)
 
 Building blocks for creating apps.
 
-### [core](core)
+#### [core](core)
 
 Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
+
+> This is an exception to the layering rule. `core` and `libraries` are considered to be on the same layer, and are separated only to communicate that `core` packages are more sensitive to changes.

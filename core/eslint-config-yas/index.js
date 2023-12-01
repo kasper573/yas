@@ -174,8 +174,14 @@ module.exports = {
 };
 
 function getMonorepoAppNames() {
+  const appsDir = path.resolve(__dirname, "../../apps");
   return fs
-    .readdirSync(path.resolve(__dirname, "../../apps"), { withFileTypes: true })
+    .readdirSync(appsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
+    .map((entry) => entry.name)
+    .map((folderName) => {
+      const packageJsonPath = path.resolve(appsDir, folderName, "package.json");
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+      return packageJson.name;
+    });
 }

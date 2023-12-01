@@ -8,7 +8,7 @@ import uniqueColor from "uniqolor";
 import chalk from "chalk";
 
 const symbols = {
-  rel: "<",
+  rel: ">",
   or: "/",
 };
 
@@ -43,14 +43,16 @@ for (let i = 0; i < hierarchy.length; i++) {
     const workspace = workspacesByName[workspaceName];
     for (const pkg of workspace.packages) {
       for (const dependency of pkg.dependencies) {
-        const parentWorkspace = parentWorkspaces.find((parent) =>
-          parent.packages.find(({ name }) => name === dependency),
+        const violatingWorkspace = parentWorkspaces.find((parent) =>
+          parent.packages
+            .filter((p) => !pkg.depcheck.exceptions.allow.includes(p.name))
+            .find(({ name }) => name === dependency),
         );
-        if (!parentWorkspace) {
+        if (!violatingWorkspace) {
           continue;
         }
         const group = `❌  Dependency hierarchy violations in ${colorize(
-          workspace.name + symbols.or + pkg.name,
+          workspace.name + "/" + pkg.name,
         )}:`;
         let list = errors.get(group);
         if (!list) {
@@ -58,7 +60,7 @@ for (let i = 0; i < hierarchy.length; i++) {
         }
         list.push(
           `may not depend on ${colorize(dependency)} (defined in ${colorize(
-            parentWorkspace.name,
+            violatingWorkspace.name,
           )})`,
         );
       }
@@ -116,6 +118,15 @@ function readPackage(packageDir: string) {
       dependencies: z.record(z.string()).optional(),
       peerDependencies: z.record(z.string()).optional(),
       devDependencies: z.record(z.string()).optional(),
+      depcheck: z
+        .object({
+          exceptions: z
+            .object({
+              allow: z.array(z.string()).default([]),
+            })
+            .default({}),
+        })
+        .default({}),
     }),
   );
   return {
@@ -125,6 +136,7 @@ function readPackage(packageDir: string) {
       ...Object.keys(pkg.peerDependencies ?? {}),
       ...Object.keys(pkg.devDependencies ?? {}),
     ]),
+    depcheck: pkg.depcheck,
   };
 }
 

@@ -5,6 +5,7 @@
   "workspaces": [
     "apps/*",
     "libraries/*",
+    "integrations/*",
     "core/*"
   ],
   "scripts": {
@@ -12,7 +13,7 @@
     "dev": "turbo run dev --concurrency 30",
     "lint": "pnpm eslint . --max-warnings=0",
     "lint:fix": "pnpm eslint . --fix",
-    "depcheck": "assert-workspace-hierarchy \"apps < libraries/core\"",
+    "depcheck": "assert-workspace-hierarchy \"apps > integrations > libraries/core\"",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
@@ -29,7 +30,7 @@
     "turbo": "1.10.13"
   },
   "engines": {
-    "node": "^18.16.0"
+    "node": "20.10.0"
   },
   "packageManager": "pnpm@8.7.1"
 }
