@@ -13,7 +13,7 @@
     "test:e2e": "yas-env playwright test"
   },
   "dependencies": {
-    "@yas/api": "workspace:*",
+    "@yas/api-client": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/ui": "workspace:*",
     "@yas/validate": "workspace:*",

@@ -10,7 +10,7 @@ import {
   Text,
   useDialog,
 } from "@yas/ui";
-import { api } from "@yas/api/sdk";
+import { api } from "@yas/api-client";
 import { env } from "../env";
 import { hello } from "../hello";
 import * as foo from "./foo.css";
