@@ -207,24 +207,6 @@ importers:
         specifier: ^8.0.1
         version: 8.2.1
 
-  core/assert-sibling-files:
-    devDependencies:
-      '@types/yargs':
-        specifier: ^17.0.24
-        version: 17.0.26
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
-      glob:
-        specifier: ^10.3.10
-        version: 10.3.10
-      tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
-      yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
-
   core/esbuild-absolute-file-plugin:
     devDependencies:
       esbuild:
@@ -497,6 +479,9 @@ importers:
       execa:
         specifier: ^7.1.1
         version: 7.2.0
+      glob:
+        specifier: ^10.3.10
+        version: 10.3.10
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -724,15 +709,15 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
-      assert-sibling-files:
-        specifier: workspace:*
-        version: link:../../core/assert-sibling-files
       concurrently:
         specifier: 8.0.1
         version: 8.0.1

@@ -42,7 +42,7 @@
     "@yas/build": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "assert-sibling-files": "workspace:*",
+    "@yas/scripts": "workspace:*",
     "concurrently": "8.0.1",
     "prop-types": "15.8.1",
     "react": "18.2.0",

@@ -5,7 +5,8 @@
   "license": "MIT",
   "bin": {
     "assert-workspace-hierarchy": "./bin/assert-workspace-hierarchy.ts",
-    "publicize-package-json": "./bin/publicize-package-json.ts"
+    "publicize-package-json": "./bin/publicize-package-json.ts",
+    "assert-sibling-files": "./bin/assert-sibling-files.ts"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.24",
@@ -16,6 +17,7 @@
     "chalk": "5.3.0",
     "execa": "^7.1.1",
     "immer": "^10.0.2",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "glob": "^10.3.10"
   }
 }
