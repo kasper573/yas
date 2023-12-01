@@ -294,27 +294,6 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
 
-  core/publicize-package-json:
-    devDependencies:
-      '@types/yargs':
-        specifier: ^17.0.24
-        version: 17.0.26
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
-      execa:
-        specifier: ^7.1.1
-        version: 7.2.0
-      immer:
-        specifier: ^10.0.2
-        version: 10.0.2
-      tsx:
-        specifier: ^3.12.7
-        version: 3.13.0
-      yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
-
   core/remark-html-to-jsx:
     devDependencies:
       mdast-util-from-markdown:
@@ -503,6 +482,9 @@ importers:
 
   core/yas-scripts:
     devDependencies:
+      '@types/yargs':
+        specifier: ^17.0.24
+        version: 17.0.26
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
@@ -512,12 +494,21 @@ importers:
       chalk:
         specifier: 5.3.0
         version: 5.3.0
+      execa:
+        specifier: ^7.1.1
+        version: 7.2.0
+      immer:
+        specifier: ^10.0.2
+        version: 10.0.2
       tsx:
         specifier: ^3.12.7
         version: 3.13.0
       uniqolor:
         specifier: 1.1.0
         version: 1.1.0
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
 
   core/yas-test:
     devDependencies:
@@ -598,6 +589,9 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
@@ -607,9 +601,6 @@ importers:
       concurrently:
         specifier: ^8.0.1
         version: 8.2.1
-      publicize-package-json:
-        specifier: workspace:*
-        version: link:../../core/publicize-package-json
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -625,6 +616,9 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
@@ -634,9 +628,6 @@ importers:
       immer:
         specifier: ^10.0.2
         version: 10.0.2
-      publicize-package-json:
-        specifier: workspace:*
-        version: link:../../core/publicize-package-json
       react:
         specifier: ^18.2.0
         version: 18.2.0
