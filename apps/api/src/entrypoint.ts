@@ -1,7 +1,5 @@
-import { createServer } from "./server";
+import { createServer } from "./definition/server";
 import { env } from "./env";
-
-// The entrypoint for the server.
 
 switch (env.runtime.type) {
   case "lambda":

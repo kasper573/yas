@@ -1,5 +1,5 @@
 import { z } from "@yas/validate";
-import { t } from "../../trpc";
+import { t } from "../../definition/trpc";
 
 export function createExampleRouter() {
   return t.router({

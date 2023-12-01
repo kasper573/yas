@@ -2,8 +2,8 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { env } from "../env";
 import { createContext } from "./context";
-import { env } from "./env";
 import { createApiRouter } from "./router";
 
 export function createServer() {
