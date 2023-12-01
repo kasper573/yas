@@ -557,6 +557,9 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      superjson:
+        specifier: 1.13.3
+        version: 1.13.3
     devDependencies:
       '@types/react':
         specifier: 18.2.37

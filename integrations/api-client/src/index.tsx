@@ -1,7 +1,7 @@
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
-import { transformer } from "@yas/api";
+import transformer from "superjson";
 import type { ApiRouter } from "@yas/api";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
