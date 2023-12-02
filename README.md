@@ -48,7 +48,11 @@ For `YAS` specific packages (i.e. encapsulations, shared config, etc), the follo
 
 ### Package layers
 
-Packages are grouped into categories that represent architectural layers: **Lower layers should not depend on higher layers**.
+Packages are grouped into categories that represent architectural layers imposing this rule:
+
+**Lower layers should not depend on higher layers**.
+
+> This is enforced using `pnpm depcheck`
 
 These are the layers, from top to bottom:
 
