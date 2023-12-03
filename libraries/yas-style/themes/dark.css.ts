@@ -58,7 +58,7 @@ export const dark: string = createTheme(vars, {
       dark: palette.red["600"],
       contrast: palette["white"]["87%"],
     },
-    divider: palette.black["87%"],
+    divider: palette.white["50%"],
     dimmer: palette.black["50%"],
     highlight: palette.white["50%"],
   },
