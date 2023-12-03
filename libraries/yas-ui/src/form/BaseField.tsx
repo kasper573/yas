@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { styled } from "@yas/style";
 import { Alert } from "../atoms/Alert";
-import type { ControlFactory } from "./FormControlLabel";
+import type { ControlFactory, FormControlLabelProps } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";
 import type { FieldProps } from "./rcf";
 
@@ -14,6 +14,7 @@ export type BaseFieldProps<T = unknown> = Pick<
     "onFocus" | "onBlur" | "className" | "style" | "sx"
   > & {
     actions?: ReactNode;
+    labelProps?: Omit<FormControlLabelProps, "control">;
   } & ControlProps;
 
 type ControlProps = { children: ReactNode } | { control: ControlFactory };
@@ -27,6 +28,7 @@ export function BaseField<T>({
   onFocus,
   onBlur,
   className,
+  labelProps,
   style,
   sx,
   ...rest
@@ -43,7 +45,11 @@ export function BaseField<T>({
         sx,
       }}
     >
-      <FormControlLabel control={controlFactory}>{label}</FormControlLabel>
+      {label || controlFactory ? (
+        <FormControlLabel {...labelProps} control={controlFactory}>
+          {label}
+        </FormControlLabel>
+      ) : null}
       {info ? <FieldInfo>{info}</FieldInfo> : null}
       {actions}
       {controlChildren}
