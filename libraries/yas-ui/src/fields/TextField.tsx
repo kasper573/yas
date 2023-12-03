@@ -38,6 +38,7 @@ export function TextField({
           onChange={(e) => onChange?.(e.target.value)}
           type={type}
           fullWidth={fullWidth}
+          error={!!baseFieldProps.errors?.length}
           {...inputProps}
         />
       )}

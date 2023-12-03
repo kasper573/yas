@@ -35,5 +35,10 @@ export const inputRecipe = recipe({
   },
   variants: {
     fullWidth,
+    error: {
+      true: {
+        borderColor: "error.main",
+      },
+    },
   },
 });

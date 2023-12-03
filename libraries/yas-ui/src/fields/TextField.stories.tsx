@@ -32,6 +32,12 @@ export const WithDefaultValue: StrictStoryObj<typeof TextField> = {
   },
 };
 
+export const WithError: StrictStoryObj<typeof TextField> = {
+  args: {
+    errors: ["Something went wrong"],
+  },
+};
+
 function TextFieldWithState(props: ComponentProps<typeof TextField>) {
   const [value, setValue] = useState(props.value);
   return <TextField {...props} value={value} onChange={setValue} />;
