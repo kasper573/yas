@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 import { styled } from "@yas/style";
-import { Alert } from "../atoms/Alert";
+import { Text } from "../atoms/Text";
 import type { ControlFactory, FormControlLabelProps } from "./FormControlLabel";
 import { FormControlLabel } from "./FormControlLabel";
 import type { FieldProps } from "./rcf";
@@ -54,7 +54,9 @@ export function BaseField<T>({
       {actions}
       {controlChildren}
       {errors && errors.length > 0 ? (
-        <Alert severity="error">{errors.join(", ")}</Alert>
+        <Text variant="caption" sx={{ color: "error.main", px: "#1" }}>
+          {errors.join(", ")}
+        </Text>
       ) : null}
     </FormControl>
   );
