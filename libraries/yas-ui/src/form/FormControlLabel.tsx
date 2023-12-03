@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { useId } from "react";
 import { styled } from "@yas/style";
 import { Text } from "../atoms/Text";
@@ -6,7 +6,7 @@ import { Text } from "../atoms/Text";
 export type ControlFactory = (labelId: string) => ReactNode;
 
 export interface FormControlLabelProps
-  extends Omit<HTMLAttributes<HTMLLabelElement>, "children"> {
+  extends Omit<ComponentProps<typeof Text>, "children"> {
   control?: ControlFactory;
 }
 
