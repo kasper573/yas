@@ -1,4 +1,20 @@
-import { recipe } from "@yas/style";
+import { recipe, style } from "@yas/style";
+
+const fullWidth = {
+  true: {
+    width: "100%",
+  },
+};
+
+export const container = recipe({
+  variants: {
+    fullWidth,
+  },
+});
+
+export const label = style({
+  ml: "#1",
+});
 
 export const inputRecipe = recipe({
   base: {
@@ -6,7 +22,7 @@ export const inputRecipe = recipe({
     borderStyle: "solid",
     borderWidth: "#1",
     borderRadius: "#2",
-    backgroundColor: "surface.main",
+    backgroundColor: "surface.light",
     color: "surface.contrast",
     fontSize: "#3",
     fontFamily: "default",
@@ -15,6 +31,14 @@ export const inputRecipe = recipe({
     borderColor: {
       default: "divider",
       focus: "primary.base.main",
+    },
+  },
+  variants: {
+    fullWidth,
+    error: {
+      true: {
+        borderColor: "error.main",
+      },
     },
   },
 });

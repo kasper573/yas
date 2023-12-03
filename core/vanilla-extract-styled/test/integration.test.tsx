@@ -19,6 +19,46 @@ describe("can render component with", () =>
     (props) => createHtml("span", props),
   ));
 
+describe("inline implementation", () => {
+  it("element", () => {
+    const styled = createStyledFactory();
+    const Component = styled("div");
+    const { container } = render(<Component as="span" />);
+    expect(container.outerHTML).toEqual("<span></span>");
+  });
+
+  it("element props", () => {
+    const styled = createStyledFactory();
+    const Component = styled("div");
+    const { container } = render(
+      <Component as="span" asProps={{ "data-testid": "foo" }} />,
+    );
+    expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
+  });
+
+  it("component", () => {
+    const styled = createStyledFactory();
+    const Component = styled("div");
+    function MySpan() {
+      return <span />;
+    }
+    const { container } = render(<Component as={MySpan} />);
+    expect(container.outerHTML).toEqual("<span></span>");
+  });
+
+  it("component props", () => {
+    const styled = createStyledFactory();
+    const Component = styled("div");
+    function MySpan(props: Record<string, unknown>) {
+      return <span {...props} />;
+    }
+    const { container } = render(
+      <Component as={MySpan} asProps={{ "data-testid": "foo" }} />,
+    );
+    expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
+  });
+});
+
 function testComponent(
   component: ElementType,
   toHtml: (props?: HtmlProps) => void,

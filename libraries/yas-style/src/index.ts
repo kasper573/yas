@@ -44,6 +44,7 @@ export const styled = createStyledFactory(
 export const recipe = createRecipeFactory(style);
 
 export { destructureVariantProps } from "vanilla-extract-styled";
+export type { RecipeVariants } from "vanilla-extract-styled";
 
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
 

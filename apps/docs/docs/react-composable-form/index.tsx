@@ -1,6 +1,6 @@
 import { z } from "@yas/validate";
 import { createForm } from "react-composable-form";
-import { TextField, NumberField, Button } from "@yas/ui";
+import { TextField, NumberField, Button, Stack } from "@yas/ui";
 // ---cut---
 
 export const UserForm = createForm((options) =>
@@ -18,9 +18,11 @@ export const UserForm = createForm((options) =>
     )
     .layout(({ fields: { Email, Password, Age }, reset, handleSubmit }) => (
       <form onReset={reset} onSubmit={handleSubmit} style={styles.grid}>
-        <Email style={styles.leanLeft} />
-        <Password style={styles.leanRight} />
-        <Age />
+        <Stack gap="3">
+          <Email fullWidth />
+          <Password fullWidth />
+          <Age fullWidth />
+        </Stack>
         <div className="button-group padding-top--md" style={styles.dockRight}>
           <Button color="secondary" type="reset">
             Reset
@@ -36,13 +38,6 @@ export const UserForm = createForm((options) =>
 // ---cut-after---
 
 const styles = {
-  grid: { display: "grid" },
+  grid: { display: "grid", minWidth: 250 },
   dockRight: { marginLeft: "auto" },
-  leanLeft: { transformOrigin: "left", transform: "rotateZ(-10deg)" },
-  leanRight: {
-    transformOrigin: "right",
-    transform: "rotateZ(10deg)",
-    width: "50%",
-    marginLeft: "auto",
-  },
 };

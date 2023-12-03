@@ -4,10 +4,9 @@ export const alertRecipe = recipe({
   base: {
     padding: "#2",
     borderRadius: "#1",
-    fontFamily: "default",
   },
   variants: {
-    variant: {
+    severity: {
       success: {
         background: "success.main",
         color: "success.contrast",

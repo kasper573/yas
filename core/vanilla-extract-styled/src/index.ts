@@ -14,19 +14,34 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
+    InlineImplementation extends ElementType,
     Recipe extends RecipeLike = RuntimeFn<{}>,
   >(
     implementation: Implementation,
     recipe?: Recipe,
-    options?: RecipeComponentOptions<Implementation, Recipe, Style>,
-  ): RecipeComponent<Implementation, Recipe, Style> {
+    options?: RecipeComponentOptions<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >,
+  ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style> {
     function RecipeComponent({
       className: inlineClassName,
       style: inlineStyle,
       sx = emptyObject as Style,
-      as = implementation,
+      as = implementation as unknown as InlineImplementation,
+      asProps: {
+        style: inlineImplementationStyle,
+        ...inlineImplementationProps
+      } = emptyObject as ComponentProps<InlineImplementation>,
       ...inlineProps
-    }: RecipeComponentProps<Implementation, Recipe, Style>) {
+    }: RecipeComponentProps<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >) {
       const props = { ...options?.defaultProps, ...inlineProps };
       const [variantProps, forwardedProps] = recipe
         ? destructureVariantProps(props, recipe, options?.forwardProps)
@@ -35,20 +50,26 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       const className = clsx(recipe?.(variantProps), inlineClassName);
       const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
       const style = useMemo(
-        () => ({ ...sxMemoized, ...inlineStyle }),
-        [sxMemoized, inlineStyle],
+        () => ({ ...sxMemoized, ...inlineStyle, ...inlineImplementationStyle }),
+        [sxMemoized, inlineStyle, inlineImplementationStyle],
       );
 
       return createElement(as, {
         className,
         ...forwardedProps,
+        ...inlineImplementationProps,
         style,
       });
     }
 
     RecipeComponent.attrs = (
       defaultProps: Partial<
-        RecipeComponentProps<Implementation, Recipe, Style>
+        RecipeComponentProps<
+          Implementation,
+          InlineImplementation,
+          Recipe,
+          Style
+        >
       >,
     ) =>
       createRecipeComponent(implementation, recipe, {
@@ -61,7 +82,12 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
 
     RecipeComponent.shouldForwardProp = (
       forwardProps: PropForwardTester<
-        keyof RecipeComponentProps<Implementation, Recipe, Style>
+        keyof RecipeComponentProps<
+          Implementation,
+          InlineImplementation,
+          Recipe,
+          Style
+        >
       >,
     ) =>
       createRecipeComponent(implementation, recipe, {
@@ -110,33 +136,50 @@ export function destructureVariantProps<
 interface StyledComponentFactory<Style> {
   <
     Implementation extends ElementType,
+    InlineImplementation extends ElementType,
     Recipe extends RecipeLike = RuntimeFn<{}>,
   >(
     implementation: Implementation,
     recipe?: Recipe,
-  ): RecipeComponent<Implementation, Recipe, Style>;
+  ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
 }
 
 interface RecipeComponent<
   Implementation extends ElementType,
+  InlineImplementation extends ElementType,
   Recipe extends RecipeLike,
   Style,
 > {
-  (props: RecipeComponentProps<Implementation, Recipe, Style>): ReactElement;
+  (
+    props: RecipeComponentProps<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >,
+  ): ReactElement;
 
   attrs: (
-    props: Partial<RecipeComponentProps<Implementation, Recipe, Style>>,
-  ) => RecipeComponent<Implementation, Recipe, Style>;
+    props: Partial<
+      RecipeComponentProps<Implementation, InlineImplementation, Recipe, Style>
+    >,
+  ) => RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
 
   shouldForwardProp: (
     tester: PropForwardTester<
-      keyof RecipeComponentProps<Implementation, Recipe, Style>
+      keyof RecipeComponentProps<
+        Implementation,
+        InlineImplementation,
+        Recipe,
+        Style
+      >
     >,
-  ) => RecipeComponent<Implementation, Recipe, Style>;
+  ) => RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
 }
 
 type RecipeComponentProps<
   Implementation extends ElementType,
+  InlineImplementation extends ElementType,
   Recipe extends RecipeLike,
   Style,
 > = RecipeVariants<Recipe> &
@@ -145,17 +188,26 @@ type RecipeComponentProps<
     className?: string;
     style?: CSSProperties;
     children?: ReactNode;
-    as?: ElementType;
+    as?: InlineImplementation;
+    asProps?: ComponentProps<InlineImplementation>;
   };
 
 interface RecipeComponentOptions<
   Implementation extends ElementType,
+  InlineImplementation extends ElementType,
   Recipe extends RecipeLike,
   Style,
 > {
-  defaultProps?: Partial<RecipeComponentProps<Implementation, Recipe, Style>>;
+  defaultProps?: Partial<
+    RecipeComponentProps<Implementation, InlineImplementation, Recipe, Style>
+  >;
   forwardProps?: PropForwardTester<
-    keyof RecipeComponentProps<Implementation, Recipe, Style>
+    keyof RecipeComponentProps<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >
   >;
 }
 
