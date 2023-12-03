@@ -31,6 +31,10 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       style: inlineStyle,
       sx = emptyObject as Style,
       as = implementation as unknown as InlineImplementation,
+      asProps: {
+        style: inlineImplementationStyle,
+        ...inlineImplementationProps
+      } = emptyObject as ComponentProps<InlineImplementation>,
       ...inlineProps
     }: RecipeComponentProps<
       Implementation,
@@ -46,13 +50,14 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       const className = clsx(recipe?.(variantProps), inlineClassName);
       const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
       const style = useMemo(
-        () => ({ ...sxMemoized, ...inlineStyle }),
-        [sxMemoized, inlineStyle],
+        () => ({ ...sxMemoized, ...inlineStyle, ...inlineImplementationStyle }),
+        [sxMemoized, inlineStyle, inlineImplementationStyle],
       );
 
       return createElement(as, {
         className,
         ...forwardedProps,
+        ...inlineImplementationProps,
         style,
       });
     }
