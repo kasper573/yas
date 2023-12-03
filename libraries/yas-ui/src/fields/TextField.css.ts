@@ -22,7 +22,7 @@ export const inputRecipe = recipe({
     borderStyle: "solid",
     borderWidth: "#1",
     borderRadius: "#2",
-    backgroundColor: "surface.main",
+    backgroundColor: "surface.light",
     color: "surface.contrast",
     fontSize: "#3",
     fontFamily: "default",
