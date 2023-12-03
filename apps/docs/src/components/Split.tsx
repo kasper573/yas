@@ -6,13 +6,13 @@ import * as styles from "./Split.css";
 export interface SplitProps {
   children: [ReactNode, ReactNode];
   names: [ReactNode, ReactNode];
-  flex?: [number, number];
+  flex?: [number | undefined, number | undefined];
 }
 
 export function Split({
   children: [left, right],
   names: [leftName, rightName],
-  flex: [leftFlex, rightFlex] = [3, 2],
+  flex: [leftFlex, rightFlex] = [1, undefined],
 }: SplitProps) {
   return (
     <>
