@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { useId } from "react";
 import { styled } from "@yas/style";
+import { Text } from "../atoms/Text";
 
 export type ControlFactory = (labelId: string) => ReactNode;
 
@@ -14,7 +15,7 @@ export const FormControlLabel = styled(
     const id = useId();
     return (
       <>
-        <label htmlFor={id} {...rest} />
+        <Text as="label" asProps={{ htmlFor: id }} {...rest} />
         {control?.(id)}
       </>
     );
