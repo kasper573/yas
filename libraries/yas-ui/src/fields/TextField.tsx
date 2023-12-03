@@ -1,13 +1,15 @@
 import type { InputHTMLAttributes } from "react";
-import { styled } from "@yas/style";
+import type { RecipeVariants } from "@yas/style";
+import { clsx, styled } from "@yas/style";
 import type { FieldProps } from "../form/rcf";
 import type { BaseFieldProps } from "../form/BaseField";
 import { BaseField } from "../form/BaseField";
-import { inputRecipe } from "./TextField.css";
+import * as styles from "./TextField.css";
 
 export interface TextFieldProps
   extends FieldProps<string>,
-    Pick<BaseFieldProps, "sx" | "style"> {
+    Pick<BaseFieldProps, "sx" | "style" | "className">,
+    RecipeVariants<typeof styles.container> {
   type?: "text" | "number" | "password";
   inputProps?: Omit<
     InputHTMLAttributes<HTMLInputElement>,
@@ -20,17 +22,22 @@ export function TextField({
   onChange,
   type,
   inputProps,
+  fullWidth,
+  className,
   ...baseFieldProps
 }: TextFieldProps) {
   return (
     <BaseField
       {...baseFieldProps}
+      className={clsx(className, styles.container({ fullWidth }))}
+      labelProps={{ className: styles.label }}
       control={(id) => (
         <Input
           id={id}
           value={value ?? ""}
           onChange={(e) => onChange?.(e.target.value)}
           type={type}
+          fullWidth={fullWidth}
           {...inputProps}
         />
       )}
@@ -38,4 +45,4 @@ export function TextField({
   );
 }
 
-const Input = styled("input", inputRecipe);
+const Input = styled("input", styles.inputRecipe);

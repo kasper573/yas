@@ -1,4 +1,20 @@
-import { recipe } from "@yas/style";
+import { recipe, style } from "@yas/style";
+
+const fullWidth = {
+  true: {
+    width: "100%",
+  },
+};
+
+export const container = recipe({
+  variants: {
+    fullWidth,
+  },
+});
+
+export const label = style({
+  ml: "#1",
+});
 
 export const inputRecipe = recipe({
   base: {
@@ -16,5 +32,8 @@ export const inputRecipe = recipe({
       default: "divider",
       focus: "primary.base.main",
     },
+  },
+  variants: {
+    fullWidth,
   },
 });
