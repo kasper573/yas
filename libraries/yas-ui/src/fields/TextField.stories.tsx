@@ -20,6 +20,12 @@ export const Placeholder: StrictStoryObj<typeof TextField> = {
   },
 };
 
+export const Labelled: StrictStoryObj<typeof TextField> = {
+  args: {
+    label: "Label",
+  },
+};
+
 export const WithDefaultValue: StrictStoryObj<typeof TextField> = {
   args: {
     value: "Default",
