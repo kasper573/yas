@@ -7,7 +7,7 @@ export const alertRecipe = recipe({
     fontFamily: "default",
   },
   variants: {
-    variant: {
+    severity: {
       success: {
         background: "success.main",
         color: "success.contrast",
