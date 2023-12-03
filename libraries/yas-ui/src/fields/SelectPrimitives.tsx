@@ -6,9 +6,10 @@ import { forwardRef } from "react";
 import { dividerRecipe } from "../layout/Divider.css";
 import * as styles from "./SelectPrimitives.css";
 
-export const SelectRoot = Select.Root;
-export const SelectPortal = Select.Portal;
-export const SelectGroup = Select.Group;
+export const SelectRoot = styled(Select.Root);
+export const SelectPortal = styled(Select.Portal);
+export const SelectGroup = styled(Select.Group);
+export const SelectValue = styled(Select.Value);
 
 export const SelectDivider = styled(Select.Separator).attrs({
   className: dividerRecipe(),
@@ -39,8 +40,6 @@ export const SelectScrollUpButton = styled(Select.ScrollUpButton).attrs({
 export const SelectTrigger = styled(Select.Trigger).attrs({
   className: styles.selectTrigger,
 });
-
-export const SelectValue = Select.Value;
 
 export const SelectIcon = styled(Select.Icon).attrs({
   className: styles.selectIcon,
