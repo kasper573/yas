@@ -19,6 +19,23 @@ describe("can render component with", () =>
     (props) => createHtml("span", props),
   ));
 
+it("inline element", () => {
+  const styled = createStyledFactory();
+  const Component = styled("div");
+  const { container } = render(<Component as="span" />);
+  expect(container.outerHTML).toEqual("<span></span>");
+});
+
+it("inline component", () => {
+  const styled = createStyledFactory();
+  const Component = styled("div");
+  function MySpan() {
+    return <span />;
+  }
+  const { container } = render(<Component as={MySpan} />);
+  expect(container.outerHTML).toEqual("<span></span>");
+});
+
 function testComponent(
   component: ElementType,
   toHtml: (props?: HtmlProps) => void,
