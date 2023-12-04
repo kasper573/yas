@@ -58,14 +58,14 @@ export const SpecializedLoginForm = LoginForm.extend((options) =>
       <Stack gap="2">
         <Email
           sx={{
-            background: "secondary.base.dark",
+            background: "secondary.base.main",
             color: "secondary.contrast.main",
           }}
         />
         <Password
           name="PWD (I am special)"
           sx={{
-            background: "primary.base.dark",
+            background: "primary.base.main",
             color: "primary.contrast.main",
           }}
         />
