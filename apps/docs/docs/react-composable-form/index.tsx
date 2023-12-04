@@ -18,9 +18,9 @@ export const UserForm = createForm((options) =>
     .layout(({ fields: { Email, Password, Age }, reset, handleSubmit }) => (
       <form onReset={reset} onSubmit={handleSubmit}>
         <Stack gap="3">
-          <Email fullWidth />
-          <Password fullWidth />
-          <Age fullWidth />
+          <Email />
+          <Password />
+          <Age />
           <Stack direction="row" gap="2" justify="end">
             <Button color="secondary" type="reset">
               Reset
