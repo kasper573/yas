@@ -14,9 +14,14 @@ export const stackRecipe = recipe({
       },
     },
     align: {
-      start: {},
-      center: {},
-      end: {},
+      start: { alignItems: "start" },
+      center: { alignItems: "center" },
+      end: { alignItems: "end" },
+    },
+    justify: {
+      start: { justifyContent: "start" },
+      center: { justifyContent: "center" },
+      end: { justifyContent: "end" },
     },
     gap: {
       0: { gap: 0 },
@@ -25,32 +30,6 @@ export const stackRecipe = recipe({
       3: { gap: "#3" },
     },
   },
-  compoundVariants: [
-    {
-      variants: { direction: "row", align: "start" },
-      style: { alignItems: "start" },
-    },
-    {
-      variants: { direction: "row", align: "center" },
-      style: { alignItems: "center" },
-    },
-    {
-      variants: { direction: "row", align: "end" },
-      style: { alignItems: "end" },
-    },
-    {
-      variants: { direction: "column", align: "start" },
-      style: { justifyContent: "start" },
-    },
-    {
-      variants: { direction: "column", align: "center" },
-      style: { justifyContent: "center" },
-    },
-    {
-      variants: { direction: "column", align: "end" },
-      style: { justifyContent: "end" },
-    },
-  ],
   defaultVariants: {
     direction: "column",
   },

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ReactNode } from "react";
 import { Stack } from "./Stack";
 import { Box } from "./Box";
 
@@ -17,12 +18,18 @@ export const Default: Story = {
     sx: { width: "150px", height: "150px" },
     children: (
       <>
-        <Box sx={{ background: "info.main", color: "info.contrast" }}>One</Box>
-        <Box sx={{ background: "info.main", color: "info.contrast" }}>Two</Box>
-        <Box sx={{ background: "info.main", color: "info.contrast" }}>
-          Three
-        </Box>
+        <ExampleItem>One</ExampleItem>
+        <ExampleItem>Two</ExampleItem>
+        <ExampleItem>Three</ExampleItem>
       </>
     ),
   },
 };
+
+function ExampleItem({ children }: { children?: ReactNode }) {
+  return (
+    <Box sx={{ m: "#1", background: "info.main", color: "info.contrast" }}>
+      {children}
+    </Box>
+  );
+}
