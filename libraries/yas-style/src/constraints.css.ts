@@ -43,6 +43,7 @@ export const resolveStyle = createStyleResolver({
   },
   defaultCondition: "default",
   properties: {
+    all: ["unset"] as const,
     cursor: all(),
     textTransform: all(),
     textDecoration: all(),
@@ -56,6 +57,7 @@ export const resolveStyle = createStyleResolver({
     inset: all(),
     outline: all(),
     position: all(),
+    userSelect: all(),
     borderWidth: tokens.borderSizes,
     borderStyle: all(),
     borderRadius: tokens.radii,
@@ -88,6 +90,7 @@ export const resolveStyle = createStyleResolver({
     textAlign: all(),
     fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
+    lineHeight: all(),
     fontWeight: all(),
     color: colors,
     background: colors,

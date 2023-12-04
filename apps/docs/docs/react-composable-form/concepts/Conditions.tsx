@@ -83,7 +83,7 @@ export default function ConditionalExample() {
   return (
     <ExampleContent>
       {(props) => (
-        <Stack direction="column" gap="3">
+        <Stack direction="column" sx={{ gap: "#7" }}>
           <DiscriminatedForm title="Discriminated" {...props} />
 
           <ConditionsForm title="Conditions" {...props} />

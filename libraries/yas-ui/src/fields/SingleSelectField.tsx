@@ -1,7 +1,19 @@
 import type { ReactNode } from "react";
 import { useMemo } from "react";
+import { ChevronUpIcon, ChevronDownIcon } from "@yas/icons";
 import type { FieldProps } from "../form/rcf";
-import { BaseField } from "../form/BaseField";
+import {
+  SelectTrigger,
+  SelectPortal,
+  SelectContent,
+  SelectScrollUpButton,
+  SelectViewport,
+  SelectItem,
+  SelectScrollDownButton,
+  SelectRoot,
+  SelectValue,
+  SelectIcon,
+} from "./SelectPrimitives";
 
 export type SingleSelectOption<Value> = {
   value: Value;
@@ -10,6 +22,7 @@ export type SingleSelectOption<Value> = {
 
 export interface SingleSelectFieldProps<Value> extends FieldProps<Value> {
   options: SingleSelectOption<Value>[];
+  emptyOptionText?: ReactNode;
 }
 
 export function SingleSelectField<Value>({
@@ -17,36 +30,64 @@ export function SingleSelectField<Value>({
   value,
   onChange,
   required,
-  ...rest
+  name,
+  label = name,
+  emptyOptionText,
+  errors,
+  info,
+  isLoading,
+  metrics,
+  fieldValues,
+  ...rootProps
 }: SingleSelectFieldProps<Value>) {
   const selectedOptionIndex = useMemo(
     () => options.findIndex((o) => o.value === value),
     [options, value],
   );
+
   function handleValueChange(indexAsString: string) {
-    const selectedOption = options[+indexAsString];
+    const selectedOption = options[Number(indexAsString)];
     if (selectedOption) {
       onChange?.(selectedOption.value);
     }
   }
+
   return (
-    <BaseField
-      {...rest}
-      control={(id) => (
-        <select
-          id={id}
-          value={selectedOptionIndex}
-          onChange={(e) => handleValueChange(e.target.value)}
-        >
-          {!required || (selectedOptionIndex === -1 && <option value={-1} />)}
-          {options.map((option, index) => (
-            <option key={index} value={index}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      )}
-    />
+    <SelectRoot
+      value={selectedOptionIndex.toString()}
+      onValueChange={handleValueChange}
+      {...rootProps}
+    >
+      <SelectTrigger aria-label={typeof label === "string" ? label : undefined}>
+        <SelectValue>
+          {selectedOptionIndex === -1
+            ? emptyOptionText ?? label
+            : options[selectedOptionIndex].label}
+        </SelectValue>
+        <SelectIcon />
+      </SelectTrigger>
+      <SelectPortal>
+        <SelectContent>
+          <SelectScrollUpButton>
+            <ChevronUpIcon />
+          </SelectScrollUpButton>
+          <SelectViewport>
+            {!required ||
+              (selectedOptionIndex === -1 && (
+                <SelectItem value="-1">{emptyOptionText}</SelectItem>
+              ))}
+            {options.map((option, index) => (
+              <SelectItem key={index} value={index.toString()}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectViewport>
+          <SelectScrollDownButton>
+            <ChevronDownIcon />
+          </SelectScrollDownButton>
+        </SelectContent>
+      </SelectPortal>
+    </SelectRoot>
   );
 }
 
