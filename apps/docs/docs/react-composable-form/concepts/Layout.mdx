@@ -8,24 +8,87 @@ import * as code from "!!slice-loader!./Layout";
 import { Split } from "../../../src/components/Split";
 import CodeBlock from "@theme/CodeBlock";
 
-Layout is a fundamental concept of this library. They allow you to reuse an existing form and
-recompose its fields using a layout of your choice.
+Layouts are responsible for styling and plotting out a forms fields and actions (i.e. submit and reset buttons).
 
-## Card layout
+It's also possible to reuse an existing form to create a composition with a new layout.
+
+## Forms have no layout by default
+
+Consider this form where we define a schema and a few field components, but you've provided no layout.
+
+By default there's no layout at all, so when you render the form, nothing but the fields will be rendered in the order they were defined.
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.LoginForm}</CodeBlock>
   <component.LoginForm />
 </Split>
 
-## Inline layout
+## Assigning a layout
+
+Before we get into [how to define a layout component](#how-to-define-a-layout-component), it's useful to first understand how they are used and what effect they have.
+
+In this example we have provided you with a layout called `CardLayout`. Let's extend the form we just created with this layout:
+
+<Split names={["Code", "Form"]}>
+  <div>
+    <CodeBlock language="tsx">{code.CardLoginForm}</CodeBlock>
+    Observe how the fields are now rendered inside a card with a submit and reset
+    button.
+  </div>
+  <component.CardLoginForm />
+</Split>
+
+## Compose as much as you like
+
+Thanks to the `extend` function you can create as many compositions as you like.
+
+Here's the same form as before, but now with a layout that renders the fields in a row and only has a submit button.
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.InlineLoginForm}</CodeBlock>
   <component.InlineLoginForm />
 </Split>
 
-## Specialized layout
+## How to define a layout component
+
+Here's how the `CardLayout` component from the previous example was defined:
+
+<CodeBlock language="tsx">{code.CardLayout}</CodeBlock>
+
+### For Typescript users
+
+If you're using Typescript, you're probably wondering where the `FromLayoutProps` type comes from.
+
+You define it in your setup file. Here's a minimal example:
+
+```tsx
+import { createRCF, inferLayoutProps } from "react-composable-form";
+
+export const createForm = createRCF();
+
+export type FormLayoutProps = inferLayoutProps<typeof createForm>;
+```
+
+The reason for this inference approach is to allow your layout components to be aware of any custom type information provided to your `createForm` factory, for example:
+
+```tsx
+interface SharedFieldProps {
+  isLoading?: boolean;
+  label?: ReactNode;
+}
+
+export const createForm = createRCF<SharedFieldProps>();
+
+export type FormLayoutProps = inferLayoutProps<typeof createForm>;
+```
+
+`FormLayoutProps` will now be aware that the fields have the `isLoading` and `label` props, so you can even use them in your generic layout components!
+
+## Specialized layout components
+
+We can also create a layout components that are specific to a particular form by passing in an inline function as the layout component.
+
+This allows Typescript to infer type information about the forms fields, which allows us to be more specific about the layout.
 
 <Split names={["Code", "Form"]}>
   <CodeBlock language="tsx">{code.SpecializedLoginForm}</CodeBlock>

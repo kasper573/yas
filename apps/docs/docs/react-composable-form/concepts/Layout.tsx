@@ -13,7 +13,11 @@ export const LoginForm = createForm((options) =>
     )
     .type(z.string(), TextField)
     .field("password", TextField, { type: "password" })
-    .layout(CardLayout),
+    .validateOn("change"),
+);
+
+export const CardLoginForm = LoginForm.extend((options) =>
+  options.layout(CardLayout),
 );
 
 export const InlineLoginForm = LoginForm.extend((options) =>
@@ -21,18 +25,34 @@ export const InlineLoginForm = LoginForm.extend((options) =>
 );
 
 export function CardLayout({
+  // A form layout component is any React component that accepts FormLayoutProps.
+  // For most layouts, these are the props you'll need (see source code docs for more information):
   fields,
   generalErrors,
   handleSubmit,
   reset,
+  // You're free to add any additional props to your layout component.
+  // You will be able to pass in these custom props when rendering the form.
   isLoading,
 }: FormLayoutProps & { isLoading?: boolean }) {
   return (
+    // The submit handler can be called manually or passed to a form element.
     <form className="card" onSubmit={handleSubmit}>
       <Stack className="card__body" gap="2">
+        {/* 
+          The layout will be given a record of React components that represents all the fields in the form.
+          You could access them by name, but if you want your layout to be generic, that's usually unsafe,
+          since then you'd assume that the form has a field with that name.
+          Instead it's recommended to map over all the field components and render them:
+        */}
         {Object.values(fields).map((Component, index) => (
+          // These are the components you defined with `type` method in the form definition, but property defaults ensured.
+          // This is possible since when constructing a form, fields have to be defined together with defaults for any required props.
+          // Thanks to this design, it's always safe to render a field component without any props
+          // (but you can still pass in any property overrides you want).
           <Component key={index} />
         ))}
+        {/* General errors are errors that could not be assigned to a specific field */}
         {generalErrors.length > 0 && (
           <Alert severity="error" className="card__footer">
             {generalErrors.join(", ")}
@@ -40,6 +60,10 @@ export function CardLayout({
         )}
       </Stack>
       <Stack className="card__footer" direction="row" gap="2">
+        {/* 
+          Loading state is not built-in to the library, 
+          but the layout system is flexible enough to make it trivial to implement manually:
+        */}
         <span style={{ flex: 1 }}>{isLoading ? <>Loading...</> : null}</span>
         <Button variant="outlined" onClick={reset}>
           Reset
@@ -53,22 +77,21 @@ export function CardLayout({
 }
 
 export const SpecializedLoginForm = LoginForm.extend((options) =>
+  // Thanks to inference, Typescript is aware that the form contains an email and password field
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
       <Stack gap="2">
-        <Email
-          sx={{
-            background: "secondary.base.main",
-            color: "secondary.contrast.main",
-          }}
-        />
-        <Password
-          name="PWD (I am special)"
-          sx={{
-            background: "primary.base.main",
-            color: "primary.contrast.main",
-          }}
-        />
+        {/* 
+          Each field can be rendered by using the component matching its name.
+          Place them wherever you please in your layout, and pass in any props you want.
+          The props are type safe and specific to each fields component type.
+        */}
+        <Email name="Email (I am special)" />
+        {/* 
+          When you constructed your form, fields had to be defined together with defaults for all their required props.
+          Thanks to this design, it's always safe to render a field without any props, since then their defaults will be used.
+         */}
+        <Password />
         <Button type="submit">Very special submit</Button>
       </Stack>
     </form>
