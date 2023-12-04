@@ -29,7 +29,7 @@ export function CardLayout({
 }: FormLayoutProps & { isLoading?: boolean }) {
   return (
     <form className="card" onSubmit={handleSubmit}>
-      <Stack className="card__body">
+      <Stack className="card__body" gap="2">
         {Object.values(fields).map((Component, index) => (
           <Component key={index} />
         ))}
@@ -39,7 +39,7 @@ export function CardLayout({
           </Alert>
         )}
       </Stack>
-      <Stack className="card__footer" direction="row">
+      <Stack className="card__footer" direction="row" gap="2">
         <span style={{ flex: 1 }}>{isLoading ? <>Loading...</> : null}</span>
         <Button variant="outlined" onClick={reset}>
           Reset
@@ -55,9 +55,20 @@ export function CardLayout({
 export const SpecializedLoginForm = LoginForm.extend((options) =>
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
-      <Stack>
-        <Email style={{ background: "#5b1111" }} />
-        <Password name="PWD (I am special)" style={{ background: "#272878" }} />
+      <Stack gap="2">
+        <Email
+          sx={{
+            background: "secondary.base.dark",
+            color: "secondary.contrast.main",
+          }}
+        />
+        <Password
+          name="PWD (I am special)"
+          sx={{
+            background: "primary.base.dark",
+            color: "primary.contrast.main",
+          }}
+        />
         <Button type="submit">Very special submit</Button>
       </Stack>
     </form>
@@ -71,7 +82,7 @@ export function InlineLayout({
 }: FormLayoutProps) {
   return (
     <form onSubmit={handleSubmit}>
-      <Stack direction="row" align="end">
+      <Stack direction="row" align="end" gap="2">
         {Object.values(fields).map((Component, index) => (
           <Component key={index} />
         ))}
