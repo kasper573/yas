@@ -1,0 +1,64 @@
+---
+sidebar_position: 0
+---
+
+Before we can start creating forms we'll need to set up a few things, some of which are optional but are outlined here for reference.
+
+The main concept of `react-composable-form` is to construct `React` components using a `createForm` function and a configuration:
+
+```tsx
+const MyForm = createForm(yourConfigurationHere);
+```
+
+However, there is actually no `createForm` function exported from the package. Instead, you'll make a specific function for your project.
+
+> The benefits of this will be explained in more detail later in this guide.
+
+## Simple setup
+
+Create a new file anywhere in your project containing the following:
+
+```tsx
+import { createRCF } from "react-composable-form";
+
+export const createForm = createRCF();
+```
+
+You can now import this `createForm` function anywhere in your project and use it to create forms.
+
+Proceed to the rest of the documentation to learn how to use it.
+
+> This is the simplest setup you can have, and is what javascript users will use.
+
+## Advanced setup
+
+This section is only relevant for typescript users.
+
+### Shared field component properties
+
+Providing a generic type to `createForm` will make sure that all field components that you assign to a form accepts these props.
+
+```tsx
+import { createRCF } from "react-composable-form";
+
+export const createForm = createRCF<SharedFieldProps>();
+
+interface SharedFieldProps {
+  isLoading?: boolean;
+  label?: ReactNode;
+}
+```
+
+### Typesafe field and layout component props
+
+Later on in this guide, you'll learn how to create your own field and layout components.
+
+When you do, you'll need to define the props that they accept. Here's how you define this types:
+
+```tsx
+import type { inferFieldProps, inferLayoutProps } from "react-composable-form";
+
+export type FieldProps<Value> = inferFieldProps<typeof createForm, Value>;
+
+export type FormLayoutProps = inferLayoutProps<typeof createForm>;
+```
