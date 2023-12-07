@@ -33,8 +33,3 @@ export const UserForm = createForm((options) =>
       </form>
     )),
 );
-
-const styles = {
-  grid: { display: "grid", minWidth: 250 },
-  dockRight: { marginLeft: "auto" },
-};
