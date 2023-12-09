@@ -6,8 +6,9 @@ const vanillaCssFile = /\.vanilla\.css$/i;
 
 /**
  * @param {import("webpack").Configuration} config
+ * @param {{ cache?: boolean }} options
  */
-function configureDocusaurusWebpackConfig(config) {
+function configureDocusaurusWebpackConfig(config, { cache = true } = {}) {
   const {
     plugins,
     optimization,
@@ -32,7 +33,9 @@ function configureDocusaurusWebpackConfig(config) {
   });
 
   // Disable cache as it seems to cause vanilla extract fonts to not be produced by webpack
-  delete config.cache;
+  if (!cache) {
+    delete config.cache;
+  }
 
   plugins.push(new VanillaExtractPlugin());
 

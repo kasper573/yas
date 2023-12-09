@@ -28,7 +28,9 @@ const config = {
     env.analytics ? "@gracefullight/docusaurus-plugin-vercel-analytics" : false,
     () => ({
       name: "webpack-customization-plugin",
-      configureWebpack: configureDocusaurusWebpackConfig,
+      configureWebpack: (config) => {
+        configureDocusaurusWebpackConfig(config, { cache: env.webpackCache });
+      },
     }),
   ],
 

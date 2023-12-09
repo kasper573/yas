@@ -3,6 +3,7 @@ const { z } = require("zod");
 const schema = z.object({
   analytics: z.boolean(),
   docsUrl: z.string().url(),
+  webpackCache: z.boolean(),
   git: z
     .object({
       owner: z.string(),
@@ -21,6 +22,7 @@ const schema = z.object({
 });
 
 const env = schema.parse({
+  webpackCache: process.env.WEBPACK_CACHE === "1",
   analytics: process.env.VERCEL === "1",
   docsUrl: process.env.DOCS_URL ?? "http://localhost:3000",
   git: {
