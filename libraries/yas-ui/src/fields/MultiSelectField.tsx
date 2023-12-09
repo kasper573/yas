@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ChevronUpIcon, ChevronDownIcon } from "@yas/icons";
 import type { FieldProps } from "../form/rcf";
+import { BaseField } from "../form/BaseField";
 import {
   SelectTrigger,
   SelectValue,
@@ -33,16 +34,9 @@ export function MultiSelectField<Value>({
   value,
   onChange,
   required,
-  name,
-  label = name,
   emptyOptionText,
-  errors,
-  info,
-  isLoading,
-  metrics,
-  fieldValues,
   selectedOptionsSummary = summarizeOptions,
-  ...rootProps
+  ...rest
 }: MultiSelectFieldProps<Value>) {
   const selectedIndexes = findSelectedIndexes(options, value);
 
@@ -58,42 +52,46 @@ export function MultiSelectField<Value>({
   }
 
   return (
-    <SelectRoot
-      value={selectedIndexes.length > 0 ? selectedIndexes.join(", ") : ""}
-      {...rootProps}
-    >
-      <SelectTrigger aria-label={typeof label === "string" ? label : undefined}>
-        <SelectValue placeholder={emptyOptionText ?? label}>
-          {selectedIndexes.length > 0 &&
-            selectedOptionsSummary(selectedIndexes.map((i) => options[i]))}
-        </SelectValue>
-        <SelectTriggerIcon />
-      </SelectTrigger>
-      <SelectPortal>
-        <SelectContent>
-          <SelectScrollUpButton>
-            <ChevronUpIcon />
-          </SelectScrollUpButton>
-          <SelectViewport>
-            {options.map((option, index) => (
-              <SelectItem
-                key={index}
-                value={index.toString()}
-                selected={selectedIndexes.includes(index)}
-                // HACK manual event subscription instead of relying on accessible events from radix.
-                // This is because radix doesn't support multiselect and only triggers onValueChange for single select value changes.
-                onMouseDown={() => toggleItemSelected(index)}
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectViewport>
-          <SelectScrollDownButton>
-            <ChevronDownIcon />
-          </SelectScrollDownButton>
-        </SelectContent>
-      </SelectPortal>
-    </SelectRoot>
+    <BaseField
+      {...rest}
+      control={(id) => (
+        <SelectRoot
+          value={selectedIndexes.length > 0 ? selectedIndexes.join(", ") : ""}
+        >
+          <SelectTrigger id={id}>
+            <SelectValue placeholder={emptyOptionText}>
+              {selectedIndexes.length > 0 &&
+                selectedOptionsSummary(selectedIndexes.map((i) => options[i]))}
+            </SelectValue>
+            <SelectTriggerIcon />
+          </SelectTrigger>
+          <SelectPortal>
+            <SelectContent>
+              <SelectScrollUpButton>
+                <ChevronUpIcon />
+              </SelectScrollUpButton>
+              <SelectViewport>
+                {options.map((option, index) => (
+                  <SelectItem
+                    key={index}
+                    value={index.toString()}
+                    selected={selectedIndexes.includes(index)}
+                    // HACK manual event subscription instead of relying on accessible events from radix.
+                    // This is because radix doesn't support multiselect and only triggers onValueChange for single select value changes.
+                    onMouseDown={() => toggleItemSelected(index)}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectViewport>
+              <SelectScrollDownButton>
+                <ChevronDownIcon />
+              </SelectScrollDownButton>
+            </SelectContent>
+          </SelectPortal>
+        </SelectRoot>
+      )}
+    />
   );
 }
 
