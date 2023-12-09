@@ -10,19 +10,12 @@ export default {
   tags: ["autodocs"],
 } satisfies Meta<typeof TextFieldWithState>;
 
-export const Empty: StrictStoryObj<typeof TextField> = {};
-
-export const Placeholder: StrictStoryObj<typeof TextField> = {
+export const Default: StrictStoryObj<typeof TextField> = {
   args: {
+    label: "TextField",
     inputProps: {
       placeholder: "Placeholder",
     },
-  },
-};
-
-export const Labelled: StrictStoryObj<typeof TextField> = {
-  args: {
-    label: "Label",
   },
 };
 

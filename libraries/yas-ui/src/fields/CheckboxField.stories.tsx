@@ -10,6 +10,9 @@ export default {
 } satisfies Meta<typeof CheckboxField>;
 
 export const Default: StrictStoryObj<typeof CheckboxField> = {
+  args: {
+    label: "CheckboxField",
+  },
   render(props) {
     const [checked, setChecked] = useState<boolean>();
     return <CheckboxField {...props} value={checked} onChange={setChecked} />;

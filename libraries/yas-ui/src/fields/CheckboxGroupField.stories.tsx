@@ -11,6 +11,7 @@ export default {
 
 export const Default: StrictStoryObj<typeof CheckboxGroupField<number>> = {
   args: {
+    label: "CheckboxGroupField",
     options: [
       { label: "Option 1", value: 1 },
       { label: "Option 2", value: 2 },
