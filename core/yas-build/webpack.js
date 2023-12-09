@@ -31,6 +31,9 @@ function configureDocusaurusWebpackConfig(config) {
     ],
   });
 
+  // Disable cache as it seems to cause vanilla extract fonts to not be produced by webpack
+  delete config.cache;
+
   plugins.push(new VanillaExtractPlugin());
 
   // Update to latest version of css minifier because 4.2.2 and down crashes:
