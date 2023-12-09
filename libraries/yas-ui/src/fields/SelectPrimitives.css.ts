@@ -1,8 +1,8 @@
-import { recipe, style } from "@yas/style";
+import { globalStyle, recipe, style } from "@yas/style";
 
 export const trigger = style({
   all: "unset",
-  display: "inline-flex",
+  display: "flex",
   alignItems: "center",
   justifyContent: "center",
   borderRadius: "#1",
@@ -98,15 +98,22 @@ export const itemSelectedIndicator = recipe({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
+    opacity: 0,
   },
   variants: {
     selected: {
-      false: {
-        display: "none",
+      true: {
+        opacity: 1,
       },
     },
   },
 });
+
+// Hook into radix-ui's internal state for selected items
+globalStyle(
+  `${item}[data-state="checked"] ${itemSelectedIndicator.classNames.base}`,
+  { opacity: 1 },
+);
 
 export const scrollButton = style({
   display: "flex",
