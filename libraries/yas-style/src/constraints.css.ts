@@ -37,6 +37,7 @@ export type ConstrainedStyleWithoutConditions = ConstrainedStyleImpl<
 export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
+    hoverOrFocus: { selectors: "&:hover, &:focus" },
     hover: { selectors: "&:hover" },
     focus: { selectors: "&:focus" },
     active: { selectors: "&:active" },

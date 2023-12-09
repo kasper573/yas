@@ -11,6 +11,7 @@ export default {
 
 export const Default: StrictStoryObj<typeof MultiSelectField<number>> = {
   args: {
+    emptyOptionText: "Select something...",
     options: [
       { label: "Option 1", value: 1 },
       { label: "Option 2", value: 2 },

@@ -12,7 +12,7 @@ import {
   SelectScrollDownButton,
   SelectRoot,
   SelectValue,
-  SelectIcon,
+  SelectTriggerIcon,
 } from "./SelectPrimitives";
 
 export type SingleSelectOption<Value> = {
@@ -64,7 +64,7 @@ export function SingleSelectField<Value>({
             ? emptyOptionText ?? label
             : options[selectedOptionIndex].label}
         </SelectValue>
-        <SelectIcon />
+        <SelectTriggerIcon />
       </SelectTrigger>
       <SelectPortal>
         <SelectContent>

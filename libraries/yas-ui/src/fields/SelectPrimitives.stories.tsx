@@ -12,7 +12,7 @@ import {
   SelectScrollDownButton,
   SelectDivider,
   SelectValue,
-  SelectIcon,
+  SelectTriggerIcon,
 } from "./SelectPrimitives";
 import { SelectItem, SelectRoot } from "./SelectPrimitives";
 
@@ -29,7 +29,7 @@ function SelectPrimitives() {
     <SelectRoot>
       <SelectTrigger aria-label="Food">
         <SelectValue placeholder="Select a fruit..." />
-        <SelectIcon />
+        <SelectTriggerIcon />
       </SelectTrigger>
       <SelectPortal>
         <SelectContent>
