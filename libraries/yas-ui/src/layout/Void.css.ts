@@ -18,6 +18,14 @@ export const outer = unsafe.recipe({
         width: innerWidth,
         height: 0,
       },
+      horizontal: {
+        width: 0,
+        height: innerHeight,
+      },
+      both: {
+        width: 0,
+        height: 0,
+      },
     },
   },
   defaultVariants,
@@ -33,6 +41,12 @@ export const inner = unsafe.recipe({
     axis: {
       vertical: {
         transform: `translateY(calc(${innerHeight} * -1 / 2))`,
+      },
+      horizontal: {
+        transform: `translateX(calc(${innerWidth} * -1 / 2))`,
+      },
+      both: {
+        transform: `translate(calc(${innerWidth} * -1 / 2), calc(${innerHeight} * -1 / 2))`,
       },
     },
   },
