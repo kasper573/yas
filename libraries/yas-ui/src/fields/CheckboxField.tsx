@@ -1,8 +1,12 @@
-import type { ComponentProps } from "react";
+import { useId, type ComponentProps } from "react";
 import { styled } from "@yas/style";
 import type { FieldProps } from "../form/rcf";
-import { BaseField } from "../form/BaseField";
 import { Stack } from "../layout/Stack";
+import {
+  FormControl,
+  FormControlErrors,
+  FormControlLabel,
+} from "../form/FormControl";
 import { checkboxRecipe } from "./CheckboxField.css";
 
 export type CheckboxLabelSide = "left" | "right";
@@ -20,11 +24,13 @@ export function CheckboxField({
   value,
   onChange,
   disabled,
+  label,
   labelSide = "left",
   ...rest
 }: CheckboxFieldProps) {
+  const id = useId();
   return (
-    <BaseField
+    <FormControl
       as={Stack}
       asProps={{
         direction: "row",
@@ -33,15 +39,16 @@ export function CheckboxField({
         gap: 1,
       }}
       {...rest}
-      control={(id) => (
-        <Checkbox
-          id={id}
-          disabled={disabled}
-          checked={value ?? false}
-          onChange={(e) => onChange?.(e.target.checked)}
-        />
-      )}
-    />
+    >
+      <FormControlLabel htmlFor={id}>{label}</FormControlLabel>
+      <Checkbox
+        id={id}
+        disabled={disabled}
+        checked={value ?? false}
+        onChange={(e) => onChange?.(e.target.checked)}
+      />
+      <FormControlErrors errors={rest.errors} />
+    </FormControl>
   );
 }
 
