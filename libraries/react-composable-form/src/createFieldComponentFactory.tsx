@@ -16,6 +16,7 @@ import type {
   FieldComponentsPassedToLayout,
   FieldFor,
   FieldProps,
+  MemoEqualityFn,
 } from "./types/optionTypes";
 import { getFirstPartyType } from "./utils/isMatchingType";
 import type { FieldInfo } from "./utils/determineFields";
@@ -25,6 +26,7 @@ import { useSyncIsomorphicStore } from "./useSyncIsomorphicStore";
 export function createFieldComponentFactory<G extends AnyRCFGenerics>(
   components: FieldComponentRegistry<G["components"]>,
   fieldList: FieldInfo<G["schema"]>[],
+  propsAreEqual?: MemoEqualityFn,
 ) {
   const allFieldNames = fieldList.reduce(
     (map, field) => map.set(field.name, true),
@@ -35,11 +37,14 @@ export function createFieldComponentFactory<G extends AnyRCFGenerics>(
       components.named[field.name] ??
       getTypedComponent(components.typed, field.type);
 
-    const EnhancedComponent = enhanceFieldComponent(
-      Component ?? createMissingFieldComponent(field.name, field.type),
-      field.name,
-      field.type,
-      allFieldNames,
+    const EnhancedComponent = memo(
+      enhanceFieldComponent(
+        Component ?? createMissingFieldComponent(field.name, field.type),
+        field.name,
+        field.type,
+        allFieldNames,
+      ),
+      propsAreEqual,
     );
 
     return map.set(field, EnhancedComponent);
@@ -73,12 +78,14 @@ function enhanceFieldComponent<
 ) {
   type Props = FieldProps<inferFieldValue<Schema, FieldName>>;
   const required = !type.isOptional();
-  return memo(function EnhancedFormField({
+
+  return function EnhancedFormField({
     onFocus,
     onChange,
     onBlur,
     ...props
   }: Partial<Props>) {
+    console.log("rendering field", name);
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncIsomorphicStore(
       store.subscribe,
@@ -121,7 +128,7 @@ function enhanceFieldComponent<
         {...props}
       />
     );
-  });
+  };
 }
 
 function createMissingFieldComponent(name: string, type: ValueType) {

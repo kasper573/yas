@@ -21,6 +21,7 @@ import { setTypedComponent } from "./utils/typedComponents";
 import type {
   AnyRCFGenerics,
   ComposedFieldComponent,
+  MemoEqualityFn,
   FormLayoutProps,
   FormOptions,
   RCFGenerics,
@@ -202,6 +203,13 @@ export class FormOptionsBuilder<G extends AnyRCFGenerics> {
     return new FormOptionsBuilder<G>({
       ...this.options,
       fieldConditionsSelector,
+    } as FormOptions<G>);
+  }
+
+  memoEqualityFn(memoEqualityFn?: MemoEqualityFn): FormOptionsBuilder<G> {
+    return new FormOptionsBuilder<G>({
+      ...this.options,
+      memoEqualityFn,
     } as FormOptions<G>);
   }
 

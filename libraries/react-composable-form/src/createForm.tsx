@@ -64,12 +64,14 @@ function createFormForOptions<G extends AnyRCFGenerics>(
     externalErrorParser,
     modes: prebuiltModes,
     fieldConditionsSelector,
+    memoEqualityFn,
   } = options;
 
   const fieldList = determineFields(schema, fieldConditionsSelector);
   const resolveFieldComponents = createFieldComponentFactory(
     components,
     fieldList,
+    memoEqualityFn,
   );
 
   function extractActiveFieldsData(allData: inferValue<G["schema"]>) {

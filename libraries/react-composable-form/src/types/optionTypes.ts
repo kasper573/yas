@@ -43,8 +43,11 @@ export interface FormOptions<G extends AnyRCFGenerics> {
   modes: FormValidationMode[];
   externalErrorParser: FormErrorsParser<G["customExternalError"], G["schema"]>;
   fieldConditionsSelector: FieldConditionsSelector<G["schema"]>;
+  memoEqualityFn?: MemoEqualityFn;
   components: FieldComponentRegistry<G["components"]>;
 }
+
+export type MemoEqualityFn = <T>(a: T, b: T) => boolean;
 
 export type FieldConditionsSelector<Schema extends FormSchema> = (
   fieldValues: inferValue<Schema>,
