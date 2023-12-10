@@ -31,6 +31,7 @@ export function TextField({
   name,
   label = name,
   errors,
+  fieldValues,
   ...rest
 }: TextFieldProps) {
   const id = useId();

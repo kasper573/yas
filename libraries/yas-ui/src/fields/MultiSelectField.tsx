@@ -43,6 +43,7 @@ export function MultiSelectField<Value>({
   errors,
   name,
   label = name,
+  fieldValues,
   ...rest
 }: MultiSelectFieldProps<Value>) {
   const selectedIndexes = findSelectedIndexes(options, value);

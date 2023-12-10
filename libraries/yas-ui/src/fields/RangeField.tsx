@@ -22,6 +22,7 @@ export function RangeField<T extends Range>({
   value: [fromValue, toValue] = [min, max] as T,
   onChange,
   errors,
+  fieldValues,
   ...rest
 }: RangeFieldProps<T>) {
   const minId = useId();

@@ -24,6 +24,7 @@ export function CheckboxGroupField<Value>({
   errors,
   name,
   label = name,
+  fieldValues,
   ...rest
 }: CheckboxGroupFieldProps<Value>) {
   const id = useId();

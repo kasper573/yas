@@ -29,6 +29,7 @@ export function RadioGroupField<Value>({
   errors,
   name,
   label = name,
+  fieldValues,
   ...rest
 }: RadioGroupFieldProps<Value>) {
   const fieldsetId = useId();

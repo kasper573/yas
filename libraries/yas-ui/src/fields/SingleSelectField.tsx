@@ -39,6 +39,7 @@ export function SingleSelectField<Value>({
   errors,
   name,
   label = name,
+  fieldValues,
   ...rest
 }: SingleSelectFieldProps<Value>) {
   const selectedOptionIndex = useMemo(
