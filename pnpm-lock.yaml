@@ -695,6 +695,12 @@ importers:
       '@radix-ui/react-select':
         specifier: ^2.0.0
         version: 2.0.0(@types/react-dom@18.2.15)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
+      '@yas/fn':
+        specifier: workspace:*
+        version: link:../yas-fn
+      '@yas/icons':
+        specifier: workspace:*
+        version: link:../yas-icons
       '@yas/style':
         specifier: workspace:*
         version: link:../yas-style
@@ -747,9 +753,6 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
-      '@yas/icons':
-        specifier: workspace:*
-        version: link:../yas-icons
       '@yas/scripts':
         specifier: workspace:*
         version: link:../../core/yas-scripts
