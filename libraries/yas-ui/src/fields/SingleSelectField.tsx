@@ -1,8 +1,12 @@
 import type { ReactNode } from "react";
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
 import { ChevronUpIcon, ChevronDownIcon } from "@yas/icons";
 import type { FieldProps } from "../form/rcf";
-import { BaseField } from "../form/BaseField";
+import {
+  FormControl,
+  FormControlLabel,
+  FormControlErrors,
+} from "../form/FormControl";
 import {
   SelectTrigger,
   SelectPortal,
@@ -32,6 +36,9 @@ export function SingleSelectField<Value>({
   onChange,
   required,
   emptyOptionText = "Select something...",
+  errors,
+  name,
+  label = name,
   ...rest
 }: SingleSelectFieldProps<Value>) {
   const selectedOptionIndex = useMemo(
@@ -46,46 +53,48 @@ export function SingleSelectField<Value>({
     }
   }
 
+  const id = useId();
   return (
-    <BaseField
-      {...rest}
-      control={(id) => (
-        <SelectRoot
-          value={selectedOptionIndex.toString()}
-          onValueChange={handleValueChange}
-        >
-          <SelectTrigger id={id}>
-            <SelectValue>
-              {selectedOptionIndex === -1
-                ? emptyOptionText
-                : options[selectedOptionIndex].label}
-            </SelectValue>
-            <SelectTriggerIcon />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectContent>
-              <SelectScrollUpButton>
-                <ChevronUpIcon />
-              </SelectScrollUpButton>
-              <SelectViewport>
-                {!required ||
-                  (selectedOptionIndex === -1 && (
-                    <SelectItem value="-1">{emptyOptionText}</SelectItem>
-                  ))}
-                {options.map((option, index) => (
-                  <SelectItem key={index} value={index.toString()}>
-                    {option.label}
-                  </SelectItem>
+    <FormControl {...rest}>
+      <FormControlLabel htmlFor={id}>{label}</FormControlLabel>
+
+      <SelectRoot
+        value={selectedOptionIndex.toString()}
+        onValueChange={handleValueChange}
+      >
+        <SelectTrigger id={id}>
+          <SelectValue>
+            {selectedOptionIndex === -1
+              ? emptyOptionText
+              : options[selectedOptionIndex].label}
+          </SelectValue>
+          <SelectTriggerIcon />
+        </SelectTrigger>
+        <SelectPortal>
+          <SelectContent>
+            <SelectScrollUpButton>
+              <ChevronUpIcon />
+            </SelectScrollUpButton>
+            <SelectViewport>
+              {!required ||
+                (selectedOptionIndex === -1 && (
+                  <SelectItem value="-1">{emptyOptionText}</SelectItem>
                 ))}
-              </SelectViewport>
-              <SelectScrollDownButton>
-                <ChevronDownIcon />
-              </SelectScrollDownButton>
-            </SelectContent>
-          </SelectPortal>
-        </SelectRoot>
-      )}
-    />
+              {options.map((option, index) => (
+                <SelectItem key={index} value={index.toString()}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectViewport>
+            <SelectScrollDownButton>
+              <ChevronDownIcon />
+            </SelectScrollDownButton>
+          </SelectContent>
+        </SelectPortal>
+      </SelectRoot>
+
+      <FormControlErrors errors={errors} />
+    </FormControl>
   );
 }
 
