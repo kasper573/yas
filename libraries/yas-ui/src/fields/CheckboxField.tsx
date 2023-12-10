@@ -24,8 +24,9 @@ export function CheckboxField({
   value,
   onChange,
   disabled,
-  label,
   labelSide = "left",
+  name,
+  label = name,
   ...rest
 }: CheckboxFieldProps) {
   const id = useId();
