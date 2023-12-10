@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import { styled } from "@yas/style";
+import { Cross2Icon } from "@yas/icons";
 import type { FieldProps } from "../form/rcf";
 import { BaseField } from "../form/BaseField";
 import { FormControlLabel } from "../form/FormControlLabel";
+import { IconButton } from "../atoms/IconButton";
 
 export interface RadioGroupOption<Value> {
   value: Value;
@@ -24,7 +26,12 @@ export function RadioGroupField<Value>({
   return (
     <BaseField
       actions={
-        !required && <span onClick={() => onChange?.(undefined)}>❌</span>
+        !required &&
+        value !== undefined && (
+          <IconButton onClick={() => onChange?.(undefined)}>
+            <Cross2Icon />
+          </IconButton>
+        )
       }
       {...rest}
     >
