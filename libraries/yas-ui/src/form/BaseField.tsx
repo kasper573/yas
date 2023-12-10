@@ -11,7 +11,7 @@ export type BaseFieldProps<T = unknown> = Pick<
 > &
   Pick<
     ComponentProps<typeof FormControl>,
-    "onFocus" | "onBlur" | "className" | "style" | "sx"
+    "onFocus" | "onBlur" | "className" | "style" | "sx" | "asProps" | "as"
   > & {
     actions?: ReactNode;
     labelProps?: Omit<FormControlLabelProps, "control">;
@@ -31,6 +31,8 @@ export function BaseField<T>({
   labelProps,
   style,
   sx,
+  as,
+  asProps,
   ...rest
 }: BaseFieldProps<T>) {
   const controlFactory = "control" in rest ? rest.control : undefined;
@@ -38,6 +40,8 @@ export function BaseField<T>({
   return (
     <FormControl
       {...{
+        as,
+        asProps,
         onFocus,
         onBlur,
         className,
