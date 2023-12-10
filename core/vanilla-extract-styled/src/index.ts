@@ -7,11 +7,10 @@ import type {
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { createElement, forwardRef, useMemo, useRef } from "react";
-import { shallowEqual } from "@yas/fn";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
-  isSXPropEqual: EqualityFn = shallowEqual,
+  isSXPropEqual: EqualityFn = Object.is,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
