@@ -1,2 +1,2 @@
-export { range } from "ramda";
+export { range, clamp } from "ramda";
 export * from "shallow-equal";
