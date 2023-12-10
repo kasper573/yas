@@ -74,7 +74,7 @@ const FilterForm = BaseForm.extend((options) =>
 
 function SearchPage() {
   const [filter, setFilter] = useState<inferFormValue<typeof FilterForm>>();
-  const [pagination, setPagination] = useState({ page: 0, size: 10 });
+  const [pagination, setPagination] = useState({ page: 1, size: 10 });
   const query = useMemo(() => ({ filter, pagination }), [filter, pagination]);
   const queryKey = useMemo(() => ["search", JSON.stringify(query)], [query]);
   const { data: response } = useQuery({
@@ -96,7 +96,7 @@ function SearchPage() {
       <pre>{JSON.stringify(response?.entries, null, 2)}</pre>
 
       <Pagination
-        totalPages={response?.total ?? 0}
+        totalPages={Math.ceil((response?.total ?? 0) / pagination.size)}
         currentPage={pagination.page}
         onChange={(page) => setPagination({ ...pagination, page })}
       />
