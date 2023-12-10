@@ -13,7 +13,6 @@ A Typescript & React specific full stack monorepo template aimed towards large s
 - Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
 - Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
-  > A convention that has to be remembered will eventually be forgotten.
 
 ## Scripts
 
