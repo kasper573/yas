@@ -2,7 +2,7 @@
 
 A Typescript & React specific full stack monorepo template aimed towards large scale development (but not enterprise level). Heavy focus on good DX, strict architecture, enforced conventions, type safety, testing and easy code sharing between packages.
 
-> Also serves as a personal playground for me to build apps and experiment with new ideas and technologies. Some of the apps and packages may be irrelevant to most users. Feel free to fork and modify/remove to your liking.
+> Also serves as a personal playground and incubation repository for me to build apps and packages and experiment with new ideas and technologies. This means that some of the more specific apps and packages will come and go over time, but the generic low level packages will remain. If a package is irrelevant to you, simply fork and modify/remove to your liking.
 
 ## Conventions
 
