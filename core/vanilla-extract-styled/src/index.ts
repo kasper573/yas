@@ -6,7 +6,7 @@ import type {
   CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement, useMemo, useRef } from "react";
+import { createElement, forwardRef, useMemo, useRef } from "react";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
@@ -26,22 +26,25 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       Style
     >,
   ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style> {
-    function RecipeComponent({
-      className: inlineClassName,
-      style: inlineStyle,
-      sx = emptyObject as Style,
-      as = implementation as unknown as InlineImplementation,
-      asProps: {
-        style: inlineImplementationStyle,
-        ...inlineImplementationProps
-      } = emptyObject as ComponentProps<InlineImplementation>,
-      ...inlineProps
-    }: RecipeComponentProps<
-      Implementation,
-      InlineImplementation,
-      Recipe,
-      Style
-    >) {
+    const RecipeComponent = forwardRef(function RecipeComponent(
+      {
+        className: inlineClassName,
+        style: inlineStyle,
+        sx = emptyObject as Style,
+        as = implementation as unknown as InlineImplementation,
+        asProps: {
+          style: inlineImplementationStyle,
+          ...inlineImplementationProps
+        } = emptyObject as ComponentProps<InlineImplementation>,
+        ...inlineProps
+      }: RecipeComponentProps<
+        Implementation,
+        InlineImplementation,
+        Recipe,
+        Style
+      >,
+      ref,
+    ) {
       const props = { ...options?.defaultProps, ...inlineProps };
       const [variantProps, forwardedProps] = recipe
         ? destructureVariantProps(props, recipe, options?.forwardProps)
@@ -59,8 +62,14 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         ...forwardedProps,
         ...inlineImplementationProps,
         style,
+        ref,
       });
-    }
+    }) as unknown as RecipeComponent<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >;
 
     RecipeComponent.attrs = (
       defaultProps: Partial<
