@@ -7,10 +7,11 @@ import type {
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { createElement, forwardRef, useMemo, useRef } from "react";
+import { shallowEqual } from "@yas/fn";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
-  isEqual: EqualityFn<Style | CSSProperties | undefined> = Object.is,
+  isSXPropEqual: EqualityFn = shallowEqual,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -51,9 +52,13 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         : [emptyObject, props];
 
       const className = clsx(recipe?.(variantProps), inlineClassName);
-      const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
+      const sxMemoized = useCompareMemo(compileStyle, sx, isSXPropEqual);
       const style = useMemo(
-        () => ({ ...sxMemoized, ...inlineStyle, ...inlineImplementationStyle }),
+        () => ({
+          ...sxMemoized,
+          ...inlineStyle,
+          ...inlineImplementationStyle,
+        }),
         [sxMemoized, inlineStyle, inlineImplementationStyle],
       );
 
@@ -108,7 +113,8 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
   };
 }
 
-export type EqualityFn<T> = (a: T, b: T) => boolean;
+type Comparable = Record<string, unknown> | unknown[] | null | undefined;
+export type EqualityFn = <T extends Comparable>(a: T, b: T) => boolean;
 
 const emptyObject = Object.freeze({});
 
@@ -252,14 +258,14 @@ function clsx(...classNames: Array<string | undefined>) {
   return defined.length ? defined.join(" ") : undefined;
 }
 
-function useCompareMemo<Input, Output>(
-  memoize: (input: Input) => Output,
+function useCompareMemo<Input extends Comparable, Output>(
+  create: (input: Input) => Output,
   input: Input,
-  isEqual: EqualityFn<Input>,
+  isEqual: EqualityFn,
 ): Output {
   const ref = useRef<[Input, Output]>();
   if (!ref.current || !isEqual(ref.current[0], input)) {
-    ref.current = [input, memoize(input)];
+    ref.current = [input, create(input)];
   }
   return ref.current[1];
 }

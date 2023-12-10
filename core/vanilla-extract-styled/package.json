@@ -15,6 +15,9 @@
     "test:unit": "vitest",
     "test:types": "vitest typecheck"
   },
+  "dependencies": {
+    "@yas/fn": "workspace:*"
+  },
   "peerDependencies": {
     "@vanilla-extract/recipes": "^0.5.0",
     "@vanilla-extract/vite-plugin": "^3.9.0",
