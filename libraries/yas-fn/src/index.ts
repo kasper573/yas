@@ -1,1 +1,1 @@
-export { equals } from "ramda";
+export { range } from "ramda";

@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react";
+import { range } from "@yas/fn";
 import { useMemo } from "react";
 import { SingleSelectField } from "../fields/SingleSelectField";
 
@@ -31,8 +32,4 @@ export function Pagination({
       {...rest}
     />
   );
-}
-
-function range(start: number, end: number): number[] {
-  return Array.from({ length: end - start + 1 }, (_, i) => i + start);
 }

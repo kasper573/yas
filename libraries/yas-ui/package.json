@@ -24,6 +24,8 @@
     "@radix-ui/react-select": "^2.0.0",
     "@yas/style": "workspace:*",
     "@yas/validate": "workspace:*",
+    "@yas/fn": "workspace:*",
+    "@yas/icons": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-imperative-hook": "workspace:*"
   },
@@ -44,7 +46,6 @@
     "@yas/scripts": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "@yas/icons": "workspace:*",
     "concurrently": "8.0.1",
     "prop-types": "15.8.1",
     "react": "18.2.0",
