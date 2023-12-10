@@ -18,6 +18,7 @@ export const spaces = {
   "#9": 96,
   "#10": 128,
   inherit: "inherit",
+  auto: "auto",
 };
 
 export const palette = {
