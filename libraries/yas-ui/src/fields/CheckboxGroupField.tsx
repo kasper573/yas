@@ -1,6 +1,10 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import type { FieldProps } from "../form/rcf";
-import { BaseField } from "../form/BaseField";
+import {
+  FormControl,
+  FormControlErrors,
+  FormControlLabel,
+} from "../form/FormControl";
 import { CheckboxField } from "./CheckboxField";
 
 export interface CheckboxGroupOption<Value> {
@@ -17,10 +21,16 @@ export function CheckboxGroupField<Value>({
   value: checkedValues = [],
   metrics,
   onChange,
+  errors,
+  name,
+  label = name,
   ...rest
 }: CheckboxGroupFieldProps<Value>) {
+  const id = useId();
   return (
-    <BaseField {...rest}>
+    <FormControl {...rest}>
+      <FormControlLabel htmlFor={id}>{label}</FormControlLabel>
+
       {options.map((option, index) => {
         const metric = metrics?.get(option.value);
         const checked = checkedValues.includes(option.value);
@@ -41,6 +51,8 @@ export function CheckboxGroupField<Value>({
           />
         );
       })}
-    </BaseField>
+
+      <FormControlErrors errors={errors} />
+    </FormControl>
   );
 }
