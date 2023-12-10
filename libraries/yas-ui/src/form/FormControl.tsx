@@ -9,8 +9,19 @@ export type FormControlLabelProps = ComponentProps<typeof Text> & {
   htmlFor?: string;
 };
 
-export function FormControlLabel({ htmlFor, ...props }: FormControlLabelProps) {
-  return <Text as="label" asProps={{ htmlFor }} {...props} />;
+export function FormControlLabel({
+  htmlFor,
+  children,
+  ...props
+}: FormControlLabelProps) {
+  if (children === null || children === undefined) {
+    return null;
+  }
+  return (
+    <Text as="label" asProps={{ htmlFor }} {...props}>
+      {children}
+    </Text>
+  );
 }
 
 export type FormControlErrorsProps = { errors?: unknown[] };
