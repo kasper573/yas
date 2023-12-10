@@ -21,7 +21,7 @@ export const UserForm = createForm((options) =>
           <Email />
           <Password />
           <Age />
-          <Stack direction="row" gap="2" justify="end">
+          <Stack direction="row" gap="2" justify="end" sx={{ ml: "auto" }}>
             <Button color="secondary" type="reset">
               Reset
             </Button>
