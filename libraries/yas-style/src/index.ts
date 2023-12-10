@@ -1,7 +1,7 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "vanilla-extract-styled";
-import { shallowEqual } from "@yas/fn";
+import { shallowEqual } from "shallow-equal";
 import type { Style } from "vanilla-extract-constrained";
 import type {
   ConstrainedStyle,

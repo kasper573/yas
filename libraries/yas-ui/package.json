@@ -24,7 +24,6 @@
     "@radix-ui/react-select": "^2.0.0",
     "@yas/style": "workspace:*",
     "@yas/validate": "workspace:*",
-    "@yas/fn": "workspace:*",
     "@yas/icons": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-imperative-hook": "workspace:*"
