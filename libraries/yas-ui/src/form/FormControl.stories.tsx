@@ -8,7 +8,7 @@ export default {
 } satisfies Meta;
 
 export const FormControlLabel: StoryObj<typeof components.FormControlLabel> = {
-  render: components.FormControlLabel,
+  render: (props) => <components.FormControlLabel {...props} />,
   args: {
     children: "FormControlLabel",
   },
