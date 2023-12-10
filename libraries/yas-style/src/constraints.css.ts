@@ -13,13 +13,9 @@ const overflows = ["visible", "hidden", "scroll"] as const;
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
+  current: "currentColor",
   // We flatten vars to make them compatible with vanilla-extract-constrained
   ...flattened(vars.color),
-};
-
-const spaces = {
-  ...tokens.spaces,
-  inherit: "inherit",
 };
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
@@ -64,17 +60,17 @@ export const resolveStyle = createStyleResolver({
     borderRadius: tokens.radii,
     justifyContent: all(),
     alignItems: all(),
-    padding: spaces,
-    paddingTop: spaces,
-    paddingRight: spaces,
-    paddingBottom: spaces,
-    paddingLeft: spaces,
-    marginTop: spaces,
-    marginRight: spaces,
-    marginBottom: spaces,
-    marginLeft: spaces,
-    margin: spaces,
-    gap: spaces,
+    padding: tokens.spaces,
+    paddingTop: tokens.spaces,
+    paddingRight: tokens.spaces,
+    paddingBottom: tokens.spaces,
+    paddingLeft: tokens.spaces,
+    marginTop: tokens.spaces,
+    marginRight: tokens.spaces,
+    marginBottom: tokens.spaces,
+    marginLeft: tokens.spaces,
+    margin: tokens.spaces,
+    gap: tokens.spaces,
     objectFit: all(),
     width: all(),
     height: all(),
@@ -98,6 +94,7 @@ export const resolveStyle = createStyleResolver({
     backgroundColor: colors,
     backgroundImage: all(),
     borderColor: colors,
+    boxSizing: all(),
 
     // SVG
     cx: all(),
