@@ -6,6 +6,7 @@ import { Stack } from "../layout/Stack";
 import { IconButton } from "../atoms/IconButton";
 import { Text } from "../atoms/Text";
 import { Void } from "../layout/Void";
+import { separator } from "./Pagination.css";
 
 export interface PaginationProps
   extends Omit<ComponentProps<typeof Stack>, "children" | "onChange"> {
@@ -22,7 +23,7 @@ export function Pagination({
   onChange,
   ...rest
 }: PaginationProps) {
-  const [from, to] = useMemo(
+  let [from, to] = useMemo(
     () =>
       clampSpan(
         currentPage - visibleRange,
@@ -32,6 +33,17 @@ export function Pagination({
       ),
     [totalPages, visibleRange, currentPage],
   );
+
+  const isLeftSeparatorVisible = from > 1;
+  if (isLeftSeparatorVisible) {
+    from += 2;
+  }
+
+  const isRightSeparatorVisible = to < totalPages;
+  if (isRightSeparatorVisible) {
+    to -= 2;
+  }
+
   return (
     <Stack direction="row" align="center" gap="1" {...rest}>
       <PageButton
@@ -41,7 +53,7 @@ export function Pagination({
         <ArrowLeftIcon />
       </PageButton>
 
-      {from > 1 && (
+      {isLeftSeparatorVisible ? (
         <>
           <PageButton onClick={() => onChange(1)}>
             <Void axis="both">
@@ -50,7 +62,7 @@ export function Pagination({
           </PageButton>
           <Separator />
         </>
-      )}
+      ) : null}
 
       <PageButtons
         from={from}
@@ -59,7 +71,7 @@ export function Pagination({
         onChange={onChange}
       />
 
-      {to < totalPages && (
+      {isRightSeparatorVisible ? (
         <>
           <Separator />
           <PageButton onClick={() => onChange(totalPages)}>
@@ -68,7 +80,7 @@ export function Pagination({
             </Void>
           </PageButton>
         </>
-      )}
+      ) : null}
 
       <PageButton
         onClick={() => onChange(currentPage + 1)}
@@ -111,7 +123,7 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
 }
 
 const PageButton = styled(IconButton).attrs({ size: "small", variant: "text" });
-const Separator = styled(Text).attrs({ children: "..." });
+const Separator = styled(Text).attrs({ children: "...", className: separator });
 
 function clampSpan(from: number, to: number, min: number, max: number) {
   if (from < min) {
