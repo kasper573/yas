@@ -31,7 +31,7 @@ export function SingleSelectField<Value>({
   value,
   onChange,
   required,
-  emptyOptionText,
+  emptyOptionText = "Select something...",
   ...rest
 }: SingleSelectFieldProps<Value>) {
   const selectedOptionIndex = useMemo(

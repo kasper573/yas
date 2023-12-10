@@ -34,7 +34,7 @@ export function MultiSelectField<Value>({
   value,
   onChange,
   required,
-  emptyOptionText,
+  emptyOptionText = "Select something...",
   selectedOptionsSummary = summarizeOptions,
   ...rest
 }: MultiSelectFieldProps<Value>) {
