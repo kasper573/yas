@@ -85,7 +85,6 @@ function enhanceFieldComponent<
     onBlur,
     ...props
   }: Partial<Props>) {
-    console.log("rendering field", name);
     const store: FormStore<Schema> = useContext(FormContext);
     const value = useSyncIsomorphicStore(
       store.subscribe,
