@@ -11,6 +11,7 @@ export default {
 
 export const Default: StrictStoryObj<typeof SingleSelectField<number>> = {
   args: {
+    label: "SingleSelectField",
     emptyOptionText: "Select something...",
     options: [
       { label: "Option 1", value: 1 },

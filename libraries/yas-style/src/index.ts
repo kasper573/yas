@@ -1,7 +1,7 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "vanilla-extract-styled";
-import { shallowEqual } from "shallow-equal";
+import { shallowEqual } from "@yas/fn";
 import type { Style } from "vanilla-extract-constrained";
 import type {
   ConstrainedStyle,
@@ -13,6 +13,8 @@ import { resolveStyle } from "./constraints.css";
 // Utilities
 export { clsx } from "clsx";
 export { palette } from "./tokens";
+export { createVar } from "@vanilla-extract/css";
+export * from "@vanilla-extract/dynamic";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle) =>

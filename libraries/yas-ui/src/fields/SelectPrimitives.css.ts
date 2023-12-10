@@ -1,8 +1,8 @@
-import { style } from "@yas/style";
+import { globalStyle, recipe, style } from "@yas/style";
 
-export const selectTrigger = style({
+export const trigger = style({
   all: "unset",
-  display: "inline-flex",
+  display: "flex",
   alignItems: "center",
   justifyContent: "center",
   borderRadius: "#1",
@@ -18,26 +18,34 @@ export const selectTrigger = style({
   boxShadow: "#1",
 });
 
-export const selectTriggerHover = style({
+export const triggerHover = style({
   backgroundColor: "surface.main",
 });
 
-export const selectTriggerFocus = style({
+export const triggerFocus = style({
   borderColor: {
     default: "divider",
     focus: "primary.base.main",
   },
 });
 
-export const selectTriggerPlaceholder = style({
+export const triggerPlaceholder = style({
   color: "primary.base.dark",
 });
 
-export const selectIcon = style({
+export const triggerIcon = style({
   color: "primary.base.light",
 });
 
-export const selectContent = style({
+export const label = style({
+  py: 0,
+  px: "#5",
+  fontSize: "#1",
+  lineHeight: "2em",
+  color: "surface.contrast",
+});
+
+export const content = style({
   fontFamily: "default",
   overflow: "hidden",
   backgroundColor: "surface.light",
@@ -45,20 +53,20 @@ export const selectContent = style({
   boxShadow: "#1",
 });
 
-export const selectViewport = style({
+export const viewport = style({
   padding: "#1",
 });
 
-export const selectItem = style({
+export const item = style({
   all: "unset",
   fontSize: "#2",
   lineHeight: "1",
   color: {
     default: "surface.contrast",
-    hover: "primary.contrast.main",
+    hoverOrFocus: "primary.contrast.main",
   },
   background: {
-    hover: "primary.base.light",
+    hoverOrFocus: "primary.base.light",
   },
   borderRadius: "#1",
   display: "flex",
@@ -71,35 +79,43 @@ export const selectItem = style({
   userSelect: "none",
 });
 
-export const selectItemDisabled = style({
+export const itemDisabled = style({
   color: "info.dark",
   pointerEvents: "none",
 });
 
-export const selectItemHighlighted = style({
+export const itemHighlighted = style({
   outline: "none",
   backgroundColor: "primary.base.light",
   color: "primary.contrast.main",
 });
 
-export const selectLabel = style({
-  py: 0,
-  px: "#5",
-  fontSize: "#1",
-  lineHeight: "2em",
-  color: "surface.contrast",
+export const itemSelectedIndicator = recipe({
+  base: {
+    position: "absolute",
+    left: "0",
+    width: "25px",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0,
+  },
+  variants: {
+    selected: {
+      true: {
+        opacity: 1,
+      },
+    },
+  },
 });
 
-export const selectItemIndicator = style({
-  position: "absolute",
-  left: "0",
-  width: "25px",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-});
+// Hook into radix-ui's internal state for selected items
+globalStyle(
+  `${item}[data-state="checked"] ${itemSelectedIndicator.classNames.base}`,
+  { opacity: 1 },
+);
 
-export const selectScrollButton = style({
+export const scrollButton = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

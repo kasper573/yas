@@ -7,5 +7,6 @@ globalStyle("html, body, #root", {
 
 export const app = style({
   background: "surface.main",
+  color: "surface.contrast",
   minHeight: "100vh",
 });

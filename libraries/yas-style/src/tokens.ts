@@ -7,6 +7,7 @@ export const fonts = {
 export const spaces = {
   0: 0,
   "#1": 4,
+  "#1.5": 6,
   "#2": 8,
   "#3": 12,
   "#4": 16,
@@ -16,6 +17,8 @@ export const spaces = {
   "#8": 64,
   "#9": 96,
   "#10": 128,
+  inherit: "inherit",
+  auto: "auto",
 };
 
 export const palette = {
@@ -120,6 +123,8 @@ export const fontSizes = {
   "#8": 64,
   "#9": 94,
   "#10": 128,
+  inherit: "inherit",
+  "100%": "100%",
 };
 
 export const borderSizes = {

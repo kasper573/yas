@@ -19,15 +19,13 @@ export function BasicFormLayout({
       <Stack gap="2">
         <Stack direction="row" align="center" gap="2">
           <Text variant="h2">{title}</Text>
-          <Stack direction="row" gap="2" align="center">
-            {isLoading ? <CircularProgress /> : null}
-            <Button variant="outlined" onClick={reset}>
-              Reset
-            </Button>
-            <Button disabled={isLoading} type="submit" variant="contained">
-              Submit
-            </Button>
-          </Stack>
+          {isLoading ? <CircularProgress /> : null}
+          <Button variant="outlined" onClick={reset}>
+            Reset
+          </Button>
+          <Button disabled={isLoading} type="submit" variant="contained">
+            Submit
+          </Button>
         </Stack>
         <Stack direction="column" gap="2">
           {Object.values(fields).map((Component, index) => (

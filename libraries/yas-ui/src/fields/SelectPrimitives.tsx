@@ -16,50 +16,54 @@ export const SelectDivider = styled(Select.Separator).attrs({
 });
 
 export const SelectLabel = styled(Select.Label).attrs({
-  className: styles.selectLabel,
+  className: styles.label,
 });
 
 export const SelectViewport = styled(Select.Viewport).attrs({
-  className: styles.selectViewport,
+  className: styles.viewport,
 });
 
 export const SelectContent = styled(Select.Content).attrs({
-  className: styles.selectContent,
+  className: styles.content,
 });
 
 export const SelectScrollDownButton = styled(Select.ScrollDownButton).attrs({
-  className: styles.selectScrollButton,
+  className: styles.scrollButton,
   children: <ChevronUpIcon />,
 });
 
 export const SelectScrollUpButton = styled(Select.ScrollUpButton).attrs({
-  className: styles.selectScrollButton,
+  className: styles.scrollButton,
   children: <ChevronDownIcon />,
 });
 
 export const SelectTrigger = styled(Select.Trigger).attrs({
-  className: styles.selectTrigger,
+  className: styles.trigger,
 });
 
-export const SelectIcon = styled(Select.Icon).attrs({
-  className: styles.selectIcon,
+export const SelectTriggerIcon = styled(Select.Icon).attrs({
+  className: styles.triggerIcon,
   children: <ChevronDownIcon />,
 });
 
 export const SelectItem = forwardRef<
   HTMLDivElement,
-  ComponentProps<typeof Select.Item>
->(function SelectItem({ children, className, ...props }, ref) {
+  ComponentProps<typeof Select.Item> & { selected?: boolean }
+>(function SelectItem({ children, className, selected, ...props }, ref) {
+  // Radix select doesn't support multiselect,
+  // so we have to force enable aria attributes to support multiple selected items
+  let focedAriaProps: undefined | Record<string, unknown> = undefined;
+  if (selected !== undefined) {
+    focedAriaProps = {
+      "data-selected": selected,
+      "data-state": selected ? "checked" : "unchecked",
+    };
+  }
+
   return (
-    <Select.Item
-      className={clsx(styles.selectItem, className)}
-      {...props}
-      ref={ref}
-    >
+    <Select.Item className={clsx(styles.item, className)} {...props} ref={ref}>
       <Select.ItemText>{children}</Select.ItemText>
-      <Select.ItemIndicator className={styles.selectItemIndicator}>
-        <CheckIcon />
-      </Select.ItemIndicator>
+      <CheckIcon className={styles.itemSelectedIndicator({ selected })} />
     </Select.Item>
   );
 });

@@ -2,39 +2,40 @@
 sidebar_position: 1
 ---
 
-import { UserForm } from "./index";
+import CodeBlock from "@theme/CodeBlock";
 import { Split } from "../../src/components/Split";
-import codeElements from "!!shiki-twoslash-loader!./index";
+import * as component from "./index";
+import * as code from "!!slice-loader!./index";
 
 # Overview
 
-> Heads up! The React Composable Form library is in beta and is subject to breaking changes,
+> Heads up! React Composable Form is in beta and is subject to breaking changes,
 > and likewise this documentation is under construction and will have missing content and contain inaccuracies.
 
 ## Motivation
 
-Most form libraries for React does one thing really well: state management.
-However, at scale, that is often not enough.
+Most form libraries for React does one thing really well: state management. However, that is often not enough.
 
-Things like reusing forms with a different layout, reusing forms with a subset of its fields, enforcing conventions
-like consistent use of components per field data type, or allowing shared props for all fields (i.e. a size option),
-often remains entirely up to the developer to solve on their own.
+Even with form state management handled for you, you usually end up having to solve things like this on your own:
 
-These things are hard to get right and require a lot of boilerplate code, especially when you want it to be typesafe.
+- Reusing forms with a different layout
+- Reusing forms with a subset or superset of fields
+- Consistently using specific field components to represent certain data types
+- Enforcing a convention of props that can be used in all field components and layouts (i.e. a size option)
 
-That's why React Composable Form has first class support for not only state management,
-but also composition and conventions.
+These type of things are really hard to get right and can easily end up with a lot of complex boilerplate code, especially when you want it to be typesafe.
+
+React Composable Form aims to solve these problems by providing a composable, typesafe, configuration first form library.
 
 ## Quick Start
 
-React Composable Form is a _configuration first_ form library.
-You create your forms using a factory that returns a React component.
+You create your forms using a factory that returns a `React` component.
 
-Here's a comprehensive example to give you an idea of what it looks like:
+Here's a comprehensive example to give you an idea of its capabilities, and what it looks like:
 
-> See the [high level concepts](/docs/category/concepts) for a more detailed breakdown.
+> See the [guide](/docs/category/guide) for a detailed walkthrough of the library.
 
 <Split names={["Code", "Form"]}>
-  {codeElements}
-  <UserForm />
+  <CodeBlock language="tsx">{code.UserForm}</CodeBlock>
+  <component.UserForm />
 </Split>

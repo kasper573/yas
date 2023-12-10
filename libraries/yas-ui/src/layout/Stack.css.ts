@@ -6,17 +6,22 @@ export const stackRecipe = recipe({
   },
   variants: {
     direction: {
-      row: {
-        flexDirection: "row",
-      },
-      column: {
-        flexDirection: "column",
-      },
+      row: {},
+      column: {},
+    },
+    reverse: {
+      true: {},
+      false: {},
     },
     align: {
-      start: {},
-      center: {},
-      end: {},
+      start: { alignItems: "start" },
+      center: { alignItems: "center" },
+      end: { alignItems: "end" },
+    },
+    justify: {
+      start: { justifyContent: "start" },
+      center: { justifyContent: "center" },
+      end: { justifyContent: "end" },
     },
     gap: {
       0: { gap: 0 },
@@ -27,31 +32,26 @@ export const stackRecipe = recipe({
   },
   compoundVariants: [
     {
-      variants: { direction: "row", align: "start" },
-      style: { alignItems: "start" },
+      variants: { direction: "row", reverse: true },
+      style: { flexDirection: "row-reverse" },
     },
     {
-      variants: { direction: "row", align: "center" },
-      style: { alignItems: "center" },
+      variants: { direction: "column", reverse: true },
+      style: { flexDirection: "column-reverse" },
     },
     {
-      variants: { direction: "row", align: "end" },
-      style: { alignItems: "end" },
+      variants: { direction: "row", reverse: false },
+      style: { flexDirection: "row" },
     },
     {
-      variants: { direction: "column", align: "start" },
-      style: { justifyContent: "start" },
-    },
-    {
-      variants: { direction: "column", align: "center" },
-      style: { justifyContent: "center" },
-    },
-    {
-      variants: { direction: "column", align: "end" },
-      style: { justifyContent: "end" },
+      variants: { direction: "column", reverse: false },
+      style: { flexDirection: "column" },
     },
   ],
   defaultVariants: {
+    align: "start",
+    justify: "start",
     direction: "column",
+    reverse: false,
   },
 });

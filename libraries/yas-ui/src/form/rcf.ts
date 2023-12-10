@@ -7,7 +7,7 @@ interface SharedFieldProps {
   isLoading?: boolean;
   label?: ReactNode;
   info?: ReactNode;
-  metrics?: Map<unknown, number>;
+  metrics?: Record<PropertyKey, number>;
   sx?: ConstrainedStyleWithoutConditions;
 }
 

@@ -6,11 +6,11 @@ import type {
   CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement, useMemo, useRef } from "react";
+import { createElement, forwardRef, useMemo, useRef } from "react";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
-  isEqual: EqualityFn<Style | CSSProperties | undefined> = Object.is,
+  isSXPropEqual: EqualityFn = Object.is,
 ): StyledComponentFactory<Style> {
   return function createRecipeComponent<
     Implementation extends ElementType,
@@ -26,31 +26,38 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       Style
     >,
   ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style> {
-    function RecipeComponent({
-      className: inlineClassName,
-      style: inlineStyle,
-      sx = emptyObject as Style,
-      as = implementation as unknown as InlineImplementation,
-      asProps: {
-        style: inlineImplementationStyle,
-        ...inlineImplementationProps
-      } = emptyObject as ComponentProps<InlineImplementation>,
-      ...inlineProps
-    }: RecipeComponentProps<
-      Implementation,
-      InlineImplementation,
-      Recipe,
-      Style
-    >) {
+    const RecipeComponent = forwardRef(function RecipeComponent(
+      {
+        className: inlineClassName,
+        style: inlineStyle,
+        sx = emptyObject as Style,
+        as = implementation as unknown as InlineImplementation,
+        asProps: {
+          style: inlineImplementationStyle,
+          ...inlineImplementationProps
+        } = emptyObject as ComponentProps<InlineImplementation>,
+        ...inlineProps
+      }: RecipeComponentProps<
+        Implementation,
+        InlineImplementation,
+        Recipe,
+        Style
+      >,
+      ref,
+    ) {
       const props = { ...options?.defaultProps, ...inlineProps };
       const [variantProps, forwardedProps] = recipe
         ? destructureVariantProps(props, recipe, options?.forwardProps)
         : [emptyObject, props];
 
       const className = clsx(recipe?.(variantProps), inlineClassName);
-      const sxMemoized = useCompareMemo(compileStyle, sx, isEqual);
+      const sxMemoized = useCompareMemo(compileStyle, sx, isSXPropEqual);
       const style = useMemo(
-        () => ({ ...sxMemoized, ...inlineStyle, ...inlineImplementationStyle }),
+        () => ({
+          ...sxMemoized,
+          ...inlineStyle,
+          ...inlineImplementationStyle,
+        }),
         [sxMemoized, inlineStyle, inlineImplementationStyle],
       );
 
@@ -59,8 +66,14 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         ...forwardedProps,
         ...inlineImplementationProps,
         style,
+        ref,
       });
-    }
+    }) as unknown as RecipeComponent<
+      Implementation,
+      InlineImplementation,
+      Recipe,
+      Style
+    >;
 
     RecipeComponent.attrs = (
       defaultProps: Partial<
@@ -99,7 +112,8 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
   };
 }
 
-export type EqualityFn<T> = (a: T, b: T) => boolean;
+type Comparable = Record<string, unknown> | unknown[] | null | undefined;
+export type EqualityFn = <T extends Comparable>(a: T, b: T) => boolean;
 
 const emptyObject = Object.freeze({});
 
@@ -243,14 +257,14 @@ function clsx(...classNames: Array<string | undefined>) {
   return defined.length ? defined.join(" ") : undefined;
 }
 
-function useCompareMemo<Input, Output>(
-  memoize: (input: Input) => Output,
+function useCompareMemo<Input extends Comparable, Output>(
+  create: (input: Input) => Output,
   input: Input,
-  isEqual: EqualityFn<Input>,
+  isEqual: EqualityFn,
 ): Output {
   const ref = useRef<[Input, Output]>();
   if (!ref.current || !isEqual(ref.current[0], input)) {
-    ref.current = [input, memoize(input)];
+    ref.current = [input, create(input)];
   }
   return ref.current[1];
 }

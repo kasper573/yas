@@ -14,7 +14,7 @@ export const Default: StrictStoryObj<typeof RangeField> = {
   args: {
     min: 0,
     max: 10,
-    label: "range",
+    label: "RangeField",
   },
   render(props) {
     const [value, setValue] = useState<Range>();
