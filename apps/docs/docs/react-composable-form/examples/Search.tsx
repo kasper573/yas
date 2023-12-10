@@ -105,7 +105,17 @@ function SearchPage() {
 }
 
 export default function SearchExample() {
-  const queryClient = useMemo(() => new QueryClient(), []);
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+    [],
+  );
   return (
     <QueryClientProvider client={queryClient}>
       <SearchPage />
