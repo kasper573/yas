@@ -13,6 +13,8 @@ import { resolveStyle } from "./constraints.css";
 // Utilities
 export { clsx } from "clsx";
 export { palette } from "./tokens";
+export { createVar } from "@vanilla-extract/css";
+export * from "@vanilla-extract/dynamic";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle) =>
