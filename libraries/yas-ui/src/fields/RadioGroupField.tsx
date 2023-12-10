@@ -33,7 +33,6 @@ export function RadioGroupField<Value>({
   ...rest
 }: RadioGroupFieldProps<Value>) {
   const fieldsetId = useId();
-  const groupId = useId();
   const showClearButton = value !== undefined && !required;
   return (
     <FormControl {...rest}>
@@ -53,19 +52,21 @@ export function RadioGroupField<Value>({
 
       <Stack as="fieldset" id={fieldsetId} className={styles.fieldset}>
         {options.map((option, index) => {
+          const radioId = `${fieldsetId}-${index}`;
           const metric = metrics?.[String(option.value)];
           const checked = option.value === value;
           const disabled = metric === 0 && !checked;
           return (
             <Stack key={index} direction="row" reverse align="center" gap="2">
-              <FormControlLabel>
+              <FormControlLabel htmlFor={radioId}>
                 {option.label}
                 {metric !== undefined && ` (${metric})`}
               </FormControlLabel>
               <input
                 type="radio"
                 className={styles.radio}
-                id={groupId}
+                name={fieldsetId}
+                id={radioId}
                 disabled={disabled}
                 checked={checked}
                 onChange={(e) => {
