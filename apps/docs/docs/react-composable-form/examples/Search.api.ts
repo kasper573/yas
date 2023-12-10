@@ -92,12 +92,14 @@ async function generateMetrics(filter?: Filter) {
     Math.max(0, value * (scale + 1) - filterCount * 2);
 
   return {
-    Price: new Map([[0, newMetric(5, 2)]]),
-    Discount: new Map(discountType.options.map((d, i) => [d, newMetric(3, i)])),
-    Manufacturer: new Map(
+    Price: Object.fromEntries([[0, newMetric(5, 2)]]),
+    Discount: Object.fromEntries(
+      discountType.options.map((d, i) => [d, newMetric(3, i)]),
+    ),
+    Manufacturer: Object.fromEntries(
       (await fetchManufacturers()).map((m, i) => [m.id, newMetric(6, i)]),
     ),
-    Resolution: new Map(
+    Resolution: Object.fromEntries(
       (await fetchResolutions()).map((r, i) => [r.id, newMetric(9, i)]),
     ),
   } satisfies SearchResultMetrics;
@@ -114,7 +116,10 @@ function size(value: unknown) {
 }
 
 export type SearchResultMetrics = Record<string, Metrics>;
-export type Metrics<Key = unknown> = Map<Key, number>;
+export type Metrics<Key extends PropertyKey = PropertyKey> = Record<
+  Key,
+  number
+>;
 
 export function paginate(
   entries: unknown[],

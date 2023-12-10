@@ -33,7 +33,7 @@ export function CheckboxGroupField<Value>({
       <FormControlLabel htmlFor={id}>{label}</FormControlLabel>
 
       {options.map((option, index) => {
-        const metric = metrics?.get(option.value);
+        const metric = metrics?.[String(option.value)];
         const checked = checkedValues.includes(option.value);
         const disabled = metric === 0 && !checked;
         return (

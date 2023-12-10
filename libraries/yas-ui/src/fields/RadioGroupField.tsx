@@ -53,7 +53,7 @@ export function RadioGroupField<Value>({
 
       <Stack as="fieldset" id={fieldsetId} className={styles.fieldset}>
         {options.map((option, index) => {
-          const metric = metrics?.get(option.value);
+          const metric = metrics?.[String(option.value)];
           const checked = option.value === value;
           const disabled = metric === 0 && !checked;
           return (
