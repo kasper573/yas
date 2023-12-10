@@ -17,7 +17,7 @@ export function ExampleContent({
   children?: ReactNode | ExampleContentRenderer;
 }) {
   const [validateOn, setValidateOn] = useState<FormValidationMode[]>([
-    "blur",
+    "change",
     "submit",
   ]);
 
