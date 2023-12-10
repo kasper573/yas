@@ -34,16 +34,15 @@ export function ExampleContent({
   return (
     <Stack direction="row" gap="3">
       <Box style={{ flex: 1 }}>{normalizeContent(children)}</Box>
-      <Box style={{ width: 250 }}>
+      <Stack gap="3" style={{ width: 250 }}>
         <MultiSelectField
-          sx={{ mb: "#4" }}
           name="Validate on"
           value={validateOn}
           options={formValidationModes.map((x) => ({ label: x, value: x }))}
           onChange={setValidateOn}
         />
         {normalizeContent(menu)}
-      </Box>
+      </Stack>
     </Stack>
   );
 }
