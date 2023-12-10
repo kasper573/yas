@@ -6,12 +6,12 @@ export const stackRecipe = recipe({
   },
   variants: {
     direction: {
-      row: {
-        flexDirection: "row",
-      },
-      column: {
-        flexDirection: "column",
-      },
+      row: {},
+      column: {},
+    },
+    reverse: {
+      true: {},
+      false: {},
     },
     align: {
       start: { alignItems: "start" },
@@ -30,7 +30,28 @@ export const stackRecipe = recipe({
       3: { gap: "#3" },
     },
   },
+  compoundVariants: [
+    {
+      variants: { direction: "row", reverse: true },
+      style: { flexDirection: "row-reverse" },
+    },
+    {
+      variants: { direction: "column", reverse: true },
+      style: { flexDirection: "column-reverse" },
+    },
+    {
+      variants: { direction: "row", reverse: false },
+      style: { flexDirection: "row" },
+    },
+    {
+      variants: { direction: "column", reverse: false },
+      style: { flexDirection: "column" },
+    },
+  ],
   defaultVariants: {
+    align: "start",
+    justify: "start",
     direction: "column",
+    reverse: false,
   },
 });
