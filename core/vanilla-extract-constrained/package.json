@@ -21,12 +21,12 @@
     "test:watch": "pnpm run test --ui"
   },
   "peerDependencies": {
-    "@vanilla-extract/vite-plugin": "^3.9.0"
+    "@vanilla-extract/vite-plugin": "3.9.2"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
     "@types/react": "18.2.37",
-    "@vanilla-extract/css": "1.13.0",
+    "@vanilla-extract/css": "1.14.0",
     "@yas/build": "workspace:*",
     "@yas/result": "workspace:*",
     "@yas/tsconfig": "workspace:*",
