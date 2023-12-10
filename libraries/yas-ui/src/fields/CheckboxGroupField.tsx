@@ -40,7 +40,12 @@ export function CheckboxGroupField<Value>({
           <CheckboxField
             key={index}
             disabled={disabled}
-            label={option.label}
+            label={
+              <>
+                {option.label}
+                {metric !== undefined && ` (${metric})`}
+              </>
+            }
             value={checked}
             onChange={(newChecked) =>
               onChange?.(

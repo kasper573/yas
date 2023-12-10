@@ -58,7 +58,10 @@ export function RadioGroupField<Value>({
           const disabled = metric === 0 && !checked;
           return (
             <Stack key={index} direction="row" reverse align="center" gap="2">
-              <FormControlLabel>{option.label}</FormControlLabel>
+              <FormControlLabel>
+                {option.label}
+                {metric !== undefined && ` (${metric})`}
+              </FormControlLabel>
               <input
                 type="radio"
                 className={styles.radio}
