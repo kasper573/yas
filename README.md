@@ -1,8 +1,8 @@
 # Yet Another Stack &middot; [![status](https://github.com/ksandin/yas/actions/workflows/ci.yml/badge.svg)](https://github.com/ksandin/yas/actions)
 
-My personal stack of apps and libraries.
+A Typescript & React specific full stack monorepo template aimed towards large scale development (but not enterprise level). Heavy focus on good DX, strict architecture, enforced conventions, type safety, testing and easy code sharing between packages.
 
-Also serves as monorepo template with focus on strict conventions, type safety, testing and easy code sharing between packages.
+> Also serves as a personal playground for me to build apps and experiment with new ideas and technologies. Some of the apps and packages may be irrelevant to most users. Feel free to fork and modify/remove to your liking.
 
 ## Conventions
 
