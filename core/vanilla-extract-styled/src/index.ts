@@ -6,7 +6,7 @@ import type {
   CSSProperties,
 } from "react";
 import type { RuntimeFn } from "@vanilla-extract/recipes";
-import { createElement, forwardRef, useMemo, useRef } from "react";
+import { createElement, forwardRef, useRef } from "react";
 
 export function createStyledFactory<Style extends Record<string, unknown>>(
   compileStyle: StyleCompiler<Style> = () => undefined,
@@ -28,14 +28,9 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
   ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style> {
     const RecipeComponent = forwardRef(function RecipeComponent(
       {
-        className: inlineClassName,
-        style: inlineStyle,
         sx = emptyObject as Style,
         as = implementation as unknown as InlineImplementation,
-        asProps: {
-          style: inlineImplementationStyle,
-          ...inlineImplementationProps
-        } = emptyObject as ComponentProps<InlineImplementation>,
+        asProps = emptyObject as ComponentProps<InlineImplementation>,
         ...inlineProps
       }: RecipeComponentProps<
         Implementation,
@@ -45,29 +40,29 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
       >,
       ref,
     ) {
-      const props = { ...options?.defaultProps, ...inlineProps };
-      const [variantProps, forwardedProps] = recipe
-        ? destructureVariantProps(props, recipe, options?.forwardProps)
-        : [emptyObject, props];
-
-      const className = clsx(recipe?.(variantProps), inlineClassName);
-      const sxMemoized = useCompareMemo(compileStyle, sx, isSXPropEqual);
-      const style = useMemo(
-        () => ({
-          ...sxMemoized,
-          ...inlineStyle,
-          ...inlineImplementationStyle,
-        }),
-        [sxMemoized, inlineStyle, inlineImplementationStyle],
+      const implementationProps = mergeElementProps(
+        options?.defaultProps,
+        inlineProps,
       );
 
-      return createElement(as, {
-        className,
-        ...forwardedProps,
-        ...inlineImplementationProps,
-        style,
-        ref,
-      });
+      const [variantProps, forwardedProps] = recipe
+        ? destructureVariantProps(
+            implementationProps,
+            recipe,
+            options?.forwardProps,
+          )
+        : [emptyObject, implementationProps];
+
+      const className = recipe?.(variantProps);
+      const style = useCompareMemo(compileStyle, sx, isSXPropEqual);
+
+      const finalProps = [
+        { className, style, ref },
+        forwardedProps,
+        asProps,
+      ].reduce(mergeElementProps);
+
+      return createElement(as, finalProps);
     }) as unknown as RecipeComponent<
       Implementation,
       InlineImplementation,
@@ -267,4 +262,25 @@ function useCompareMemo<Input extends Comparable, Output>(
     ref.current = [input, create(input)];
   }
   return ref.current[1];
+}
+
+type ElementPropsLike = {
+  className?: string;
+  style?: CSSProperties;
+  [key: string]: unknown;
+};
+
+function mergeElementProps<
+  Left extends ElementPropsLike,
+  Right extends ElementPropsLike,
+>(a?: Left, b?: Right): Left & Right {
+  if (!a || !b) {
+    return (a ?? b) as Left & Right;
+  }
+  return {
+    ...a,
+    ...b,
+    className: clsx(a.className, b.className),
+    style: { ...a.style, ...b.style },
+  };
 }

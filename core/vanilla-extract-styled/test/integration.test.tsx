@@ -175,6 +175,24 @@ function testComponent(
     expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "other" } }));
   });
 
+  it("embedded style via .attrs()", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component).attrs({ style: { width: 24 } });
+    const { container } = render(<Component />);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { style: "width: 24px;" } }),
+    );
+  });
+
+  it("embedded style via .attrs() merges with inline style", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component).attrs({ style: { width: 24 } });
+    const { container } = render(<Component style={{ height: 12 }} />);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { style: "width: 24px; height: 12px;" } }),
+    );
+  });
+
   it("combination of everything", () => {
     const styled = createStyledFactory((style: CSSProperties) => style);
     const Component = styled(component, recipeWithVariants).attrs({
@@ -197,9 +215,9 @@ function testComponent(
       toHtml({
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y foo`,
+          style: "background: red; color: blue;",
           "data-foo": "bar",
           role: "alert",
-          style: "background: red; color: blue;",
         },
         content: "Hello",
       }),
