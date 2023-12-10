@@ -1,5 +1,4 @@
-import type { ComponentProps } from "react";
-import { range } from "@yas/fn";
+import type { ComponentProps, ReactNode } from "react";
 import { useMemo } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@yas/icons";
 import { styled } from "@yas/style";
@@ -23,15 +22,13 @@ export function Pagination({
   onChange,
   ...rest
 }: PaginationProps) {
-  const options = useMemo(
+  const [from, to] = useMemo(
     () =>
-      range(
-        ...clampSpan(
-          currentPage - visibleRange,
-          currentPage + visibleRange,
-          1,
-          totalPages || 1,
-        ),
+      clampSpan(
+        currentPage - visibleRange,
+        currentPage + visibleRange,
+        1,
+        totalPages || 1,
       ),
     [totalPages, visibleRange, currentPage],
   );
@@ -44,7 +41,7 @@ export function Pagination({
         <ArrowLeftIcon />
       </PageButton>
 
-      {options[0] > 1 && (
+      {from > 1 && (
         <>
           <PageButton onClick={() => onChange(1)}>
             <Void axis="both">
@@ -56,12 +53,13 @@ export function Pagination({
       )}
 
       <PageButtons
-        pages={options}
+        from={from}
+        to={to}
         currentPage={currentPage}
         onChange={onChange}
       />
 
-      {options[options.length - 1] < totalPages && (
+      {to < totalPages && (
         <>
           <Separator />
           <PageButton onClick={() => onChange(totalPages)}>
@@ -83,15 +81,18 @@ export function Pagination({
 }
 
 interface PageButtonsProps {
-  pages: number[];
+  from: number;
+  to: number;
   currentPage: number;
   onChange: (newPage: number) => void;
 }
 
-function PageButtons({ pages, currentPage, onChange }: PageButtonsProps) {
-  return (
-    <>
-      {pages.map((page) => (
+function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
+  let output: ReactNode = null;
+  for (let page = from; page <= to; page++) {
+    output = (
+      <>
+        {output}
         <PageButton
           key={page}
           color="primary"
@@ -102,9 +103,11 @@ function PageButtons({ pages, currentPage, onChange }: PageButtonsProps) {
             <Text variant="caption">{page}</Text>
           </Void>
         </PageButton>
-      ))}
-    </>
-  );
+      </>
+    );
+  }
+
+  return output;
 }
 
 const PageButton = styled(IconButton).attrs({ size: "small", variant: "text" });
