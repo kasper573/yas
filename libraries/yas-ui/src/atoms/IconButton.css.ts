@@ -7,6 +7,12 @@ const size = (value: number) => ({
   maxWidth: value,
 });
 
+export const sizes = {
+  small: 24,
+  medium: 32,
+  large: 48,
+};
+
 export const iconButtonRecipe = recipe({
   base: {
     display: "inline-flex",
@@ -29,9 +35,9 @@ export const iconButtonRecipe = recipe({
   },
   variants: {
     size: {
-      small: size(24),
-      medium: size(32),
-      large: size(48),
+      small: size(sizes.small),
+      medium: size(sizes.medium),
+      large: size(sizes.large),
     },
     color: {
       primary: {},

@@ -1,5 +1,4 @@
-import type { ComponentProps } from "react";
-import { range } from "@yas/fn";
+import type { ComponentProps, ReactNode } from "react";
 import { useMemo } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@yas/icons";
 import { styled } from "@yas/style";
@@ -7,6 +6,7 @@ import { Stack } from "../layout/Stack";
 import { IconButton } from "../atoms/IconButton";
 import { Text } from "../atoms/Text";
 import { Void } from "../layout/Void";
+import { separator } from "./Pagination.css";
 
 export interface PaginationProps
   extends Omit<ComponentProps<typeof Stack>, "children" | "onChange"> {
@@ -23,18 +23,27 @@ export function Pagination({
   onChange,
   ...rest
 }: PaginationProps) {
-  const options = useMemo(
+  let [from, to] = useMemo(
     () =>
-      range(
-        ...clampSpan(
-          currentPage - visibleRange,
-          currentPage + visibleRange,
-          1,
-          totalPages || 1,
-        ),
+      clampSpan(
+        currentPage - visibleRange,
+        currentPage + visibleRange,
+        1,
+        totalPages || 1,
       ),
     [totalPages, visibleRange, currentPage],
   );
+
+  const isLeftSeparatorVisible = from > 1;
+  if (isLeftSeparatorVisible) {
+    from += 2;
+  }
+
+  const isRightSeparatorVisible = to < totalPages;
+  if (isRightSeparatorVisible) {
+    to -= 2;
+  }
+
   return (
     <Stack direction="row" align="center" gap="1" {...rest}>
       <PageButton
@@ -44,7 +53,7 @@ export function Pagination({
         <ArrowLeftIcon />
       </PageButton>
 
-      {options[0] > 1 && (
+      {isLeftSeparatorVisible ? (
         <>
           <PageButton onClick={() => onChange(1)}>
             <Void axis="both">
@@ -53,15 +62,16 @@ export function Pagination({
           </PageButton>
           <Separator />
         </>
-      )}
+      ) : null}
 
       <PageButtons
-        pages={options}
+        from={from}
+        to={to}
         currentPage={currentPage}
         onChange={onChange}
       />
 
-      {options[options.length - 1] < totalPages && (
+      {isRightSeparatorVisible ? (
         <>
           <Separator />
           <PageButton onClick={() => onChange(totalPages)}>
@@ -70,7 +80,7 @@ export function Pagination({
             </Void>
           </PageButton>
         </>
-      )}
+      ) : null}
 
       <PageButton
         onClick={() => onChange(currentPage + 1)}
@@ -83,15 +93,18 @@ export function Pagination({
 }
 
 interface PageButtonsProps {
-  pages: number[];
+  from: number;
+  to: number;
   currentPage: number;
   onChange: (newPage: number) => void;
 }
 
-function PageButtons({ pages, currentPage, onChange }: PageButtonsProps) {
-  return (
-    <>
-      {pages.map((page) => (
+function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
+  let output: ReactNode = null;
+  for (let page = from; page <= to; page++) {
+    output = (
+      <>
+        {output}
         <PageButton
           key={page}
           color="primary"
@@ -102,13 +115,15 @@ function PageButtons({ pages, currentPage, onChange }: PageButtonsProps) {
             <Text variant="caption">{page}</Text>
           </Void>
         </PageButton>
-      ))}
-    </>
-  );
+      </>
+    );
+  }
+
+  return output;
 }
 
 const PageButton = styled(IconButton).attrs({ size: "small", variant: "text" });
-const Separator = styled(Text).attrs({ children: "..." });
+const Separator = styled(Text).attrs({ children: "...", className: separator });
 
 function clampSpan(from: number, to: number, min: number, max: number) {
   if (from < min) {
