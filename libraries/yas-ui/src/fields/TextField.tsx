@@ -28,7 +28,8 @@ export function TextField({
   inputProps,
   fullWidth,
   className,
-  label,
+  name,
+  label = name,
   errors,
   ...rest
 }: TextFieldProps) {
