@@ -40,10 +40,15 @@ The following scripts are only available in the root of the repository and will 
 
 ## Packages
 
-For `YAS` specific packages (i.e. encapsulations, shared config, etc), the following rules apply:
+Packages should follow these naming conventions:
 
-- Folder names must have `yas-` prefix
+- Package folder names must have `yas-` prefix
 - package.json name must have `@yas/` prefix
+
+Exceptions apply:
+
+- 3rd party packages that must follow a different naming convention (i.e. `eslint-*`).
+- Packages that are being incubated and intended to eventually be extracted into their own repository can be named whatever they're supposed to be named in the future.
 
 ### Package layers
 
