@@ -45,6 +45,7 @@ export const styled = createStyledFactory(
 
 export const recipe = createRecipeFactory(style);
 
+export type { RecipeVariants } from "vanilla-extract-recipe-factory";
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
 
 // Non-constrained escape hatches
