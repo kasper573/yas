@@ -4,7 +4,7 @@ Abstract utility for creating typesafe styled [React](https://reactjs.org/) comp
 
 ## Usage
 
-Use the provided factory to create a `styled`` function that you will use to create react components.
+Use the provided factory to create a `styled` function that you will use to create react components.
 
 > (Optional) Provide an sx compiler if you want to enable the `sx` prop.
 
