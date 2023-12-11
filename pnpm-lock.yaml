@@ -279,6 +279,30 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
 
+  core/react-styled-factory:
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
+      '@vanilla-extract/recipes':
+        specifier: 0.5.1
+        version: 0.5.1(@vanilla-extract/css@1.14.0)
+      '@vanilla-extract/vite-plugin':
+        specifier: 3.9.2
+        version: 3.9.2(vite@4.4.9)
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../yas-test
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      concurrently:
+        specifier: ^8.2.1
+        version: 8.2.1
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+
   core/remark-html-to-jsx:
     devDependencies:
       mdast-util-from-markdown:
@@ -367,31 +391,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
-
-  core/vanilla-extract-styled:
-    dependencies:
-      '@vanilla-extract/recipes':
-        specifier: 0.5.1
-        version: 0.5.1(@vanilla-extract/css@1.14.0)
-      '@vanilla-extract/vite-plugin':
-        specifier: 3.9.2
-        version: 3.9.2(vite@4.4.9)
-    devDependencies:
-      '@types/react':
-        specifier: 18.2.37
-        version: 18.2.37
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../yas-test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../yas-tsconfig
-      concurrently:
-        specifier: ^8.2.1
-        version: 8.2.1
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
 
   core/yas-build:
     devDependencies:
@@ -657,6 +656,9 @@ importers:
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
+      react-styled-factory:
+        specifier: workspace:*
+        version: link:../../core/react-styled-factory
       shallow-equal:
         specifier: 3.1.0
         version: 3.1.0
@@ -666,9 +668,6 @@ importers:
       vanilla-extract-recipe-factory:
         specifier: workspace:*
         version: link:../../core/vanilla-extract-recipe-factory
-      vanilla-extract-styled:
-        specifier: workspace:*
-        version: link:../../core/vanilla-extract-styled
     devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
@@ -9182,7 +9181,6 @@ packages:
       '@vanilla-extract/css': ^1.0.0
     dependencies:
       '@vanilla-extract/css': 1.14.0
-    dev: false
 
   /@vanilla-extract/vite-plugin@3.9.2(vite@4.4.9):
     resolution: {integrity: sha512-WYgWiEs+nw+lNazyW0Ixp0MMgtNgPL+8fFKrol1V5XoNIzRrYPGfuLhRI7PwheSWQVGF7OOer0kUWQcLey1vOQ==}

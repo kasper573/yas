@@ -1,6 +1,6 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
-import { createStyledFactory } from "vanilla-extract-styled";
+import { createStyledFactory } from "react-styled-factory";
 import { shallowEqual } from "shallow-equal";
 import type { Style } from "vanilla-extract-constrained";
 import type {
@@ -44,9 +44,6 @@ export const styled = createStyledFactory(
 );
 
 export const recipe = createRecipeFactory(style);
-
-export { destructureVariantProps } from "vanilla-extract-styled";
-export type { RecipeVariants } from "vanilla-extract-styled";
 
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
 

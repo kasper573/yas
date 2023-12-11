@@ -25,7 +25,7 @@
     "shallow-equal": "3.1.0",
     "vanilla-extract-constrained": "workspace:*",
     "vanilla-extract-recipe-factory": "workspace:*",
-    "vanilla-extract-styled": "workspace:*"
+    "react-styled-factory": "workspace:*"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
