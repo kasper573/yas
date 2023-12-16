@@ -4,6 +4,7 @@ export * from "./atoms/Dialog";
 export * from "./atoms/Text";
 export * from "./atoms/ExampleImage";
 export * from "./atoms/CircularProgress";
+export * from "./atoms/Link";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
