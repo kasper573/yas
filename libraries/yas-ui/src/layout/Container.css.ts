@@ -15,8 +15,5 @@ export const container = unsafe.style({
     "(min-width: 1280px)": {
       maxWidth: 1280,
     },
-    "(min-width: 1920px)": {
-      maxWidth: 1920,
-    },
   },
 });
