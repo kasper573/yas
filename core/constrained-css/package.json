@@ -14,8 +14,11 @@
   "dependencies": {
     "@yas/result": "workspace:*"
   },
+  "peerDependencies": {
+    "csstype": "^3"
+  },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
-    "csstype": "3.1.3"
+    "csstype": "^3"
   }
 }
