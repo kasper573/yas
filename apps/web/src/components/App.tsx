@@ -4,10 +4,11 @@ import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { clsx } from "@yas/style";
 import { dark } from "@yas/style/themes/dark.css";
 import { light } from "@yas/style/themes/light.css";
-import { Sandbox } from "./examples/sandbox/Sandbox";
+import { BrowserRouter } from "react-router-dom";
+import { env } from "../env";
+import { ThemeProvider, type ThemeName } from "../hooks/useTheme";
 import * as styles from "./App.css";
-import { env } from "./env";
-import { ThemeProvider, type ThemeName } from "./hooks/useTheme";
+import { AppRoutes } from "./Routes";
 
 const themeClassNames = {
   dark,
@@ -20,11 +21,13 @@ export function App() {
 
   return (
     <div className={clsx(styles.app, themeClassNames[theme])}>
-      <ApiClientProvider value={apiClient}>
-        <ThemeProvider theme={theme} setTheme={setTheme}>
-          <Sandbox />
-        </ThemeProvider>
-      </ApiClientProvider>
+      <BrowserRouter>
+        <ApiClientProvider value={apiClient}>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <AppRoutes />
+          </ThemeProvider>
+        </ApiClientProvider>
+      </BrowserRouter>
       <DialogOutlet />
     </div>
   );
