@@ -1,42 +1,41 @@
 import type {
   ReactNode,
-  ElementType,
   ReactElement,
   ComponentProps,
   CSSProperties,
+  ElementType,
 } from "react";
-import type { RuntimeFn } from "@vanilla-extract/recipes";
 import { createElement, forwardRef, useRef } from "react";
 
-export function createStyledFactory<Style extends Record<string, unknown>>(
-  compileStyle: StyleCompiler<Style> = () => undefined,
+export function createStyledFactory<SX>(
+  compileStyle: SXCompiler<SX> = () => undefined,
   isSXPropEqual: EqualityFn = Object.is,
-): StyledComponentFactory<Style> {
+): StyledComponentFactory<SX> {
   return function createRecipeComponent<
-    Implementation extends ElementType,
-    InlineImplementation extends ElementType,
-    Recipe extends RecipeLike = RuntimeFn<{}>,
+    Implementation extends AnyImplementation,
+    InlineImplementation extends AnyImplementation,
+    RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
-    recipe?: Recipe,
+    recipe?: RecipeFn<RecipeInput>,
     options?: RecipeComponentOptions<
       Implementation,
       InlineImplementation,
-      Recipe,
-      Style
+      RecipeInput,
+      SX
     >,
-  ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style> {
+  ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX> {
     const RecipeComponent = forwardRef(function RecipeComponent(
       {
-        sx = emptyObject as Style,
+        sx = emptyObject as SX,
         as = implementation as unknown as InlineImplementation,
         asProps = emptyObject as ComponentProps<InlineImplementation>,
         ...inlineProps
       }: RecipeComponentProps<
         Implementation,
         InlineImplementation,
-        Recipe,
-        Style
+        RecipeInput,
+        SX
       >,
       ref,
     ) {
@@ -45,19 +44,25 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         inlineProps,
       );
 
-      const [variantProps, forwardedProps] = recipe
+      const [recipeInput, forwardedProps] = recipe
         ? destructureVariantProps(
             implementationProps,
-            recipe,
+            recipe.variants(),
             options?.forwardProps,
           )
         : [emptyObject, implementationProps];
 
-      const className = recipe?.(variantProps);
-      const style = useCompareMemo(compileStyle, sx, isSXPropEqual);
+      const recipeClassName = recipe?.(recipeInput as RecipeInput);
+      const styleOrClassName = useCompareMemo(compileStyle, sx, isSXPropEqual);
+
+      const [sxStyle, sxClassName] =
+        typeof styleOrClassName === "string"
+          ? [undefined, styleOrClassName]
+          : [styleOrClassName, undefined];
 
       const finalProps = [
-        { className, style, ref },
+        { className: recipeClassName, style: sxStyle, ref },
+        { className: sxClassName },
         forwardedProps,
         asProps,
       ].reduce(mergeElementProps);
@@ -66,8 +71,8 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
     }) as unknown as RecipeComponent<
       Implementation,
       InlineImplementation,
-      Recipe,
-      Style
+      RecipeInput,
+      SX
     >;
 
     RecipeComponent.attrs = (
@@ -75,8 +80,8 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         RecipeComponentProps<
           Implementation,
           InlineImplementation,
-          Recipe,
-          Style
+          RecipeInput,
+          SX
         >
       >,
     ) =>
@@ -93,8 +98,8 @@ export function createStyledFactory<Style extends Record<string, unknown>>(
         keyof RecipeComponentProps<
           Implementation,
           InlineImplementation,
-          Recipe,
-          Style
+          RecipeInput,
+          SX
         >
       >,
     ) =>
@@ -116,17 +121,16 @@ const emptyObject = Object.freeze({});
  * Separates the props into variant props and remaining props based on the given recipe
  */
 export function destructureVariantProps<
-  Props extends Record<string, unknown>,
-  Recipe extends RecipeLike,
+  Props extends Record<PropertyKey, unknown>,
+  Variants extends Array<keyof Props>,
 >(
   allProps: Props,
-  recipe: Recipe,
+  variants: Variants,
   shouldForwardProp: PropForwardTester<keyof Props> = ({ isVariant }) =>
     !isVariant,
 ) {
   const variantProps: Record<string, unknown> = {};
   const forwardedProps: Record<string, unknown> = {};
-  const variants = recipe.variants();
   for (const prop in allProps) {
     const isVariant = variants.includes(prop);
     if (isVariant) {
@@ -137,85 +141,92 @@ export function destructureVariantProps<
     }
   }
   return [
-    variantProps as Pick<Props, VariantName<Recipe>>,
-    forwardedProps as Omit<Props, VariantName<Recipe>>,
+    variantProps as Pick<Props, Variants[number]>,
+    forwardedProps as Omit<Props, Variants[number]>,
   ] as const;
 }
 
-interface StyledComponentFactory<Style> {
+interface StyledComponentFactory<SX> {
   <
-    Implementation extends ElementType,
-    InlineImplementation extends ElementType,
-    Recipe extends RecipeLike = RuntimeFn<{}>,
+    Implementation extends AnyImplementation,
+    InlineImplementation extends AnyImplementation,
+    RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
-    recipe?: Recipe,
-  ): RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
+    recipe?: RecipeFn<RecipeInput>,
+  ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
 }
 
 interface RecipeComponent<
-  Implementation extends ElementType,
-  InlineImplementation extends ElementType,
-  Recipe extends RecipeLike,
-  Style,
+  Implementation extends AnyImplementation,
+  InlineImplementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
 > {
   (
     props: RecipeComponentProps<
       Implementation,
       InlineImplementation,
-      Recipe,
-      Style
+      RecipeInput,
+      SX
     >,
   ): ReactElement;
 
   attrs: (
     props: Partial<
-      RecipeComponentProps<Implementation, InlineImplementation, Recipe, Style>
+      RecipeComponentProps<
+        Implementation,
+        InlineImplementation,
+        RecipeInput,
+        SX
+      >
     >,
-  ) => RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
+  ) => RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
 
   shouldForwardProp: (
     tester: PropForwardTester<
       keyof RecipeComponentProps<
         Implementation,
         InlineImplementation,
-        Recipe,
-        Style
+        RecipeInput,
+        SX
       >
     >,
-  ) => RecipeComponent<Implementation, InlineImplementation, Recipe, Style>;
+  ) => RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
 }
 
 type RecipeComponentProps<
-  Implementation extends ElementType,
-  InlineImplementation extends ElementType,
-  Recipe extends RecipeLike,
-  Style,
-> = RecipeVariants<Recipe> &
-  Omit<ComponentProps<Implementation>, keyof RecipeVariants<Recipe>> & {
-    sx?: Style;
-    className?: string;
-    style?: CSSProperties;
-    children?: ReactNode;
-    as?: InlineImplementation;
-    asProps?: ComponentProps<InlineImplementation>;
-  };
+  Implementation extends AnyImplementation,
+  InlineImplementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
+> =
+  // We must strip plain indexes to ensure no variants resolve to empty object
+  StripIndexes<RecipeInput> &
+    ComponentProps<Implementation> & {
+      sx?: SX;
+      className?: string;
+      style?: CSSProperties;
+      children?: ReactNode;
+      as?: InlineImplementation;
+      asProps?: ComponentProps<InlineImplementation>;
+    };
 
 interface RecipeComponentOptions<
-  Implementation extends ElementType,
-  InlineImplementation extends ElementType,
-  Recipe extends RecipeLike,
-  Style,
+  Implementation extends AnyImplementation,
+  InlineImplementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
 > {
   defaultProps?: Partial<
-    RecipeComponentProps<Implementation, InlineImplementation, Recipe, Style>
+    RecipeComponentProps<Implementation, InlineImplementation, RecipeInput, SX>
   >;
   forwardProps?: PropForwardTester<
     keyof RecipeComponentProps<
       Implementation,
       InlineImplementation,
-      Recipe,
-      Style
+      RecipeInput,
+      SX
     >
   >;
 }
@@ -225,18 +236,21 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
   isVariant: boolean;
 }) => boolean;
 
-type StyleCompiler<Style> = (style: Style) => CSSProperties | undefined;
+export type CSSClassName = string;
 
-// Improved vanilla extract type utilities
-export type RecipeLike = RuntimeFn<Record<string, Record<string, never>>>;
-export type RecipeVariants<Recipe extends RecipeLike> = StripIndexes<
-  Exclude<Parameters<Recipe>[0], undefined>
->;
-export type VariantName<Recipe extends RecipeLike> = `${string &
-  keyof RecipeVariants<Recipe>}`;
+type AnyImplementation = ElementType;
 
-// We must strip plain indexes since recipes without variants
-// will have their VariantGroups type resolved to { [key: string]: unknown }
+export type SXCompiler<SX> = (
+  sx: SX,
+) => CSSProperties | CSSClassName | undefined;
+
+export type RecipeInputLike = Record<string, unknown>;
+
+export interface RecipeFn<Input extends RecipeInputLike> {
+  (input?: Input): CSSClassName;
+  variants: () => Array<keyof Input>;
+}
+
 type StripIndexes<T> = {
   [K in keyof T as string extends K
     ? never

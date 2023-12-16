@@ -1,4 +1,7 @@
-import type { RuntimeFn } from "@vanilla-extract/recipes";
+import type {
+  RuntimeFn,
+  RecipeVariants as RecipeVariantsImpl,
+} from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
 
 export function createRecipeFactory<
@@ -64,6 +67,9 @@ export type StyleCompiler<Style, CompiledStyle extends CompiledStyleLike> = (
 ) => CompiledStyle;
 
 export type CompiledStyleLike = string | string[];
+
+export type RecipeVariants<RecipeLike extends RuntimeFn<Record<string, any>>> =
+  Exclude<RecipeVariantsImpl<RecipeLike>, undefined>;
 
 type Variants<Groups, T> = {
   [G in keyof Groups]: {

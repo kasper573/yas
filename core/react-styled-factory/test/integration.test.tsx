@@ -126,6 +126,13 @@ function testComponent(
     );
   });
 
+  it("sx className", () => {
+    const styled = createStyledFactory((className: string) => className);
+    const Component = styled(component);
+    const { container } = render(<Component sx="foo" />);
+    expect(container.outerHTML).toEqual(toHtml({ attrs: { class: "foo" } }));
+  });
+
   it("variants", () => {
     const styled = createStyledFactory();
     const Component = styled(component, recipeWithVariants);

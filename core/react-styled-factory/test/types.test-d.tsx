@@ -23,7 +23,8 @@ it("inherits props of component", () => {
 
   const Component = styled((props: BaseProps) => null);
 
-  type Selection = Pick<ComponentProps<typeof Component>, keyof BaseProps>;
+  type Props = ComponentProps<typeof Component>;
+  type Selection = Pick<Props, keyof BaseProps>;
 
   expectTypeOf<Selection>().toEqualTypeOf<BaseProps>();
 });
