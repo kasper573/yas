@@ -11,11 +11,13 @@ import {
   useDialog,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
-import { env } from "../env";
-import { hello } from "../hello";
+import { env } from "../../env";
+import { hello } from "../../hello";
+import { useTheme } from "../../hooks/useTheme";
 import * as foo from "./foo.css";
 
-export function Home() {
+export function Sandbox() {
+  const [theme, toggleTheme] = useTheme();
   const { data: response } = api.example.hello.useQuery(hello());
   const showDialog = useDialog(TestDialog);
   return (
@@ -44,6 +46,9 @@ export function Home() {
 
       <Text variant="h1">Image from @yas/ui</Text>
       <ExampleImage />
+
+      <Text>Theme: {theme}</Text>
+      <Button onClick={toggleTheme}>Toggle theme</Button>
     </>
   );
 }
