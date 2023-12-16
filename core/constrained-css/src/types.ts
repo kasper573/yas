@@ -56,7 +56,12 @@ export const conditionKeys = [
   "selectors",
 ] as const;
 
-export type Style = CSSProperties<string | number>;
+export type Style = CSSProperties<string | number> & {
+  [K in ConditionKey]?: Record<
+    string,
+    Record<string, string | number | undefined>
+  >;
+};
 
 type Condition = Partial<Record<ConditionKey, string>>;
 
