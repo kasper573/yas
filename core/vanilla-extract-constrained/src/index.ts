@@ -1,6 +1,7 @@
 import { addFunctionSerializer } from "@vanilla-extract/css/functionSerializer";
 import { createStyleResolver as createStyleResolverImpl } from "constrained-css";
 export type { ConstrainedStyle, Style, StyleResolver } from "constrained-css";
+export { all } from "constrained-css";
 
 export const createStyleResolver: typeof createStyleResolverImpl = (
   definition,
