@@ -216,15 +216,9 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/yas-result
     devDependencies:
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../yas-test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
-      concurrently:
-        specifier: ^8.2.1
-        version: 8.2.1
       csstype:
         specifier: 3.1.3
         version: 3.1.3
