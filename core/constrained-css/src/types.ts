@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { Properties as CSSProperties } from "csstype";
 
 // Definition types
 

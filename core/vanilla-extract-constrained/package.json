@@ -6,10 +6,6 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./src/styleResolver": {
-      "import": "./src/styleResolver.ts",
-      "require": "./src/styleResolver.ts"
-    },
     "./src/functionEvaluator": {
       "import": "./src/functionEvaluator.ts",
       "require": "./src/functionEvaluator.ts"
@@ -19,6 +15,9 @@
     "build": "tsc --noEmit --project tsconfig.json",
     "test": "pnpm playwright test -c playwright-ct.config.js",
     "test:watch": "pnpm run test --ui"
+  },
+  "dependencies": {
+    "constrained-css": "workspace:*"
   },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "3.9.2"

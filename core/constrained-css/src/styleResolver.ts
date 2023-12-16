@@ -1,4 +1,4 @@
-import { ok, err } from "@yas/result";
+import { ok, err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import type {
   ConditionRecord,
   ConstrainedDefinition,
@@ -14,6 +14,23 @@ import {
 } from "./types";
 
 export function createStyleResolver<
+  Conditions extends ConditionRecord,
+  Properties extends StrictPropertyDefinitionRecord,
+  Shorthands extends PropertyShorthandRecord<Properties>,
+>(
+  definition: ConstrainedDefinition<Conditions, Properties, Shorthands>,
+): StyleResolver<Conditions, Properties, Shorthands> {
+  return createStyleResolverImpl(definition);
+}
+
+// We only apply this stricter constraint in the outermost scope to avoid
+// blowing up the type system with a million variants in the internal
+// implementation code (where it's not needed anyqway).
+export type StrictPropertyDefinitionRecord = {
+  [K in keyof Style]?: PropertyDefinition<Style[K]>;
+};
+
+function createStyleResolverImpl<
   Conditions extends ConditionRecord,
   Properties extends PropertyDefinitionRecord,
   Shorthands extends PropertyShorthandRecord<Properties>,
@@ -107,12 +124,14 @@ export function createStyleResolver<
     }
 
     if (errors.length) {
-      throw new Error(
-        errors
-          .map(
-            ([name, error]) => `Invalid property "${String(name)}": ${error}`,
-          )
-          .join("\n"),
+      unwrapUnsafe_useWithCaution(
+        err(
+          errors
+            .map(
+              ([name, error]) => `Invalid property "${String(name)}": ${error}`,
+            )
+            .join("\n"),
+        ),
       );
     }
 
@@ -147,6 +166,16 @@ export function createStyleResolver<
   }
 
   return resolveStyle;
+}
+
+/**
+ * Use this as the value for a property to indicate that it can be any CSS value.)
+ */
+export function all<T>(): T[] {
+  // We use a symbol to represent this at runtime, but assert as the expected type
+  // to be able to optimally infer only the values for the specified properties.
+  // This heavily reduces the number of type variants that gets generated.
+  return anyCssValue as unknown as T[];
 }
 
 // Can unfortunately not be a symbol because it needs to be serializable.
