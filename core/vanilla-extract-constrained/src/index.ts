@@ -9,7 +9,7 @@ export const createStyleResolver: typeof createStyleResolverImpl = (
   const resolver = createStyleResolverImpl(definition);
 
   addFunctionSerializer(resolver, {
-    importPath: "constrained-css",
+    importPath: "vanilla-extract-constrained/src/styleResolver",
     importName: "createStyleResolver",
     args: [definition] as unknown as Serializable,
   });

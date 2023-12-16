@@ -1,6 +1,6 @@
 {
   "name": "constrained-css",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {

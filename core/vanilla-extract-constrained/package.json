@@ -6,6 +6,10 @@
     ".": {
       "import": "./src/index.ts"
     },
+    "./src/styleResolver": {
+      "import": "./src/styleResolver.ts",
+      "require": "./src/styleResolver.ts"
+    },
     "./src/functionEvaluator": {
       "import": "./src/functionEvaluator.ts",
       "require": "./src/functionEvaluator.ts"
