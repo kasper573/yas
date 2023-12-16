@@ -16,8 +16,8 @@ export function BasicFormLayout({
 }: FormLayoutProps & { title: ReactNode; isLoading?: boolean }) {
   return (
     <form onSubmit={handleSubmit}>
-      <Stack gap="2">
-        <Stack direction="row" align="center" gap="2">
+      <Stack gap="#2">
+        <Stack direction="row" align="center" gap="#2">
           <Text variant="h2">{title}</Text>
           {isLoading ? <CircularProgress /> : null}
           <Button variant="outlined" onClick={reset}>
@@ -27,7 +27,7 @@ export function BasicFormLayout({
             Submit
           </Button>
         </Stack>
-        <Stack direction="column" gap="2">
+        <Stack direction="column" gap="#2">
           {Object.values(fields).map((Component, index) => (
             <Component key={index} />
           ))}

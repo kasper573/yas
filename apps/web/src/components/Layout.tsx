@@ -5,7 +5,7 @@ import { Menu } from "./Menu";
 export function Layout() {
   return (
     <Container>
-      <Stack gap="3" sx={{ p: "#5" }}>
+      <Stack gap="#3" sx={{ p: "#5" }}>
         <Menu />
         <div>
           <Outlet />

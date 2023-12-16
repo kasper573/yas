@@ -36,7 +36,7 @@ export function RadioGroupField<Value>({
   const showClearButton = value !== undefined && !required;
   return (
     <FormControl {...rest}>
-      <Stack direction="row" align="center" gap="2">
+      <Stack direction="row" align="center" gap="#2">
         <FormControlLabel htmlFor={fieldsetId}>{label}</FormControlLabel>
 
         <Void>
@@ -57,7 +57,7 @@ export function RadioGroupField<Value>({
           const checked = option.value === value;
           const disabled = metric === 0 && !checked;
           return (
-            <Stack key={index} direction="row" reverse align="center" gap="2">
+            <Stack key={index} direction="row" reverse align="center" gap="#2">
               <FormControlLabel htmlFor={radioId}>
                 {option.label}
                 {metric !== undefined && ` (${metric})`}

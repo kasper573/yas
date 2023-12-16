@@ -32,9 +32,9 @@ export function ExampleContent({
   }
 
   return (
-    <Stack direction="row" gap="3">
+    <Stack direction="row" gap="#3">
       <Box style={{ flex: 1 }}>{normalizeContent(children)}</Box>
-      <Stack gap="3" style={{ width: 250 }}>
+      <Stack gap="#3" style={{ width: 250 }}>
         <MultiSelectField
           name="Validate on"
           value={validateOn}

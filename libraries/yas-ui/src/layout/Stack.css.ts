@@ -1,4 +1,7 @@
-import { recipe } from "@yas/style";
+import { recipe, unsafe } from "@yas/style";
+
+type Space = keyof typeof unsafe.tokens.spaces;
+const spaces = Object.keys(unsafe.tokens.spaces) as Space[];
 
 export const stackRecipe = recipe({
   base: {
@@ -23,12 +26,9 @@ export const stackRecipe = recipe({
       center: { justifyContent: "center" },
       end: { justifyContent: "end" },
     },
-    gap: {
-      0: { gap: 0 },
-      1: { gap: "#1" },
-      2: { gap: "#2" },
-      3: { gap: "#3" },
-    },
+    gap: Object.fromEntries(
+      spaces.map((space) => [space, { gap: space }]),
+    ) as Record<Space, { gap: Space }>,
   },
   compoundVariants: [
     {

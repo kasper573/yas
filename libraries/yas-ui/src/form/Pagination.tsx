@@ -45,7 +45,7 @@ export function Pagination({
   }
 
   return (
-    <Stack direction="row" align="center" gap="1" {...rest}>
+    <Stack direction="row" align="center" gap="#1" {...rest}>
       <PageButton
         onClick={() => onChange(currentPage - 1)}
         disabled={currentPage === 1}

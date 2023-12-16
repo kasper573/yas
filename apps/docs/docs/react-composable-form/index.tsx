@@ -17,11 +17,11 @@ export const UserForm = createForm((options) =>
     )
     .layout(({ fields: { Email, Password, Age }, reset, handleSubmit }) => (
       <form onReset={reset} onSubmit={handleSubmit}>
-        <Stack gap="3">
+        <Stack gap="#3">
           <Email />
           <Password />
           <Age />
-          <Stack direction="row" gap="2" justify="end" sx={{ ml: "auto" }}>
+          <Stack direction="row" gap="#2" justify="end" sx={{ ml: "auto" }}>
             <Button color="secondary" type="reset">
               Reset
             </Button>
