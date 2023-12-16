@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { Properties as CSSProperties } from "csstype";
 
 // Definition types
 
@@ -56,7 +56,12 @@ export const conditionKeys = [
   "selectors",
 ] as const;
 
-export type Style = CSSProperties;
+export type Style = CSSProperties<string | number> & {
+  [K in ConditionKey]?: Record<
+    string,
+    Record<string, string | number | undefined>
+  >;
+};
 
 type Condition = Partial<Record<ConditionKey, string>>;
 
