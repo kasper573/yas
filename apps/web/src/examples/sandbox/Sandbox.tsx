@@ -1,5 +1,6 @@
 import type { DialogProps } from "@yas/ui";
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -7,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   ExampleImage,
+  Stack,
   Text,
   useDialog,
 } from "@yas/ui";
@@ -26,29 +28,35 @@ export function Sandbox() {
       <Text paragraph>Mode: {env.mode}</Text>
       <Text paragraph>Server response: {response?.message}</Text>
       <Text paragraph>Server time: {response?.date.toLocaleString()}</Text>
+      <Text>Theme: {theme}</Text>
+
+      <Stack direction="row" gap="#2" sx={{ mt: "#2" }}>
+        <Button onClick={toggleTheme}>Toggle theme</Button>
+        <Button onClick={() => showDialog()}>Show dialog</Button>
+      </Stack>
+
       <div className={foo.container()}>Testing vanilla-extract css</div>
 
-      <Button onClick={() => showDialog()}>Show dialog</Button>
+      <Stack direction="row" gap="#2">
+        <Box
+          sx={{
+            p: "#7",
+            fontFamily: "default",
+            background: "secondary.base.main",
+            color: "secondary.contrast.main",
+          }}
+        >
+          Testing sx prop
+        </Box>
 
-      <Box
-        sx={{
-          p: "#10",
-          fontFamily: "default",
-          background: "secondary.base.main",
-          color: "secondary.contrast.main",
-        }}
-      >
-        Testing sx prop
-      </Box>
+        <Box className={foo.projectImage} sx={{ p: "#2" }}>
+          <Alert severity="info">Image from apps/web</Alert>
+        </Box>
 
-      <Text variant="h1">Image from apps/web</Text>
-      <div className={foo.projectImage} />
-
-      <Text variant="h1">Image from @yas/ui</Text>
-      <ExampleImage />
-
-      <Text>Theme: {theme}</Text>
-      <Button onClick={toggleTheme}>Toggle theme</Button>
+        <ExampleImage sx={{ p: "#2" }}>
+          <Alert severity="info">Image from @yas/ui</Alert>
+        </ExampleImage>
+      </Stack>
     </>
   );
 }
