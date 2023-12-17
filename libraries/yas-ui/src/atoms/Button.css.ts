@@ -2,7 +2,6 @@ import { recipe } from "@yas/style";
 
 export const buttonRecipe = recipe({
   base: {
-    border: "none",
     margin: 0,
     padding: 0,
     width: "auto",
@@ -15,9 +14,7 @@ export const buttonRecipe = recipe({
     transition: [
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
-    borderRadius: "#1",
-    borderWidth: "#1",
-    borderStyle: "solid",
+    border: ["standard"],
     cursor: "pointer",
   },
   variants: {

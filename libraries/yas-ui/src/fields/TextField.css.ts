@@ -18,9 +18,7 @@ export const label = style({
 
 export const inputRecipe = recipe({
   base: {
-    padding: "#3",
-    borderStyle: "solid",
-    borderWidth: "#1",
+    border: ["emphasized"],
     borderRadius: "#2",
     backgroundColor: "surface.light",
     color: "surface.contrast",

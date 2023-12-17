@@ -127,12 +127,7 @@ export const fontSizes = {
   "100%": "100%",
 };
 
-export const borderSizes = {
-  "#1": 1,
-  "#2": 2,
-  "#3": 3,
-};
-
+export type Radii = keyof typeof radii;
 export const radii = {
   0: 0,
   "#1": 4,
@@ -145,6 +140,15 @@ export const shadows = {
   none: "none",
   "#1": `0px 4px 8px -3px ${palette.black["87%"]}`,
 };
+
+export type Border = keyof typeof borders;
+export const borders = {
+  none: () => "none",
+  inherit: () => "inherit",
+  standard: (color) => `1px solid ${color} ${coerce(radii["#1"])}`,
+  emphasized: (color) => `1px solid ${color} ${coerce(radii["#3"])}`,
+  circular: (color) => `1px solid ${color} ${coerce(radii["50%"])}`,
+} satisfies Record<string, (color: string) => string>;
 
 export const durations = {
   short1: "50ms",
@@ -190,3 +194,6 @@ export const transitions = {
     exit: `${durations.short4} ${easings.standardAccelerate}`,
   },
 };
+
+const coerce = (value: string | number) =>
+  typeof value === "number" ? `${value}px` : value;
