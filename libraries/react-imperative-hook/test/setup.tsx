@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 import { test, render as renderReact } from "@yas/test/vitest/react";
-import { useMemo } from "react";
+import { StrictMode, useMemo } from "react";
 import type { InstanceSpawnerFor } from "../src/createPredefinedSpawnerHook";
 import type { GeneralHookOptions } from "../src/constants";
 import { createImperative } from "../src/createImperative";
@@ -36,17 +36,23 @@ export function defineAbstractHookTest<T extends AnyComponent>(
 export function setupImperative(createStore = () => new ComponentStore()) {
   const imp = createImperative();
   function render(Content: ComponentType) {
-    function Wrapper({ children }: { children?: ReactNode }) {
-      const store = useMemo(createStore, []);
-      return (
+    return renderReact(
+      <Wrapper>
+        <Content />
+      </Wrapper>,
+    );
+  }
+
+  function Wrapper({ children }: { children?: ReactNode }) {
+    const store = useMemo(createStore, []);
+    return (
+      <StrictMode>
         <imp.Context.Provider value={store}>
           {children}
           <imp.Outlet />
         </imp.Context.Provider>
-      );
-    }
-
-    return renderReact(<Content />, { wrapper: Wrapper });
+      </StrictMode>
+    );
   }
 
   return { imp, render };
