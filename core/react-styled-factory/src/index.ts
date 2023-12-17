@@ -28,7 +28,7 @@ export function createStyledFactory<SX>(
   ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX> {
     const {
       defaultProps: {
-        as: defaultImplementation,
+        as: defaultAsImplementation,
         asProps: extraDefaultProps,
         ...defaultProps
       } = {} as Exclude<typeof options.defaultProps, undefined>,
@@ -37,7 +37,8 @@ export function createStyledFactory<SX>(
 
     const RecipeComponent = forwardRef(function RecipeComponent(
       {
-        as = implementation as unknown as InlineImplementation,
+        as = (defaultAsImplementation ??
+          implementation) as unknown as InlineImplementation,
         asProps = emptyObject as ComponentProps<InlineImplementation>,
         ...inlineProps
       }: RecipeComponentProps<
