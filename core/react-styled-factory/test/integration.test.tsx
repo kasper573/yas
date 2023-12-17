@@ -57,6 +57,18 @@ describe("inline implementation", () => {
     const { container } = render(<Component as={MySpan} data-testid="foo" />);
     expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
   });
+
+  it("replaces recipe", () => {
+    const styled = createStyledFactory();
+    const Blue = styled("div", blueColorRecipe);
+    const Green = styled(Blue, greenColorRecipe);
+    const { container } = render(<Green as="span" />);
+    expect(container.outerHTML).toEqual(
+      createHtml("span", {
+        attrs: { class: "green" },
+      }),
+    );
+  });
 });
 
 function testComponent(
@@ -151,20 +163,6 @@ function testComponent(
     const Component = styled(component);
     const { container } = render(<Component sx="foo" />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { class: "foo" } }));
-  });
-
-  it("double composed", () => {
-    const styled = createStyledFactory();
-    const Inner = styled(component, blueColorRecipe);
-    const Outer = styled(Inner, greenColorRecipe).attrs({
-      as: "dialog",
-    });
-    const { container } = render(<Outer />);
-    expect(container.outerHTML).toEqual(
-      createHtml("dialog", {
-        attrs: { class: `blue green` },
-      }),
-    );
   });
 
   it("variants", () => {
