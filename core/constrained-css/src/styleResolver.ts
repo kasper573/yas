@@ -1,3 +1,4 @@
+import type { Result } from "@yas/result";
 import { ok, err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import type {
   ConditionRecord,
@@ -175,7 +176,10 @@ export function all<T>(): T[] {
 export const anyCssValue = "___placeholder_for_any_css_value___" as const;
 const passThroughProperties: PropertyKey[] = ["containerName"];
 
-function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
+function resolveValue<Value>(
+  options: PropertyDefinition<Value>,
+  value: Value,
+): Result<Value, string> {
   if (Object.is(options, anyCssValue)) {
     return ok(value);
   }
@@ -210,7 +214,7 @@ function resolveValue<T>(options: PropertyDefinition<T>, value: T) {
       )}`,
     );
   }
-  return ok(options[value as keyof typeof options]);
+  return ok(options[value as keyof typeof options] as Value);
 }
 
 function assignPath(
