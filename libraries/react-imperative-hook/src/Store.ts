@@ -19,8 +19,11 @@ export class Store<State> {
 
     const newState = produce(this._state, (draft) => {
       this._currentMutation = { draft };
-      mutator(draft as State);
-      this._currentMutation = undefined;
+      try {
+        mutator(draft as State);
+      } finally {
+        this._currentMutation = undefined;
+      }
     });
 
     this._state = newState;
