@@ -8,7 +8,11 @@ import {
 import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../src";
 import { recipeClassName } from "./fixtures";
-import { recipeWithVariants } from "./test.css";
+import {
+  blueColorRecipe,
+  greenColorRecipe,
+  recipeWithVariants,
+} from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -147,6 +151,20 @@ function testComponent(
     const Component = styled(component);
     const { container } = render(<Component sx="foo" />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { class: "foo" } }));
+  });
+
+  it("double composed", () => {
+    const styled = createStyledFactory();
+    const Inner = styled(component, blueColorRecipe);
+    const Outer = styled(Inner, greenColorRecipe).attrs({
+      as: "dialog",
+    });
+    const { container } = render(<Outer />);
+    expect(container.outerHTML).toEqual(
+      createHtml("dialog", {
+        attrs: { class: `blue green` },
+      }),
+    );
   });
 
   it("variants", () => {

@@ -34,3 +34,21 @@ export const recipeWithoutVariants = recipe({
     color: "red",
   },
 });
+
+export const blueColorRecipe = recipe(
+  {
+    base: {
+      color: "blue",
+    },
+  },
+  "blue",
+);
+
+export const greenColorRecipe = recipe(
+  {
+    base: {
+      color: "green",
+    },
+  },
+  "green",
+);
