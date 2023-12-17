@@ -12,19 +12,16 @@
   "scripts": {
     "build": "storybook build -o dist",
     "dev": "storybook dev -p 6006 --no-open",
-    "test": "pnpm test:components && pnpm test:unit && pnpm test:stories-exist",
-    "test:watch": "concurrently -n component,unit \"pnpm test:components:watch\" \"pnpm test:unit:watch\"",
-    "test:components": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 test-storybook",
-    "test:components:watch": "start-server-and-test \"pnpm dev --ci\" http://localhost:6006 \"test-storybook --watch\"",
+    "test": "concurrently -n \"component,unit,stories-exist\" \"pnpm test:components\" \"pnpm test:unit\" \"pnpm test:stories-exist\"",
+    "test:components": "pnpm build && concurrently -k -s first -n \"http,test\" \"http-server dist --port 6006 --silent\" \"wait-on tcp:6006 && test-storybook\"",
     "test:unit": "vitest run",
-    "test:unit:watch": "vitest",
     "test:stories-exist": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\""
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.0.0",
+    "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/validate": "workspace:*",
-    "@yas/icons": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-imperative-hook": "workspace:*"
   },
@@ -46,11 +43,12 @@
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "concurrently": "8.0.1",
+    "http-server": "^14.1.1",
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "start-server-and-test": "2.0.0",
     "storybook": "7.6.3",
-    "storybook-addon-variants": "^0.2.0"
+    "storybook-addon-variants": "^0.2.0",
+    "wait-on": "^7.2.0"
   }
 }

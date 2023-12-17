@@ -5,3 +5,4 @@ export {
   globalStyle,
   globalKeyframes,
 } from "@vanilla-extract/css";
+export * as tokens from "./tokens";

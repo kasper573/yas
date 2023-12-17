@@ -10,6 +10,7 @@ import { flattened } from "./flattened";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
+type Color = keyof typeof colors;
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
@@ -50,14 +51,12 @@ export const resolveStyle = createStyleResolver({
     gridAutoFlow: all(),
     flex: all(),
     flexDirection: all(),
-    border: ["none", "inherit"],
+    border,
+    borderRadius: tokens.radii,
     inset: all(),
     outline: all(),
     position: all(),
     userSelect: all(),
-    borderWidth: tokens.borderSizes,
-    borderStyle: all(),
-    borderRadius: tokens.radii,
     justifyContent: all(),
     alignItems: all(),
     padding: tokens.spaces,
@@ -71,6 +70,8 @@ export const resolveStyle = createStyleResolver({
     marginLeft: tokens.spaces,
     margin: tokens.spaces,
     gap: tokens.spaces,
+    rowGap: tokens.spaces,
+    columnGap: tokens.spaces,
     objectFit: all(),
     width: all(),
     height: all(),
@@ -155,3 +156,9 @@ type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
   preset: keyof typeof flattenedTransitions,
 ];
+
+function border(...[preset, colorName = "divider"]: Border) {
+  return tokens.borders[preset](colors[colorName]);
+}
+
+type Border = [preset: tokens.Border, color?: Color];

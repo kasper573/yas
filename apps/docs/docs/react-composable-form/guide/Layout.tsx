@@ -38,7 +38,7 @@ export function CardLayout({
   return (
     // The submit handler can be called manually or passed to a form element.
     <form className="card" onSubmit={handleSubmit}>
-      <Stack className="card__body" gap="2">
+      <Stack className="card__body" gap="#2">
         {/* 
           The layout will be given a record of React components that represents all the fields in the form.
           You could access them by name, but if you want your layout to be generic, that's usually unsafe,
@@ -59,7 +59,7 @@ export function CardLayout({
           </Alert>
         )}
       </Stack>
-      <Stack className="card__footer" direction="row" gap="2">
+      <Stack className="card__footer" direction="row" gap="#2">
         {/* 
           Loading state is not built-in to the library, 
           but the layout system is flexible enough to make it trivial to implement manually:
@@ -80,7 +80,7 @@ export const SpecializedLoginForm = LoginForm.extend((options) =>
   // Thanks to inference, Typescript is aware that the form contains an email and password field
   options.layout(({ fields: { Email, Password }, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
-      <Stack gap="2">
+      <Stack gap="#2">
         {/* 
           Each field can be rendered by using the component matching its name.
           Place them wherever you please in your layout, and pass in any props you want.
@@ -105,7 +105,7 @@ export function InlineLayout({
 }: FormLayoutProps) {
   return (
     <form onSubmit={handleSubmit}>
-      <Stack direction="row" align="end" gap="2">
+      <Stack direction="row" align="end" gap="#2">
         {Object.values(fields).map((Component, index) => (
           <Component key={index} />
         ))}

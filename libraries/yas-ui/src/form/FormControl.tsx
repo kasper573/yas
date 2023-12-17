@@ -5,24 +5,21 @@ import { Text } from "../atoms/Text";
 export type FormControlProps = ComponentProps<typeof FormControl>;
 export const FormControl = styled("div");
 
-export type FormControlLabelProps = ComponentProps<typeof Text> & {
+export type FormControlLabelProps = ComponentProps<typeof TextLabel> & {
   htmlFor?: string;
 };
 
 export function FormControlLabel({
-  htmlFor,
   children,
   ...props
 }: FormControlLabelProps) {
   if (children === null || children === undefined) {
     return null;
   }
-  return (
-    <Text as="label" asProps={{ htmlFor }} {...props}>
-      {children}
-    </Text>
-  );
+  return <TextLabel {...props}>{children}</TextLabel>;
 }
+
+const TextLabel = Text.as("label");
 
 export type FormControlErrorsProps = { errors?: unknown[] };
 export function FormControlErrors({ errors }: FormControlErrorsProps) {

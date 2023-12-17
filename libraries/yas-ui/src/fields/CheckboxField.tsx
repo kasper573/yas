@@ -15,7 +15,7 @@ export interface CheckboxFieldProps
   extends FieldProps<boolean>,
     Omit<
       ComponentProps<typeof Checkbox>,
-      keyof FieldProps<boolean> | "checked" | "as" | "asProps"
+      keyof FieldProps<boolean> | "checked" | "as"
     > {
   labelSide?: CheckboxLabelSide;
 }
@@ -32,16 +32,7 @@ export function CheckboxField({
 }: CheckboxFieldProps) {
   const id = useId();
   return (
-    <FormControl
-      as={Stack}
-      asProps={{
-        direction: "row",
-        reverse: labelSide === "left",
-        align: "center",
-        gap: 1,
-      }}
-      {...rest}
-    >
+    <FormControlStack reverse={labelSide === "left"} {...rest}>
       <FormControlLabel htmlFor={id}>{label}</FormControlLabel>
       <Checkbox
         id={id}
@@ -50,9 +41,15 @@ export function CheckboxField({
         onChange={(e) => onChange?.(e.target.checked)}
       />
       <FormControlErrors errors={rest.errors} />
-    </FormControl>
+    </FormControlStack>
   );
 }
+
+const FormControlStack = FormControl.as(Stack).attrs({
+  direction: "row",
+  align: "center",
+  gap: "#1",
+});
 
 const Checkbox = styled("input", checkboxRecipe).attrs({
   type: "checkbox",

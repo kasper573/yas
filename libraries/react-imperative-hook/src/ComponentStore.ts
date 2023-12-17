@@ -40,7 +40,10 @@ export class ComponentStore {
   markComponentsForRemoval(ids: ComponentId[]) {
     return this.store.mutate((components) => {
       for (const id of ids) {
-        components[id].shouldBeRemovedWhenEmpty = true;
+        const component = components[id];
+        if (component) {
+          component.shouldBeRemovedWhenEmpty = true;
+        }
       }
     });
   }

@@ -6,9 +6,13 @@ import {
   vi,
 } from "@yas/test/vitest/react";
 import type { CSSProperties, ElementType } from "react";
-import { createStyledFactory } from "../src";
+import { createStyledFactory } from "../src/createStyledFactory";
 import { recipeClassName } from "./fixtures";
-import { recipeWithVariants } from "./test.css";
+import {
+  blueColorRecipe,
+  greenColorRecipe,
+  recipeWithVariants,
+} from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -23,16 +27,16 @@ describe("inline implementation", () => {
   it("element", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
-    const { container } = render(<Component as="span" />);
+    const ComponentSpan = Component.as("span");
+    const { container } = render(<ComponentSpan />);
     expect(container.outerHTML).toEqual("<span></span>");
   });
 
   it("element props", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
-    const { container } = render(
-      <Component as="span" asProps={{ "data-testid": "foo" }} />,
-    );
+    const ComponentSpan = Component.as("span");
+    const { container } = render(<ComponentSpan data-testid="foo" />);
     expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
   });
 
@@ -42,7 +46,8 @@ describe("inline implementation", () => {
     function MySpan() {
       return <span />;
     }
-    const { container } = render(<Component as={MySpan} />);
+    const ComponentMySpan = Component.as(MySpan);
+    const { container } = render(<ComponentMySpan />);
     expect(container.outerHTML).toEqual("<span></span>");
   });
 
@@ -52,10 +57,22 @@ describe("inline implementation", () => {
     function MySpan(props: Record<string, unknown>) {
       return <span {...props} />;
     }
-    const { container } = render(
-      <Component as={MySpan} asProps={{ "data-testid": "foo" }} />,
-    );
+    const ComponentMySpan = Component.as(MySpan);
+    const { container } = render(<ComponentMySpan data-testid="foo" />);
     expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
+  });
+
+  it("replaces recipe", () => {
+    const styled = createStyledFactory();
+    const Blue = styled("div", blueColorRecipe);
+    const Green = styled(Blue, greenColorRecipe);
+    const GreenSpan = Green.as("span");
+    const { container } = render(<GreenSpan />);
+    expect(container.outerHTML).toEqual(
+      createHtml("span", {
+        attrs: { class: "green" },
+      }),
+    );
   });
 });
 
@@ -115,7 +132,7 @@ function testComponent(
 
   it("sx memoized", () => {
     const compile = vi.fn((style: CSSProperties) => style);
-    const styled = createStyledFactory(compile, isEqual);
+    const styled = createStyledFactory({ compile, isEqual });
     const Component = styled(component);
     const { container, rerender } = render(<Component sx={{ color: "red" }} />);
     rerender(<Component sx={{ color: "red" }} />);
@@ -123,6 +140,20 @@ function testComponent(
     expect(compile).toHaveBeenCalledTimes(2);
     expect(container.outerHTML).toEqual(
       toHtml({ attrs: { style: `color: blue;` } }),
+    );
+  });
+
+  it("sx merged", () => {
+    const styled = createStyledFactory((style: CSSProperties) => style);
+    const Inner = styled(component).attrs({ sx: { background: "red" } });
+    const Outer = styled(Inner).attrs({ sx: { color: "blue" } });
+    const { container } = render(<Outer sx={{ border: "white" }} />);
+    expect(container.outerHTML).toEqual(
+      toHtml({
+        attrs: {
+          style: `background: red; color: blue; border: white;`,
+        },
+      }),
     );
   });
 

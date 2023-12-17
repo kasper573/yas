@@ -19,8 +19,7 @@ export const label = style({
 export const inputRecipe = recipe({
   base: {
     padding: "#3",
-    borderStyle: "solid",
-    borderWidth: "#1",
+    border: "standard",
     borderRadius: "#2",
     backgroundColor: "surface.light",
     color: "surface.contrast",
@@ -29,7 +28,6 @@ export const inputRecipe = recipe({
     outline: { focus: "none" },
     boxShadow: { focus: "#1" },
     borderColor: {
-      default: "divider",
       focus: "primary.base.main",
     },
   },

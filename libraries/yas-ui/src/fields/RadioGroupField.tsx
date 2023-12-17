@@ -36,7 +36,7 @@ export function RadioGroupField<Value>({
   const showClearButton = value !== undefined && !required;
   return (
     <FormControl {...rest}>
-      <Stack direction="row" align="center" gap="2">
+      <Stack direction="row" align="center" gap="#2">
         <FormControlLabel htmlFor={fieldsetId}>{label}</FormControlLabel>
 
         <Void>
@@ -50,14 +50,14 @@ export function RadioGroupField<Value>({
         </Void>
       </Stack>
 
-      <Stack as="fieldset" id={fieldsetId} className={styles.fieldset}>
+      <Fieldset id={fieldsetId}>
         {options.map((option, index) => {
           const radioId = `${fieldsetId}-${index}`;
           const metric = metrics?.[String(option.value)];
           const checked = option.value === value;
           const disabled = metric === 0 && !checked;
           return (
-            <Stack key={index} direction="row" reverse align="center" gap="2">
+            <Stack key={index} direction="row" reverse align="center" gap="#2">
               <FormControlLabel htmlFor={radioId}>
                 {option.label}
                 {metric !== undefined && ` (${metric})`}
@@ -78,9 +78,13 @@ export function RadioGroupField<Value>({
             </Stack>
           );
         })}
-      </Stack>
+      </Fieldset>
 
       <FormControlErrors errors={errors} />
     </FormControl>
   );
 }
+
+const Fieldset = Stack.as("fieldset").attrs({
+  className: styles.fieldset,
+});

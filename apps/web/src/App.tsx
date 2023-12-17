@@ -1,33 +1,21 @@
 import { useMemo, useState } from "react";
-import { Button, DialogOutlet, Text } from "@yas/ui";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
-import { clsx } from "@yas/style";
-import { dark } from "@yas/style/themes/dark.css";
-import { light } from "@yas/style/themes/light.css";
-import { Home } from "./pages/Home";
-import * as styles from "./App.css";
+import { BrowserRouter } from "react-router-dom";
 import { env } from "./env";
-
-type ThemeName = keyof typeof themeClassNames;
-const themeClassNames = {
-  dark,
-  light,
-};
+import { ThemeProvider, type ThemeName } from "./hooks/useTheme";
+import { AppRoutes } from "./components/Routes";
 
 export function App() {
-  const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
   const [theme, setTheme] = useState<ThemeName>("dark");
-  function toggleTheme() {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }
+  const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
+
   return (
-    <div className={clsx(styles.app, themeClassNames[theme])}>
-      <Text>Theme: {theme}</Text>
+    <BrowserRouter>
       <ApiClientProvider value={apiClient}>
-        <Home />
-        <Button onClick={toggleTheme}>Toggle theme</Button>
+        <ThemeProvider theme={theme} setTheme={setTheme}>
+          <AppRoutes />
+        </ThemeProvider>
       </ApiClientProvider>
-      <DialogOutlet />
-    </div>
+    </BrowserRouter>
   );
 }

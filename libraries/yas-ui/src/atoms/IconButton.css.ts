@@ -27,9 +27,8 @@ export const iconButtonRecipe = recipe({
     transition: [
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
+    border: ["standard"],
     borderRadius: "50%",
-    borderWidth: "#1",
-    borderStyle: "solid",
     fontSize: "100%",
     cursor: "pointer",
   },

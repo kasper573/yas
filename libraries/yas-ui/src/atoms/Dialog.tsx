@@ -54,7 +54,7 @@ export const {
 
 const Overlay = styled("div", overlayRecipe);
 const DialogPaper = styled(Paper, dialogRecipe).attrs({
-  as: "dialog",
+  role: "dialog",
 });
 
 export const DialogTitle = styled(Text, dialogTitleRecipe).attrs({

@@ -1,5 +1,5 @@
-import type { ComponentProps, ReactNode } from "react";
-import { useState } from "react";
+import type { ComponentProps, ComponentType, ReactNode } from "react";
+import { StrictMode, useState } from "react";
 import {
   act,
   fireEvent as userEvent,
@@ -8,12 +8,14 @@ import {
   describe,
   test,
   expect,
+  render as renderReact,
 } from "@yas/test/vitest/react";
 import type { Deferred } from "../src/deferPromise";
 import type { GeneralHookOptions } from "../src/constants";
 import type { ImperativeComponentProps } from "../src/ComponentStore";
 import type { AnyComponent } from "../src/utilityTypes";
 import { ComponentStore } from "../src/ComponentStore";
+import { createImperative } from "../src";
 import type { AbstractHookTestFactory } from "./setup";
 import { setupImperative, defineAbstractHookTest } from "./setup";
 
@@ -125,6 +127,55 @@ test("can spawn an instance temporarily for a removed component", async () => {
 
   userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
   expect(store.state).toEqual({});
+});
+
+describe("can open dialog, close it, and then unmount", () => {
+  const imp = createImperative();
+  return defineAbstractHookTest(
+    Dialog,
+    async (useHook, render) => {
+      render(App);
+
+      userEvent.click(screen.getByText("Open dialog"));
+      userEvent.click(screen.getByRole("button", { name: "OK" }));
+      expect(screen.queryByRole("dialog")).toBeNull();
+      userEvent.click(screen.getByText("Go to page 2"));
+      await screen.findByText("This is page 2");
+
+      function App() {
+        const [page, setPage] = useState(1);
+        return (
+          <>
+            {page === 1 ? <Page1 gotoPage2={() => setPage(2)} /> : <Page2 />}
+            <imp.Outlet />
+          </>
+        );
+      }
+
+      function Page1({ gotoPage2 }: { gotoPage2: () => void }) {
+        const spawn = useHook();
+        return (
+          <>
+            <button onClick={() => spawn()}>Open dialog</button>
+            <button onClick={gotoPage2}>Go to page 2</button>
+          </>
+        );
+      }
+
+      function Page2() {
+        return <p>This is page 2</p>;
+      }
+    },
+    {
+      imp,
+      render: (Content: ComponentType) =>
+        renderReact(
+          <StrictMode>
+            <Content />
+          </StrictMode>,
+        ),
+    },
+  );
 });
 
 describe("removeOnUnmount", () => {
