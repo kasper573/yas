@@ -28,7 +28,6 @@ export const inputRecipe = recipe({
     outline: { focus: "none" },
     boxShadow: { focus: "#1" },
     borderColor: {
-      default: "divider",
       focus: "primary.base.main",
     },
   },
