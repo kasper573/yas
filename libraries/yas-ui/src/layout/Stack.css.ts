@@ -6,8 +6,14 @@ const spaces = Object.keys(unsafe.tokens.spaces) as Space[];
 export const stackRecipe = recipe({
   base: {
     display: "flex",
+    boxSizing: "border-box",
   },
   variants: {
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+    },
     direction: {
       row: {},
       column: {},
@@ -29,6 +35,12 @@ export const stackRecipe = recipe({
     gap: Object.fromEntries(
       spaces.map((space) => [space, { gap: space }]),
     ) as Record<Space, { gap: Space }>,
+    columnGap: Object.fromEntries(
+      spaces.map((space) => [space, { columnGap: space }]),
+    ) as Record<Space, { columnGap: Space }>,
+    rowGap: Object.fromEntries(
+      spaces.map((space) => [space, { rowGap: space }]),
+    ) as Record<Space, { rowGap: Space }>,
   },
   compoundVariants: [
     {
@@ -52,6 +64,7 @@ export const stackRecipe = recipe({
     align: "start",
     justify: "start",
     direction: "column",
+    fullWidth: true,
     reverse: false,
   },
 });
