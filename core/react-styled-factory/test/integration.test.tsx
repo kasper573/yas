@@ -126,6 +126,26 @@ function testComponent(
     );
   });
 
+  it("sx merged", () => {
+    const styled = createStyledFactory((style: CSSProperties) => style);
+    const Inner = styled(component).attrs({
+      sx: { background: "this should get overridden" },
+    });
+    const Component = styled("span").attrs({
+      as: Inner,
+      sx: { color: "blue" },
+      asProps: { sx: { borderRadius: "50%" } },
+    });
+    const { container } = render(<Component sx={{ border: "white" }} />);
+    expect(container.outerHTML).toEqual(
+      createHtml("span", {
+        attrs: {
+          style: `color: blue; border-radius: 50%; border: white;`,
+        },
+      }),
+    );
+  });
+
   it("sx className", () => {
     const styled = createStyledFactory((className: string) => className);
     const Component = styled(component);

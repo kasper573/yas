@@ -10,6 +10,7 @@ import { createElement, forwardRef, useRef } from "react";
 export function createStyledFactory<SX>(
   compileStyle: SXCompiler<SX> = () => undefined,
   isSXPropEqual: EqualityFn = Object.is,
+  mergeSX: SXMerger<SX> = defaultSXMerger,
 ): StyledComponentFactory<SX> {
   return function createRecipeComponent<
     Implementation extends AnyImplementation,
@@ -18,13 +19,22 @@ export function createStyledFactory<SX>(
   >(
     implementation: Implementation,
     recipe?: RecipeFn<RecipeInput>,
-    options?: RecipeComponentOptions<
+    options: RecipeComponentOptions<
       Implementation,
       InlineImplementation,
       RecipeInput,
       SX
-    >,
+    > = {},
   ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX> {
+    const {
+      defaultProps: {
+        as: defaultImplementation,
+        asProps: extraDefaultProps,
+        ...defaultProps
+      } = {} as Exclude<typeof options.defaultProps, undefined>,
+      forwardProps,
+    } = options;
+
     const RecipeComponent = forwardRef(function RecipeComponent(
       {
         as = implementation as unknown as InlineImplementation,
@@ -38,19 +48,24 @@ export function createStyledFactory<SX>(
       >,
       ref,
     ) {
-      const {
-        sx = emptyObject as (typeof inlineProps)["sx"],
-        ...implementationProps
-      } = mergeElementProps(options?.defaultProps, inlineProps);
+      const mergedProps = [
+        defaultProps,
+        extraDefaultProps,
+        asProps,
+        inlineProps,
+      ].reduce(({ sx: sxA, ...a } = {}, { sx: sxB, ...b } = {}) => {
+        const merged = mergeElementProps(a, b);
+        if (sxA || sxB) {
+          merged.sx = sxA && sxB ? mergeSX(sxA, sxB) : sxA ?? sxB;
+        }
+        return merged;
+      });
 
       const [recipeInput, forwardedProps] = recipe
-        ? destructureVariantProps(
-            implementationProps,
-            recipe.variants(),
-            options?.forwardProps,
-          )
-        : [emptyObject, implementationProps];
+        ? destructureVariantProps(mergedProps, recipe.variants(), forwardProps)
+        : [emptyObject, mergedProps];
 
+      const { sx = emptyObject, ...forwardedPropsWithoutSX } = forwardedProps;
       const recipeClassName = recipe?.(recipeInput as RecipeInput);
       const styleOrClassName = useCompareMemo(compileStyle, sx, isSXPropEqual);
 
@@ -62,8 +77,7 @@ export function createStyledFactory<SX>(
       const finalProps = [
         { className: recipeClassName, style: sxStyle, ref },
         { className: sxClassName },
-        forwardedProps,
-        asProps,
+        forwardedPropsWithoutSX,
       ].reduce(mergeElementProps);
 
       return createElement(as, finalProps);
@@ -243,6 +257,8 @@ export type SXCompiler<SX> = (
   sx: SX,
 ) => CSSProperties | CSSClassName | undefined;
 
+export type SXMerger<SX> = (a: SX, b: SX) => SX;
+
 export type RecipeInputLike = Record<string, unknown>;
 
 export interface RecipeFn<Input extends RecipeInputLike> {
@@ -277,12 +293,7 @@ function useCompareMemo<Input extends Comparable, Output>(
   return ref.current[1];
 }
 
-type ElementPropsLike = {
-  className?: string;
-  style?: CSSProperties;
-  sx?: object;
-  [key: string]: unknown;
-};
+type ElementPropsLike = Pick<HTMLElement, "className" | "style">;
 
 function mergeElementProps<
   Left extends ElementPropsLike,
@@ -291,11 +302,21 @@ function mergeElementProps<
   if (!a || !b) {
     return (a ?? b) as Left & Right;
   }
+
   return {
     ...a,
     ...b,
     className: clsx(a.className, b.className),
     style: { ...a.style, ...b.style },
-    sx: { ...a.sx, ...b.sx },
   };
 }
+
+const defaultSXMerger = <T>(a: T, b: T) => {
+  if (a === b) {
+    return a;
+  }
+  if (typeof a === "object" || typeof b === "object") {
+    return { ...a, ...b };
+  }
+  return clsx(a as string, b as string) as T;
+};
