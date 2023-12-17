@@ -30,9 +30,7 @@ describe("inline implementation", () => {
   it("element props", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
-    const { container } = render(
-      <Component as="span" asProps={{ "data-testid": "foo" }} />,
-    );
+    const { container } = render(<Component as="span" data-testid="foo" />);
     expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
   });
 
@@ -52,9 +50,7 @@ describe("inline implementation", () => {
     function MySpan(props: Record<string, unknown>) {
       return <span {...props} />;
     }
-    const { container } = render(
-      <Component as={MySpan} asProps={{ "data-testid": "foo" }} />,
-    );
+    const { container } = render(<Component as={MySpan} data-testid="foo" />);
     expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
   });
 });
@@ -140,7 +136,7 @@ function testComponent(
     expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
-          style: `color: blue; border-radius: 50%; border: white;`,
+          style: `border-radius: 50%; color: blue; border: white;`,
         },
       }),
     );
