@@ -38,7 +38,7 @@ export function CheckboxField({
         direction: "row",
         reverse: labelSide === "left",
         align: "center",
-        gap: 1,
+        gap: "#1",
       }}
       {...rest}
     >
