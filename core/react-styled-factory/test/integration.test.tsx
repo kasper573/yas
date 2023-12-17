@@ -138,7 +138,7 @@ function testComponent(
     });
     const { container } = render(<Component sx={{ border: "white" }} />);
     expect(container.outerHTML).toEqual(
-      createHtml("span", {
+      toHtml({
         attrs: {
           style: `color: blue; border-radius: 50%; border: white;`,
         },
