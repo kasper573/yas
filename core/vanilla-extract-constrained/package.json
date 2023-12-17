@@ -20,6 +20,9 @@
     "test": "pnpm playwright test -c playwright-ct.config.js",
     "test:watch": "pnpm run test --ui"
   },
+  "dependencies": {
+    "constrained-css": "workspace:*"
+  },
   "peerDependencies": {
     "@vanilla-extract/vite-plugin": "3.9.2"
   },

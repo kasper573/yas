@@ -213,6 +213,19 @@ importers:
         specifier: ^8.0.1
         version: 8.2.1
 
+  core/constrained-css:
+    dependencies:
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libraries/yas-result
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../yas-tsconfig
+      csstype:
+        specifier: ^3
+        version: 3.1.2
+
   core/esbuild-absolute-file-plugin:
     devDependencies:
       esbuild:
@@ -353,6 +366,9 @@ importers:
       '@vanilla-extract/vite-plugin':
         specifier: 3.9.2
         version: 3.9.2(vite@4.4.9)
+      constrained-css:
+        specifier: workspace:*
+        version: link:../constrained-css
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: 1.39.0
