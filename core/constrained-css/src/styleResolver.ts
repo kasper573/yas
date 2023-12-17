@@ -25,7 +25,7 @@ export function createStyleResolver<
 }
 
 // We only apply this stricter constraint in the outermost scope to avoid
-// blowing up the type system with a million variants in the internal
+// blowing up the type system with excess variants in the internal
 // implementation code (where it's not needed anyqway).
 export type StrictPropertyDefinitionRecord = {
   [K in keyof Style]?: PropertyDefinition<Style[K]>;
@@ -162,6 +162,8 @@ function createStyleResolverImpl<
   return resolveStyle;
 }
 
+const passThroughProperties: PropertyKey[] = ["containerName"];
+
 /**
  * Use this as the value for a property to indicate that it can be any CSS value.)
  */
@@ -169,18 +171,17 @@ export function all<T>(): T[] {
   // We use a symbol to represent this at runtime, but assert as the expected type
   // to be able to optimally infer only the values for the specified properties.
   // This heavily reduces the number of type variants that gets generated.
-  return anyCssValue as unknown as T[];
+  return anyCssValuePlaceholder as unknown as T[];
 }
 
-// Can unfortunately not be a symbol because it needs to be serializable.
-export const anyCssValue = "___placeholder_for_any_css_value___" as const;
-const passThroughProperties: PropertyKey[] = ["containerName"];
+// Can unfortunately not be a symbol because it needs to be serializable for some integrations.
+const anyCssValuePlaceholder = "___placeholder_for_any_css_value___" as const;
 
 function resolveValue<Value>(
   options: PropertyDefinition<Value>,
   value: Value,
 ): Result<Value, string> {
-  if (Object.is(options, anyCssValue)) {
+  if (Object.is(options, anyCssValuePlaceholder)) {
     return ok(value);
   }
   if (typeof options === "function") {
