@@ -71,6 +71,8 @@ export const resolveStyle = createStyleResolver({
     marginLeft: tokens.spaces,
     margin: tokens.spaces,
     gap: tokens.spaces,
+    rowGap: tokens.spaces,
+    columnGap: tokens.spaces,
     objectFit: all(),
     width: all(),
     height: all(),
