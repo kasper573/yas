@@ -13,7 +13,11 @@ export const conditionalRedColor = atoms({
   },
 });
 
-export const functional2pxBorder = atoms({
+export const functional2pxBorderAsValueInput = atoms({
+  border: 2,
+});
+
+export const functional2pxBorderAsArrayInput = atoms({
   border: [2],
 });
 

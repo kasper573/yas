@@ -184,14 +184,10 @@ function resolveValue<Value>(
     return ok(value);
   }
   if (typeof options === "function") {
-    if (!Array.isArray(value)) {
-      return err(
-        `Invalid functional value ${value}. Must be an array of args to pass to property function.`,
-      );
-    }
     let res;
     try {
-      res = options(...(value as Parameters<typeof options>));
+      const args = Array.isArray(value) ? value : [value];
+      res = options(...(args as Parameters<typeof options>));
     } catch (e) {
       return err(
         `Could not resolve functional value ${JSON.stringify(value)}:\n\n${e}`,

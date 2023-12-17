@@ -16,9 +16,16 @@ test("can define valid aliased value", async ({ mount }) => {
   await expect(component).toHaveCSS("background-color", colors.red);
 });
 
-test("can define valid functional value", async ({ mount }) => {
+test("can define valid functional value (array input)", async ({ mount }) => {
   const component = await mount(
-    <VanillaExtract className="functional2pxBorder" />,
+    <VanillaExtract className="functional2pxBorderAsArrayInput" />,
+  );
+  await expect(component).toHaveCSS("border-width", "2px");
+});
+
+test("can define valid functional value (value input)", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="functional2pxBorderAsValueInput" />,
   );
   await expect(component).toHaveCSS("border-width", "2px");
 });
