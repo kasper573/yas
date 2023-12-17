@@ -4,12 +4,10 @@ import { Menu } from "./Menu";
 
 export function Layout() {
   return (
-    <Container>
-      <Stack gap="#3" sx={{ p: "#5" }}>
-        <Menu />
-        <div>
-          <Outlet />
-        </div>
+    <Container as={Stack} asProps={{ gap: "#3", sx: { flex: 1, p: "#5" } }}>
+      <Menu />
+      <Stack sx={{ flex: 1 }}>
+        <Outlet />
       </Stack>
     </Container>
   );
