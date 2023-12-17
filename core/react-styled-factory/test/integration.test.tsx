@@ -140,19 +140,13 @@ function testComponent(
 
   it("sx merged", () => {
     const styled = createStyledFactory((style: CSSProperties) => style);
-    const Inner = styled(component).attrs({
-      sx: { background: "this should get overridden" },
-    });
-    const Component = styled("span").attrs({
-      as: Inner,
-      sx: { color: "blue" },
-      asProps: { sx: { borderRadius: "50%" } },
-    });
-    const { container } = render(<Component sx={{ border: "white" }} />);
+    const Inner = styled(component).attrs({ sx: { background: "red" } });
+    const Outer = styled(Inner).attrs({ sx: { color: "blue" } });
+    const { container } = render(<Outer sx={{ border: "white" }} />);
     expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
-          style: `border-radius: 50%; color: blue; border: white;`,
+          style: `background: red; color: blue; border: white;`,
         },
       }),
     );
