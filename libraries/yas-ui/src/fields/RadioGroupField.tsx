@@ -50,7 +50,7 @@ export function RadioGroupField<Value>({
         </Void>
       </Stack>
 
-      <Stack as="fieldset" id={fieldsetId} className={styles.fieldset}>
+      <Fieldset id={fieldsetId}>
         {options.map((option, index) => {
           const radioId = `${fieldsetId}-${index}`;
           const metric = metrics?.[String(option.value)];
@@ -78,9 +78,13 @@ export function RadioGroupField<Value>({
             </Stack>
           );
         })}
-      </Stack>
+      </Fieldset>
 
       <FormControlErrors errors={errors} />
     </FormControl>
   );
 }
+
+const Fieldset = Stack.as("fieldset").attrs({
+  className: styles.fieldset,
+});

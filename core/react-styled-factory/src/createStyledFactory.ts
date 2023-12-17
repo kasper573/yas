@@ -4,7 +4,6 @@ import type {
   ComponentProps,
   CSSProperties,
   ElementType,
-  ComponentType,
   ForwardedRef,
 } from "react";
 import { createElement, forwardRef } from "react";
@@ -30,14 +29,13 @@ export function createStyledFactory<SX>(
     options: RecipeComponentOptions<Implementation, RecipeInput, SX> = {},
   ): RecipeComponent<Implementation, RecipeInput, SX> {
     function RecipeComponentImpl(
-      { as = implementation, asProps, ...inlineProps }: RecipeComponentProps,
+      { as = implementation, ...inlineProps }: AnyRecipeComponentProps,
       ref: ForwardedRef<HTMLElement>,
     ) {
-      const { sx = emptyObject, ...mergedProps } = [
+      const { sx = emptyObject, ...mergedProps } = mergeElementProps(
         options.defaultProps,
-        asProps,
         inlineProps,
-      ].reduce(mergeElementProps);
+      );
 
       const [recipeInput, forwardedProps] = recipe
         ? destructureVariantProps(
@@ -75,6 +73,9 @@ export function createStyledFactory<SX>(
     Object.assign(RecipeComponent, {
       displayName: `styled(${getElementTypeName(implementation)})`,
     });
+
+    RecipeComponent.as = (newImplementation) =>
+      createRecipeComponent(newImplementation, recipe, options);
 
     RecipeComponent.attrs = (defaultProps) =>
       createRecipeComponent(implementation, recipe, {
@@ -115,48 +116,40 @@ type DefaultRecipeComponentProps<
   Implementation extends AnyImplementation,
   RecipeInput extends RecipeInputLike,
   SX,
-> = Partial<
-  Omit<
-    RecipeComponentProps<Implementation, AnyImplementation, RecipeInput, SX>,
-    "as" | "asProps"
-  >
->;
+> = Partial<RecipeComponentProps<Implementation, RecipeInput, SX>>;
+
+export interface RecipeComponentConstructor<
+  Implementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
+> {
+  (props: RecipeComponentProps<Implementation, RecipeInput, SX>): ReactElement;
+}
 
 interface RecipeComponent<
   Implementation extends AnyImplementation,
   RecipeInput extends RecipeInputLike,
   SX,
-> {
-  <InlineImplementation extends AnyImplementation = NoImplementation>(
-    props: RecipeComponentProps<
-      Implementation,
-      InlineImplementation,
-      RecipeInput,
-      SX
-    >,
-  ): ReactElement;
+> extends RecipeComponentConstructor<Implementation, RecipeInput, SX> {
+  as<NewImplementation extends AnyImplementation>(
+    as: NewImplementation,
+  ): RecipeComponent<NewImplementation, RecipeInput, SX>;
 
-  attrs: (
+  attrs(
     props: DefaultRecipeComponentProps<Implementation, RecipeInput, SX>,
-  ) => RecipeComponent<Implementation, RecipeInput, SX>;
+  ): RecipeComponent<Implementation, RecipeInput, SX>;
 
-  shouldForwardProp: (
+  shouldForwardProp(
     tester: PropForwardTester<
-      keyof RecipeComponentProps<
-        Implementation,
-        AnyImplementation,
-        RecipeInput,
-        SX
-      >
+      keyof RecipeComponentProps<Implementation, RecipeInput, SX>
     >,
-  ) => RecipeComponent<Implementation, RecipeInput, SX>;
+  ): RecipeComponent<Implementation, RecipeInput, SX>;
 }
 
-type RecipeComponentProps<
-  Implementation extends AnyImplementation = AnyImplementation,
-  InlineImplementation extends AnyImplementation = AnyImplementation,
-  RecipeInput extends RecipeInputLike = RecipeInputLike,
-  SX = unknown,
+export type RecipeComponentProps<
+  Implementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
 > =
   // We must strip plain indexes to ensure no variants resolve to empty object
   StripIndexes<RecipeInput> &
@@ -165,8 +158,6 @@ type RecipeComponentProps<
       className?: string;
       style?: CSSProperties;
       children?: ReactNode;
-      as?: InlineImplementation;
-      asProps?: ComponentProps<InlineImplementation>;
     };
 
 interface RecipeComponentOptions<
@@ -176,17 +167,17 @@ interface RecipeComponentOptions<
 > {
   defaultProps?: DefaultRecipeComponentProps<Implementation, RecipeInput, SX>;
   forwardProps?: PropForwardTester<
-    keyof RecipeComponentProps<
-      Implementation,
-      AnyImplementation,
-      RecipeInput,
-      SX
-    >
+    keyof RecipeComponentProps<Implementation, RecipeInput, SX>
   >;
 }
 
-type AnyImplementation = ElementType;
-type NoImplementation = ComponentType<{}>;
+type AnyRecipeComponentProps = RecipeComponentProps<
+  AnyImplementation,
+  RecipeInputLike,
+  unknown
+>;
+
+export type AnyImplementation = ElementType;
 
 export type RecipeInputLike = Record<string, unknown>;
 

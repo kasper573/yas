@@ -16,13 +16,18 @@ export function Layout() {
   const [theme] = useTheme();
   return (
     <div className={clsx(themeClassNames[theme], layout)}>
-      <Container as={Stack} asProps={{ gap: "#3", sx: { flex: 1, p: "#5" } }}>
+      <ContainerStack>
         <Menu />
         <Stack sx={{ flex: 1 }}>
           <RouterOutlet />
         </Stack>
-      </Container>
+      </ContainerStack>
       <DialogOutlet />
     </div>
   );
 }
+
+const ContainerStack = Container.as(Stack).attrs({
+  gap: "#3",
+  sx: { flex: 1, p: "#5" },
+});
