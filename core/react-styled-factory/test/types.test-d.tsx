@@ -1,6 +1,6 @@
 import type { ComponentProps, HTMLAttributes } from "react";
 import { it, expectTypeOf } from "@yas/test/vitest/react";
-import { createStyledFactory } from "../src";
+import { createStyledFactory } from "../src/createStyledFactory";
 import type { Color, Variants } from "./test.css";
 import { recipeWithoutVariants, recipeWithVariants } from "./test.css";
 

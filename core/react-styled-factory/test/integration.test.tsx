@@ -6,7 +6,7 @@ import {
   vi,
 } from "@yas/test/vitest/react";
 import type { CSSProperties, ElementType } from "react";
-import { createStyledFactory } from "../src";
+import { createStyledFactory } from "../src/createStyledFactory";
 import { recipeClassName } from "./fixtures";
 import {
   blueColorRecipe,
