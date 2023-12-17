@@ -158,7 +158,7 @@ type Transition = [
 ];
 
 function border(...[preset, colorName = "divider"]: Border) {
-  return tokens.borders[preset](colorName);
+  return tokens.borders[preset](colors[colorName]);
 }
 
 type Border = [preset: tokens.Border, color?: Color];

@@ -15,6 +15,7 @@ export const buttonRecipe = recipe({
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
     border: ["standard"],
+    borderRadius: "#2",
     cursor: "pointer",
   },
   variants: {

@@ -145,9 +145,7 @@ export type Border = keyof typeof borders;
 export const borders = {
   none: () => "none",
   inherit: () => "inherit",
-  standard: (color) => `1px solid ${color} ${coerce(radii["#1"])}`,
-  emphasized: (color) => `1px solid ${color} ${coerce(radii["#3"])}`,
-  circular: (color) => `1px solid ${color} ${coerce(radii["50%"])}`,
+  standard: (color) => `1px solid ${color}`,
 } satisfies Record<string, (color: string) => string>;
 
 export const durations = {
