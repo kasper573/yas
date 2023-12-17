@@ -10,7 +10,7 @@ import { flattened } from "./flattened";
 
 const overflows = ["visible", "hidden", "scroll"] as const;
 
-type Color = keyof typeof vars.color;
+type Color = keyof typeof colors;
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
@@ -157,8 +157,8 @@ type Transition = [
   preset: keyof typeof flattenedTransitions,
 ];
 
-function border(...[preset, color = "divider"]: BorderArgs): string {
-  return tokens.borders[preset](color);
+function border(...[preset, colorName = "divider"]: BorderArgs) {
+  return tokens.borders[preset](colorName);
 }
 
 type BorderArgs = [preset: tokens.Border, color?: Color, radii?: tokens.Radii];
