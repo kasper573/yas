@@ -4,6 +4,8 @@ import type {
   ComponentProps,
   CSSProperties,
   ElementType,
+  ComponentType,
+  ForwardedRef,
 } from "react";
 import { createElement, forwardRef, useRef } from "react";
 
@@ -12,34 +14,23 @@ export function createStyledFactory<SX>(
   isSXPropEqual: EqualityFn = Object.is,
   mergeSX: SXMerger<SX> = defaultSXMerger,
 ): StyledComponentFactory<SX> {
+  const mergeElementProps = createPropsMerger(mergeSX);
   return function createRecipeComponent<
     Implementation extends AnyImplementation,
-    InlineImplementation extends AnyImplementation,
     RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
     recipe?: RecipeFn<RecipeInput>,
-    options: RecipeComponentOptions<
-      Implementation,
-      InlineImplementation,
-      RecipeInput,
-      SX
-    > = {},
-  ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX> {
-    const {
-      defaultProps: {
-        as: defaultAsImplementation,
-        asProps: extraDefaultProps,
-        ...defaultProps
-      } = {} as Exclude<typeof options.defaultProps, undefined>,
-      forwardProps,
-    } = options;
+    options: RecipeComponentOptions<Implementation, RecipeInput, SX> = {},
+  ): RecipeComponent<Implementation, RecipeInput, SX> {
+    const { forwardProps } = options;
 
-    const RecipeComponent = forwardRef(function RecipeComponent(
+    const RecipeComponent = forwardRef(function RecipeComponent<
+      InlineImplementation extends AnyImplementation = NoImplementation,
+    >(
       {
-        as = (defaultAsImplementation ??
-          implementation) as unknown as InlineImplementation,
-        asProps = emptyObject as ComponentProps<InlineImplementation>,
+        as = implementation as unknown as InlineImplementation,
+        asProps,
         ...inlineProps
       }: RecipeComponentProps<
         Implementation,
@@ -47,26 +38,17 @@ export function createStyledFactory<SX>(
         RecipeInput,
         SX
       >,
-      ref,
+      ref: ForwardedRef<HTMLElement>,
     ) {
-      const mergedProps = [
-        defaultProps,
-        extraDefaultProps,
+      const { sx = emptyObject, ...mergedProps } = mergeElementProps(
         asProps,
         inlineProps,
-      ].reduce(({ sx: sxA, ...a } = {}, { sx: sxB, ...b } = {}) => {
-        const merged = mergeElementProps(a, b);
-        if (sxA || sxB) {
-          merged.sx = sxA && sxB ? mergeSX(sxA, sxB) : sxA ?? sxB;
-        }
-        return merged;
-      });
+      );
 
       const [recipeInput, forwardedProps] = recipe
         ? destructureVariantProps(mergedProps, recipe.variants(), forwardProps)
         : [emptyObject, mergedProps];
 
-      const { sx = emptyObject, ...forwardedPropsWithoutSX } = forwardedProps;
       const recipeClassName = recipe?.(recipeInput as RecipeInput);
       const styleOrClassName = useCompareMemo(compileStyle, sx, isSXPropEqual);
 
@@ -78,40 +60,42 @@ export function createStyledFactory<SX>(
       const finalProps = [
         { className: recipeClassName, style: sxStyle, ref },
         { className: sxClassName },
-        forwardedPropsWithoutSX,
+        forwardedProps,
       ].reduce(mergeElementProps);
 
       return createElement(as, finalProps);
-    }) as unknown as RecipeComponent<
-      Implementation,
-      InlineImplementation,
-      RecipeInput,
-      SX
-    >;
+    }) as unknown as RecipeComponent<Implementation, RecipeInput, SX>;
 
-    RecipeComponent.attrs = (
-      defaultProps: Partial<
-        RecipeComponentProps<
+    RecipeComponent.attrs = <
+      DefaultProps extends DefaultRecipeComponentProps<
+        Implementation,
+        RecipeInput,
+        SX
+      >,
+    >(
+      defaultProps: DefaultProps,
+    ) => {
+      return forwardRef(function RecipeComponentWithDefaultProps(
+        props: DefaultProps,
+        ref: ForwardedRef<HTMLElement>,
+      ) {
+        return createElement(RecipeComponent, {
+          ...mergeElementProps(defaultProps, props),
+          ref,
+        } as RecipeComponentProps<
           Implementation,
-          InlineImplementation,
+          AnyImplementation,
           RecipeInput,
           SX
-        >
-      >,
-    ) =>
-      createRecipeComponent(implementation, recipe, {
-        ...options,
-        defaultProps: {
-          ...options?.defaultProps,
-          ...defaultProps,
-        },
-      });
+        >);
+      }) as unknown as RecipeComponent<Implementation, RecipeInput, SX>;
+    };
 
     RecipeComponent.shouldForwardProp = (
       forwardProps: PropForwardTester<
         keyof RecipeComponentProps<
           Implementation,
-          InlineImplementation,
+          AnyImplementation,
           RecipeInput,
           SX
         >
@@ -163,21 +147,30 @@ export function destructureVariantProps<
 interface StyledComponentFactory<SX> {
   <
     Implementation extends AnyImplementation,
-    InlineImplementation extends AnyImplementation,
     RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
     recipe?: RecipeFn<RecipeInput>,
-  ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
+  ): RecipeComponent<Implementation, RecipeInput, SX>;
 }
+
+type DefaultRecipeComponentProps<
+  Implementation extends AnyImplementation,
+  RecipeInput extends RecipeInputLike,
+  SX,
+> = Partial<
+  Omit<
+    RecipeComponentProps<Implementation, AnyImplementation, RecipeInput, SX>,
+    "as" | "asProps"
+  >
+>;
 
 interface RecipeComponent<
   Implementation extends AnyImplementation,
-  InlineImplementation extends AnyImplementation,
   RecipeInput extends RecipeInputLike,
   SX,
 > {
-  (
+  <InlineImplementation extends AnyImplementation>(
     props: RecipeComponentProps<
       Implementation,
       InlineImplementation,
@@ -186,27 +179,26 @@ interface RecipeComponent<
     >,
   ): ReactElement;
 
-  attrs: (
-    props: Partial<
-      RecipeComponentProps<
-        Implementation,
-        InlineImplementation,
-        RecipeInput,
-        SX
-      >
+  attrs: <
+    DefaultProps extends DefaultRecipeComponentProps<
+      Implementation,
+      RecipeInput,
+      SX
     >,
-  ) => RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
+  >(
+    props: DefaultProps,
+  ) => RecipeComponent<Implementation, RecipeInput, SX>;
 
   shouldForwardProp: (
     tester: PropForwardTester<
       keyof RecipeComponentProps<
         Implementation,
-        InlineImplementation,
+        AnyImplementation,
         RecipeInput,
         SX
       >
     >,
-  ) => RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX>;
+  ) => RecipeComponent<Implementation, RecipeInput, SX>;
 }
 
 type RecipeComponentProps<
@@ -228,17 +220,13 @@ type RecipeComponentProps<
 
 interface RecipeComponentOptions<
   Implementation extends AnyImplementation,
-  InlineImplementation extends AnyImplementation,
   RecipeInput extends RecipeInputLike,
   SX,
 > {
-  defaultProps?: Partial<
-    RecipeComponentProps<Implementation, InlineImplementation, RecipeInput, SX>
-  >;
   forwardProps?: PropForwardTester<
     keyof RecipeComponentProps<
       Implementation,
-      InlineImplementation,
+      AnyImplementation,
       RecipeInput,
       SX
     >
@@ -253,12 +241,13 @@ export type PropForwardTester<PropName extends PropertyKey> = (info: {
 export type CSSClassName = string;
 
 type AnyImplementation = ElementType;
+type NoImplementation = ComponentType<{}>;
 
 export type SXCompiler<SX> = (
   sx: SX,
 ) => CSSProperties | CSSClassName | undefined;
 
-export type SXMerger<SX> = (a: SX, b: SX) => SX;
+export type SXMerger<SX> = (a?: SX, b?: SX) => SX | undefined;
 
 export type RecipeInputLike = Record<string, unknown>;
 
@@ -294,30 +283,34 @@ function useCompareMemo<Input extends Comparable, Output>(
   return ref.current[1];
 }
 
-type ElementPropsLike = Pick<HTMLElement, "className" | "style">;
+type ElementPropsLike<SX> = {
+  className?: string;
+  style?: CSSProperties;
+  sx?: SX;
+};
 
-function mergeElementProps<
-  Left extends ElementPropsLike,
-  Right extends ElementPropsLike,
->(a?: Left, b?: Right): Left & Right {
-  if (!a || !b) {
-    return (a ?? b) as Left & Right;
-  }
+function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
+  return function mergeElementProps<
+    Left extends ElementPropsLike<SX>,
+    Right extends ElementPropsLike<SX>,
+  >(a?: Left, b?: Right): Left & Right {
+    if (!a || !b) {
+      return (a ?? b) as Left & Right;
+    }
 
-  return {
-    ...a,
-    ...b,
-    className: clsx(a.className, b.className),
-    style: { ...a.style, ...b.style },
+    return {
+      ...a,
+      ...b,
+      className: clsx(a.className, b.className),
+      style: { ...a.style, ...b.style },
+      sx: sxMerger(a.sx, b.sx),
+    };
   };
 }
 
-const defaultSXMerger = <T>(a: T, b: T) => {
+const defaultSXMerger = <T>(a?: T, b?: T): T | undefined => {
   if (a === b) {
     return a;
   }
-  if (typeof a === "object" || typeof b === "object") {
-    return { ...a, ...b };
-  }
-  return clsx(a as string, b as string) as T;
+  return a && b ? { ...a, ...b } : a ?? b;
 };
