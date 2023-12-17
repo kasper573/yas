@@ -62,6 +62,10 @@ export function createStyledFactory<SX>(
       RecipeComponentImpl,
     ) as unknown as RecipeComponent<Implementation, RecipeInput, SX>;
 
+    Object.assign(RecipeComponent, {
+      displayName: `styled(${getElementTypeName(implementation)})`,
+    });
+
     RecipeComponent.attrs = (defaultProps) =>
       createRecipeComponent(implementation, recipe, {
         ...options,
@@ -110,6 +114,13 @@ export function destructureVariantProps<
     variantProps as Pick<Props, Variants[number]>,
     forwardedProps as Omit<Props, Variants[number]>,
   ] as const;
+}
+
+function getElementTypeName(impl: ElementType): string {
+  if (typeof impl === "string") {
+    return impl;
+  }
+  return impl.displayName ?? impl.name;
 }
 
 interface StyledComponentFactory<SX> {
