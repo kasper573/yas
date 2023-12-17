@@ -2,6 +2,8 @@ import { unsafe } from "@yas/style";
 
 export const container = unsafe.style({
   margin: "auto",
+  width: "100%",
+  boxSizing: "border-box",
   "@media": {
     "(min-width: 0px)": {
       maxWidth: 0,
