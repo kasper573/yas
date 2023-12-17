@@ -27,7 +27,6 @@ export function createStyledFactory<SX>(
   ): RecipeComponent<Implementation, InlineImplementation, RecipeInput, SX> {
     const RecipeComponent = forwardRef(function RecipeComponent(
       {
-        sx = emptyObject as SX,
         as = implementation as unknown as InlineImplementation,
         asProps = emptyObject as ComponentProps<InlineImplementation>,
         ...inlineProps
@@ -39,10 +38,10 @@ export function createStyledFactory<SX>(
       >,
       ref,
     ) {
-      const implementationProps = mergeElementProps(
-        options?.defaultProps,
-        inlineProps,
-      );
+      const {
+        sx = emptyObject as (typeof inlineProps)["sx"],
+        ...implementationProps
+      } = mergeElementProps(options?.defaultProps, inlineProps);
 
       const [recipeInput, forwardedProps] = recipe
         ? destructureVariantProps(
@@ -122,7 +121,7 @@ const emptyObject = Object.freeze({});
  */
 export function destructureVariantProps<
   Props extends Record<PropertyKey, unknown>,
-  Variants extends Array<keyof Props>,
+  Variants extends PropertyKey[],
 >(
   allProps: Props,
   variants: Variants,
@@ -281,6 +280,7 @@ function useCompareMemo<Input extends Comparable, Output>(
 type ElementPropsLike = {
   className?: string;
   style?: CSSProperties;
+  sx?: object;
   [key: string]: unknown;
 };
 
@@ -296,5 +296,6 @@ function mergeElementProps<
     ...b,
     className: clsx(a.className, b.className),
     style: { ...a.style, ...b.style },
+    sx: { ...a.sx, ...b.sx },
   };
 }
