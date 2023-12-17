@@ -157,8 +157,8 @@ type Transition = [
   preset: keyof typeof flattenedTransitions,
 ];
 
-function border(...[preset, colorName = "divider"]: BorderArgs) {
+function border(...[preset, colorName = "divider"]: Border) {
   return tokens.borders[preset](colorName);
 }
 
-type BorderArgs = [preset: tokens.Border, color?: Color, radii?: tokens.Radii];
+type Border = [preset: tokens.Border, color?: Color];
