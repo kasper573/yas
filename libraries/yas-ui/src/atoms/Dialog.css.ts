@@ -29,7 +29,7 @@ export const overlayRecipe = recipe({
 export const dialogRecipe = recipe({
   base: {
     // Reset
-    border: ["inherit"],
+    border: "inherit",
     color: "inherit",
     padding: "inherit",
     margin: 0,

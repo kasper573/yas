@@ -11,7 +11,7 @@ export const clearButton = recipe({
 
 export const fieldset = style({
   padding: 0,
-  border: ["none"],
+  border: "none",
 });
 
 export const radio = style({

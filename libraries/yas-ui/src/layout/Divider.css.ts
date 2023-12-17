@@ -6,7 +6,7 @@ export const dividerRecipe = recipe({
     backgroundColor: "divider",
     width: "100%",
     boxSizing: "border-box",
-    border: ["none"],
+    border: "none",
   },
   variants: {
     margin: {

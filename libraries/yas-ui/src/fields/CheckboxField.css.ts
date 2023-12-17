@@ -2,7 +2,7 @@ import { recipe } from "@yas/style";
 
 export const checkboxRecipe = recipe({
   base: {
-    border: ["standard"],
+    border: "standard",
     borderRadius: "#1",
     backgroundColor: "surface.main",
     fontSize: "#2",
