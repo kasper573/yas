@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { DialogOutlet } from "@yas/ui";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { clsx } from "@yas/style";
 import { dark } from "@yas/style/themes/dark.css";
@@ -28,7 +27,6 @@ export function App() {
           </ThemeProvider>
         </ApiClientProvider>
       </BrowserRouter>
-      <DialogOutlet />
     </div>
   );
 }
