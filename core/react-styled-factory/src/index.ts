@@ -10,11 +10,10 @@ import type {
 import { createElement, forwardRef, useRef } from "react";
 
 export function createStyledFactory<SX>(
-  compileStyle: SXCompiler<SX> = () => undefined,
-  isSXPropEqual: EqualityFn = Object.is,
-  mergeSX: SXMerger<SX> = defaultSXMerger,
+  sxAdapterOptions?: SXAdapterOptions<SX>,
 ): StyledComponentFactory<SX> {
-  const mergeElementProps = createPropsMerger(mergeSX);
+  const sxAdapter = normalizeSXAdapter(sxAdapterOptions);
+  const mergeElementProps = createPropsMerger(sxAdapter.merge);
   return function createRecipeComponent<
     Implementation extends AnyImplementation,
     RecipeInput extends RecipeInputLike,
@@ -42,7 +41,11 @@ export function createStyledFactory<SX>(
         : [emptyObject, mergedProps];
 
       const recipeClassName = recipe?.(recipeInput as RecipeInput);
-      const styleOrClassName = useCompareMemo(compileStyle, sx, isSXPropEqual);
+      const styleOrClassName = useCompareMemo(
+        sxAdapter.compile,
+        sx,
+        sxAdapter.isEqual,
+      );
 
       const [sxStyle, sxClassName] =
         typeof styleOrClassName === "string"
@@ -221,6 +224,40 @@ export type SXCompiler<SX> = (
 
 export type SXMerger<SX> = (a?: SX, b?: SX) => SX | undefined;
 
+export type SXAdapter<SX> = {
+  compile: SXCompiler<SX>;
+  merge: SXMerger<SX>;
+  isEqual: EqualityFn;
+};
+
+const defaultSXMerger = <T>(a?: T, b?: T): T | undefined => {
+  if (a === b) {
+    return a;
+  }
+  return a && b ? { ...a, ...b } : a ?? b;
+};
+
+const defaultSXAdapter = {
+  compile: () => undefined,
+  merge: defaultSXMerger,
+  isEqual: Object.is,
+};
+
+type SXAdapterOptions<SX> = Partial<SXAdapter<SX>> | SXCompiler<SX>;
+
+function normalizeSXAdapter<SX>(options?: SXAdapterOptions<SX>): SXAdapter<SX> {
+  if (typeof options === "function") {
+    return {
+      ...defaultSXAdapter,
+      compile: options,
+    };
+  }
+  return {
+    ...defaultSXAdapter,
+    ...options,
+  };
+}
+
 export type RecipeInputLike = Record<string, unknown>;
 
 export interface RecipeFn<Input extends RecipeInputLike> {
@@ -279,10 +316,3 @@ function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
     };
   };
 }
-
-const defaultSXMerger = <T>(a?: T, b?: T): T | undefined => {
-  if (a === b) {
-    return a;
-  }
-  return a && b ? { ...a, ...b } : a ?? b;
-};

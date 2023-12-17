@@ -127,7 +127,7 @@ function testComponent(
 
   it("sx memoized", () => {
     const compile = vi.fn((style: CSSProperties) => style);
-    const styled = createStyledFactory(compile, isEqual);
+    const styled = createStyledFactory({ compile, isEqual });
     const Component = styled(component);
     const { container, rerender } = render(<Component sx={{ color: "red" }} />);
     rerender(<Component sx={{ color: "red" }} />);

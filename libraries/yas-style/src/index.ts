@@ -36,12 +36,12 @@ export const keyframes = (
     ),
   );
 
-export const styled = createStyledFactory(
-  resolveStyle as (
+export const styled = createStyledFactory({
+  compile: resolveStyle as (
     constrainedStyle: ConstrainedStyleWithoutConditions,
   ) => Style,
-  shallowEqual,
-);
+  isEqual: shallowEqual,
+});
 
 export const recipe = createRecipeFactory(style);
 
