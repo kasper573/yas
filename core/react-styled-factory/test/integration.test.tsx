@@ -206,6 +206,17 @@ function testComponent(
     expect(container.outerHTML).toEqual(toHtml({ attrs: { role: "alert" } }));
   });
 
+  it("default prop chained", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component)
+      .attrs({ role: "alert" })
+      .attrs({ "data-testid": "foo" });
+    const { container } = render(<Component />);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { role: "alert", "data-testid": "foo" } }),
+    );
+  });
+
   it("default prop and inline override", () => {
     const styled = createStyledFactory();
     const Component = styled(component).attrs({ role: "default" });
