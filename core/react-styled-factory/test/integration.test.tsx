@@ -8,11 +8,7 @@ import {
 import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../src/createStyledFactory";
 import { recipeClassName } from "./fixtures";
-import {
-  blueColorRecipe,
-  greenColorRecipe,
-  recipeWithVariants,
-} from "./test.css";
+import { greenColorRecipe, recipeWithVariants } from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -23,8 +19,8 @@ describe("can render component with", () =>
     (props) => createHtml("span", props),
   ));
 
-describe("inline implementation", () => {
-  it("element", () => {
+describe("changing implementation", () => {
+  it("can change element", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
     const ComponentSpan = Component.as("span");
@@ -32,15 +28,15 @@ describe("inline implementation", () => {
     expect(container.outerHTML).toEqual("<span></span>");
   });
 
-  it("element props", () => {
+  it("can use new element props", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
-    const ComponentSpan = Component.as("span");
-    const { container } = render(<ComponentSpan data-testid="foo" />);
-    expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
+    const AsDialog = Component.as("dialog");
+    const { container } = render(<AsDialog open />);
+    expect(container.outerHTML).toEqual(`<dialog open=""></dialog>`);
   });
 
-  it("component", () => {
+  it("can change component", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
     function MySpan() {
@@ -51,21 +47,23 @@ describe("inline implementation", () => {
     expect(container.outerHTML).toEqual("<span></span>");
   });
 
-  it("component props", () => {
+  it("can use new component props", () => {
     const styled = createStyledFactory();
     const Component = styled("div");
-    function MySpan(props: Record<string, unknown>) {
-      return <span {...props} />;
+    function MySpan({ foo }: { foo: string }) {
+      return <span data-testid={foo} />;
     }
     const ComponentMySpan = Component.as(MySpan);
-    const { container } = render(<ComponentMySpan data-testid="foo" />);
-    expect(container.outerHTML).toEqual(`<span data-testid="foo"></span>`);
+    const { container } = render(<ComponentMySpan foo="bar" />);
+    expect(container.outerHTML).toEqual(`<span data-testid="bar"></span>`);
   });
 
-  it("replaces recipe", () => {
+  it("old implementation is not used", () => {
     const styled = createStyledFactory();
-    const Blue = styled("div", blueColorRecipe);
-    const Green = styled(Blue, greenColorRecipe);
+    const Old = styled(() => {
+      throw new Error("Should not be used");
+    });
+    const Green = styled(Old, greenColorRecipe);
     const GreenSpan = Green.as("span");
     const { container } = render(<GreenSpan />);
     expect(container.outerHTML).toEqual(
