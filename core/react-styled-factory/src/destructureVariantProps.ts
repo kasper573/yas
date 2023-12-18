@@ -1,6 +1,3 @@
-/**
- * Separates the props into variant props and remaining props based on the given recipe
- */
 export function destructureVariantProps<
   Props extends Record<PropertyKey, unknown>,
   Variants extends PropertyKey[],
