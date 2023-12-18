@@ -8,7 +8,11 @@ import {
 import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../src/createStyledFactory";
 import { recipeClassName } from "./fixtures";
-import { greenColorRecipe, recipeWithVariants } from "./test.css";
+import {
+  blueColorRecipe,
+  greenColorRecipe,
+  recipeWithVariants,
+} from "./test.css";
 
 describe("can render element with", () =>
   testComponent("div", (props) => createHtml("div", props)));
@@ -69,6 +73,19 @@ describe("changing implementation", () => {
     expect(container.outerHTML).toEqual(
       createHtml("span", {
         attrs: { class: "green" },
+      }),
+    );
+  });
+
+  it("merges recipes but gets the new inner implementation", () => {
+    const styled = createStyledFactory();
+    const Blue = styled("div", blueColorRecipe);
+    const Green = styled("span", greenColorRecipe);
+    const GreenBlue = Green.as(Blue);
+    const { container } = render(<GreenBlue />);
+    expect(container.outerHTML).toEqual(
+      createHtml("div", {
+        attrs: { class: "blue green" },
       }),
     );
   });
