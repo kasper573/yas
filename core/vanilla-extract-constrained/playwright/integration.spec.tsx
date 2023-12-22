@@ -71,6 +71,14 @@ test("defining multiple properties yield a single class name", async ({
   expect(classListSize).toBe(1);
 });
 
+test("defining multiple properties with a single alias", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="redColorAndGreenBackgroundViaSingleAlias" />,
+  );
+  await expect(component).toHaveCSS("color", colors.red);
+  await expect(component).toHaveCSS("background-color", colors.green);
+});
+
 test.describe("conditional", () => {
   test.describe("inline", () => {
     test("default", async ({ mount }) => {

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { createStyleResolver, all } from "../../src";
+import { createStyleResolver, all, raw } from "../../src";
 import { colors } from "./tokens";
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
@@ -17,6 +17,12 @@ const resolveStyle = createStyleResolver({
     },
     fontSize: all(),
     border: (size: 1 | 2) => `${size}px solid black`,
+    multiPropertyAlias: raw({
+      "red-color-green-background": {
+        color: colors.red,
+        background: colors.green,
+      },
+    }),
   },
   shorthands: {
     bg: ["background"],

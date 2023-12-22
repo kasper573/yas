@@ -42,6 +42,10 @@ export const validRedColorAndGreenBackground = atoms({
   background: "success",
 });
 
+export const redColorAndGreenBackgroundViaSingleAlias = atoms({
+  multiPropertyAlias: "red-color-green-background",
+});
+
 const layerName = layer();
 export const layerRedColor = atoms({
   "@layer": {

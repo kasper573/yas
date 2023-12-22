@@ -53,10 +53,10 @@ function createStyleResolverImpl<
 
     consumeRootConditions(constrainedStyle, style);
 
-    for (const [propertyNameOrShorthand, propertyValue] of Object.entries(
+    for (const [propertyNameOrShorthand, propertyInput] of Object.entries(
       constrainedStyle,
     )) {
-      if (propertyValue === undefined || propertyValue === null) {
+      if (propertyInput === undefined || propertyInput === null) {
         continue;
       }
 
@@ -66,27 +66,33 @@ function createStyleResolverImpl<
 
       for (const propertyName of propertyNames) {
         if (passThroughProperties.includes(propertyName)) {
-          style[propertyName] = propertyValue;
+          style[propertyName] = propertyInput;
           continue;
         }
+
         const propertyDefinition = properties[propertyName];
         if (!propertyDefinition) {
           errors.push([propertyNameOrShorthand, "Unknown property"]);
           continue;
         }
 
-        if (!isPlainObject(propertyValue)) {
-          const res = resolveValue(propertyDefinition, propertyValue);
+        if (!isPlainObject(propertyInput)) {
+          const res = resolvePropertyStyle(
+            propertyName,
+            propertyDefinition,
+            propertyInput,
+          );
+
           if (res.isErr()) {
             errors.push([propertyName, res.error]);
             continue;
           }
-          style[propertyName] = res.value;
+          Object.assign(style, res.value);
           continue;
         }
 
         for (const [conditionName, conditionValue] of Object.entries(
-          propertyValue,
+          propertyInput,
         )) {
           const condition = conditions?.[conditionName];
           if (!condition) {
@@ -94,24 +100,33 @@ function createStyleResolverImpl<
             continue;
           }
 
-          const res = resolveValue(propertyDefinition, conditionValue);
+          const res = resolvePropertyStyle(
+            propertyName,
+            propertyDefinition,
+            conditionValue,
+          );
+
           if (res.isErr()) {
             errors.push([propertyName, res.error]);
             continue;
           }
 
           if (defaultCondition === conditionName) {
-            style[propertyName] = res.value;
+            Object.assign(style, res.value);
           }
 
           for (const [conditionKey, conditionAlias] of Object.entries(
             condition,
           )) {
-            assignPath(
-              style,
-              [conditionKey, conditionAlias, propertyName],
+            for (const [cssPropertyName, cssValue] of Object.entries(
               res.value,
-            );
+            )) {
+              assignPath(
+                style,
+                [conditionKey, conditionAlias, cssPropertyName],
+                cssValue,
+              );
+            }
           }
         }
       }
@@ -171,47 +186,59 @@ export function all<T>(): T[] {
   // We use a symbol to represent this at runtime, but assert as the expected type
   // to be able to optimally infer only the values for the specified properties.
   // This heavily reduces the number of type variants that gets generated.
-  return anyCssValuePlaceholder as unknown as T[];
+  return anyCssValueIdentifier as unknown as T[];
+}
+
+export function raw<Aliases extends string>(
+  aliasedStyles: Record<Aliases, Style>,
+): Record<Aliases, Style> {
+  return { ...aliasedStyles, [aliasedRawStylesIdentifier]: true };
 }
 
 // Can unfortunately not be a symbol because it needs to be serializable for some integrations.
-const anyCssValuePlaceholder = "___placeholder_for_any_css_value___" as const;
+const anyCssValueIdentifier = "___any_css_value___" as const;
+const aliasedRawStylesIdentifier = "___aliased_raw_styles___" as const;
 
-function resolveValue<Value>(
-  options: PropertyDefinition<Value>,
-  value: Value,
-): Result<Value, string> {
-  if (Object.is(options, anyCssValuePlaceholder)) {
-    return ok(value);
+function resolvePropertyStyle<Value>(
+  propertyName: PropertyKey,
+  def: PropertyDefinition<Value>,
+  input: unknown,
+): Result<Style, string> {
+  if (Object.is(def, anyCssValueIdentifier)) {
+    return ok({ [propertyName]: input });
   }
-  if (typeof options === "function") {
+
+  if (aliasedRawStylesIdentifier in def) {
+    return ok(def[input as keyof typeof def] as unknown as Style);
+  }
+
+  if (typeof def === "function") {
     let res;
     try {
-      const args = Array.isArray(value) ? value : [value];
-      res = options(...(args as Parameters<typeof options>));
+      const args = Array.isArray(input) ? input : [input];
+      res = def(...(args as Parameters<typeof def>));
     } catch (e) {
       return err(
-        `Could not resolve functional value ${JSON.stringify(value)}:\n\n${e}`,
+        `Could not resolve functional value ${JSON.stringify(input)}:\n\n${e}`,
       );
     }
-    return ok(res);
+    return ok({ [propertyName]: res });
   }
-  if (Array.isArray(options)) {
-    if (!options.includes(value as string)) {
-      return err(
-        `Invalid value ${value}. Must be one of: ${options.join(", ")}`,
-      );
+
+  if (Array.isArray(def)) {
+    if (!def.includes(input as string)) {
+      return err(`Invalid value ${input}. Must be one of: ${def.join(", ")}`);
     }
-    return ok(value);
+    return ok({ [propertyName]: input });
   }
-  if (!options.hasOwnProperty(value as string)) {
+
+  if (!def.hasOwnProperty(input as string)) {
     return err(
-      `Invalid value ${value}. Must be one of: ${Object.keys(options).join(
-        ", ",
-      )}`,
+      `Invalid value ${input}. Must be one of: ${Object.keys(def).join(", ")}`,
     );
   }
-  return ok(options[value as keyof typeof options] as Value);
+
+  return ok({ [propertyName]: def[input as keyof typeof def] });
 }
 
 function assignPath(
