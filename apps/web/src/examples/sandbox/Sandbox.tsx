@@ -35,7 +35,7 @@ export function Sandbox() {
         <Button onClick={() => showDialog()}>Show dialog</Button>
       </Stack>
 
-      <div className={foo.container()}>Testing vanilla-extract css</div>
+      <div className={foo.container}>Testing vanilla-extract css</div>
 
       <Stack direction="row" gap="#2">
         <Box

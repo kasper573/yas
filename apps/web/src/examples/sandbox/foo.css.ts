@@ -1,12 +1,9 @@
-import { recipe, style } from "@yas/style";
+import { style } from "@yas/style";
 import projectImageUrl from "./image.jpg";
 
-export const container = recipe({
-  base: {
-    color: "success.main",
-    fontFamily: "default",
-    fontSize: "#7",
-  },
+export const container = style({
+  color: "success.main",
+  typography: "body",
 });
 
 export const projectImage = style({
