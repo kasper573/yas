@@ -60,7 +60,7 @@ export const vars = createThemeContract({
     body: typographyStyle,
     body2: typographyStyle,
     caption: typographyStyle,
-    button: typographyStyle,
+    hero: typographyStyle,
     h1: typographyStyle,
     h2: typographyStyle,
     h3: typographyStyle,

@@ -20,7 +20,7 @@ export const typography: Record<keyof typeof vars.typography, TypographyStyle> =
     body: regular(fontSizes["#2"]),
     body2: regular(fontSizes["#3"]),
     caption: regular(fontSizes["#1"]),
-    button: regular(fontSizes["#2"]),
+    hero: header(fontSizes["#9"]),
     h1: header(fontSizes["#6"]),
     h2: header(fontSizes["#5"]),
     h3: header(fontSizes["#4"]),
