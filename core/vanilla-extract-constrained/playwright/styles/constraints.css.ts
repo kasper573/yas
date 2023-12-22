@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { createStyleResolver, all, multi } from "../../src";
+import { all, createStyleResolver, multi } from "../../src";
 import { colors } from "./tokens";
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
@@ -30,5 +30,5 @@ const resolveStyle = createStyleResolver({
   },
 });
 
-export const atoms = (constrainedStyle: ConstrainedStyle) =>
+export const constrained = (constrainedStyle: ConstrainedStyle) =>
   style(resolveStyle(constrainedStyle));
