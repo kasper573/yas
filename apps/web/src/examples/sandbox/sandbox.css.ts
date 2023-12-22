@@ -2,7 +2,16 @@ import { style } from "@yas/style";
 import projectImageUrl from "./image.jpg";
 
 export const container = style({
-  color: "success.main",
+  transition: [["background", "standard.enter"]],
+  background: {
+    default: "info.main",
+    hover: "success.main",
+  },
+  color: {
+    default: "info.contrast",
+    hover: "success.contrast",
+  },
+  padding: "#4",
   typography: "body",
 });
 

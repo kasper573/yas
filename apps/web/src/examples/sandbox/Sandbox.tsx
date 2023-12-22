@@ -16,7 +16,7 @@ import { api } from "@yas/api-client";
 import { env } from "../../env";
 import { hello } from "../../hello";
 import { useTheme } from "../../hooks/useTheme";
-import * as foo from "./foo.css";
+import * as styles from "./sandbox.css";
 
 export function Sandbox() {
   const [theme, toggleTheme] = useTheme();
@@ -35,7 +35,7 @@ export function Sandbox() {
         <Button onClick={() => showDialog()}>Show dialog</Button>
       </Stack>
 
-      <div className={foo.container}>Testing vanilla-extract css</div>
+      <div className={styles.container}>Testing vanilla-extract css</div>
 
       <Stack direction="row" gap="#2">
         <Box
@@ -43,12 +43,13 @@ export function Sandbox() {
             p: "#7",
             background: "secondary.base.main",
             color: "secondary.contrast.main",
+            typography: "body",
           }}
         >
           Testing sx prop
         </Box>
 
-        <Box className={foo.projectImage} sx={{ p: "#2" }}>
+        <Box className={styles.projectImage} sx={{ p: "#2" }}>
           <Alert severity="info">Image from apps/web</Alert>
         </Box>
 
