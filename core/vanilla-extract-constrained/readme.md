@@ -10,7 +10,7 @@ Here's how you define your constraints, very much like sprinkles:
 
 ```typescript
 // constrained.css.ts
-import { createStyleResolver, all } from "vanilla-extract-constrained";
+import { createStyleResolver, all, multi } from "vanilla-extract-constrained";
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
 
@@ -27,6 +27,18 @@ export const resolveStyle = createStyleResolver({
     },
     background: ["yellow", "blue"]
     fontSize: all(), // Infers and accepts all default CSS values for this property
+    border: multi({ // Allows specifying aliases that will define multiple properties at once
+      standard: {
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "black",
+      },
+      thick: {
+        borderWidth: "2px",
+        borderStyle: "solid",
+        borderColor: "black",
+      },
+    }),
     transition  (...list: Transition[]) {
       // Function properties allow you to safely deal with composite and dynamic values
       // The function should return a valid css value, but may accept ANY argument types.

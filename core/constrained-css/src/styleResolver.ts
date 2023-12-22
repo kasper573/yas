@@ -189,15 +189,15 @@ export function all<T>(): T[] {
   return anyCssValueIdentifier as unknown as T[];
 }
 
-export function raw<Aliases extends string>(
+export function multi<Aliases extends string>(
   aliasedStyles: Record<Aliases, Style>,
 ): Record<Aliases, Style> {
-  return { ...aliasedStyles, [aliasedRawStylesIdentifier]: true };
+  return { ...aliasedStyles, [multiIdentifier]: true };
 }
 
 // Can unfortunately not be a symbol because it needs to be serializable for some integrations.
 const anyCssValueIdentifier = "___any_css_value___" as const;
-const aliasedRawStylesIdentifier = "___aliased_raw_styles___" as const;
+const multiIdentifier = "___multiple_styles___" as const;
 
 function resolvePropertyStyle<Value>(
   propertyName: PropertyKey,
@@ -208,7 +208,7 @@ function resolvePropertyStyle<Value>(
     return ok({ [propertyName]: input });
   }
 
-  if (aliasedRawStylesIdentifier in def) {
+  if (multiIdentifier in def) {
     return ok(def[input as keyof typeof def] as unknown as Style);
   }
 
