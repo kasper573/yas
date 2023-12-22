@@ -8,11 +8,9 @@ export const trigger = style({
   borderRadius: "#1",
   py: 0,
   px: "#4",
-  fontSize: "#1",
-  lineHeight: "1",
+  typography: "caption",
   height: "35px",
   gap: "#1",
-  fontFamily: "default",
   backgroundColor: "surface.light",
   color: "surface.contrast",
   boxShadow: "#1",
@@ -38,15 +36,21 @@ export const triggerIcon = style({
 });
 
 export const label = style({
-  py: 0,
-  px: "#5",
-  fontSize: "#1",
-  lineHeight: "2em",
+  pb: "#1",
+  px: "#4",
+  typography: "h4",
+  color: "surface.contrast",
+});
+
+export const labelRealCSSS = style({
+  pb: "#1",
+  px: "#4",
+  typography: "h4",
   color: "surface.contrast",
 });
 
 export const content = style({
-  fontFamily: "default",
+  typography: "body",
   overflow: "hidden",
   backgroundColor: "surface.light",
   borderRadius: "#2",
@@ -59,8 +63,7 @@ export const viewport = style({
 
 export const item = style({
   all: "unset",
-  fontSize: "#2",
-  lineHeight: "1",
+  typography: "body",
   color: {
     default: "surface.contrast",
     hoverOrFocus: "primary.contrast.main",

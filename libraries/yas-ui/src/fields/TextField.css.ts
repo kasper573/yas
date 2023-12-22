@@ -23,8 +23,7 @@ export const inputRecipe = recipe({
     borderRadius: "#2",
     backgroundColor: "surface.light",
     color: "surface.contrast",
-    fontSize: "#3",
-    fontFamily: "default",
+    typography: "body",
     outline: { focus: "none" },
     boxShadow: { focus: "#1" },
     borderColor: {

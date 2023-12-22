@@ -41,7 +41,6 @@ export function Sandbox() {
         <Box
           sx={{
             p: "#7",
-            fontFamily: "default",
             background: "secondary.base.main",
             color: "secondary.contrast.main",
           }}

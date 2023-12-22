@@ -5,7 +5,8 @@ export const checkboxRecipe = recipe({
     border: "standard",
     borderRadius: "#1",
     backgroundColor: "surface.main",
-    fontSize: "#2",
+    width: "20px",
+    height: "20px",
     outline: { focus: "none" },
     boxShadow: { focus: "#1" },
     borderColor: {

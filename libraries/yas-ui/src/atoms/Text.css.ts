@@ -1,30 +1,21 @@
-import { recipe } from "@yas/style";
+import { recipe, unsafe } from "@yas/style";
+
+const typographyVariants = Object.keys(
+  unsafe.vars.typography,
+) as unsafe.TypographyVariant[];
 
 export const textRecipe = recipe({
   base: {
-    fontFamily: "default",
-    fontWeight: "normal",
     color: "inherit",
     display: "block",
   },
   variants: {
-    variant: {
-      body: {
-        fontSize: "#2",
-      },
-      h1: {
-        fontSize: "#5",
-      },
-      h2: {
-        fontSize: "#4",
-      },
-      h3: {
-        fontSize: "#3",
-      },
-      caption: {
-        fontSize: "#1",
-      },
-    },
+    variant: Object.fromEntries(
+      typographyVariants.map((typography) => [typography, { typography }]),
+    ) as Record<
+      unsafe.TypographyVariant,
+      { typography: unsafe.TypographyVariant }
+    >,
     paragraph: {
       true: {
         marginBottom: "#2",

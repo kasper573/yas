@@ -5,14 +5,14 @@ import { outline } from "./Dashboard.css";
 export function Dashboard() {
   return (
     <Outlined>
-      <Stack direction="row" sx={{ mt: rowGap, px: columnGap }}>
+      <Stack direction="row" sx={{ my: rowGap, px: columnGap }}>
         <OrganizationSelect />
         <NavMenu sx={{ flex: 1 }} />
         <Search />
         <UserMenu />
       </Stack>
       <Divider margin={false} />
-      <Stack sx={{ flex: 1 }}>
+      <Stack sx={{ flex: 1, p: "#5" }}>
         <Title />
         <Tabs />
         <Stack direction="row">
@@ -33,11 +33,11 @@ export function Dashboard() {
 const rowGap = "#3" as const;
 const columnGap = "#5" as const;
 const Stack = styled(StackImpl).attrs({ columnGap, rowGap });
-const Outlined = styled(Stack).attrs({ className: outline });
+const Outlined = styled("div").attrs({ className: outline });
 const NavMenu = styled(Text).attrs({ children: "NavMenu" });
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
-const Title = styled(Text).attrs({ children: "Title" });
+const Title = styled(Text).attrs({ variant: "h1", children: "Dashboard" });
 const Tabs = styled(Text).attrs({ children: "Tabs" });
 const Stats = styled(Text).attrs({ children: "Stats" });
 const Graph = styled(Text).attrs({ children: "Graph" });

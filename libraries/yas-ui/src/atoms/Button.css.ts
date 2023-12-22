@@ -7,10 +7,6 @@ export const buttonRecipe = recipe({
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
-    fontFamily: "default",
-    fontWeight: 500,
-    fontSize: "#2",
-    textTransform: "uppercase",
     transition: [
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
@@ -21,17 +17,17 @@ export const buttonRecipe = recipe({
   variants: {
     size: {
       small: {
-        fontSize: "#1",
+        typography: "caption",
         px: "#2",
-        py: "#2",
+        py: "#1",
       },
       medium: {
-        fontSize: "#2",
+        typography: "body",
         px: "#2",
         py: "#2",
       },
       large: {
-        fontSize: "#3",
+        typography: "body2",
         px: "#3",
         py: "#2",
       },
@@ -124,7 +120,7 @@ export const buttonRecipe = recipe({
     },
   ],
   defaultVariants: {
-    size: "small",
+    size: "medium",
     variant: "contained",
     color: "primary",
     disabled: false,

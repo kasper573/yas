@@ -123,8 +123,6 @@ export const fontSizes = {
   "#8": 64,
   "#9": 94,
   "#10": 128,
-  inherit: "inherit",
-  "100%": "100%",
 };
 
 export type Radii = keyof typeof radii;

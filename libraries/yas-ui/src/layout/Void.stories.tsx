@@ -23,7 +23,7 @@ export const Default: Story = {
             sx={{
               background: "error.main",
               padding: "#3",
-              fontSize: "#5",
+              typography: "h3",
             }}
           >
             Void

@@ -20,8 +20,6 @@ export const iconButtonRecipe = recipe({
     margin: 0,
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "default",
-    fontWeight: 500,
     textTransform: "uppercase",
     boxSizing: "border-box",
     transition: [

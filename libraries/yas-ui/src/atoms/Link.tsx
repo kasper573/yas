@@ -1,4 +1,4 @@
-import { styled } from "@yas/style";
+import { Text } from "../atoms/Text";
 import { link } from "./Link.css";
 
-export const Link = styled("a").attrs({ className: link });
+export const Link = Text.as("a").attrs({ className: link });
