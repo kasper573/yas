@@ -1,4 +1,5 @@
 import { createThemeContract } from "@vanilla-extract/css";
+import type { Properties as CSSProperties } from "csstype";
 
 const color = {
   main: null,
@@ -22,6 +23,20 @@ const transition = {
   exit: null,
 };
 
+export type TypographyVariant = keyof typeof vars.typography;
+export type TypographyStyle = {
+  [K in keyof typeof typographyStyle]: Extract<CSSProperties[K], string>;
+};
+
+const typographyStyle = {
+  fontFamily: null,
+  fontSize: null,
+  fontStyle: null,
+  fontWeight: null,
+  letterSpacing: null,
+  lineHeight: null,
+} satisfies Partial<Record<keyof CSSProperties, null>>;
+
 export const vars = createThemeContract({
   color: {
     // Groups
@@ -40,5 +55,17 @@ export const vars = createThemeContract({
   transitions: {
     emphasized: transition,
     standard: transition,
+  },
+  typography: {
+    body: typographyStyle,
+    body2: typographyStyle,
+    caption: typographyStyle,
+    button: typographyStyle,
+    h1: typographyStyle,
+    h2: typographyStyle,
+    h3: typographyStyle,
+    h4: typographyStyle,
+    h5: typographyStyle,
+    h6: typographyStyle,
   },
 });

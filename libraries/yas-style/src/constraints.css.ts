@@ -3,7 +3,7 @@ import type {
   ConstrainedStyle as ConstrainedStyleImpl,
   StyleResolver,
 } from "vanilla-extract-constrained";
-import { all, createStyleResolver } from "vanilla-extract-constrained";
+import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
 import { flattened } from "./flattened";
@@ -88,6 +88,7 @@ export const resolveStyle = createStyleResolver({
     textAlign: all(),
     fontFamily: tokens.fonts,
     fontSize: tokens.fontSizes,
+    typography: multi(vars.typography),
     lineHeight: all(),
     fontWeight: all(),
     color: colors,

@@ -179,19 +179,3 @@ export const easings = {
   legacyDecelerate: "cubic-bezier(0, 0, 0.2, 1)",
   linear: "cubic-bezier(0, 0, 1, 1)",
 };
-
-export const transitions = {
-  emphasized: {
-    beginAndEndOnScreen: `${durations.long2} ${easings.emphasized}`,
-    enter: `${durations.medium4} ${easings.emphasizedDecelerate}`,
-    exit: `${durations.short4} ${easings.emphasizedAccelerate}`,
-  },
-  standard: {
-    beginAndEndOnScreen: `${durations.medium2} ${easings.standard}`,
-    enter: `${durations.medium1} ${easings.standardDecelerate}`,
-    exit: `${durations.short4} ${easings.standardAccelerate}`,
-  },
-};
-
-const coerce = (value: string | number) =>
-  typeof value === "number" ? `${value}px` : value;

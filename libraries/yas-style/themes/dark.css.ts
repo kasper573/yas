@@ -1,6 +1,7 @@
 import { createTheme } from "@vanilla-extract/css";
 import { vars } from "../src/vars.css";
-import { palette, transitions } from "../src/tokens";
+import { palette } from "../src/tokens";
+import { transitions, typography } from "./shared";
 
 export const dark: string = createTheme(vars, {
   color: {
@@ -63,4 +64,5 @@ export const dark: string = createTheme(vars, {
     highlight: palette.white["50%"],
   },
   transitions,
+  typography,
 });
