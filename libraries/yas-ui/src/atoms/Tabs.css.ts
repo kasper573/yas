@@ -1,4 +1,4 @@
-import { globalStyle, recipe } from "@yas/style";
+import { recipe } from "@yas/style";
 
 export const list = recipe({
   base: {
@@ -24,6 +24,8 @@ export const list = recipe({
   },
 });
 
+const variantClasses = list.classNames.variants.variant;
+
 export const item = recipe({
   base: {
     borderRadius: "#3",
@@ -34,27 +36,21 @@ export const item = recipe({
   },
   variants: {
     active: {
-      true: {},
-      false: {},
+      true: {
+        selectors: {
+          [`${variantClasses["item-contained"]} &`]: {
+            background: "info.main",
+            color: "info.contrast",
+          },
+          [`${variantClasses["contained"]} &`]: {
+            background: "surface.main",
+            color: "surface.contrast",
+          },
+        },
+      },
+      false: {
+        color: "info.light",
+      },
     },
   },
-});
-
-const variantClasses = list.classNames.variants.variant;
-const activeClasses = item.classNames.variants.active;
-
-globalStyle(`${variantClasses["item-contained"]} ${activeClasses.true}`, {
-  background: "info.main",
-  color: "info.contrast",
-});
-
-for (const variantClass of Object.values(variantClasses)) {
-  globalStyle(`${variantClass} ${activeClasses.false}`, {
-    color: "info.light",
-  });
-}
-
-globalStyle(`${variantClasses["contained"]} ${activeClasses.true}`, {
-  background: "surface.main",
-  color: "surface.contrast",
 });
