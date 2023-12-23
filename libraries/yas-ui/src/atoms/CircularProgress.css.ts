@@ -36,6 +36,10 @@ export const circularProgressRecipe = recipe({
         width: 32,
         height: 32,
       },
+      hero: {
+        width: 94,
+        height: 94,
+      },
     },
   },
   defaultVariants: {

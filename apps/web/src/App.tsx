@@ -5,7 +5,7 @@ import { env } from "./env";
 import { ThemeProvider, type ThemeName } from "./hooks/useTheme";
 import { AppRoutes } from "./components/Routes";
 
-export function App() {
+export default function App() {
   const [theme, setTheme] = useState<ThemeName>("dark");
   const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
 

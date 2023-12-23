@@ -9,6 +9,7 @@ export * from "./atoms/Tabs";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
+export * from "./layout/Dock";
 export * from "./layout/Stack";
 export * from "./layout/Container";
 export * from "./layout/Void";

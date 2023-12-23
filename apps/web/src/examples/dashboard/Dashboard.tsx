@@ -12,7 +12,7 @@ import { outline } from "./Dashboard.css";
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <Outlined>
       <Stack direction="row" align="center" sx={{ my: rowGap, px: columnGap }}>

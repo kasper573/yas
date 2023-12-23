@@ -18,7 +18,7 @@ import { hello } from "../../hello";
 import { useTheme } from "../../hooks/useTheme";
 import * as styles from "./sandbox.css";
 
-export function Sandbox() {
+export default function Sandbox() {
   const [theme, toggleTheme] = useTheme();
   const { data: response } = api.example.hello.useQuery(hello());
   const showDialog = useDialog(TestDialog);
