@@ -100,7 +100,7 @@ export const resolveStyle = createStyleResolver({
     // SVG
     cx: all(),
     cy: all(),
-    fill: all(),
+    fill: colors,
     stroke: colors,
     strokeWidth: all(),
     r: all(),

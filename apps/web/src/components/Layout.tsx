@@ -29,7 +29,7 @@ export default function Layout() {
           <Suspense
             fallback={
               <Dock position="center">
-                <CircularProgress size="hero" />
+                <CircularProgress size="large" />
               </Dock>
             }
           >

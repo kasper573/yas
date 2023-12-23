@@ -23,14 +23,7 @@ function RootSuspenseFallback() {
       height="48"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        animation: "root-suspense-fallback-animation 1s linear infinite",
-        fill: "#90CAF9",
-      }}
+      className="root-suspense-fallback"
     >
       <path
         d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"

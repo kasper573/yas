@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YAS</title>
     <style type="text/css">
-      @keyframes root-suspense-fallback-animation {
+      .root-suspense-fallback {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: spin 1s linear infinite;
+        fill: #0c80df;
+      }
+
+      @keyframes spin {
         0% {
-          transform: rotate(0deg);
+          transform: translate(-50%, -50%) rotate(0deg);
         }
         100% {
-          transform: rotate(360deg);
+          transform: translate(-50%, -50%) rotate(360deg);
         }
       }
     </style>
