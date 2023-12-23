@@ -169,6 +169,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^4
+        version: 4.29.15(react-dom@18.2.0)(react@18.2.0)
       '@yas/api-client':
         specifier: workspace:*
         version: link:../../integrations/api-client

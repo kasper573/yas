@@ -1,10 +1,25 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { createContext, useCallback, useContext } from "react";
 
-export type ThemeName = "dark" | "light";
+import { useQuery } from "@tanstack/react-query";
+export type ThemeName = keyof typeof themeStyleLoaders;
 
 export function useTheme() {
   return useContext(ThemeContext);
+}
+
+const themeStyleLoaders = {
+  dark: () => import("@yas/style/themes/dark.css").then((m) => m.dark),
+  light: () => import("@yas/style/themes/light.css").then((m) => m.light),
+};
+
+export function useThemeClassName() {
+  const [themeName] = useTheme();
+  const { data: themeClassName } = useQuery(
+    ["theme", themeName],
+    themeStyleLoaders[themeName],
+  );
+  return themeClassName;
 }
 
 export function ThemeProvider({
