@@ -40,23 +40,19 @@ export const item = recipe({
   },
 });
 
-globalStyle(
-  `${list.classNames.variants.variant["item-contained"]} ${item.classNames.variants.active.true}`,
-  {
-    background: "info.main",
-    color: "info.contrast",
-  },
-);
+const variantClasses = list.classNames.variants.variant;
+const activeClasses = item.classNames.variants.active;
 
-globalStyle(
-  `${list.classNames.variants.variant["text-highlight"]} ${item.classNames.variants.active.false}`,
-  { color: "info.light" },
-);
+globalStyle(`${variantClasses["item-contained"]} ${activeClasses.true}`, {
+  background: "info.main",
+  color: "info.contrast",
+});
 
-globalStyle(
-  `${list.classNames.variants.variant["contained"]} ${item.classNames.variants.active.true}`,
-  {
-    background: "surface.main",
-    color: "surface.contrast",
-  },
-);
+globalStyle(`${variantClasses["text-highlight"]} ${activeClasses.false}`, {
+  color: "info.light",
+});
+
+globalStyle(`${variantClasses["contained"]} ${activeClasses.true}`, {
+  background: "surface.main",
+  color: "surface.contrast",
+});
