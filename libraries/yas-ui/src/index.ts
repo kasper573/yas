@@ -5,6 +5,7 @@ export * from "./atoms/Text";
 export * from "./atoms/ExampleImage";
 export * from "./atoms/CircularProgress";
 export * from "./atoms/Link";
+export * from "./atoms/Tabs";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
