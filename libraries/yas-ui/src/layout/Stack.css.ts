@@ -26,11 +26,13 @@ export const stackRecipe = recipe({
       start: { alignItems: "start" },
       center: { alignItems: "center" },
       end: { alignItems: "end" },
+      stretch: { alignItems: "stretch" },
     },
     justify: {
       start: { justifyContent: "start" },
       center: { justifyContent: "center" },
       end: { justifyContent: "end" },
+      spaceBetween: { justifyContent: "space-between" },
     },
     gap: Object.fromEntries(
       spaces.map((space) => [space, { gap: space }]),
