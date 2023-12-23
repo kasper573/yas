@@ -15,7 +15,7 @@ export interface CheckboxFieldProps
   extends FieldProps<boolean>,
     Omit<
       ComponentProps<typeof Checkbox>,
-      keyof FieldProps<boolean> | "checked" | "as"
+      keyof FieldProps<boolean> | "checked"
     > {
   labelSide?: CheckboxLabelSide;
 }
