@@ -65,10 +65,11 @@ export function createStyledFactory<SX>(
       ].reduce(mergeElementProps);
 
       if (asChild) {
-        const child = Children.only(finalProps.children) as ReactElement;
+        const { children, ...finalPropsWithoutChildren } = finalProps;
+        const child = Children.only(children) as ReactElement;
         return createElement(
           child.type,
-          mergeElementProps(finalProps, child.props),
+          mergeElementProps(finalPropsWithoutChildren, child.props),
         );
       }
 

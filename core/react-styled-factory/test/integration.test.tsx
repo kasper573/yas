@@ -89,6 +89,22 @@ describe("changing implementation", () => {
       }),
     );
   });
+
+  it("asChild uses the implementation of the child but retains props", () => {
+    const styled = createStyledFactory();
+    const Div = styled("div", greenColorRecipe);
+    const Span = styled("span", blueColorRecipe);
+    const { container } = render(
+      <Span asChild data-testid="foo">
+        <Div role="button" />
+      </Span>,
+    );
+    expect(container.outerHTML).toEqual(
+      createHtml("div", {
+        attrs: { class: "green blue", "data-testid": "foo", role: "button" },
+      }),
+    );
+  });
 });
 
 function testComponent(
