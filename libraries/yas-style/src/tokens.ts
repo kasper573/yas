@@ -140,11 +140,11 @@ export const shadows = {
 };
 
 export type Border = keyof typeof borders;
-export const borders = {
-  none: () => "none",
-  inherit: () => "inherit",
-  standard: (color) => `1px solid ${color}`,
-} satisfies Record<string, (color: string) => string>;
+export const borders = (color: string) => ({
+  none: "none",
+  inherit: "inherit",
+  standard: `1px solid ${color}`,
+});
 
 export const durations = {
   short1: "50ms",

@@ -52,7 +52,8 @@ export const resolveStyle = createStyleResolver({
     flex: all(),
     flexDirection: all(),
     listStyle: all(),
-    border,
+    border: tokens.borders(colors.divider),
+    borderColor: colors,
     borderRadius: tokens.radii,
     inset: all(),
     outline: all(),
@@ -94,7 +95,6 @@ export const resolveStyle = createStyleResolver({
     background: colors,
     backgroundColor: colors,
     backgroundImage: all(),
-    borderColor: colors,
     boxSizing: all(),
 
     // SVG
@@ -157,8 +157,6 @@ type Transition = [
   preset: keyof typeof flattenedTransitions,
 ];
 
-function border(...[preset, colorName = "divider"]: Border) {
-  return tokens.borders[preset](colors[colorName]);
+function border(size: unknown) {
+  return size + ` solid ${colors.divider}`;
 }
-
-type Border = [preset: tokens.Border, color?: Color];
