@@ -16,6 +16,7 @@
     "@yas/api-client": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/ui": "workspace:*",
+    "@yas/icons": "workspace:*",
     "@yas/validate": "workspace:*",
     "@tanstack/react-query": "^4",
     "react": "^18.2.0",

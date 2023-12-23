@@ -7,6 +7,8 @@ import {
   Tabs,
   Text,
 } from "@yas/ui";
+import type { ReactNode } from "react";
+import { RocketIcon } from "@yas/icons";
 import { outline } from "./Dashboard.css";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
@@ -37,11 +39,27 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <Stack direction="row">
-          <Stats />
-          <Stats />
-          <Stats />
-          <Stats />
+        <Stack direction="row" align="stretch">
+          <Stats
+            title="Total Revenue"
+            amount="$45,231.89"
+            description="+20.1% from last month"
+          />
+          <Stats
+            title="Subscriptions"
+            amount="+2350"
+            description="+180.1% from last month"
+          />
+          <Stats
+            title="Sales"
+            amount="+12,234"
+            description="+19% from last month"
+          />
+          <Stats
+            title="Active Now"
+            amount="+573"
+            description="+201 since last hour"
+          />
         </Stack>
         <Stack direction="row">
           <Graph />
@@ -54,15 +72,40 @@ export default function Dashboard() {
 
 const rowGap = "#3" as const;
 const columnGap = "#5" as const;
-const Stack = styled(StackImpl).attrs({ columnGap, rowGap });
-const Outlined = styled("div").attrs({ className: outline });
+export const Stack = styled(StackImpl).attrs({ columnGap, rowGap });
+export const Outlined = styled("div").attrs({ className: outline });
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Title = styled(Text).attrs({ variant: "h1", children: "Dashboard" });
 
-const Stats = styled(Text).attrs({ children: "Stats" });
 const Graph = styled(Text).attrs({ children: "Graph" });
 const RecentSales = styled(Text).attrs({ children: "RecentSales" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
+
+export function Stats({
+  title,
+  amount,
+  description,
+}: {
+  title: ReactNode;
+  amount: ReactNode;
+  description: ReactNode;
+}) {
+  return (
+    <Outlined sx={{ p: "#5" }}>
+      <Stack
+        direction="row"
+        align="center"
+        justify="spaceBetween"
+        sx={{ flex: 1 }}
+      >
+        <Text variant="h5">{title}</Text>
+        <RocketIcon />
+      </Stack>
+      <Text variant="h1">{amount}</Text>
+      <Text variant="caption">{description}</Text>
+    </Outlined>
+  );
+}

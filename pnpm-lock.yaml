@@ -175,6 +175,9 @@ importers:
       '@yas/api-client':
         specifier: workspace:*
         version: link:../../integrations/api-client
+      '@yas/icons':
+        specifier: workspace:*
+        version: link:../../libraries/yas-icons
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
