@@ -7,9 +7,14 @@ import {
   Tabs,
   Text,
 } from "@yas/ui";
-import type { ReactNode } from "react";
-import { RocketIcon } from "@yas/icons";
-import { outline } from "./Dashboard.css";
+import {
+  RocketIcon,
+  PersonIcon,
+  CardStackIcon,
+  BarChartIcon,
+} from "@yas/icons";
+import { Outlined } from "./Shared";
+import { Stats } from "./Stats";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -44,21 +49,25 @@ export default function Dashboard() {
             title="Total Revenue"
             amount="$45,231.89"
             description="+20.1% from last month"
+            icon={<RocketIcon />}
           />
           <Stats
             title="Subscriptions"
             amount="+2350"
             description="+180.1% from last month"
+            icon={<PersonIcon />}
           />
           <Stats
             title="Sales"
             amount="+12,234"
             description="+19% from last month"
+            icon={<CardStackIcon />}
           />
           <Stats
             title="Active Now"
             amount="+573"
             description="+201 since last hour"
+            icon={<BarChartIcon />}
           />
         </Stack>
         <Stack direction="row">
@@ -73,7 +82,6 @@ export default function Dashboard() {
 const rowGap = "#3" as const;
 const columnGap = "#5" as const;
 export const Stack = styled(StackImpl).attrs({ columnGap, rowGap });
-export const Outlined = styled("div").attrs({ className: outline });
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Title = styled(Text).attrs({ variant: "h1", children: "Dashboard" });
@@ -83,29 +91,3 @@ const RecentSales = styled(Text).attrs({ children: "RecentSales" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
-
-export function Stats({
-  title,
-  amount,
-  description,
-}: {
-  title: ReactNode;
-  amount: ReactNode;
-  description: ReactNode;
-}) {
-  return (
-    <Outlined sx={{ p: "#5" }}>
-      <Stack
-        direction="row"
-        align="center"
-        justify="spaceBetween"
-        sx={{ flex: 1 }}
-      >
-        <Text variant="h5">{title}</Text>
-        <RocketIcon />
-      </Stack>
-      <Text variant="h1">{amount}</Text>
-      <Text variant="caption">{description}</Text>
-    </Outlined>
-  );
-}
