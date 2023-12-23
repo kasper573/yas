@@ -48,9 +48,11 @@ globalStyle(`${variantClasses["item-contained"]} ${activeClasses.true}`, {
   color: "info.contrast",
 });
 
-globalStyle(`${variantClasses["text-highlight"]} ${activeClasses.false}`, {
-  color: "info.light",
-});
+for (const variantClass of Object.values(variantClasses)) {
+  globalStyle(`${variantClass} ${activeClasses.false}`, {
+    color: "info.light",
+  });
+}
 
 globalStyle(`${variantClasses["contained"]} ${activeClasses.true}`, {
   background: "surface.main",
