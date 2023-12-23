@@ -1,20 +1,42 @@
 import { styled } from "@yas/style";
-import { Divider, Stack as StackImpl, Text } from "@yas/ui";
+import {
+  Divider,
+  Link,
+  Stack as StackImpl,
+  TabItem,
+  Tabs,
+  Text,
+} from "@yas/ui";
 import { outline } from "./Dashboard.css";
+
+const mainNav = ["Overview", "Customers", "Products", "Settings"];
+const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export function Dashboard() {
   return (
     <Outlined>
-      <Stack direction="row" sx={{ my: rowGap, px: columnGap }}>
+      <Stack direction="row" align="center" sx={{ my: rowGap, px: columnGap }}>
         <OrganizationSelect />
-        <NavMenu sx={{ flex: 1 }} />
+        <Tabs variant="text-highlight" sx={{ flex: 1 }}>
+          {mainNav.map((label, index) => (
+            <TabItem asChild key={index} active={index === 0}>
+              <Link>{label}</Link>
+            </TabItem>
+          ))}
+        </Tabs>
         <Search />
         <UserMenu />
       </Stack>
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
         <Title />
-        <Tabs />
+        <Tabs variant="contained" sx={{ flex: 1 }}>
+          {secondaryNav.map((label, index) => (
+            <TabItem asChild key={index} active={index === 0}>
+              <Link>{label}</Link>
+            </TabItem>
+          ))}
+        </Tabs>
         <Stack direction="row">
           <Stats />
           <Stats />
@@ -34,11 +56,10 @@ const rowGap = "#3" as const;
 const columnGap = "#5" as const;
 const Stack = styled(StackImpl).attrs({ columnGap, rowGap });
 const Outlined = styled("div").attrs({ className: outline });
-const NavMenu = styled(Text).attrs({ children: "NavMenu" });
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Title = styled(Text).attrs({ variant: "h1", children: "Dashboard" });
-const Tabs = styled(Text).attrs({ children: "Tabs" });
+
 const Stats = styled(Text).attrs({ children: "Stats" });
 const Graph = styled(Text).attrs({ children: "Graph" });
 const RecentSales = styled(Text).attrs({ children: "RecentSales" });
