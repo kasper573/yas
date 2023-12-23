@@ -1,25 +1,19 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { createContext, useCallback, useContext } from "react";
+import { dark } from "@yas/style/themes/dark.css";
+import { light } from "@yas/style/themes/light.css";
 
-import { useQuery } from "@tanstack/react-query";
-export type ThemeName = keyof typeof themeStyleLoaders;
+export type ThemeName = keyof typeof themeClassNames;
+const themeClassNames = { dark, light };
+const themeNames = Object.keys(themeClassNames) as ThemeName[];
 
 export function useTheme() {
   return useContext(ThemeContext);
 }
 
-const themeStyleLoaders = {
-  dark: () => import("@yas/style/themes/dark.css").then((m) => m.dark),
-  light: () => import("@yas/style/themes/light.css").then((m) => m.light),
-};
-
 export function useThemeClassName() {
   const [themeName] = useTheme();
-  const { data: themeClassName } = useQuery(
-    ["theme", themeName],
-    themeStyleLoaders[themeName],
-  );
-  return themeClassName;
+  return themeClassNames[themeName];
 }
 
 export function ThemeProvider({
@@ -32,7 +26,7 @@ export function ThemeProvider({
   setTheme: Dispatch<SetStateAction<ThemeName>>;
 }) {
   const toggleTheme = useCallback(
-    () => setTheme((theme) => (theme === "dark" ? "light" : "dark")),
+    () => setTheme((theme) => themeNames.filter((t) => t !== theme)[0]),
     [setTheme],
   );
   return (
