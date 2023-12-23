@@ -404,6 +404,9 @@ importers:
         specifier: 3.9.2
         version: 3.9.2(vite@4.4.9)
     devDependencies:
+      '@vanilla-extract/css':
+        specifier: 1.14.0
+        version: 1.14.0
       '@yas/test':
         specifier: workspace:*
         version: link:../yas-test

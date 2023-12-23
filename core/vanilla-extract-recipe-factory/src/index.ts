@@ -3,6 +3,7 @@ import type {
   RecipeVariants as RecipeVariantsImpl,
 } from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
+import type { ComplexStyleRule } from "@vanilla-extract/css";
 
 export function createRecipeFactory<
   Style,
@@ -66,7 +67,7 @@ export type StyleCompiler<Style, CompiledStyle extends CompiledStyleLike> = (
   style: Style,
 ) => CompiledStyle;
 
-export type CompiledStyleLike = string | string[];
+export type CompiledStyleLike = string | string[] | ComplexStyleRule;
 
 export type RecipeVariants<RecipeLike extends RuntimeFn<Record<string, any>>> =
   Exclude<RecipeVariantsImpl<RecipeLike>, undefined>;
