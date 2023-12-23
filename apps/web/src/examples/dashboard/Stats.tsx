@@ -1,7 +1,7 @@
 import { Text } from "@yas/ui";
 import type { ReactNode } from "react";
 import { Outlined } from "./Shared";
-import { Stack } from "./Dashboard";
+import { CommonStack } from "./Shared";
 
 export function Stats({
   title,
@@ -16,7 +16,7 @@ export function Stats({
 }) {
   return (
     <Outlined sx={{ p: "#5" }}>
-      <Stack
+      <CommonStack
         direction="row"
         align="center"
         justify="spaceBetween"
@@ -24,7 +24,7 @@ export function Stats({
       >
         <Text variant="h5">{title}</Text>
         {icon}
-      </Stack>
+      </CommonStack>
       <Text variant="h1">{amount}</Text>
       <Text variant="caption">{description}</Text>
     </Outlined>
