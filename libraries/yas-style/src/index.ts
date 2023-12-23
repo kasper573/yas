@@ -17,8 +17,8 @@ export { createVar } from "@vanilla-extract/css";
 export * from "@vanilla-extract/dynamic";
 
 // Constrained vanilla-extract functions
-export const style = (constrainedStyle: ConstrainedStyle) =>
-  vanilla.style(resolveStyle(constrainedStyle));
+export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>
+  vanilla.style(resolveStyle(constrainedStyle), debugId);
 
 export const globalStyle = (
   selector: string,
@@ -43,7 +43,7 @@ export const styled = createStyledFactory({
   isEqual: shallowEqual,
 });
 
-export const recipe = createRecipeFactory(style);
+export const recipe = createRecipeFactory(resolveStyle);
 
 export type { RecipeVariants } from "vanilla-extract-recipe-factory";
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
