@@ -6,7 +6,7 @@ import type {
   ElementType,
   ForwardedRef,
 } from "react";
-import { createElement, forwardRef } from "react";
+import { createElement, forwardRef, Children } from "react";
 import type { PropForwardTester } from "./destructureVariantProps";
 import { destructureVariantProps } from "./destructureVariantProps";
 import { useCompareMemo } from "./useCompareMemo";
@@ -29,13 +29,14 @@ export function createStyledFactory<SX>(
     options: RecipeComponentOptions<Implementation, RecipeInput, SX> = {},
   ): RecipeComponent<Implementation, RecipeInput, SX> {
     function RecipeComponentImpl(
-      { as = implementation, ...inlineProps }: AnyRecipeComponentProps,
+      inlineProps: AnyRecipeComponentProps,
       ref: ForwardedRef<HTMLElement>,
     ) {
-      const { sx = emptyObject, ...mergedProps } = mergeElementProps(
-        options.defaultProps,
-        inlineProps,
-      );
+      const {
+        sx = emptyObject,
+        asChild,
+        ...mergedProps
+      } = mergeElementProps(options.defaultProps, inlineProps);
 
       const [recipeInput, forwardedProps] = recipe
         ? destructureVariantProps(
@@ -63,7 +64,15 @@ export function createStyledFactory<SX>(
         forwardedProps,
       ].reduce(mergeElementProps);
 
-      return createElement(as, finalProps);
+      if (asChild) {
+        const child = Children.only(finalProps.children) as ReactElement;
+        return createElement(
+          child.type,
+          mergeElementProps(finalProps, child.props),
+        );
+      }
+
+      return createElement(implementation, finalProps);
     }
 
     const RecipeComponent = forwardRef(
@@ -161,6 +170,7 @@ export type RecipeComponentProps<
       className?: string;
       style?: CSSProperties;
       children?: ReactNode;
+      asChild?: boolean;
     };
 
 interface RecipeComponentOptions<
