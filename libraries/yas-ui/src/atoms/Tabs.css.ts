@@ -29,7 +29,7 @@ export const item = recipe({
     borderRadius: "#3",
     px: "#3",
     py: "#1",
-    transition: [[["background", "color"], "emphasized.beginAndEndOnScreen"]],
+    transition: [[["background", "color"], "standard.beginAndEndOnScreen"]],
     cursor: "pointer",
   },
   variants: {
