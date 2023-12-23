@@ -1,4 +1,4 @@
-import { recipe } from "@yas/style";
+import { globalStyle, recipe } from "@yas/style";
 
 export const list = recipe({
   base: {
@@ -6,12 +6,17 @@ export const list = recipe({
     p: 0,
     display: "flex",
     flexDirection: "row",
+    listStyle: "none",
   },
   variants: {
     variant: {
       "item-contained": {},
       "text-highlight": {},
-      contained: {},
+      contained: {
+        borderRadius: "#3",
+        padding: "#1",
+        background: "surface.dark",
+      },
     },
   },
   defaultVariants: {
@@ -24,14 +29,34 @@ export const item = recipe({
     borderRadius: "#3",
     px: "#3",
     py: "#1",
-    transition: [[["background", "color"], "standard.enter"]],
+    transition: [[["background", "color"], "emphasized.beginAndEndOnScreen"]],
+    cursor: "pointer",
   },
   variants: {
     active: {
-      true: {
-        background: "info.main",
-        color: "info.contrast",
-      },
+      true: {},
+      false: {},
     },
   },
 });
+
+globalStyle(
+  `${list.classNames.variants.variant["item-contained"]} ${item.classNames.variants.active.true}`,
+  {
+    background: "info.main",
+    color: "info.contrast",
+  },
+);
+
+globalStyle(
+  `${list.classNames.variants.variant["text-highlight"]} ${item.classNames.variants.active.false}`,
+  { color: "info.light" },
+);
+
+globalStyle(
+  `${list.classNames.variants.variant["contained"]} ${item.classNames.variants.active.true}`,
+  {
+    background: "surface.main",
+    color: "surface.contrast",
+  },
+);
