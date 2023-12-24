@@ -61,6 +61,8 @@ export const resolveStyle = createStyleResolver({
     userSelect: all(),
     justifyContent: all(),
     alignItems: all(),
+    alignSelf: all(),
+    justifySelf: all(),
     padding: tokens.spaces,
     paddingTop: tokens.spaces,
     paddingRight: tokens.spaces,

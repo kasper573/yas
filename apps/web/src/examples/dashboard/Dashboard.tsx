@@ -15,6 +15,7 @@ import {
 } from "@yas/icons";
 import { Card } from "./Card";
 import { Stats } from "./Stats";
+import { BarChart } from "./BarChart";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -72,8 +73,14 @@ export default function Dashboard() {
           />
         </Stack>
         <Stack direction="row">
-          <Graph />
-          <RecentSales />
+          <Card style={{ flex: 3 }}>
+            <Text variant="h5">Overview</Text>
+            <BarChart />
+          </Card>
+          <Card style={{ flex: 2 }}>
+            <Text variant="h5">Recent Sales</Text>
+            <BarChart />
+          </Card>
         </Stack>
       </Stack>
     </Card>
@@ -89,15 +96,6 @@ const Title = styled(Text).attrs({
 });
 const Stack = styled(StackImpl).attrs({ gap: "#4" });
 
-function Graph() {
-  return (
-    <Card>
-      <Text>Graph</Text>
-    </Card>
-  );
-}
-
-const RecentSales = styled(Text).attrs({ children: "RecentSales" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
