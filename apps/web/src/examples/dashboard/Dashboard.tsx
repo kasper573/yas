@@ -1,26 +1,28 @@
 import { styled } from "@yas/style";
-import { Divider, Link, TabItem, Tabs, Text } from "@yas/ui";
+import {
+  Divider,
+  Link,
+  Stack as StackImpl,
+  TabItem,
+  Tabs,
+  Text,
+} from "@yas/ui";
 import {
   RocketIcon,
   PersonIcon,
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
-import { Outlined, columnGap, rowGap } from "./Shared";
+import { Card } from "./Card";
 import { Stats } from "./Stats";
-import { CommonStack } from "./Shared";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
   return (
-    <Outlined>
-      <CommonStack
-        direction="row"
-        align="center"
-        sx={{ my: rowGap, px: columnGap }}
-      >
+    <Card sx={{ p: 0 }}>
+      <Stack direction="row" align="center" sx={{ my: "#2", px: "#5" }}>
         <OrganizationSelect />
         <Tabs variant="text-highlight" sx={{ flex: 1 }}>
           {mainNav.map((label, index) => (
@@ -31,9 +33,10 @@ export default function Dashboard() {
         </Tabs>
         <Search />
         <UserMenu />
-      </CommonStack>
+      </Stack>
       <Divider margin={false} />
-      <CommonStack sx={{ flex: 1, p: "#5" }}>
+
+      <Stack sx={{ flex: 1, p: "#5" }}>
         <Title />
         <Tabs variant="contained" sx={{ flex: 1 }}>
           {secondaryNav.map((label, index) => (
@@ -42,7 +45,7 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <CommonStack direction="row" align="stretch">
+        <Stack direction="row" align="stretch">
           <Stats
             title="Total Revenue"
             amount="$45,231.89"
@@ -67,20 +70,33 @@ export default function Dashboard() {
             description="+201 since last hour"
             icon={<BarChartIcon />}
           />
-        </CommonStack>
-        <CommonStack direction="row">
+        </Stack>
+        <Stack direction="row">
           <Graph />
           <RecentSales />
-        </CommonStack>
-      </CommonStack>
-    </Outlined>
+        </Stack>
+      </Stack>
+    </Card>
   );
 }
 
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
-const Title = styled(Text).attrs({ variant: "h1", children: "Dashboard" });
-const Graph = styled(Text).attrs({ children: "Graph" });
+const Title = styled(Text).attrs({
+  variant: "h1",
+  children: "Dashboard",
+  sx: { lineHeight: 1 },
+});
+const Stack = styled(StackImpl).attrs({ gap: "#4" });
+
+function Graph() {
+  return (
+    <Card>
+      <Text>Graph</Text>
+    </Card>
+  );
+}
+
 const RecentSales = styled(Text).attrs({ children: "RecentSales" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",

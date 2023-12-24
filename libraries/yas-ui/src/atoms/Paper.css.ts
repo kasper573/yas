@@ -9,6 +9,7 @@ export const paperRecipe = recipe({
       0: {
         background: "surface.main",
         boxShadow: "none",
+        border: "standard",
       },
       1: {
         background: "surface.light",

@@ -90,6 +90,7 @@ export const resolveStyle = createStyleResolver({
     textAlign: all(),
     typography: multi(vars.typography),
     fontSize: ["inherit", "100%"] as const,
+    lineHeight: [1, "inherit", "100%"] as const,
     fontWeight: all(),
     color: colors,
     background: colors,
