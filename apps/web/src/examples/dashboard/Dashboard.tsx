@@ -77,7 +77,7 @@ export default function Dashboard() {
             icon={<BarChartIcon />}
             className={gridAreas.activeNow}
           />
-          <Card sx={{ gap: "#4", minHeight: 300 }} className={gridAreas.chart}>
+          <Card sx={{ gap: "#4" }} className={gridAreas.chart}>
             <div>
               <Text variant="h5">Overview</Text>
               <Text>&nbsp;</Text>

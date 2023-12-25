@@ -1,4 +1,4 @@
-import { createGrid, style, unsafe } from "@yas/style";
+import { createGrid, globalStyle, style, unsafe } from "@yas/style";
 
 const grid = createGrid(
   "totalRevenue",
@@ -21,7 +21,6 @@ export const gridContainer = unsafe.style([
     "@media": {
       "(max-width: 599px)": {
         gridTemplateAreas: grid.template(),
-        height: 1450,
       },
       "(min-width: 600px)": {
         gridTemplateAreas: grid.template([
@@ -30,17 +29,23 @@ export const gridContainer = unsafe.style([
           ["chart", "chart"],
           ["recentSales", "recentSales"],
         ]),
-        height: 1150,
       },
       "(min-width: 1280px)": {
         gridTemplateAreas: grid.template([
           ["totalRevenue", "subscriptions", "sales", "activeNow"],
           ["chart", "chart", "recentSales", "recentSales"],
         ]),
-        height: 580,
       },
     },
   },
 ]);
 
 export const gridAreas = grid.styles;
+
+// grid row height doesn't work properly in safari, so we need to ensure minimum heights
+globalStyle(gridAreas.totalRevenue, { minHeight: 138.5 });
+globalStyle(gridAreas.subscriptions, { minHeight: 138.5 });
+globalStyle(gridAreas.sales, { minHeight: 138.5 });
+globalStyle(gridAreas.activeNow, { minHeight: 138.5 });
+globalStyle(gridAreas.chart, { minHeight: 300 });
+globalStyle(gridAreas.recentSales, { minHeight: 425 });
