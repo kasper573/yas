@@ -41,7 +41,7 @@ export const item = recipe({
   },
 });
 
-const itemContentHeight = 40.5;
+const itemContentHeight = 40;
 
 export const icon = style({
   height: itemContentHeight,
