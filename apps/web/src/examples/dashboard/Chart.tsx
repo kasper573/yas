@@ -2,7 +2,7 @@ import { unsafe } from "@yas/style";
 import type { ComponentProps } from "react";
 import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { formatCurrency } from "./currency";
+import { formatCurrency } from "./shared";
 
 export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
   return (
@@ -34,6 +34,7 @@ export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
 const { radii } = unsafe.tokens;
 const { typography, color } = unsafe.vars;
 const barRadius = [radii["#1"], radii["#1"], 0, 0] satisfies BarProps["radius"];
+
 const textStyle = (name: keyof typeof typography) => ({
   ...typography[name],
   fill: "currentColor",

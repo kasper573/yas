@@ -1,39 +1,20 @@
 import { styled } from "@yas/style";
 import {
-  Avatar,
   Box,
   Divider,
   Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryContent,
-  ListItemText,
   Stack as StackImpl,
   TabItem,
   Tabs,
   Text,
 } from "@yas/ui";
-import {
-  RocketIcon,
-  PersonIcon,
-  CardStackIcon,
-  BarChartIcon,
-} from "@yas/icons";
-import { Card } from "./Card";
-import { Stats } from "./Stats";
+import { Card } from "./shared";
 import { Chart } from "./Chart";
-import { formatCurrency } from "./currency";
+import { StatsRow } from "./Stats";
+import { SalesList } from "./Sales";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
-const sales = [
-  { name: "Olivia Martin", email: "olivia.martin@email.com", amount: 1999 },
-  { name: "Jackson Lee", email: "jackson.lee@email.com", amount: 39 },
-  { name: "Isabella Nguyen", email: "isabella.nguyen@email.com", amount: 299 },
-  { name: "William Kim", email: "will@email.com", amount: 99 },
-  { name: "Sofia Davis", email: "sofia.davis@email.com", amount: 39 },
-];
 
 export default function Dashboard() {
   return (
@@ -60,32 +41,7 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <Stack direction="row" align="stretch">
-          <Stats
-            title="Total Revenue"
-            amount={formatCurrency(45231.89)}
-            description="+20.1% from last month"
-            icon={<RocketIcon />}
-          />
-          <Stats
-            title="Subscriptions"
-            amount="+2350"
-            description="+180.1% from last month"
-            icon={<PersonIcon />}
-          />
-          <Stats
-            title="Sales"
-            amount="+12,234"
-            description="+19% from last month"
-            icon={<CardStackIcon />}
-          />
-          <Stats
-            title="Active Now"
-            amount="+573"
-            description="+201 since last hour"
-            icon={<BarChartIcon />}
-          />
-        </Stack>
+        <StatsRow />
         <Stack direction="row" align="stretch">
           <Card sx={{ flex: 3, gap: "#4" }}>
             <div>
@@ -99,22 +55,7 @@ export default function Dashboard() {
               <Text variant="h5">Recent Sales</Text>
               <Text>You made 265 sales this month.</Text>
             </Box>
-            <List>
-              {sales.map((sale, index) => (
-                <ListItem button key={index} sx={{ px: "#5" }}>
-                  <ListItemIcon>
-                    <Avatar
-                      alt={`${sale.name} avatar`}
-                      src={`https://picsum.photos/40/40?grayscale&random=${index}`}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={sale.name} secondary={sale.email} />
-                  <ListItemSecondaryContent>
-                    <Text variant="h3">+{formatCurrency(sale.amount)}</Text>
-                  </ListItemSecondaryContent>
-                </ListItem>
-              ))}
-            </List>
+            <SalesList />
           </Card>
         </Stack>
       </Stack>
