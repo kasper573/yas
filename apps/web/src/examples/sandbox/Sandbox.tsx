@@ -15,7 +15,7 @@ import {
 import { api } from "@yas/api-client";
 import { env } from "../../env";
 import { hello } from "../../hello";
-import { useTheme } from "../../hooks/useTheme";
+import { useTheme } from "../../theme";
 import * as styles from "./sandbox.css";
 
 export default function Sandbox() {

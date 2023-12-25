@@ -8,7 +8,7 @@ import {
 import { Outlet as RouterOutlet } from "react-router-dom";
 import { clsx } from "@yas/style";
 import { Suspense } from "react";
-import { useThemeClassName } from "../hooks/useTheme";
+import { useThemeClassName } from "../theme";
 import { Menu } from "./Menu";
 import { layout } from "./Layout.css";
 
