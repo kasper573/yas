@@ -2,6 +2,7 @@ export * from "./atoms/Alert";
 export * from "./atoms/Button";
 export * from "./atoms/Dialog";
 export * from "./atoms/Text";
+export * from "./atoms/Avatar";
 export * from "./atoms/List";
 export * from "./atoms/Paper";
 export * from "./atoms/ExampleImage";

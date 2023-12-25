@@ -1,5 +1,6 @@
 import { styled } from "@yas/style";
 import {
+  Avatar,
   Box,
   Divider,
   Link,
@@ -99,7 +100,9 @@ export default function Dashboard() {
               {sales.map((sale, index) => (
                 <ListItem button key={index} sx={{ px: "#5" }}>
                   <ListItemIcon>
-                    <PersonIcon />
+                    <Avatar>
+                      <PersonIcon />
+                    </Avatar>
                   </ListItemIcon>
                   <ListItemText primary={sale.name} secondary={sale.email} />
                   <ListItemSecondaryContent>
