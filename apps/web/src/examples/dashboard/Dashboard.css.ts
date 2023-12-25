@@ -14,11 +14,14 @@ export const gridContainer = unsafe.style([
     display: "grid",
     width: "100%",
     gap: "#4",
+    gridAutoColumns: "1fr",
+    gridAutoRows: "fit-content(1fr)",
   }),
   {
     "@media": {
       "(max-width: 599px)": {
         gridTemplateAreas: grid.template(),
+        height: 1450,
       },
       "(min-width: 600px)": {
         gridTemplateAreas: grid.template([
@@ -27,16 +30,14 @@ export const gridContainer = unsafe.style([
           ["chart", "chart"],
           ["recentSales", "recentSales"],
         ]),
-        gridTemplateColumns: "1fr 1fr",
-        gridTemplateRows: "auto auto auto auto",
+        height: 1150,
       },
       "(min-width: 1280px)": {
         gridTemplateAreas: grid.template([
           ["totalRevenue", "subscriptions", "sales", "activeNow"],
           ["chart", "chart", "recentSales", "recentSales"],
         ]),
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
-        gridTemplateRows: "1fr auto",
+        height: 580,
       },
     },
   },

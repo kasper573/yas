@@ -49,6 +49,8 @@ export const resolveStyle = createStyleResolver({
     opacity: all(),
     display: all(),
     gridAutoFlow: all(),
+    gridAutoColumns: all(),
+    gridAutoRows: all(),
     gridArea: all(),
     gridTemplateAreas: all(),
     gridTemplateColumns: all(),
