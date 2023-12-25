@@ -9,6 +9,8 @@ export const tabs = recipe({
     listStyle: "none",
     maxWidth: "100%",
     boxSizing: "border-box",
+
+    // TODO replace with ScrollArea
     overflowX: "auto",
   },
   variants: {
