@@ -18,6 +18,7 @@ export const buttonRecipe = recipe({
     size: {
       small: {
         typography: "caption",
+        color: "inherit",
         px: "#2",
         py: "#1",
       },

@@ -8,7 +8,6 @@ const regular = (size: number): TypographyStyle => ({
   fontStyle: "normal",
   letterSpacing: "normal",
   lineHeight: `1.5em`,
-  opacity: "1",
   color: "inherit",
 });
 
@@ -23,7 +22,7 @@ export const typography: Record<keyof typeof vars.typography, TypographyStyle> =
     body2: regular(fontSizes["#3"]),
     caption: {
       ...regular(fontSizes["#1"]),
-      opacity: "0.8",
+      color: "color-mix(in srgb, currentColor 75%, transparent)",
     },
     hero: header(fontSizes["#9"]),
     h1: header(fontSizes["#6"]),
