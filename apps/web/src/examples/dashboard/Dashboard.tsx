@@ -87,11 +87,14 @@ export default function Dashboard() {
           />
         </Stack>
         <Stack direction="row" align="stretch">
-          <Card sx={{ flex: 3, gap: "#2" }}>
-            <Text variant="h5">Overview</Text>
+          <Card sx={{ flex: 3, gap: "#4" }}>
+            <div>
+              <Text variant="h5">Overview</Text>
+              <Text>&nbsp;</Text>
+            </div>
             <Chart />
           </Card>
-          <Card sx={{ flex: 2, gap: "#2", px: 0 }}>
+          <Card sx={{ flex: 2, gap: "#4", px: 0 }}>
             <Box sx={{ px: "#5" }}>
               <Text variant="h5">Recent Sales</Text>
               <Text>You made 265 sales this month.</Text>
