@@ -123,7 +123,7 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
 }
 
 const PageButton = styled(IconButton).attrs({ size: "small", variant: "text" });
-const Separator = styled(Text).attrs({ children: "...", className: separator });
+const Separator = styled(Text, separator).attrs({ children: "..." });
 
 function clampSpan(from: number, to: number, min: number, max: number) {
   if (from < min) {

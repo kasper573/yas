@@ -1,4 +1,4 @@
 import { styled } from "@yas/style";
 import { container } from "./Container.css";
 
-export const Container = styled("div").attrs({ className: container });
+export const Container = styled("div", container);

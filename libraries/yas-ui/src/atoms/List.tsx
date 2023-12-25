@@ -32,6 +32,4 @@ export const ListItemPrimaryText = styled(Text).attrs({ variant: "h5" });
 
 export const ListItemSecondaryText = styled(Text).attrs({ variant: "caption" });
 
-export const ListItemSecondaryContent = styled("div").attrs({
-  className: secondaryContent,
-});
+export const ListItemSecondaryContent = styled("div", secondaryContent);
