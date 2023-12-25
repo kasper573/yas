@@ -9,8 +9,7 @@ import type {
 import { createElement, forwardRef, Children } from "react";
 import type { PropForwardTester } from "./destructureVariantProps";
 import { destructureVariantProps } from "./destructureVariantProps";
-import { useCompareMemo } from "./useCompareMemo";
-import { createPropsMerger } from "./createPropsMerger";
+import { clsx, createPropsMerger } from "./createPropsMerger";
 import type { SXAdapterOptions } from "./sxAdapter";
 import { normalizeSXAdapterOptions } from "./sxAdapter";
 
@@ -25,7 +24,7 @@ export function createStyledFactory<SX>(
     RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
-    recipe?: RecipeFn<RecipeInput>,
+    recipeOrClassNames?: string | string[] | RecipeFn<RecipeInput>,
     options: RecipeComponentOptions<Implementation, RecipeInput, SX> = {},
   ): RecipeComponent<Implementation, RecipeInput, SX> {
     function RecipeComponentImpl(
@@ -38,21 +37,8 @@ export function createStyledFactory<SX>(
         ...mergedProps
       } = mergeElementProps(options.defaultProps, inlineProps);
 
-      const [recipeInput, forwardedProps] = recipe
-        ? destructureVariantProps(
-            mergedProps,
-            recipe.variants(),
-            options.forwardProps,
-          )
-        : [emptyObject, mergedProps];
-
-      const recipeClassName = recipe?.(recipeInput as RecipeInput);
-      const styleOrClassName = useCompareMemo(
-        sxAdapter.compile,
-        sx,
-        sxAdapter.isEqual,
-      );
-
+      const styleOrClassName = sxAdapter.compile(sx);
+      const [recipeClassName, forwardedProps] = resolveRecipe(mergedProps);
       const [sxStyle, sxClassName] =
         typeof styleOrClassName === "string"
           ? [undefined, styleOrClassName]
@@ -76,6 +62,29 @@ export function createStyledFactory<SX>(
       return createElement(implementation, finalProps);
     }
 
+    function resolveRecipe(
+      props: Record<string, unknown>,
+    ): [string | undefined, Record<string, unknown>] {
+      if (!recipeOrClassNames) {
+        return [undefined, props];
+      }
+      if (typeof recipeOrClassNames === "string") {
+        return [recipeOrClassNames, props];
+      }
+      if (Array.isArray(recipeOrClassNames)) {
+        return [clsx(...recipeOrClassNames), props];
+      }
+
+      const [recipeInput, forwardedProps] = destructureVariantProps(
+        props,
+        recipeOrClassNames.variants(),
+        options.forwardProps,
+      );
+
+      const recipeClassName = recipeOrClassNames(recipeInput as RecipeInput);
+      return [recipeClassName, forwardedProps];
+    }
+
     const RecipeComponent = forwardRef(
       RecipeComponentImpl,
     ) as unknown as RecipeComponent<Implementation, RecipeInput, SX>;
@@ -85,10 +94,10 @@ export function createStyledFactory<SX>(
     });
 
     RecipeComponent.as = (newImplementation) =>
-      createRecipeComponent(newImplementation, recipe, options);
+      createRecipeComponent(newImplementation, recipeOrClassNames, options);
 
     RecipeComponent.attrs = (defaultProps) =>
-      createRecipeComponent(implementation, recipe, {
+      createRecipeComponent(implementation, recipeOrClassNames, {
         ...options,
         defaultProps: {
           ...options.defaultProps,
@@ -97,7 +106,7 @@ export function createStyledFactory<SX>(
       });
 
     RecipeComponent.shouldForwardProp = (forwardProps) =>
-      createRecipeComponent(implementation, recipe, {
+      createRecipeComponent(implementation, recipeOrClassNames, {
         ...options,
         forwardProps,
       });
@@ -121,7 +130,7 @@ interface StyledComponentFactory<SX> {
     RecipeInput extends RecipeInputLike,
   >(
     implementation: Implementation,
-    recipe?: RecipeFn<RecipeInput>,
+    recipeOrClassNames?: string | string[] | RecipeFn<RecipeInput>,
   ): RecipeComponent<Implementation, RecipeInput, SX>;
 }
 

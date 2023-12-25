@@ -1,7 +1,6 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "react-styled-factory";
-import { shallowEqual } from "shallow-equal";
 import type { Style } from "vanilla-extract-constrained";
 import type {
   ConstrainedStyle,
@@ -40,7 +39,6 @@ export const styled = createStyledFactory({
   compile: resolveStyle as (
     constrainedStyle: ConstrainedStyleWithoutConditions,
   ) => Style,
-  isEqual: shallowEqual,
 });
 
 export const recipe = createRecipeFactory(resolveStyle);

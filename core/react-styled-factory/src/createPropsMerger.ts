@@ -26,7 +26,7 @@ type ElementPropsLike<SX> = {
   sx?: SX;
 };
 
-function clsx(...classNames: Array<string | undefined>) {
+export function clsx(...classNames: Array<string | undefined>) {
   const defined = classNames.filter(Boolean);
   return defined.length ? defined.join(" ") : undefined;
 }

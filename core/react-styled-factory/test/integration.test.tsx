@@ -3,7 +3,6 @@ import {
   it,
   expect,
   render as renderRoot,
-  vi,
 } from "@yas/test/vitest/react";
 import type { CSSProperties, ElementType } from "react";
 import { createStyledFactory } from "../src/createStyledFactory";
@@ -134,12 +133,48 @@ function testComponent(
     );
   });
 
-  it("className", () => {
+  it("one base className", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, "foo");
+    const { container } = render(<Component>Hello</Component>);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { class: "foo" }, content: "Hello" }),
+    );
+  });
+
+  it("mayn base classNames", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, ["foo", "bar"]);
+    const { container } = render(<Component>Hello</Component>);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { class: "foo bar" }, content: "Hello" }),
+    );
+  });
+
+  it("inline className", () => {
     const styled = createStyledFactory();
     const Component = styled(component);
     const { container } = render(<Component className="foo">Hello</Component>);
     expect(container.outerHTML).toEqual(
       toHtml({ attrs: { class: "foo" }, content: "Hello" }),
+    );
+  });
+
+  it("one base className and inline className", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, "foo");
+    const { container } = render(<Component className="bar">Hello</Component>);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { class: "foo bar" }, content: "Hello" }),
+    );
+  });
+
+  it("many base classNames and inline className", () => {
+    const styled = createStyledFactory();
+    const Component = styled(component, ["foo", "bar"]);
+    const { container } = render(<Component className="baz">Hello</Component>);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { class: "foo bar baz" }, content: "Hello" }),
     );
   });
 
@@ -158,19 +193,6 @@ function testComponent(
     const { container } = render(<Component sx={{ color: "red" }} />);
     expect(container.outerHTML).toEqual(
       toHtml({ attrs: { style: `color: red;` } }),
-    );
-  });
-
-  it("sx memoized", () => {
-    const compile = vi.fn((style: CSSProperties) => style);
-    const styled = createStyledFactory({ compile, isEqual });
-    const Component = styled(component);
-    const { container, rerender } = render(<Component sx={{ color: "red" }} />);
-    rerender(<Component sx={{ color: "red" }} />);
-    rerender(<Component sx={{ color: "blue" }} />);
-    expect(compile).toHaveBeenCalledTimes(2);
-    expect(container.outerHTML).toEqual(
-      toHtml({ attrs: { style: `color: blue;` } }),
     );
   });
 

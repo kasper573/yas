@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import type { EqualityFn } from "./useCompareMemo";
 
 export function normalizeSXAdapterOptions<SX>(
   options?: SXAdapterOptions<SX>,
@@ -26,7 +25,6 @@ function defaultSXMerger<T>(a?: T, b?: T): T | undefined {
 const defaultSXAdapter = {
   compile: () => undefined,
   merge: defaultSXMerger,
-  isEqual: Object.is,
 };
 
 export type SXAdapterOptions<SX> = Partial<SXAdapter<SX>> | SXCompiler<SX>;
@@ -34,7 +32,6 @@ export type SXAdapterOptions<SX> = Partial<SXAdapter<SX>> | SXCompiler<SX>;
 export interface SXAdapter<SX> {
   compile: SXCompiler<SX>;
   merge: SXMerger<SX>;
-  isEqual: EqualityFn;
 }
 
 export type SXCompiler<SX> = (
