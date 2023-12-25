@@ -1,5 +1,5 @@
 import { Stack, Text } from "@yas/ui";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { Card } from "./shared";
 
 export function StatsCard({
@@ -7,14 +7,15 @@ export function StatsCard({
   amount,
   description,
   icon,
+  ...cardProps
 }: {
   title: ReactNode;
   amount: ReactNode;
   description: ReactNode;
   icon: ReactNode;
-}) {
+} & Pick<ComponentProps<typeof Card>, "className" | "style" | "sx">) {
   return (
-    <Card>
+    <Card {...cardProps}>
       <Stack
         direction="row"
         align="center"

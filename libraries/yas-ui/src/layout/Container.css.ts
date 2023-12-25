@@ -6,7 +6,7 @@ export const container = unsafe.style({
   boxSizing: "border-box",
   "@media": {
     "(min-width: 0px)": {
-      maxWidth: 0,
+      maxWidth: 599,
     },
     "(min-width: 600px)": {
       maxWidth: 600,

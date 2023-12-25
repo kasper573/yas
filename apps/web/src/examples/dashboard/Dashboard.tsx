@@ -14,10 +14,11 @@ import {
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
-import { Chart } from "./Chart";
 import { SalesList } from "./Sales";
 import { Card, formatCurrency } from "./shared";
 import { StatsCard } from "./Stats";
+import { gridAreas, gridContainer } from "./Dashboard.css";
+import { Chart } from "./Chart";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -47,48 +48,50 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <Stack direction="row" gap="#4" align="stretch">
+        <div className={gridContainer}>
           <StatsCard
             title="Total Revenue"
             amount={formatCurrency(45231.89)}
             description="+20.1% from last month"
             icon={<RocketIcon />}
+            className={gridAreas.totalRevenue}
           />
           <StatsCard
             title="Subscriptions"
             amount="+2350"
             description="+180.1% from last month"
             icon={<PersonIcon />}
+            className={gridAreas.subscriptions}
           />
           <StatsCard
             title="Sales"
             amount="+12,234"
             description="+19% from last month"
             icon={<CardStackIcon />}
+            className={gridAreas.sales}
           />
           <StatsCard
             title="Active Now"
             amount="+573"
             description="+201 since last hour"
             icon={<BarChartIcon />}
+            className={gridAreas.activeNow}
           />
-        </Stack>
-        <Stack direction="row" align="stretch">
-          <Card sx={{ flex: 3, gap: "#4" }}>
+          <Card sx={{ gap: "#4", minHeight: 300 }} className={gridAreas.chart}>
             <div>
               <Text variant="h5">Overview</Text>
               <Text>&nbsp;</Text>
             </div>
             <Chart />
           </Card>
-          <Card sx={{ flex: 2, gap: "#4", px: 0 }}>
+          <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
             <Box sx={{ px: "#5" }}>
               <Text variant="h5">Recent Sales</Text>
               <Text>You made 265 sales this month.</Text>
             </Box>
             <SalesList />
           </Card>
-        </Stack>
+        </div>
       </Stack>
     </Card>
   );

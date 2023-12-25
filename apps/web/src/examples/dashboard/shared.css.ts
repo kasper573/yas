@@ -5,4 +5,5 @@ export const card = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 });

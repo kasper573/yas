@@ -29,6 +29,8 @@ export const item = recipe({
     py: "#2",
     px: "#3",
     transition: [[["background", "color"], "standard.enter"]],
+    width: "100%",
+    boxSizing: "border-box",
   },
   variants: {
     button: {
@@ -56,6 +58,18 @@ globalStyle(`${icon} > *`, {
   width: "100%",
 });
 
+export const text = style({
+  overflow: "hidden",
+});
+
+export const textEllipsis = style({
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  maxWidth: "100%",
+});
+
 export const secondaryContent = style({
+  flex: 1,
   ml: "auto",
 });
