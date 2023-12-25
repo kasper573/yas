@@ -42,9 +42,9 @@ export const dark: string = createTheme(vars, {
       contrast: palette["white"]["87%"],
     },
     info: {
-      light: palette.gray["400"],
-      main: palette.gray["500"],
-      dark: palette.gray["600"],
+      light: palette.gray["700"],
+      main: palette.gray["800"],
+      dark: palette.gray["900"],
       contrast: palette["white"]["87%"],
     },
     warning: {

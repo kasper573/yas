@@ -15,7 +15,7 @@ export const tabs = recipe({
       contained: {
         borderRadius: "#3",
         padding: "#1",
-        background: "surface.dark",
+        background: "info.main",
       },
     },
   },
@@ -44,12 +44,12 @@ export const item = recipe({
           },
           [`${variantClasses["contained"]} &`]: {
             background: "surface.main",
-            color: "surface.contrast",
+            color: "info.contrast",
           },
         },
       },
       false: {
-        color: "info.light",
+        opacity: 0.67,
       },
     },
   },
