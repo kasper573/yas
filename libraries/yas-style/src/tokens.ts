@@ -6,6 +6,7 @@ export const fonts = {
 
 export const spaces = {
   0: 0,
+  1: 1,
   "#1": 4,
   "#1.5": 6,
   "#2": 8,

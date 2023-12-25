@@ -2,6 +2,7 @@ import { unsafe } from "@yas/style";
 import type { ComponentProps } from "react";
 import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { formatCurrency } from "./currency";
 
 export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
   return (
@@ -9,11 +10,11 @@ export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
       <BarChart data={data}>
         <XAxis dataKey="name" style={textStyle} />
         <YAxis
-          width={42}
+          width={45}
           style={textStyle}
           axisLine={false}
           tickLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={formatCurrency}
         />
         <Bar
           dataKey="value"

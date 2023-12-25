@@ -1,7 +1,13 @@
 import { styled } from "@yas/style";
 import {
+  Box,
   Divider,
   Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryContent,
+  ListItemText,
   Stack as StackImpl,
   TabItem,
   Tabs,
@@ -16,9 +22,17 @@ import {
 import { Card } from "./Card";
 import { Stats } from "./Stats";
 import { Chart } from "./Chart";
+import { formatCurrency } from "./currency";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
+const sales = [
+  { name: "Olivia Martin", email: "olivia.martin@email.com", amount: 1999 },
+  { name: "Jackson Lee", email: "jackson.lee@email.com", amount: 39 },
+  { name: "Isabella Nguyen", email: "isabella.nguyen@email.com", amount: 299 },
+  { name: "William Kim", email: "will@email.com", amount: 99 },
+  { name: "Sofia Davis", email: "sofia.davis@email.com", amount: 39 },
+];
 
 export default function Dashboard() {
   return (
@@ -36,9 +50,8 @@ export default function Dashboard() {
         <UserMenu />
       </Stack>
       <Divider margin={false} />
-
       <Stack sx={{ flex: 1, p: "#5" }}>
-        <Title />
+        <Title>Dashboard</Title>
         <Tabs variant="contained" sx={{ flex: 1 }}>
           {secondaryNav.map((label, index) => (
             <TabItem asChild key={index} active={index === 0}>
@@ -49,7 +62,7 @@ export default function Dashboard() {
         <Stack direction="row" align="stretch">
           <Stats
             title="Total Revenue"
-            amount="$45,231.89"
+            amount={formatCurrency(45231.89)}
             description="+20.1% from last month"
             icon={<RocketIcon />}
           />
@@ -72,14 +85,29 @@ export default function Dashboard() {
             icon={<BarChartIcon />}
           />
         </Stack>
-        <Stack direction="row" align="stretch" sx={{ height: 400 }}>
+        <Stack direction="row" align="stretch">
           <Card sx={{ flex: 3, gap: "#2" }}>
             <Text variant="h5">Overview</Text>
             <Chart />
           </Card>
-          <Card sx={{ flex: 2, gap: "#2" }}>
-            <Text variant="h5">Overview</Text>
-            <Chart />
+          <Card sx={{ flex: 2, gap: "#2", px: 0 }}>
+            <Box sx={{ px: "#5" }}>
+              <Text variant="h5">Recent Sales</Text>
+              <Text>You made 265 sales this month.</Text>
+            </Box>
+            <List>
+              {sales.map((sale, index) => (
+                <ListItem button key={index} sx={{ px: "#5" }}>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={sale.name} secondary={sale.email} />
+                  <ListItemSecondaryContent>
+                    <Text>{formatCurrency(sale.amount)}</Text>
+                  </ListItemSecondaryContent>
+                </ListItem>
+              ))}
+            </List>
           </Card>
         </Stack>
       </Stack>
@@ -89,11 +117,7 @@ export default function Dashboard() {
 
 const Search = styled(Text).attrs({ children: "Search" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
-const Title = styled(Text).attrs({
-  variant: "h1",
-  children: "Dashboard",
-  sx: { lineHeight: 1 },
-});
+const Title = styled(Text).attrs({ variant: "h1", sx: { lineHeight: 1 } });
 const Stack = styled(StackImpl).attrs({ gap: "#4" });
 
 const OrganizationSelect = styled(Text).attrs({

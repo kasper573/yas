@@ -1,6 +1,6 @@
 import { recipe } from "@yas/style";
 
-export const list = recipe({
+export const tabs = recipe({
   base: {
     m: 0,
     p: 0,
@@ -24,7 +24,7 @@ export const list = recipe({
   },
 });
 
-const variantClasses = list.classNames.variants.variant;
+const variantClasses = tabs.classNames.variants.variant;
 
 export const item = recipe({
   base: {
