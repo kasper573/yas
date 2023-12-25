@@ -99,10 +99,7 @@ export function createStyledFactory<SX>(
     RecipeComponent.attrs = (defaultProps) =>
       createRecipeComponent(implementation, recipeOrClassNames, {
         ...options,
-        defaultProps: {
-          ...options.defaultProps,
-          ...defaultProps,
-        },
+        defaultProps: mergeElementProps(options.defaultProps, defaultProps),
       });
 
     RecipeComponent.shouldForwardProp = (forwardProps) =>
