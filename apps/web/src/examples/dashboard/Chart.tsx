@@ -8,10 +8,15 @@ export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
   return (
     <ResponsiveContainer width="100%" height="100%" {...props}>
       <BarChart data={data}>
-        <XAxis dataKey="name" style={textStyle} />
+        <XAxis
+          dataKey="name"
+          style={textStyle("caption")}
+          axisLine={false}
+          tickLine={false}
+        />
         <YAxis
           width={45}
-          style={textStyle}
+          style={textStyle("body")}
           axisLine={false}
           tickLine={false}
           tickFormatter={(value) => formatCurrency(value, 0)}
@@ -29,10 +34,10 @@ export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
 const { radii } = unsafe.tokens;
 const { typography, color } = unsafe.vars;
 const barRadius = [radii["#1"], radii["#1"], 0, 0] satisfies BarProps["radius"];
-const textStyle = {
-  ...typography.body,
+const textStyle = (name: keyof typeof typography) => ({
+  ...typography[name],
   fill: "currentColor",
-};
+});
 
 const data = [
   { name: "Jan", value: 3000 },
