@@ -103,7 +103,7 @@ export default function Dashboard() {
                   </ListItemIcon>
                   <ListItemText primary={sale.name} secondary={sale.email} />
                   <ListItemSecondaryContent>
-                    <Text>{formatCurrency(sale.amount)}</Text>
+                    <Text variant="h3">+{formatCurrency(sale.amount)}</Text>
                   </ListItemSecondaryContent>
                 </ListItem>
               ))}

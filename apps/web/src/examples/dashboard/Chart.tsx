@@ -14,7 +14,7 @@ export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
           style={textStyle}
           axisLine={false}
           tickLine={false}
-          tickFormatter={formatCurrency}
+          tickFormatter={(value) => formatCurrency(value, 0)}
         />
         <Bar
           dataKey="value"
