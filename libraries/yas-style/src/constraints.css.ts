@@ -8,7 +8,7 @@ import * as tokens from "./tokens";
 import { vars } from "./vars.css";
 import { flattened } from "./flattened";
 
-const overflows = ["visible", "hidden", "scroll"] as const;
+const overflows = ["visible", "hidden", "scroll", "auto"] as const;
 
 type Color = keyof typeof colors;
 const colors = {

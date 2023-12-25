@@ -7,6 +7,9 @@ export const tabs = recipe({
     display: "flex",
     flexDirection: "row",
     listStyle: "none",
+    maxWidth: "100%",
+    boxSizing: "border-box",
+    overflowX: "auto",
   },
   variants: {
     variant: {
