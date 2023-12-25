@@ -100,9 +100,9 @@ export default function Dashboard() {
               {sales.map((sale, index) => (
                 <ListItem button key={index} sx={{ px: "#5" }}>
                   <ListItemIcon>
-                    <Avatar>
-                      <PersonIcon />
-                    </Avatar>
+                    <Avatar
+                      src={`https://picsum.photos/32/32?grayscale&random=${index}`}
+                    />
                   </ListItemIcon>
                   <ListItemText primary={sale.name} secondary={sale.email} />
                   <ListItemSecondaryContent>
