@@ -8,10 +8,16 @@ import {
   Tabs,
   Text,
 } from "@yas/ui";
-import { Card } from "./shared";
+import {
+  RocketIcon,
+  PersonIcon,
+  CardStackIcon,
+  BarChartIcon,
+} from "@yas/icons";
 import { Chart } from "./Chart";
-import { StatsRow } from "./Stats";
 import { SalesList } from "./Sales";
+import { Card, formatCurrency } from "./shared";
+import { StatsCard } from "./Stats";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -41,7 +47,32 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <StatsRow />
+        <Stack direction="row" gap="#4" align="stretch">
+          <StatsCard
+            title="Total Revenue"
+            amount={formatCurrency(45231.89)}
+            description="+20.1% from last month"
+            icon={<RocketIcon />}
+          />
+          <StatsCard
+            title="Subscriptions"
+            amount="+2350"
+            description="+180.1% from last month"
+            icon={<PersonIcon />}
+          />
+          <StatsCard
+            title="Sales"
+            amount="+12,234"
+            description="+19% from last month"
+            icon={<CardStackIcon />}
+          />
+          <StatsCard
+            title="Active Now"
+            amount="+573"
+            description="+201 since last hour"
+            icon={<BarChartIcon />}
+          />
+        </Stack>
         <Stack direction="row" align="stretch">
           <Card sx={{ flex: 3, gap: "#4" }}>
             <div>
