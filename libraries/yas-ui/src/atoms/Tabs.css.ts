@@ -1,4 +1,4 @@
-import { globalStyle, recipe } from "@yas/style";
+import { recipe } from "@yas/style";
 
 export const tabs = recipe({
   base: {
@@ -26,16 +26,13 @@ export const tabs = recipe({
 
 const variantClasses = tabs.classNames.variants.variant;
 
-const paddingStyle = {
-  px: "#3",
-  py: "#1",
-} as const;
-
 export const item = recipe({
   base: {
     borderRadius: "#3",
     transition: [[["background", "color"], "standard.beginAndEndOnScreen"]],
     cursor: "pointer",
+    px: "#3",
+    py: "#1",
   },
   variants: {
     active: {
@@ -55,14 +52,5 @@ export const item = recipe({
         opacity: 0.67,
       },
     },
-    padding: {
-      self: paddingStyle,
-      child: {},
-    },
-  },
-  defaultVariants: {
-    padding: "self",
   },
 });
-
-globalStyle(`${item.classNames.variants.padding.child} > *`, paddingStyle);
