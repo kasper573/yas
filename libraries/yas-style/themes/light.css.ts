@@ -6,9 +6,9 @@ import { transitions, typography } from "./shared";
 export const light: string = createTheme(vars, {
   color: {
     surface: {
-      light: palette.gray["100"],
-      main: palette.gray["200"],
-      dark: palette.gray["300"],
+      light: palette.white["100%"],
+      main: palette.gray["50"],
+      dark: palette.gray["100"],
       contrast: palette.gray["900"],
     },
     primary: {
