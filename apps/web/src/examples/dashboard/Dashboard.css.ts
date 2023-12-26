@@ -40,7 +40,13 @@ export const gridContainer = unsafe.style([
   },
 ]);
 
-export const gridAreas = grid.styles;
+export const gridAreas = grid.classNames;
+
+for (const className of Object.values(grid.classNames)) {
+  globalStyle(className, {
+    boxSizing: "border-box",
+  });
+}
 
 // grid row height doesn't work properly in safari, so we need to ensure minimum heights
 globalStyle(gridAreas.totalRevenue, { minHeight: 138.5 });
