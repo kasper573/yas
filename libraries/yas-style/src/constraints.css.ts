@@ -38,6 +38,9 @@ export const resolveStyle = createStyleResolver({
     hover: { selectors: "&:hover" },
     focus: { selectors: "&:focus" },
     active: { selectors: "&:active" },
+    "large-display": { "@media": "(min-width: 1024px)" },
+    "medium-display": { "@media": "(min-width: 600px)" },
+    "small-display": { "@media": "(max-width: 599px)" },
   },
   defaultCondition: "default",
   properties: {
