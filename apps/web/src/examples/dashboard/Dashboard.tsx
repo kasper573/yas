@@ -1,8 +1,10 @@
 import { styled } from "@yas/style";
 import {
   Box,
+  CircularProgress,
   DatePicker,
   Divider,
+  Dock,
   Link,
   Stack as StackImpl,
   TabItem,
@@ -15,7 +17,7 @@ import {
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { api } from "@yas/api-client";
 import { RecentSaleList } from "./RecentSaleList";
 import { Card, formatCurrency } from "./shared";
@@ -30,7 +32,6 @@ const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
   const [dateFilter, setDateFilter] = useState(todaysDate);
-  const [data] = api.example.dashboard.useSuspenseQuery(dateFilter);
 
   return (
     <Card sx={{ p: 0 }}>
@@ -52,67 +53,88 @@ export default function Dashboard() {
           <Title>Dashboard</Title>
           <DatePicker value={dateFilter} onChange={setDateFilter} />
         </Stack>
-        <Tabs variant="contained" sx={{ flex: 1 }}>
-          {secondaryNav.map((label, index) => (
-            <TabItem asChild key={index} active={index === 0}>
-              <Link>{label}</Link>
-            </TabItem>
-          ))}
-        </Tabs>
-        <div className={gridContainer}>
-          <StatsCard
-            title="Total Revenue"
-            amount={formatCurrency(data.totalRevenue)}
-            description={`${formatOffset(
-              data.revenueDeltaSinceLastMonth,
-            )}% from last month`}
-            icon={<RocketIcon />}
-            className={gridAreas.totalRevenue}
-          />
-          <StatsCard
-            title="Subscriptions"
-            amount={formatOffset(data.subscriptions)}
-            description={`${formatOffset(
-              data.subscriptionDeltaSinceLastMonth,
-            )}% from last month`}
-            icon={<PersonIcon />}
-            className={gridAreas.subscriptions}
-          />
-          <StatsCard
-            title="Sales"
-            amount={formatOffset(data.sales)}
-            description={`${formatOffset(
-              data.salesDeltaSinceLastMonth,
-            )}% from last month`}
-            icon={<CardStackIcon />}
-            className={gridAreas.sales}
-          />
-          <StatsCard
-            title="Active Now"
-            amount={formatOffset(data.activeNow)}
-            description={`${formatOffset(
-              data.activeSinceLastHour,
-            )} since last hour`}
-            icon={<BarChartIcon />}
-            className={gridAreas.activeNow}
-          />
-          <Card sx={{ gap: "#4" }} className={gridAreas.chart}>
-            <div>
-              <Text variant="h5">Overview</Text>
-              <Text>&nbsp;</Text>
-            </div>
-            <Chart data={data.revenueOverTime} />
-          </Card>
-          <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
-            <Box sx={{ px: "#5" }}>
-              <Text variant="h5">Recent Sales</Text>
-              <Text>You made {data.yourSalesThisMonth} sales this month.</Text>
-            </Box>
-            <RecentSaleList data={data.recentSales} />
-          </Card>
-        </div>
+        <Suspense fallback={<DashboardSkeleton />}>
+          <Separate dateFilter={dateFilter} />
+        </Suspense>
       </Stack>
     </Card>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <Box sx={{ minHeight: "60vh" }}>
+      <Dock position="center">
+        <CircularProgress size="large" />
+      </Dock>
+    </Box>
+  );
+}
+
+function Separate({ dateFilter }: { dateFilter: Date }) {
+  const [data] = api.example.dashboard.useSuspenseQuery(dateFilter);
+  return (
+    <>
+      <Tabs variant="contained" sx={{ flex: 1 }}>
+        {secondaryNav.map((label, index) => (
+          <TabItem asChild key={index} active={index === 0}>
+            <Link>{label}</Link>
+          </TabItem>
+        ))}
+      </Tabs>
+      <div className={gridContainer}>
+        <StatsCard
+          title="Total Revenue"
+          amount={formatCurrency(data.totalRevenue)}
+          description={`${formatOffset(
+            data.revenueDeltaSinceLastMonth,
+          )}% from last month`}
+          icon={<RocketIcon />}
+          className={gridAreas.totalRevenue}
+        />
+        <StatsCard
+          title="Subscriptions"
+          amount={formatOffset(data.subscriptions)}
+          description={`${formatOffset(
+            data.subscriptionDeltaSinceLastMonth,
+          )}% from last month`}
+          icon={<PersonIcon />}
+          className={gridAreas.subscriptions}
+        />
+        <StatsCard
+          title="Sales"
+          amount={formatOffset(data.sales)}
+          description={`${formatOffset(
+            data.salesDeltaSinceLastMonth,
+          )}% from last month`}
+          icon={<CardStackIcon />}
+          className={gridAreas.sales}
+        />
+        <StatsCard
+          title="Active Now"
+          amount={formatOffset(data.activeNow)}
+          description={`${formatOffset(
+            data.activeSinceLastHour,
+          )} since last hour`}
+          icon={<BarChartIcon />}
+          className={gridAreas.activeNow}
+        />
+        <Card sx={{ gap: "#4" }} className={gridAreas.chart}>
+          <div>
+            <Text variant="h5">Overview</Text>
+            <Text>&nbsp;</Text>
+          </div>
+          <Chart data={data.revenueOverTime} />
+        </Card>
+        <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
+          <Box sx={{ px: "#5" }}>
+            <Text variant="h5">Recent Sales</Text>
+            <Text>You made {data.yourSalesThisMonth} sales this month.</Text>
+          </Box>
+          <RecentSaleList data={data.recentSales} />
+        </Card>
+      </div>
+    </>
   );
 }
 
