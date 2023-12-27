@@ -22,6 +22,11 @@ export const textRecipe = recipe({
       },
       false: {},
     },
+    noWrap: {
+      true: {
+        whiteSpace: "nowrap",
+      },
+    },
   },
   compoundVariants: [
     {
