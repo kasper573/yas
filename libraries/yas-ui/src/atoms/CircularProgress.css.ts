@@ -8,7 +8,7 @@ const spin = keyframes({
 export const circularProgressRecipe = recipe({
   base: {
     display: "inline-block",
-    animation: `${spin} 1s linear infinite`,
+    animation: [spin, "1s", "linear", "infinite"],
     fill: "primary.base.main",
   },
   variants: {
