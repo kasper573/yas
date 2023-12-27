@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { BrowserRouter } from "react-router-dom";
 import { env } from "./env";
-import { AppRoutes } from "./components/Routes";
+import { AppRoutes } from "./Routes";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import type { ThemeName } from "./theme";
 

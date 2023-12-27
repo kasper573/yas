@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy } from "react";
-const Layout = lazy(() => import("./Layout"));
+const Layout = lazy(() => import("./components/Layout"));
 
 export function AppRoutes() {
   return (
@@ -8,11 +8,11 @@ export function AppRoutes() {
       <Route path="/" element={<Layout />}>
         <Route
           path="/"
-          Component={lazy(() => import("../examples/sandbox/Sandbox"))}
+          Component={lazy(() => import("./examples/sandbox/Sandbox"))}
         />
         <Route
           path="/dashboard"
-          Component={lazy(() => import("../examples/dashboard/Dashboard"))}
+          Component={lazy(() => import("./examples/dashboard/Dashboard"))}
         />
       </Route>
     </Routes>
