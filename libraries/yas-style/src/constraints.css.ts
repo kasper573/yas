@@ -123,7 +123,7 @@ export const resolveStyle = createStyleResolver({
 
     // Composites
     transition,
-    animation: all(),
+    animation,
     transform: all(),
     boxShadow: tokens.shadows,
     textShadow: tokens.shadows,
@@ -167,11 +167,32 @@ function transition<Transitions extends Transition[]>(
     .join(", ");
 }
 
+/**
+ * Define a transition css string by selecting among theme variable transition presets
+ */
+function animation([
+  animationName,
+  duration,
+  easingPreset,
+  iterationCount,
+]: Animation) {
+  return [animationName, duration, tokens.easings[easingPreset], iterationCount]
+    .filter(Boolean)
+    .join(" ");
+}
+
+type Animation = [
+  animationName: string,
+  duration: Duration,
+  easingPreset: keyof typeof tokens.easings,
+  iterationCount?: number | "infinite",
+];
+
+type TimeUnit = "ms" | "s" | "min" | "h" | "d";
+type Numeric = `${number}` | `${number}.${number}`;
+type Duration = `${Numeric}${TimeUnit}`;
+
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
   preset: keyof typeof flattenedTransitions,
 ];
-
-function border(size: unknown) {
-  return size + ` solid ${colors.divider}`;
-}
