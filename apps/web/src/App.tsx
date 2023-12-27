@@ -6,7 +6,7 @@ import { env } from "./env";
 import { AppRoutes } from "./Routes";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import type { ThemeName } from "./theme";
-import { ErrorFallback } from "./ErrorFallback";
+import { ErrorFallback } from "./components/ErrorFallback";
 
 export default function App() {
   const [theme, setTheme] = useState<ThemeName>("dark");
