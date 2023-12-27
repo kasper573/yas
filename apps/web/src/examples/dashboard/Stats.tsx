@@ -22,11 +22,17 @@ export function StatsCard({
         justify="spaceBetween"
         sx={{ flex: 1 }}
       >
-        <Text variant="h5">{title}</Text>
+        <Text variant="h5" noWrap>
+          {title}
+        </Text>
         {icon}
       </Stack>
-      <Text variant="h1">{amount}</Text>
-      <Text variant="caption">{description}</Text>
+      <Text variant="h1" noWrap>
+        {amount}
+      </Text>
+      <Text variant="caption" noWrap>
+        {description}
+      </Text>
     </Card>
   );
 }

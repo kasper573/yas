@@ -19,12 +19,11 @@ import {
 import { Suspense, useState } from "react";
 import { api } from "@yas/api-client";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, formatCurrency } from "./shared";
+import { Card, format, formatCurrency } from "./shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./Dashboard.css";
 import { Chart } from "./Chart";
 import { todaysDate } from "./shared";
-import { formatOffset } from "./shared";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -74,36 +73,37 @@ function DashboardContent({ dateFilter }: { dateFilter: Date }) {
       <StatsCard
         title="Total Revenue"
         amount={formatCurrency(data.totalRevenue)}
-        description={`${formatOffset(
-          data.revenueDeltaSinceLastMonth,
-        )}% from last month`}
+        description={`${format(data.revenueDeltaSinceLastMonth, [
+          "sign",
+          "currency",
+        ])}% from last month`}
         icon={<RocketIcon />}
         className={gridAreas.totalRevenue}
       />
       <StatsCard
         title="Subscriptions"
-        amount={formatOffset(data.subscriptions)}
-        description={`${formatOffset(
-          data.subscriptionDeltaSinceLastMonth,
-        )}% from last month`}
+        amount={format(data.subscriptions, ["sign"])}
+        description={`${format(data.subscriptionDeltaSinceLastMonth, [
+          "sign",
+        ])}% from last month`}
         icon={<PersonIcon />}
         className={gridAreas.subscriptions}
       />
       <StatsCard
         title="Sales"
-        amount={formatOffset(data.sales)}
-        description={`${formatOffset(
-          data.salesDeltaSinceLastMonth,
-        )}% from last month`}
+        amount={format(data.sales, ["sign"])}
+        description={`${format(data.salesDeltaSinceLastMonth, [
+          "sign",
+        ])}% from last month`}
         icon={<CardStackIcon />}
         className={gridAreas.sales}
       />
       <StatsCard
         title="Active Now"
-        amount={formatOffset(data.activeNow)}
-        description={`${formatOffset(
-          data.activeSinceLastHour,
-        )} since last hour`}
+        amount={format(data.activeNow, ["sign"])}
+        description={`${format(data.activeSinceLastHour, [
+          "sign",
+        ])} since last hour`}
         icon={<BarChartIcon />}
         className={gridAreas.activeNow}
       />
@@ -117,7 +117,9 @@ function DashboardContent({ dateFilter }: { dateFilter: Date }) {
       <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
         <Box sx={{ px: "#5" }}>
           <Text variant="h5">Recent Sales</Text>
-          <Text>You made {data.yourSalesThisMonth} sales this month.</Text>
+          <Text>
+            You made {data.yourSalesThisMonth.toFixed(0)} sales this month.
+          </Text>
         </Box>
         <RecentSaleList data={data.recentSales} />
       </Card>

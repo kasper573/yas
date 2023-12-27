@@ -7,7 +7,7 @@ import {
   ListItemText,
   Text,
 } from "@yas/ui";
-import { formatCurrency } from "./shared";
+import { format } from "./shared";
 
 export function RecentSaleList({ data }: { data: RecentSale[] }) {
   return (
@@ -19,7 +19,9 @@ export function RecentSaleList({ data }: { data: RecentSale[] }) {
           </ListItemIcon>
           <ListItemText primary={sale.name} secondary={sale.email} />
           <ListItemSecondaryContent>
-            <Text variant="h3">+{formatCurrency(sale.amount)}</Text>
+            <Text variant="h3">
+              {format(sale.amount, ["sign", "currency"])}
+            </Text>
           </ListItemSecondaryContent>
         </ListItem>
       ))}

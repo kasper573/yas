@@ -4,12 +4,15 @@ import { card } from "./shared.css";
 
 export const Card = styled(Paper).attrs({ elevation: "0", className: card });
 
-export const formatCurrency = (value: number, maximumFractionDigits = 2) =>
-  new Intl.NumberFormat("en-US", {
+const maxFractions = 0;
+
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits,
+    maximumFractionDigits: maxFractions,
   }).format(value);
+}
 
 export function todaysDate() {
   const date = new Date();
@@ -17,9 +20,19 @@ export function todaysDate() {
   return date;
 }
 
-export function formatOffset(value: number) {
-  if (value === 0) {
-    return "0";
+export function format(value: number, formats: Array<"sign" | "currency">) {
+  let output = formats.includes("currency")
+    ? formatCurrency(value)
+    : value.toFixed(maxFractions);
+  if (formats.includes("sign")) {
+    output = sign(value) + output;
   }
-  return value > 0 ? `+${value}` : `-${value}`;
+  return output;
+}
+
+export function sign(value: number) {
+  if (value === 0) {
+    return "";
+  }
+  return value > 0 ? `+` : `-`;
 }

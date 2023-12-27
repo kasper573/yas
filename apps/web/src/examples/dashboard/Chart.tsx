@@ -26,7 +26,7 @@ export function Chart({
           style={textStyle("body")}
           axisLine={false}
           tickLine={false}
-          tickFormatter={(value) => formatCurrency(value, 0)}
+          tickFormatter={formatCurrency}
         />
         <Bar
           dataKey="value"
