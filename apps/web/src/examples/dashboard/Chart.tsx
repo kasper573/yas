@@ -4,7 +4,14 @@ import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { formatCurrency } from "./shared";
 
-export function Chart(props: ComponentProps<typeof ResponsiveContainer>) {
+export interface ChartProps extends ComponentProps<typeof ResponsiveContainer> {
+  data: { name: string; value: number }[];
+}
+
+export function Chart({
+  data,
+  ...props
+}: ComponentProps<typeof ResponsiveContainer>) {
   return (
     <ResponsiveContainer width="100%" height="100%" {...props}>
       <BarChart data={data}>
@@ -39,18 +46,3 @@ const textStyle = (name: keyof typeof typography) => ({
   ...typography[name],
   fill: "currentColor",
 });
-
-const data = [
-  { name: "Jan", value: 3000 },
-  { name: "Feb", value: 4500 },
-  { name: "Mar", value: 2900 },
-  { name: "Apr", value: 4000 },
-  { name: "May", value: 5000 },
-  { name: "Jun", value: 5200 },
-  { name: "Jul", value: 1400 },
-  { name: "Aug", value: 1300 },
-  { name: "Sep", value: 4100 },
-  { name: "Oct", value: 1350 },
-  { name: "Nov", value: 5600 },
-  { name: "Dec", value: 1337 },
-];
