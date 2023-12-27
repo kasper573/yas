@@ -16,20 +16,20 @@ import {
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { api } from "@yas/api-client";
+import { useRouterState } from "../../hooks/useRouterState";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, format, formatCurrency } from "./shared";
+import { Card, format, formatCurrency, todaysDate } from "./shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./Dashboard.css";
 import { Chart } from "./Chart";
-import { todaysDate } from "./shared";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
-  const [dateFilter, setDateFilter] = useState(todaysDate);
+  const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
 
   return (
     <Card sx={{ p: 0 }}>
@@ -145,3 +145,8 @@ const Stack = styled(StackImpl).attrs({ gap: "#4" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
+
+const dateEncoding = {
+  decode: (value?: string) => (value ? new Date(value) : todaysDate()),
+  encode: (value: Date) => value.toISOString().split("T")[0],
+};
