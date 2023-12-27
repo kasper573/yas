@@ -23,6 +23,7 @@ export * from "./form/Pagination";
 export * from "./form/rcf";
 export * from "./fields/CheckboxField";
 export * from "./fields/CheckboxGroupField";
+export * from "./fields/DatePicker";
 export * from "./fields/MultiSelectField";
 export * from "./fields/NumberField";
 export * from "./fields/RadioGroupField";
