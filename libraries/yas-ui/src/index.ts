@@ -14,6 +14,7 @@ export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
 export * from "./layout/Dock";
+export * from "./layout/Bounds";
 export * from "./layout/Stack";
 export * from "./layout/Container";
 export * from "./layout/Void";
