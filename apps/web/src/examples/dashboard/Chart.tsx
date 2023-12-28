@@ -2,20 +2,16 @@ import { unsafe } from "@yas/style";
 import { type ComponentProps } from "react";
 import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { useConsoleFilter } from "../../../hooks/useConsoleFilter";
 import { formatCurrency } from "./shared";
 
-export interface ChartProps extends ComponentProps<typeof ResponsiveContainer> {
+export interface ChartProps
+  extends Omit<ComponentProps<typeof ResponsiveContainer>, "data"> {
   data: { name: string; value: number }[];
 }
 
-export function Chart({
-  data,
-  ...props
-}: ComponentProps<typeof ResponsiveContainer>) {
-  useConsoleFilter(isValidRechartsWarning);
+export function Chart({ data, ...props }: ChartProps) {
   return (
-    <ResponsiveContainer width="100%" height="100%" {...props}>
+    <ResponsiveContainer width="100%" height="100%" minWidth={0} {...props}>
       <BarChart data={data}>
         <XAxis
           dataKey="name"
@@ -38,13 +34,6 @@ export function Chart({
       </BarChart>
     </ResponsiveContainer>
   );
-}
-
-function isValidRechartsWarning(...args: unknown[]) {
-  // recharts handles react Suspense improperly and throws an invalid warning that we can ignore
-  return !args
-    .join(" ")
-    .includes("The width(0) and height(0) of chart should be greater than 0");
 }
 
 const { radii } = unsafe.tokens;
