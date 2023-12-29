@@ -20,14 +20,14 @@ import * as styles from "./sandbox.css";
 
 export default function Sandbox() {
   const [theme, toggleTheme] = useTheme();
-  const { data: response } = api.example.hello.useQuery(hello());
+  const [response] = api.example.hello.useSuspenseQuery(hello());
   const showDialog = useDialog(TestDialog);
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>
       <Text paragraph>Mode: {env.mode}</Text>
-      <Text paragraph>Server response: {response?.message}</Text>
-      <Text paragraph>Server time: {response?.date.toLocaleString()}</Text>
+      <Text paragraph>Server response: {response.message}</Text>
+      <Text paragraph>Server time: {response.date.toLocaleString()}</Text>
       <Text>Theme: {theme}</Text>
 
       <Stack direction="row" gap="#2" sx={{ mt: "#2" }}>
