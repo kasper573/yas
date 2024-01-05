@@ -32,18 +32,25 @@ export type ConstrainedStyleWithoutConditions = ConstrainedStyleImpl<
     : never
 >;
 
+const breakpointConditions = Object.fromEntries(
+  Object.entries(breakpointQueries(tokens.breakpoints)).map(([name, query]) => [
+    name,
+    { "@media": query },
+  ]),
+) as Record<tokens.Breakpoint, { "@media": string }>;
+
+const inputConditions = {
+  hoverOrFocus: { selectors: "&:hover, &:focus" },
+  hover: { selectors: "&:hover" },
+  focus: { selectors: "&:focus" },
+  active: { selectors: "&:active" },
+};
+
 export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
-    hoverOrFocus: { selectors: "&:hover, &:focus" },
-    hover: { selectors: "&:hover" },
-    focus: { selectors: "&:focus" },
-    active: { selectors: "&:active" },
-    ...(Object.fromEntries(
-      Object.entries(breakpointQueries(tokens.breakpoints)).map(
-        ([name, query]) => [name, { "@media": query }],
-      ),
-    ) as Record<tokens.Breakpoint, { "@media": string }>),
+    ...inputConditions,
+    ...breakpointConditions,
   },
   defaultCondition: "default",
   properties: {
