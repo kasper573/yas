@@ -1,21 +1,40 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
 import { useState } from "react";
+import type { DateRange } from "./Calendar";
 import { Calendar } from "./Calendar";
 
 export default {
   title: "atoms/Calendar",
-  component: UncontrolledCalendar,
+  component: () => null,
   tags: ["autodocs"],
-} satisfies Meta<typeof Calendar>;
+} satisfies Meta;
 
-type Story = StoryObj<Meta<typeof Calendar>>;
-
-export const Default: Story = {
-  args: {} as Story["args"], // For some reason react-day-picker has issues with storybook and typescript, so we have to assert
+export const Single: StoryObj = {
+  render: () => <SingleCalendar />,
 };
 
-function UncontrolledCalendar(props: ComponentProps<typeof Calendar>) {
+export const Range: StoryObj = {
+  render: () => <RangeCalendar />,
+};
+
+export const Multiple: StoryObj = {
+  render: () => <MultiCalendar />,
+};
+
+function SingleCalendar() {
   const [date, setDate] = useState<Date | undefined>(() => new Date());
   return <Calendar mode="single" selected={date} onSelect={setDate} />;
+}
+
+function RangeCalendar() {
+  const [range, setRange] = useState<DateRange | undefined>(() => ({
+    from: new Date(),
+    to: new Date(),
+  }));
+  return <Calendar mode="range" selected={range} onSelect={setRange} />;
+}
+
+function MultiCalendar() {
+  const [dates, setDates] = useState<Date[] | undefined>(() => [new Date()]);
+  return <Calendar mode="multiple" selected={dates} onSelect={setDates} />;
 }

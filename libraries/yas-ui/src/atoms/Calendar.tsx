@@ -7,6 +7,7 @@ import type {
 import { DayPicker } from "react-day-picker";
 import { clsx } from "@yas/style";
 import * as styles from "./Calendar.css";
+export type { DateRange } from "react-day-picker";
 
 export type CalendarProps =
   | DayPickerSingleProps
