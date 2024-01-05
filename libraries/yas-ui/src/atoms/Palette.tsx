@@ -1,9 +1,9 @@
-import { palette } from "@yas/style";
+import { unsafe } from "@yas/style";
 import { Stack } from "../layout/Stack";
 import { Text } from "./Text";
 
 interface PaletteProps {
-  colorName?: keyof typeof palette;
+  colorName?: keyof typeof unsafe.tokens.palette;
 }
 
 export function Palette({ colorName }: PaletteProps) {
@@ -13,15 +13,17 @@ export function Palette({ colorName }: PaletteProps) {
   return (
     <Stack>
       <Text sx={{ textAlign: "center", p: "#2" }}>{colorName}</Text>
-      {Object.entries(palette[colorName]).map(([gradeName, gradeValue]) => (
-        <Text
-          key={gradeName}
-          sx={{ py: "#2", px: "#5", textAlign: "center" }}
-          style={{ background: gradeValue, color: contrastColor(gradeValue) }}
-        >
-          {gradeName}
-        </Text>
-      ))}
+      {Object.entries(unsafe.tokens.palette[colorName]).map(
+        ([gradeName, gradeValue]) => (
+          <Text
+            key={gradeName}
+            sx={{ py: "#2", px: "#5", textAlign: "center" }}
+            style={{ background: gradeValue, color: contrastColor(gradeValue) }}
+          >
+            {gradeName}
+          </Text>
+        ),
+      )}
     </Stack>
   );
 }

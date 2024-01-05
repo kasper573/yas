@@ -6,10 +6,10 @@ export const fonts = {
 
 export type Breakpoint = keyof typeof breakpoints;
 export const breakpoints = {
-  "large-display": "(min-width: 1024px)",
-  "medium-display": "(min-width: 600px)",
-  "small-display": "(min-width: 0px)",
-} satisfies Record<string, string>;
+  "large-display": 1024,
+  "medium-display": 600,
+  "small-display": 0,
+} satisfies Record<string, number>;
 
 export const spaces = {
   0: 0,

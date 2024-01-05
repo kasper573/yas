@@ -7,6 +7,7 @@ import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
 import { flattened } from "./flattened";
+import { breakpointMediaQueries } from "./mediaQueries";
 
 const overflows = ["visible", "hidden", "scroll", "auto"] as const;
 
@@ -39,7 +40,7 @@ export const resolveStyle = createStyleResolver({
     focus: { selectors: "&:focus" },
     active: { selectors: "&:active" },
     ...(Object.fromEntries(
-      Object.entries(tokens.breakpoints).map(([name, query]) => [
+      Object.entries(breakpointMediaQueries).map(([name, query]) => [
         name,
         { "@media": query },
       ]),

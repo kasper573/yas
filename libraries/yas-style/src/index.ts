@@ -11,7 +11,6 @@ import { resolveStyle } from "./constraints.css";
 
 // Utilities
 export { clsx } from "clsx";
-export { palette } from "./tokens";
 export {
   createVar,
   layer,
@@ -19,6 +18,8 @@ export {
   createContainer,
 } from "@vanilla-extract/css";
 export * from "@vanilla-extract/dynamic";
+export * from "./gridAreas";
+export * from "./mediaQueries";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>
@@ -47,8 +48,6 @@ export const styled = createStyledFactory({
 });
 
 export const recipe = createRecipeFactory(resolveStyle);
-
-export * from "./gridAreas";
 
 export type { RecipeVariants } from "vanilla-extract-recipe-factory";
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };
