@@ -31,6 +31,7 @@ export function useMediaQuery(query: string): boolean {
 
 export function useMediaQueries<Name extends PropertyKey>(
   record: Record<Name, string>,
+  output: "preserve-keys" | "omit-falsy" = "omit-falsy",
 ): NamedMatches<Name> {
   const queries = useMemo<string[]>(() => Object.values(record), [record]);
   const matches = useMediaQueryList(queries);
@@ -39,9 +40,9 @@ export function useMediaQueries<Name extends PropertyKey>(
       Object.fromEntries(
         Object.entries(record)
           .map(([name], index) => [name, matches[index]])
-          .filter(([, match]) => match),
+          .filter(([, match]) => (output === "omit-falsy" ? match : true)),
       ) as NamedMatches<Name>,
-    [record, matches],
+    [record, matches, output],
   );
 }
 

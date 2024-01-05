@@ -21,7 +21,10 @@ import { useTheme } from "../../theme";
 import * as styles from "./sandbox.css";
 
 export default function Sandbox() {
-  const preferenceMediaQueryResults = useMediaQueries(preferenceMediaQueries);
+  const preferenceMediaQueryResults = useMediaQueries(
+    preferenceMediaQueries,
+    "preserve-keys",
+  );
   const breakpointName = Object.keys(useMediaQueries(breakpointQuery.all))[0];
   const [theme, toggleTheme] = useTheme();
   const [response] = api.example.hello.useSuspenseQuery(hello());
