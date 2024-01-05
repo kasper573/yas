@@ -117,13 +117,9 @@ export const day_today = style({
   },
 });
 
-export const day_outside = style({
-  opacity: 0.5,
-});
+export const day_outside = style({});
 
-export const day_disabled = style({
-  opacity: 0.5,
-});
+export const day_disabled = style({});
 
 export const day_hidden = style({
   visibility: "hidden",
@@ -141,6 +137,11 @@ export const cell = recipe({
     borderRadius,
     overflow: "hidden",
     transition: [[["background-color", "color"], "standard.enter"]],
+    selectors: {
+      [`&:has(>${day_outside}), &:has(>${day_disabled})`]: {
+        opacity: 0.5,
+      },
+    },
   },
   variants: {
     range: {
