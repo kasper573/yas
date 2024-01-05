@@ -6,7 +6,7 @@ export * from "./atoms/Avatar";
 export * from "./atoms/List";
 export * from "./atoms/Paper";
 export * from "./atoms/Skeleton";
-export * from "./atoms/ExampleImage";
+export * from "./ExampleImage";
 export * from "./atoms/CircularProgress";
 export * from "./atoms/Link";
 export * from "./atoms/Tabs";
