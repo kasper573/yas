@@ -35,7 +35,12 @@ export const nav = style({
   columnGap: "#1",
 });
 
-export const nav_button = iconButtonRecipe();
+export const nav_button = iconButtonRecipe({
+  color: "inherit",
+  variant: "text",
+  shape: "rounded",
+  size: "medium",
+});
 
 export const nav_button_previous = style({
   position: "absolute",
