@@ -9,10 +9,14 @@ import { clsx } from "@yas/style";
 import * as styles from "./Calendar.css";
 export type { DateRange } from "react-day-picker";
 
+export type SingleCalendarProps = DayPickerSingleProps;
+export type RangeCalendarProps = DayPickerRangeProps;
+export type MultipleCalendarProps = DayPickerMultipleProps;
+
 export type CalendarProps =
-  | DayPickerSingleProps
-  | DayPickerMultipleProps
-  | DayPickerRangeProps;
+  | SingleCalendarProps
+  | RangeCalendarProps
+  | MultipleCalendarProps;
 
 const { base, cell, ...defaultClassNames } = styles;
 
@@ -32,11 +36,13 @@ export function Calendar({
         ...defaultClassNames,
         ...overrideClassNames,
       }}
-      components={{
-        IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
-      }}
+      components={components}
       {...props}
     />
   );
 }
+
+const components = {
+  IconLeft: () => <ChevronLeftIcon />,
+  IconRight: () => <ChevronRightIcon />,
+};
