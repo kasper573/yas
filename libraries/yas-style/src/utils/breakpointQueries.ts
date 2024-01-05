@@ -2,10 +2,10 @@
  * Converts breakpoints to media queries.
  */
 export function breakpointQueries<Name extends PropertyKey>(
-  breakpoints: Record<string, number>,
+  breakpoints: Record<Name, number>,
 ) {
   const breakpointList = Object.entries(breakpoints).sort(
-    ([, a], [, b]) => a - b,
+    ([, a], [, b]) => Number(a) - Number(b),
   );
   return Object.fromEntries(
     breakpointList
