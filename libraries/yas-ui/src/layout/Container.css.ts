@@ -1,6 +1,7 @@
-import { breakpointMediaQueries, unsafe } from "@yas/style";
+import { breakpointQueries, unsafe } from "@yas/style";
 
-const breakpointList = Object.entries(unsafe.tokens.breakpoints);
+const { breakpoints } = unsafe.tokens;
+const breakpointList = Object.entries(breakpoints);
 
 export const container = unsafe.style({
   margin: "auto",
@@ -8,7 +9,7 @@ export const container = unsafe.style({
   boxSizing: "border-box",
   "@media": {
     ...Object.fromEntries(
-      Object.entries(breakpointMediaQueries).map(([name, query]) => {
+      Object.entries(breakpointQueries(breakpoints)).map(([name, query]) => {
         const index = breakpointList.findIndex(([n]) => n === name);
         const current = breakpointList[index]?.[1];
         const next = index !== -1 ? breakpointList[index + 1]?.[1] : undefined;

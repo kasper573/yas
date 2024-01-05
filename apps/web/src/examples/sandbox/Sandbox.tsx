@@ -14,7 +14,7 @@ import {
   useModal,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
-import { breakpointMediaQueries } from "@yas/style";
+import { breakpointQueries, unsafe } from "@yas/style";
 import { env } from "../../env";
 import { hello } from "../../hello";
 import { useTheme } from "../../theme";
@@ -93,5 +93,5 @@ const mediaQueries = {
       "(prefers-contrast: more)",
     ].map((query) => [query, query]),
   ),
-  ...breakpointMediaQueries,
+  ...breakpointQueries(unsafe.tokens.breakpoints),
 };

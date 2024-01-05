@@ -18,8 +18,8 @@ export {
   createContainer,
 } from "@vanilla-extract/css";
 export * from "@vanilla-extract/dynamic";
-export * from "./gridAreas";
-export * from "./mediaQueries";
+export * from "./utils/gridAreas";
+export * from "./utils/breakpointQueries";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>
