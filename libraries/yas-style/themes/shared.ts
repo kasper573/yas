@@ -1,3 +1,4 @@
+import { globalStyle } from "@vanilla-extract/css";
 import { fonts, durations, easings, fontSizes } from "../src/tokens";
 import type { TypographyStyle, vars } from "../src/vars.css";
 
@@ -45,3 +46,12 @@ export const transitions = {
     exit: `${durations.short4} ${easings.standardAccelerate}`,
   },
 };
+
+globalStyle("*", {
+  "@media": {
+    "(prefers-reduced-motion: reduce)": {
+      transitionDuration: "0ms !important",
+      animationDuration: "0ms !important",
+    },
+  },
+});
