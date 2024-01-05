@@ -5,11 +5,12 @@ import { ErrorBoundary } from "react-error-boundary";
 import { env } from "./env";
 import { AppRoutes } from "./Routes";
 import { ThemeProvider } from "./theme/ThemeProvider";
-import type { ThemeName } from "./theme";
+import { usePreferredTheme } from "./theme";
 import { ErrorFallback } from "./components/ErrorFallback";
 
 export default function App() {
-  const [theme, setTheme] = useState<ThemeName>("dark");
+  const preferredTheme = usePreferredTheme();
+  const [theme, setTheme] = useState(preferredTheme);
   const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
 
   return (
