@@ -137,7 +137,6 @@ export const day_today = style({
 });
 
 export const day_outside = style({
-  color: "surface.contrastMuted",
   opacity: 0.5,
   selectors: {
     [`&:${day_selected}`]: {
@@ -150,7 +149,6 @@ export const day_outside = style({
 
 export const day_disabled = style({
   opacity: 0.5,
-  color: "surface.contrastMuted",
 });
 
 export const day_hidden = style({

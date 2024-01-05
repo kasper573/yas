@@ -10,7 +10,6 @@ export const dark: string = createTheme(vars, {
       main: palette.gray["900"],
       dark: palette.gray["950"],
       contrast: palette.gray["100"],
-      contrastMuted: palette.gray["300"],
     },
     primary: {
       base: {
