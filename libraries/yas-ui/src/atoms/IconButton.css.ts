@@ -9,8 +9,8 @@ const size = (value: number) => ({
 
 export const sizes = {
   small: 24,
-  medium: 32,
-  large: 48,
+  medium: 28,
+  large: 32,
 };
 
 export const iconButtonRecipe = recipe({
@@ -26,7 +26,6 @@ export const iconButtonRecipe = recipe({
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
     border: "standard",
-    borderRadius: "50%",
     fontSize: "100%",
     cursor: "pointer",
   },
@@ -39,6 +38,7 @@ export const iconButtonRecipe = recipe({
     color: {
       primary: {},
       secondary: {},
+      inherit: {},
     },
     variant: {
       text: {
@@ -51,6 +51,14 @@ export const iconButtonRecipe = recipe({
       },
       contained: {},
       outlined: {},
+    },
+    shape: {
+      circular: {
+        borderRadius: "50%",
+      },
+      rounded: {
+        borderRadius: "#2",
+      },
     },
     disabled: {
       true: { pointerEvents: "none" },
@@ -115,6 +123,13 @@ export const iconButtonRecipe = recipe({
       },
     },
     {
+      variants: { color: "inherit" },
+      style: {
+        color: "inherit",
+        borderColor: "current",
+      },
+    },
+    {
       variants: { disabled: true },
       style: {
         background: { default: "info.dark" },
@@ -126,6 +141,7 @@ export const iconButtonRecipe = recipe({
   defaultVariants: {
     size: "medium",
     variant: "contained",
+    shape: "circular",
     color: "primary",
     disabled: false,
   },
