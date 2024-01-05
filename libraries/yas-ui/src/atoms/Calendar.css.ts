@@ -8,12 +8,21 @@ export const base = style({
   display: "inline-block",
 });
 
+export const months = style({
+  display: "flex",
+  flexDirection: {
+    default: "row",
+    "small-display": "column",
+  },
+  gap: "#3",
+});
+
 export const caption = style({
   display: "flex",
   position: "relative",
   justifyContent: "center",
   alignItems: "center",
-  mb: "#3",
+  mb: "#2",
 });
 
 export const caption_label = style({
@@ -23,6 +32,7 @@ export const caption_label = style({
 export const nav = style({
   display: "flex",
   alignItems: "center",
+  columnGap: "#1",
 });
 
 export const nav_button = iconButtonRecipe();
@@ -48,7 +58,6 @@ export const head_row = style({
 
 export const head_cell = style({
   typography: "body",
-  borderRadius: borderRadius,
   flex: 1,
 });
 
@@ -60,7 +69,6 @@ export const row = style({
 
 export const day = style({
   border: "none",
-  borderRadius: borderRadius,
   typography: "body",
   cursor: "pointer",
   height: 32,
@@ -69,23 +77,31 @@ export const day = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  transition: [[["background-color", "color"], "standard.enter"]],
+  transition: [[["background-color", "color", "opacity"], "standard.enter"]],
   padding: 0,
   selectors: {
     [`&:hover:not([aria-selected])`]: {
       background: "info.main",
       color: "info.contrast",
     },
+    [`&[aria-selected]`]: {
+      borderRadius,
+    },
   },
 });
 
-export const day_range_start = style({});
-export const day_range_middle = style({});
-export const day_range_end = style({});
-
-export const day_selected = style({
+const selectedDayColors = {
   background: "primary.base.main",
   color: "primary.contrast.main",
+} as const;
+
+export const day_range_start = style(selectedDayColors);
+
+export const day_range_middle = style({});
+
+export const day_range_end = style(selectedDayColors);
+
+export const day_selected = style({
   opacity: 1,
 });
 
@@ -122,35 +138,31 @@ export const cell = recipe({
     alignItems: "center",
     justifyContent: "center",
     typography: "caption",
-    selectors: {
-      [`&:has(${day_selected}${day_range_end})`]: {
-        borderRightRadius: borderRadius,
-      },
-    },
+    borderRadius,
+    overflow: "hidden",
+    transition: [[["background-color", "color"], "standard.enter"]],
   },
   variants: {
     range: {
       true: {
         selectors: {
-          [`&:has(>${day_range_end})`]: {
-            borderRightRadius: borderRadius,
+          [`&:has(>${day_selected})`]: {
+            background: "info.light",
+            color: "info.contrast",
+            borderRadius: 0,
           },
-          [`&:has(>${day_range_start})`]: {
+          [`&:has(>${day_range_start}), &:first-child`]: {
             borderLeftRadius: borderRadius,
           },
-          [`&:first:has(${day_selected})`]: {
-            borderLeftRadius: borderRadius,
-          },
-          [`&:last:has(${day_selected})`]: {
+          [`&:has(>${day_range_end}), &:last-child`]: {
             borderRightRadius: borderRadius,
           },
         },
       },
       false: {
+        borderRadius,
         selectors: {
-          [`&:has(${day_selected})`]: {
-            borderRadius: borderRadius,
-          },
+          [`&:has(>${day_selected})`]: selectedDayColors,
         },
       },
     },
