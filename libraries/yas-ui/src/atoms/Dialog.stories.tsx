@@ -2,6 +2,7 @@ import { within, userEvent, waitFor } from "@storybook/testing-library";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentType } from "react";
 import { useMemo } from "react";
+import { styled } from "@yas/style";
 import {
   ModalContext,
   ModalOutlet,
@@ -26,9 +27,7 @@ export default {
 
 export const OpenBaseDialog: StoryObj = {
   render: () => (
-    // Since dialogs are rendered overlayed it has no inline size, so we need to
-    // provide some minimum space for the docs preview in storybook to look good
-    <div style={{ minWidth: 300, minHeight: 300 }}>
+    <FixedSizeContainer>
       <BaseDialog open>
         <DialogTitle>DialogTitle</DialogTitle>
         <DialogContent>
@@ -39,7 +38,7 @@ export const OpenBaseDialog: StoryObj = {
           <Button variant="outlined">Action 2</Button>
         </DialogActions>
       </BaseDialog>
-    </div>
+    </FixedSizeContainer>
   ),
 };
 
@@ -114,9 +113,20 @@ function withModalContext<Props extends object>(
     const store = useMemo(() => new ModalStore(), []);
     return (
       <ModalContext.Provider value={store}>
-        <Component {...props} />
-        <ModalOutlet />
+        <FixedSizeContainer>
+          <Component {...props} />
+          <ModalOutlet />
+        </FixedSizeContainer>
       </ModalContext.Provider>
     );
   };
 }
+
+// Since dialogs are rendered overlayed it has no inline size, so we need to
+// provide some minimum space for the docs preview in storybook to look good
+const FixedSizeContainer = styled("div").attrs({
+  style: {
+    width: 300,
+    height: 300,
+  },
+});
