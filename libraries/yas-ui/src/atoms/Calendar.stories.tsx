@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import type { DateRange } from "./Calendar";
+import type { DateRange, RangeCalendarProps } from "./Calendar";
 import { Calendar } from "./Calendar";
 
 export default {
@@ -17,6 +17,10 @@ export const Range: StoryObj = {
   render: () => <RangeCalendar />,
 };
 
+export const RangeSeveralMonths: StoryObj = {
+  render: () => <RangeCalendar numberOfMonths={3} />,
+};
+
 export const Multiple: StoryObj = {
   render: () => <MultiCalendar />,
 };
@@ -26,12 +30,14 @@ function SingleCalendar() {
   return <Calendar mode="single" selected={date} onSelect={setDate} />;
 }
 
-function RangeCalendar() {
+function RangeCalendar(props: Partial<RangeCalendarProps>) {
   const [range, setRange] = useState<DateRange | undefined>(() => ({
     from: new Date(),
     to: new Date(),
   }));
-  return <Calendar mode="range" selected={range} onSelect={setRange} />;
+  return (
+    <Calendar mode="range" selected={range} onSelect={setRange} {...props} />
+  );
 }
 
 function MultiCalendar() {
