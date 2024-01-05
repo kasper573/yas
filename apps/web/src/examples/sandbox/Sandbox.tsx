@@ -10,7 +10,7 @@ import {
   ExampleImage,
   Stack,
   Text,
-  useDialog,
+  useModal,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
 import { env } from "../../env";
@@ -21,7 +21,7 @@ import * as styles from "./sandbox.css";
 export default function Sandbox() {
   const [theme, toggleTheme] = useTheme();
   const [response] = api.example.hello.useSuspenseQuery(hello());
-  const showDialog = useDialog(TestDialog);
+  const showDialog = useModal(TestDialog);
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>

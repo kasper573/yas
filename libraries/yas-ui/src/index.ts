@@ -33,3 +33,4 @@ export * from "./fields/RangeField";
 export * from "./fields/SingleSelectField";
 export * from "./fields/TextField";
 export * from "./hooks/useElementBounds";
+export * from "./hooks/useModal";

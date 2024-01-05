@@ -1,10 +1,4 @@
-import {
-  CircularProgress,
-  Container,
-  DialogOutlet,
-  Dock,
-  Stack,
-} from "@yas/ui";
+import { CircularProgress, Container, ModalOutlet, Dock, Stack } from "@yas/ui";
 import { Outlet as RouterOutlet } from "react-router-dom";
 import { clsx } from "@yas/style";
 import { Suspense } from "react";
@@ -30,7 +24,7 @@ export default function Layout() {
           </Suspense>
         </Stack>
       </ContainerStack>
-      <DialogOutlet />
+      <ModalOutlet />
     </div>
   );
 }

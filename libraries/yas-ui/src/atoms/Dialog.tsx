@@ -1,7 +1,7 @@
 import type { ImperativeComponentProps } from "react-imperative-hook";
-import { createImperative } from "react-imperative-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
+import { useModalSustainer } from "../hooks/useModal";
 import {
   dialogActionsRecipe,
   dialogContentRecipe,
@@ -23,7 +23,7 @@ export function Dialog<ResolutionValue>({
   ...baseDialogProps
 }: DialogProps<ResolutionValue>) {
   const [open, setOpen] = useState(false);
-  const releaseDialog = useDialogSustainer({ instanceId });
+  const releaseDialog = useModalSustainer({ instanceId });
 
   // Simple way to trigger css reflow.
   useLayoutEffect(() => {
@@ -40,15 +40,6 @@ export function Dialog<ResolutionValue>({
   );
 }
 
-export const {
-  useSpawnSustainer: useDialogSustainer,
-  usePredefinedSpawner: useDialog,
-  useInlineSpawner: useDialogs,
-  Context: DialogContext,
-  Outlet: DialogOutlet,
-  Store: DialogStore,
-} = createImperative();
-
 // The BaseDialog represents the plain design,
 // while the Dialog is its integration with react-imperative-hook.
 
@@ -63,7 +54,7 @@ export const DialogTitle = styled(Text, dialogTitleRecipe).attrs({
 export const DialogContent = styled("div", dialogContentRecipe);
 export const DialogActions = styled("div", dialogActionsRecipe);
 
-function BaseDialog({
+export function BaseDialog({
   open,
   onClickAway,
   ...paperProps
