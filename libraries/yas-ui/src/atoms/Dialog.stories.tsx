@@ -1,30 +1,35 @@
 import { within, userEvent, waitFor } from "@storybook/testing-library";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps, ComponentType } from "react";
+import type { ComponentType } from "react";
 import { useMemo } from "react";
+import {
+  ModalContext,
+  ModalOutlet,
+  ModalStore,
+  useModal,
+} from "../hooks/useModal";
 import {
   Dialog as DialogImpl,
   DialogActions,
   DialogContent,
-  DialogContext,
-  DialogOutlet,
-  DialogStore,
   DialogTitle,
-  useDialog,
+  BaseDialog,
 } from "./Dialog";
 import { Button } from "./Button";
 import { Text } from "./Text";
 
 export default {
   title: "atoms/Dialog",
-  component: Dialog,
+  component: () => null,
   tags: ["autodocs"],
-} satisfies Meta<typeof DialogImpl>;
+} satisfies Meta;
 
-export const Default: StoryObj<Meta<typeof DialogImpl>> = {
-  args: {
-    children: (
-      <>
+export const OpenBaseDialog: StoryObj = {
+  render: () => (
+    // Since dialogs are rendered overlayed it has no inline size, so we need to
+    // provide some minimum space for the docs preview in storybook to look good
+    <div style={{ minWidth: 300, minHeight: 300 }}>
+      <BaseDialog open>
         <DialogTitle>DialogTitle</DialogTitle>
         <DialogContent>
           <Text>DialogContent</Text>
@@ -33,16 +38,14 @@ export const Default: StoryObj<Meta<typeof DialogImpl>> = {
           <Button>Action 1</Button>
           <Button variant="outlined">Action 2</Button>
         </DialogActions>
-      </>
-    ),
-    state: { type: "pending" },
-    resolve: () => {},
-  },
+      </BaseDialog>
+    </div>
+  ),
 };
 
-export const CanSpawn: StoryObj<Meta<typeof DialogImpl>> = {
-  render: withDialogContext(() => {
-    const showDialog = useDialog(DialogImpl);
+export const CanSpawnDialog: StoryObj = {
+  render: withModalContext(() => {
+    const showDialog = useModal(DialogImpl);
     return (
       <button
         onClick={() =>
@@ -77,9 +80,9 @@ export const CanSpawn: StoryObj<Meta<typeof DialogImpl>> = {
   },
 };
 
-export const CanClose: StoryObj<Meta<typeof DialogImpl>> = {
-  render: withDialogContext(() => {
-    const showDialog = useDialog(({ resolve, ...props }) => (
+export const CanCloseSpawnedDialog: StoryObj = {
+  render: withModalContext(() => {
+    const showDialog = useModal(({ resolve, ...props }) => (
       <DialogImpl {...props}>
         <DialogTitle>DialogTitle</DialogTitle>
         <DialogContent>
@@ -96,7 +99,7 @@ export const CanClose: StoryObj<Meta<typeof DialogImpl>> = {
 
   play: async (context) => {
     const canvas = within(context.canvasElement);
-    await CanSpawn.play?.(context);
+    await CanSpawnDialog.play?.(context);
     await userEvent.click(canvas.getByRole("button", { name: "Close" }));
     await waitFor(function notPresent() {
       return !canvas.queryByRole("dialog");
@@ -104,26 +107,16 @@ export const CanClose: StoryObj<Meta<typeof DialogImpl>> = {
   },
 };
 
-function withDialogContext<Props extends object>(
+function withModalContext<Props extends object>(
   Component: ComponentType<Props>,
 ) {
   return function WithDialogContext(props: Props) {
-    const store = useMemo(() => new DialogStore(), []);
+    const store = useMemo(() => new ModalStore(), []);
     return (
-      <DialogContext.Provider value={store}>
+      <ModalContext.Provider value={store}>
         <Component {...props} />
-        <DialogOutlet />
-      </DialogContext.Provider>
+        <ModalOutlet />
+      </ModalContext.Provider>
     );
   };
-}
-
-// Since dialogs are rendered overlayed it has no inline size, so we need to
-// provide some minimum space for the docs preview in storybook to look good
-function Dialog(props: ComponentProps<typeof DialogImpl>) {
-  return (
-    <div style={{ minWidth: 300, minHeight: 300 }}>
-      <DialogImpl {...props} />
-    </div>
-  );
 }
