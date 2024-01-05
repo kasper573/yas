@@ -1,5 +1,4 @@
-import { clsx, recipe, style } from "@yas/style";
-import { buttonRecipe } from "./Button.css";
+import { recipe, style } from "@yas/style";
 import { iconButtonRecipe } from "./IconButton.css";
 
 const borderRadius = "#2" as const;
@@ -9,31 +8,12 @@ export const base = style({
   display: "inline-block",
 });
 
-export const months = style({
-  display: "flex",
-  flexDirection: {
-    default: "column",
-    "small-display": "row",
-  },
-  rowGap: {
-    default: "#4",
-    "small-display": 0,
-  },
-  columnGap: {
-    "small-display": "#4",
-  },
-});
-
-export const month = style({
-  rowGap: "#4",
-});
-
 export const caption = style({
   display: "flex",
   position: "relative",
   justifyContent: "center",
   alignItems: "center",
-  mb: "#2",
+  mb: "#3",
 });
 
 export const caption_label = style({
@@ -43,43 +23,23 @@ export const caption_label = style({
 export const nav = style({
   display: "flex",
   alignItems: "center",
-  columnGap: "#1",
 });
 
-export const nav_button = clsx(
-  buttonRecipe({ variant: "outlined" }),
-  style({
-    height: 28,
-    width: 28,
-    background: "transparent",
-    padding: 0,
-    opacity: {
-      default: 0.5,
-      hover: 1,
-    },
-  }),
-);
+export const nav_button = iconButtonRecipe();
 
-export const nav_button_previous = clsx(
-  iconButtonRecipe(),
-  style({
-    position: "absolute",
-    left: 6,
-  }),
-);
+export const nav_button_previous = style({
+  position: "absolute",
+  left: 6,
+});
 
-export const nav_button_next = clsx(
-  iconButtonRecipe(),
-  style({
-    position: "absolute",
-    right: 6,
-  }),
-);
+export const nav_button_next = style({
+  position: "absolute",
+  right: 6,
+});
 
 export const table = style({
   width: "100%",
   borderCollapse: "collapse",
-  rowGap: "#1",
 });
 
 export const head_row = style({
@@ -120,9 +80,7 @@ export const day = style({
 });
 
 export const day_range_start = style({});
-
 export const day_range_middle = style({});
-
 export const day_range_end = style({});
 
 export const day_selected = style({
