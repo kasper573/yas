@@ -25,7 +25,8 @@ function useMediaQueryList(queryStrings: string[]): boolean[] {
 }
 
 export function useMediaQuery(query: string): boolean {
-  return useMediaQueryList([query])[0];
+  const queryList = useMemo(() => [query], [query]);
+  return useMediaQueryList(queryList)[0];
 }
 
 export function useMediaQueries<Name extends PropertyKey>(
@@ -36,7 +37,9 @@ export function useMediaQueries<Name extends PropertyKey>(
   return useMemo(
     () =>
       Object.fromEntries(
-        Object.entries(record).map(([name], index) => [name, matches[index]]),
+        Object.entries(record)
+          .map(([name], index) => [name, matches[index]])
+          .filter(([, match]) => match),
       ) as NamedMatches<Name>,
     [record, matches],
   );
@@ -50,10 +53,9 @@ export const mediaQueries = <Name extends PropertyKey>(
   queries: Record<Name, string>,
 ): NamedMatches<Name> =>
   Object.fromEntries(
-    Object.entries(queries).map(([name, query]) => [
-      name,
-      matchMedia(query as string).matches,
-    ]),
+    Object.entries(queries)
+      .map(([name, query]) => [name, matchMedia(query as string).matches])
+      .filter(([, match]) => match),
   ) as NamedMatches<Name>;
 
 // Isomorphic version of window.matchMedia

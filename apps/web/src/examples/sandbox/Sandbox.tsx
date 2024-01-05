@@ -14,14 +14,15 @@ import {
   useModal,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
-import { breakpointQueries, unsafe } from "@yas/style";
+import { breakpointQuery } from "@yas/style";
 import { env } from "../../env";
 import { hello } from "../../hello";
 import { useTheme } from "../../theme";
 import * as styles from "./sandbox.css";
 
 export default function Sandbox() {
-  const mediaQueryResults = useMediaQueries(mediaQueries);
+  const preferenceMediaQueryResults = useMediaQueries(preferenceMediaQueries);
+  const breakpointName = Object.keys(useMediaQueries(breakpointQuery.all))[0];
   const [theme, toggleTheme] = useTheme();
   const [response] = api.example.hello.useSuspenseQuery(hello());
   const showDialog = useModal(TestDialog);
@@ -34,7 +35,9 @@ export default function Sandbox() {
       <Text>Theme: {theme}</Text>
 
       <Text sx={{ whiteSpace: "pre-wrap" }}>
-        useMediaQueries: {JSON.stringify(mediaQueryResults, null, 2)}
+        useMediaQueries: {JSON.stringify(preferenceMediaQueryResults, null, 2)}
+        {"\n"}
+        breakpoint: {breakpointName}
       </Text>
 
       <Stack direction="row" gap="#2" sx={{ mt: "#2" }}>
@@ -83,15 +86,12 @@ function TestDialog<T>(props: DialogProps<T>) {
   );
 }
 
-const mediaQueries = {
-  ...Object.fromEntries(
-    [
-      "(prefers-color-scheme: dark)",
-      "(prefers-color-scheme: light)",
-      "(prefers-reduced-motion: reduce)",
-      "(prefers-reduced-transparency: reduce)",
-      "(prefers-contrast: more)",
-    ].map((query) => [query, query]),
-  ),
-  ...breakpointQueries(unsafe.tokens.breakpoints),
-};
+const preferenceMediaQueries = Object.fromEntries(
+  [
+    "(prefers-color-scheme: dark)",
+    "(prefers-color-scheme: light)",
+    "(prefers-reduced-motion: reduce)",
+    "(prefers-reduced-transparency: reduce)",
+    "(prefers-contrast: more)",
+  ].map((query) => [query, query]),
+);

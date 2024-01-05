@@ -7,16 +7,14 @@ import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
 import { flattened } from "./utils/flattened";
-import { breakpointQueries } from "./utils/breakpointQueries";
+import { breakpointQuery } from "./utils/breakpointQuery";
 
 const overflows = ["visible", "hidden", "scroll", "auto"] as const;
 
-type Color = keyof typeof colors;
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
   current: "currentColor",
-  // We flatten vars to make them compatible with vanilla-extract-constrained
   ...flattened(vars.color),
 };
 
@@ -33,9 +31,9 @@ export type ConstrainedStyleWithoutConditions = ConstrainedStyleImpl<
 >;
 
 const breakpointConditions = Object.fromEntries(
-  Object.entries(breakpointQueries(tokens.breakpoints)).map(([name, query]) => [
+  breakpointQuery.names.map((name) => [
     name,
-    { "@media": query },
+    { "@media": breakpointQuery.only(name) },
   ]),
 ) as Record<tokens.Breakpoint, { "@media": string }>;
 
