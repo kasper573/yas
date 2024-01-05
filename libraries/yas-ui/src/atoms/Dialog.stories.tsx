@@ -16,8 +16,6 @@ import {
   DialogTitle,
   BaseDialog,
 } from "./Dialog";
-import { Button } from "./Button";
-import { Text } from "./Text";
 
 export default {
   title: "atoms/Dialog",
@@ -30,12 +28,10 @@ export const OpenBaseDialog: StoryObj = {
     <FixedSizeContainer>
       <BaseDialog open>
         <DialogTitle>DialogTitle</DialogTitle>
-        <DialogContent>
-          <Text>DialogContent</Text>
-        </DialogContent>
+        <DialogContent>DialogContent</DialogContent>
         <DialogActions>
-          <Button>Action 1</Button>
-          <Button variant="outlined">Action 2</Button>
+          <button>Action 1</button>
+          <button>Action 2</button>
         </DialogActions>
       </BaseDialog>
     </FixedSizeContainer>
@@ -52,12 +48,10 @@ export const CanSpawnDialog: StoryObj = {
             children: (
               <>
                 <DialogTitle>DialogTitle</DialogTitle>
-                <DialogContent>
-                  <Text>DialogContent</Text>
-                </DialogContent>
+                <DialogContent>DialogContent</DialogContent>
                 <DialogActions>
-                  <Button>Action 1</Button>
-                  <Button variant="outlined">Action 2</Button>
+                  <button>Action 1</button>
+                  <button>Action 2</button>
                 </DialogActions>
               </>
             ),
@@ -84,12 +78,10 @@ export const CanCloseSpawnedDialog: StoryObj = {
     const showDialog = useModal(({ resolve, ...props }) => (
       <DialogImpl {...props}>
         <DialogTitle>DialogTitle</DialogTitle>
-        <DialogContent>
-          <Text>DialogContent</Text>
-        </DialogContent>
+        <DialogContent>DialogContent</DialogContent>
         <DialogActions>
-          <Button onClick={() => resolve()}>Close</Button>
-          <Button variant="outlined">Action 2</Button>
+          <button onClick={() => resolve()}>Close</button>
+          <button>Action 2</button>
         </DialogActions>
       </DialogImpl>
     ));
