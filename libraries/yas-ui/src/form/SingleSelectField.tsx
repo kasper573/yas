@@ -1,12 +1,6 @@
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import { ChevronUpIcon, ChevronDownIcon } from "@yas/icons";
-import type { FieldProps } from "./rcf";
-import {
-  FormControl,
-  FormControlLabel,
-  FormControlErrors,
-} from "./FormControl";
 import {
   SelectTrigger,
   SelectPortal,
@@ -19,6 +13,12 @@ import {
   SelectValue,
   SelectTriggerIcon,
 } from "../atoms/Select";
+import type { FieldProps } from "./rcf";
+import {
+  FormControl,
+  FormControlLabel,
+  FormControlErrors,
+} from "./FormControl";
 
 export type SingleSelectOption<Value> = {
   value: Value;
