@@ -188,12 +188,19 @@ function transition<Transitions extends Transition[]>(
 /**
  * Define a transition css string by selecting among theme variable transition presets
  */
-function animation(
-  ...[animationName, duration, easingPreset, iterationCount]: Animation
-) {
-  return [animationName, duration, tokens.easings[easingPreset], iterationCount]
-    .filter(Boolean)
-    .join(" ");
+function animation<Animations extends Animation[]>(...animations: Animations) {
+  return animations
+    .map(([animationName, duration, easingPreset, iterationCount]) => {
+      return [
+        animationName,
+        duration,
+        tokens.easings[easingPreset],
+        iterationCount,
+      ]
+        .filter(Boolean)
+        .join(" ");
+    })
+    .join(", ");
 }
 
 type Animation = [
