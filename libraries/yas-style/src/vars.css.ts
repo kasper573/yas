@@ -41,7 +41,10 @@ const typographyStyle = {
 export const vars = createThemeContract({
   color: {
     // Groups
-    surface: colorWithSimpleContrast,
+    surface: {
+      ...colorWithSimpleContrast,
+      contrastMuted: null,
+    },
     primary: colorWithFullContrast,
     secondary: colorWithFullContrast,
     success: colorWithSimpleContrast,
