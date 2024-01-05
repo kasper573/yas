@@ -4,6 +4,13 @@ export const fonts = {
   default: roboto,
 };
 
+export type Breakpoint = keyof typeof breakpoints;
+export const breakpoints = {
+  "large-display": "(min-width: 1024px)",
+  "medium-display": "(min-width: 600px)",
+  "small-display": "(min-width: 0px)",
+} satisfies Record<string, string>;
+
 export const spaces = {
   0: 0,
   1: 1,
