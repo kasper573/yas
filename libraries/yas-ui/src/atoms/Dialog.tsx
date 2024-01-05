@@ -7,10 +7,10 @@ import {
   dialogContentRecipe,
   dialogRecipe,
   dialogTitleRecipe,
-  overlayRecipe,
 } from "./Dialog.css";
 import { Paper } from "./Paper";
 import { Text } from "./Text";
+import { Overlay } from "./Overlay";
 
 export interface DialogProps<ResolutionValue = void>
   extends Omit<ComponentProps<typeof BaseDialog>, "open" | "onClickAway">,
@@ -43,7 +43,6 @@ export function Dialog<ResolutionValue>({
 // The BaseDialog represents the plain design,
 // while the Dialog is its integration with react-imperative-hook.
 
-const Overlay = styled("div", overlayRecipe);
 const DialogPaper = styled(Paper, dialogRecipe).attrs({
   role: "dialog",
 });
