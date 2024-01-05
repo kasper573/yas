@@ -2,7 +2,7 @@
 
 A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture.
 
-> Also serves as a personal playground and incubation repository for me to build apps and packages and experiment with new ideas and technologies. This means that some of the more specific apps and packages will come and go over time, but the generic low level packages will remain. If a package is irrelevant to you, simply fork and modify/remove to your liking.
+> Also serves as a incubation repository for me to experiment with [new ideas and technologies](#incubations).
 
 ## Conventions
 
@@ -77,4 +77,8 @@ Building blocks for creating apps.
 
 Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
 
-> This is an exception to the layering rule. `core` and `libraries` are considered to be on the same layer, and are separated only to communicate that `core` packages are more sensitive to changes.
+#### [incubations](incubations)
+
+Experimental packages. If they become stable, they will be extracted into their own repository.
+
+> If you fork this repo, you should strive not to make any changes to these packages. Ideally, once this repo is production ready, there will be no incubation packages at all.
