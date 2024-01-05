@@ -1,21 +1,19 @@
-import { unsafe } from "@yas/style";
+import { breakpointMediaQueries, unsafe } from "@yas/style";
+
+const breakpointList = Object.entries(unsafe.tokens.breakpoints);
 
 export const container = unsafe.style({
   margin: "auto",
   width: "100%",
   boxSizing: "border-box",
   "@media": {
-    "(min-width: 0px)": {
-      maxWidth: 599,
-    },
-    "(min-width: 600px)": {
-      maxWidth: 600,
-    },
-    "(min-width: 960px)": {
-      maxWidth: 960,
-    },
-    "(min-width: 1280px)": {
-      maxWidth: 1280,
-    },
+    ...Object.fromEntries(
+      Object.entries(breakpointMediaQueries).map(([name, query]) => {
+        const index = breakpointList.findIndex(([n]) => n === name);
+        const current = breakpointList[index]?.[1];
+        const next = index !== -1 ? breakpointList[index + 1]?.[1] : undefined;
+        return [query, { maxWidth: next ?? current }];
+      }),
+    ),
   },
 });

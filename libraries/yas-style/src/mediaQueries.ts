@@ -4,15 +4,16 @@ import { breakpoints } from "./tokens";
 const breakpointList = Object.entries(breakpoints);
 export const breakpointMediaQueries = Object.fromEntries(
   breakpointList
-    .sort(([, a], [, b]) => a - b)
-    .map(([name, width], index) => {
-      if (index === 0) {
-        return [name, `(max-width: ${width}px)`];
-      }
-      if (index === breakpointList.length - 1) {
-        return [name, `(min-width: ${width}px)`];
-      }
-      const [, next] = breakpointList[index + 1];
-      return [name, `(min-width: ${width}px) and (max-width: ${next - 1}px)`];
+    .map(([name, min], index) => {
+      const max = breakpointList[index + 1]?.[1] as number | undefined;
+      return [name, [min, max]] as const;
+    })
+    .map(([name, [min, max]]) => {
+      return [
+        name,
+        max !== undefined
+          ? `(min-width: ${min}px) and (max-width: ${max}px)`
+          : `(min-width: ${min}px)`,
+      ];
     }),
 ) as Record<Breakpoint, string>;

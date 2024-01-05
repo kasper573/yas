@@ -1,46 +1,48 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-function useMediaQueryImpl<Resolution>(
-  query: string,
-  resolve: (query: string) => Resolution,
-): Resolution {
-  const [resolution, setResolution] = useState(() => resolve(query));
-  const latestResolver = useRef(resolve);
-  latestResolver.current = resolve;
+function useMediaQueryList(queryStrings: string[]): boolean[] {
+  const [matches, setMatches] = useState<boolean[]>(() =>
+    queryStrings.map(matchMedia).map(({ matches }) => matches),
+  );
 
   useEffect(() => {
-    const match = matchMedia(query);
-    const handleChange = () => {
-      console.log("change");
-      setResolution(latestResolver.current(query));
-    };
-    match.addEventListener("change", handleChange);
-    return () => match.removeEventListener("change", handleChange);
-  }, [query]);
+    const updateIndex = (index: number, updated: boolean) =>
+      setMatches((values) =>
+        values.map((current, i) => (i === index ? updated : current)),
+      );
 
-  return resolution;
+    const queries = queryStrings.map(matchMedia);
+    const unsubs = queries.map((query, index) => {
+      const handle = (e: { matches: boolean }) => updateIndex(index, e.matches);
+      query.addEventListener("change", handle);
+      return () => query.removeEventListener("change", handle);
+    });
+
+    return () => unsubs.forEach((unsub) => unsub());
+  }, [queryStrings]);
+
+  return matches;
 }
 
 export function useMediaQuery(query: string): boolean {
-  return useMediaQueryImpl(query, () => matchMedia(query).matches);
+  return useMediaQueryList([query])[0];
 }
 
 export function useMediaQueries<Name extends PropertyKey>(
   record: Record<Name, string>,
 ): NamedMatches<Name> {
-  const query = useMemo(() => Object.values(record).join(", "), [record]);
-  return useMediaQueryImpl(query, () => mediaQueries(record));
+  const queries = useMemo<string[]>(() => Object.values(record), [record]);
+  const matches = useMediaQueryList(queries);
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(record).map(([name], index) => [name, matches[index]]),
+      ) as NamedMatches<Name>,
+    [record, matches],
+  );
 }
 
-const matchMedia: MediaMatcher =
-  typeof window !== "undefined"
-    ? window.matchMedia
-    : // Noop fallback for SSR
-      () => ({
-        matches: false,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-      });
+// Non-hook versions
 
 export const mediaQuery = (query: string): boolean => matchMedia(query).matches;
 
@@ -53,6 +55,20 @@ export const mediaQueries = <Name extends PropertyKey>(
       matchMedia(query as string).matches,
     ]),
   ) as NamedMatches<Name>;
+
+// Isomorphic version of window.matchMedia
+
+const matchMedia: MediaMatcher =
+  typeof window !== "undefined"
+    ? window.matchMedia
+    : // Noop fallback for SSR
+      () => ({
+        matches: false,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+      });
+
+// We're only using part of the media query API
 
 type MediaQueryLike = Pick<
   MediaQueryList,
