@@ -79,13 +79,11 @@ export const day = style({
   justifyContent: "center",
   transition: [[["background-color", "color", "opacity"], "standard.enter"]],
   padding: 0,
+  borderRadius,
   selectors: {
     [`&:hover:not([aria-selected])`]: {
       background: "info.main",
       color: "info.contrast",
-    },
-    [`&[aria-selected]`]: {
-      borderRadius,
     },
   },
 });
@@ -106,19 +104,16 @@ export const day_selected = style({
 });
 
 export const day_today = style({
-  background: "secondary.base.main",
-  color: "secondary.contrast.main",
+  fontWeight: "bold",
+  selectors: {
+    [`&:not([aria-selected]), &${day_range_middle}`]: {
+      color: "primary.base.main",
+    },
+  },
 });
 
 export const day_outside = style({
   opacity: 0.5,
-  selectors: {
-    [`&:${day_selected}`]: {
-      color: "secondary.contrast.main",
-      background: "secondary.base.dark",
-      opacity: 0.3,
-    },
-  },
 });
 
 export const day_disabled = style({
