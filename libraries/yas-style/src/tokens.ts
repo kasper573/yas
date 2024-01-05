@@ -9,7 +9,7 @@ export const breakpoints = {
   // Keep ordered from smallest to largest
   "small-display": 0,
   "medium-display": 768,
-  "large-display": 1440,
+  "large-display": 1360,
 } satisfies Record<string, number>;
 
 export const spaces = {
