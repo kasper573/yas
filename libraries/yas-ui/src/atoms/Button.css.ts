@@ -24,8 +24,8 @@ export const buttonRecipe = recipe({
       },
       medium: {
         typography: "body",
-        px: "#2",
-        py: "#2",
+        px: "#3",
+        py: "#1",
       },
       large: {
         typography: "body2",
