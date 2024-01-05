@@ -13,18 +13,18 @@ import {
   SelectDivider,
   SelectValue,
   SelectTriggerIcon,
-} from "./SelectPrimitives";
-import { SelectItem, SelectRoot } from "./SelectPrimitives";
+} from "./Select";
+import { SelectItem, SelectRoot } from "./Select";
 
 export default {
-  title: "fields/SelectPrimitives",
-  component: SelectPrimitives,
+  title: "atoms/Select",
+  component: SelectShowcase,
   tags: ["autodocs"],
-} satisfies Meta<typeof SelectPrimitives>;
+} satisfies Meta<typeof SelectShowcase>;
 
-export const Default: StrictStoryObj<typeof SelectPrimitives> = {};
+export const Default: StrictStoryObj<typeof SelectShowcase> = {};
 
-function SelectPrimitives() {
+function SelectShowcase() {
   return (
     <SelectRoot>
       <SelectTrigger aria-label="Food">

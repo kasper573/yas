@@ -1,11 +1,11 @@
 import { useId, type ReactNode } from "react";
 import { ChevronUpIcon, ChevronDownIcon } from "@yas/icons";
-import type { FieldProps } from "../form/rcf";
+import type { FieldProps } from "./rcf";
 import {
   FormControl,
   FormControlLabel,
   FormControlErrors,
-} from "../form/FormControl";
+} from "./FormControl";
 import {
   SelectTrigger,
   SelectValue,
@@ -16,8 +16,8 @@ import {
   SelectViewport,
   SelectItem,
   SelectScrollDownButton,
-} from "./SelectPrimitives";
-import { SelectRoot } from "./SelectPrimitives";
+} from "../atoms/Select";
+import { SelectRoot } from "../atoms/Select";
 
 export interface MultiSelectOption<Value> {
   value: Value;

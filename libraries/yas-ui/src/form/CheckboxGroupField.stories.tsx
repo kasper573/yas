@@ -4,7 +4,7 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { CheckboxGroupField } from "./CheckboxGroupField";
 
 export default {
-  title: "fields/CheckboxGroupField",
+  title: "form/CheckboxGroupField",
   component: CheckboxGroupField,
   tags: ["autodocs"],
 } satisfies Meta<typeof CheckboxGroupField<number>>;

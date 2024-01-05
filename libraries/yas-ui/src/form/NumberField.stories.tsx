@@ -4,7 +4,7 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { NumberField } from "./NumberField";
 
 export default {
-  title: "fields/NumberField",
+  title: "form/NumberField",
   component: NumberField,
   tags: ["autodocs"],
 } satisfies Meta<typeof NumberField>;

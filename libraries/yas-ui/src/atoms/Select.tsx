@@ -4,7 +4,7 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@yas/icons";
 import type { ComponentProps } from "react";
 import { forwardRef } from "react";
 import { dividerRecipe } from "../layout/Divider.css";
-import * as styles from "./SelectPrimitives.css";
+import * as styles from "./Select.css";
 
 export const SelectRoot = styled(Select.Root);
 export const SelectPortal = styled(Select.Portal);

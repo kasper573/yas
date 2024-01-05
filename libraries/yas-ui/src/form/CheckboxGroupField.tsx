@@ -1,10 +1,10 @@
 import { useId, type ReactNode } from "react";
-import type { FieldProps } from "../form/rcf";
+import type { FieldProps } from "./rcf";
 import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
-} from "../form/FormControl";
+} from "./FormControl";
 import { CheckboxField } from "./CheckboxField";
 
 export interface CheckboxGroupOption<Value> {

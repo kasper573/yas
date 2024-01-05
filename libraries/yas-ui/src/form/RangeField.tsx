@@ -1,11 +1,11 @@
 import { useId } from "react";
+import { Stack } from "../layout/Stack";
 import {
   FormControl,
   FormControlLabel,
   FormControlErrors,
-} from "../form/FormControl";
-import type { FieldProps } from "../form/rcf";
-import { Stack } from "../layout/Stack";
+} from "./FormControl";
+import type { FieldProps } from "./rcf";
 
 export type Range = [number, number];
 

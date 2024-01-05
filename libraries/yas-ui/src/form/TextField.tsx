@@ -1,13 +1,13 @@
 import { useId, type InputHTMLAttributes } from "react";
 import type { RecipeVariants } from "@yas/style";
 import { clsx, styled } from "@yas/style";
-import type { FieldProps } from "../form/rcf";
+import type { FieldProps } from "./rcf";
 import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
   type FormControlProps,
-} from "../form/FormControl";
+} from "./FormControl";
 import * as styles from "./TextField.css";
 
 export interface TextFieldProps

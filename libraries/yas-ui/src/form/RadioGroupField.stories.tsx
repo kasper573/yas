@@ -4,7 +4,7 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { RadioGroupField } from "./RadioGroupField";
 
 export default {
-  title: "fields/RadioGroupField",
+  title: "form/RadioGroupField",
   component: RadioGroupField,
   tags: ["autodocs"],
 } satisfies Meta<typeof RadioGroupField<number>>;
