@@ -9,7 +9,7 @@ import {
 } from "@yas/ui";
 import type { types } from "@yas/api-client";
 import { NavLink } from "../../components/NavLink";
-import { format } from "./shared";
+import { formatNumber } from "./shared";
 
 export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
   return (
@@ -23,7 +23,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
             <ListItemText primary={sale.name} secondary={sale.email} />
             <ListItemSecondaryContent>
               <Text variant="h3">
-                {format(sale.amount, ["sign", "currency"])}
+                {formatNumber(sale.amount, ["sign", "currency"])}
               </Text>
             </ListItemSecondaryContent>
           </NavLink>

@@ -8,7 +8,7 @@ import {
 import type { types } from "@yas/api-client";
 import { api } from "@yas/api-client";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, format, formatCurrency } from "./shared";
+import { Card, formatNumber, formatCurrency } from "./shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./Dashboard.css";
 import { Chart } from "./Chart";
@@ -24,7 +24,7 @@ export function DashboardContent({
       <StatsCard
         title="Total Revenue"
         amount={formatCurrency(data.totalRevenue)}
-        description={`${format(data.revenueDeltaSinceLastMonth, [
+        description={`${formatNumber(data.revenueDeltaSinceLastMonth, [
           "sign",
           "currency",
         ])}% from last month`}
@@ -33,8 +33,8 @@ export function DashboardContent({
       />
       <StatsCard
         title="Subscriptions"
-        amount={format(data.subscriptions, ["sign"])}
-        description={`${format(data.subscriptionDeltaSinceLastMonth, [
+        amount={formatNumber(data.subscriptions, ["sign"])}
+        description={`${formatNumber(data.subscriptionDeltaSinceLastMonth, [
           "sign",
         ])}% from last month`}
         icon={<PersonIcon />}
@@ -42,8 +42,8 @@ export function DashboardContent({
       />
       <StatsCard
         title="Sales"
-        amount={format(data.sales, ["sign"])}
-        description={`${format(data.salesDeltaSinceLastMonth, [
+        amount={formatNumber(data.sales, ["sign"])}
+        description={`${formatNumber(data.salesDeltaSinceLastMonth, [
           "sign",
         ])}% from last month`}
         icon={<CardStackIcon />}
@@ -51,8 +51,8 @@ export function DashboardContent({
       />
       <StatsCard
         title="Active Now"
-        amount={format(data.activeNow, ["sign"])}
-        description={`${format(data.activeSinceLastHour, [
+        amount={formatNumber(data.activeNow, ["sign"])}
+        description={`${formatNumber(data.activeSinceLastHour, [
           "sign",
         ])} since last hour`}
         icon={<BarChartIcon />}

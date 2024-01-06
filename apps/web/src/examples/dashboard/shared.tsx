@@ -14,7 +14,10 @@ export function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function format(value: number, formats: Array<"sign" | "currency">) {
+export function formatNumber(
+  value: number,
+  formats: Array<"sign" | "currency">,
+) {
   let output = formats.includes("currency")
     ? formatCurrency(value)
     : value.toFixed(maxFractions);
