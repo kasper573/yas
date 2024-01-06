@@ -5,10 +5,17 @@ const spaces = Object.keys(unsafe.tokens.spaces) as Space[];
 
 export const stackRecipe = recipe({
   base: {
-    display: "flex",
     boxSizing: "border-box",
   },
   variants: {
+    inline: {
+      true: {
+        display: "inline-flex",
+      },
+      false: {
+        display: "flex",
+      },
+    },
     fullWidth: {
       true: {
         width: "100%",
@@ -66,6 +73,7 @@ export const stackRecipe = recipe({
     align: "start",
     justify: "start",
     direction: "column",
+    inline: false,
     fullWidth: true,
     reverse: false,
   },
