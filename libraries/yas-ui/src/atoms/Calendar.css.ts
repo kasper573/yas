@@ -87,7 +87,7 @@ export const day = style({
   borderRadius,
   selectors: {
     [`&:hover:not([aria-selected])`]: {
-      background: "info.main",
+      background: "info.light",
       color: "info.contrast",
     },
   },
