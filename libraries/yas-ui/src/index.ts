@@ -7,6 +7,7 @@ export * from "./atoms/Text";
 export * from "./atoms/Avatar";
 export * from "./atoms/List";
 export * from "./atoms/Paper";
+export * from "./atoms/Popover";
 export * from "./atoms/Skeleton";
 export * from "./atoms/CircularProgress";
 export * from "./atoms/Link";
