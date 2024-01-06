@@ -22,7 +22,7 @@ export interface TextFieldProps
   type?: "text" | "number" | "password";
   inputProps?: Omit<
     ComponentProps<typeof InputArea>,
-    "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size"
+    "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size" | "children"
   >;
 }
 
