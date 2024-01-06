@@ -7,7 +7,7 @@ export function useRouterState<T>(
     encode: (value: T) => string;
     decode: (value?: string) => T;
   },
-): [T, (value: T) => void] {
+): [T, (value?: T) => void] {
   const [searchParams, setSearchParams] = useSearchParams();
   const encodedValue = searchParams.get(paramName) || undefined;
 
@@ -19,9 +19,13 @@ export function useRouterState<T>(
     }
   }, [protocol, encodedValue]);
 
-  function setValue(newValue: T) {
+  function setValue(newValue?: T) {
     const newParams = new URLSearchParams(searchParams);
-    newParams.set(paramName, protocol.encode(newValue));
+    if (newValue !== undefined) {
+      newParams.set(paramName, protocol.encode(newValue));
+    } else {
+      newParams.delete(paramName);
+    }
     setSearchParams(newParams);
   }
 
