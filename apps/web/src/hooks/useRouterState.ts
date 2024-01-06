@@ -34,7 +34,7 @@ export type RouterStateEncoding<T> = {
   decode: (value?: string) => T;
 };
 
-const stringEncoding: RouterStateEncoding<string> = {
-  encode: (value) => value,
-  decode: (value) => value ?? "",
+const stringEncoding: RouterStateEncoding<string | undefined> = {
+  encode: (value) => value ?? "",
+  decode: (value) => value || undefined,
 };
