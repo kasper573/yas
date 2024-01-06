@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ExampleImage } from "./ExampleImage";
 
 export default {
-  title: "atoms/ExampleImage",
+  title: "debug/ExampleImage",
   component: ExampleImage,
   tags: ["autodocs"],
 } satisfies Meta<typeof ExampleImage>;

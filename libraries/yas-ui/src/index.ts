@@ -35,4 +35,4 @@ export * from "./form/TextField";
 export * from "./hooks/useElementBounds";
 export * from "./hooks/useModal";
 export * from "./hooks/useMediaQuery";
-export * from "./ExampleImage";
+export * from "./debug/ExampleImage";
