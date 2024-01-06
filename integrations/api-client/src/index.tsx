@@ -6,6 +6,7 @@ import transformer from "superjson";
 import type { ApiRouter } from "@yas/api";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
+export type { types } from "@yas/api";
 
 /**
  * Convenience proxy for accessing the client interface
