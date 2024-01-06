@@ -23,6 +23,7 @@ import { Card } from "./shared";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
 import { SearchForm } from "./SearchForm";
+import { useDebounce } from "./useDebounce";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -34,11 +35,20 @@ export default function Dashboard() {
     numberEncoding<types.example.UserId>(),
   );
   const [searchInput, setSearchInput] = useState<string | undefined>();
-  const userResult = api.example.users.get.useQuery(userId!, {
+  const debouncedSearchInput = useDebounce(searchInput, 333);
+
+  const selectedUser = api.example.users.get.useQuery(userId!, {
     enabled: userId !== undefined,
   });
-  const searchResult = api.example.users.list.useQuery(searchInput);
-  const selectedUser = userResult.data;
+
+  const searchResult = api.example.users.list.useQuery(
+    debouncedSearchInput.value,
+    { enabled: debouncedSearchInput.value !== undefined },
+  );
+
+  const isSearching =
+    searchInput !== undefined &&
+    (debouncedSearchInput.isDebouncing || searchResult.isFetching);
 
   const clearSelectedUser = () => selectUser();
   function selectUser(newUserId?: types.example.UserId) {
@@ -60,7 +70,7 @@ export default function Dashboard() {
         <SearchForm
           value={searchInput}
           onChange={setSearchInput}
-          isLoading={searchResult.isLoading}
+          isLoading={isSearching}
         >
           <List>
             {searchResult.data?.map((user, index) => (
@@ -83,13 +93,16 @@ export default function Dashboard() {
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
         <Stack direction="row" justify="spaceBetween">
-          <Title onClear={selectedUser ? clearSelectedUser : undefined}>
+          <Title
+            showClearButton={!!selectedUser.data}
+            onClear={clearSelectedUser}
+          >
             Dashboard
-            {selectedUser ? ` for ${selectedUser.name}` : undefined}
+            {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
           </Title>
           <DatePicker value={dateFilter} onChange={setDateFilter} />
         </Stack>
-        {userResult?.error ? (
+        {selectedUser.error ? (
           <Text>Could not find user by id {userId}</Text>
         ) : (
           <>

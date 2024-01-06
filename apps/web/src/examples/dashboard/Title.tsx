@@ -4,9 +4,11 @@ import type { ReactNode } from "react";
 
 export function Title({
   children,
+  showClearButton,
   onClear,
 }: {
   children?: ReactNode;
+  showClearButton?: boolean;
   onClear?: () => void;
 }) {
   return (
@@ -14,12 +16,8 @@ export function Title({
       <Text variant="h1" sx={{ lineHeight: 1 }}>
         {children}
       </Text>
-      {onClear ? (
-        <IconButton
-          color="primary"
-          variant="outlined"
-          onClick={() => onClear?.()}
-        >
+      {showClearButton ? (
+        <IconButton color="primary" variant="outlined" onClick={onClear}>
           <Cross1Icon />
         </IconButton>
       ) : null}
