@@ -29,13 +29,16 @@ const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
   const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
-  const [userId, setUserId] = useRouterState("user", numberEncoding);
+  const [userId, setUserId] = useRouterState(
+    "user",
+    numberEncoding<types.example.UserId>(),
+  );
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const userResult = api.example.users.get.useQuery(userId!, {
     enabled: userId !== undefined,
   });
-  const selectedUser = userResult.data;
   const searchResult = api.example.users.list.useQuery(searchInput);
+  const selectedUser = userResult.data;
 
   const clearSelectedUser = () => selectUser();
   function selectUser(newUserId?: types.example.UserId) {
@@ -119,8 +122,12 @@ const dateEncoding: RouterStateEncoding<Date> = {
   encode: (value) => formatISO(value, { representation: "date" }),
 };
 
-const numberEncoding: RouterStateEncoding<number | undefined> = {
-  decode: (value) =>
-    ["", undefined].includes(value) ? undefined : Number(value),
-  encode: (value) => value?.toString() ?? "",
-};
+function numberEncoding<T extends number>(): RouterStateEncoding<
+  T | undefined
+> {
+  return {
+    decode: (value) =>
+      ["", undefined].includes(value) ? undefined : (Number(value) as T),
+    encode: (value) => value?.toString() ?? "",
+  };
+}
