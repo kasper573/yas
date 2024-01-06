@@ -242,9 +242,6 @@ importers:
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
-      '@yas/validate':
-        specifier: workspace:*
-        version: link:../../libraries/yas-validate
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.50.0)
@@ -710,6 +707,16 @@ importers:
         specifier: 3.1.2
         version: 3.1.2
 
+  libraries/yas-time:
+    dependencies:
+      date-fns:
+        specifier: 3.1.0
+        version: 3.1.0
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
+
   libraries/yas-ui:
     dependencies:
       '@radix-ui/react-popover':
@@ -732,7 +739,7 @@ importers:
         version: link:../../incubations/react-composable-form
       react-day-picker:
         specifier: 8.10.0
-        version: 8.10.0(date-fns@2.30.0)(react@18.2.0)
+        version: 8.10.0(date-fns@3.1.0)(react@18.2.0)
       react-imperative-hook:
         specifier: workspace:*
         version: link:../../incubations/react-imperative-hook
@@ -11534,6 +11541,11 @@ packages:
     engines: {node: '>=0.11'}
     dependencies:
       '@babel/runtime': 7.23.1
+    dev: true
+
+  /date-fns@3.1.0:
+    resolution: {integrity: sha512-ZO7yefXV/wCWzd3I9haCHmfzlfA3i1a2HHO7ZXjtJrRjXt8FULKJ2Vl8wji3XYF4dQ0ZJ/tokXDZeYlFvgms9Q==}
+    dev: false
 
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -18599,13 +18611,13 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-day-picker@8.10.0(date-fns@2.30.0)(react@18.2.0):
+  /react-day-picker@8.10.0(date-fns@3.1.0)(react@18.2.0):
     resolution: {integrity: sha512-mz+qeyrOM7++1NCb1ARXmkjMkzWVh2GL9YiPbRjKe0zHccvekk4HE+0MPOZOrosn8r8zTHIIeOUXTmXRqmkRmg==}
     peerDependencies:
       date-fns: ^2.28.0 || ^3.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      date-fns: 2.30.0
+      date-fns: 3.1.0
       react: 18.2.0
     dev: false
 
