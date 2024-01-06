@@ -709,6 +709,9 @@ importers:
 
   libraries/yas-time:
     dependencies:
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../yas-result
       date-fns:
         specifier: 3.1.0
         version: 3.1.0
@@ -731,6 +734,9 @@ importers:
       '@yas/style':
         specifier: workspace:*
         version: link:../yas-style
+      '@yas/time':
+        specifier: workspace:*
+        version: link:../yas-time
       '@yas/validate':
         specifier: workspace:*
         version: link:../yas-validate
