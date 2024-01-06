@@ -16,7 +16,7 @@ import {
 import { Suspense, useState } from "react";
 import { formatISO, startOfToday } from "@yas/time";
 import type { types } from "@yas/api-client";
-import { api } from "@yas/api-client";
+import { api, enabledWhenDefined } from "@yas/api-client";
 import type { RouterStateEncoding } from "../../hooks/useRouterState";
 import { useRouterState } from "../../hooks/useRouterState";
 import { NavLink } from "../../components/NavLink";
@@ -39,13 +39,12 @@ export default function Dashboard() {
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const debouncedSearchInput = useDebounce(searchInput, 333);
 
-  const selectedUser = api.example.users.get.useQuery(userId!, {
-    enabled: userId !== undefined,
-  });
+  const selectedUser = api.example.users.get.useQuery(
+    ...enabledWhenDefined(userId),
+  );
 
   const searchResult = api.example.users.list.useQuery(
-    debouncedSearchInput.value!,
-    { enabled: debouncedSearchInput.value !== undefined },
+    ...enabledWhenDefined(debouncedSearchInput.value),
   );
 
   const isSearching =
