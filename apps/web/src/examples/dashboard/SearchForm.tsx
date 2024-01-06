@@ -38,6 +38,7 @@ export function SearchForm({
           onFocusOutside={clear}
           onInteractOutside={clear}
           style={{ overflow: "hidden" }}
+          onClick={clear}
         >
           {children}
         </PopoverContent>
