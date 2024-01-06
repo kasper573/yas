@@ -1,11 +1,14 @@
 import { z } from "@yas/validate";
 
-export const recentSaleSchema = z.object({
+export const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  amount: z.number(),
   avatarUrl: z.string().url(),
 });
+
+export const recentSaleSchema = userSchema.and(
+  z.object({ amount: z.number() }),
+);
 
 export const dashboardSchema = z.object({
   totalRevenue: z.number(),
