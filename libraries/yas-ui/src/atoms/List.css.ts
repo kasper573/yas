@@ -12,7 +12,7 @@ export const list = recipe({
   variants: {
     compact: {
       true: { gap: 1 },
-      false: { gap: "#2" },
+      false: { gap: "#2", py: "#2" },
     },
   },
   defaultVariants: {
@@ -24,7 +24,7 @@ export const item = recipe({
   base: {
     display: "flex",
     flexDirection: "row",
-    gap: "#2",
+    gap: "#3",
     alignItems: "center",
     py: "#2",
     px: "#3",
@@ -36,8 +36,8 @@ export const item = recipe({
     button: {
       true: {
         cursor: "pointer",
-        background: { hover: "surface.light", active: "highlight" },
-        color: { hover: "surface.contrast", active: "surface.contrast" },
+        background: { hover: "info.light", active: "highlight" },
+        color: { hover: "info.contrast", active: "surface.contrast" },
       },
     },
   },
