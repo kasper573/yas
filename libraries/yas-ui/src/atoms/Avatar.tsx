@@ -1,5 +1,5 @@
 import { styled } from "@yas/style";
-import type { ImgHTMLAttributes } from "react";
+import type { ImgHTMLAttributes, ReactNode } from "react";
 import { avatar } from "./Avatar.css";
 
 export const Avatar = styled(AvatarImpl, avatar);
@@ -9,6 +9,7 @@ type AvatarImplProps = Omit<
   "children" | "src"
 > & {
   src?: string;
+  children?: ReactNode;
 };
 
 function AvatarImpl(props: AvatarImplProps) {
