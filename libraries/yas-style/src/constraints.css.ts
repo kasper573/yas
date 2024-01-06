@@ -1,4 +1,8 @@
-import type { PropertiesHyphen as CSSProperties } from "csstype";
+import type {
+  PropertiesHyphen as CSSProperties,
+  DataType,
+  Property,
+} from "csstype";
 import type {
   ConstrainedStyle as ConstrainedStyleImpl,
   StyleResolver,
@@ -190,16 +194,29 @@ function transition<Transitions extends Transition[]>(
  */
 function animation<Animations extends Animation[]>(...animations: Animations) {
   return animations
-    .map(([animationName, durationPreset, easingPreset, iterationCount]) => {
-      return [
+    .map(
+      ([
         animationName,
-        tokens.durations[durationPreset],
-        tokens.easings[easingPreset],
-        iterationCount,
-      ]
-        .filter(Boolean)
-        .join(" ");
-    })
+        durationPreset,
+        easingPreset,
+        {
+          count = "infinite" as const,
+          fill = "forwards" as const,
+          direction = "normal" as const,
+        } = {},
+      ]) => {
+        return [
+          animationName,
+          tokens.durations[durationPreset],
+          tokens.easings[easingPreset],
+          count,
+          fill,
+          direction,
+        ]
+          .filter(Boolean)
+          .join(" ");
+      },
+    )
     .join(", ");
 }
 
@@ -207,8 +224,14 @@ type Animation = [
   animationName: string,
   durationPreset: keyof typeof tokens.durations,
   easingPreset: keyof typeof tokens.easings,
-  iterationCount?: number | "infinite",
+  options?: AnimationOptions,
 ];
+
+interface AnimationOptions {
+  count?: Property.AnimationIterationCount;
+  direction?: DataType.SingleAnimationDirection;
+  fill?: DataType.SingleAnimationFillMode;
+}
 
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,

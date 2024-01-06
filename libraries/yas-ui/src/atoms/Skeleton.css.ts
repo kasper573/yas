@@ -7,7 +7,7 @@ const pulse = keyframes({
 });
 
 export const skeleton = style({
-  animation: [[pulse, "extraLong5", "standard", "infinite"]],
+  animation: [[pulse, "extraLong5", "standard"]],
   borderRadius: "#2",
   background: "surface.light",
 });
