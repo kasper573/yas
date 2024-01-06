@@ -1,5 +1,6 @@
 export * from "./atoms/Alert";
 export * from "./atoms/Button";
+export * from "./atoms/IconButton";
 export * from "./atoms/Dialog";
 export * from "./atoms/Drawer";
 export * from "./atoms/Text";
