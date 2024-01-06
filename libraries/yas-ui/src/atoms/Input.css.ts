@@ -22,8 +22,12 @@ export const root = recipe({
       },
     },
     size: {
-      small: {},
-      medium: {},
+      small: {
+        p: "#1.5",
+      },
+      medium: {
+        p: "#2",
+      },
     },
   },
   defaultVariants: {
@@ -36,13 +40,9 @@ export const input = style({
   typography: "body",
   color: "surface.contrast",
   flex: 1,
-  px: "#3",
-  selectors: {
-    [`${root.classNames.variants.size.small} > &`]: {
-      py: "#1.5",
-    },
-    [`${root.classNames.variants.size.medium} > &`]: {
-      py: "#2",
-    },
-  },
+  px: "#1",
+});
+
+export const slot = style({
+  display: "flex",
 });
