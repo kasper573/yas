@@ -39,7 +39,7 @@ export const inputRecipe = recipe({
     },
     size: {
       small: {
-        py: "#1",
+        py: "#1.5",
       },
       medium: {
         py: "#2",
