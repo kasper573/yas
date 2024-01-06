@@ -1,15 +1,14 @@
-import { z } from "@yas/validate";
 import { t } from "../../definition/trpc";
-import { dashboardType } from "./types";
+import { dashboardFilterType, dashboardType } from "./types";
 import { createSeededRandom } from "./random";
 
 export function createDashboardProcedure() {
   return t.procedure
-    .input(z.date())
+    .input(dashboardFilterType)
     .output(dashboardType)
-    .query(async ({ input, ctx }) => {
-      const rand = createSeededRandom(input.toISOString());
-      const users = await ctx.userRepository.search();
+    .query(async ({ input: { date, userId }, ctx }) => {
+      const rand = createSeededRandom(userId + "_" + date.toISOString());
+      const users = await ctx.userRepository.all();
       const recentSales = users.map((user) => ({
         ...user,
         amount: rand() * 1999,

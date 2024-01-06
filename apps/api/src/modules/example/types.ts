@@ -4,15 +4,21 @@ export type UserId = z.infer<typeof userIdType>;
 export const userIdType = z.number().brand("userId");
 
 export type User = z.infer<typeof userType>;
-
 export const userType = z.object({
-  id: userIdType,
+  userId: userIdType,
   name: z.string(),
   email: z.string().email(),
   avatarUrl: z.string().url(),
 });
 
+export type RecentSale = z.infer<typeof recentSaleType>;
 export const recentSaleType = userType.and(z.object({ amount: z.number() }));
+
+export type DashboardFilter = z.infer<typeof dashboardFilterType>;
+export const dashboardFilterType = z.object({
+  userId: userIdType.optional(),
+  date: z.date(),
+});
 
 export const dashboardType = z.object({
   totalRevenue: z.number(),

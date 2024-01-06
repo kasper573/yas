@@ -29,7 +29,7 @@ const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
-  const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
+  const [date, setDate] = useRouterState("date", dateEncoding);
   const [userId, setUserId] = useRouterState(
     "user",
     numberEncoding<types.example.UserId>(),
@@ -42,7 +42,7 @@ export default function Dashboard() {
   });
 
   const searchResult = api.example.users.list.useQuery(
-    debouncedSearchInput.value,
+    debouncedSearchInput.value!,
     { enabled: debouncedSearchInput.value !== undefined },
   );
 
@@ -78,7 +78,7 @@ export default function Dashboard() {
                 button
                 key={index}
                 sx={{ px: "#5" }}
-                onClick={() => selectUser(user.id)}
+                onClick={() => selectUser(user.userId)}
               >
                 <ListItemIcon>
                   <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
@@ -100,7 +100,7 @@ export default function Dashboard() {
             Dashboard
             {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
           </Title>
-          <DatePicker value={dateFilter} onChange={setDateFilter} />
+          <DatePicker value={date} onChange={setDate} />
         </Stack>
         {selectedUser.error ? (
           <Text>Could not find user by id {userId}</Text>
@@ -114,7 +114,7 @@ export default function Dashboard() {
               ))}
             </Tabs>
             <Suspense fallback={<DashboardSkeleton />}>
-              <DashboardContent dateFilter={dateFilter} />
+              <DashboardContent filter={{ date, userId }} />
             </Suspense>
           </>
         )}

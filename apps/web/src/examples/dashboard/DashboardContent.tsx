@@ -5,6 +5,7 @@ import {
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
+import type { types } from "@yas/api-client";
 import { api } from "@yas/api-client";
 import { RecentSaleList } from "./RecentSaleList";
 import { Card, format, formatCurrency } from "./shared";
@@ -12,8 +13,12 @@ import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./Dashboard.css";
 import { Chart } from "./Chart";
 
-export function DashboardContent({ dateFilter }: { dateFilter: Date }) {
-  const [data] = api.example.dashboard.useSuspenseQuery(dateFilter);
+export function DashboardContent({
+  filter,
+}: {
+  filter: types.example.DashboardFilter;
+}) {
+  const [data] = api.example.dashboard.useSuspenseQuery(filter);
   return (
     <div className={gridContainer}>
       <StatsCard

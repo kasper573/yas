@@ -6,7 +6,7 @@ import { userIdType, userType } from "./types";
 export function createUsersRouter() {
   return t.router({
     list: t.procedure
-      .input(z.string().optional())
+      .input(z.string())
       .output(userType.array())
       .query(({ input, ctx }) => ctx.userRepository.search(input)),
     get: t.procedure
