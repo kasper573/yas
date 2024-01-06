@@ -1,12 +1,9 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export function useRouterState<T>(
+export function useRouterState<T = string>(
   paramName: string,
-  protocol: {
-    encode: (value: T) => string;
-    decode: (value?: string) => T;
-  },
+  protocol: RouterStateEncoding<T> = stringEncoding as unknown as RouterStateEncoding<T>,
 ): [T, (value?: T) => void] {
   const [searchParams, setSearchParams] = useSearchParams();
   const encodedValue = searchParams.get(paramName) || undefined;
@@ -31,3 +28,13 @@ export function useRouterState<T>(
 
   return [value, setValue];
 }
+
+export type RouterStateEncoding<T> = {
+  encode: (value: T) => string;
+  decode: (value?: string) => T;
+};
+
+const stringEncoding: RouterStateEncoding<string> = {
+  encode: (value) => value,
+  decode: (value) => value ?? "",
+};
