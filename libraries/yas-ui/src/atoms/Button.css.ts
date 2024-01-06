@@ -36,6 +36,7 @@ export const buttonRecipe = recipe({
     color: {
       primary: {},
       secondary: {},
+      surface: {},
     },
     variant: {
       text: {
@@ -64,6 +65,10 @@ export const buttonRecipe = recipe({
       style: { color: "secondary.base.main" },
     },
     {
+      variants: { color: "surface", variant: "text" },
+      style: { color: "surface.contrast" },
+    },
+    {
       variants: { color: "primary", variant: "contained" },
       style: {
         background: {
@@ -88,6 +93,18 @@ export const buttonRecipe = recipe({
       },
     },
     {
+      variants: { color: "surface", variant: "contained" },
+      style: {
+        background: {
+          default: "surface.light",
+          hover: "surface.main",
+          active: "surface.dark",
+        },
+        color: "surface.contrast",
+        borderColor: "surface.contrast",
+      },
+    },
+    {
       variants: { color: "primary", variant: "outlined" },
       style: {
         background: {
@@ -109,6 +126,18 @@ export const buttonRecipe = recipe({
         },
         color: "secondary.base.main",
         borderColor: "secondary.base.main",
+      },
+    },
+    {
+      variants: { color: "surface", variant: "outlined" },
+      style: {
+        background: {
+          default: "surface.contrast",
+          hover: "surface.contrast",
+          active: "surface.contrast",
+        },
+        color: "surface.main",
+        borderColor: "surface.main",
       },
     },
     {
