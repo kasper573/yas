@@ -36,6 +36,7 @@ export function SearchForm({
         <PopoverContent
           onOpenAutoFocus={(e) => e.preventDefault()}
           onFocusOutside={clear}
+          onInteractOutside={clear}
         >
           {children}
         </PopoverContent>
