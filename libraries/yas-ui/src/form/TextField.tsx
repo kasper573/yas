@@ -1,4 +1,5 @@
-import { useId, type InputHTMLAttributes } from "react";
+import type { ComponentProps } from "react";
+import { useId } from "react";
 import type { RecipeVariants } from "@yas/style";
 import { clsx, styled } from "@yas/style";
 import type { FieldProps } from "./rcf";
@@ -16,8 +17,8 @@ export interface TextFieldProps
     RecipeVariants<typeof styles.container> {
   type?: "text" | "number" | "password";
   inputProps?: Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    "value" | "onChange" | "onFocus" | "onBlur" | "type"
+    ComponentProps<typeof Input>,
+    "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size"
   >;
 }
 
@@ -32,6 +33,8 @@ export function TextField({
   label = name,
   errors,
   fieldValues,
+  required,
+  size,
   ...rest
 }: TextFieldProps) {
   const id = useId();
@@ -46,11 +49,19 @@ export function TextField({
       <Input
         id={id}
         value={value ?? ""}
-        onChange={(e) => onChange?.(e.target.value)}
+        onChange={(e) => {
+          if (!required && e.target.value === "") {
+            onChange?.(undefined);
+          } else {
+            onChange?.(e.target.value);
+          }
+        }}
         type={type}
         fullWidth={fullWidth}
         error={!!errors?.length}
         autoComplete="off"
+        size={size}
+        required={required}
         {...inputProps}
       />
       <FormControlErrors errors={errors} />
@@ -59,3 +70,5 @@ export function TextField({
 }
 
 const Input = styled("input", styles.inputRecipe);
+
+type Test = ComponentProps<typeof Input>["size"];

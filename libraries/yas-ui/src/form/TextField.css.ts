@@ -18,7 +18,7 @@ export const label = style({
 
 export const inputRecipe = recipe({
   base: {
-    padding: "#3",
+    px: "#3",
     border: "standard",
     borderRadius: "#2",
     backgroundColor: "surface.light",
@@ -37,5 +37,16 @@ export const inputRecipe = recipe({
         borderColor: "error.main",
       },
     },
+    size: {
+      small: {
+        py: "#1",
+      },
+      medium: {
+        py: "#2",
+      },
+    },
+  },
+  defaultVariants: {
+    size: "medium",
   },
 });
