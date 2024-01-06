@@ -8,7 +8,7 @@ export function createUsersRouter() {
     list: t.procedure
       .input(z.string())
       .output(userType.array())
-      .query(({ input, ctx }) => ctx.userRepository.search(input)),
+      .query(({ input, ctx }) => ctx.userRepository.search(input, 5)),
     get: t.procedure
       .input(userIdType)
       .output(userType)
