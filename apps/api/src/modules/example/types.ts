@@ -1,17 +1,20 @@
 import { z } from "@yas/validate";
 
-export const userSchema = z.object({
-  id: z.number(),
+export type UserId = z.infer<typeof userIdType>;
+export const userIdType = z.number().brand("userId");
+
+export type User = z.infer<typeof userType>;
+
+export const userType = z.object({
+  id: userIdType,
   name: z.string(),
   email: z.string().email(),
   avatarUrl: z.string().url(),
 });
 
-export const recentSaleSchema = userSchema.and(
-  z.object({ amount: z.number() }),
-);
+export const recentSaleType = userType.and(z.object({ amount: z.number() }));
 
-export const dashboardSchema = z.object({
+export const dashboardType = z.object({
   totalRevenue: z.number(),
   subscriptions: z.number(),
   sales: z.number(),
@@ -22,5 +25,5 @@ export const dashboardSchema = z.object({
   subscriptionDeltaSinceLastMonth: z.number(),
   yourSalesThisMonth: z.number(),
   revenueOverTime: z.array(z.object({ name: z.string(), value: z.number() })),
-  recentSales: z.array(recentSaleSchema),
+  recentSales: z.array(recentSaleType),
 });

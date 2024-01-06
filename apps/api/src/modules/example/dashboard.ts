@@ -1,14 +1,19 @@
 import { z } from "@yas/validate";
 import { t } from "../../definition/trpc";
-import { dashboardSchema } from "./types";
-import { createRandomUsers, createSeededRandom } from "./fixtures";
+import { dashboardType } from "./types";
+import { createSeededRandom } from "./random";
 
 export function createDashboardProcedure() {
   return t.procedure
     .input(z.date())
-    .output(dashboardSchema)
-    .query(({ input }) => {
+    .output(dashboardType)
+    .query(async ({ input, ctx }) => {
       const rand = createSeededRandom(input.toISOString());
+      const users = await ctx.userRepository.search();
+      const recentSales = users.map((user) => ({
+        ...user,
+        amount: rand() * 1999,
+      }));
       return {
         totalRevenue: rand() * 45231.89,
         revenueDeltaSinceLastMonth: rand() * 180.1,
@@ -33,7 +38,7 @@ export function createDashboardProcedure() {
           { name: "Nov", value: rand() * 5600 },
           { name: "Dec", value: rand() * 1337 },
         ],
-        recentSales: createRandomUsers(rand),
+        recentSales,
       };
     });
 }

@@ -30,7 +30,10 @@ export default function Dashboard() {
   const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
   const [userId, setUserId] = useRouterState("user", numberEncoding);
   const [searchInput, setSearchInput] = useState<string | undefined>();
-  const searchResult = api.example.users.useQuery(searchInput);
+  const userResult = api.example.users.get.useQuery(userId!, {
+    enabled: userId !== undefined,
+  });
+  const searchResult = api.example.users.list.useQuery(searchInput);
 
   return (
     <Card sx={{ p: 0 }}>
@@ -69,21 +72,32 @@ export default function Dashboard() {
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
         <Stack direction="row" justify="spaceBetween">
-          <Title onClear={userId !== undefined ? () => setUserId() : undefined}>
-            Dashboard{userId ? ` for ${userId}` : undefined}
+          <Title
+            onClear={
+              userResult.data !== undefined ? () => setUserId() : undefined
+            }
+          >
+            Dashboard
+            {userResult.data ? ` for ${userResult.data.name}` : undefined}
           </Title>
           <DatePicker value={dateFilter} onChange={setDateFilter} />
         </Stack>
-        <Tabs variant="contained" sx={{ flex: 1 }}>
-          {secondaryNav.map((label, index) => (
-            <TabItem asChild key={index} active={index === 0}>
-              <Link>{label}</Link>
-            </TabItem>
-          ))}
-        </Tabs>
-        <Suspense fallback={<DashboardSkeleton />}>
-          <DashboardContent dateFilter={dateFilter} />
-        </Suspense>
+        {userResult?.error ? (
+          <Text>Could not find user by id {userId}</Text>
+        ) : (
+          <>
+            <Tabs variant="contained" sx={{ flex: 1 }}>
+              {secondaryNav.map((label, index) => (
+                <TabItem asChild key={index} active={index === 0}>
+                  <Link>{label}</Link>
+                </TabItem>
+              ))}
+            </Tabs>
+            <Suspense fallback={<DashboardSkeleton />}>
+              <DashboardContent dateFilter={dateFilter} />
+            </Suspense>
+          </>
+        )}
       </Stack>
     </Card>
   );
