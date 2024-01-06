@@ -15,6 +15,7 @@ import {
 } from "@yas/ui";
 import { Suspense, useState } from "react";
 import { formatISO, startOfToday } from "@yas/time";
+import type { types } from "@yas/api-client";
 import { api } from "@yas/api-client";
 import type { RouterStateEncoding } from "../../hooks/useRouterState";
 import { useRouterState } from "../../hooks/useRouterState";
@@ -33,7 +34,14 @@ export default function Dashboard() {
   const userResult = api.example.users.get.useQuery(userId!, {
     enabled: userId !== undefined,
   });
+  const selectedUser = userResult.data;
   const searchResult = api.example.users.list.useQuery(searchInput);
+
+  const clearSelectedUser = () => selectUser();
+  function selectUser(newUserId?: types.example.UserId) {
+    setUserId(newUserId);
+    setSearchInput(undefined);
+  }
 
   return (
     <Card sx={{ p: 0 }}>
@@ -57,7 +65,7 @@ export default function Dashboard() {
                 button
                 key={index}
                 sx={{ px: "#5" }}
-                onClick={() => setUserId(user.id)}
+                onClick={() => selectUser(user.id)}
               >
                 <ListItemIcon>
                   <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
@@ -72,13 +80,9 @@ export default function Dashboard() {
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
         <Stack direction="row" justify="spaceBetween">
-          <Title
-            onClear={
-              userResult.data !== undefined ? () => setUserId() : undefined
-            }
-          >
+          <Title onClear={selectedUser ? clearSelectedUser : undefined}>
             Dashboard
-            {userResult.data ? ` for ${userResult.data.name}` : undefined}
+            {selectedUser ? ` for ${selectedUser.name}` : undefined}
           </Title>
           <DatePicker value={dateFilter} onChange={setDateFilter} />
         </Stack>
