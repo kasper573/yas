@@ -172,6 +172,7 @@ export const durations = {
   extraLong2: "800ms",
   extraLong3: "900ms",
   extraLong4: "1000ms",
+  extraLong5: "1500ms",
 };
 
 export const easings = {

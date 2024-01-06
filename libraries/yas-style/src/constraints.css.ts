@@ -190,10 +190,10 @@ function transition<Transitions extends Transition[]>(
  */
 function animation<Animations extends Animation[]>(...animations: Animations) {
   return animations
-    .map(([animationName, duration, easingPreset, iterationCount]) => {
+    .map(([animationName, durationPreset, easingPreset, iterationCount]) => {
       return [
         animationName,
-        duration,
+        tokens.durations[durationPreset],
         tokens.easings[easingPreset],
         iterationCount,
       ]
@@ -205,14 +205,10 @@ function animation<Animations extends Animation[]>(...animations: Animations) {
 
 type Animation = [
   animationName: string,
-  duration: Duration,
+  durationPreset: keyof typeof tokens.durations,
   easingPreset: keyof typeof tokens.easings,
   iterationCount?: number | "infinite",
 ];
-
-type TimeUnit = "ms" | "s" | "min" | "h" | "d";
-type Numeric = `${number}` | `${number}.${number}`;
-type Duration = `${Numeric}${TimeUnit}`;
 
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
