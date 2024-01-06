@@ -1,5 +1,7 @@
 import { createVar, fallbackVar } from "@vanilla-extract/css";
 
+// Typesafe utilities for working with css transforms using vanilla extract vars
+
 export type CSSVar = ReturnType<typeof createVar>;
 
 export function createTransformVar(): TransformVar {
