@@ -1,10 +1,8 @@
 import { globalStyle, recipe } from "@yas/style";
 
 const size = (value: number) => ({
-  minWidth: value,
-  minHeight: value,
-  maxHeight: value,
-  maxWidth: value,
+  width: value,
+  height: value,
 });
 
 export const sizes = {
