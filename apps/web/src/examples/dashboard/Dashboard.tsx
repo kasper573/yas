@@ -1,20 +1,26 @@
 import { styled } from "@yas/style";
 import {
+  Avatar,
   DatePicker,
   Divider,
   Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Stack as StackImpl,
   TabItem,
   Tabs,
   Text,
-  TextField,
 } from "@yas/ui";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { formatISO, startOfToday } from "@yas/time";
+import { api } from "@yas/api-client";
 import { useRouterState } from "../../hooks/useRouterState";
 import { Card } from "./shared";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
+import { SearchForm } from "./SearchForm";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
@@ -22,11 +28,10 @@ const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 export default function Dashboard() {
   const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
   const [search, setSearch] = useRouterState("search");
-  const [searchInput, setSearchInput] = useState<string | undefined>();
+  const searchResult = api.example.users.useQuery(search);
 
   function performNewSearch(newSearch?: string) {
     setSearch(newSearch);
-    setSearchInput(undefined);
   }
 
   return (
@@ -40,19 +45,21 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            performNewSearch(searchInput);
-          }}
+        <SearchForm
+          isLoading={searchResult.isLoading}
+          onSubmit={performNewSearch}
         >
-          <Search
-            value={searchInput}
-            onChange={setSearchInput}
-            inputProps={{ placeholder: "Search..." }}
-            clearable
-          />
-        </form>
+          <List>
+            {searchResult.data?.map((user, index) => (
+              <ListItem button key={index} sx={{ px: "#5" }}>
+                <ListItemIcon>
+                  <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
+                </ListItemIcon>
+                <ListItemText primary={user.name} secondary={user.email} />
+              </ListItem>
+            ))}
+          </List>
+        </SearchForm>
         <UserMenu />
       </Stack>
       <Divider margin={false} />
@@ -78,7 +85,6 @@ export default function Dashboard() {
   );
 }
 
-const Search = styled(TextField).attrs({ size: "small" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Stack = styled(StackImpl).attrs({ gap: "#4" });
 
