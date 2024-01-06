@@ -31,6 +31,12 @@ export const WithError: StrictStoryObj<typeof TextField> = {
   },
 };
 
+export const Clearable: StrictStoryObj<typeof TextField> = {
+  args: {
+    clearable: true,
+  },
+};
+
 function TextFieldWithState(props: ComponentProps<typeof TextField>) {
   const [value, setValue] = useState(props.value);
   return <TextField {...props} value={value} onChange={setValue} />;

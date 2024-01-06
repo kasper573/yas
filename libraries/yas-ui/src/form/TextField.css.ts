@@ -6,47 +6,34 @@ const fullWidth = {
   },
 };
 
-export const container = recipe({
-  variants: {
-    fullWidth,
-  },
+export const control = recipe({
+  variants: { fullWidth },
 });
 
 export const label = style({
   ml: "#1",
 });
 
-export const inputRecipe = recipe({
+export const input = recipe({
+  variants: { fullWidth },
+});
+
+export const clearButton = recipe({
   base: {
-    px: "#3",
-    border: "standard",
-    borderRadius: "#2",
-    backgroundColor: "surface.light",
-    color: "surface.contrast",
-    typography: "body",
-    outline: { focus: "none" },
-    boxShadow: { focus: "#1" },
-    borderColor: {
-      focus: "primary.base.main",
-    },
+    mr: "#2",
   },
   variants: {
-    fullWidth,
-    error: {
+    visible: {
       true: {
-        borderColor: "error.main",
+        visibility: "visible",
       },
-    },
-    size: {
-      small: {
-        py: "#1.5",
-      },
-      medium: {
-        py: "#2",
+      false: {
+        visibility: "hidden",
+        pointerEvents: "none",
       },
     },
   },
   defaultVariants: {
-    size: "medium",
+    visible: false,
   },
 });
