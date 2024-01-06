@@ -24,6 +24,7 @@
     "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/validate": "workspace:*",
+    "@yas/time": "workspace:*",
     "react-composable-form": "workspace:*",
     "react-day-picker": "8.10.0",
     "react-imperative-hook": "workspace:*"

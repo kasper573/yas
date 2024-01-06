@@ -11,7 +11,7 @@ export default {
 
 export const Default: StrictStoryObj<typeof DatePicker> = {
   render(props) {
-    const [value, setValue] = useState<Date>(() => new Date());
+    const [value, setValue] = useState<Date | undefined>(() => new Date());
     return <DatePicker {...props} value={value} onChange={setValue} />;
   },
 };
