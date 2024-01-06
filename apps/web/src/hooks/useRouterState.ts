@@ -1,10 +1,11 @@
 import { useMemo } from "react";
+import type { NavigateOptions } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
 export function useRouterState<T = inferEncodingValue<typeof stringEncoding>>(
   paramName: string,
   protocol: RouterStateEncoding<T> = stringEncoding as unknown as RouterStateEncoding<T>,
-): [T, (value?: T) => void] {
+) {
   const [searchParams, setSearchParams] = useSearchParams();
   const encodedValue = searchParams.get(paramName) || undefined;
 
@@ -16,17 +17,17 @@ export function useRouterState<T = inferEncodingValue<typeof stringEncoding>>(
     }
   }, [protocol, encodedValue]);
 
-  function setValue(newValue?: T) {
+  function setValue(newValue?: T, options: NavigateOptions = {}) {
     const newParams = new URLSearchParams(searchParams);
     if (newValue !== undefined) {
       newParams.set(paramName, protocol.encode(newValue));
     } else {
       newParams.delete(paramName);
     }
-    setSearchParams(newParams);
+    setSearchParams(newParams, { replace: true, ...options });
   }
 
-  return [value, setValue];
+  return [value, setValue] as const;
 }
 
 export type RouterStateEncoding<T> = {

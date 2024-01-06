@@ -19,6 +19,7 @@ import type { types } from "@yas/api-client";
 import { api } from "@yas/api-client";
 import type { RouterStateEncoding } from "../../hooks/useRouterState";
 import { useRouterState } from "../../hooks/useRouterState";
+import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
@@ -34,6 +35,7 @@ export default function Dashboard() {
     "user",
     numberEncoding<types.example.UserId>(),
   );
+  const clearSelectedUser = () => setUserId(undefined, { replace: false });
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const debouncedSearchInput = useDebounce(searchInput, 333);
 
@@ -49,12 +51,6 @@ export default function Dashboard() {
   const isSearching =
     searchInput !== undefined &&
     (debouncedSearchInput.isDebouncing || searchResult.isFetching);
-
-  const clearSelectedUser = () => selectUser();
-  function selectUser(newUserId?: types.example.UserId) {
-    setUserId(newUserId);
-    setSearchInput(undefined);
-  }
 
   return (
     <Card sx={{ p: 0 }}>
@@ -75,16 +71,16 @@ export default function Dashboard() {
           {searchResult.data ? (
             <List sx={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
-                <ListItem
-                  button
-                  key={index}
-                  sx={{ px: "#5" }}
-                  onClick={() => selectUser(user.userId)}
-                >
-                  <ListItemIcon>
-                    <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
-                  </ListItemIcon>
-                  <ListItemText primary={user.name} secondary={user.email} />
+                <ListItem asChild button key={index} sx={{ px: "#5" }}>
+                  <NavLink to={`/dashboard?user=${user.userId}`}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt={`${user.name} avatar`}
+                        src={user.avatarUrl}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={user.name} secondary={user.email} />
+                  </NavLink>
                 </ListItem>
               ))}
               {searchResult.data.length === 0 && (
