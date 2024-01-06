@@ -2,11 +2,14 @@ import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { ThemeProvider, ThemeInjector } from "@yas/ui";
-import { getPreferredTheme } from "@yas/ui";
 import { env } from "./env";
 import { AppRoutes } from "./Routes";
 import { ErrorFallback } from "./components/ErrorFallback";
+import {
+  getPreferredTheme,
+  ThemeProvider,
+  ThemeInjector,
+} from "./ThemeProvider";
 
 const rootRef = { current: document.documentElement };
 

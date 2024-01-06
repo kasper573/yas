@@ -12,12 +12,12 @@ import {
   Text,
   useMediaQueries,
   useModal,
-  useTheme,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
 import { breakpointQuery } from "@yas/style";
 import { env } from "../../env";
 import { hello } from "../../hello";
+import { useTheme } from "../../ThemeProvider";
 import * as styles from "./sandbox.css";
 
 export default function Sandbox() {
