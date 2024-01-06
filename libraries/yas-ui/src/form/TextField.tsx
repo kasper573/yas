@@ -5,6 +5,7 @@ import { clsx } from "@yas/style";
 import { Cross1Icon } from "@yas/icons";
 import { InputArea, InputRoot, InputSlot } from "../atoms/Input";
 import { IconButton } from "../atoms/IconButton";
+import { CircularProgress } from "../atoms/CircularProgress";
 import type { FieldProps } from "./rcf";
 import {
   FormControl,
@@ -33,6 +34,7 @@ export function TextField({
   inputProps,
   fullWidth,
   className,
+  isLoading,
   name,
   label = name,
   errors,
@@ -76,13 +78,19 @@ export function TextField({
           }}
         />
         <InputSlot>
-          <IconButton
-            variant="text"
-            onClick={() => onChange?.(undefined)}
-            className={styles.clearButton({ visible: clearable && !isEmpty })}
-          >
-            <Cross1Icon />
-          </IconButton>
+          {isLoading ? (
+            <CircularProgress className={styles.loadingSpinner} />
+          ) : (
+            <IconButton
+              variant="text"
+              onClick={() => onChange?.(undefined)}
+              className={styles.clearButton({
+                visible: clearable && !isEmpty,
+              })}
+            >
+              <Cross1Icon />
+            </IconButton>
+          )}
         </InputSlot>
       </InputRoot>
       <FormControlErrors errors={errors} />
