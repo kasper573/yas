@@ -44,4 +44,4 @@ globalStyle(gridAreas.subscriptions, { minHeight: 138.5 });
 globalStyle(gridAreas.sales, { minHeight: 138.5 });
 globalStyle(gridAreas.activeNow, { minHeight: 138.5 });
 globalStyle(gridAreas.chart, { minHeight: 300 });
-globalStyle(gridAreas.recentSales, { minHeight: 425 });
+globalStyle(gridAreas.recentSales, { minHeight: 394 });

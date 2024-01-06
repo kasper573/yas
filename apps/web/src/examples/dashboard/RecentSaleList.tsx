@@ -13,7 +13,7 @@ import { format } from "./shared";
 
 export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
   return (
-    <List>
+    <List compact>
       {data.map((sale, index) => (
         <ListItem asChild button key={index} sx={{ px: "#5" }}>
           <NavLink to={`/dashboard?user=${sale.userId}`}>

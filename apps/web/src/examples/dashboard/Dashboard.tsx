@@ -72,21 +72,30 @@ export default function Dashboard() {
           onChange={setSearchInput}
           isLoading={isSearching}
         >
-          <List>
-            {searchResult.data?.map((user, index) => (
-              <ListItem
-                button
-                key={index}
-                sx={{ px: "#5" }}
-                onClick={() => selectUser(user.userId)}
-              >
-                <ListItemIcon>
-                  <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
-                </ListItemIcon>
-                <ListItemText primary={user.name} secondary={user.email} />
-              </ListItem>
-            ))}
-          </List>
+          {searchResult.data ? (
+            <List sx={{ minWidth: 200 }}>
+              {searchResult.data.map((user, index) => (
+                <ListItem
+                  button
+                  key={index}
+                  sx={{ px: "#5" }}
+                  onClick={() => selectUser(user.userId)}
+                >
+                  <ListItemIcon>
+                    <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
+                  </ListItemIcon>
+                  <ListItemText primary={user.name} secondary={user.email} />
+                </ListItem>
+              ))}
+              {searchResult.data.length === 0 && (
+                <ListItem sx={{ px: "#5" }}>
+                  <ListItemText
+                    primary={`No users found matching "${debouncedSearchInput.value}"`}
+                  />
+                </ListItem>
+              )}
+            </List>
+          ) : null}
         </SearchForm>
         <UserMenu />
       </Stack>

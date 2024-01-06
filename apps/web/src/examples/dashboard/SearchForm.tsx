@@ -37,6 +37,7 @@ export function SearchForm({
           onOpenAutoFocus={(e) => e.preventDefault()}
           onFocusOutside={clear}
           onInteractOutside={clear}
+          style={{ overflow: "hidden" }}
         >
           {children}
         </PopoverContent>
