@@ -1,8 +1,6 @@
 import type {
-  ReactNode,
   ReactElement,
   ComponentProps,
-  CSSProperties,
   ElementType,
   ForwardedRef,
 } from "react";
@@ -178,9 +176,6 @@ export type RecipeComponentProps<
   StripIndexes<RecipeInput> &
     Omit<ComponentProps<Implementation>, keyof StripIndexes<RecipeInput>> & {
       sx?: SX;
-      className?: string;
-      style?: CSSProperties;
-      children?: ReactNode;
       asChild?: boolean;
     };
 
