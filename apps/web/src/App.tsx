@@ -12,7 +12,15 @@ const rootRef = { current: document.documentElement };
 
 export default function App() {
   const [theme, setTheme] = useState(getPreferredTheme);
-  const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
+  const apiClient = useMemo(
+    () =>
+      createApiClient(env.apiUrl, {
+        queries: {
+          retry: env.mode === "production",
+        },
+      }),
+    [],
+  );
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>

@@ -1,4 +1,5 @@
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
+import type { QueryClientConfig } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 import transformer from "superjson";
@@ -34,8 +35,11 @@ export const ApiContext = createContext<ApiClient["trpc"]>(
 
 export type ApiClient = ReturnType<typeof createApiClient>;
 
-export function createApiClient(url: string) {
-  const queryClient = new QueryClient();
+export function createApiClient(
+  url: string,
+  defaultOptions?: QueryClientConfig["defaultOptions"],
+) {
+  const queryClient = new QueryClient({ defaultOptions });
   const trpc = createTRPCReact<ApiRouter>();
   const trpcClient = trpc.createClient({
     transformer,
