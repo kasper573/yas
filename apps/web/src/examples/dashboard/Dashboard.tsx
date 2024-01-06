@@ -9,6 +9,7 @@ import {
   TabItem,
   Tabs,
   Text,
+  TextField,
 } from "@yas/ui";
 import {
   RocketIcon,
@@ -31,10 +32,11 @@ const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
   const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
+  const [search, setSearch] = useRouterState("search");
 
   return (
     <Card sx={{ p: 0 }}>
-      <Stack direction="row" align="center" sx={{ my: "#2", px: "#5" }}>
+      <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
         <OrganizationSelect />
         <Tabs variant="text-highlight" sx={{ flex: 1 }}>
           {mainNav.map((label, index) => (
@@ -43,7 +45,7 @@ export default function Dashboard() {
             </TabItem>
           ))}
         </Tabs>
-        <Search />
+        <Search value={search} onChange={setSearch} />
         <UserMenu />
       </Stack>
       <Divider margin={false} />
@@ -138,7 +140,7 @@ function DashboardSkeleton() {
   );
 }
 
-const Search = styled(Text).attrs({ children: "Search" });
+const Search = styled(TextField).attrs({ children: "Search", size: "small" });
 const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Title = styled(Text).attrs({ variant: "h1", sx: { lineHeight: 1 } });
 const Stack = styled(StackImpl).attrs({ gap: "#4" });
