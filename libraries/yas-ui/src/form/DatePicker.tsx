@@ -7,6 +7,7 @@ import { Calendar } from "../atoms/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../atoms/Popover";
 import { Stack } from "../layout/Stack";
 import type { FieldProps } from "./rcf";
+import { datePickerText } from "./DatePicker.css";
 
 export interface DatePickerProps
   extends FieldProps<Date>,
@@ -34,7 +35,12 @@ export function DatePicker({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant={variant} color={color} {...rest}>
-          <Stack direction="row" gap="#2" align="center" sx={{ minHeight: 21 }}>
+          <Stack
+            direction="row"
+            gap="#2"
+            align="center"
+            className={datePickerText}
+          >
             <CalendarIcon />
             {value ? format(value, formatPreset) : <span>Pick a date</span>}
           </Stack>
