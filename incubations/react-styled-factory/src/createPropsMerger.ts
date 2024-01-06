@@ -20,7 +20,7 @@ export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
   };
 }
 
-type ElementPropsLike<SX> = {
+export type ElementPropsLike<SX> = {
   className?: string;
   style?: CSSProperties;
   sx?: SX;

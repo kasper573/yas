@@ -9,6 +9,7 @@ import type {
 import { createElement, forwardRef, Children } from "react";
 import type { PropForwardTester } from "./destructureVariantProps";
 import { destructureVariantProps } from "./destructureVariantProps";
+import type { ElementPropsLike } from "./createPropsMerger";
 import { clsx, createPropsMerger } from "./createPropsMerger";
 import type { SXAdapterOptions } from "./sxAdapter";
 import { normalizeSXAdapterOptions } from "./sxAdapter";
@@ -35,9 +36,12 @@ export function createStyledFactory<SX>(
         sx = emptyObject,
         asChild,
         ...mergedProps
-      } = mergeElementProps(options.defaultProps, inlineProps);
+      } = mergeElementProps(
+        options.defaultProps,
+        inlineProps as ElementPropsLike<SX>,
+      );
 
-      const styleOrClassName = sxAdapter.compile(sx);
+      const styleOrClassName = sxAdapter.compile(sx as SX);
       const [recipeClassName, forwardedProps] = resolveRecipe(mergedProps);
       const [sxStyle, sxClassName] =
         typeof styleOrClassName === "string"
@@ -78,7 +82,7 @@ export function createStyledFactory<SX>(
       const [recipeInput, forwardedProps] = destructureVariantProps(
         props,
         recipeOrClassNames.variants(),
-        options.forwardProps,
+        options.forwardProps as PropForwardTester,
       );
 
       const recipeClassName = recipeOrClassNames(recipeInput as RecipeInput);
@@ -172,7 +176,7 @@ export type RecipeComponentProps<
 > =
   // We must strip plain indexes to ensure no variants resolve to empty object
   StripIndexes<RecipeInput> &
-    ComponentProps<Implementation> & {
+    Omit<ComponentProps<Implementation>, keyof StripIndexes<RecipeInput>> & {
       sx?: SX;
       className?: string;
       style?: CSSProperties;
