@@ -1,4 +1,5 @@
-import { t } from "../../definition/trpc";
+import { t, trpcUnwrap } from "../../definition/trpc";
+import type { RecentSale } from "./types";
 import { dashboardFilterType, dashboardType } from "./types";
 import { createSeededRandom } from "./random";
 
@@ -9,10 +10,20 @@ export function createDashboardProcedure() {
     .query(async ({ input: { date, userId }, ctx }) => {
       const rand = createSeededRandom(userId + "_" + date.toISOString());
       const users = await ctx.userRepository.all();
-      const recentSales = users.map((user) => ({
-        ...user,
-        amount: rand() * 1999,
-      }));
+      const selectedUser =
+        userId !== undefined
+          ? trpcUnwrap(await ctx.userRepository.get(userId))
+          : undefined;
+
+      const recentSales = [1, 2, 3, 4, 5].map((): RecentSale => {
+        const user =
+          selectedUser ?? users[Math.round(rand() * (users.length - 1))];
+        return {
+          ...user,
+          amount: rand() * 1999,
+        };
+      });
+
       return {
         totalRevenue: rand() * 45231.89,
         revenueDeltaSinceLastMonth: rand() * 180.1,

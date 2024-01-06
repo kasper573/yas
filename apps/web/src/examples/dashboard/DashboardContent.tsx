@@ -68,9 +68,7 @@ export function DashboardContent({
       <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
         <Box sx={{ px: "#5" }}>
           <Text variant="h5">Recent Sales</Text>
-          <Text>
-            You made {data.yourSalesThisMonth.toFixed(0)} sales this month.
-          </Text>
+          <Text>{data.yourSalesThisMonth.toFixed(0)} sales this month.</Text>
         </Box>
         <RecentSaleList data={data.recentSales} />
       </Card>
