@@ -18,9 +18,10 @@ import {
 } from "@yas/icons";
 import { Suspense } from "react";
 import { api } from "@yas/api-client";
+import { formatISO, startOfToday } from "@yas/time";
 import { useRouterState } from "../../hooks/useRouterState";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, format, formatCurrency, todaysDate } from "./shared";
+import { Card, format, formatCurrency } from "./shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./Dashboard.css";
 import { Chart } from "./Chart";
@@ -147,6 +148,6 @@ const OrganizationSelect = styled(Text).attrs({
 });
 
 const dateEncoding = {
-  decode: (value?: string) => (value ? new Date(value) : todaysDate()),
-  encode: (value: Date) => value.toISOString().split("T")[0],
+  decode: (value?: string): Date => (value ? new Date(value) : startOfToday()),
+  encode: (value: Date): string => formatISO(value, { representation: "date" }),
 };

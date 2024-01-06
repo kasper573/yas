@@ -14,12 +14,6 @@ export function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function todaysDate() {
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  return date;
-}
-
 export function format(value: number, formats: Array<"sign" | "currency">) {
   let output = formats.includes("currency")
     ? formatCurrency(value)

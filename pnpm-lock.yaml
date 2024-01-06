@@ -181,6 +181,9 @@ importers:
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
+      '@yas/time':
+        specifier: workspace:*
+        version: link:../../libraries/yas-time
       '@yas/ui':
         specifier: workspace:*
         version: link:../../libraries/yas-ui
