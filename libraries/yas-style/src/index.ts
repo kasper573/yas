@@ -13,6 +13,7 @@ import { resolveStyle } from "./constraints.css";
 export { clsx } from "clsx";
 export {
   createVar,
+  fallbackVar,
   layer,
   globalLayer,
   createContainer,
@@ -20,6 +21,7 @@ export {
 export * from "@vanilla-extract/dynamic";
 export * from "./utils/gridAreas";
 export { breakpointQuery } from "./utils/breakpointQuery";
+export * from "./utils/transformVar";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>
