@@ -1,6 +1,7 @@
 import { z } from "@yas/validate";
 
 export const userSchema = z.object({
+  id: z.number(),
   name: z.string(),
   email: z.string().email(),
   avatarUrl: z.string().url(),

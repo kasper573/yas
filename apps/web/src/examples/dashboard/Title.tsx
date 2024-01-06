@@ -4,21 +4,21 @@ import type { ReactNode } from "react";
 
 export function Title({
   children,
-  onClearSearch,
+  onClear,
 }: {
   children?: ReactNode;
-  onClearSearch?: () => void;
+  onClear?: () => void;
 }) {
   return (
     <Stack direction="row" gap="#2" align="center">
       <Text variant="h1" sx={{ lineHeight: 1 }}>
         {children}
       </Text>
-      {onClearSearch ? (
+      {onClear ? (
         <IconButton
           color="primary"
           variant="outlined"
-          onClick={() => onClearSearch?.()}
+          onClick={() => onClear?.()}
         >
           <Cross1Icon />
         </IconButton>

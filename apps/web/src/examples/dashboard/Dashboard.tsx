@@ -13,9 +13,10 @@ import {
   Tabs,
   Text,
 } from "@yas/ui";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { formatISO, startOfToday } from "@yas/time";
 import { api } from "@yas/api-client";
+import type { RouterStateEncoding } from "../../hooks/useRouterState";
 import { useRouterState } from "../../hooks/useRouterState";
 import { Card } from "./shared";
 import { Title } from "./Title";
@@ -27,12 +28,9 @@ const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard() {
   const [dateFilter, setDateFilter] = useRouterState("date", dateEncoding);
-  const [search, setSearch] = useRouterState("search");
-  const searchResult = api.example.users.useQuery(search);
-
-  function performNewSearch(newSearch?: string) {
-    setSearch(newSearch);
-  }
+  const [userId, setUserId] = useRouterState("user", numberEncoding);
+  const [searchInput, setSearchInput] = useState<string | undefined>();
+  const searchResult = api.example.users.useQuery(searchInput);
 
   return (
     <Card sx={{ p: 0 }}>
@@ -46,12 +44,18 @@ export default function Dashboard() {
           ))}
         </Tabs>
         <SearchForm
+          value={searchInput}
+          onChange={setSearchInput}
           isLoading={searchResult.isLoading}
-          onSubmit={performNewSearch}
         >
           <List>
             {searchResult.data?.map((user, index) => (
-              <ListItem button key={index} sx={{ px: "#5" }}>
+              <ListItem
+                button
+                key={index}
+                sx={{ px: "#5" }}
+                onClick={() => setUserId(user.id)}
+              >
                 <ListItemIcon>
                   <Avatar alt={`${user.name} avatar`} src={user.avatarUrl} />
                 </ListItemIcon>
@@ -65,8 +69,8 @@ export default function Dashboard() {
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
         <Stack direction="row" justify="spaceBetween">
-          <Title onClearSearch={search ? performNewSearch : undefined}>
-            Dashboard{search ? ` for ${search}` : undefined}
+          <Title onClear={userId !== undefined ? () => setUserId() : undefined}>
+            Dashboard{userId ? ` for ${userId}` : undefined}
           </Title>
           <DatePicker value={dateFilter} onChange={setDateFilter} />
         </Stack>
@@ -92,7 +96,13 @@ const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
 
-const dateEncoding = {
-  decode: (value?: string): Date => (value ? new Date(value) : startOfToday()),
-  encode: (value: Date): string => formatISO(value, { representation: "date" }),
+const dateEncoding: RouterStateEncoding<Date> = {
+  decode: (value) => (value ? new Date(value) : startOfToday()),
+  encode: (value) => formatISO(value, { representation: "date" }),
+};
+
+const numberEncoding: RouterStateEncoding<number | undefined> = {
+  decode: (value) =>
+    ["", undefined].includes(value) ? undefined : Number(value),
+  encode: (value) => value?.toString() ?? "",
 };

@@ -1,38 +1,42 @@
 import { PopoverAnchor, TextField, Popover, PopoverContent } from "@yas/ui";
-import { useState } from "react";
 import type { ReactNode } from "react";
 
 export function SearchForm({
+  value,
   isLoading,
-  onSubmit,
+  onChange,
   children,
 }: {
+  value?: string;
+  onChange?: (value?: string) => void;
   isLoading?: boolean;
-  onSubmit?: (value?: string) => void;
   children?: ReactNode;
 }) {
-  const [input, setInput] = useState<string | undefined>();
-
+  function clear() {
+    onChange?.(undefined);
+  }
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit?.(input);
-        setInput(undefined);
+        clear();
       }}
     >
-      <Popover open={input !== undefined}>
+      <Popover open={value !== undefined}>
         <PopoverAnchor>
           <TextField
             size="small"
-            value={input}
-            onChange={setInput}
+            value={value}
+            onChange={onChange}
             inputProps={{ placeholder: "Search..." }}
             isLoading={isLoading}
             clearable
           />
         </PopoverAnchor>
-        <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <PopoverContent
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          onFocusOutside={clear}
+        >
           {children}
         </PopoverContent>
       </Popover>
