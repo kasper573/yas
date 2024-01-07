@@ -1,6 +1,7 @@
 import type { Result } from "@yas/result";
 import { ok, err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import type {
+  CSSVariable,
   ConditionRecord,
   ConstrainedDefinition,
   ConstrainedStyle,
@@ -177,7 +178,7 @@ function createStyleResolverImpl<
   return resolveStyle;
 }
 
-const passThroughProperties: PropertyKey[] = ["containerName"];
+const passThroughProperties: PropertyKey[] = ["containerName", "vars"];
 
 /**
  * Use this as the value for a property to indicate that it can be any CSS value.)
@@ -195,6 +196,10 @@ export function multi<Aliases extends string>(
   return { ...aliasedStyles, [multiIdentifier]: true };
 }
 
+const isCSSVariable = (value: unknown): value is CSSVariable => {
+  return /^var\(--[^\(\)]+\)$/.test(String(value));
+};
+
 // Can unfortunately not be a symbol because it needs to be serializable for some integrations.
 const anyCssValueIdentifier = "___any_css_value___" as const;
 const multiIdentifier = "___multiple_styles___" as const;
@@ -204,7 +209,7 @@ function resolvePropertyStyle<Value>(
   def: PropertyDefinition<Value>,
   input: unknown,
 ): Result<Style, string> {
-  if (Object.is(def, anyCssValueIdentifier)) {
+  if (Object.is(def, anyCssValueIdentifier) || isCSSVariable(input)) {
     return ok({ [propertyName]: input });
   }
 

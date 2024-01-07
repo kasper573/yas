@@ -86,6 +86,14 @@ export type ConstrainedStyle<
   >;
 };
 
+export type CSSVariable =
+  | `var(--${string})`
+  | `var(--${string}, ${string | number})`;
+
+export type CSSVariableValue = string;
+
+export type CSSVariables = Record<CSSVariable, CSSVariableValue>;
+
 type ConstrainedStyleImpl<
   Conditions extends ConditionRecord,
   Properties extends PropertyDefinitionRecord,
@@ -102,6 +110,8 @@ type ConstrainedStyleImpl<
     Properties,
     Shorthands[ShorthandName][number]
   >;
+} & {
+  vars?: CSSVariables;
 };
 
 type ConstrainedPropertyInput<
@@ -109,7 +119,7 @@ type ConstrainedPropertyInput<
   Properties extends PropertyDefinitionRecord,
   PropertyName extends keyof Properties,
 > = WithConditions<
-  ConstrainedPropertyValue<Properties[PropertyName]>,
+  CSSVariable | ConstrainedPropertyValue<Properties[PropertyName]>,
   Exclude<Conditions, undefined>
 >;
 

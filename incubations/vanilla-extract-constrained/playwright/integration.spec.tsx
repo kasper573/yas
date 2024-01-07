@@ -37,6 +37,13 @@ test("can define valid shorthand value", async ({ mount }) => {
   await expect(component).toHaveCSS("color", colors.red);
 });
 
+test("can define valid variable value", async ({ mount }) => {
+  const component = await mount(
+    <VanillaExtract className="validVariableRedColor" />,
+  );
+  await expect(component).toHaveCSS("color", colors.red);
+});
+
 test("can define valid aliased shorthand value", async ({ mount }) => {
   const component = await mount(
     <VanillaExtract className="validAliasedShorthandRedBackground" />,

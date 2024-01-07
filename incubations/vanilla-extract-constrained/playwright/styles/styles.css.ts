@@ -1,4 +1,4 @@
-import { layer } from "@vanilla-extract/css";
+import { createVar, layer } from "@vanilla-extract/css";
 import { constrained } from "./constraints.css";
 import { colors } from "./tokens";
 
@@ -35,6 +35,15 @@ export const validAliasedShorthandRedBackground = constrained({
 
 export const validRedColor = constrained({
   color: colors.red,
+});
+
+const myVar = createVar();
+
+export const validVariableRedColor = constrained({
+  vars: {
+    [myVar]: colors.red,
+  },
+  color: myVar,
 });
 
 export const validRedColorAndGreenBackground = constrained({
