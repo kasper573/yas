@@ -14,7 +14,6 @@ const colorSetNames = Object.entries(nonSurfaceColors)
 export const buttonRecipe = recipe({
   base: {
     margin: 0,
-    padding: 0,
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
@@ -22,27 +21,25 @@ export const buttonRecipe = recipe({
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
     border: "standard",
-    borderRadius: "#2",
     cursor: "pointer",
   },
   variants: {
+    button: {
+      true: {
+        display: "inline-flex",
+        padding: "#1",
+        alignItems: "center",
+        justifyContent: "center",
+        textTransform: "uppercase",
+        boxSizing: "border-box",
+        fontSize: "100%",
+        overflow: "hidden",
+      },
+    },
     size: {
-      small: {
-        typography: "caption",
-        color: "inherit",
-        px: "#2",
-        py: "#1",
-      },
-      medium: {
-        typography: "body",
-        px: "#3",
-        py: "#1",
-      },
-      large: {
-        typography: "body2",
-        px: "#3",
-        py: "#2",
-      },
+      small: {},
+      medium: {},
+      large: {},
     },
     color: {
       "surface-contrast": {},
@@ -52,16 +49,17 @@ export const buttonRecipe = recipe({
       >),
     },
     variant: {
-      text: {
-        borderColor: "transparent",
-        background: {
-          default: "transparent",
-          hover: "info.base.dark",
-          active: "info.base.main",
-        },
-      },
+      text: {},
       contained: {},
       outlined: {},
+    },
+    shape: {
+      circular: {
+        borderRadius: "50%",
+      },
+      rounded: {
+        borderRadius: "#2",
+      },
     },
     disabled: {
       true: { pointerEvents: "none" },
@@ -69,6 +67,42 @@ export const buttonRecipe = recipe({
     },
   },
   compoundVariants: [
+    {
+      variants: { button: true, size: "small" },
+      style: iconSize(24),
+    },
+    {
+      variants: { button: true, size: "medium" },
+      style: iconSize(28),
+    },
+    {
+      variants: { button: true, size: "large" },
+      style: iconSize(32),
+    },
+    {
+      variants: { button: false, size: "small" },
+      style: {
+        typography: "caption",
+        px: "#2",
+        py: "#1",
+      },
+    },
+    {
+      variants: { button: false, size: "medium" },
+      style: {
+        typography: "body",
+        px: "#3",
+        py: "#1",
+      },
+    },
+    {
+      variants: { button: false, size: "large" },
+      style: {
+        typography: "body2",
+        px: "#3",
+        py: "#1",
+      },
+    },
     ...variantsForColorSet(
       "surface-contrast",
       "surface.contrast",
@@ -90,7 +124,9 @@ export const buttonRecipe = recipe({
     size: "medium",
     variant: "contained",
     color: "primary",
+    shape: "rounded",
     disabled: false,
+    button: false,
   },
 });
 
@@ -102,7 +138,15 @@ function variantsForColorSet<ColorVariant extends string>(
   return [
     {
       variants: { color: colorVariant, variant: "text" },
-      style: { color: `${basePrefix}.main` },
+      style: {
+        color: `${basePrefix}.main`,
+        background: {
+          default: `transparent`,
+          hover: `${contrastPrefix}.light`,
+          active: `${contrastPrefix}.main`,
+        },
+        borderColor: "transparent",
+      },
     },
     {
       variants: { color: colorVariant, variant: "contained" },
@@ -129,6 +173,15 @@ function variantsForColorSet<ColorVariant extends string>(
       },
     },
   ] as { variants: {}; style: {} }[];
+}
+
+function iconSize(value: number) {
+  return {
+    minWidth: value,
+    minHeight: value,
+    maxWidth: value,
+    maxHeight: value,
+  };
 }
 
 function without<T>(array: T[], ...values: T[]): T[] {
