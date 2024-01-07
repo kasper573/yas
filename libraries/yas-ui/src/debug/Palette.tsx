@@ -6,7 +6,20 @@ interface PaletteProps {
   colorName?: keyof typeof unsafe.tokens.palette;
 }
 
-export function Palette({ colorName }: PaletteProps) {
+export function Palette() {
+  return (
+    <Stack direction="row" align="center">
+      {Object.keys(unsafe.tokens.palette).map((colorName) => (
+        <Color
+          key={colorName}
+          colorName={colorName as keyof typeof unsafe.tokens.palette}
+        />
+      ))}
+    </Stack>
+  );
+}
+
+function Color({ colorName }: PaletteProps) {
   if (!colorName) {
     return null;
   }
