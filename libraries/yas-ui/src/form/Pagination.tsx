@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@yas/icons";
 import { styled } from "@yas/style";
 import { Stack } from "../layout/Stack";
-import { IconButton } from "../atoms/IconButton";
+import { Button } from "../atoms/Button";
 import { Text } from "../atoms/Text";
 import { Void } from "../layout/Void";
 import { separator } from "./Pagination.css";
@@ -122,8 +122,13 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
   return output;
 }
 
-const PageButton = styled(IconButton).attrs({ size: "small", variant: "text" });
-const Separator = styled(Text).attrs({ children: "...", className: separator });
+const PageButton = styled(Button).attrs({
+  icon: true,
+  size: "small",
+  variant: "text",
+});
+
+const Separator = styled(Text, separator).attrs({ children: "..." });
 
 function clampSpan(from: number, to: number, min: number, max: number) {
   if (from < min) {

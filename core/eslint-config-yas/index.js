@@ -166,10 +166,18 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
       },
     },
+
     ...require("@yas/env/eslintOverrides"),
     ...require("@yas/style/eslintOverrides"),
-    ...require("@yas/validate/eslintOverrides"),
     ...require("@yas/result/eslintOverrides"),
+
+    // List of encapsulated libraries
+    // Add new libraries here as they are encapsulated
+    ensureUseOfEncapsulation("yas-style", "@vanilla-extract"),
+    ensureUseOfEncapsulation("yas-time", "date-fns"),
+    ensureUseOfEncapsulation("yas-icons", "@radix-ui/react-icons"),
+    ensureUseOfEncapsulation("yas-result", "neverthrow"),
+    ensureUseOfEncapsulation("yas-validate", "zod"),
   ],
 };
 
@@ -184,4 +192,24 @@ function getMonorepoAppNames() {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
       return packageJson.name;
     });
+}
+
+function ensureUseOfEncapsulation(internalPackageName, thirdPartyPackageName) {
+  return {
+    files: ["*.ts", "*.tsx"],
+    excludedFiles: [`**/${internalPackageName}/**`],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: thirdPartyPackageName,
+              message: `Use "${internalPackageName}" instead`,
+            },
+          ],
+        },
+      ],
+    },
+  };
 }

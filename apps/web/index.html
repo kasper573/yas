@@ -3,7 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="YAS is a monorepo template with focus on type safety and DX"
+    />
     <title>YAS</title>
+    <style type="text/css">
+      .root-suspense-fallback {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: spin 1s linear infinite;
+        fill: #0c80df;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <script type="module" src="/src/main.tsx"></script>

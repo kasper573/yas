@@ -1,8 +1,8 @@
 import { style } from "@yas/style";
 
 export const link = style({
-  fontFamily: "default",
   textDecoration: "none",
+  cursor: "pointer",
   selectors: {
     "&:hover": {
       textDecoration: "underline",

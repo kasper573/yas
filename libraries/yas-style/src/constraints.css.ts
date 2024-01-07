@@ -1,21 +1,24 @@
-import type { PropertiesHyphen as CSSProperties } from "csstype";
+import type {
+  PropertiesHyphen as CSSProperties,
+  DataType,
+  Property,
+} from "csstype";
 import type {
   ConstrainedStyle as ConstrainedStyleImpl,
   StyleResolver,
 } from "vanilla-extract-constrained";
-import { all, createStyleResolver } from "vanilla-extract-constrained";
+import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
 import * as tokens from "./tokens";
 import { vars } from "./vars.css";
-import { flattened } from "./flattened";
+import { flattened } from "./utils/flattened";
+import { breakpointQuery } from "./utils/breakpointQuery";
 
-const overflows = ["visible", "hidden", "scroll"] as const;
+const overflows = ["visible", "hidden", "scroll", "auto"] as const;
 
-type Color = keyof typeof colors;
 const colors = {
   transparent: "transparent",
   inherit: "inherit",
   current: "currentColor",
-  // We flatten vars to make them compatible with vanilla-extract-constrained
   ...flattened(vars.color),
 };
 
@@ -31,13 +34,25 @@ export type ConstrainedStyleWithoutConditions = ConstrainedStyleImpl<
     : never
 >;
 
+const breakpointConditions = Object.fromEntries(
+  breakpointQuery.names.map((name) => [
+    name,
+    { "@media": breakpointQuery.only(name) },
+  ]),
+) as Record<tokens.Breakpoint, { "@media": string }>;
+
+const inputConditions = {
+  hoverOrFocus: { selectors: "&:hover, &:focus" },
+  hover: { selectors: "&:hover" },
+  focus: { selectors: "&:focus" },
+  active: { selectors: "&:active" },
+};
+
 export const resolveStyle = createStyleResolver({
   conditions: {
     default: {},
-    hoverOrFocus: { selectors: "&:hover, &:focus" },
-    hover: { selectors: "&:hover" },
-    focus: { selectors: "&:focus" },
-    active: { selectors: "&:active" },
+    ...inputConditions,
+    ...breakpointConditions,
   },
   defaultCondition: "default",
   properties: {
@@ -48,17 +63,34 @@ export const resolveStyle = createStyleResolver({
     pointerEvents: all(),
     opacity: all(),
     display: all(),
+    visibility: all(),
     gridAutoFlow: all(),
+    gridAutoColumns: all(),
+    gridAutoRows: all(),
+    gridArea: all(),
+    gridTemplateAreas: all(),
+    gridTemplateColumns: all(),
+    gridTemplateRows: all(),
     flex: all(),
+    flexShrink: all(),
     flexDirection: all(),
-    border,
+    listStyle: all(),
+    border: tokens.borders(colors.divider),
+    borderColor: colors,
     borderRadius: tokens.radii,
+    borderTopRightRadius: tokens.radii,
+    borderBottomRightRadius: tokens.radii,
+    borderTopLeftRadius: tokens.radii,
+    borderBottomLeftRadius: tokens.radii,
+    borderCollapse: all(),
     inset: all(),
     outline: all(),
     position: all(),
     userSelect: all(),
     justifyContent: all(),
     alignItems: all(),
+    alignSelf: all(),
+    justifySelf: all(),
     padding: tokens.spaces,
     paddingTop: tokens.spaces,
     paddingRight: tokens.spaces,
@@ -86,21 +118,22 @@ export const resolveStyle = createStyleResolver({
     overflowX: overflows,
     overflowY: overflows,
     textAlign: all(),
-    fontFamily: tokens.fonts,
-    fontSize: tokens.fontSizes,
-    lineHeight: all(),
+    typography: multi(vars.typography),
+    fontSize: ["inherit", "100%"] as const,
+    lineHeight: [1, "inherit", "100%"] as const,
     fontWeight: all(),
+    textOverflow: all(),
+    whiteSpace: all(),
     color: colors,
     background: colors,
     backgroundColor: colors,
     backgroundImage: all(),
-    borderColor: colors,
     boxSizing: all(),
 
     // SVG
     cx: all(),
     cy: all(),
-    fill: all(),
+    fill: colors,
     stroke: colors,
     strokeWidth: all(),
     r: all(),
@@ -108,7 +141,7 @@ export const resolveStyle = createStyleResolver({
 
     // Composites
     transition,
-    animation: all(),
+    animation,
     transform: all(),
     boxShadow: tokens.shadows,
     textShadow: tokens.shadows,
@@ -129,6 +162,10 @@ export const resolveStyle = createStyleResolver({
     mb: ["marginBottom"],
     ml: ["marginLeft"],
     overflow: ["overflowX", "overflowY"],
+    borderRightRadius: ["borderTopRightRadius", "borderBottomRightRadius"],
+    borderLeftRadius: ["borderTopLeftRadius", "borderBottomLeftRadius"],
+    borderTopRadius: ["borderTopLeftRadius", "borderTopRightRadius"],
+    borderBottomRadius: ["borderBottomLeftRadius", "borderBottomRightRadius"],
   },
 });
 
@@ -152,13 +189,51 @@ function transition<Transitions extends Transition[]>(
     .join(", ");
 }
 
+/**
+ * Define a transition css string by selecting among theme variable transition presets
+ */
+function animation<Animations extends Animation[]>(...animations: Animations) {
+  return animations
+    .map(
+      ([
+        animationName,
+        durationPreset,
+        easingPreset,
+        {
+          count = "infinite" as const,
+          fill = "forwards" as const,
+          direction = "normal" as const,
+        } = {},
+      ]) => {
+        return [
+          animationName,
+          tokens.durations[durationPreset],
+          tokens.easings[easingPreset],
+          count,
+          fill,
+          direction,
+        ]
+          .filter(Boolean)
+          .join(" ");
+      },
+    )
+    .join(", ");
+}
+
+type Animation = [
+  animationName: string,
+  durationPreset: keyof typeof tokens.durations,
+  easingPreset: keyof typeof tokens.easings,
+  options?: AnimationOptions,
+];
+
+interface AnimationOptions {
+  count?: Property.AnimationIterationCount;
+  direction?: DataType.SingleAnimationDirection;
+  fill?: DataType.SingleAnimationFillMode;
+}
+
 type Transition = [
   property: keyof CSSProperties | Array<keyof CSSProperties>,
   preset: keyof typeof flattenedTransitions,
 ];
-
-function border(...[preset, colorName = "divider"]: Border) {
-  return tokens.borders[preset](colors[colorName]);
-}
-
-type Border = [preset: tokens.Border, color?: Color];

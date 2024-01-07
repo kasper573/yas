@@ -1,21 +1,40 @@
 import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { BrowserRouter } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 import { env } from "./env";
-import { ThemeProvider, type ThemeName } from "./hooks/useTheme";
-import { AppRoutes } from "./components/Routes";
+import { AppRoutes } from "./Routes";
+import { ErrorFallback } from "./components/ErrorFallback";
+import {
+  getPreferredTheme,
+  ThemeProvider,
+  ThemeInjector,
+} from "./ThemeProvider";
 
-export function App() {
-  const [theme, setTheme] = useState<ThemeName>("dark");
-  const apiClient = useMemo(() => createApiClient(env.apiUrl), []);
+const rootRef = { current: document.documentElement };
+
+export default function App() {
+  const [theme, setTheme] = useState(getPreferredTheme);
+  const apiClient = useMemo(
+    () =>
+      createApiClient(env.apiUrl, {
+        queries: {
+          retry: env.mode === "production",
+        },
+      }),
+    [],
+  );
 
   return (
-    <BrowserRouter>
-      <ApiClientProvider value={apiClient}>
-        <ThemeProvider theme={theme} setTheme={setTheme}>
-          <AppRoutes />
-        </ThemeProvider>
-      </ApiClientProvider>
-    </BrowserRouter>
+    <ErrorBoundary fallbackRender={ErrorFallback}>
+      <BrowserRouter>
+        <ApiClientProvider value={apiClient}>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <ThemeInjector target={rootRef} />
+            <AppRoutes />
+          </ThemeProvider>
+        </ApiClientProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }

@@ -1,8 +1,8 @@
 {
   "name": "@yas/icons",
   "version": "0.0.0",
-  "private": true,
-  "license": "UNLICENSED",
+  "sideEffects": false,
+  "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

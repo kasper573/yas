@@ -27,7 +27,7 @@ export function FormControlErrors({ errors }: FormControlErrorsProps) {
     return null;
   }
   return (
-    <Text variant="caption" sx={{ color: "error.main", px: "#1" }}>
+    <Text variant="caption" sx={{ color: "error.base.main", px: "#1" }}>
       {errors.join(", ")}
     </Text>
   );

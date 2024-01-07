@@ -1,8 +1,8 @@
 # Yet Another Stack &middot; [![status](https://github.com/ksandin/yas/actions/workflows/ci.yml/badge.svg)](https://github.com/ksandin/yas/actions)
 
-A Typescript & React specific full stack monorepo template aimed towards large scale development (but not enterprise level). Heavy focus on good DX, strict architecture, enforced conventions, type safety, testing and easy code sharing between packages.
+A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture.
 
-> Also serves as a personal playground and incubation repository for me to build apps and packages and experiment with new ideas and technologies. This means that some of the more specific apps and packages will come and go over time, but the generic low level packages will remain. If a package is irrelevant to you, simply fork and modify/remove to your liking.
+> Also serves as a incubation repository for me to experiment with [new ideas and technologies](#incubations).
 
 ## Conventions
 
@@ -13,6 +13,7 @@ A Typescript & React specific full stack monorepo template aimed towards large s
 - Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
 - Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
+- Each non-trivial package should provide its own documentation.
 
 ## Scripts
 
@@ -76,4 +77,8 @@ Building blocks for creating apps.
 
 Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
 
-> This is an exception to the layering rule. `core` and `libraries` are considered to be on the same layer, and are separated only to communicate that `core` packages are more sensitive to changes.
+#### [incubations](incubations)
+
+Experimental packages. If they become stable, they will be extracted into their own repository.
+
+> If you fork this repo, you should strive not to make any changes to these packages. Ideally, once this repo is production ready, there will be no incubation packages at all.

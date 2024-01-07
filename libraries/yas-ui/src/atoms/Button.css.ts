@@ -1,132 +1,170 @@
-import { recipe } from "@yas/style";
+import { createVar, globalStyle, recipe, unsafe } from "@yas/style";
+
+const { colorSetNames, vars: themeVars } = unsafe;
+const nonSurfaceColorSetNames = colorSetNames.filter(
+  (value) => value !== "surface",
+) as Exclude<unsafe.ColorSetName, "surface">[];
+
+export const iconSizes = {
+  small: 24,
+  medium: 28,
+  large: 32,
+};
+
+const buttonVars = {
+  iconSize: createVar("iconSize"),
+  color: {
+    base: {
+      light: createVar("base.light"),
+      main: createVar("base.main"),
+      dark: createVar("base.dark"),
+    },
+    contrast: {
+      light: createVar("contrast.light"),
+      main: createVar("contrast.main"),
+      dark: createVar("contrast.dark"),
+    },
+  },
+};
 
 export const buttonRecipe = recipe({
   base: {
     margin: 0,
-    padding: 0,
     width: "auto",
     overflow: "visible",
     textAlign: "inherit",
-    fontFamily: "default",
-    fontWeight: 500,
-    fontSize: "#2",
-    textTransform: "uppercase",
     transition: [
       [["background-color", "color", "border-color"], "standard.enter"],
     ],
     border: "standard",
-    borderRadius: "#2",
     cursor: "pointer",
   },
   variants: {
     size: {
       small: {
-        fontSize: "#1",
+        vars: { [buttonVars.iconSize]: `${iconSizes.small}px` },
+        typography: "caption",
         px: "#2",
-        py: "#2",
+        py: "#1",
       },
       medium: {
-        fontSize: "#2",
-        px: "#2",
-        py: "#2",
+        vars: { [buttonVars.iconSize]: `${iconSizes.medium}px` },
+        typography: "body",
+        px: "#3",
+        py: "#1",
       },
       large: {
-        fontSize: "#3",
+        vars: { [buttonVars.iconSize]: `${iconSizes.large}px` },
+        typography: "body2",
         px: "#3",
-        py: "#2",
+        py: "#1",
       },
     },
+    icon: {
+      true: {
+        display: "inline-flex",
+        padding: "#1",
+        alignItems: "center",
+        justifyContent: "center",
+        textTransform: "uppercase",
+        boxSizing: "border-box",
+        fontSize: "100%",
+        overflow: "hidden",
+        minWidth: buttonVars.iconSize,
+        minHeight: buttonVars.iconSize,
+        maxWidth: buttonVars.iconSize,
+        maxHeight: buttonVars.iconSize,
+      },
+      false: {},
+    },
     color: {
-      primary: {},
-      secondary: {},
+      "surface-contrast": {
+        vars: assignColorVars(
+          themeVars.color.surface.contrast,
+          themeVars.color.surface.base,
+        ),
+      },
+      ...(Object.fromEntries(
+        nonSurfaceColorSetNames.map((name) => [
+          name,
+          {
+            vars: assignColorVars(
+              themeVars.color[name].base,
+              themeVars.color[name].contrast,
+            ),
+          },
+        ]),
+      ) as Record<Exclude<unsafe.ColorSetName, "surface">, { vars: {} }>),
     },
     variant: {
       text: {
-        borderColor: "transparent",
+        color: buttonVars.color.base.main,
         background: {
-          default: "transparent",
-          hover: "info.dark",
-          active: "info.main",
+          default: `transparent`,
+          hover: buttonVars.color.contrast.light,
+          active: buttonVars.color.contrast.main,
         },
+        borderColor: "transparent",
       },
-      contained: {},
-      outlined: {},
+      contained: {
+        background: {
+          default: buttonVars.color.base.light,
+          hover: buttonVars.color.base.main,
+          active: buttonVars.color.base.dark,
+        },
+        color: buttonVars.color.contrast.light,
+        borderColor: buttonVars.color.contrast.light,
+      },
+      outlined: {
+        background: {
+          default: buttonVars.color.contrast.light,
+          hover: buttonVars.color.contrast.main,
+          active: buttonVars.color.contrast.dark,
+        },
+        color: buttonVars.color.base.main,
+        borderColor: buttonVars.color.base.main,
+      },
+    },
+    shape: {
+      circular: {
+        borderRadius: "50%",
+      },
+      rounded: {
+        borderRadius: "#2",
+      },
     },
     disabled: {
-      true: { pointerEvents: "none" },
+      true: {
+        pointerEvents: "none",
+        background: "info.base.dark",
+        color: "highlight",
+        borderColor: "surface.base.dark",
+      },
       false: {},
     },
   },
-  compoundVariants: [
-    {
-      variants: { color: "primary", variant: "text" },
-      style: { color: "primary.base.main" },
-    },
-    {
-      variants: { color: "secondary", variant: "text" },
-      style: { color: "secondary.base.main" },
-    },
-    {
-      variants: { color: "primary", variant: "contained" },
-      style: {
-        background: {
-          default: "primary.base.light",
-          hover: "primary.base.main",
-          active: "primary.base.dark",
-        },
-        color: "primary.contrast.main",
-        borderColor: "primary.contrast.main",
-      },
-    },
-    {
-      variants: { color: "secondary", variant: "contained" },
-      style: {
-        background: {
-          default: "secondary.base.light",
-          hover: "secondary.base.main",
-          active: "secondary.base.dark",
-        },
-        color: "secondary.contrast.main",
-        borderColor: "secondary.contrast.main",
-      },
-    },
-    {
-      variants: { color: "primary", variant: "outlined" },
-      style: {
-        background: {
-          default: "primary.contrast.light",
-          hover: "primary.contrast.main",
-          active: "primary.contrast.dark",
-        },
-        color: "primary.base.main",
-        borderColor: "primary.base.main",
-      },
-    },
-    {
-      variants: { color: "secondary", variant: "outlined" },
-      style: {
-        background: {
-          default: "secondary.contrast.light",
-          hover: "secondary.contrast.main",
-          active: "secondary.contrast.dark",
-        },
-        color: "secondary.base.main",
-        borderColor: "secondary.base.main",
-      },
-    },
-    {
-      variants: { disabled: true },
-      style: {
-        background: { default: "info.dark" },
-        color: "highlight",
-        borderColor: "surface.dark",
-      },
-    },
-  ],
   defaultVariants: {
-    size: "small",
+    size: "medium",
     variant: "contained",
     color: "primary",
+    shape: "rounded",
     disabled: false,
+    icon: false,
   },
+});
+
+function assignColorVars(base: unsafe.ColorSet, contrast: unsafe.ColorSet) {
+  return {
+    [buttonVars.color.base.light]: base.light,
+    [buttonVars.color.base.main]: base.main,
+    [buttonVars.color.base.dark]: base.dark,
+    [buttonVars.color.contrast.light]: contrast.light,
+    [buttonVars.color.contrast.main]: contrast.main,
+    [buttonVars.color.contrast.dark]: contrast.dark,
+  };
+}
+
+globalStyle(`${buttonRecipe.classNames.variants.icon.true} > *`, {
+  width: "100%",
+  height: "100%",
 });

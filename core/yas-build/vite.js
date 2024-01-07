@@ -29,7 +29,7 @@ function determineVisualizerPlugin(template) {
   const packageName = path.basename(process.cwd());
   return visualizer({
     open: true,
-    template: ["true", "1"].includes(template) ? undefined : template,
+    template: ["true", "1"].includes(String(template)) ? undefined : template,
     title: `Bundle Analysis: ${packageName}`,
     filename: "dist/bundle-analysis.html",
   });

@@ -1,14 +1,21 @@
 import { createTheme } from "@vanilla-extract/css";
 import { vars } from "../src/vars.css";
-import { palette, transitions } from "../src/tokens";
+import { palette } from "../src/tokens";
+import { transitions, typography } from "./shared";
 
 export const dark: string = createTheme(vars, {
   color: {
     surface: {
-      light: palette.gray["800"],
-      main: palette.gray["900"],
-      dark: palette.gray["950"],
-      contrast: palette.gray["100"],
+      base: {
+        light: palette.gray["800"],
+        main: palette.gray["900"],
+        dark: palette.gray["950"],
+      },
+      contrast: {
+        light: palette.gray["200"],
+        main: palette.gray["100"],
+        dark: palette.gray["50"],
+      },
     },
     primary: {
       base: {
@@ -35,32 +42,57 @@ export const dark: string = createTheme(vars, {
       },
     },
     success: {
-      light: palette.green["400"],
-      main: palette.green["500"],
-      dark: palette.green["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.green["400"],
+        main: palette.green["500"],
+        dark: palette.green["600"],
+      },
+      contrast: {
+        light: palette.green["800"],
+        main: palette.green["900"],
+        dark: palette.green["950"],
+      },
     },
     info: {
-      light: palette.gray["400"],
-      main: palette.gray["500"],
-      dark: palette.gray["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.gray["700"],
+        main: palette.gray["800"],
+        dark: palette.gray["900"],
+      },
+      contrast: {
+        light: palette.gray["50"],
+        main: palette.gray["100"],
+        dark: palette.gray["200"],
+      },
     },
     warning: {
-      light: palette.orange["400"],
-      main: palette.orange["500"],
-      dark: palette.orange["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.orange["300"],
+        main: palette.orange["400"],
+        dark: palette.orange["500"],
+      },
+      contrast: {
+        light: palette.orange["950"],
+        main: palette.orange["900"],
+        dark: palette.orange["800"],
+      },
     },
     error: {
-      light: palette.red["400"],
-      main: palette.red["500"],
-      dark: palette.red["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.red["400"],
+        main: palette.red["500"],
+        dark: palette.red["600"],
+      },
+      contrast: {
+        light: palette.red["950"],
+        main: palette.red["900"],
+        dark: palette.red["800"],
+      },
     },
     divider: palette.white["50%"],
     dimmer: palette.black["50%"],
     highlight: palette.white["50%"],
   },
   transitions,
+  typography,
 });

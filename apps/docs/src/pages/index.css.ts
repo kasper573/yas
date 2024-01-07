@@ -6,9 +6,7 @@ export const hero = style({
   textAlign: "center",
 });
 
-export const title = style({
-  fontSize: "#9",
-});
+export const title = style({ typography: "hero" });
 
 export const titleWord = unsafe.style({
   display: "inline-block",
@@ -23,7 +21,7 @@ export const titleWord = unsafe.style({
 });
 
 export const tagline = style({
-  fontSize: "#5",
+  typography: "h2",
   margin: 0,
 });
 

@@ -1,7 +1,6 @@
 import * as vanilla from "@vanilla-extract/css";
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { createStyledFactory } from "react-styled-factory";
-import { shallowEqual } from "shallow-equal";
 import type { Style } from "vanilla-extract-constrained";
 import type {
   ConstrainedStyle,
@@ -12,13 +11,21 @@ import { resolveStyle } from "./constraints.css";
 
 // Utilities
 export { clsx } from "clsx";
-export { palette } from "./tokens";
-export { createVar } from "@vanilla-extract/css";
+export {
+  createVar,
+  fallbackVar,
+  layer,
+  globalLayer,
+  createContainer,
+} from "@vanilla-extract/css";
 export * from "@vanilla-extract/dynamic";
+export * from "./utils/gridAreas";
+export { breakpointQuery } from "./utils/breakpointQuery";
+export * from "./utils/transformVar";
 
 // Constrained vanilla-extract functions
-export const style = (constrainedStyle: ConstrainedStyle) =>
-  vanilla.style(resolveStyle(constrainedStyle));
+export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>
+  vanilla.style(resolveStyle(constrainedStyle), debugId);
 
 export const globalStyle = (
   selector: string,
@@ -40,10 +47,9 @@ export const styled = createStyledFactory({
   compile: resolveStyle as (
     constrainedStyle: ConstrainedStyleWithoutConditions,
   ) => Style,
-  isEqual: shallowEqual,
 });
 
-export const recipe = createRecipeFactory(style);
+export const recipe = createRecipeFactory(resolveStyle);
 
 export type { RecipeVariants } from "vanilla-extract-recipe-factory";
 export type { ConstrainedStyle, ConstrainedStyleWithoutConditions };

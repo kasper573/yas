@@ -1,4 +1,8 @@
 import { styled } from "@yas/style";
+import type { ComponentProps } from "react";
 import { buttonRecipe } from "./Button.css";
 
-export const Button = styled("button", buttonRecipe);
+export type ButtonProps = ComponentProps<typeof Button>;
+export const Button = styled("button", buttonRecipe).attrs({
+  type: "button",
+});

@@ -1,11 +1,14 @@
 import { globalStyle, style } from "@yas/style";
 
 export const layout = style({
-  background: "surface.main",
-  color: "surface.contrast",
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
+});
+
+globalStyle("html", {
+  background: "surface.base.main",
+  color: "surface.contrast.main",
 });
 
 globalStyle("html, body, #root", {

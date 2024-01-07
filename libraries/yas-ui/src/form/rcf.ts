@@ -7,6 +7,7 @@ interface SharedFieldProps {
   isLoading?: boolean;
   label?: ReactNode;
   info?: ReactNode;
+  size?: "small" | "medium";
   metrics?: Record<PropertyKey, number>;
   sx?: ConstrainedStyleWithoutConditions;
 }

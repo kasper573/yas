@@ -10,46 +10,59 @@ import {
   ExampleImage,
   Stack,
   Text,
-  useDialog,
+  useMediaQueries,
+  useModal,
 } from "@yas/ui";
 import { api } from "@yas/api-client";
+import { breakpointQuery } from "@yas/style";
 import { env } from "../../env";
 import { hello } from "../../hello";
-import { useTheme } from "../../hooks/useTheme";
-import * as foo from "./foo.css";
+import { useTheme } from "../../ThemeProvider";
+import * as styles from "./sandbox.css";
 
-export function Sandbox() {
+export default function Sandbox() {
+  const preferenceMediaQueryResults = useMediaQueries(
+    preferenceMediaQueries,
+    "preserve-keys",
+  );
+  const breakpointName = Object.keys(useMediaQueries(breakpointQuery.all))[0];
   const [theme, toggleTheme] = useTheme();
-  const { data: response } = api.example.hello.useQuery(hello());
-  const showDialog = useDialog(TestDialog);
+  const [response] = api.example.hello.useSuspenseQuery(hello());
+  const showDialog = useModal(TestDialog);
   return (
     <>
       <Text variant="h1">Yet Another Stack</Text>
       <Text paragraph>Mode: {env.mode}</Text>
-      <Text paragraph>Server response: {response?.message}</Text>
-      <Text paragraph>Server time: {response?.date.toLocaleString()}</Text>
+      <Text paragraph>Server response: {response.message}</Text>
+      <Text paragraph>Server time: {response.date.toLocaleString()}</Text>
       <Text>Theme: {theme}</Text>
+
+      <Text sx={{ whiteSpace: "pre-wrap" }}>
+        useMediaQueries: {JSON.stringify(preferenceMediaQueryResults, null, 2)}
+        {"\n"}
+        breakpoint: {breakpointName}
+      </Text>
 
       <Stack direction="row" gap="#2" sx={{ mt: "#2" }}>
         <Button onClick={toggleTheme}>Toggle theme</Button>
         <Button onClick={() => showDialog()}>Show dialog</Button>
       </Stack>
 
-      <div className={foo.container()}>Testing vanilla-extract css</div>
+      <div className={styles.container}>Testing vanilla-extract css</div>
 
       <Stack direction="row" gap="#2">
         <Box
           sx={{
             p: "#7",
-            fontFamily: "default",
             background: "secondary.base.main",
             color: "secondary.contrast.main",
+            typography: "body",
           }}
         >
           Testing sx prop
         </Box>
 
-        <Box className={foo.projectImage} sx={{ p: "#2" }}>
+        <Box className={styles.projectImage} sx={{ p: "#2" }}>
           <Alert severity="info">Image from apps/web</Alert>
         </Box>
 
@@ -75,3 +88,13 @@ function TestDialog<T>(props: DialogProps<T>) {
     </Dialog>
   );
 }
+
+const preferenceMediaQueries = Object.fromEntries(
+  [
+    "(prefers-color-scheme: dark)",
+    "(prefers-color-scheme: light)",
+    "(prefers-reduced-motion: reduce)",
+    "(prefers-reduced-transparency: reduce)",
+    "(prefers-contrast: more)",
+  ].map((query) => [query, query]),
+);

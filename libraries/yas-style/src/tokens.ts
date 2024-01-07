@@ -4,8 +4,17 @@ export const fonts = {
   default: roboto,
 };
 
+export type Breakpoint = keyof typeof breakpoints;
+export const breakpoints = {
+  // Keep ordered from smallest to largest
+  "small-display": 0,
+  "medium-display": 768,
+  "large-display": 1360,
+} satisfies Record<string, number>;
+
 export const spaces = {
   0: 0,
+  1: 1,
   "#1": 4,
   "#1.5": 6,
   "#2": 8,
@@ -33,17 +42,17 @@ export const palette = {
     "50%": "rgba(0, 0, 0, 0.5)",
   },
   gray: {
-    50: "#EFF2F6",
-    100: "#DFE6EC",
-    200: "#BFCDD9",
-    300: "#9FB4C6",
-    400: "#7F9BB3",
-    500: "#5F82A0",
-    600: "#4C6880",
-    700: "#394E60",
-    800: "#263440",
-    900: "#131A20",
-    950: "#090D10",
+    50: "#E9EDF2",
+    100: "#D2DCE4",
+    200: "#A5B9CA",
+    300: "#7996AF",
+    400: "#54728D",
+    500: "#394E60",
+    600: "#2E3E4D",
+    700: "#222F3A",
+    800: "#171F26",
+    900: "#0B1013",
+    950: "#06080A",
   },
   red: {
     50: "#FBECE9",
@@ -123,8 +132,6 @@ export const fontSizes = {
   "#8": 64,
   "#9": 94,
   "#10": 128,
-  inherit: "inherit",
-  "100%": "100%",
 };
 
 export type Radii = keyof typeof radii;
@@ -142,11 +149,11 @@ export const shadows = {
 };
 
 export type Border = keyof typeof borders;
-export const borders = {
-  none: () => "none",
-  inherit: () => "inherit",
-  standard: (color) => `1px solid ${color}`,
-} satisfies Record<string, (color: string) => string>;
+export const borders = (color: string) => ({
+  none: "none",
+  inherit: "inherit",
+  standard: `1px solid ${color}`,
+});
 
 export const durations = {
   short1: "50ms",
@@ -165,6 +172,7 @@ export const durations = {
   extraLong2: "800ms",
   extraLong3: "900ms",
   extraLong4: "1000ms",
+  extraLong5: "1500ms",
 };
 
 export const easings = {
@@ -179,19 +187,3 @@ export const easings = {
   legacyDecelerate: "cubic-bezier(0, 0, 0.2, 1)",
   linear: "cubic-bezier(0, 0, 1, 1)",
 };
-
-export const transitions = {
-  emphasized: {
-    beginAndEndOnScreen: `${durations.long2} ${easings.emphasized}`,
-    enter: `${durations.medium4} ${easings.emphasizedDecelerate}`,
-    exit: `${durations.short4} ${easings.emphasizedAccelerate}`,
-  },
-  standard: {
-    beginAndEndOnScreen: `${durations.medium2} ${easings.standard}`,
-    enter: `${durations.medium1} ${easings.standardDecelerate}`,
-    exit: `${durations.short4} ${easings.standardAccelerate}`,
-  },
-};
-
-const coerce = (value: string | number) =>
-  typeof value === "number" ? `${value}px` : value;

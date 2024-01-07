@@ -1,31 +1,5 @@
 import { recipe } from "@yas/style";
 
-export const overlayRecipe = recipe({
-  base: {
-    backgroundColor: "dimmer",
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    opacity: 0,
-  },
-  variants: {
-    open: {
-      true: {
-        opacity: 1,
-        pointerEvents: "auto",
-        transition: [["opacity", "standard.enter"]],
-      },
-      false: {
-        opacity: 0,
-        pointerEvents: "none",
-        transition: [["opacity", "standard.exit"]],
-      },
-    },
-  },
-});
-
 export const dialogRecipe = recipe({
   base: {
     // Reset
@@ -43,6 +17,7 @@ export const dialogRecipe = recipe({
     width: "90vw",
     maxWidth: "450px",
     maxHeight: "85vh",
+    pointerEvents: "all",
   },
   variants: {
     open: {

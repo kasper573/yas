@@ -19,7 +19,7 @@ export default function Home() {
             </span>
           ))}
         </h1>
-        <p className={styles.tagline}>{tagline}</p>
+        <h2 className={styles.tagline}>{tagline}</h2>
       </header>
       <main>
         <section>
