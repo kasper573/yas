@@ -48,9 +48,9 @@ export const dark: string = createTheme(vars, {
         dark: palette.green["600"],
       },
       contrast: {
-        light: palette["gray"]["800"],
-        main: palette["gray"]["800"],
-        dark: palette["gray"]["800"],
+        light: palette.green["800"],
+        main: palette.green["900"],
+        dark: palette.green["950"],
       },
     },
     info: {
@@ -60,21 +60,21 @@ export const dark: string = createTheme(vars, {
         dark: palette.gray["900"],
       },
       contrast: {
-        light: palette["gray"]["50"],
-        main: palette["gray"]["100"],
-        dark: palette["gray"]["200"],
+        light: palette.gray["50"],
+        main: palette.gray["100"],
+        dark: palette.gray["200"],
       },
     },
     warning: {
       base: {
-        light: palette.orange["400"],
-        main: palette.orange["500"],
-        dark: palette.orange["600"],
+        light: palette.orange["300"],
+        main: palette.orange["400"],
+        dark: palette.orange["500"],
       },
       contrast: {
-        light: palette["gray"]["950"],
-        main: palette["gray"]["900"],
-        dark: palette["gray"]["800"],
+        light: palette.orange["950"],
+        main: palette.orange["900"],
+        dark: palette.orange["800"],
       },
     },
     error: {
@@ -84,9 +84,9 @@ export const dark: string = createTheme(vars, {
         dark: palette.red["600"],
       },
       contrast: {
-        light: palette["gray"]["900"],
-        main: palette["gray"]["800"],
-        dark: palette["gray"]["700"],
+        light: palette.red["950"],
+        main: palette.red["900"],
+        dark: palette.red["800"],
       },
     },
     divider: palette.white["50%"],
