@@ -1,15 +1,6 @@
 import { recipe, unsafe } from "@yas/style";
 
-const { surface, ...nonSurfaceColors } = unsafe.vars.color;
-
-type Colors = typeof nonSurfaceColors;
-type ColorSetName = {
-  [K in keyof Colors]: Colors[K] extends string ? never : K;
-}[keyof Colors];
-
-const colorSetNames = Object.entries(nonSurfaceColors)
-  .filter(([, value]) => typeof value !== "string")
-  .map(([key]) => key) as ColorSetName[];
+const nonSurfaceColorSetNames = without(unsafe.colorSetNames, "surface");
 
 export const iconSizes = {
   small: 24,
@@ -50,10 +41,9 @@ export const buttonRecipe = recipe({
     },
     color: {
       "surface-contrast": {},
-      ...(Object.fromEntries(colorSetNames.map((name) => [name, {}])) as Record<
-        ColorSetName,
-        {}
-      >),
+      ...(Object.fromEntries(
+        nonSurfaceColorSetNames.map((name) => [name, {}]),
+      ) as Record<Exclude<unsafe.ColorSetName, "surface">, {}>),
     },
     variant: {
       text: {},
@@ -112,7 +102,7 @@ export const buttonRecipe = recipe({
       "surface.contrast",
       "surface.base",
     ),
-    ...without(colorSetNames, "surface").flatMap((color) =>
+    ...nonSurfaceColorSetNames.flatMap((color) =>
       variantsForColorSet(color, `${color}.base`, `${color}.contrast`),
     ),
     {

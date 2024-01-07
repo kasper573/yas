@@ -6,5 +6,5 @@ export {
   globalKeyframes,
 } from "@vanilla-extract/css";
 export * as tokens from "./tokens";
-export { vars } from "./vars.css";
+export * from "./vars.css";
 export type { TypographyVariant } from "./vars.css";

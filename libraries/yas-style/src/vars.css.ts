@@ -65,3 +65,13 @@ export const vars = createThemeContract({
     h6: typographyStyle,
   },
 });
+
+type Colors = typeof vars.color;
+
+export type ColorSetName = {
+  [K in keyof Colors]: Colors[K] extends string ? never : K;
+}[keyof Colors];
+
+export const colorSetNames = Object.entries(vars.color)
+  .filter(([, value]) => typeof value !== "string")
+  .map(([key]) => key) as ColorSetName[];
