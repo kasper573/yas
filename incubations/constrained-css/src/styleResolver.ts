@@ -227,18 +227,30 @@ function resolvePropertyStyle<Value>(
 
   if (Array.isArray(def)) {
     if (!def.includes(input as string)) {
-      return err(`Invalid value ${input}. Must be one of: ${def.join(", ")}`);
+      return err(`Invalid value ${input}. Must be one of: ${summary(def)}`);
     }
     return ok({ [propertyName]: input });
   }
 
   if (!def.hasOwnProperty(input as string)) {
     return err(
-      `Invalid value ${input}. Must be one of: ${Object.keys(def).join(", ")}`,
+      `Invalid value ${input}. Must be one of: ${summary(Object.keys(def))}`,
     );
   }
 
   return ok({ [propertyName]: def[input as keyof typeof def] });
+}
+
+function summary(values: string[]) {
+  if (values.length <= 2) {
+    return values.join(" or ");
+  }
+  if (values.length === 3) {
+    return `${values.slice(0, 2).join(", ")}, and ${values[2]}`;
+  }
+  const excess = values.length - 3;
+  values = values.slice(0, 3);
+  return `${values.join(", ")}, and ${excess} more`;
 }
 
 function assignPath(
