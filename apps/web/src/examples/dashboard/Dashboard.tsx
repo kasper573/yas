@@ -69,7 +69,10 @@ export default function Dashboard({
             <List sx={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
                 <ListItem asChild button key={index} sx={{ px: "#5" }}>
-                  <NavLink to="/dashboard" search={{ userId: user.userId }}>
+                  <NavLink
+                    to="/dashboard"
+                    search={(prev) => ({ ...prev, userId: user.userId })}
+                  >
                     <ListItemIcon>
                       <Avatar
                         alt={`${user.name} avatar`}

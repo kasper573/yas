@@ -16,7 +16,10 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
     <List compact>
       {data.map((sale, index) => (
         <ListItem asChild button key={index} sx={{ px: "#5" }}>
-          <NavLink to="/dashboard" search={{ userId: sale.userId }}>
+          <NavLink
+            to="/dashboard"
+            search={(prev) => ({ ...prev, userId: sale.userId })}
+          >
             <ListItemIcon>
               <Avatar alt={`${sale.name} avatar`} src={sale.avatarUrl} />
             </ListItemIcon>
