@@ -1,7 +1,8 @@
-import { Router, Route, RootRoute } from "@yas/router";
+import { Router, Route, RootRoute, NotFoundRoute } from "@yas/router";
 import { z } from "@yas/validate";
 import { lazy } from "react";
 import { env } from "./env";
+import { ErrorFallback } from "./components/ErrorFallback";
 
 const Layout = lazy(() => import("./components/Layout"));
 
@@ -35,9 +36,18 @@ export const dashboardRoute = new Route({
   }),
 });
 
+const notFoundRoute = new NotFoundRoute({
+  getParentRoute: () => rootRoute,
+  component: lazy(() => import("./components/NotFound")),
+});
+
 const routeTree = rootRoute.addChildren([indexRoute, dashboardRoute]);
 
-export const router = new Router({ routeTree });
+export const router = new Router({
+  routeTree,
+  defaultErrorComponent: ErrorFallback,
+  notFoundRoute,
+});
 
 declare module "@yas/router" {
   interface Register {
