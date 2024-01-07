@@ -1,6 +1,9 @@
 import { recipe, unsafe } from "@yas/style";
 
-const nonSurfaceColorSetNames = without(unsafe.colorSetNames, "surface");
+const nonSurfaceColorSetNames = without(
+  unsafe.colorSetNames,
+  "surface",
+) as Exclude<unsafe.ColorSetName, "surface">[];
 
 export const iconSizes = {
   small: 24,
@@ -64,7 +67,7 @@ export const buttonRecipe = recipe({
     },
   },
   compoundVariants: [
-    ...Object.entries(iconSizes).map(([size, value]) => ({
+    ...typedEntries(iconSizes).map(([size, value]) => ({
       variants: { icon: true, size },
       style: {
         minWidth: value,
@@ -102,6 +105,7 @@ export const buttonRecipe = recipe({
       "surface.contrast",
       "surface.base",
     ),
+
     ...nonSurfaceColorSetNames.flatMap((color) =>
       variantsForColorSet(color, `${color}.base`, `${color}.contrast`),
     ),
@@ -124,10 +128,14 @@ export const buttonRecipe = recipe({
   },
 });
 
-function variantsForColorSet<ColorVariant extends string>(
+function variantsForColorSet<
+  ColorVariant extends string,
+  BasePrefix extends string,
+  ContrastPrefix extends string,
+>(
   colorVariant: ColorVariant,
-  basePrefix: string,
-  contrastPrefix: string,
+  basePrefix: BasePrefix,
+  contrastPrefix: ContrastPrefix,
 ) {
   return [
     {
@@ -166,9 +174,15 @@ function variantsForColorSet<ColorVariant extends string>(
         borderColor: `${basePrefix}.main`,
       },
     },
-  ] as { variants: {}; style: {} }[];
+  ] as const;
 }
 
 function without<T>(array: T[], ...values: T[]): T[] {
   return array.filter((value) => !values.includes(value));
+}
+
+function typedEntries<T extends Record<string, unknown>>(
+  obj: T,
+): Array<[keyof T, T[keyof T]]> {
+  return Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
 }
