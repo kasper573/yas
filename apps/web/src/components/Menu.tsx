@@ -5,7 +5,7 @@ import { NavLink } from "./NavLink";
 const exampleRoutes = [
   { to: "/", label: "Sandbox" },
   { to: "/dashboard", label: "Dashboard" },
-];
+] as const;
 
 export function Menu() {
   const { location } = useRouterState();
