@@ -48,13 +48,10 @@ export const item = recipe({
             color: "info.contrast.main",
           },
           [`${variantClasses["contained"]} &`]: {
-            background: "surface.base.main",
-            color: "info.contrast.main",
+            background: "info.contrast.main",
+            color: "info.base.main",
           },
         },
-      },
-      false: {
-        opacity: 0.67,
       },
     },
   },
