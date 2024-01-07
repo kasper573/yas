@@ -691,6 +691,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.15
         version: 18.2.15
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
 
   libraries/yas-style:
     dependencies:
