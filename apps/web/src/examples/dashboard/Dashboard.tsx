@@ -15,10 +15,8 @@ import {
 } from "@yas/ui";
 import { Suspense, useState } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
-
-import { useSearchState } from "@yas/router";
+import type { RouteComponentProps } from "@yas/router";
 import { NavLink } from "../../components/NavLink";
-import { dashboardRoute } from "../../router";
 import { Card } from "./shared";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
@@ -28,14 +26,12 @@ import { useDebounce } from "./useDebounce";
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
-const currentDate = new Date();
-
-export default function Dashboard() {
-  const [params, setParams] = useSearchState(dashboardRoute);
-  const { date = currentDate, userId } = params;
-
-  const setDate = (date?: Date) => setParams({ date }, { replace: true });
-  const setUserId = (userId?: types.example.UserId) => setParams({ userId });
+export default function Dashboard({
+  search: { date = new Date(), userId },
+  setSearch,
+}: RouteComponentProps<{ date?: Date; userId: types.example.UserId }>) {
+  const setDate = (date?: Date) => setSearch({ date }, { replace: true });
+  const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
 
   const clearSelectedUser = () => setUserId(undefined);
   const [searchInput, setSearchInput] = useState<string | undefined>();

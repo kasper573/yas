@@ -6,14 +6,20 @@ import type {
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
-export function useSearchState<R extends AnyRoute>(route: R) {
+export type SearchParams<R extends AnyRoute> = FullSearchSchema<R>;
+
+export type SetSearchParams<Params> = (
+  changes: Partial<Params>,
+  options?: Omit<NavigateOptions, "to" | "search">,
+) => Promise<unknown>;
+
+export function useSearchState<R extends AnyRoute>(
+  route: R,
+): [SearchParams<R>, SetSearchParams<SearchParams<R>>] {
   const navigate = useNavigate();
-  const search: FullSearchSchema<R> = route.useSearch();
-  const setSearch = useCallback(
-    (
-      changes: Partial<FullSearchSchema<R>>,
-      options?: Omit<NavigateOptions<R>, "to" | "search">,
-    ) =>
+  const search: SearchParams<R> = route.useSearch();
+  const setSearch: SetSearchParams<SearchParams<R>> = useCallback(
+    (changes, options) =>
       navigate({
         to: route.fullPath,
         search: { ...search, ...changes },
@@ -21,5 +27,5 @@ export function useSearchState<R extends AnyRoute>(route: R) {
       }),
     [navigate, route.fullPath, search],
   );
-  return [search, setSearch] as const;
+  return [search, setSearch];
 }
