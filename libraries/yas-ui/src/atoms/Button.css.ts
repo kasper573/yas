@@ -1,4 +1,15 @@
-import { recipe } from "@yas/style";
+import { recipe, unsafe } from "@yas/style";
+
+const { surface, ...nonSurfaceColors } = unsafe.vars.color;
+
+type Colors = typeof nonSurfaceColors;
+type ColorSetName = {
+  [K in keyof Colors]: Colors[K] extends string ? never : K;
+}[keyof Colors];
+
+const colorSetNames = Object.entries(nonSurfaceColors)
+  .filter(([, value]) => typeof value !== "string")
+  .map(([key]) => key) as ColorSetName[];
 
 export const buttonRecipe = recipe({
   base: {
@@ -34,9 +45,11 @@ export const buttonRecipe = recipe({
       },
     },
     color: {
-      primary: {},
-      secondary: {},
-      surface: {},
+      "surface-contrast": {},
+      ...(Object.fromEntries(colorSetNames.map((name) => [name, {}])) as Record<
+        ColorSetName,
+        {}
+      >),
     },
     variant: {
       text: {
@@ -56,90 +69,14 @@ export const buttonRecipe = recipe({
     },
   },
   compoundVariants: [
-    {
-      variants: { color: "primary", variant: "text" },
-      style: { color: "primary.base.main" },
-    },
-    {
-      variants: { color: "secondary", variant: "text" },
-      style: { color: "secondary.base.main" },
-    },
-    {
-      variants: { color: "surface", variant: "text" },
-      style: { color: "surface.contrast.main" },
-    },
-    {
-      variants: { color: "primary", variant: "contained" },
-      style: {
-        background: {
-          default: "primary.base.light",
-          hover: "primary.base.main",
-          active: "primary.base.dark",
-        },
-        color: "primary.contrast.main",
-        borderColor: "primary.contrast.main",
-      },
-    },
-    {
-      variants: { color: "secondary", variant: "contained" },
-      style: {
-        background: {
-          default: "secondary.base.light",
-          hover: "secondary.base.main",
-          active: "secondary.base.dark",
-        },
-        color: "secondary.contrast.main",
-        borderColor: "secondary.contrast.main",
-      },
-    },
-    {
-      variants: { color: "surface", variant: "contained" },
-      style: {
-        background: {
-          default: "surface.base.light",
-          hover: "surface.base.main",
-          active: "surface.base.dark",
-        },
-        color: "surface.contrast.main",
-        borderColor: "surface.contrast.main",
-      },
-    },
-    {
-      variants: { color: "primary", variant: "outlined" },
-      style: {
-        background: {
-          default: "primary.contrast.light",
-          hover: "primary.contrast.main",
-          active: "primary.contrast.dark",
-        },
-        color: "primary.base.main",
-        borderColor: "primary.base.main",
-      },
-    },
-    {
-      variants: { color: "secondary", variant: "outlined" },
-      style: {
-        background: {
-          default: "secondary.contrast.light",
-          hover: "secondary.contrast.main",
-          active: "secondary.contrast.dark",
-        },
-        color: "secondary.base.main",
-        borderColor: "secondary.base.main",
-      },
-    },
-    {
-      variants: { color: "surface", variant: "outlined" },
-      style: {
-        background: {
-          default: "surface.contrast.main",
-          hover: "surface.contrast.main",
-          active: "surface.contrast.main",
-        },
-        color: "surface.base.main",
-        borderColor: "surface.base.main",
-      },
-    },
+    ...variantsForColorSet(
+      "surface-contrast",
+      "surface.contrast",
+      "surface.base",
+    ),
+    ...without(colorSetNames, "surface").flatMap((color) =>
+      variantsForColorSet(color, `${color}.base`, `${color}.contrast`),
+    ),
     {
       variants: { disabled: true },
       style: {
@@ -156,3 +93,44 @@ export const buttonRecipe = recipe({
     disabled: false,
   },
 });
+
+function variantsForColorSet<ColorVariant extends string>(
+  colorVariant: ColorVariant,
+  basePrefix: string,
+  contrastPrefix: string,
+) {
+  return [
+    {
+      variants: { color: colorVariant, variant: "text" },
+      style: { color: `${basePrefix}.main` },
+    },
+    {
+      variants: { color: colorVariant, variant: "contained" },
+      style: {
+        background: {
+          default: `${basePrefix}.light`,
+          hover: `${basePrefix}.main`,
+          active: `${basePrefix}.dark`,
+        },
+        color: `${contrastPrefix}.main`,
+        borderColor: `${contrastPrefix}.main`,
+      },
+    },
+    {
+      variants: { color: colorVariant, variant: `outlined` },
+      style: {
+        background: {
+          default: `${contrastPrefix}.light`,
+          hover: `${contrastPrefix}.main`,
+          active: `${contrastPrefix}.dark`,
+        },
+        color: `${basePrefix}.main`,
+        borderColor: `${basePrefix}.main`,
+      },
+    },
+  ] as { variants: {}; style: {} }[];
+}
+
+function without<T>(array: T[], ...values: T[]): T[] {
+  return array.filter((value) => !values.includes(value));
+}

@@ -28,7 +28,7 @@ export function DatePicker({
   name,
   format: formatPreset = "long-date",
   variant = "contained",
-  color = "surface",
+  color = "surface-contrast",
   ...rest
 }: DatePickerProps) {
   return (
