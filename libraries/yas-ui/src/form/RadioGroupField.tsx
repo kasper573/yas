@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { Cross2Icon } from "@yas/icons";
-import { IconButton } from "../atoms/IconButton";
+import { Button } from "../atoms/Button";
 import { Stack } from "../layout/Stack";
 import { Void } from "../layout/Void";
 import {
@@ -40,13 +40,14 @@ export function RadioGroupField<Value>({
         <FormControlLabel htmlFor={fieldsetId}>{label}</FormControlLabel>
 
         <Void>
-          <IconButton
+          <Button
+            icon
             size="small"
             onClick={() => onChange?.(undefined)}
             className={styles.clearButton({ visible: showClearButton })}
           >
             <Cross2Icon />
-          </IconButton>
+          </Button>
         </Void>
       </Stack>
 

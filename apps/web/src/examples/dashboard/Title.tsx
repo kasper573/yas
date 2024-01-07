@@ -1,4 +1,4 @@
-import { IconButton, Stack, Text } from "@yas/ui";
+import { Button, Stack, Text } from "@yas/ui";
 import { Cross1Icon } from "@yas/icons";
 import type { ReactNode } from "react";
 
@@ -17,14 +17,15 @@ export function Title({
         {children}
       </Text>
       {showClearButton ? (
-        <IconButton
+        <Button
+          icon
           shape="rounded"
-          color="primary"
+          color="surface-contrast"
           variant="outlined"
           onClick={onClear}
         >
           <Cross1Icon />
-        </IconButton>
+        </Button>
       ) : null}
     </Stack>
   );

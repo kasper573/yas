@@ -27,7 +27,7 @@ export function DatePicker({
   metrics,
   name,
   format: formatPreset = "long-date",
-  variant = "contained",
+  variant = "outlined",
   color = "surface-contrast",
   ...rest
 }: DatePickerProps) {

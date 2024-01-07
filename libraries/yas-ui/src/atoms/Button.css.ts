@@ -11,6 +11,12 @@ const colorSetNames = Object.entries(nonSurfaceColors)
   .filter(([, value]) => typeof value !== "string")
   .map(([key]) => key) as ColorSetName[];
 
+export const iconSizes = {
+  small: 24,
+  medium: 28,
+  large: 32,
+};
+
 export const buttonRecipe = recipe({
   base: {
     margin: 0,
@@ -24,7 +30,7 @@ export const buttonRecipe = recipe({
     cursor: "pointer",
   },
   variants: {
-    button: {
+    icon: {
       true: {
         display: "inline-flex",
         padding: "#1",
@@ -35,6 +41,7 @@ export const buttonRecipe = recipe({
         fontSize: "100%",
         overflow: "hidden",
       },
+      false: {},
     },
     size: {
       small: {},
@@ -67,20 +74,17 @@ export const buttonRecipe = recipe({
     },
   },
   compoundVariants: [
+    ...Object.entries(iconSizes).map(([size, value]) => ({
+      variants: { icon: true, size },
+      style: {
+        minWidth: value,
+        minHeight: value,
+        maxWidth: value,
+        maxHeight: value,
+      },
+    })),
     {
-      variants: { button: true, size: "small" },
-      style: iconSize(24),
-    },
-    {
-      variants: { button: true, size: "medium" },
-      style: iconSize(28),
-    },
-    {
-      variants: { button: true, size: "large" },
-      style: iconSize(32),
-    },
-    {
-      variants: { button: false, size: "small" },
+      variants: { icon: false, size: "small" },
       style: {
         typography: "caption",
         px: "#2",
@@ -88,7 +92,7 @@ export const buttonRecipe = recipe({
       },
     },
     {
-      variants: { button: false, size: "medium" },
+      variants: { icon: false, size: "medium" },
       style: {
         typography: "body",
         px: "#3",
@@ -96,7 +100,7 @@ export const buttonRecipe = recipe({
       },
     },
     {
-      variants: { button: false, size: "large" },
+      variants: { icon: false, size: "large" },
       style: {
         typography: "body2",
         px: "#3",
@@ -126,7 +130,7 @@ export const buttonRecipe = recipe({
     color: "primary",
     shape: "rounded",
     disabled: false,
-    button: false,
+    icon: false,
   },
 });
 
@@ -173,15 +177,6 @@ function variantsForColorSet<ColorVariant extends string>(
       },
     },
   ] as { variants: {}; style: {} }[];
-}
-
-function iconSize(value: number) {
-  return {
-    minWidth: value,
-    minHeight: value,
-    maxWidth: value,
-    maxHeight: value,
-  };
 }
 
 function without<T>(array: T[], ...values: T[]): T[] {

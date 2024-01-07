@@ -13,5 +13,5 @@ export const Text: StoryObj<Meta<typeof Button>> = {
 };
 
 export const Icon: StoryObj<Meta<typeof Button>> = {
-  args: { button: true, children: <Cross1Icon /> },
+  args: { icon: true, children: <Cross1Icon /> },
 };

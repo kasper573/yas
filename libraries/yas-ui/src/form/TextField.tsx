@@ -4,7 +4,7 @@ import type { RecipeVariants } from "@yas/style";
 import { clsx } from "@yas/style";
 import { Cross1Icon } from "@yas/icons";
 import { InputArea, InputRoot, InputSlot } from "../atoms/Input";
-import { IconButton } from "../atoms/IconButton";
+import { Button } from "../atoms/Button";
 import { CircularProgress } from "../atoms/CircularProgress";
 import type { FieldProps } from "./rcf";
 import {
@@ -81,7 +81,8 @@ export function TextField({
           {isLoading ? (
             <CircularProgress className={styles.loadingSpinner} />
           ) : (
-            <IconButton
+            <Button
+              icon
               variant="text"
               onClick={() => onChange?.(undefined)}
               className={styles.clearButton({
@@ -89,7 +90,7 @@ export function TextField({
               })}
             >
               <Cross1Icon />
-            </IconButton>
+            </Button>
           )}
         </InputSlot>
       </InputRoot>

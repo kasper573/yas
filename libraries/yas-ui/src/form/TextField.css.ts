@@ -28,8 +28,10 @@ export const loadingSpinner = style({
 
 export const clearButton = recipe({
   base: {
-    width: inputHeight,
-    height: inputHeight,
+    minWidth: inputHeight,
+    maxWidth: inputHeight,
+    minHeight: inputHeight,
+    maxHeight: inputHeight,
   },
   variants: {
     visible: {

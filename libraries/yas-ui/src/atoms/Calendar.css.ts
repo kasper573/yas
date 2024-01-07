@@ -1,5 +1,5 @@
 import { recipe, style } from "@yas/style";
-import { iconButtonRecipe } from "./IconButton.css";
+import { buttonRecipe } from "./Button.css";
 
 const borderRadius = "#2" as const;
 
@@ -35,8 +35,9 @@ export const nav = style({
   columnGap: "#1",
 });
 
-export const nav_button = iconButtonRecipe({
-  color: "inherit",
+export const nav_button = buttonRecipe({
+  icon: true,
+  color: "surface-contrast",
   variant: "text",
   shape: "rounded",
   size: "medium",
