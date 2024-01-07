@@ -1,5 +1,5 @@
 import { TabItem, Tabs } from "@yas/ui";
-import { useLocation } from "react-router-dom";
+import { useRouterState } from "@yas/router";
 import { NavLink } from "./NavLink";
 
 const exampleRoutes = [
@@ -8,7 +8,7 @@ const exampleRoutes = [
 ];
 
 export function Menu() {
-  const location = useLocation();
+  const { location } = useRouterState();
   return (
     <Tabs>
       {exampleRoutes.map(({ to, label }, index) => (

@@ -1,4 +1,3 @@
-import { NavLink as NavLinkImpl } from "react-router-dom";
-import { Link } from "@yas/ui";
+import { Link as NavLinkImpl } from "@yas/router";
 
-export const NavLink = Link.as(NavLinkImpl);
+export const NavLink = NavLinkImpl; //Link.as(NavLinkImpl);

@@ -178,6 +178,9 @@ importers:
       '@yas/icons':
         specifier: workspace:*
         version: link:../../libraries/yas-icons
+      '@yas/router':
+        specifier: workspace:*
+        version: link:../../libraries/yas-router
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
@@ -196,9 +199,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-router-dom:
-        specifier: ^6.21.0
-        version: 6.21.0(react-dom@18.2.0)(react@18.2.0)
       recharts:
         specifier: 2.10.3
         version: 2.10.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
@@ -675,6 +675,22 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
+
+  libraries/yas-router:
+    dependencies:
+      '@tanstack/react-router':
+        specifier: ^1.1.9
+        version: 1.1.9(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/router-devtools':
+        specifier: ^1.1.9
+        version: 1.1.9(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
+      '@types/react-dom':
+        specifier: 18.2.15
+        version: 18.2.15
 
   libraries/yas-style:
     dependencies:
@@ -6817,11 +6833,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.1
 
-  /@remix-run/router@1.14.0:
-    resolution: {integrity: sha512-WOHih+ClN7N8oHk9N4JUiMxQJmRVaOxcg8w7F/oHUXzJt920ekASLI/7cYX8XkntDWRhLZtsk6LbGrkgOAvi5A==}
-    engines: {node: '>=14.0.0'}
-    dev: false
-
   /@rollup/pluginutils@5.0.5:
     resolution: {integrity: sha512-6aEYR910NyP73oHiJglti74iRyOwgFU4x3meH/H8OJx6Ry0j6cOVZ5X/wTvub7G7Ao6qaHBEaNsV3GLJkSsF+Q==}
     engines: {node: '>=14.0.0'}
@@ -8278,6 +8289,11 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
+  /@tanstack/history@1.1.9:
+    resolution: {integrity: sha512-nVsM7Zh5bMo6rPcJNfnFEek0EuOxQJ6Gom7kP4vKt769s/OPqgXpAI881M6FNyydMV1hu1MaxXMEzCEyctH4EA==}
+    engines: {node: '>=12'}
+    dev: false
+
   /@tanstack/query-core@4.29.15:
     resolution: {integrity: sha512-Recc1d5rjHesKhzlH3Aw66v+vQxtB9OHEXP/vxgEcEJ0DwEpfe3EQ4id20vuBJHY2XRjfgWGmUs6ZgK6PSsTXA==}
     dev: false
@@ -8298,6 +8314,53 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/react-router@1.1.9(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9VG/1oBhIcP3/5V+80V/D5AsLoIwUBqLYkPr1705MWD7MXUw4rh2Z7O6rJYJmTcSr4nxgeuqcbBgppgLQUPpBA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.23.1
+      '@tanstack/history': 1.1.9
+      '@tanstack/react-store': 0.2.1(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/store': 0.1.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tiny-invariant: 1.3.1
+      tiny-warning: 1.0.3
+    dev: false
+
+  /@tanstack/react-store@0.2.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tEbMCQjbeVw9KOP/202LfqZMSNAVi6zYkkp1kBom8nFuMx/965Hzes3+6G6b/comCwVxoJU8Gg9IrcF8yRPthw==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/store': 0.1.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/router-devtools@1.1.9(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-jHExtD/5O3wi4k21KMUeR5ojpE3xSs9UNldFZqwAUK+LTLhSCglgSi9T7Ecn9MSxF/tDgel3WFnaxGIT/z1qFQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.23.1
+      '@tanstack/react-router': 1.1.9(react-dom@18.2.0)(react@18.2.0)
+      date-fns: 2.30.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/store@0.1.3:
+    resolution: {integrity: sha512-GnolmC8Fr4mvsHE1fGQmR3Nm0eBO3KnZjDU0a+P3TeQNM/dDscFGxtA7p31NplQNW3KwBw4t1RVFmz0VeKLxcw==}
     dev: false
 
   /@testing-library/dom@9.3.3:
@@ -11550,7 +11613,6 @@ packages:
     engines: {node: '>=0.11'}
     dependencies:
       '@babel/runtime': 7.23.1
-    dev: true
 
   /date-fns@3.1.0:
     resolution: {integrity: sha512-ZO7yefXV/wCWzd3I9haCHmfzlfA3i1a2HHO7ZXjtJrRjXt8FULKJ2Vl8wji3XYF4dQ0ZJ/tokXDZeYlFvgms9Q==}
@@ -18880,19 +18942,6 @@ packages:
       tiny-warning: 1.0.3
     dev: true
 
-  /react-router-dom@6.21.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1dUdVj3cwc1npzJaf23gulB562ESNvxf7E4x8upNJycqyUm5BRRZ6dd3LrlzhtLaMrwOCO8R0zoiYxdaJx4LlQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      '@remix-run/router': 1.14.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router: 6.21.0(react@18.2.0)
-    dev: false
-
   /react-router@5.3.4(react@18.2.0):
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}
     peerDependencies:
@@ -18909,16 +18958,6 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     dev: true
-
-  /react-router@6.21.0(react@18.2.0):
-    resolution: {integrity: sha512-hGZ0HXbwz3zw52pLZV3j3+ec+m/PQ9cTpBvqjFQmy2XVUWGn5MD+31oXHb6dVTxYzmAeaiUBYjkoNz66n3RGCg==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-    dependencies:
-      '@remix-run/router': 1.14.0
-      react: 18.2.0
-    dev: false
 
   /react-smooth@2.0.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-BMP2Ad42tD60h0JW6BFaib+RJuV5dsXJK9Baxiv/HlNFjvRLqA9xrNKxVWnUIZPQfzUwGXIlU/dSYLU+54YGQA==}
@@ -20553,7 +20592,6 @@ packages:
 
   /tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
-    dev: true
 
   /tinybench@2.5.1:
     resolution: {integrity: sha512-65NKvSuAVDP/n4CqH+a9w2kTlLReS9vhsAP06MWx+/89nMinJyB2icyl58RIcqCmIggpojIGeuJGhjU1aGMBSg==}
