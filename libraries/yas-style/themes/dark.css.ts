@@ -60,9 +60,9 @@ export const dark: string = createTheme(vars, {
         dark: palette.gray["900"],
       },
       contrast: {
-        light: palette["gray"]["900"],
-        main: palette["white"]["87%"],
-        dark: palette["gray"]["800"],
+        light: palette["gray"]["50"],
+        main: palette["gray"]["100"],
+        dark: palette["gray"]["200"],
       },
     },
     warning: {
@@ -72,8 +72,8 @@ export const dark: string = createTheme(vars, {
         dark: palette.orange["600"],
       },
       contrast: {
-        light: palette["gray"]["900"],
-        main: palette["white"]["87%"],
+        light: palette["gray"]["950"],
+        main: palette["gray"]["900"],
         dark: palette["gray"]["800"],
       },
     },
@@ -85,8 +85,8 @@ export const dark: string = createTheme(vars, {
       },
       contrast: {
         light: palette["gray"]["900"],
-        main: palette["white"]["87%"],
-        dark: palette["gray"]["800"],
+        main: palette["gray"]["800"],
+        dark: palette["gray"]["700"],
       },
     },
     divider: palette.white["50%"],
