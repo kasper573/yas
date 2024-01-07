@@ -1,6 +1,7 @@
 import { createThemeContract } from "@vanilla-extract/css";
 import type { Properties as CSSProperties } from "csstype";
 
+export type ColorSet = Record<keyof typeof colorSet, string>;
 const colorSet = {
   main: null,
   light: null,
