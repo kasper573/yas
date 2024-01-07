@@ -36,9 +36,14 @@ function ColorSet({ colorSetName }: ColorSetsProps) {
         light
       </Color>
       {colorSetName !== "surface" && (
-        <Button color={colorSetName} sx={{ mt: "#2" }}>
-          Click me
-        </Button>
+        <>
+          <Button color={colorSetName} variant="outlined" sx={{ mt: "#2" }}>
+            Click me
+          </Button>
+          <Button color={colorSetName} variant="contained" sx={{ mt: "#2" }}>
+            Click me
+          </Button>
+        </>
       )}
     </Stack>
   );
