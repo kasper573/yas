@@ -87,8 +87,8 @@ export const day = style({
   borderRadius,
   selectors: {
     [`&:hover:not([aria-selected])`]: {
-      background: "info.light",
-      color: "info.contrast",
+      background: "info.base.light",
+      color: "info.contrast.main",
     },
   },
 });
@@ -148,8 +148,8 @@ export const cell = recipe({
       true: {
         selectors: {
           [`&:has(>${day_selected})`]: {
-            background: "info.light",
-            color: "info.contrast",
+            background: "info.base.light",
+            color: "info.contrast.main",
             borderRadius: 0,
           },
           [`&:has(>${day_range_start}), &:first-child`]: {

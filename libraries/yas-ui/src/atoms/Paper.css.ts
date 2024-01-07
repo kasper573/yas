@@ -7,12 +7,12 @@ export const paperRecipe = recipe({
   variants: {
     elevation: {
       0: {
-        background: "surface.main",
+        background: "surface.base.main",
         boxShadow: "none",
         border: "standard",
       },
       1: {
-        background: "surface.light",
+        background: "surface.base.light",
         boxShadow: "#1",
       },
     },

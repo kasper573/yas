@@ -36,8 +36,8 @@ export const item = recipe({
     button: {
       true: {
         cursor: "pointer",
-        background: { hover: "info.light", active: "highlight" },
-        color: { hover: "info.contrast", active: "surface.contrast" },
+        background: { hover: "info.base.light", active: "highlight" },
+        color: { hover: "info.contrast.main", active: "surface.contrast.main" },
       },
     },
   },

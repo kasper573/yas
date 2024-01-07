@@ -43,8 +43,8 @@ export const buttonRecipe = recipe({
         borderColor: "transparent",
         background: {
           default: "transparent",
-          hover: "info.dark",
-          active: "info.main",
+          hover: "info.base.dark",
+          active: "info.base.main",
         },
       },
       contained: {},
@@ -66,7 +66,7 @@ export const buttonRecipe = recipe({
     },
     {
       variants: { color: "surface", variant: "text" },
-      style: { color: "surface.contrast" },
+      style: { color: "surface.contrast.main" },
     },
     {
       variants: { color: "primary", variant: "contained" },
@@ -96,12 +96,12 @@ export const buttonRecipe = recipe({
       variants: { color: "surface", variant: "contained" },
       style: {
         background: {
-          default: "surface.light",
-          hover: "surface.main",
-          active: "surface.dark",
+          default: "surface.base.light",
+          hover: "surface.base.main",
+          active: "surface.base.dark",
         },
-        color: "surface.contrast",
-        borderColor: "surface.contrast",
+        color: "surface.contrast.main",
+        borderColor: "surface.contrast.main",
       },
     },
     {
@@ -132,20 +132,20 @@ export const buttonRecipe = recipe({
       variants: { color: "surface", variant: "outlined" },
       style: {
         background: {
-          default: "surface.contrast",
-          hover: "surface.contrast",
-          active: "surface.contrast",
+          default: "surface.contrast.main",
+          hover: "surface.contrast.main",
+          active: "surface.contrast.main",
         },
-        color: "surface.main",
-        borderColor: "surface.main",
+        color: "surface.base.main",
+        borderColor: "surface.base.main",
       },
     },
     {
       variants: { disabled: true },
       style: {
-        background: { default: "info.dark" },
+        background: { default: "info.base.dark" },
         color: "highlight",
-        borderColor: "surface.dark",
+        borderColor: "surface.base.dark",
       },
     },
   ],

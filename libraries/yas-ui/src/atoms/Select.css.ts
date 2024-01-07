@@ -11,13 +11,13 @@ export const trigger = style({
   typography: "caption",
   height: "35px",
   gap: "#1",
-  backgroundColor: "surface.light",
-  color: "surface.contrast",
+  backgroundColor: "surface.base.light",
+  color: "surface.contrast.main",
   boxShadow: "#1",
 });
 
 export const triggerHover = style({
-  backgroundColor: "surface.main",
+  backgroundColor: "surface.base.main",
 });
 
 export const triggerFocus = style({
@@ -39,20 +39,20 @@ export const label = style({
   pb: "#1",
   px: "#4",
   typography: "h4",
-  color: "surface.contrast",
+  color: "surface.contrast.main",
 });
 
 export const labelRealCSSS = style({
   pb: "#1",
   px: "#4",
   typography: "h4",
-  color: "surface.contrast",
+  color: "surface.contrast.main",
 });
 
 export const content = style({
   typography: "body",
   overflow: "hidden",
-  backgroundColor: "surface.light",
+  backgroundColor: "surface.base.light",
   borderRadius: "#2",
   boxShadow: "#1",
 });
@@ -65,7 +65,7 @@ export const item = style({
   all: "unset",
   typography: "body",
   color: {
-    default: "surface.contrast",
+    default: "surface.contrast.main",
     hoverOrFocus: "primary.contrast.main",
   },
   background: {
@@ -83,7 +83,7 @@ export const item = style({
 });
 
 export const itemDisabled = style({
-  color: "info.dark",
+  color: "info.base.dark",
   pointerEvents: "none",
 });
 
@@ -123,7 +123,7 @@ export const scrollButton = style({
   alignItems: "center",
   justifyContent: "center",
   height: "25px",
-  backgroundColor: "surface.light",
-  color: "surface.contrast",
+  backgroundColor: "surface.base.light",
+  color: "surface.contrast.main",
   cursor: "default",
 });

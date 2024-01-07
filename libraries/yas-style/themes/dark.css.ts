@@ -6,10 +6,16 @@ import { transitions, typography } from "./shared";
 export const dark: string = createTheme(vars, {
   color: {
     surface: {
-      light: palette.gray["800"],
-      main: palette.gray["900"],
-      dark: palette.gray["950"],
-      contrast: palette.gray["100"],
+      base: {
+        light: palette.gray["800"],
+        main: palette.gray["900"],
+        dark: palette.gray["950"],
+      },
+      contrast: {
+        light: palette.gray["200"],
+        main: palette.gray["100"],
+        dark: palette.gray["50"],
+      },
     },
     primary: {
       base: {
@@ -36,28 +42,52 @@ export const dark: string = createTheme(vars, {
       },
     },
     success: {
-      light: palette.green["400"],
-      main: palette.green["500"],
-      dark: palette.green["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.green["400"],
+        main: palette.green["500"],
+        dark: palette.green["600"],
+      },
+      contrast: {
+        light: palette["gray"]["900"],
+        main: palette["white"]["87%"],
+        dark: palette["gray"]["800"],
+      },
     },
     info: {
-      light: palette.gray["700"],
-      main: palette.gray["800"],
-      dark: palette.gray["900"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.gray["700"],
+        main: palette.gray["800"],
+        dark: palette.gray["900"],
+      },
+      contrast: {
+        light: palette["gray"]["900"],
+        main: palette["white"]["87%"],
+        dark: palette["gray"]["800"],
+      },
     },
     warning: {
-      light: palette.orange["400"],
-      main: palette.orange["500"],
-      dark: palette.orange["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.orange["400"],
+        main: palette.orange["500"],
+        dark: palette.orange["600"],
+      },
+      contrast: {
+        light: palette["gray"]["900"],
+        main: palette["white"]["87%"],
+        dark: palette["gray"]["800"],
+      },
     },
     error: {
-      light: palette.red["400"],
-      main: palette.red["500"],
-      dark: palette.red["600"],
-      contrast: palette["white"]["87%"],
+      base: {
+        light: palette.red["400"],
+        main: palette.red["500"],
+        dark: palette.red["600"],
+      },
+      contrast: {
+        light: palette["gray"]["900"],
+        main: palette["white"]["87%"],
+        dark: palette["gray"]["800"],
+      },
     },
     divider: palette.white["50%"],
     dimmer: palette.black["50%"],

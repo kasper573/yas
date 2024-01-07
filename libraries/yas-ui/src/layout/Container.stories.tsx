@@ -15,7 +15,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: (
-      <Box sx={{ m: "#1", background: "info.main", color: "info.contrast" }}>
+      <Box
+        sx={{
+          m: "#1",
+          background: "info.base.main",
+          color: "info.contrast.main",
+        }}
+      >
         This content should be responsive
       </Box>
     ),

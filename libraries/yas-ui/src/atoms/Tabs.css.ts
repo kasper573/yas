@@ -20,7 +20,7 @@ export const tabs = recipe({
       contained: {
         borderRadius: "#3",
         padding: "#1",
-        background: "info.main",
+        background: "info.base.main",
       },
     },
   },
@@ -44,12 +44,12 @@ export const item = recipe({
       true: {
         selectors: {
           [`${variantClasses["item-contained"]} &`]: {
-            background: "info.main",
-            color: "info.contrast",
+            background: "info.base.main",
+            color: "info.contrast.main",
           },
           [`${variantClasses["contained"]} &`]: {
-            background: "surface.main",
-            color: "info.contrast",
+            background: "surface.base.main",
+            color: "info.contrast.main",
           },
         },
       },

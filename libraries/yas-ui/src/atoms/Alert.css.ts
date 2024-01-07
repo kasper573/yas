@@ -8,20 +8,20 @@ export const alertRecipe = recipe({
   variants: {
     severity: {
       success: {
-        background: "success.main",
-        color: "success.contrast",
+        background: "success.base.main",
+        color: "success.contrast.main",
       },
       info: {
-        background: "info.main",
-        color: "info.contrast",
+        background: "info.base.main",
+        color: "info.contrast.main",
       },
       warning: {
-        background: "warning.main",
-        color: "warning.contrast",
+        background: "warning.base.main",
+        color: "warning.contrast.main",
       },
       error: {
-        background: "error.main",
-        color: "error.contrast",
+        background: "error.base.main",
+        color: "error.contrast.main",
       },
     },
   },

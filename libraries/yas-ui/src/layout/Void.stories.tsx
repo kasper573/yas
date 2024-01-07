@@ -16,12 +16,16 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render() {
     return (
-      <Stack direction="row" align="center" sx={{ background: "success.main" }}>
+      <Stack
+        direction="row"
+        align="center"
+        sx={{ background: "success.base.main" }}
+      >
         Hello
         <Void>
           <Box
             sx={{
-              background: "error.main",
+              background: "error.base.main",
               padding: "#3",
               typography: "h3",
             }}

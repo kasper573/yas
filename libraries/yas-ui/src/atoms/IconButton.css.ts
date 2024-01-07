@@ -43,8 +43,8 @@ export const iconButtonRecipe = recipe({
         borderColor: "transparent",
         background: {
           default: "transparent",
-          hover: "info.dark",
-          active: "info.main",
+          hover: "info.base.dark",
+          active: "info.base.main",
         },
       },
       contained: {},
@@ -130,9 +130,9 @@ export const iconButtonRecipe = recipe({
     {
       variants: { disabled: true },
       style: {
-        background: { default: "info.dark" },
+        background: { default: "info.base.dark" },
         color: "highlight",
-        borderColor: "surface.dark",
+        borderColor: "surface.base.dark",
       },
     },
   ],

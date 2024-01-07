@@ -28,7 +28,13 @@ export const Default: Story = {
 
 function ExampleItem({ children }: { children?: ReactNode }) {
   return (
-    <Box sx={{ m: "#1", background: "info.main", color: "info.contrast" }}>
+    <Box
+      sx={{
+        m: "#1",
+        background: "info.base.main",
+        color: "info.contrast.main",
+      }}
+    >
       {children}
     </Box>
   );

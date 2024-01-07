@@ -1,20 +1,15 @@
 import { createThemeContract } from "@vanilla-extract/css";
 import type { Properties as CSSProperties } from "csstype";
 
-const color = {
+const colorSet = {
   main: null,
   light: null,
   dark: null,
 };
 
-const colorWithFullContrast = {
-  base: color,
-  contrast: color,
-};
-
-const colorWithSimpleContrast = {
-  ...color,
-  contrast: null,
+const colorSetWithContrast = {
+  base: colorSet,
+  contrast: colorSet,
 };
 
 const transition = {
@@ -40,15 +35,15 @@ const typographyStyle = {
 
 export const vars = createThemeContract({
   color: {
-    // Groups
-    surface: colorWithSimpleContrast,
-    primary: colorWithFullContrast,
-    secondary: colorWithFullContrast,
-    success: colorWithSimpleContrast,
-    info: colorWithSimpleContrast,
-    warning: colorWithSimpleContrast,
-    error: colorWithSimpleContrast,
-    // One-off
+    // Contrast color sets
+    surface: colorSetWithContrast,
+    primary: colorSetWithContrast,
+    secondary: colorSetWithContrast,
+    success: colorSetWithContrast,
+    info: colorSetWithContrast,
+    warning: colorSetWithContrast,
+    error: colorSetWithContrast,
+    // Single colors
     divider: null,
     dimmer: null,
     highlight: null,

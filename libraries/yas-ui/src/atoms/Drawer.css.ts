@@ -20,7 +20,7 @@ export const drawerRecipe = recipe({
 
     // Custom
     position: "absolute",
-    background: "surface.light",
+    background: "surface.base.light",
     pointerEvents: "all",
   },
   variants: {

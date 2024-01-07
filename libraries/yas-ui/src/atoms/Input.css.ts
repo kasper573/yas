@@ -8,7 +8,7 @@ export const root = recipe({
     position: "relative",
     border: "standard",
     borderRadius: "#2",
-    backgroundColor: "surface.light",
+    backgroundColor: "surface.base.light",
     outline: { focus: "none" },
     boxShadow: { focus: "#1" },
     borderColor: {
@@ -18,7 +18,7 @@ export const root = recipe({
   variants: {
     error: {
       true: {
-        borderColor: "error.main",
+        borderColor: "error.base.main",
       },
     },
     size: {
@@ -38,7 +38,7 @@ export const root = recipe({
 export const input = style({
   all: "unset",
   typography: "body",
-  color: "surface.contrast",
+  color: "surface.contrast.main",
   flex: 1,
   px: "#1",
 });

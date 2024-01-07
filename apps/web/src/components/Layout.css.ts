@@ -7,8 +7,8 @@ export const layout = style({
 });
 
 globalStyle("html", {
-  background: "surface.main",
-  color: "surface.contrast",
+  background: "surface.base.main",
+  color: "surface.contrast.main",
 });
 
 globalStyle("html, body, #root", {

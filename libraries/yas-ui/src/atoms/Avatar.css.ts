@@ -2,7 +2,7 @@ import { globalStyle, recipe } from "@yas/style";
 
 export const avatar = recipe({
   base: {
-    backgroundColor: "surface.dark",
+    backgroundColor: "surface.base.dark",
     borderRadius: "50%",
     overflow: "hidden",
     display: "flex",
