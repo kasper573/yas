@@ -11,11 +11,28 @@ A notable change is that Route instances will automatically enhance their compon
 The purpose of this to prevent the bad practice of importing route instances all over the codebase when using `myRoute.useSearch()`, which tighly couples all route components with the entire route tree, effectively entangling all route component modules:
 
 ```tsx
+import { useNavigate } from "@tanstack/react-router";
 import { myRoute } from "./routes"; // Contains potentially hundreds of routes, which we now indirectly depend on
 
 export function MyRouteComponent() {
+  const navigate = useNavigate();
   const search = myRoute.useSearch();
-  return <div>{search}</div>;
+
+  return (
+    <>
+      Input date: {search.date?.toString()}
+      <button
+        onClick={() =>
+          navigate({
+            to: myRoute.fullPath,
+            search: { date: new Date() },
+          })
+        }
+      >
+        Update date
+      </button>
+    </>
+  );
 }
 ```
 
@@ -28,7 +45,6 @@ export function MyRouteComponent({
   search,
   setSearch,
 }: RouteComponentProps<{ date?: Date }>) {
-  const search = props.useSearch();
   return (
     <>
       Input date: {search.date?.toString()}
