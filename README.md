@@ -2,7 +2,7 @@
 
 A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture.
 
-> Also serves as an [incubation](#incubations) repository for me to experiment with new ideas and technologies.
+> Also serves as an [incubation](#incubations) repository for experimenting with new ideas and technologies.
 
 ## Quick start
 
