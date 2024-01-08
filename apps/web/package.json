@@ -17,12 +17,12 @@
     "@yas/api-client": "workspace:*",
     "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",
+    "@yas/time": "workspace:*",
     "@yas/ui": "workspace:*",
     "@yas/validate": "workspace:*",
-    "@yas/time": "workspace:*",
+    "@yas/router": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0",
     "recharts": "2.10.3"
   },
   "devDependencies": {

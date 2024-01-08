@@ -6,6 +6,7 @@ import type {
 } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 import { clsx } from "@yas/style";
+import { useMemo } from "react";
 import * as styles from "./Calendar.css";
 export type { DateRange } from "react-day-picker";
 
@@ -27,15 +28,20 @@ export function Calendar({
   ...props
 }: CalendarProps) {
   const range = props.mode === "range";
+  const classNames = useMemo(
+    () => ({
+      cell: cell({ range }),
+      ...defaultClassNames,
+      ...overrideClassNames,
+    }),
+    [range, overrideClassNames],
+  );
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={clsx(base, className)}
-      classNames={{
-        cell: cell({ range }),
-        ...defaultClassNames,
-        ...overrideClassNames,
-      }}
+      classNames={classNames}
       components={components}
       {...props}
     />
