@@ -4,6 +4,12 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 > Also serves as an [incubation](#incubations) repository for me to experiment with new ideas and technologies.
 
+## Quick start
+
+- Clone this repository
+- Run `pnpm install`
+- Run `pnpm dev` to start all development servers. Links to all apps will be displayed in the terminal.
+
 ## Conventions
 
 - The repository root should only hold global tooling and configuration files.
@@ -48,8 +54,8 @@ Packages should follow these naming conventions:
 
 Exceptions apply:
 
-- 3rd party packages that must follow a different naming convention (i.e. `eslint-*`).
-- Packages that are being incubated and intended to eventually be extracted into their own repository can be named whatever they're supposed to be named in the future.
+- Packages that must follow a 3rd party naming convention (i.e. `eslint-*`).
+- Incubation packages may have whatever name they want.
 
 ### Package layers
 
