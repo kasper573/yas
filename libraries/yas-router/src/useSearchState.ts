@@ -16,6 +16,9 @@ type SetSearchParams<R extends AnyRoute> = (
   options?: Omit<NavigateOptions, "to" | "search">,
 ) => Promise<void>;
 
+/**
+ * Like useState, but for search params of a specific route.
+ */
 export function useSearchState<
   TId extends RouteIds<RegisteredRouter["routeTree"]>,
   TRoute extends AnyRoute,
