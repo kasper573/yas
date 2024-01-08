@@ -15,7 +15,7 @@ import {
 } from "@yas/ui";
 import { Suspense, useState } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
-import type { RouteComponentProps } from "@yas/router";
+import { RouteApi, useSearchState } from "@yas/router";
 import { startOfToday } from "@yas/time";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
@@ -27,10 +27,10 @@ import { useDebounce } from "./useDebounce";
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
-export default function Dashboard({
-  search: { date = startOfToday(), userId },
-  setSearch,
-}: RouteComponentProps<{ date?: Date; userId: types.example.UserId }>) {
+const route = new RouteApi({ id: "/dashboard" });
+
+export default function Dashboard() {
+  const [{ userId, date = startOfToday() }, setSearch] = useSearchState(route);
   const setDate = (date?: Date) => setSearch({ date }, { replace: true });
   const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
 
