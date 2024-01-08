@@ -56,4 +56,4 @@ export function MyRouteComponent({
 }
 ```
 
-While this approach is slightly more verbose, sinceyou can't infer the search params type from the route instance, we have now successfully decoupled the route component from the route tree.
+While this approach is slightly more verbose, since you can't infer the search params type from the route instance, we have now successfully decoupled the route component from the route tree.
