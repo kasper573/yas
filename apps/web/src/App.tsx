@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
-import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
+import { RouterProvider } from "@yas/router";
 import { env } from "./env";
-import { AppRoutes } from "./Routes";
 import { ErrorFallback } from "./components/ErrorFallback";
 import {
   getPreferredTheme,
   ThemeProvider,
   ThemeInjector,
 } from "./ThemeProvider";
+import { router } from "./router";
 
 const rootRef = { current: document.documentElement };
 
@@ -27,14 +27,15 @@ export default function App() {
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>
-      <BrowserRouter>
-        <ApiClientProvider value={apiClient}>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <ThemeInjector target={rootRef} />
-            <AppRoutes />
-          </ThemeProvider>
-        </ApiClientProvider>
-      </BrowserRouter>
+      <ApiClientProvider value={apiClient}>
+        <ThemeProvider theme={theme} setTheme={setTheme}>
+          <ThemeInjector target={rootRef} />
+          <RouterProvider
+            router={router}
+            defaultErrorComponent={ErrorFallback}
+          />
+        </ThemeProvider>
+      </ApiClientProvider>
     </ErrorBoundary>
   );
 }

@@ -14,11 +14,9 @@ import {
   Text,
 } from "@yas/ui";
 import { Suspense, useState } from "react";
-import { formatISO, startOfToday } from "@yas/time";
-import type { types } from "@yas/api-client";
-import { api, enabledWhenDefined } from "@yas/api-client";
-import type { RouterStateEncoding } from "../../hooks/useRouterState";
-import { useRouterState } from "../../hooks/useRouterState";
+import { api, enabledWhenDefined, type types } from "@yas/api-client";
+import type { RouteComponentProps } from "@yas/router";
+import { startOfToday } from "@yas/time";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { Title } from "./Title";
@@ -29,13 +27,14 @@ import { useDebounce } from "./useDebounce";
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
-export default function Dashboard() {
-  const [date, setDate] = useRouterState("date", dateEncoding);
-  const [userId, setUserId] = useRouterState(
-    "user",
-    numberEncoding<types.example.UserId>(),
-  );
-  const clearSelectedUser = () => setUserId(undefined, { replace: false });
+export default function Dashboard({
+  search: { date = startOfToday(), userId },
+  setSearch,
+}: RouteComponentProps<{ date?: Date; userId: types.example.UserId }>) {
+  const setDate = (date?: Date) => setSearch({ date }, { replace: true });
+  const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
+
+  const clearSelectedUser = () => setUserId(undefined);
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const debouncedSearchInput = useDebounce(searchInput, 333);
 
@@ -71,7 +70,10 @@ export default function Dashboard() {
             <List sx={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
                 <ListItem asChild button key={index} sx={{ px: "#5" }}>
-                  <NavLink to={`/dashboard?user=${user.userId}`}>
+                  <NavLink
+                    to="/dashboard"
+                    search={(prev) => ({ ...prev, userId: user.userId })}
+                  >
                     <ListItemIcon>
                       <Avatar
                         alt={`${user.name} avatar`}
@@ -133,18 +135,3 @@ const Stack = styled(StackImpl).attrs({ gap: "#4" });
 const OrganizationSelect = styled(Text).attrs({
   children: "OrganizationSelect",
 });
-
-const dateEncoding: RouterStateEncoding<Date> = {
-  decode: (value) => (value ? new Date(value) : startOfToday()),
-  encode: (value) => formatISO(value, { representation: "date" }),
-};
-
-function numberEncoding<T extends number>(): RouterStateEncoding<
-  T | undefined
-> {
-  return {
-    decode: (value) =>
-      ["", undefined].includes(value) ? undefined : (Number(value) as T),
-    encode: (value) => value?.toString() ?? "",
-  };
-}
