@@ -16,6 +16,7 @@ import {
 import { Suspense, useState } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
 import type { RouteComponentProps } from "@yas/router";
+import { startOfToday } from "@yas/time";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { Title } from "./Title";
@@ -27,7 +28,7 @@ const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
 export default function Dashboard({
-  search: { date = new Date(), userId },
+  search: { date = startOfToday(), userId },
   setSearch,
 }: RouteComponentProps<{ date?: Date; userId: types.example.UserId }>) {
   const setDate = (date?: Date) => setSearch({ date }, { replace: true });
