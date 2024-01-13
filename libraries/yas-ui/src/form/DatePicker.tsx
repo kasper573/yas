@@ -1,12 +1,13 @@
 import { CalendarIcon } from "@yas/icons";
 import type { FormatPreset } from "@yas/time";
 import { format } from "@yas/time";
-import type { ButtonProps } from "../atoms/Button";
-import { Button } from "../atoms/Button";
-import { Calendar } from "../atoms/Calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../atoms/Popover";
+import type { ButtonProps } from "../components/Button";
+import { Button } from "../components/Button";
+import { Calendar } from "../organisms/Calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../components/Popover";
 import { Stack } from "../layout/Stack";
-import type { FieldProps } from "./rcf";
+import { Paper } from "../components/Paper";
+import type { FieldProps } from "./shared/rcf";
 import { datePickerText } from "./DatePicker.css";
 
 export interface DatePickerProps
@@ -47,13 +48,15 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <Calendar
-          mode="single"
-          selected={value}
-          onSelect={onChange}
-          initialFocus
-          required={required}
-        />
+        <Paper>
+          <Calendar
+            mode="single"
+            selected={value}
+            onSelect={onChange}
+            initialFocus
+            required={required}
+          />
+        </Paper>
       </PopoverContent>
     </Popover>
   );

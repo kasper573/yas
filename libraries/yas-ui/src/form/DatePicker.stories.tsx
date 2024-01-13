@@ -4,7 +4,6 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { DatePicker } from "./DatePicker";
 
 export default {
-  title: "form/DatePicker",
   component: DatePicker,
   tags: ["autodocs"],
 } satisfies Meta<typeof DatePicker>;

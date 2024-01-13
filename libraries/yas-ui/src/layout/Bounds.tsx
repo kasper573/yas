@@ -2,8 +2,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { useRef, useState } from "react";
 import { styled } from "@yas/style";
 import { useElementBounds } from "@yas/hooks";
-import { relativeFill } from "./Bounds.css";
-import { Dock } from "./Dock";
+import { relativeFill, dock } from "./Bounds.css";
 
 export interface BoundsProps
   extends Omit<ComponentProps<typeof Root>, "children"> {
@@ -21,7 +20,7 @@ export function Bounds({ children, ...props }: BoundsProps) {
   useElementBounds(ref, setBounds);
   return (
     <Root ref={ref} {...props}>
-      <Dock>{bounds ? children?.(bounds) : null}</Dock>
+      <div className={dock}>{bounds ? children?.(bounds) : null}</div>
     </Root>
   );
 }

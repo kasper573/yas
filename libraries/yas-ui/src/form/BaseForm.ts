@@ -1,8 +1,8 @@
 import { z } from "@yas/validate";
 import { TextField } from "./TextField";
-import { NumberField } from "./NumberField";
-import { createForm } from "./rcf";
+import { NumberField } from "./composed/NumberField";
 import { BasicFormLayout } from "./BasicFormLayout";
+import { createForm } from "./shared/rcf";
 
 export const BaseForm = createForm((options) =>
   options

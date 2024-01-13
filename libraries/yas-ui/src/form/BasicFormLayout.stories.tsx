@@ -3,7 +3,6 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { BasicFormLayout } from "./BasicFormLayout";
 
 export default {
-  title: "form/BasicFormLayout",
   component: BasicFormLayout,
   tags: ["autodocs"],
 } satisfies Meta<typeof BasicFormLayout>;

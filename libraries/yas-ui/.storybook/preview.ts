@@ -3,7 +3,7 @@ import { dark } from "@yas/style/themes/dark.css";
 import { light } from "@yas/style/themes/light.css";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import { clsx } from "@yas/style";
-import { pageContainer } from "./storybook.css";
+import { pageContainer } from "./preview.css";
 
 const preview: Preview = {
   parameters: {

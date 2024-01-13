@@ -5,3 +5,8 @@ export const relativeFill = style({
   height: "100%",
   position: "relative",
 });
+
+export const dock = style({
+  position: "absolute",
+  inset: 0,
+});

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
-import { Alert } from "../atoms/Alert";
+import { Alert } from "../components/Alert";
 import { Stack } from "../layout/Stack";
-import { Button } from "../atoms/Button";
-import { Text } from "../atoms/Text";
-import { CircularProgress } from "../atoms/CircularProgress";
-import type { FormLayoutProps } from "./rcf";
+import { Button } from "../components/Button";
+import { Text } from "../components/Text";
+import { CircularProgress } from "../components/CircularProgress";
+import type { FormLayoutProps } from "./shared/rcf";
 
 export function BasicFormLayout({
   title,
@@ -33,7 +33,9 @@ export function BasicFormLayout({
           ))}
         </Stack>
         {generalErrors.length > 0 && (
-          <Alert color="error">{generalErrors.join(", ")}</Alert>
+          <Alert color="error">
+            <Text>{generalErrors.join(", ")}</Text>
+          </Alert>
         )}
       </Stack>
     </form>

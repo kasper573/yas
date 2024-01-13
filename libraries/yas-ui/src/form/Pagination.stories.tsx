@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Pagination } from "./Pagination";
 
 export default {
-  title: "form/Pagination",
   component: Pagination,
   tags: ["autodocs"],
 } satisfies Meta<typeof Pagination>;

@@ -3,16 +3,16 @@ import { useId } from "react";
 import type { RecipeVariants } from "@yas/style";
 import { clsx } from "@yas/style";
 import { Cross1Icon } from "@yas/icons";
-import { InputArea, InputRoot, InputSlot } from "../atoms/Input";
-import { Button } from "../atoms/Button";
-import { CircularProgress } from "../atoms/CircularProgress";
-import type { FieldProps } from "./rcf";
+import { InputArea, InputRoot, InputSlot } from "../components/Input";
+import { Button } from "../components/Button";
+import { CircularProgress } from "../components/CircularProgress";
+import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
   type FormControlProps,
-} from "./FormControl";
+} from "./shared/FormControl";
 import * as styles from "./TextField.css";
 
 export interface TextFieldProps

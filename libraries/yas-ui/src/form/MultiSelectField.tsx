@@ -10,14 +10,14 @@ import {
   SelectViewport,
   SelectItem,
   SelectScrollDownButton,
-} from "../atoms/Select";
-import { SelectRoot } from "../atoms/Select";
-import type { FieldProps } from "./rcf";
+} from "../components/Select";
+import { SelectRoot } from "../components/Select";
+import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,
   FormControlLabel,
   FormControlErrors,
-} from "./FormControl";
+} from "./shared/FormControl";
 
 export interface MultiSelectOption<Value> {
   value: Value;

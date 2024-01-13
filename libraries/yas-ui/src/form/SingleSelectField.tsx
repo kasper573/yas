@@ -12,13 +12,13 @@ import {
   SelectRoot,
   SelectValue,
   SelectTriggerIcon,
-} from "../atoms/Select";
-import type { FieldProps } from "./rcf";
+} from "../components/Select";
+import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,
   FormControlLabel,
   FormControlErrors,
-} from "./FormControl";
+} from "./shared/FormControl";
 
 export type SingleSelectOption<Value> = {
   value: Value;

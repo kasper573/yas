@@ -99,11 +99,15 @@ export default function Sandbox() {
         </Box>
 
         <Box className={styles.projectImage} sx={{ p: "#2" }}>
-          <Alert severity="info">Image from apps/web</Alert>
+          <Alert severity="info">
+            <Text>Image from apps/web</Text>
+          </Alert>
         </Box>
 
         <ExampleImage sx={{ p: "#2" }}>
-          <Alert severity="info">Image from @yas/ui</Alert>
+          <Alert severity="info">
+            <Text>Image from @yas/ui</Text>
+          </Alert>
         </ExampleImage>
       </Stack>
     </>
