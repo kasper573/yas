@@ -25,4 +25,7 @@ export const alertRecipe = recipe({
       },
     },
   },
+  defaultVariants: {
+    severity: "error",
+  },
 });

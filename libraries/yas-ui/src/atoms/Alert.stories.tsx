@@ -8,5 +8,5 @@ export default {
 } satisfies Meta<typeof Alert>;
 
 export const Default: StoryObj<Meta<typeof Alert>> = {
-  args: { children: "Alert!" },
+  args: { children: <>Alert!</> },
 };
