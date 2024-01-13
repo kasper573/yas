@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { useRef, useState } from "react";
 import { styled } from "@yas/style";
-import { useElementBounds } from "../hooks/useElementBounds";
+import { useElementBounds } from "@yas/hooks";
 import { relativeFill } from "./Bounds.css";
 import { Dock } from "./Dock";
 

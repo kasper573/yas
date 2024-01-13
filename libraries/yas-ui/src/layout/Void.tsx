@@ -1,6 +1,6 @@
 import { useRef, type ComponentProps } from "react";
 import { setElementVars, styled } from "@yas/style";
-import { useElementBounds } from "../hooks/useElementBounds";
+import { useElementBounds } from "@yas/hooks";
 import { inner, outer, innerHeight, innerWidth } from "./Void.css";
 
 /**

@@ -1,6 +1,7 @@
-import { CircularProgress, Container, ModalOutlet, Dock, Stack } from "@yas/ui";
+import { CircularProgress, Container, Dock, Stack } from "@yas/ui";
 import { Outlet as RouterOutlet } from "@yas/router";
 import { Suspense } from "react";
+import { ModalOutlet } from "@yas/hooks";
 import { Menu } from "./Menu";
 import { layout } from "./Layout.css";
 

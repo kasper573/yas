@@ -1,7 +1,7 @@
 import type { ImperativeComponentProps } from "react-imperative-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
-import { useModalSustainer } from "../hooks/useModal";
+import { useModalSustainer } from "@yas/hooks";
 import { clipperRecipe, drawerRecipe } from "./Drawer.css";
 import { Overlay } from "./Overlay";
 

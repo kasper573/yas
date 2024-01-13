@@ -175,6 +175,9 @@ importers:
       '@yas/api-client':
         specifier: workspace:*
         version: link:../../integrations/api-client
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../../libraries/yas-hooks
       '@yas/icons':
         specifier: workspace:*
         version: link:../../libraries/yas-icons
@@ -656,6 +659,25 @@ importers:
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
 
+  libraries/yas-hooks:
+    dependencies:
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-imperative-hook:
+        specifier: workspace:*
+        version: link:../../incubations/react-imperative-hook
+      usehooks-ts:
+        specifier: 2.9.2
+        version: 2.9.2(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
+
   libraries/yas-icons:
     dependencies:
       '@radix-ui/react-icons':
@@ -750,6 +772,9 @@ importers:
       '@radix-ui/react-select':
         specifier: ^2.0.0
         version: 2.0.0(@types/react-dom@18.2.15)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../yas-hooks
       '@yas/icons':
         specifier: workspace:*
         version: link:../yas-icons
@@ -21425,6 +21450,18 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+
+  /usehooks-ts@2.9.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-fOzPeG01rs51CGYzqgioP/zs9v1Cgpe+zcXeqJPlDHYfdfG/wjsdjBWHJi+Ph1JgQAGUrDo5sJbPlaZd+Z9lxw==}
+    engines: {node: '>=16.15.0'}
+    requiresBuild: true
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
