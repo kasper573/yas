@@ -16,7 +16,7 @@
     "test:types": "vitest typecheck"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "18.2.0"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
@@ -25,6 +25,6 @@
     "@vanilla-extract/recipes": "0.5.1",
     "@vanilla-extract/vite-plugin": "3.9.2",
     "concurrently": "^8.2.1",
-    "react": "^18.2.0"
+    "react": "18.2.0"
   }
 }

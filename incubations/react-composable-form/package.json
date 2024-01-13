@@ -37,7 +37,7 @@
   },
   "peerDependencies": {
     "immer": "^10.0.2",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
@@ -47,7 +47,7 @@
     "@yas/tsconfig": "workspace:*",
     "@yas/scripts": "workspace:*",
     "concurrently": "^8.0.1",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "zod": "^3.22.3"
   }
 }
