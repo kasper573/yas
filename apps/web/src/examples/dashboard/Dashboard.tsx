@@ -17,12 +17,12 @@ import { Suspense, useState } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
 import { RouteApi, useSearchState } from "@yas/router";
 import { startOfToday } from "@yas/time";
+import { useDebounce } from "@yas/hooks";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
 import { SearchForm } from "./SearchForm";
-import { useDebounce } from "./useDebounce";
 
 const mainNav = ["Overview", "Customers", "Products", "Settings"];
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];

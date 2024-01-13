@@ -1,0 +1,25 @@
+{
+  "name": "@yas/hooks",
+  "version": "0.0.0",
+  "sideEffects": false,
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "usehooks-ts": "2.9.2",
+    "react-imperative-hook": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.37",
+    "@yas/tsconfig": "workspace:*"
+  }
+}

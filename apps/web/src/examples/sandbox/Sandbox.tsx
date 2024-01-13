@@ -10,9 +10,8 @@ import {
   ExampleImage,
   Stack,
   Text,
-  useMediaQueries,
-  useModal,
 } from "@yas/ui";
+import { useMediaQueries, useModal } from "@yas/hooks";
 import { api } from "@yas/api-client";
 import { breakpointQuery } from "@yas/style";
 import { env } from "../../env";

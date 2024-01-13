@@ -32,6 +32,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
+    width: "100%",
   },
   title: { margin: 0 },
   buttons: { display: "flex", flexDirection: "row", gap: 10 },
