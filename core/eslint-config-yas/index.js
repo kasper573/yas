@@ -169,7 +169,6 @@ module.exports = {
 
     ...require("@yas/env/eslintOverrides"),
     ...require("@yas/style/eslintOverrides"),
-    ...require("@yas/result/eslintOverrides"),
 
     {
       files: ["*.ts", "*.tsx", "*.js", "*.jsx"],
