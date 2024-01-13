@@ -245,9 +245,6 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../yas-env
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/yas-result
       '@yas/style':
         specifier: workspace:*
         version: link:../../libraries/yas-style
