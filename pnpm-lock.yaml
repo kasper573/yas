@@ -181,6 +181,9 @@ importers:
       '@yas/icons':
         specifier: workspace:*
         version: link:../../libraries/yas-icons
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libraries/yas-result
       '@yas/router':
         specifier: workspace:*
         version: link:../../libraries/yas-router

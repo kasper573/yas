@@ -18,6 +18,7 @@
     "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/time": "workspace:*",
+    "@yas/result": "workspace:*",
     "@yas/ui": "workspace:*",
     "@yas/hooks": "workspace:*",
     "@yas/validate": "workspace:*",
