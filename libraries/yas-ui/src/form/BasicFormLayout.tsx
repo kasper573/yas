@@ -33,7 +33,9 @@ export function BasicFormLayout({
           ))}
         </Stack>
         {generalErrors.length > 0 && (
-          <Alert color="error">{generalErrors.join(", ")}</Alert>
+          <Alert color="error">
+            <Text>{generalErrors.join(", ")}</Text>
+          </Alert>
         )}
       </Stack>
     </form>

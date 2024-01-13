@@ -1,5 +1,5 @@
 import { z } from "@yas/validate";
-import { Button, Stack } from "@yas/ui";
+import { Button, Stack, Text } from "@yas/ui";
 import type { FormLayoutProps } from "@yas/ui";
 import { createForm, TextField, Alert } from "@yas/ui";
 
@@ -55,7 +55,7 @@ export function CardLayout({
         {/* General errors are errors that could not be assigned to a specific field */}
         {generalErrors.length > 0 && (
           <Alert severity="error" className="card__footer">
-            {generalErrors.join(", ")}
+            <Text>{generalErrors.join(", ")}</Text>
           </Alert>
         )}
       </Stack>
@@ -114,7 +114,9 @@ export function InlineLayout({
         </div>
       </Stack>
       {generalErrors.length > 0 && (
-        <Alert severity="error">{generalErrors.join(", ")}</Alert>
+        <Alert severity="error">
+          <Text>{generalErrors.join(", ")}</Text>
+        </Alert>
       )}
     </form>
   );
