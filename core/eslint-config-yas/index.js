@@ -171,13 +171,33 @@ module.exports = {
     ...require("@yas/style/eslintOverrides"),
     ...require("@yas/result/eslintOverrides"),
 
-    // List of encapsulated libraries
-    // Add new libraries here as they are encapsulated
-    ensureUseOfEncapsulation("yas-style", "@vanilla-extract"),
-    ensureUseOfEncapsulation("yas-time", "date-fns"),
-    ensureUseOfEncapsulation("yas-icons", "@radix-ui/react-icons"),
-    ensureUseOfEncapsulation("yas-result", "neverthrow"),
-    ensureUseOfEncapsulation("yas-validate", "zod"),
+    {
+      files: ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      excludedFiles: [
+        // We don't enforce encapsulation rules in incubations because incubations are supposed to be
+        // moved to separate repositories eventually, so they should depend on whatever packages they want
+        "**/incubations/**",
+        // Ignore docs/src/env.js because it's has be able to be used inside of docusaurus.config.js,
+        // which doesn't support @yas/validate (can't be used in javascript)
+        "**/docs/src/env.js",
+      ],
+      rules: {
+        // List of encapsulated libraries
+        "yas/encapsulate-dependency": [
+          "error",
+          {
+            "@yas/style": "@vanilla-extract/css",
+            "@yas/style": "@vanilla-extract/recipes",
+            "@yas/style": "@vanilla-extract/dynamic",
+            "@yas/time": "date-fns",
+            "@yas/hooks": "usehooks-ts",
+            "@yas/icons": "@radix-ui/react-icons",
+            "@yas/result": "neverthrow",
+            "@yas/validate": "zod",
+          },
+        ],
+      },
+    },
   ],
 };
 
@@ -192,24 +212,4 @@ function getMonorepoAppNames() {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
       return packageJson.name;
     });
-}
-
-function ensureUseOfEncapsulation(internalPackageName, thirdPartyPackageName) {
-  return {
-    files: ["*.ts", "*.tsx"],
-    excludedFiles: [`**/${internalPackageName}/**`],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            {
-              name: thirdPartyPackageName,
-              message: `Use "${internalPackageName}" instead`,
-            },
-          ],
-        },
-      ],
-    },
-  };
 }
