@@ -32,5 +32,5 @@ export * from "./form/SingleSelectField";
 export * from "./form/TextField";
 export * from "./form/composed/CheckboxGroupField";
 export * from "./form/composed/NumberField";
-export * from "./form/composed-again/BaseForm";
+export * from "./form/BaseForm";
 export * from "./debug/ExampleImage";

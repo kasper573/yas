@@ -5,7 +5,7 @@ module.exports = {
     "yas/atomic-module": [
       "error",
       [
-        path.resolve(__dirname, "src/form/composed-again"),
+        path.resolve(__dirname, "src/form/BaseForm.ts"),
         path.resolve(__dirname, "src/form/composed"),
         path.resolve(__dirname, "src/form"),
         path.resolve(__dirname, "src/form/shared"),
