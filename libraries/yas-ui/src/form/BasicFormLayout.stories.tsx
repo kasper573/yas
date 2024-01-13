@@ -19,5 +19,6 @@ export const Default: StrictStoryObj<typeof BasicFormLayout> = {
     fieldValues: {},
     reset: () => {},
     handleSubmit: () => {},
+    title: "Title",
   },
 };
