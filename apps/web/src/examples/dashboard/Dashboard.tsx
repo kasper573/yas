@@ -53,7 +53,6 @@ export default function Dashboard() {
   return (
     <Card sx={{ p: 0 }}>
       <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
-        <OrganizationSelect />
         <Tabs variant="text-highlight" sx={{ flex: 1 }}>
           {mainNav.map((label, index) => (
             <TabItem asChild key={index} active={index === 0}>
@@ -94,7 +93,6 @@ export default function Dashboard() {
             </List>
           ) : null}
         </SearchForm>
-        <UserMenu />
       </Stack>
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
@@ -129,9 +127,4 @@ export default function Dashboard() {
   );
 }
 
-const UserMenu = styled(Text).attrs({ children: "UserMenu" });
 const Stack = styled(StackImpl).attrs({ gap: "#4" });
-
-const OrganizationSelect = styled(Text).attrs({
-  children: "OrganizationSelect",
-});
