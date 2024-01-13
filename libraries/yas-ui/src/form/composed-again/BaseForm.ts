@@ -1,6 +1,6 @@
 import { z } from "@yas/validate";
 import { TextField } from "../TextField";
-import { NumberField } from "../NumberField";
+import { NumberField } from "../composed/NumberField";
 import { BasicFormLayout } from "../BasicFormLayout";
 import { createForm } from "../shared/rcf";
 

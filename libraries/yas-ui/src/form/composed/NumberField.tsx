@@ -1,6 +1,6 @@
-import type { FieldProps } from "./shared/rcf";
-import type { TextFieldProps } from "./TextField";
-import { TextField } from "./TextField";
+import type { FieldProps } from "../shared/rcf";
+import type { TextFieldProps } from "../TextField";
+import { TextField } from "../TextField";
 
 export interface NumberFieldProps
   extends FieldProps<number>,

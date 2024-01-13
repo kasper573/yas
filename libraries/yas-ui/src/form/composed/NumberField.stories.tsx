@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { useState } from "react";
-import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
+import type { StrictStoryObj } from "../../../.storybook/StrictStoryObj";
 import { NumberField } from "./NumberField";
 
 export default {

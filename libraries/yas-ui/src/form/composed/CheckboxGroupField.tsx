@@ -1,11 +1,11 @@
 import { useId, type ReactNode } from "react";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "../shared/rcf";
 import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
-} from "./shared/FormControl";
-import { CheckboxField } from "./CheckboxField";
+} from "../shared/FormControl";
+import { CheckboxField } from "../CheckboxField";
 
 export interface CheckboxGroupOption<Value> {
   value: Value;
