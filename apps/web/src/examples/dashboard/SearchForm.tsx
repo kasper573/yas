@@ -1,4 +1,10 @@
-import { PopoverAnchor, TextField, Popover, PopoverContent } from "@yas/ui";
+import {
+  PopoverAnchor,
+  TextField,
+  Popover,
+  PopoverContent,
+  Paper,
+} from "@yas/ui";
 import type { ReactNode } from "react";
 
 export function SearchForm({
@@ -40,7 +46,7 @@ export function SearchForm({
           style={{ overflow: "hidden" }}
           onClick={clear}
         >
-          {children}
+          <Paper>{children}</Paper>
         </PopoverContent>
       </Popover>
     </form>

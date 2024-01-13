@@ -15,7 +15,11 @@ function PopoverShowcase() {
       <PopoverTrigger asChild>
         <button>Open</button>
       </PopoverTrigger>
-      <PopoverContent style={{ padding: 12 }}>Content</PopoverContent>
+      <PopoverContent
+        style={{ padding: 12, background: "gray", color: "black" }}
+      >
+        Content
+      </PopoverContent>
     </Popover>
   );
 }

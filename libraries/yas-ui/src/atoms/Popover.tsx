@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { clsx } from "@yas/style";
 import { forwardRef } from "react";
-import { popoverContent } from "./Popover.css";
+import { popoverAnimation } from "./Popover.css";
 
 const Popover = PopoverPrimitive.Root;
 
@@ -22,7 +22,7 @@ const PopoverContent = forwardRef<
         ref={ref}
         align={align}
         sideOffset={sideOffset}
-        className={clsx(popoverContent, className)}
+        className={clsx(popoverAnimation, className)}
         {...props}
       />
     </PopoverPrimitive.Portal>

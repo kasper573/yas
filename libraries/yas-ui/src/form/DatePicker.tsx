@@ -6,6 +6,7 @@ import { Button } from "../atoms/Button";
 import { Calendar } from "../atoms/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../atoms/Popover";
 import { Stack } from "../layout/Stack";
+import { Paper } from "../atoms/Paper";
 import type { FieldProps } from "./shared/rcf";
 import { datePickerText } from "./DatePicker.css";
 
@@ -47,13 +48,15 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <Calendar
-          mode="single"
-          selected={value}
-          onSelect={onChange}
-          initialFocus
-          required={required}
-        />
+        <Paper>
+          <Calendar
+            mode="single"
+            selected={value}
+            onSelect={onChange}
+            initialFocus
+            required={required}
+          />
+        </Paper>
       </PopoverContent>
     </Popover>
   );

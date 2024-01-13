@@ -6,7 +6,6 @@ import {
   style,
   unsafe,
 } from "@yas/style";
-import { paperRecipe } from "./Paper.css";
 
 const hiddenTransform = createTransformVar();
 const hiddenStyles = {
@@ -17,7 +16,7 @@ const hiddenStyles = {
 const enter = keyframes({ from: hiddenStyles });
 const exit = keyframes({ to: hiddenStyles });
 
-const popoverAnimation = clsx(
+export const popoverAnimation = clsx(
   style({
     selectors: {
       "&[data-state=open]": {
@@ -46,7 +45,3 @@ const popoverAnimation = clsx(
     },
   }),
 );
-
-const popoverPaper = paperRecipe({ elevation: "1" });
-
-export const popoverContent = clsx(popoverPaper, popoverAnimation);
