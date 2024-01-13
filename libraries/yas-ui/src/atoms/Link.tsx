@@ -1,8 +1,8 @@
 import type { AnchorHTMLAttributes } from "react";
-import { Text } from "../atoms/Text";
+import { styled } from "@yas/style";
 import { link } from "./Link.css";
 
-export const Link = Text.as(AnchorWithFallback).attrs({ className: link });
+export const Link = styled(AnchorWithFallback, link);
 
 // Rendering anchor tags without href results in uncrawlable links, which is poor SEO.
 

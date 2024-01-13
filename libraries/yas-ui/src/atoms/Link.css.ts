@@ -1,6 +1,7 @@
 import { style } from "@yas/style";
 
 export const link = style({
+  typography: "body",
   textDecoration: "none",
   cursor: "pointer",
   selectors: {
@@ -11,4 +12,8 @@ export const link = style({
       color: "inherit",
     },
   },
+});
+
+export const h2 = style({
+  typography: "h2",
 });
