@@ -1,6 +1,6 @@
 import { unsafe } from "@yas/style";
 import { Stack } from "../layout/Stack";
-import { Text } from "../atoms/Text";
+import { Text } from "../components/Text";
 
 interface PaletteProps {
   colorName?: keyof typeof unsafe.tokens.palette;

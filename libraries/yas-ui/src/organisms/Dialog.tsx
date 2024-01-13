@@ -2,15 +2,15 @@ import type { ImperativeComponentProps } from "react-imperative-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
 import { useModalSustainer } from "@yas/hooks";
+import { Paper } from "../components/Paper";
+import { Text } from "../components/Text";
+import { Overlay } from "../components/Overlay";
 import {
   dialogActionsRecipe,
   dialogContentRecipe,
   dialogRecipe,
   dialogTitleRecipe,
 } from "./Dialog.css";
-import { Paper } from "./Paper";
-import { Text } from "./Text";
-import { Overlay } from "./Overlay";
 
 export interface DialogProps<ResolutionValue = void>
   extends Omit<ComponentProps<typeof BaseDialog>, "open" | "onClickAway">,

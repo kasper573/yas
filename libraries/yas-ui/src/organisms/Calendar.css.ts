@@ -1,5 +1,5 @@
 import { recipe, style } from "@yas/style";
-import { buttonRecipe } from "./Button.css";
+import { buttonRecipe } from "../components/Button.css";
 
 const borderRadius = "#2" as const;
 

@@ -1,8 +1,8 @@
 import { unsafe } from "@yas/style";
 import type { ReactNode } from "react";
 import { Stack } from "../layout/Stack";
-import { Text } from "../atoms/Text";
-import { Button } from "../atoms/Button";
+import { Text } from "../components/Text";
+import { Button } from "../components/Button";
 
 interface ColorSetsProps {
   colorSetName?: unsafe.ColorSetName;

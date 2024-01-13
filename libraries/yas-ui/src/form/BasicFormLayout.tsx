@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { Alert } from "../atoms/Alert";
+import { Alert } from "../components/Alert";
 import { Stack } from "../layout/Stack";
-import { Button } from "../atoms/Button";
-import { Text } from "../atoms/Text";
-import { CircularProgress } from "../atoms/CircularProgress";
+import { Button } from "../components/Button";
+import { Text } from "../components/Text";
+import { CircularProgress } from "../components/CircularProgress";
 import type { FormLayoutProps } from "./shared/rcf";
 
 export function BasicFormLayout({

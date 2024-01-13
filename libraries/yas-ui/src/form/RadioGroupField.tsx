@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { Cross2Icon } from "@yas/icons";
-import { Button } from "../atoms/Button";
+import { Button } from "../components/Button";
 import { Stack } from "../layout/Stack";
 import { Void } from "../layout/Void";
 import {

@@ -12,7 +12,7 @@ import {
   SelectRoot,
   SelectValue,
   SelectTriggerIcon,
-} from "../atoms/Select";
+} from "../components/Select";
 import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,

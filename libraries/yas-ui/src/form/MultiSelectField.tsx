@@ -10,8 +10,8 @@ import {
   SelectViewport,
   SelectItem,
   SelectScrollDownButton,
-} from "../atoms/Select";
-import { SelectRoot } from "../atoms/Select";
+} from "../components/Select";
+import { SelectRoot } from "../components/Select";
 import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,

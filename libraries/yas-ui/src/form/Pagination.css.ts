@@ -1,5 +1,5 @@
 import { style } from "@yas/style";
-import { iconSizes } from "../atoms/Button.css";
+import { iconSizes } from "../components/Button.css";
 
 export const separator = style({
   width: iconSizes.small,

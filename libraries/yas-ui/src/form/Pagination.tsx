@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@yas/icons";
 import { styled } from "@yas/style";
 import { Stack } from "../layout/Stack";
-import { Button } from "../atoms/Button";
-import { Text } from "../atoms/Text";
+import { Button } from "../components/Button";
+import { Text } from "../components/Text";
 import { Void } from "../layout/Void";
 import { separator } from "./Pagination.css";
 
