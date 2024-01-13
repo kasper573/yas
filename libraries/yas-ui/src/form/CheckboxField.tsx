@@ -1,12 +1,12 @@
 import { useId, type ComponentProps } from "react";
 import { styled } from "@yas/style";
 import { Stack } from "../layout/Stack";
-import type { FieldProps } from "./rcf";
+import type { FieldProps } from "./shared/rcf";
 import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
-} from "./FormControl";
+} from "./shared/FormControl";
 import { checkboxRecipe } from "./CheckboxField.css";
 
 export type CheckboxLabelSide = "left" | "right";

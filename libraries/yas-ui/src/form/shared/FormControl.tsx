@@ -1,6 +1,6 @@
 import { styled } from "@yas/style";
 import type { ComponentProps } from "react";
-import { Text } from "../atoms/Text";
+import { Text } from "../../atoms/Text";
 
 export type FormControlProps = ComponentProps<typeof FormControl>;
 export const FormControl = styled("div");

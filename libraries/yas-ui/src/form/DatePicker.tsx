@@ -6,7 +6,7 @@ import { Button } from "../atoms/Button";
 import { Calendar } from "../atoms/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../atoms/Popover";
 import { Stack } from "../layout/Stack";
-import type { FieldProps } from "./rcf";
+import type { FieldProps } from "./shared/rcf";
 import { datePickerText } from "./DatePicker.css";
 
 export interface DatePickerProps

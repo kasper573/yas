@@ -7,8 +7,8 @@ import {
   FormControl,
   FormControlErrors,
   FormControlLabel,
-} from "./FormControl";
-import type { FieldProps } from "./rcf";
+} from "./shared/FormControl";
+import type { FieldProps } from "./shared/rcf";
 import * as styles from "./RadioGroupField.css";
 
 export interface RadioGroupOption<Value> {

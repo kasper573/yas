@@ -4,7 +4,7 @@ import { Stack } from "../layout/Stack";
 import { Button } from "../atoms/Button";
 import { Text } from "../atoms/Text";
 import { CircularProgress } from "../atoms/CircularProgress";
-import type { FormLayoutProps } from "./rcf";
+import type { FormLayoutProps } from "./shared/rcf";
 
 export function BasicFormLayout({
   title,

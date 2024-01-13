@@ -1,4 +1,4 @@
-import type { FieldProps } from "./rcf";
+import type { FieldProps } from "./shared/rcf";
 import type { TextFieldProps } from "./TextField";
 import { TextField } from "./TextField";
 

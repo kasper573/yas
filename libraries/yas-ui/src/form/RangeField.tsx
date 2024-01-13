@@ -4,8 +4,8 @@ import {
   FormControl,
   FormControlLabel,
   FormControlErrors,
-} from "./FormControl";
-import type { FieldProps } from "./rcf";
+} from "./shared/FormControl";
+import type { FieldProps } from "./shared/rcf";
 
 export type Range = [number, number];
 
