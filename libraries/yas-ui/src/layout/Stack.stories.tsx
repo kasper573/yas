@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
 import { Stack } from "./Stack";
-import { Box } from "./Box";
 
 const meta = {
   title: "layout/Stack",
@@ -27,15 +26,14 @@ export const Default: Story = {
 };
 
 function ExampleItem({ children }: { children?: ReactNode }) {
-  return (
-    <Box
-      sx={{
-        m: "#1",
-        background: "info.base.main",
-        color: "info.contrast.main",
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return <div style={styles.item}>{children}</div>;
 }
+
+const styles = {
+  item: {
+    margin: 8,
+    padding: 8,
+    background: "gray",
+    color: "white",
+  },
+};

@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Void } from "./Void";
-import { Box } from "./Box";
-import { Stack } from "./Stack";
 
 const meta = {
   title: "layout/Void",
@@ -16,25 +14,26 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render() {
     return (
-      <Stack
-        direction="row"
-        align="center"
-        sx={{ background: "success.base.main" }}
-      >
+      <div style={styles.stack}>
         Hello
         <Void>
-          <Box
-            sx={{
-              background: "error.base.main",
-              padding: "#3",
-              typography: "h3",
-            }}
-          >
-            Void
-          </Box>
+          <div style={styles.void}>Void</div>
         </Void>
         World
-      </Stack>
+      </div>
     );
   },
 };
+
+const styles = {
+  stack: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  void: {
+    background: "red",
+    padding: 12,
+    fontSize: 24,
+  },
+} as const;
