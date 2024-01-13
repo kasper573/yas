@@ -15,7 +15,7 @@
     "dev": "turbo run dev --concurrency 30",
     "lint": "pnpm eslint . --max-warnings=0",
     "lint:fix": "pnpm eslint . --fix",
-    "depcheck": "assert-workspace-hierarchy \"apps > integrations > libraries/core/incubations\"",
+    "depcheck": "assert-workspace-hierarchy \"apps > integrations > libraries/core/incubations\" && assert-dependency-versions --pn react react-dom @types/react @types/react-dom",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
