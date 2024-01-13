@@ -6,7 +6,8 @@
   "bin": {
     "assert-workspace-hierarchy": "./bin/assert-workspace-hierarchy.ts",
     "publicize-package-json": "./bin/publicize-package-json.ts",
-    "assert-sibling-files": "./bin/assert-sibling-files.ts"
+    "assert-sibling-files": "./bin/assert-sibling-files.ts",
+    "assert-dependency-versions": "./bin/assert-dependency-versions.ts"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.24",

@@ -1,11 +1,8 @@
 #!/usr/bin/env tsx
 
-import * as path from "path";
-import * as fs from "fs";
-import type { ZodType } from "@yas/validate";
-import { z } from "@yas/validate";
 import uniqueColor from "uniqolor";
 import chalk from "chalk";
+import { loadWorkspace } from "../src/workspace";
 
 const symbols = {
   rel: ">",
@@ -42,7 +39,7 @@ for (let i = 0; i < hierarchy.length; i++) {
   for (const workspaceName of workspaceGroup) {
     const workspace = workspacesByName[workspaceName];
     for (const pkg of workspace.packages) {
-      for (const dependency of pkg.dependencies) {
+      for (const dependency of pkg.uniqueDependencyNames) {
         const violatingWorkspace = parentWorkspaces.find((parent) =>
           parent.packages
             .filter((p) => !pkg.depcheck.exceptions.allow.includes(p.name))
@@ -94,57 +91,6 @@ function parseHierarchy(rule: string): string[][] {
         .map((part) => part.trim())
         .filter(Boolean),
     );
-}
-
-function loadWorkspace(rootDir: string, name: string) {
-  const workspaceDir = path.resolve(rootDir, name);
-  const packages = fs.readdirSync(workspaceDir, { withFileTypes: true }).reduce(
-    (list, file) => {
-      if (file.isDirectory()) {
-        list.push(readPackage(path.resolve(workspaceDir, file.name)));
-      }
-      return list;
-    },
-    [] as Array<ReturnType<typeof readPackage>>,
-  );
-  return { name, packages };
-}
-
-function readPackage(packageDir: string) {
-  const pkg = readJSONFile(
-    path.join(packageDir, "package.json"),
-    z.object({
-      name: z.string(),
-      dependencies: z.record(z.string()).optional(),
-      peerDependencies: z.record(z.string()).optional(),
-      devDependencies: z.record(z.string()).optional(),
-      depcheck: z
-        .object({
-          exceptions: z
-            .object({
-              allow: z.array(z.string()).default([]),
-            })
-            .default({}),
-        })
-        .default({}),
-    }),
-  );
-  return {
-    name: pkg.name,
-    dependencies: new Set([
-      ...Object.keys(pkg.dependencies ?? {}),
-      ...Object.keys(pkg.peerDependencies ?? {}),
-      ...Object.keys(pkg.devDependencies ?? {}),
-    ]),
-    depcheck: pkg.depcheck,
-  };
-}
-
-function readJSONFile<T extends ZodType>(
-  filename: string,
-  schema: T,
-): z.infer<T> {
-  return schema.parse(JSON.parse(fs.readFileSync(filename, "utf-8")));
 }
 
 function colorize(str: string) {

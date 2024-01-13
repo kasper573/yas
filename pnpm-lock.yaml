@@ -194,10 +194,10 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/yas-validate
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       recharts:
         specifier: 2.10.3
@@ -476,7 +476,7 @@ importers:
         specifier: ^8.0.1
         version: 8.2.1
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       zod:
         specifier: ^3.22.3
@@ -503,7 +503,7 @@ importers:
         specifier: ^10.0.2
         version: 10.0.2
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
 
   incubations/react-styled-factory:
@@ -527,7 +527,7 @@ importers:
         specifier: ^8.2.1
         version: 8.2.1
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
 
   incubations/remark-html-to-jsx:
@@ -603,7 +603,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
 
   incubations/vanilla-extract-recipe-factory:
@@ -643,7 +643,7 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/yas-result
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       superjson:
         specifier: 1.13.3
