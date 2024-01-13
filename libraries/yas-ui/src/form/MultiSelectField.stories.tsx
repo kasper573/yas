@@ -4,7 +4,6 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { MultiSelectField } from "./MultiSelectField";
 
 export default {
-  title: "form/MultiSelectField",
   component: MultiSelectField,
   tags: ["autodocs"],
 } satisfies Meta<typeof MultiSelectField<number>>;

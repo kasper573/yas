@@ -4,7 +4,6 @@ import type { DateRange, RangeCalendarProps } from "./Calendar";
 import { Calendar } from "./Calendar";
 
 export default {
-  title: "atoms/Calendar",
   component: () => null,
   tags: ["autodocs"],
 } satisfies Meta;

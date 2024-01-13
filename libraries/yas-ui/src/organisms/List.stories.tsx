@@ -9,7 +9,6 @@ import {
 } from "./List";
 
 export default {
-  title: "atoms/List",
   component: List,
   tags: ["autodocs"],
 } satisfies Meta<typeof List>;

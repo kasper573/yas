@@ -13,7 +13,6 @@ import {
 } from "./Dialog";
 
 export default {
-  title: "atoms/Dialog",
   component: () => null,
   tags: ["autodocs"],
 } satisfies Meta;

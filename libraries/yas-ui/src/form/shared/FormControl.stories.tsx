@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as components from "./FormControl";
 
 export default {
-  title: "form/FormControl",
   component: () => null,
   tags: ["autodocs"],
 } satisfies Meta;

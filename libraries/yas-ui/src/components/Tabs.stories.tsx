@@ -3,7 +3,6 @@ import { useState, type ComponentProps } from "react";
 import { TabItem, Tabs } from "./Tabs";
 
 export default {
-  title: "atoms/Tabs",
   component: TabsExample,
   tags: ["autodocs"],
 } satisfies Meta<typeof Tabs>;

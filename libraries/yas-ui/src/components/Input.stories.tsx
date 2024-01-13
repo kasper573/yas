@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { InputArea, InputRoot, InputSlot } from "./Input";
 
 export default {
-  title: "atoms/Input",
   component: InputShowcase,
   tags: ["autodocs"],
 } satisfies Meta<typeof InputShowcase>;

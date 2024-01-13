@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Void } from "./Void";
 
 const meta = {
-  title: "layout/Void",
   component: () => null,
   tags: ["autodocs"],
 } satisfies Meta;

@@ -7,7 +7,6 @@ import { ModalContext, ModalOutlet, ModalStore, useModal } from "@yas/hooks";
 import { Drawer as DrawerImpl, BaseDrawer } from "./Drawer";
 
 export default {
-  title: "atoms/Drawer",
   component: BaseDrawer,
   tags: ["autodocs"],
 } satisfies DrawerMeta;

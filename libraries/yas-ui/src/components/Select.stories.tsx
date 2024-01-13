@@ -17,7 +17,6 @@ import {
 import { SelectItem, SelectRoot } from "./Select";
 
 export default {
-  title: "atoms/Select",
   component: SelectShowcase,
   tags: ["autodocs"],
 } satisfies Meta<typeof SelectShowcase>;

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Paper } from "./Paper";
 
 export default {
-  title: "atoms/Paper",
   component: Paper,
   tags: ["autodocs"],
 } satisfies Meta<typeof Paper>;

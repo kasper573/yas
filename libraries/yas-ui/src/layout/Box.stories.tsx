@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Box } from "./Box";
 
 const meta = {
-  title: "layout/Box",
   component: Box,
   tags: ["autodocs"],
 } satisfies Meta<typeof Box>;

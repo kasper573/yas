@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Popover, PopoverTrigger, PopoverContent } from "./Popover";
 
 export default {
-  title: "atoms/Popover",
   component: PopoverShowcase,
   tags: ["autodocs"],
 } satisfies Meta;

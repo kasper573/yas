@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Bounds } from "./Bounds";
 
 const meta = {
-  title: "layout/Bounds",
   component: BoundsExample,
   tags: ["autodocs"],
 } satisfies Meta<typeof BoundsExample>;

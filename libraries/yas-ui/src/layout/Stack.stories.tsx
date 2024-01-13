@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { Stack } from "./Stack";
 
 const meta = {
-  title: "layout/Stack",
   component: Stack,
   tags: ["autodocs"],
 } satisfies Meta<typeof Stack>;

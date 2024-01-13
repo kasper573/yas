@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Skeleton } from "./Skeleton";
 
 export default {
-  title: "atoms/Skeleton",
   component: Skeleton,
   tags: ["autodocs"],
 } satisfies Meta<typeof Skeleton>;

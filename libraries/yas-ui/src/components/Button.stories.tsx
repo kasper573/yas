@@ -3,7 +3,6 @@ import { Cross1Icon } from "@yas/icons";
 import { Button } from "./Button";
 
 export default {
-  title: "atoms/Button",
   component: Button,
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>;

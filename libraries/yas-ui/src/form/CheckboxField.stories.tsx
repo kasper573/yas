@@ -4,7 +4,6 @@ import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
 import { CheckboxField } from "./CheckboxField";
 
 export default {
-  title: "form/CheckboxField",
   component: CheckboxField,
   tags: ["autodocs"],
 } satisfies Meta<typeof CheckboxField>;
