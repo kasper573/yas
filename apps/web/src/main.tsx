@@ -3,7 +3,7 @@ import { StrictMode, Suspense, lazy } from "react";
 const App = lazy(() => import("./App"));
 
 const rootElement = document.getElementById("root");
-if (rootElement) {
+if (rootElement && window.location.hash !== "#no-render") {
   createRoot(rootElement).render(
     <StrictMode>
       <Suspense fallback={<RootSuspenseFallback />}>
