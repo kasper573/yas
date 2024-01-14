@@ -1,7 +1,3 @@
-import type {
-  RuntimeFn,
-  RecipeVariants as RecipeVariantsImpl,
-} from "@vanilla-extract/recipes";
 import { recipe } from "@vanilla-extract/recipes";
 import type { ComplexStyleRule } from "@vanilla-extract/css";
 
@@ -69,8 +65,26 @@ export type StyleCompiler<Style, CompiledStyle extends CompiledStyleLike> = (
 
 export type CompiledStyleLike = string | string[] | ComplexStyleRule;
 
-export type RecipeVariants<RecipeLike extends RuntimeFn<Record<string, any>>> =
-  Exclude<RecipeVariantsImpl<RecipeLike>, undefined>;
+export type RecipeVariants<T> = T extends RuntimeFn<infer Groups>
+  ? VariantSelection<Groups>
+  : never;
+
+export interface RuntimeFn<Groups> {
+  (options?: VariantSelection<Groups>): string;
+  variants: () => (keyof Groups)[];
+  classNames: RecipeClassNames<Groups>;
+}
+
+type RecipeClassNames<Groups> = {
+  base: string;
+  variants: VariantsClassNames<Groups>;
+};
+
+type VariantsClassNames<Groups> = {
+  [G in keyof Groups]: {
+    [P in keyof Groups[G]]: string;
+  };
+};
 
 type Variants<Groups, T> = {
   [G in keyof Groups]: {
@@ -79,8 +93,15 @@ type Variants<Groups, T> = {
 };
 
 type VariantSelection<Groups> = {
-  [Group in keyof Groups]?: TreatBooleanStringAsBoolean<keyof Groups[Group]>;
+  [Group in keyof Groups]?: VariantValue<keyof Groups[Group]>;
 };
+
+type VariantValue<T extends PropertyKey | boolean> = ValueOf<{
+  [K in T as BooleanStringOf<K>]: NumberOfNumericStringOrNumericStringOr<
+    K,
+    BooleanOfBooleanStringOrBooleanStringOr<K, K>
+  >;
+}>;
 
 interface CompoundVariant<Groups, T> {
   variants: VariantSelection<Groups>;
@@ -99,7 +120,21 @@ type PatternOptions<
 };
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
-type TreatBooleanStringAsBoolean<T> = T extends "true" | "false" ? boolean : T;
+
+type BooleanOfBooleanStringOrBooleanStringOr<T, Fallback = never> = T extends
+  | "true"
+  | "false"
+  ? boolean
+  : Fallback;
+
+type NumberOfNumericStringOrNumericStringOr<
+  T,
+  Fallback = never,
+> = T extends `${infer N extends number}` ? N : Fallback;
+
+type BooleanStringOf<T> = T extends boolean ? `${T}` : T & PropertyKey;
+
+type ValueOf<T> = T[keyof T];
 
 const typedEntries = Object.entries as <T>(
   o: T,

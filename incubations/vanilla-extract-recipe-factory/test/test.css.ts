@@ -2,7 +2,7 @@ import { recipe } from "@vanilla-extract/recipes";
 import { createRecipeFactory } from "../src";
 
 const createCustomRecipe = createRecipeFactory(
-  (style: { color: string }) => "whatever",
+  (style: { color: string }) => style,
 );
 
 const props = {
@@ -21,6 +21,14 @@ const props = {
       },
       y: {
         color: "y",
+      },
+    },
+    baz: {
+      true: {
+        color: "yes",
+      },
+      false: {
+        color: "no",
       },
     },
   },
