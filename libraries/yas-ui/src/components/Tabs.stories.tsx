@@ -1,43 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState, type ComponentProps } from "react";
 import { TabItem, Tabs } from "./Tabs";
 
 export default {
-  component: TabsExample,
+  component: Tabs,
   tags: ["autodocs"],
 } satisfies Meta<typeof Tabs>;
 
 export const Contained: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "contained",
+    variant: "contained" as const,
+    children: <TabItems />,
   },
 };
 
 export const ItemContained: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "item-contained",
+    variant: "item-contained" as const,
+    children: <TabItems />,
   },
 };
 
 export const TextHighlight: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "text-highlight",
+    variant: "text-highlight" as const,
+    children: <TabItems />,
   },
 };
 
-function TabsExample(props: ComponentProps<typeof Tabs>) {
-  const [active, setActive] = useState(0);
+function TabItems() {
   return (
-    <Tabs {...props}>
-      <TabItem active={active === 0} onClick={() => setActive(0)}>
-        Foo
-      </TabItem>
-      <TabItem active={active === 1} onClick={() => setActive(1)}>
-        Bar
-      </TabItem>
-      <TabItem active={active === 2} onClick={() => setActive(2)}>
-        Baz
-      </TabItem>
-    </Tabs>
+    <>
+      <TabItem active>Foo</TabItem>
+      <TabItem>Bar</TabItem>
+      <TabItem>Baz</TabItem>
+    </>
   );
 }
