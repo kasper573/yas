@@ -14,6 +14,7 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+      exclude: ["sx", "asChild", "children"],
     },
   },
   decorators: [
