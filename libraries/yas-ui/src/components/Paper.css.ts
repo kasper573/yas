@@ -18,6 +18,6 @@ export const paperRecipe = recipe({
     },
   },
   defaultVariants: {
-    elevation: "1",
+    elevation: 1,
   },
 });
