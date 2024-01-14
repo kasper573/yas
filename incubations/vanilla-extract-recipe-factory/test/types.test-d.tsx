@@ -71,8 +71,6 @@ it("supports rich set of variants and defaultVariants", () => {
   });
 });
 
-type inferVariants<T> = T extends (variants: infer V) => unknown
-  ? Exclude<V, undefined>
-  : never;
+type inferVariants<T> = T extends (variants?: infer V) => unknown ? V : never;
 
 type inferVariantNames<T> = keyof inferVariants<T>;
