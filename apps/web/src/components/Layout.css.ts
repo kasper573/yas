@@ -6,12 +6,12 @@ export const layout = style({
   minHeight: "100vh",
 });
 
-globalStyle("html", {
+globalStyle(":root", {
   background: "surface.base.main",
   color: "surface.contrast.main",
 });
 
-globalStyle("html, body, #root", {
+globalStyle(":root, body, #root", {
   minHeight: "100vh",
   margin: 0,
 });
