@@ -5,7 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@vanilla-extract/esbuild-plugin": "2.3.1",
-    "@vanilla-extract/vite-plugin": "0.0.0-vite-plugin-new-20240116073055",
+    "@vanilla-extract/vite-plugin": "3.9.2",
     "@vanilla-extract/webpack-plugin": "2.3.1",
     "@vitejs/plugin-react": "4.0.1",
     "@yas/env": "workspace:*",
