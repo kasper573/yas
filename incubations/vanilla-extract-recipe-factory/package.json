@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "@vanilla-extract/recipes": "0.5.1",
-    "@vanilla-extract/vite-plugin": "3.9.2"
+    "@vanilla-extract/vite-plugin": "0.0.0-vite-plugin-new-20240116073055"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",

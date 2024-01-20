@@ -9,9 +9,7 @@ const filter = /\.(gif|jpe?g|tiff?|png|webp|bmp|svg|woff2?)$/;
 // so we have a few different functions to configure it for each bundler.
 
 function viteVanillaExtractPlugin() {
-  return vite.vanillaExtractPlugin({
-    esbuildOptions: { plugins: [absoluteFilePlugin({ filter })] },
-  });
+  return vite.vanillaExtractPlugin();
 }
 
 function esbuildVanillaExtractPlugin() {
