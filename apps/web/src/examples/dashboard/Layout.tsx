@@ -19,7 +19,7 @@ import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { SearchForm } from "./SearchForm";
 
-const mainNav = [
+const dashboardLinks = [
   { to: "/dashboard", label: "Overview" },
   { to: "/dashboard/customers", label: "Customers" },
   { to: "/dashboard/products", label: "Products" },
@@ -41,10 +41,12 @@ export default function Layout() {
   return (
     <Card sx={{ p: 0 }}>
       <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
-        <Tabs variant="text-highlight" sx={{ flex: 1 }}>
-          {mainNav.map(({ to, label }, index) => (
-            <TabItem asChild key={index}>
-              <NavLink to={to}>{label}</NavLink>
+        <Tabs variant="item-contained" sx={{ flex: 1 }}>
+          {dashboardLinks.map(({ to, label }, index) => (
+            <TabItem key={index} asChild>
+              <NavLink to={to} activeOptions={{ exact: true }}>
+                {label}
+              </NavLink>
             </TabItem>
           ))}
         </Tabs>

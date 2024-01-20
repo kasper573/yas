@@ -38,21 +38,33 @@ export const item = recipe({
     cursor: "pointer",
     px: "#3",
     py: "#1",
+    selectors: activeStyleSelectors(
+      (prefix) => `${prefix}[data-status="active"]`, // Tanstack router Link integration
+    ),
   },
   variants: {
     active: {
       true: {
-        selectors: {
-          [`${variantClasses["item-contained"]} &`]: {
-            background: "info.base.main",
-            color: "info.contrast.main",
-          },
-          [`${variantClasses["contained"]} &`]: {
-            background: "info.contrast.main",
-            color: "info.base.main",
-          },
-        },
+        selectors: activeStyleSelectors(),
       },
     },
   },
 });
+
+function activeStyleSelectors(
+  transformSelector = (selector: string) => selector,
+) {
+  return {
+    [transformSelector(`${variantClasses["item-contained"]} &`)]: {
+      background: "info.base.main",
+      color: "info.contrast.main",
+    },
+    [transformSelector(`${variantClasses["contained"]} &`)]: {
+      background: "info.contrast.main",
+      color: "info.base.main",
+    },
+    [transformSelector(`${variantClasses["text-highlight"]} &`)]: {
+      fontWeight: "bold",
+    },
+  } as const;
+}

@@ -1,15 +1,33 @@
-import { CircularProgress, Container, Dock, Stack } from "@yas/ui";
+import {
+  CircularProgress,
+  Container,
+  Dock,
+  Stack,
+  TabItem,
+  Tabs,
+} from "@yas/ui";
 import { Outlet as RouterOutlet } from "@yas/router";
 import { Suspense } from "react";
 import { ModalOutlet } from "@yas/hooks";
-import { Menu } from "./Menu";
 import { layout } from "./Layout.css";
+import { NavLink } from "./NavLink";
+
+const mainLinks = [
+  { to: "/", label: "Sandbox" },
+  { to: "/dashboard", label: "Dashboard" },
+] as const;
 
 export default function Layout() {
   return (
     <div className={layout}>
       <ContainerStack>
-        <Menu />
+        <Tabs>
+          {mainLinks.map(({ to, label }, index) => (
+            <TabItem key={index} asChild>
+              <NavLink to={to}>{label}</NavLink>
+            </TabItem>
+          ))}
+        </Tabs>
         <Stack sx={{ flex: 1 }}>
           <Suspense
             fallback={
