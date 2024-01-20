@@ -1,6 +1,7 @@
 import { styled } from "@yas/style";
 import {
   Avatar,
+  CircularProgress,
   Divider,
   List,
   ListItem,
@@ -10,10 +11,10 @@ import {
   TabItem,
   Tabs,
 } from "@yas/ui";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { api, enabledWhenDefined } from "@yas/api-client";
-import { Outlet } from "@yas/router";
 import { useDebounce } from "@yas/hooks";
+import { Outlet } from "@yas/router";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { SearchForm } from "./SearchForm";
@@ -83,7 +84,11 @@ export default function Layout() {
       </Stack>
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
-        <Outlet />
+        <Suspense
+          fallback={<CircularProgress size="large" sx={{ margin: "auto" }} />}
+        >
+          <Outlet />
+        </Suspense>
       </Stack>
     </Card>
   );
