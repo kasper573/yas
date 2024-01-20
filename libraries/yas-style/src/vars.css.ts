@@ -1,3 +1,4 @@
+import type { createTheme } from "@vanilla-extract/css";
 import { createThemeContract } from "@vanilla-extract/css";
 import type { Properties as CSSProperties } from "csstype";
 
@@ -66,6 +67,8 @@ export const vars = createThemeContract({
     h6: typographyStyle,
   },
 });
+
+export type ThemeValues = Parameters<typeof createTheme<typeof vars>>[1];
 
 type Colors = typeof vars.color;
 
