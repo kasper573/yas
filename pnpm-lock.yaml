@@ -368,12 +368,18 @@ importers:
       '@types/yargs':
         specifier: ^17.0.24
         version: 17.0.26
+      '@yas/result':
+        specifier: workspace:*
+        version: link:../../libraries/yas-result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../yas-tsconfig
       '@yas/validate':
         specifier: workspace:*
         version: link:../../libraries/yas-validate
+      bottleneck:
+        specifier: 2.19.5
+        version: 2.19.5
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -10415,6 +10421,10 @@ packages:
 
   /boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
+
+  /bottleneck@2.19.5:
+    resolution: {integrity: sha512-VHiNCbI1lKdl44tGrhNfU3lup0Tj/ZBMJB5/2ZbNXRCPuRCO7ed2mgcK4r17y+KB2EfuYuRaVlwNbAeaWGSpbw==}
+    dev: true
 
   /boxen@6.2.1:
     resolution: {integrity: sha512-H4PEsJXfFI/Pt8sjDWbHlQPx4zL/bvSQjcilJmaulGt5mLDorHOHpmdXAJcBcmru7PhYSp/cDMWRko4ZUMFkSw==}
