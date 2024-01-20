@@ -17,60 +17,58 @@ const rootRoute = new RootRoute({
   ),
 });
 
-function createRouteTree() {
-  const indexRoute = new Route({
-    getParentRoute: () => rootRoute,
-    path: "/",
-    component: lazy(() => import("./examples/sandbox/Sandbox")),
-  });
+const indexRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: lazy(() => import("./examples/sandbox/Sandbox")),
+});
 
-  const dashboardRoute = new Route({
-    getParentRoute: () => rootRoute,
-    path: "/dashboard",
-    component: lazy(() => import("./examples/dashboard/Layout")),
-  });
+const dashboardRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/dashboard",
+  component: lazy(() => import("./examples/dashboard/Layout")),
+});
 
-  const overviewRoute = new Route({
-    getParentRoute: () => dashboardRoute,
-    path: "/",
-    component: lazy(() => import("./examples/dashboard/Overview")),
-    validateSearch: z.object({
-      userId: z.number().brand("userId").optional(),
-      date: z
-        .string()
-        .transform((str) => new Date(str))
-        .optional(),
-    }),
-  });
+const overviewRoute = new Route({
+  getParentRoute: () => dashboardRoute,
+  path: "/",
+  component: lazy(() => import("./examples/dashboard/Overview")),
+  validateSearch: z.object({
+    userId: z.number().brand("userId").optional(),
+    date: z
+      .string()
+      .transform((str) => new Date(str))
+      .optional(),
+  }),
+});
 
-  const customersRoutes = new Route({
-    getParentRoute: () => dashboardRoute,
-    path: "customers",
-    component: lazy(() => import("./examples/dashboard/Customers")),
-  });
+const customersRoutes = new Route({
+  getParentRoute: () => dashboardRoute,
+  path: "customers",
+  component: lazy(() => import("./examples/dashboard/Customers")),
+});
 
-  const productsRoutes = new Route({
-    getParentRoute: () => dashboardRoute,
-    path: "products",
-    component: lazy(() => import("./examples/dashboard/Products")),
-  });
+const productsRoutes = new Route({
+  getParentRoute: () => dashboardRoute,
+  path: "products",
+  component: lazy(() => import("./examples/dashboard/Products")),
+});
 
-  const settingsRoutes = new Route({
-    getParentRoute: () => dashboardRoute,
-    path: "settings",
-    component: lazy(() => import("./examples/dashboard/Settings")),
-  });
+const settingsRoutes = new Route({
+  getParentRoute: () => dashboardRoute,
+  path: "settings",
+  component: lazy(() => import("./examples/dashboard/Settings")),
+});
 
-  return rootRoute.addChildren([
-    indexRoute,
-    dashboardRoute.addChildren([
-      overviewRoute,
-      customersRoutes,
-      productsRoutes,
-      settingsRoutes,
-    ]),
-  ]);
-}
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  dashboardRoute.addChildren([
+    overviewRoute,
+    customersRoutes,
+    productsRoutes,
+    settingsRoutes,
+  ]),
+]);
 
 const notFoundRoute = new NotFoundRoute({
   getParentRoute: () => rootRoute,
@@ -78,7 +76,7 @@ const notFoundRoute = new NotFoundRoute({
 });
 
 export const router = new Router({
-  routeTree: createRouteTree(),
+  routeTree,
   defaultErrorComponent: ErrorFallback,
   notFoundRoute,
 });
