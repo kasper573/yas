@@ -30,7 +30,7 @@
     "eslint-plugin-yas": "workspace:*",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
-    "turbo": "1.10.13"
+    "turbo": "1.11.3"
   },
   "engines": {
     "node": "20.10.0"
