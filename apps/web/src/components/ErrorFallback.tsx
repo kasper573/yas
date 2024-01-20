@@ -31,7 +31,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: "100vh",
+    minHeight: "40vh",
     width: "100%",
   },
   title: { margin: 0 },
