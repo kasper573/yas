@@ -1,9 +1,8 @@
 import { styled } from "@yas/style";
 import {
   Avatar,
-  DatePicker,
+  CircularProgress,
   Divider,
-  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -11,36 +10,25 @@ import {
   Stack as StackImpl,
   TabItem,
   Tabs,
-  Text,
 } from "@yas/ui";
 import { Suspense, useState } from "react";
-import { api, enabledWhenDefined, type types } from "@yas/api-client";
-import { RouteApi, useSearchState } from "@yas/router";
-import { startOfToday } from "@yas/time";
+import { api, enabledWhenDefined } from "@yas/api-client";
 import { useDebounce } from "@yas/hooks";
+import { Outlet } from "@yas/router";
 import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
-import { Title } from "./Title";
-import { DashboardContent, DashboardSkeleton } from "./DashboardContent";
 import { SearchForm } from "./SearchForm";
 
-const mainNav = ["Overview", "Customers", "Products", "Settings"];
-const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
+const dashboardLinks = [
+  { to: "/dashboard", label: "Overview" },
+  { to: "/dashboard/customers", label: "Customers" },
+  { to: "/dashboard/products", label: "Products" },
+  { to: "/dashboard/settings", label: "Settings" },
+] as const;
 
-const route = new RouteApi({ id: "/dashboard" });
-
-export default function Dashboard() {
-  const [{ userId, date = startOfToday() }, setSearch] = useSearchState(route);
-  const setDate = (date?: Date) => setSearch({ date }, { replace: true });
-  const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
-
-  const clearSelectedUser = () => setUserId(undefined);
+export default function Layout() {
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const debouncedSearchInput = useDebounce(searchInput, 333);
-
-  const selectedUser = api.example.users.get.useQuery(
-    ...enabledWhenDefined(userId),
-  );
 
   const searchResult = api.example.users.list.useQuery(
     ...enabledWhenDefined(debouncedSearchInput.value),
@@ -53,10 +41,12 @@ export default function Dashboard() {
   return (
     <Card sx={{ p: 0 }}>
       <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
-        <Tabs variant="text-highlight" sx={{ flex: 1 }}>
-          {mainNav.map((label, index) => (
-            <TabItem asChild key={index} active={index === 0}>
-              <Link>{label}</Link>
+        <Tabs variant="item-contained" sx={{ flex: 1 }}>
+          {dashboardLinks.map(({ to, label }, index) => (
+            <TabItem key={index} asChild>
+              <NavLink to={to} activeOptions={{ exact: true }}>
+                {label}
+              </NavLink>
             </TabItem>
           ))}
         </Tabs>
@@ -96,32 +86,11 @@ export default function Dashboard() {
       </Stack>
       <Divider margin={false} />
       <Stack sx={{ flex: 1, p: "#5" }}>
-        <Stack direction="row" justify="spaceBetween">
-          <Title
-            showClearButton={!!selectedUser.data}
-            onClear={clearSelectedUser}
-          >
-            Dashboard
-            {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
-          </Title>
-          <DatePicker value={date} onChange={setDate} />
-        </Stack>
-        {selectedUser.error ? (
-          <Text>Could not find user by id {userId}</Text>
-        ) : (
-          <>
-            <Tabs variant="contained" sx={{ flex: 1 }}>
-              {secondaryNav.map((label, index) => (
-                <TabItem asChild key={index} active={index === 0}>
-                  <Link>{label}</Link>
-                </TabItem>
-              ))}
-            </Tabs>
-            <Suspense fallback={<DashboardSkeleton />}>
-              <DashboardContent filter={{ date, userId }} />
-            </Suspense>
-          </>
-        )}
+        <Suspense
+          fallback={<CircularProgress size="large" sx={{ margin: "auto" }} />}
+        >
+          <Outlet />
+        </Suspense>
       </Stack>
     </Card>
   );

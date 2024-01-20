@@ -1,7 +1,6 @@
 #!/usr/bin/env tsx
 
-import uniqueColor from "uniqolor";
-import chalk from "chalk";
+import { colorize } from "../src/colorize";
 import { loadWorkspace } from "../src/workspace";
 
 const symbols = {
@@ -91,8 +90,4 @@ function parseHierarchy(rule: string): string[][] {
         .map((part) => part.trim())
         .filter(Boolean),
     );
-}
-
-function colorize(str: string) {
-  return chalk.hex(uniqueColor(str).color)(str);
 }

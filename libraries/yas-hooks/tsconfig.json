@@ -1,1 +1,1 @@
-{ "extends": "@yas/tsconfig/node.json" }
+{ "extends": "@yas/tsconfig/react.json" }

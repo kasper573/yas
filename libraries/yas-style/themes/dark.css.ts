@@ -1,9 +1,9 @@
 import { createTheme } from "@vanilla-extract/css";
-import { vars } from "../src/vars.css";
+import { vars, type ThemeValues } from "../src/vars.css";
 import { palette } from "../src/tokens";
 import { transitions, typography } from "./shared";
 
-export const dark: string = createTheme(vars, {
+const values: ThemeValues = {
   color: {
     surface: {
       base: {
@@ -95,4 +95,6 @@ export const dark: string = createTheme(vars, {
   },
   transitions,
   typography,
-});
+};
+
+export const dark: string = createTheme(vars, values);

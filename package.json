@@ -16,6 +16,7 @@
     "lint": "pnpm eslint . --max-warnings=0",
     "lint:fix": "pnpm eslint . --fix",
     "depcheck": "assert-workspace-hierarchy \"apps > integrations > libraries/core/incubations\" && assert-dependency-versions --pn react react-dom @types/react @types/react-dom",
+    "typecheck": "typecheck-all-workspaces",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "turbo run test",
@@ -29,10 +30,10 @@
     "eslint-plugin-yas": "workspace:*",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
-    "turbo": "1.10.13"
+    "turbo": "1.11.3"
   },
   "engines": {
     "node": "20.10.0"
   },
-  "packageManager": "pnpm@8.7.1"
+  "packageManager": "pnpm@8.14.1"
 }
