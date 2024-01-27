@@ -12,8 +12,7 @@
     }
   },
   "dependencies": {
-    "usehooks-ts": "2.9.2",
-    "react-imperative-hook": "workspace:*"
+    "usehooks-ts": "2.9.2"
   },
   "peerDependencies": {
     "react": "18.2.0"

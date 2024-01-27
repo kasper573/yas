@@ -673,9 +673,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-imperative-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-imperative-hook
       usehooks-ts:
         specifier: 2.9.2
         version: 2.9.2(react-dom@18.2.0)(react@18.2.0)
