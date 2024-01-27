@@ -1,0 +1,22 @@
+{
+  "name": "hookform-controller-proxy",
+  "version": "0.0.0",
+  "sideEffects": false,
+  "license": "MIT",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./src/index.tsx",
+      "require": "./src/index.tsx"
+    }
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-hook-form": "^7"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.37",
+    "@yas/tsconfig": "workspace:*"
+  }
+}
