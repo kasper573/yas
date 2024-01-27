@@ -3,7 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentType } from "react";
 import { useMemo } from "react";
 import { styled } from "@yas/style";
-import { ModalContext, ModalOutlet, ModalStore, useModal } from "@yas/hooks";
+import {
+  ModalContext,
+  ModalOutlet,
+  ModalStore,
+  useModal,
+} from "../hooks/useModal";
 import {
   Dialog as DialogImpl,
   DialogActions,

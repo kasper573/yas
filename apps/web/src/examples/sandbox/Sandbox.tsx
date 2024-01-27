@@ -11,7 +11,8 @@ import {
   Stack,
   Text,
 } from "@yas/ui";
-import { useMediaQueries, useModal } from "@yas/hooks";
+import { useMediaQueries } from "@yas/hooks";
+import { useModal } from "@yas/ui";
 import { api } from "@yas/api-client";
 import { breakpointQuery } from "@yas/style";
 import { useState } from "react";

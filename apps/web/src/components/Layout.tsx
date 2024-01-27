@@ -8,7 +8,7 @@ import {
 } from "@yas/ui";
 import { Outlet as RouterOutlet } from "@yas/router";
 import { Suspense } from "react";
-import { ModalOutlet } from "@yas/hooks";
+import { ModalOutlet } from "@yas/ui";
 import { layout } from "./Layout.css";
 import { NavLink } from "./NavLink";
 

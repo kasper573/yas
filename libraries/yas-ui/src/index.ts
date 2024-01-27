@@ -1,3 +1,4 @@
+export * from "./hooks/useModal";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
