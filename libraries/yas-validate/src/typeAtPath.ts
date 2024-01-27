@@ -2,7 +2,10 @@ import type { ZodType } from "zod";
 import { ZodIntersection, ZodObject } from "zod";
 import { normalizeType } from "./normalizeType";
 
-export function typeAtPath(type: ZodType, path: string[]): ZodType | undefined {
+export function typeAtPath(
+  type: ZodType,
+  path: readonly string[],
+): ZodType | undefined {
   if (path.length === 0) {
     return type;
   }
