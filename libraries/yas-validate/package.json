@@ -11,10 +11,15 @@
       "require": "./src/index.ts"
     }
   },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "dependencies": {
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*"
+    "@yas/tsconfig": "workspace:*",
+    "@yas/test": "workspace:*"
   }
 }
