@@ -1,5 +1,3 @@
 # Hooks
 
-An encapsulation of the [usehooks-ts](https://usehooks-ts.com) library. Refer to their documentation.
-
-Also provides custom hooks.
+React hooks for generalized DOM manipulation. For more specific hooks, other packages may provide them.
