@@ -1,4 +1,4 @@
-name: On push
+name: Build and test
 on: [push]
 
 env:
