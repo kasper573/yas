@@ -3,7 +3,7 @@ import type { AnyZodObject } from "@yas/validate";
 import { z } from "@yas/validate";
 import { useRef, useState } from "react";
 import type { UseFormReturn } from "./useForm";
-import { useForm, useFieldControllers } from "./useForm";
+import { useForm, useFieldControllers, useFormChanges } from "./useForm";
 
 export default {
   component: UseFormControllersExample,
@@ -30,7 +30,7 @@ function UseFormControllersExample() {
 
   const form = useForm(schema, {
     defaultValues: {
-      foo: "fo",
+      foo: "foo",
       user: { firstName: "first", lastName: "last" },
     },
     mode: "all",
@@ -73,9 +73,10 @@ function FormDataPreview<Schema extends AnyZodObject>({
   return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
-function UserForm({ value: user, onChange }: FieldProps<User>) {
+function UserForm({ value: user, onChange, error }: FieldProps<User>) {
   const form = useForm(userType, { defaultValues: user });
   const control = useFieldControllers(form);
+  useFormChanges(form, onChange);
   return (
     <>
       {control.firstName((props) => (
@@ -84,6 +85,7 @@ function UserForm({ value: user, onChange }: FieldProps<User>) {
       {control.lastName((props) => (
         <TextField {...props} />
       ))}
+      {error}
     </>
   );
 }
