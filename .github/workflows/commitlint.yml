@@ -16,7 +16,7 @@ jobs:
           node-version-file: "package.json"
 
       - name: Install Packages
-        run: npm install conventional-changelog-conventionalcommits commitlint@latest
+        run: npm install --global conventional-changelog-conventionalcommits commitlint@latest
 
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
