@@ -12,11 +12,11 @@ import {
   SelectScrollDownButton,
 } from "../components/Select";
 import { SelectRoot } from "../components/Select";
-import type { FieldProps } from "./shared/rcf";
+import type { RequiredFieldProps } from "./shared/types";
 import {
   FormControl,
   FormControlLabel,
-  FormControlErrors,
+  FormControlError,
 } from "./shared/FormControl";
 
 export interface MultiSelectOption<Value> {
@@ -25,9 +25,7 @@ export interface MultiSelectOption<Value> {
 }
 
 export interface MultiSelectFieldProps<Value>
-  extends Omit<FieldProps<readonly Value[]>, "value" | "onChange"> {
-  value?: Value[];
-  onChange?: (value: Value[]) => void;
+  extends RequiredFieldProps<Value[]> {
   options: MultiSelectOption<Value>[];
   emptyOptionText?: ReactNode;
   selectedOptionsSummary?: (options: MultiSelectOption<Value>[]) => ReactNode;
@@ -40,10 +38,8 @@ export function MultiSelectField<Value>({
   required,
   emptyOptionText = "Select something...",
   selectedOptionsSummary = summarizeOptions,
-  errors,
-  name,
-  label = name,
-  fieldValues,
+  error,
+  label,
   ...rest
 }: MultiSelectFieldProps<Value>) {
   const selectedIndexes = findSelectedIndexes(options, value);
@@ -100,7 +96,7 @@ export function MultiSelectField<Value>({
         </SelectPortal>
       </SelectRoot>
 
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </FormControl>
   );
 }

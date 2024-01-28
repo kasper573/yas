@@ -21,14 +21,14 @@ export function FormControlLabel({
 
 const TextLabel = Text.as("label");
 
-export type FormControlErrorsProps = { errors?: unknown[] };
-export function FormControlErrors({ errors }: FormControlErrorsProps) {
-  if (!errors?.length) {
+export type FormControlErrorProps = { error?: string };
+export function FormControlError({ error }: FormControlErrorProps) {
+  if (error === undefined) {
     return null;
   }
   return (
     <Text variant="caption" sx={{ color: "error.base.main", px: "#1" }}>
-      {errors.join(", ")}
+      {error}
     </Text>
   );
 }

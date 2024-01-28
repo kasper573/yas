@@ -4,16 +4,22 @@ import { Stack } from "../layout/Stack";
 import { Button } from "../components/Button";
 import { Text } from "../components/Text";
 import { CircularProgress } from "../components/CircularProgress";
-import type { FormLayoutProps } from "./shared/rcf";
 
 export function BasicFormLayout({
   title,
-  fields,
+  children,
   generalErrors,
   handleSubmit,
   reset,
   isLoading,
-}: FormLayoutProps & { title: ReactNode; isLoading?: boolean }) {
+}: {
+  reset?: () => void;
+  children?: ReactNode;
+  generalErrors?: string[];
+  handleSubmit?: () => void;
+  title: ReactNode;
+  isLoading?: boolean;
+}) {
   return (
     <form onSubmit={handleSubmit}>
       <Stack gap="#2">
@@ -28,13 +34,11 @@ export function BasicFormLayout({
           </Button>
         </Stack>
         <Stack direction="column" gap="#2">
-          {Object.values(fields).map((Component, index) => (
-            <Component key={index} />
-          ))}
+          {children}
         </Stack>
-        {generalErrors.length > 0 && (
+        {!!generalErrors?.length && (
           <Alert color="error">
-            <Text>{generalErrors.join(", ")}</Text>
+            <Text>{generalErrors?.join(", ")}</Text>
           </Alert>
         )}
       </Stack>

@@ -13,11 +13,11 @@ import {
   SelectValue,
   SelectTriggerIcon,
 } from "../components/Select";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "./shared/types";
 import {
   FormControl,
   FormControlLabel,
-  FormControlErrors,
+  FormControlError,
 } from "./shared/FormControl";
 
 export type SingleSelectOption<Value> = {
@@ -25,10 +25,10 @@ export type SingleSelectOption<Value> = {
   label: ReactNode;
 };
 
-export interface SingleSelectFieldProps<Value> extends FieldProps<Value> {
+export type SingleSelectFieldProps<Value> = FieldProps<Value> & {
   options: SingleSelectOption<Value>[];
   emptyOptionText?: ReactNode;
-}
+};
 
 export function SingleSelectField<Value>({
   options,
@@ -36,10 +36,8 @@ export function SingleSelectField<Value>({
   onChange,
   required,
   emptyOptionText = "Select something...",
-  errors,
-  name,
-  label = name,
-  fieldValues,
+  error,
+  label,
   ...rest
 }: SingleSelectFieldProps<Value>) {
   const selectedOptionIndex = useMemo(
@@ -94,7 +92,7 @@ export function SingleSelectField<Value>({
         </SelectPortal>
       </SelectRoot>
 
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </FormControl>
   );
 }

@@ -3,26 +3,24 @@ import { Stack } from "../layout/Stack";
 import {
   FormControl,
   FormControlLabel,
-  FormControlErrors,
+  FormControlError,
 } from "./shared/FormControl";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "./shared/types";
 
 export type Range = [number, number];
 
-export interface RangeFieldProps<T extends Range> extends FieldProps<T> {
+export type RangeFieldProps<T extends Range> = FieldProps<T> & {
   min?: number;
   max?: number;
-}
+};
 
 export function RangeField<T extends Range>({
   min = 0,
   max = 1,
-  name,
-  label = name,
+  label,
   value: [fromValue, toValue] = [min, max] as T,
   onChange,
-  errors,
-  fieldValues,
+  error,
   ...rest
 }: RangeFieldProps<T>) {
   const minId = useId();
@@ -59,7 +57,7 @@ export function RangeField<T extends Range>({
         </Stack>
       </FormControl>
 
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </>
   );
 }

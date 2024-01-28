@@ -13,10 +13,9 @@ export const FormControlLabel: StoryObj<typeof components.FormControlLabel> = {
   },
 };
 
-export const FormControlErrors: StoryObj<typeof components.FormControlErrors> =
-  {
-    render: (props) => <components.FormControlErrors {...props} />,
-    args: {
-      errors: ["Error 1", "Error 2"],
-    },
-  };
+export const FormControlErrors: StoryObj<typeof components.FormControlError> = {
+  render: (props) => <components.FormControlError {...props} />,
+  args: {
+    error: ["Error 1", "Error 2"],
+  },
+};

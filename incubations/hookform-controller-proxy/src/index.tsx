@@ -73,7 +73,7 @@ export type FieldRendererProps<Value> = [Value] extends [undefined]
   ? OptionalFieldRendererProps<Exclude<Value, undefined>>
   : RequiredFieldRendererProps<Value>;
 
-interface FieldRendererBaseProps {
+export interface FieldRendererBaseProps {
   onBlur?: () => unknown;
   onFocus?: () => unknown;
   error?: string;

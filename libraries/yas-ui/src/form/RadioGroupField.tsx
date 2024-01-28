@@ -5,10 +5,10 @@ import { Stack } from "../layout/Stack";
 import { Void } from "../layout/Void";
 import {
   FormControl,
-  FormControlErrors,
+  FormControlError,
   FormControlLabel,
 } from "./shared/FormControl";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "./shared/types";
 import * as styles from "./RadioGroupField.css";
 
 export interface RadioGroupOption<Value> {
@@ -16,9 +16,9 @@ export interface RadioGroupOption<Value> {
   label: ReactNode;
 }
 
-export interface RadioGroupFieldProps<Value> extends FieldProps<Value> {
+export type RadioGroupFieldProps<Value> = FieldProps<Value> & {
   options: RadioGroupOption<Value>[];
-}
+};
 
 export function RadioGroupField<Value>({
   options,
@@ -26,14 +26,22 @@ export function RadioGroupField<Value>({
   metrics,
   onChange,
   required,
-  errors,
-  name,
-  label = name,
-  fieldValues,
+  error,
+  label,
   ...rest
 }: RadioGroupFieldProps<Value>) {
   const fieldsetId = useId();
   const showClearButton = value !== undefined && !required;
+
+  function tryEmitChangedValue(newValue: Value | undefined) {
+    if (required) {
+      if (newValue !== undefined) {
+        onChange?.(newValue);
+      }
+    } else {
+      onChange?.(newValue);
+    }
+  }
   return (
     <FormControl {...rest}>
       <Stack direction="row" align="center" gap="#2">
@@ -43,7 +51,7 @@ export function RadioGroupField<Value>({
           <Button
             icon
             size="small"
-            onClick={() => onChange?.(undefined)}
+            onClick={() => tryEmitChangedValue?.(undefined)}
             className={styles.clearButton({ visible: showClearButton })}
           >
             <Cross2Icon />
@@ -81,7 +89,7 @@ export function RadioGroupField<Value>({
         })}
       </Fieldset>
 
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </FormControl>
   );
 }
