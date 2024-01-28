@@ -12,7 +12,7 @@
  */
 
 /**
- * @type {Project[]}
+ * @type {[Project]}
  */
 const projects = [
   defineProjectByConvention("react-imperative-hook", {
