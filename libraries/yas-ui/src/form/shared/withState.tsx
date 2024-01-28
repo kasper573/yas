@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import type { FieldProps } from "./types";
 
+/**
+ * Augments a component's story with stateful value and onChange properties.
+ */
 export const withState: Decorator = (Story, context) => {
   return (
     <StateProvider initialValue={context.args.value}>
