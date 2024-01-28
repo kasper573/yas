@@ -12,14 +12,9 @@
  */
 
 /**
- * @type {[Project, Project]}
+ * @type {Project[]}
  */
 const projects = [
-  defineProjectByConvention("react-composable-form", {
-    description:
-      "Form library for React with focus on composition, convention and type safety.",
-    imageUrl: "/img/jigsaw.webp",
-  }),
   defineProjectByConvention("react-imperative-hook", {
     description:
       "React hook for improved DX with async UI flows like modals, toasts, drawers, etc.",
