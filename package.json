@@ -21,7 +21,9 @@
     "format:fix": "prettier --write .",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=4096 eslint"
+    "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=4096 eslint",
+    "prepare": "husky",
+    "commitlint": "commitlint"
   },
   "devDependencies": {
     "@yas/scripts": "workspace:*",
@@ -31,8 +33,9 @@
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "turbo": "1.11.3",
-    "conventional-changelog-conventionalcommits": "7.0.2",
-    "commitlint": "18.6.0"
+    "husky": "9.0.6",
+    "@commitlint/cli": "18.6.0",
+    "@commitlint/config-conventional": "18.6.0"
   },
   "engines": {
     "node": "20.10.0"

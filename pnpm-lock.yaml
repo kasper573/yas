@@ -8,15 +8,15 @@ importers:
 
   .:
     devDependencies:
+      '@commitlint/cli':
+        specifier: 18.6.0
+        version: 18.6.0(@types/node@20.8.10)(typescript@5.2.2)
+      '@commitlint/config-conventional':
+        specifier: 18.6.0
+        version: 18.6.0
       '@yas/scripts':
         specifier: workspace:*
         version: link:core/yas-scripts
-      commitlint:
-        specifier: 18.6.0
-        version: 18.6.0(@types/node@20.8.10)(typescript@5.2.2)
-      conventional-changelog-conventionalcommits:
-        specifier: 7.0.2
-        version: 7.0.2
       cross-env:
         specifier: 7.0.3
         version: 7.0.3
@@ -29,6 +29,9 @@ importers:
       eslint-plugin-yas:
         specifier: workspace:*
         version: link:core/eslint-plugin-yas
+      husky:
+        specifier: 9.0.6
+        version: 9.0.6
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4182,6 +4185,13 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
       - typescript
+    dev: true
+
+  /@commitlint/config-conventional@18.6.0:
+    resolution: {integrity: sha512-CDCOf2eJz9D/TL44IBks0stM9TmdLCNE2B48owIU3YCadwzts/bobXPScagIgPQF6hhKYMEdj5zpUDlmbwuqwQ==}
+    engines: {node: '>=v18'}
+    dependencies:
+      conventional-changelog-conventionalcommits: 7.0.2
     dev: true
 
   /@commitlint/config-validator@18.6.0:
@@ -11196,18 +11206,6 @@ packages:
     engines: {node: ^12.20.0 || >=14}
     dev: true
 
-  /commitlint@18.6.0(@types/node@20.8.10)(typescript@5.2.2):
-    resolution: {integrity: sha512-CiY4gz0ftWwr96aYvXfbCX0pvJ1mupdUL2HACzXyyb7YMRU4vodjFROCZ8ny4i5Dhpu8uRZerPPaGkUOZY/kVQ==}
-    engines: {node: '>=v18'}
-    hasBin: true
-    dependencies:
-      '@commitlint/cli': 18.6.0(@types/node@20.8.10)(typescript@5.2.2)
-      '@commitlint/types': 18.6.0
-    transitivePeerDependencies:
-      - '@types/node'
-      - typescript
-    dev: true
-
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
     dev: true
@@ -14472,6 +14470,12 @@ packages:
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
+    dev: true
+
+  /husky@9.0.6:
+    resolution: {integrity: sha512-EEuw/rfTiMjOfuL7pGO/i9otg1u36TXxqjIA6D9qxVjd/UXoDOsLor/BSFf5hTK50shwzCU3aVVwdXDp/lp7RA==}
+    engines: {node: '>=18'}
+    hasBin: true
     dev: true
 
   /iconv-lite@0.4.24:
