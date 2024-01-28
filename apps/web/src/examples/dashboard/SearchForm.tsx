@@ -4,8 +4,12 @@ import {
   Popover,
   PopoverContent,
   Paper,
+  useForm,
+  useFieldControllers,
+  useFormChanges,
 } from "@yas/ui";
-import type { ReactNode } from "react";
+import { z } from "@yas/validate";
+import { type ReactNode } from "react";
 
 export function SearchForm({
   value,
@@ -18,26 +22,24 @@ export function SearchForm({
   isLoading?: boolean;
   children?: ReactNode;
 }) {
-  function clear() {
-    onChange?.(undefined);
-  }
+  const form = useForm(searchSchema);
+  const control = useFieldControllers(form);
+  useFormChanges(form, ({ search }) => onChange?.(search));
+  const clear = () => form.reset();
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        clear();
-      }}
-    >
+    <form onSubmit={form.handleSubmit(() => {})}>
       <Popover open={value !== undefined}>
         <PopoverAnchor>
-          <TextField
-            size="small"
-            value={value}
-            onChange={onChange}
-            inputProps={{ placeholder: "Search..." }}
-            isLoading={isLoading}
-            clearable
-          />
+          {control.search((props) => (
+            <TextField
+              {...props}
+              size="small"
+              inputProps={{ placeholder: "Search..." }}
+              isLoading={isLoading}
+              clearable
+            />
+          ))}
         </PopoverAnchor>
         <PopoverContent
           onOpenAutoFocus={(e) => e.preventDefault()}
@@ -52,3 +54,5 @@ export function SearchForm({
     </form>
   );
 }
+
+const searchSchema = z.object({ search: z.string().optional() });
