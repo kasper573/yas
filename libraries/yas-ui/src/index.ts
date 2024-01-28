@@ -1,5 +1,4 @@
 export * from "./hooks/useModal";
-export * from "./hooks/useForm";
 export * from "./layout/Divider";
 export * from "./layout/Stack";
 export * from "./layout/Box";
@@ -22,6 +21,7 @@ export * from "./organisms/Dialog";
 export * from "./organisms/Drawer";
 export * from "./organisms/List";
 export * from "./form/shared/types";
+export * from "./form/shared/useForm";
 export * from "./form/shared/FormControl";
 export * from "./form/Pagination";
 export * from "./form/CheckboxField";

@@ -4,6 +4,7 @@ import { z } from "@yas/validate";
 import { useRef, useState } from "react";
 import type { UseFormReturn } from "./useForm";
 import { useForm, useFieldControllers, useFormChanges } from "./useForm";
+import type { FieldProps } from "./types";
 
 export default {
   component: UseFormControllersExample,
@@ -94,24 +95,17 @@ function TextField({
   value,
   onChange,
   error,
-  required,
+  size,
   ...rest
-}: FieldProps<string | undefined>) {
+}: FieldProps<string>) {
   return (
     <div>
       <input
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange?.(e.target.value)}
         {...rest}
       />
       {error}
     </div>
   );
-}
-
-interface FieldProps<Value> {
-  value: Value;
-  onChange: (value: Value) => void;
-  error?: string;
-  required?: boolean;
 }

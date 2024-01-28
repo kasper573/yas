@@ -43,7 +43,7 @@ export function createControllerProxyFactory<Meta>(
                   // unfortunate assert just to make typescript happy,
                   // it works around some complicated generics not worth solving,
                   // and the assertion has no real problems in practice.
-                  required: required as true,
+                  required: required as false,
                 });
               }}
             />
@@ -69,7 +69,7 @@ export interface FieldRenderer<Value> {
   (props: FieldRendererProps<Value>): ReactElement;
 }
 
-export type FieldRendererProps<Value> = [Value] extends [undefined]
+export type FieldRendererProps<Value> = [undefined] extends [Value]
   ? OptionalFieldRendererProps<Exclude<Value, undefined>>
   : RequiredFieldRendererProps<Value>;
 

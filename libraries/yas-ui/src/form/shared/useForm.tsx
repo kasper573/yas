@@ -36,11 +36,11 @@ export type UseFormReturn<Schema extends AnyZodObject> = UseFormReturnImpl<
  */
 export function useFormChanges<Schema extends AnyZodObject>(
   form: UseFormReturn<Schema>,
-  onChange: (values: z.infer<Schema>) => void,
+  onChange?: (values: z.infer<Schema>) => void,
 ) {
   const latestOnChange = useLatest(onChange);
   useEffect(() => {
-    const sub = form.watch((values) => latestOnChange.current(values));
+    const sub = form.watch((values) => latestOnChange.current?.(values));
     return () => sub.unsubscribe();
   }, [form, latestOnChange]);
 }
