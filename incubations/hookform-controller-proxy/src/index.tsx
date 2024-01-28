@@ -24,6 +24,7 @@ export function createControllerProxyFactory<Meta>(
         },
         apply(_1, _2, [render]: [FieldRenderer<unknown>]) {
           const pathAsString = path.join(".") as Path<TFieldValues>;
+
           return (
             <Controller
               control={form.control}

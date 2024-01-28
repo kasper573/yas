@@ -11,12 +11,22 @@
       "require": "./src/index.tsx"
     }
   },
+  "scripts": {
+    "test": "pnpm playwright test -c playwright-ct.config.js",
+    "test:watch": "pnpm run test --ui"
+  },
   "peerDependencies": {
     "react": "18.2.0",
     "react-hook-form": "^7"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "1.39.0",
+    "@hookform/resolvers": "^3",
     "@types/react": "18.2.37",
-    "@yas/tsconfig": "workspace:*"
+    "@yas/validate": "workspace:*",
+    "@yas/build": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
