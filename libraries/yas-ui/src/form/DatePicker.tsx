@@ -7,31 +7,37 @@ import { Calendar } from "../organisms/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/Popover";
 import { Stack } from "../layout/Stack";
 import { Paper } from "../components/Paper";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "./shared/types";
 import { datePickerText } from "./DatePicker.css";
 
-export interface DatePickerProps
-  extends FieldProps<Date>,
-    Pick<ButtonProps, "variant" | "color"> {
-  format?: FormatPreset;
-}
+export type DatePickerProps = FieldProps<Date> &
+  Pick<ButtonProps, "variant" | "color"> & {
+    format?: FormatPreset;
+  };
 
 export function DatePicker({
   value,
   onChange,
-  errors,
+  error,
   required,
-  fieldValues,
   info,
   isLoading,
   label,
   metrics,
-  name,
   format: formatPreset = "long-date",
   variant = "outlined",
   color = "surface-contrast",
   ...rest
 }: DatePickerProps) {
+  function tryEmitChangedDate(date?: Date) {
+    if (required) {
+      if (date) {
+        onChange?.(date);
+      }
+    } else {
+      onChange?.(date);
+    }
+  }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -52,7 +58,7 @@ export function DatePicker({
           <Calendar
             mode="single"
             selected={value}
-            onSelect={onChange}
+            onSelect={tryEmitChangedDate}
             initialFocus
             required={required}
           />

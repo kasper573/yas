@@ -26,9 +26,11 @@
     "@yas/validate": "workspace:*",
     "@yas/hooks": "workspace:*",
     "@yas/time": "workspace:*",
-    "react-composable-form": "workspace:*",
+    "@hookform/resolvers": "3.3.4",
     "react-day-picker": "8.10.0",
-    "react-imperative-hook": "workspace:*"
+    "react-hook-form": "7.49.3",
+    "react-imperative-hook": "workspace:*",
+    "hookform-controller-proxy": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.6.3",

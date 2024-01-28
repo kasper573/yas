@@ -102,9 +102,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-composable-form:
-        specifier: workspace:*
-        version: link:../../incubations/react-composable-form
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -463,6 +460,37 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
 
+  incubations/hookform-controller-proxy:
+    dependencies:
+      react-hook-form:
+        specifier: ^7
+        version: 7.49.3(react@18.2.0)
+    devDependencies:
+      '@hookform/resolvers':
+        specifier: ^3
+        version: 3.3.4(react-hook-form@7.49.3)
+      '@playwright/experimental-ct-react':
+        specifier: 1.39.0
+        version: 1.39.0(vite@4.5.2)
+      '@types/react':
+        specifier: 18.2.37
+        version: 18.2.37
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/yas-build
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/yas-tsconfig
+      '@yas/validate':
+        specifier: workspace:*
+        version: link:../../libraries/yas-validate
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+
   incubations/react-composable-form:
     dependencies:
       immer:
@@ -673,9 +701,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-imperative-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-imperative-hook
       usehooks-ts:
         specifier: 2.9.2
         version: 2.9.2(react-dom@18.2.0)(react@18.2.0)
@@ -775,6 +800,9 @@ importers:
 
   libraries/yas-ui:
     dependencies:
+      '@hookform/resolvers':
+        specifier: 3.3.4
+        version: 3.3.4(react-hook-form@7.49.3)
       '@radix-ui/react-popover':
         specifier: ^1.0.7
         version: 1.0.7(@types/react-dom@18.2.15)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
@@ -796,12 +824,15 @@ importers:
       '@yas/validate':
         specifier: workspace:*
         version: link:../yas-validate
-      react-composable-form:
+      hookform-controller-proxy:
         specifier: workspace:*
-        version: link:../../incubations/react-composable-form
+        version: link:../../incubations/hookform-controller-proxy
       react-day-picker:
         specifier: 8.10.0
         version: 8.10.0(date-fns@3.1.0)(react@18.2.0)
+      react-hook-form:
+        specifier: 7.49.3
+        version: 7.49.3(react@18.2.0)
       react-imperative-hook:
         specifier: workspace:*
         version: link:../../incubations/react-imperative-hook
@@ -885,6 +916,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.3
     devDependencies:
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../../core/yas-test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
@@ -5637,6 +5671,13 @@ packages:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.3.0
+
+  /@hookform/resolvers@3.3.4(react-hook-form@7.49.3):
+    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.49.3(react@18.2.0)
 
   /@humanwhocodes/config-array@0.11.11:
     resolution: {integrity: sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==}
@@ -18845,6 +18886,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
+
+  /react-hook-form@7.49.3(react@18.2.0):
+    resolution: {integrity: sha512-foD6r3juidAT1cOZzpmD/gOKt7fRsDhXXZ0y28+Al1CHgX+AY1qIN9VSIIItXRq1dN68QrRwl1ORFlwjBaAqeQ==}
+    engines: {node: '>=18', pnpm: '8'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}

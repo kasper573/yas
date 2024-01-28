@@ -1,16 +1,11 @@
-import type { Meta } from "@storybook/react";
-import { useState } from "react";
-import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
 import { DatePicker } from "./DatePicker";
+import { withState } from "./shared/withState";
 
 export default {
   component: DatePicker,
+  decorators: [withState],
   tags: ["autodocs"],
 } satisfies Meta<typeof DatePicker>;
 
-export const Default: StrictStoryObj<typeof DatePicker> = {
-  render(props) {
-    const [value, setValue] = useState<Date | undefined>(() => new Date());
-    return <DatePicker {...props} value={value} onChange={setValue} />;
-  },
-};
+export const Default: StoryObj<typeof DatePicker> = {};

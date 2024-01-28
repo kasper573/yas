@@ -1,8 +1,0 @@
-{
-  "label": "Guide",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "Each section of the guide represents an important high level concept you should to be aware of when using React Composable Form. The guide best read in order, as each section builds on the previous one, but each section may also serve as a reference for each concept."
-  }
-}

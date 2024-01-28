@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
-import { useState } from "react";
-import type { StrictStoryObj } from "../../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
+import { withState } from "../shared/withState";
 import { CheckboxGroupField } from "./CheckboxGroupField";
 
 export default {
   component: CheckboxGroupField,
+  decorators: [withState],
   tags: ["autodocs"],
 } satisfies Meta<typeof CheckboxGroupField<number>>;
 
-export const Default: StrictStoryObj<typeof CheckboxGroupField<number>> = {
+export const Default: StoryObj<typeof CheckboxGroupField<number>> = {
   args: {
     label: "CheckboxGroupField",
     options: [
@@ -16,9 +16,5 @@ export const Default: StrictStoryObj<typeof CheckboxGroupField<number>> = {
       { label: "Option 2", value: 2 },
       { label: "Option 3", value: 3 },
     ],
-  },
-  render(props) {
-    const [value, setValue] = useState<number[]>();
-    return <CheckboxGroupField {...props} value={value} onChange={setValue} />;
   },
 };

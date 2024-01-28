@@ -1,8 +1,8 @@
 import { useId, type ReactNode } from "react";
-import type { FieldProps } from "../shared/rcf";
+import type { RequiredFieldProps } from "../shared/types";
 import {
   FormControl,
-  FormControlErrors,
+  FormControlError,
   FormControlLabel,
 } from "../shared/FormControl";
 import { CheckboxField } from "../CheckboxField";
@@ -12,7 +12,8 @@ export interface CheckboxGroupOption<Value> {
   label: ReactNode;
 }
 
-export interface CheckboxGroupFieldProps<Value> extends FieldProps<Value[]> {
+export interface CheckboxGroupFieldProps<Value>
+  extends RequiredFieldProps<Value[]> {
   options: CheckboxGroupOption<Value>[];
 }
 
@@ -21,10 +22,8 @@ export function CheckboxGroupField<Value>({
   value: checkedValues = [],
   metrics,
   onChange,
-  errors,
-  name,
-  label = name,
-  fieldValues,
+  error,
+  label,
   ...rest
 }: CheckboxGroupFieldProps<Value>) {
   const id = useId();
@@ -58,7 +57,7 @@ export function CheckboxGroupField<Value>({
         );
       })}
 
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </FormControl>
   );
 }

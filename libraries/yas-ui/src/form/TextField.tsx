@@ -6,26 +6,29 @@ import { Cross1Icon } from "@yas/icons";
 import { InputArea, InputRoot, InputSlot } from "../components/Input";
 import { Button } from "../components/Button";
 import { CircularProgress } from "../components/CircularProgress";
-import type { FieldProps } from "./shared/rcf";
+import type { FieldProps } from "./shared/types";
 import {
   FormControl,
-  FormControlErrors,
+  FormControlError,
   FormControlLabel,
   type FormControlProps,
 } from "./shared/FormControl";
 import * as styles from "./TextField.css";
 
-export interface TextFieldProps
-  extends FieldProps<string>,
-    Pick<FormControlProps, "sx" | "style" | "className">,
-    RecipeVariants<typeof styles.control> {
-  clearable?: boolean;
-  type?: "text" | "number" | "password";
-  inputProps?: Omit<
-    ComponentProps<typeof InputArea>,
-    "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size" | "children"
-  >;
-}
+export type TextFieldBaseProps = Pick<
+  FormControlProps,
+  "sx" | "style" | "className"
+> &
+  Omit<RecipeVariants<typeof styles.control>, "onChange"> & {
+    clearable?: boolean;
+    type?: "text" | "number" | "password";
+    inputProps?: Omit<
+      ComponentProps<typeof InputArea>,
+      "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size" | "children"
+    >;
+  };
+
+export type TextFieldProps = TextFieldBaseProps & FieldProps<string>;
 
 export function TextField({
   value,
@@ -35,10 +38,8 @@ export function TextField({
   fullWidth,
   className,
   isLoading,
-  name,
-  label = name,
-  errors,
-  fieldValues,
+  label,
+  error,
   required,
   size,
   clearable,
@@ -46,6 +47,13 @@ export function TextField({
 }: TextFieldProps) {
   const id = useId();
   const isEmpty = value === undefined;
+
+  function tryClearValue() {
+    if (!required) {
+      onChange?.(undefined);
+    }
+  }
+
   return (
     <FormControl
       {...rest}
@@ -54,7 +62,7 @@ export function TextField({
       <FormControlLabel className={styles.label} htmlFor={id}>
         {label}
       </FormControlLabel>
-      <InputRoot size={size} error={!!errors?.length}>
+      <InputRoot size={size} error={error !== undefined}>
         <InputArea
           id={id}
           value={value ?? ""}
@@ -72,7 +80,7 @@ export function TextField({
           className={clsx(styles.input({ fullWidth }), inputProps?.className)}
           onKeyDown={(e) => {
             if (clearable && e.key === "Escape") {
-              onChange?.(undefined);
+              tryClearValue();
             }
             inputProps?.onKeyDown?.(e);
           }}
@@ -84,7 +92,7 @@ export function TextField({
             <Button
               icon
               variant="text"
-              onClick={() => onChange?.(undefined)}
+              onClick={tryClearValue}
               className={styles.clearButton({
                 visible: clearable && !isEmpty,
               })}
@@ -94,7 +102,7 @@ export function TextField({
           )}
         </InputSlot>
       </InputRoot>
-      <FormControlErrors errors={errors} />
+      <FormControlError error={error} />
     </FormControl>
   );
 }

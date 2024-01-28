@@ -1,19 +1,15 @@
-import type { Meta } from "@storybook/react";
-import { useState } from "react";
-import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
 import { CheckboxField } from "./CheckboxField";
+import { withState } from "./shared/withState";
 
 export default {
   component: CheckboxField,
+  decorators: [withState],
   tags: ["autodocs"],
 } satisfies Meta<typeof CheckboxField>;
 
-export const Default: StrictStoryObj<typeof CheckboxField> = {
+export const Default: StoryObj<typeof CheckboxField> = {
   args: {
     label: "CheckboxField",
-  },
-  render(props) {
-    const [checked, setChecked] = useState<boolean>();
-    return <CheckboxField {...props} value={checked} onChange={setChecked} />;
   },
 };

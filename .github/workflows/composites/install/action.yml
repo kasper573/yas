@@ -1,5 +1,5 @@
 name: "Install dependencies"
-description: "Checkout repository and install dependencies"
+description: "Install dependencies"
 runs:
   using: "composite"
   steps:
@@ -7,7 +7,7 @@ runs:
       uses: pnpm/action-setup@v2
 
     - name: Install Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version-file: "package.json"
         cache: "pnpm"

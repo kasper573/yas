@@ -12,6 +12,7 @@ module.exports = {
         path.resolve(__dirname, "src/organisms"),
         path.resolve(__dirname, "src/components"),
         path.resolve(__dirname, "src/layout"),
+        path.resolve(__dirname, "src/hooks"),
         path.resolve(__dirname, ".storybook"),
         path.resolve(__dirname, "assets"),
       ],
