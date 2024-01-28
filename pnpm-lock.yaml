@@ -102,9 +102,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-composable-form:
-        specifier: workspace:*
-        version: link:../../incubations/react-composable-form
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -815,9 +812,6 @@ importers:
       hookform-controller-proxy:
         specifier: workspace:*
         version: link:../../incubations/hookform-controller-proxy
-      react-composable-form:
-        specifier: workspace:*
-        version: link:../../incubations/react-composable-form
       react-day-picker:
         specifier: 8.10.0
         version: 8.10.0(date-fns@3.1.0)(react@18.2.0)
