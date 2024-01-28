@@ -1,5 +1,4 @@
-import type { Meta } from "@storybook/react";
-import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
 import { SingleSelectField } from "./SingleSelectField";
 import { withState } from "./shared/withState";
 
@@ -9,7 +8,7 @@ export default {
   tags: ["autodocs"],
 } satisfies Meta<typeof SingleSelectField<number>>;
 
-export const Default: StrictStoryObj<typeof SingleSelectField<number>> = {
+export const Default: StoryObj<typeof SingleSelectField<number>> = {
   args: {
     label: "SingleSelectField",
     emptyOptionText: "Select something...",

@@ -1,5 +1,4 @@
-import type { Meta } from "@storybook/react";
-import type { StrictStoryObj } from "../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
 import { TextField } from "./TextField";
 import { withState } from "./shared/withState";
 
@@ -9,7 +8,7 @@ export default {
   tags: ["autodocs"],
 } satisfies Meta<typeof TextField>;
 
-export const Default: StrictStoryObj<typeof TextField> = {
+export const Default: StoryObj<typeof TextField> = {
   args: {
     label: "TextField",
     inputProps: {
@@ -18,25 +17,25 @@ export const Default: StrictStoryObj<typeof TextField> = {
   },
 };
 
-export const WithDefaultValue: StrictStoryObj<typeof TextField> = {
+export const WithDefaultValue: StoryObj<typeof TextField> = {
   args: {
     value: "Default",
   },
 };
 
-export const WithError: StrictStoryObj<typeof TextField> = {
+export const WithError: StoryObj<typeof TextField> = {
   args: {
     error: "Something went wrong",
   },
 };
 
-export const Clearable: StrictStoryObj<typeof TextField> = {
+export const Clearable: StoryObj<typeof TextField> = {
   args: {
     clearable: true,
   },
 };
 
-export const Loading: StrictStoryObj<typeof TextField> = {
+export const Loading: StoryObj<typeof TextField> = {
   args: {
     isLoading: true,
   },

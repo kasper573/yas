@@ -1,19 +1,15 @@
-import type { Meta } from "@storybook/react";
-import { useState } from "react";
-import type { StrictStoryObj } from "../../../.storybook/StrictStoryObj";
+import type { Meta, StoryObj } from "@storybook/react";
+import { withState } from "../shared/withState";
 import { NumberField } from "./NumberField";
 
 export default {
   component: NumberField,
+  decorators: [withState],
   tags: ["autodocs"],
 } satisfies Meta<typeof NumberField>;
 
-export const Default: StrictStoryObj<typeof NumberField> = {
+export const Default: StoryObj<typeof NumberField> = {
   args: {
     label: "NumberField",
-  },
-  render(props) {
-    const [value, setValue] = useState<number>();
-    return <NumberField {...props} value={value} onChange={setValue} />;
   },
 };
