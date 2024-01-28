@@ -22,8 +22,7 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=4096 eslint",
-    "prepare": "husky",
-    "commitlint": "commitlint"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@yas/scripts": "workspace:*",
