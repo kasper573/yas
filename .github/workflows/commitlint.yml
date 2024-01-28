@@ -1,0 +1,23 @@
+name: Conventional Commits
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/workflows/composites/install/
+
+      - name: Validate current commit
+        if: github.event_name == 'push'
+        run: pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
+
+      - name: Validate all pull request commits
+        if: github.event_name == 'pull_request'
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose

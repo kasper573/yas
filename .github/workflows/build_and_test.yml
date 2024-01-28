@@ -1,11 +1,12 @@
-name: CI
+name: Build and Test
 on: [push]
+
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  convention:
+  conventions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
