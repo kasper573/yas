@@ -9,13 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      #- uses: ./.github/workflows/composites/install/
-      - uses: wagoid/commitlint-github-action@v5
+        with:
+          fetch-depth: 0
 
-      # - name: Validate current commit (last commit) with commitlint
-      #   if: github.event_name == 'push'
-      #   run: pnpm exec commitlint -- --from HEAD~1 --to HEAD --verbose
+      - uses: ./.github/workflows/composites/install/
 
-      # - name: Validate PR commits with commitlint
-      #   if: github.event_name == 'pull_request'
-      #   run: pnpm exec commitlint -- --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
+      - name: Validate current commit
+        if: github.event_name == 'push'
+        run: pnpm exec commitlint -- --from HEAD~1 --to HEAD --verbose
+
+      - name: Validate all pull request commits
+        if: github.event_name == 'pull_request'
+        run: pnpm exec commitlint -- --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
