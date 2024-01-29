@@ -32,7 +32,7 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
       await execa("git", ["commit", "-m", commitMessage], {
         stdio: "inherit",
       });
-      await $(`git push`, { stdio: "inherit" });
+      await $(`git push origin`, { stdio: "inherit" });
     },
     distFolder,
   });
