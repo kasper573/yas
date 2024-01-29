@@ -48,3 +48,5 @@ export function createMutableResource<T>(
     reload,
   };
 }
+
+export type MutableResource<T> = ReturnType<typeof createMutableResource<T>>;

@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "bin": {
-    "publicize-package-json": "./bin/publicize-package-json.ts",
+    "release-incubation": "./bin/release-incubation.ts",
     "typecheck-all-workspaces": "./bin/typecheck-all-workspaces.ts",
     "assert-workspace-hierarchy": "./bin/assert-workspace-hierarchy.ts",
     "assert-sibling-files": "./bin/assert-sibling-files.ts",

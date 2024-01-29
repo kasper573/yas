@@ -1,21 +1,17 @@
-#!/usr/bin/env tsx
-
 import * as path from "path";
-import { execaCommand } from "execa";
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
-import { createMutableResource } from "../src/createMutableResource";
+import type { MutableResource } from "./createMutableResource";
+import { createMutableResource } from "./createMutableResource";
 
 /**
  * Strips internal package details from package.json before running a command.
  * Restores package.json after the command is done, but keeps the new version intact.
  */
-async function run({
-  command,
+export async function publicizePackageJson({
+  operation,
   distFolder,
   preview,
 }: {
-  command: string;
+  operation: (pkg: MutableResource<PackageJson>) => Promise<void>;
   distFolder: string;
   preview?: boolean;
 }) {
@@ -48,14 +44,10 @@ async function run({
 
     console.log("package.json has been made release ready");
 
-    console.log(`Running command "${command}"`);
-    const { stdout } = await execaCommand(command);
-    console.log(stdout);
+    await operation(pkg);
     return 0;
   } catch (e) {
-    console.error(
-      `Error while running command "${command}":\n` + (e as Error).message,
-    );
+    console.error(e instanceof Error ? e.message : `Unknown error: ${e}`);
     return 1;
   } finally {
     pkg.reload();
@@ -121,20 +113,10 @@ function handleInternalPackageDependencies(
   return ok;
 }
 
-const args = yargs(hideBin(process.argv))
-  .options({
-    command: { type: "string", alias: "c", demandOption: true },
-    distFolder: { type: "string", alias: "d", demandOption: true },
-    preview: { type: "boolean", alias: "p" },
-  })
-  .parseSync();
-
-run(args).then(process.exit);
-
-type PackageJson = {
+export interface PackageJson {
   version: string;
   devDependencies?: Record<string, string>;
   dependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
   [key: string]: unknown;
-};
+}

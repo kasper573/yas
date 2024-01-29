@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "react": "18.2.0",

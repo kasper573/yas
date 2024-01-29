@@ -33,7 +33,7 @@
     "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
     "test:unit": "vitest",
     "test:types": "vitest typecheck",
-    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "immer": "^10.0.2",
