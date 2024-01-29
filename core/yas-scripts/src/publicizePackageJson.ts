@@ -47,7 +47,11 @@ export async function publicizePackageJson({
     await operation(pkg);
     return 0;
   } catch (e) {
-    console.error(e instanceof Error ? e.message : `Unknown error: ${e}`);
+    if (e instanceof Error) {
+      console.error(e.stack ?? e.message ?? e.cause ?? e.name ?? String(e));
+    } else {
+      console.error(`Unknown error: ${e}`);
+    }
     return 1;
   } finally {
     pkg.reload();
