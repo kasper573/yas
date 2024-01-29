@@ -14,7 +14,7 @@
     "component"
   ],
   "author": "Kasper573",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
