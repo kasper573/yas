@@ -48,9 +48,7 @@ export async function publicizePackageJson({
     return 0;
   } catch (e) {
     if (e instanceof Error) {
-      console.error(
-        [e.name, e.message, e.stack, e.cause].filter(Boolean).join("\n"),
-      );
+      console.error(e.stack ?? e.message ?? e.cause ?? e.name ?? String(e));
     } else {
       console.error(`Unknown error: ${e}`);
     }
