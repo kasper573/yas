@@ -2,7 +2,7 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { execaCommand as $, execa } from "execa";
+import { execaCommand as $ } from "execa";
 import type { PackageJson } from "../src/publicizePackageJson";
 import { publicizePackageJson } from "../src/publicizePackageJson";
 import type { MutableResource } from "../src/createMutableResource";
@@ -24,15 +24,6 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
       // Release to npm
       console.log(`Releasing to npm: ${pkg.contents.name}@${newVersion}`);
       await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
-
-      // Commit the new package.json version
-      const commitMessage = `ci: update ${pkg.contents.name} to ${newVersion}`;
-      console.log(`Committing updated package version ${pkg.filePath}`);
-      await $(`git add ${pkg.filePath}`, { stdio: "inherit" });
-      await execa("git", ["commit", "-m", commitMessage], {
-        stdio: "inherit",
-      });
-      await $(`git push origin`, { stdio: "inherit" });
     },
     distFolder,
   });
