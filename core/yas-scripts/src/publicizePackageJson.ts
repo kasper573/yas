@@ -114,6 +114,7 @@ function handleInternalPackageDependencies(
 }
 
 export interface PackageJson {
+  name: string;
   version: string;
   devDependencies?: Record<string, string>;
   dependencies?: Record<string, string>;

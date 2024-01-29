@@ -7,7 +7,7 @@
       "outputs": ["dist/**", "build/**"]
     },
     "release": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["build"],
       "cache": false
     },
     "test": {

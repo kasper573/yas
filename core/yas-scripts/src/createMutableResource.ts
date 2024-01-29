@@ -39,14 +39,15 @@ export function createMutableResource<T>(
     current = load();
   }
 
-  return {
+  return Object.freeze({
     get contents() {
       return current;
     },
     update,
     restore,
     reload,
-  };
+    filePath,
+  });
 }
 
 export type MutableResource<T> = ReturnType<typeof createMutableResource<T>>;
