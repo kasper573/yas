@@ -10,10 +10,13 @@ import type { MutableResource } from "../src/createMutableResource";
 async function releaseIncubation({ distFolder }: { distFolder: string }) {
   const exitCode = await publicizePackageJson({
     async operation(pkg) {
-      if (!(await hasChanges(pkg.contents.name))) {
+      const { local, latest } = await packageChanges(pkg.contents.name);
+      if (local === latest) {
         console.log("No changes detected. Skipping release.");
         return;
       }
+
+      console.log(`Changes detected. Local: ${local}, Latest: ${latest}`);
 
       // Update package.json with new version
       const newVersion = await bumpPackageVersion(pkg);
@@ -41,14 +44,14 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
   return 0;
 }
 
-async function hasChanges(packageName: string) {
+async function packageChanges(packageName: string) {
   const { stdout: tarballName } = await $(`npm pack`);
   const { stdout: opensslOutput } = await $(`openssl sha1 ${tarballName}`);
   const [, local] = opensslOutput.split(" ");
   const { stdout: latest } = await $(
     `npm show ${packageName}@latest dist.shasum`,
   );
-  return local !== latest;
+  return { local, latest };
 }
 
 async function bumpPackageVersion(pkg: MutableResource<PackageJson>) {
