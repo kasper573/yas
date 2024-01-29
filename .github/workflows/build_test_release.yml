@@ -57,3 +57,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
       - run: pnpm release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
