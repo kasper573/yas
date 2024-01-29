@@ -16,26 +16,38 @@
     "state"
   ],
   "author": "Kasper573",
-  "version": "0.11.13",
+  "version": "0.11.14",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
     }
+  },
+  "scripts": {
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit --project tsconfig.build.json",
+    "test": "pnpm test:unit run && pnpm test:types --run",
+    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
+    "test:unit": "vitest",
+    "test:types": "vitest typecheck",
+    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "immer": "^10.0.2",
     "react": "18.2.0",
     "zod": "^3.22.3"
   },
-  "module": "dist/index.mjs",
-  "files": [
-    "dist",
-    "package.json",
-    "readme.md"
-  ]
+  "devDependencies": {
+    "@types/react": "18.2.37",
+    "@yas/build": "workspace:*",
+    "@yas/test": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "@yas/scripts": "workspace:*",
+    "concurrently": "^8.0.1",
+    "react": "18.2.0",
+    "zod": "^3.22.3"
+  }
 }
