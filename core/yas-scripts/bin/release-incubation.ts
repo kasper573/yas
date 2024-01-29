@@ -26,7 +26,9 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
       const commitMessage = `ci: update ${pkg.contents.name} to ${newVersion}`;
       console.log(`Committing updated package version ${pkg.filePath}`);
       await $(`git add ${pkg.filePath}`, { stdio: "inherit" });
-      await execa("git", ["commit", "-m", commitMessage], { stdio: "inherit" });
+      await execa("git", ["commit", "-m", JSON.stringify(commitMessage)], {
+        stdio: "inherit",
+      });
       await $(`git push`, { stdio: "inherit" });
     },
     distFolder,
