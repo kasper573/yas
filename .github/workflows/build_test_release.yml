@@ -65,3 +65,10 @@ jobs:
       - run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # The release command may have updated package.json versions, which we want to commit and push.
+      - name: Commit and push changes
+        run: |
+          git add .
+          git diff --cached --exit-code || exit 0  # Exit if there are no changes
+          git commit -m "chore: release"
+          git push
