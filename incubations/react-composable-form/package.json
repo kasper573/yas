@@ -16,7 +16,7 @@
     "state"
   ],
   "author": "Kasper573",
-  "version": "0.11.14",
+  "version": "0.11.15",
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
