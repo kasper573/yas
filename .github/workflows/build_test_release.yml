@@ -51,6 +51,8 @@ jobs:
           NODE_ENV: development
 
   release:
+    permissions:
+      contents: write
     needs: [conventions, test, typecheck, build]
     runs-on: ubuntu-latest
     steps:
@@ -58,8 +60,8 @@ jobs:
       - uses: ./.github/workflows/composites/install/
       - name: Setup git config
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       - run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
