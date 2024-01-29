@@ -38,9 +38,9 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
 
 async function packageChanges(packageName: string) {
   const { stdout: tarballName } = await $(`npm pack`);
-  const { stdout: opensslOutput } = await $(`openssl sha1 ${tarballName}`);
+  const { stdout: opensslOutput } = await $(`shasum -a 1 ${tarballName}`);
   await fs.unlink(tarballName);
-  const [, local] = opensslOutput.split(" ");
+  const [local] = opensslOutput.split(" ");
   const { stdout: latest } = await $(
     `npm show ${packageName}@latest dist.shasum`,
   );
