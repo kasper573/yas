@@ -62,8 +62,9 @@ jobs:
       - run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GH_TOKEN: ${{ secrets.RELEASE_GH_TOKEN }}
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GH_TOKEN }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
