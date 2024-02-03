@@ -16,7 +16,7 @@ jobs:
 
       - name: Validate current commit
         if: github.event_name == 'push'
-        run: pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
+        run: pnpm exec commitlint --from ${{ github.event.before }} --to HEAD --verbose
 
       - name: Validate all pull request commits
         if: github.event_name == 'pull_request'
