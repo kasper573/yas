@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build, Test and Release
 on: [push]
 
 env:
@@ -31,6 +31,13 @@ jobs:
           name: playwright
           path: "**/.playwright/**"
 
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm typecheck
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -43,9 +50,22 @@ jobs:
           # This CI job is only for sanity testing the build process in the CI.
           NODE_ENV: development
 
-  typecheck:
+  release:
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/master'
+    needs: [conventions, test, typecheck, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
-      - run: pnpm typecheck
+      - run: pnpm release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "chore: bump package versions for recent release" || true
+          git push

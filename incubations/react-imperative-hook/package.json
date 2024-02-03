@@ -1,10 +1,5 @@
 {
   "name": "react-imperative-hook",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kasper573/yas.git",
-    "directory": "libaries/react-imperative-hook"
-  },
   "description": "React hook that provides an imperative interface for spawning and resolving components",
   "keywords": [
     "react",
@@ -14,7 +9,7 @@
     "component"
   ],
   "author": "Kasper573",
-  "version": "0.1.12",
+  "version": "0.1.35",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
@@ -30,7 +25,7 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "react": "18.2.0",

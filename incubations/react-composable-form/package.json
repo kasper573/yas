@@ -1,10 +1,5 @@
 {
   "name": "react-composable-form",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kasper573/yas.git",
-    "directory": "libraries/react-composable-form"
-  },
   "description": "Form library for React with focus on composition, convention and type safety.",
   "keywords": [
     "react",
@@ -16,7 +11,7 @@
     "state"
   ],
   "author": "Kasper573",
-  "version": "0.11.4",
+  "version": "0.11.21",
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -33,7 +28,7 @@
     "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
     "test:unit": "vitest",
     "test:types": "vitest typecheck",
-    "release": "publicize-package-json -c \"pnpm publish --no-git-checks\" -d dist"
+    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "immer": "^10.0.2",

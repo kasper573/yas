@@ -371,6 +371,9 @@ importers:
 
   core/yas-scripts:
     devDependencies:
+      '@types/tar':
+        specifier: 6.1.11
+        version: 6.1.11
       '@types/yargs':
         specifier: ^17.0.24
         version: 17.0.26
@@ -398,6 +401,9 @@ importers:
       immer:
         specifier: ^10.0.2
         version: 10.0.2
+      tar:
+        specifier: 6.2.0
+        version: 6.2.0
       tsx:
         specifier: 4.6.1
         version: 4.6.1
@@ -9266,6 +9272,13 @@ packages:
     resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
     dev: true
 
+  /@types/tar@6.1.11:
+    resolution: {integrity: sha512-ThA1WD8aDdVU4VLuyq5NEqriwXErF5gEIJeyT6gHBWU7JtSmW2a5qjNv3/vR82O20mW+1vhmeZJfBQPT3HCugg==}
+    dependencies:
+      '@types/node': 20.8.10
+      minipass: 4.2.8
+    dev: true
+
   /@types/unist@2.0.8:
     resolution: {integrity: sha512-d0XxK3YTObnWVp6rZuev3c49+j4Lo8g4L1ZRm9z5L0xpoZycUPshHgczK5gsUMaZOstjVYYi09p5gYvUtfChYw==}
     dev: true
@@ -17328,6 +17341,11 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       yallist: 4.0.0
+    dev: true
+
+  /minipass@4.2.8:
+    resolution: {integrity: sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ==}
+    engines: {node: '>=8'}
     dev: true
 
   /minipass@5.0.0:

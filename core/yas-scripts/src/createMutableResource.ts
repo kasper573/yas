@@ -4,7 +4,7 @@ import { produce } from "immer";
 export function createMutableResource<T>(
   filePath: string,
   parse: (contents: string) => T,
-  format: (contents: T) => string,
+  format: (contents: T, isRestoring: boolean) => string,
 ) {
   const original = load();
   let current = original;
@@ -14,7 +14,7 @@ export function createMutableResource<T>(
     current = produce(current, (draft) => {
       res = mutator(draft as T);
     });
-    fs.writeFileSync(filePath, format(current));
+    fs.writeFileSync(filePath, format(current, false));
     return res;
   }
 
@@ -26,6 +26,7 @@ export function createMutableResource<T>(
           mutator(draft as T);
           // Discard output
         }),
+        true,
       ),
       "utf-8",
     );
@@ -39,12 +40,15 @@ export function createMutableResource<T>(
     current = load();
   }
 
-  return {
+  return Object.freeze({
     get contents() {
       return current;
     },
     update,
     restore,
     reload,
-  };
+    filePath,
+  });
 }
+
+export type MutableResource<T> = ReturnType<typeof createMutableResource<T>>;
