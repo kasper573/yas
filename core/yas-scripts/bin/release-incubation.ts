@@ -1,6 +1,10 @@
 #!/usr/bin/env tsx
 
-import * as fs from "fs/promises";
+import path from "path";
+import fs from "fs/promises";
+import os from "os";
+import crypto from "crypto";
+import tar from "tar";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { execaCommand as $ } from "execa";
@@ -16,8 +20,6 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
         console.log("No changes detected. Skipping release.");
         return;
       }
-
-      console.log(`Changes detected. Local: ${local}, Latest: ${latest}`);
 
       // Update package.json with new version
       const newVersion = await bumpPackageVersion(pkg);
@@ -37,14 +39,46 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
 }
 
 async function packageChanges(packageName: string) {
-  const { stdout: tarballName } = await $(`npm pack`);
-  const { stdout: opensslOutput } = await $(`shasum -a 1 ${tarballName}`);
-  await fs.unlink(tarballName);
-  const [local] = opensslOutput.split(" ");
-  const { stdout: latest } = await $(
-    `npm show ${packageName}@latest dist.shasum`,
-  );
+  const localTarball = await npmPack("");
+  const latestTarball = await npmPack(`${packageName}@latest`);
+  const local = await hashTarball(localTarball);
+  const latest = await hashTarball(latestTarball);
+  if (local !== latest) {
+    console.log(`Changes detected.\nLocal: ${local}\nLatest:${latest}`);
+    console.log(await diffTarball(localTarball, latestTarball));
+  }
   return { local, latest };
+}
+
+async function npmPack(args = "") {
+  const { stdout: tarballName } = await $(`npm pack ${args}`);
+  const tarball = await fs.readFile(tarballName);
+  fs.unlink(tarballName);
+  return tarball;
+}
+
+async function hashTarball(tarball: Buffer): Promise<string> {
+  return crypto.createHash("sha1").update(tarball).digest("hex");
+}
+
+async function diffTarball(a: Buffer, b: Buffer): Promise<string> {
+  const dirA = tempFilename();
+  const dirB = tempFilename();
+
+  try {
+    await unpackTarball(a, dirA);
+    await unpackTarball(b, dirB);
+    await $(`diff -ru ${dirA} ${dirB}`);
+    return "No difference";
+  } catch (e) {
+    if (e !== null && typeof e === "object" && "stdout" in e) {
+      return String(e.stdout);
+    }
+    throw e; // Unexpected error
+  } finally {
+    await fs.rm(dirA, { recursive: true });
+    await fs.rm(dirB, { recursive: true });
+  }
 }
 
 async function bumpPackageVersion(pkg: MutableResource<PackageJson>) {
@@ -63,6 +97,25 @@ async function bumpPackageVersion(pkg: MutableResource<PackageJson>) {
   });
 
   return newVersion;
+}
+
+async function unpackTarball(tarball: Buffer, outDir: string): Promise<void> {
+  const file = tempFilename() + ".tgz";
+  await fs.writeFile(file, tarball);
+  try {
+    await fs.mkdir(outDir);
+    await tar.extract({ file, cwd: outDir });
+  } finally {
+    await fs.rm(file);
+  }
+}
+
+const count = 0;
+function tempFilename() {
+  return path.resolve(
+    os.tmpdir(),
+    count + "_" + Math.random().toString(36).slice(2),
+  );
 }
 
 const args = yargs(hideBin(process.argv))

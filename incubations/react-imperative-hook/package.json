@@ -9,7 +9,7 @@
     "component"
   ],
   "author": "Kasper573",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",

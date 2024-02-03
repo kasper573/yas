@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@types/yargs": "^17.0.24",
+    "@types/tar": "6.1.11",
     "@yas/tsconfig": "workspace:*",
     "@yas/validate": "workspace:*",
     "@yas/result": "workspace:*",
@@ -22,6 +23,7 @@
     "execa": "^7.1.1",
     "immer": "^10.0.2",
     "yargs": "^17.7.2",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "tar": "6.2.0"
   }
 }
