@@ -22,7 +22,10 @@ export async function publicizePackageJson({
   const pkg = createMutableResource(
     packageJsonPath,
     (str) => JSON.parse(str) as PackageJson,
-    (json) => JSON.stringify(json, null, 2) + "\n",
+    (json, isRestoring) => {
+      const jsonString = JSON.stringify(json, null, 2);
+      return jsonString + (isRestoring ? "\n" : "");
+    },
   );
 
   if (preview) {
