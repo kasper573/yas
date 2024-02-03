@@ -59,15 +59,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
-      - name: Setup git config
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
       - run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Commit and push changes
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add .
           git commit -m "chore: bump package versions for recent release" || true
           git push
