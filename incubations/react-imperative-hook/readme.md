@@ -10,7 +10,7 @@ you'd much rather want an imperative and promise based interface, which is what 
 - Lightweight with zero runtime dependencies.
 - Written in TypeScript with proper generics in mind.
 
-### [Try it on CodeSandbox](https://codesandbox.io/p/sandbox/react-imperative-hook-example-4kkvp2)
+### [Try it on StackBlitz](https://stackblitz.com/edit/react-imperative-hook-example?file=src%2FApp.tsx)
 
 ### Install
 
@@ -128,7 +128,7 @@ export function App() {
 
 ### Primitives
 
-See [CodeSandbox](#try-it-on-codesandbox) for examples for all primitives.
+See [StackBlitz](#try-it-on-stackblitz) for examples for all primitives.
 
 #### Outlet
 
