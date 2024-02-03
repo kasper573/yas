@@ -18,7 +18,6 @@ jobs:
         id: merge
         run: |
           isMerge=$(git show --pretty=%P -s HEAD | grep -q ' ' && echo true || echo false)
-          echo "isMerge=$isMerge"
           echo "isMerge=$isMerge" >> $GITHUB_OUTPUT
 
       - name: Lint all commits in push event
