@@ -3,11 +3,11 @@
 import path from "path";
 import fs from "fs/promises";
 import os from "os";
-import crypto from "crypto";
 import tar from "tar";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { execaCommand as $ } from "execa";
+import { err, ok, type Result } from "@yas/result";
 import type { PackageJson } from "../src/publicizePackageJson";
 import { publicizePackageJson } from "../src/publicizePackageJson";
 import type { MutableResource } from "../src/createMutableResource";
@@ -15,11 +15,14 @@ import type { MutableResource } from "../src/createMutableResource";
 async function releaseIncubation({ distFolder }: { distFolder: string }) {
   const exitCode = await publicizePackageJson({
     async operation(pkg) {
-      const { local, latest } = await packageChanges(pkg.contents.name);
-      if (local === latest) {
+      const result = await compareLocalWithLatestPackage(pkg.contents.name);
+      if (result.isOk()) {
         console.log("No changes detected. Skipping release.");
         return;
       }
+
+      console.log("Changes detected");
+      console.log(result.error);
 
       // Update package.json with new version
       const newVersion = await bumpPackageVersion(pkg);
@@ -38,16 +41,10 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
   return 0;
 }
 
-async function packageChanges(packageName: string) {
+async function compareLocalWithLatestPackage(packageName: string) {
   const localTarball = await npmPack("");
   const latestTarball = await npmPack(`${packageName}@latest`);
-  const local = await hashTarball(localTarball);
-  const latest = await hashTarball(latestTarball);
-  if (local !== latest) {
-    console.log(`Changes detected.\nLocal: ${local}\nLatest:${latest}`);
-    console.log(await diffTarball(localTarball, latestTarball));
-  }
-  return { local, latest };
+  return await diffTarballs(localTarball, latestTarball);
 }
 
 async function npmPack(args = "") {
@@ -57,22 +54,21 @@ async function npmPack(args = "") {
   return tarball;
 }
 
-async function hashTarball(tarball: Buffer): Promise<string> {
-  return crypto.createHash("sha1").update(tarball).digest("hex");
-}
-
-async function diffTarball(a: Buffer, b: Buffer): Promise<string> {
+async function diffTarballs(
+  a: Buffer,
+  b: Buffer,
+): Promise<Result<void, string>> {
   const dirA = tempFilename();
   const dirB = tempFilename();
 
   try {
     await unpackTarball(a, dirA);
     await unpackTarball(b, dirB);
-    await $(`diff -ru ${dirA} ${dirB}`);
-    return "No difference";
+    await $(`diff -Bru ${dirA} ${dirB}`);
+    return ok(void 0);
   } catch (e) {
     if (e !== null && typeof e === "object" && "stdout" in e) {
-      return String(e.stdout);
+      return err(String(e.stdout));
     }
     throw e; // Unexpected error
   } finally {
