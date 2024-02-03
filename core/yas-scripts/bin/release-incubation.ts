@@ -12,7 +12,13 @@ import type { PackageJson } from "../src/publicizePackageJson";
 import { publicizePackageJson } from "../src/publicizePackageJson";
 import type { MutableResource } from "../src/createMutableResource";
 
-async function releaseIncubation({ distFolder }: { distFolder: string }) {
+async function tryReleaseIncubation({
+  distFolder,
+  preview = false,
+}: {
+  distFolder: string;
+  preview?: boolean;
+}) {
   const exitCode = await publicizePackageJson({
     async operation(pkg) {
       const result = await compareLocalWithLatestPackage(pkg.contents.name);
@@ -24,12 +30,14 @@ async function releaseIncubation({ distFolder }: { distFolder: string }) {
       console.log("Changes detected");
       console.log(result.error);
 
-      // Update package.json with new version
-      const newVersion = await bumpPackageVersion(pkg);
+      if (!preview) {
+        // Update package.json with new version
+        const newVersion = await bumpPackageVersion(pkg);
 
-      // Release to npm
-      console.log(`Releasing to npm: ${pkg.contents.name}@${newVersion}`);
-      await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
+        // Release to npm
+        console.log(`Releasing to npm: ${pkg.contents.name}@${newVersion}`);
+        await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
+      }
     },
     distFolder,
   });
@@ -64,7 +72,7 @@ async function diffTarballs(
   try {
     await unpackTarball(a, dirA);
     await unpackTarball(b, dirB);
-    await $(`diff -Bruw ${dirA} ${dirB}`);
+    await $(`diff -r ${dirA} ${dirB}`);
     return ok(void 0);
   } catch (e) {
     if (e !== null && typeof e === "object" && "stdout" in e) {
@@ -117,7 +125,8 @@ function tempFilename() {
 const args = yargs(hideBin(process.argv))
   .options({
     distFolder: { type: "string", alias: "d", demandOption: true },
+    preview: { type: "boolean", alias: "p" },
   })
   .parseSync();
 
-releaseIncubation(args).then(process.exit);
+tryReleaseIncubation(args).then(process.exit);
