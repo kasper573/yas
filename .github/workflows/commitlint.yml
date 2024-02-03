@@ -17,7 +17,7 @@ jobs:
       - name: Determine if merge commit
         id: merge
         run: |
-          isMerge=$(git log -1 --merges --pretty=%B)
+          isMerge=$(git show --pretty=%P -s HEAD | grep -q ' ' && echo true || echo false)
           echo "isMerge=$isMerge"
           echo "isMerge=$isMerge" >> $GITHUB_OUTPUT
 
