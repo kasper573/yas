@@ -14,8 +14,12 @@ jobs:
 
       - uses: ./.github/workflows/composites/install/
 
+      - name: Determine if merge commit
+        id: merge
+        run: echo ::set-output name=isMerge::$(git log -1 --merges --pretty=%B)
+
       - name: Lint all commits in push event
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.merge.outputs.isMerge == 'false'
         run: pnpm exec commitlint --from ${{ github.event.before }} --to HEAD --verbose
 
       - name: Lint all commits in pull request
