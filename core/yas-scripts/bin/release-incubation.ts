@@ -64,7 +64,7 @@ async function diffTarballs(
   try {
     await unpackTarball(a, dirA);
     await unpackTarball(b, dirB);
-    await $(`diff -Bru ${dirA} ${dirB}`);
+    await $(`diff -Bruw ${dirA} ${dirB}`);
     return ok(void 0);
   } catch (e) {
     if (e !== null && typeof e === "object" && "stdout" in e) {
