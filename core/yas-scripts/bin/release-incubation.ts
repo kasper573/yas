@@ -8,9 +8,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { execaCommand as $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
-import type { PackageJson } from "../src/publicizePackageJson";
 import { publicizePackageJson } from "../src/publicizePackageJson";
-import type { MutableResource } from "../src/createMutableResource";
 
 async function tryReleaseIncubation({
   distFolder,
@@ -21,21 +19,29 @@ async function tryReleaseIncubation({
 }) {
   const exitCode = await publicizePackageJson({
     async operation(pkg) {
-      const result = await compareLocalWithLatestPackage(pkg.contents.name);
+      const [localTarball] = await npmPack(pkg.contents.name);
+      const [latestTarball, currentVersion] = await npmPack(
+        pkg.contents.name,
+        "latest",
+      );
+
+      const result = await diffTarballs(localTarball, latestTarball);
       if (result.isOk()) {
         console.log("No changes detected. Skipping release.");
         return;
       }
 
-      console.log("Changes detected");
+      const nextVersion = bumpVersion(currentVersion);
+
+      console.log(`Changes detected`);
       console.log(result.error);
 
-      if (!preview) {
-        // Update package.json with new version
-        const newVersion = await bumpPackageVersion(pkg);
+      console.log(
+        `Updating from version ${pkg.contents.version} to ${nextVersion}`,
+      );
 
-        // Release to npm
-        console.log(`Releasing to npm: ${pkg.contents.name}@${newVersion}`);
+      if (!preview) {
+        pkg.update((pkg) => (pkg.version = nextVersion));
         await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
       }
     },
@@ -49,17 +55,21 @@ async function tryReleaseIncubation({
   return 0;
 }
 
-async function compareLocalWithLatestPackage(packageName: string) {
-  const localTarball = await npmPack("");
-  const latestTarball = await npmPack(`${packageName}@latest`);
-  return await diffTarballs(localTarball, latestTarball);
-}
+async function npmPack(packageName: string, versionQuery?: string) {
+  const command = versionQuery
+    ? `npm pack ${packageName}@${versionQuery}`
+    : `npm pack`;
 
-async function npmPack(args = "") {
-  const { stdout: tarballName } = await $(`npm pack ${args}`);
+  const { stdout: tarballName } = await $(command);
   const tarball = await fs.readFile(tarballName);
   fs.unlink(tarballName);
-  return tarball;
+
+  const packageVersion = tarballName.match(/-(\d+\.\d+\.\d+).tgz$/)?.[1];
+  if (!packageVersion) {
+    throw new Error(`Could not extract version from ${tarballName}`);
+  }
+
+  return [tarball, packageVersion] as const;
 }
 
 async function diffTarballs(
@@ -85,22 +95,9 @@ async function diffTarballs(
   }
 }
 
-async function bumpPackageVersion(pkg: MutableResource<PackageJson>) {
-  const version = pkg.contents.version;
+function bumpVersion(version: string) {
   const [major, minor, patch] = version.split(".").map((n) => Number(n));
-
-  if (patch === undefined) {
-    throw new Error(`Invalid version: ${version}`);
-  }
-
-  const newVersion = `${major}.${minor}.${patch + 1}`;
-
-  console.log(`Bumping version from ${version} to ${newVersion}`);
-  pkg.update((pkg) => {
-    pkg.version = newVersion;
-  });
-
-  return newVersion;
+  return `${major}.${minor}.${patch + 1}`;
 }
 
 async function unpackTarball(tarball: Buffer, outDir: string): Promise<void> {
