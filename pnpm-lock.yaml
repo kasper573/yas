@@ -518,9 +518,6 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
