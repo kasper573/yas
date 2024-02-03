@@ -53,6 +53,7 @@ jobs:
   release:
     permissions:
       contents: write
+    if: github.ref == 'refs/heads/master'
     needs: [conventions, test, typecheck, build]
     runs-on: ubuntu-latest
     steps:
