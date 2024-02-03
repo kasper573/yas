@@ -16,7 +16,10 @@ jobs:
 
       - name: Determine if merge commit
         id: merge
-        run: echo "isMerge=$(git log -1 --merges --pretty=%B)" >> $GITHUB_OUTPUT
+        run: |
+          isMerge=$(git log -1 --merges --pretty=%B)
+          echo "isMerge=$isMerge"
+          echo "isMerge=$isMerge" >> $GITHUB_OUTPUT
 
       - name: Lint all commits in push event
         if: github.event_name == 'push' && steps.merge.outputs.isMerge == 'false'
