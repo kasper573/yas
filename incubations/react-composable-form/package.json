@@ -1,10 +1,5 @@
 {
   "name": "react-composable-form",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kasper573/yas.git",
-    "directory": "libraries/react-composable-form"
-  },
   "description": "Form library for React with focus on composition, convention and type safety.",
   "keywords": [
     "react",
