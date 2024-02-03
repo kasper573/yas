@@ -68,4 +68,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "chore: bump package versions for recent release" || true
-          git push
+          git push --force
