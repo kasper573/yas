@@ -28,7 +28,7 @@
     "release": "release-incubation"
   },
   "peerDependencies": {
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "immer": "^10.0.2"
   },
   "devDependencies": {
@@ -36,8 +36,8 @@
     "@yas/test": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
-    "@types/react": "18.2.37",
-    "react": "18.2.0",
+    "@types/react": "^18.2.37",
+    "react": "^18.2.0",
     "immer": "^10.0.2"
   }
 }

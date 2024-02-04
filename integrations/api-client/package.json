@@ -16,11 +16,11 @@
     "@tanstack/react-query": "4.29.15",
     "@trpc/client": "10.44.1",
     "@trpc/react-query": "10.44.1",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "superjson": "1.13.3"
   },
   "devDependencies": {
-    "@types/react": "18.2.37",
+    "@types/react": "^18.2.37",
     "@yas/tsconfig": "workspace:*"
   },
   "depcheck": {
