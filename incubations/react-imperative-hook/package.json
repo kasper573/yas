@@ -9,35 +9,25 @@
     "component"
   ],
   "author": "Kasper573",
-  "version": "0.1.58",
+  "version": "0.1.57",
   "license": "MIT",
-  "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     }
-  },
-  "scripts": {
-    "build": "pnpm typecheck && tsup",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "release": "release-incubation -d dist"
   },
   "peerDependencies": {
     "react": "18.2.0",
     "immer": "^10.0.2"
   },
-  "devDependencies": {
-    "@yas/tsconfig": "workspace:*",
-    "@yas/test": "workspace:*",
-    "@yas/build": "workspace:*",
-    "@yas/scripts": "workspace:*",
-    "@types/react": "18.2.37",
-    "react": "18.2.0",
-    "immer": "^10.0.2"
-  }
+  "module": "dist/index.mjs",
+  "files": [
+    "dist",
+    "package.json",
+    "readme.md"
+  ]
 }
