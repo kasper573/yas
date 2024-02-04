@@ -586,16 +586,16 @@ importers:
 
   incubations/vanilla-extract-recipe-factory:
     dependencies:
-      '@vanilla-extract/recipes':
-        specifier: 0.5.1
-        version: 0.5.1(@vanilla-extract/css@1.14.0)
-      '@vanilla-extract/vite-plugin':
-        specifier: 3.9.2
-        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
-    devDependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: ^1.14.0
         version: 1.14.0
+      '@vanilla-extract/recipes':
+        specifier: ^0.5.1
+        version: 0.5.1(@vanilla-extract/css@1.14.0)
+    devDependencies:
+      '@vanilla-extract/vite-plugin':
+        specifier: ^3.9.2
+        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test
