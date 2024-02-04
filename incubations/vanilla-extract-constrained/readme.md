@@ -6,6 +6,8 @@ Provides the same type safety and strictness of sprinkles (and with a similar AP
 
 > Heads-up: vanilla-extract-constrained does not generate atomic CSS like sprinkles does, and instead generates potentially duplicated css across the css classes that gets generated. However, a lot of apps should be okay with this performance trade-off, and some likely even benefit from it, since this approach means you generate less verbose HTML due to the large amount of css class names that atomic css yields.
 
+> Heads up 2: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
+
 Here's how you define your constraints, very much like sprinkles:
 
 ```typescript

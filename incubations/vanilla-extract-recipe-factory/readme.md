@@ -2,6 +2,8 @@
 
 Create your own [recipe function](https://vanilla-extract.style/documentation/packages/recipes/), but control how styles are compiled.
 
+> Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
+
 ```tsx
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 
