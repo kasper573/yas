@@ -70,7 +70,7 @@ export async function makePackageJsonPublishable<OperationOutput>({
     });
     console.log("package.json has been restored");
     if (operationOutput) {
-      afterOperation?.(operationOutput.value);
+      await afterOperation?.(operationOutput.value);
     }
   }
 }
