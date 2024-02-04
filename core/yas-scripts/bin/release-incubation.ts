@@ -49,8 +49,8 @@ async function tryReleaseIncubation({
         const $$ = $({ stdio: "inherit" });
         await $$`pnpm publish --no-git-checks`;
         await $$`git add ./package.json`;
-        await $$`git ${["commit", "-m", `"${msg}"`]}`;
-        await $$`git ${["tag", "-a", `"${tag}"`]}`;
+        await $$`git ${["commit", "-m", msg]}`;
+        await $$`git ${["tag", "-a", tag]}`;
         await $$`git push`;
       }
     },
