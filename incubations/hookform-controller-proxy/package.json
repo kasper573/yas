@@ -12,8 +12,11 @@
     }
   },
   "scripts": {
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "pnpm playwright test -c playwright-ct.config.js",
-    "test:watch": "pnpm run test --ui"
+    "test:watch": "pnpm run test --ui",
+    "release": "release-incubation"
   },
   "peerDependencies": {
     "react": "18.2.0",
@@ -25,6 +28,7 @@
     "@types/react": "18.2.37",
     "@yas/validate": "workspace:*",
     "@yas/build": "workspace:*",
+    "@yas/scripts": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "react": "18.2.0",
     "react-dom": "18.2.0"
