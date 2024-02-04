@@ -8,7 +8,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
-import { publicizePackageJson } from "../src/publicizePackageJson";
+import { makePackageJsonPublishable } from "../src/makePackageJsonPublishable";
 
 const $$ = $({ stdio: "inherit" });
 
@@ -19,7 +19,7 @@ async function tryReleaseIncubation({
   distFolder: string;
   preview?: boolean;
 }) {
-  return publicizePackageJson({
+  return makePackageJsonPublishable({
     async operation(pkg) {
       const [localTarball] = await npmPack(pkg.contents.name);
       const [latestTarball, currentVersion] = await npmPack(
