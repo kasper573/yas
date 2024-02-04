@@ -44,11 +44,12 @@ async function tryReleaseIncubation({
         pkg.update((pkg) => (pkg.version = nextVersion));
 
         const tag = `${pkg.contents.name}@${nextVersion}`;
+        const msg = `chore(${pkg.contents.name}): bump package.json to ${nextVersion}`;
 
         const $$ = $({ stdio: "inherit" });
         await $$`pnpm publish --no-git-checks`;
         await $$`git add ./package.json`;
-        await $$`git ${["commit", "-m", `"Release ${tag}"`]}`;
+        await $$`git ${["commit", "-m", `"${msg}"`]}`;
         await $$`git ${["tag", "-a", `"${tag}"`]}`;
         await $$`git push`;
       }
