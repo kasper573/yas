@@ -4,7 +4,7 @@ The declarative nature of React is great for most use cases, but not always.
 When working with async UI flows like modals, toasts and drawers, it's often
 preferable to have an imperative and promise based interface, which is what this library provides.
 
-> This package is in alpha and does not use semantic versioning.
+> This package is in alpha and does not use semantic versioning. Changes of all kinds are released to the patch portion of the version string. The rest of the version string is unused while in alpha.
 
 ### Features
 
