@@ -38,12 +38,12 @@ const Component = styled(Impl);
 <Component>Foo</Component>; // <span>Foo</span>
 ```
 
-(Optional) Provide an sx compiler to the factory if you want to enable the `sx` prop on all components:
+(Optional) Provide an sx compiler (i.e. [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/)) to the factory if you want to enable the `sx` prop on all components:
 
 ```tsx
 // styled.ts
 import { createStyledFactory } from "react-styled-factory";
-import { sprinkles } from "./styles.css.ts"; // @vanilla-extract/sprinkles works as sx compiler
+import { sprinkles } from "./styles.css.ts";
 
 export const styled = createStyledFactory(sprinkles);
 
@@ -52,12 +52,13 @@ import { styled } from "./styled";
 
 const Component = styled("div");
 
-<Component sx={{ color: "primary", pt: "large" }} />; // <div class="color-red padding-top-large"></div>
+<Component sx={{ color: "primary", pt: "large" }} />;
+// <div class="color-red padding-top-large"></div>
 ```
 
 ## Styling components
 
-Provide a class name compiler (i.e. [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/recipes/)) to automatically convert specific props to class names:
+Provide a class name compiler (i.e. [@vanilla-extract/recipes](https://vanilla-extract.style/documentation/packages/recipes/)) to automatically convert specific props to class names:
 
 ```tsx
 // styles.css.ts
@@ -81,7 +82,8 @@ import { myRecipe } from "./styles.css.ts";
 
 const Component = styled("div", myRecipe);
 
-<Component size="large" color="primary" />; // <div class="size-large color-primary"></div>
+<Component size="large" color="primary" />;
+// <div class="size-large color-primary"></div>
 ```
 
 You can also pass in plain class names for simpler components:
@@ -164,13 +166,15 @@ import { dialogRecipe } from "./Dialog.css.ts";
 
 const Dialog1 = styled("dialog", dialogRecipe);
 
-// "open" will be interpreted and generate a class, but will not be passed to the inner component
+// "open" will be interpreted and generate a class,
+// but will not be passed to the inner component
 <Dialog1 open />; // <dialog class="open-true"></dialog>
 
 const Dialog2 = styled("dialog", dialogRecipe).shouldForwardProp(
   ({ name, isVariant }) => !isVariant || name == "open",
 );
 
-// Now "open" will be both used to generate a class and be passed to the inner component
+// Here "open" will be both used to generate a class
+// and be passed to the inner component
 <Dialog2 open />; // <dialog class="open-true" open></dialog>
 ```
