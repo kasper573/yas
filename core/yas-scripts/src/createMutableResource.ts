@@ -10,11 +10,12 @@ export function createMutableResource<T>(
   let current = original;
 
   function mutate<R>(
-    mutator: (contents: T) => R,
+    source: T,
+    mutator: (draft: T) => R,
     operation: "update" | "restore",
   ): R {
     let res = undefined as R;
-    current = produce(current, (draft) => {
+    current = produce(source, (draft) => {
       res = mutator(draft as T);
     });
     fs.writeFileSync(filePath, format(current, operation), "utf-8");
@@ -22,11 +23,11 @@ export function createMutableResource<T>(
   }
 
   function update<R>(mutator: (contents: T) => R): R {
-    return mutate(mutator, "update");
+    return mutate(current, mutator, "update");
   }
 
   function restore<R>(mutator: (contents: T) => R): R {
-    return mutate(mutator, "restore");
+    return mutate(original, mutator, "restore");
   }
 
   function load() {
