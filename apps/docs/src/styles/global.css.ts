@@ -42,3 +42,11 @@ unsafe.globalStyle("html", {
 unsafe.globalStyle(".footer", {
   background: "transparent",
 });
+
+unsafe.globalStyle(`[data-theme="light"] pre.shiki.nord`, {
+  display: "none",
+});
+
+unsafe.globalStyle(`[data-theme="dark"] pre.shiki.min-light`, {
+  display: "none",
+});
