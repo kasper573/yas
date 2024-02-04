@@ -11,9 +11,6 @@
   "scripts": {
     "build": "tsc --noEmit --project tsconfig.json"
   },
-  "dependencies": {
-    "@yas/result": "workspace:*"
-  },
   "peerDependencies": {
     "csstype": "^3"
   },

@@ -1,5 +1,3 @@
-import type { Result } from "@yas/result";
-import { ok, err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import type {
   CSSVariable,
   ConditionRecord,
@@ -8,12 +6,10 @@ import type {
   PropertyDefinitionRecord,
   PropertyShorthandRecord,
   Style,
+  PropertyDefinition,
+  StyleResolver,
 } from "./types";
-import {
-  rootConditionKeys,
-  type PropertyDefinition,
-  type StyleResolver,
-} from "./types";
+import { rootConditionKeys } from "./types";
 
 export function createStyleResolver<
   Conditions extends ConditionRecord,
@@ -84,7 +80,7 @@ function createStyleResolverImpl<
             propertyInput,
           );
 
-          if (res.isErr()) {
+          if (!res.ok) {
             errors.push([propertyName, res.error]);
             continue;
           }
@@ -107,7 +103,7 @@ function createStyleResolverImpl<
             conditionValue,
           );
 
-          if (res.isErr()) {
+          if (!res.ok) {
             errors.push([propertyName, res.error]);
             continue;
           }
@@ -134,14 +130,12 @@ function createStyleResolverImpl<
     }
 
     if (errors.length) {
-      unwrapUnsafe_useWithCaution(
-        err(
-          errors
-            .map(
-              ([name, error]) => `Invalid property "${String(name)}": ${error}`,
-            )
-            .join("\n"),
-        ),
+      throw new Error(
+        errors
+          .map(
+            ([name, error]) => `Invalid property "${String(name)}": ${error}`,
+          )
+          .join("\n"),
       );
     }
 
@@ -279,4 +273,14 @@ function isPlainObject<T>(value: T): value is T & Record<string, unknown> {
     !Array.isArray(value) &&
     !(value instanceof Date)
   );
+}
+
+type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
+
+function ok<T>(value: T): Result<T, never> {
+  return { ok: true, value };
+}
+
+function err<E>(error: E): Result<never, E> {
+  return { ok: false, error };
 }
