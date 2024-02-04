@@ -69,8 +69,18 @@ export async function makePackageJsonPublishable<OperationOutput>({
       }
     });
     console.log("package.json has been restored");
-    if (operationOutput) {
-      await afterOperation?.(operationOutput.value);
+    if (afterOperation) {
+      if (operationOutput) {
+        console.log(
+          "Running afterOperation with output",
+          operationOutput.value,
+        );
+        await afterOperation?.(operationOutput.value);
+      } else {
+        console.log("No output available to pass to afterOperation");
+      }
+    } else {
+      console.log("No afterOperation to run");
     }
   }
 }

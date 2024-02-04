@@ -52,6 +52,7 @@ async function tryReleaseIncubation({
         const [packageName, nextVersion] = releaseInfo;
         const tag = `${packageName}@${nextVersion}`;
         const msg = `chore(${packageName}): bump package.json to ${nextVersion}`;
+        console.log(`Adding git commit and tag`);
         await $$`git add ./package.json`;
         await $$`git ${["commit", "-m", msg]}`;
         await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
