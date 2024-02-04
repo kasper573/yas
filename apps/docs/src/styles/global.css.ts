@@ -1,7 +1,5 @@
 import { unsafe } from "@yas/style";
 
-import "./shiki-twoslash.css";
-
 unsafe.globalStyle(":root", {
   vars: {
     "--ifm-color-primary": "#296aa3",
