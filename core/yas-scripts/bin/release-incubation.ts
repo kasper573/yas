@@ -6,7 +6,7 @@ import os from "os";
 import tar from "tar";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { execaCommand as $ } from "execa";
+import { $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
 import { publicizePackageJson } from "../src/publicizePackageJson";
 
@@ -43,14 +43,14 @@ async function tryReleaseIncubation({
       if (!preview) {
         pkg.update((pkg) => (pkg.version = nextVersion));
 
-        await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
-
         const tag = `${pkg.contents.name}@${nextVersion}`;
 
-        await $(`git add ./package.json`, { stdio: "inherit" });
-        await $(`git commit -m "Bump to ${tag}"`, { stdio: "inherit" });
-        await $(`git tag -a "${tag}"`, { stdio: "inherit" });
-        await $(`git push`, { stdio: "inherit" });
+        const $$ = $({ stdio: "inherit" });
+        await $$`pnpm publish --no-git-checks`;
+        await $$`git add ./package.json`;
+        await $$`git commit -m "Bump to ${tag}"`;
+        await $$`git tag -a "${tag}"`;
+        await $$`git push`;
       }
     },
     distFolder,
@@ -64,11 +64,9 @@ async function tryReleaseIncubation({
 }
 
 async function npmPack(packageName: string, versionQuery?: string) {
-  const command = versionQuery
-    ? `npm pack ${packageName}@${versionQuery}`
-    : `npm pack`;
-
-  const { stdout: tarballName } = await $(command);
+  const { stdout: tarballName } = await (versionQuery
+    ? $`npm pack ${packageName}@${versionQuery}`
+    : $`npm pack`);
   const tarball = await fs.readFile(tarballName);
   fs.unlink(tarballName);
 
@@ -90,7 +88,7 @@ async function diffTarballs(
   try {
     await unpackTarball(a, dirA);
     await unpackTarball(b, dirB);
-    await $(`diff -r ${dirA} ${dirB}`);
+    await $`diff -r ${dirA} ${dirB}`;
     return ok(void 0);
   } catch (e) {
     if (e !== null && typeof e === "object" && "stdout" in e) {
