@@ -4,8 +4,6 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 > Also serves as an [incubation](#incubations) repository for experimenting with new ideas and technologies.
 
-Hehe
-
 ## Quick start
 
 - Clone this repository
