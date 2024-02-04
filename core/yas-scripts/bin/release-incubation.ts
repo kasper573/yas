@@ -47,7 +47,7 @@ async function tryReleaseIncubation({
 
         const tag = `${pkg.contents.name}@${nextVersion}`;
 
-        await $(`git add ${pkg.filePath}`, { stdio: "inherit" });
+        await $(`git add ./package.json`, { stdio: "inherit" });
         await $(`git commit -m "Bump to ${tag}"`, { stdio: "inherit" });
         await $(`git tag -a "${tag}"`, { stdio: "inherit" });
         await $(`git push`, { stdio: "inherit" });
