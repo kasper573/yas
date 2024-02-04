@@ -50,7 +50,7 @@ async function tryReleaseIncubation({
         await $$`pnpm publish --no-git-checks`;
         await $$`git add ./package.json`;
         await $$`git ${["commit", "-m", msg]}`;
-        await $$`git ${["tag", "-a", tag]}`;
+        await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
         await $$`git push`;
       }
     },
