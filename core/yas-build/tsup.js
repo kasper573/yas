@@ -1,5 +1,3 @@
-// @ts-check
-
 const { defineConfig } = require("tsup");
 const { defineEnv } = require("./defineEnv");
 const { esbuildVanillaExtractPlugin } = require("./vanillaExtractPlugin");
@@ -13,7 +11,7 @@ function createYasTsupConfig(projectRoot, options) {
     format: ["cjs", "esm"],
     clean: true,
     dts: true,
-    noExternal: [/^@yas\//],
+    noExternal: internalPackages(projectRoot),
     define: defineEnv(projectRoot),
     esbuildPlugins: [esbuildVanillaExtractPlugin()],
     esbuildOptions(options) {
@@ -25,6 +23,27 @@ function createYasTsupConfig(projectRoot, options) {
     },
     ...options,
   });
+}
+
+/**
+ * @param {string} projectRoot
+ * @returns {string[]}
+ */
+function internalPackages(projectRoot) {
+  const packageNames = [];
+  const packageJson = require(`${projectRoot}/package.json`);
+  const { dependencies, devDependencies, peerDependencies } = packageJson;
+  for (const deps of [dependencies, devDependencies, peerDependencies]) {
+    for (const [packageName, packageVersion] of Object.entries(deps ?? {})) {
+      if (
+        packageVersion.startsWith("workspace:") &&
+        !packageNames.includes(packageName)
+      ) {
+        packageNames.push(packageName);
+      }
+    }
+  }
+  return packageNames;
 }
 
 module.exports = { createYasTsupConfig };
