@@ -1,7 +1,5 @@
 import { unsafe } from "@yas/style";
 
-import "./shiki-twoslash.css";
-
 unsafe.globalStyle(":root", {
   vars: {
     "--ifm-color-primary": "#296aa3",
@@ -43,4 +41,12 @@ unsafe.globalStyle("html", {
 
 unsafe.globalStyle(".footer", {
   background: "transparent",
+});
+
+unsafe.globalStyle(`[data-theme="light"] pre.shiki.nord`, {
+  display: "none",
+});
+
+unsafe.globalStyle(`[data-theme="dark"] pre.shiki.min-light`, {
+  display: "none",
 });

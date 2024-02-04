@@ -44,13 +44,6 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./fixtures/sidebars.js"),
           editUrl: env.git.sourceUrl(pathToAppRelativeToRoot),
-          remarkPlugins: [
-            [
-              require("remark-shiki-twoslash").default,
-              require("./shiki-twoslash.config"),
-            ],
-            require("remark-html-to-jsx"), // Transforms HTML nodes output by shiki-twoslash into JSX nodes
-          ],
         },
         pages: {
           // Don't treat typesafe css files as pages

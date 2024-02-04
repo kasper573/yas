@@ -22,7 +22,11 @@ jobs:
 
       - name: Lint all commits in push event
         if: github.event_name == 'push' && steps.merge.outputs.isMerge == 'false'
-        run: pnpm exec commitlint --from ${{ github.event.before }} --to HEAD --verbose
+        env:
+          commitsJson: ${{ toJson(github.event.commits) }}
+        run: |
+          commitCount=$(echo "$commitsJson" | jq length)
+          pnpm exec commitlint --from HEAD~$commitCount --to HEAD --verbose
 
       - name: Lint all commits in pull request
         if: github.event_name == 'pull_request'
