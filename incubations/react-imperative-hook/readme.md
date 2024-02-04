@@ -44,7 +44,7 @@ const {
   useSpawnSustainer: useModalSustainer,
 } = createImperative();
 
-// For TypeScript users, use this type helper to define a props type
+// For TypeScript, use this type helper to define a props type
 // for components that should be compatible with the imperative hooks.
 // T is the type of the value the component resolves with.
 export type ModalProps<T = void> = ImperativeComponentProps<T>;
