@@ -23,20 +23,28 @@ async function tryReleaseIncubation() {
 
   const versionBeforeReleaseAttempt = pkg.contents.version;
   try {
-    const [localTarball] = await npmPack(pkg.contents.name);
-    const [latestTarball, currentVersion] = await npmPack(
-      pkg.contents.name,
-      "latest",
-    );
+    let nextVersion: string;
+    if (await npmPackageExists(pkg.contents.name)) {
+      const [localTarball] = await npmPack(pkg.contents.name);
+      const [latestTarball, currentVersion] = await npmPack(
+        pkg.contents.name,
+        "latest",
+      );
 
-    const result = await diffTarballs(localTarball, latestTarball);
-    if (result.isOk()) {
-      console.log("No changes detected. Skipping release.");
-      return;
+      const result = await diffTarballs(localTarball, latestTarball);
+      if (result.isOk()) {
+        console.log("No changes detected. Skipping release.");
+        return;
+      }
+
+      nextVersion = bumpVersion(currentVersion);
+      console.log("Changes detected: ", result.error);
+    } else {
+      console.log("Package doesn't exist on npm. Publishing initial version.");
+      nextVersion = "0.0.0";
     }
 
-    console.log("Changes detected: ", result.error);
-    pkg.update((draft) => (draft.version = bumpVersion(currentVersion)));
+    pkg.update((draft) => (draft.version = nextVersion));
     await $$`pnpm publish --no-git-checks`;
   } finally {
     pkg.restore((draft) => (draft.version = pkg.contents.version));
@@ -57,10 +65,20 @@ async function tryReleaseIncubation() {
   await $$`git push`;
 }
 
+async function npmPackageExists(packageName: string) {
+  try {
+    await $`npm view ${packageName} version`;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function npmPack(packageName: string, versionQuery?: string) {
   const { stdout: tarballName } = await (versionQuery
     ? $`npm pack ${packageName}@${versionQuery}`
     : $`npm pack`);
+
   const tarball = await fs.readFile(tarballName);
   fs.unlink(tarballName);
 
