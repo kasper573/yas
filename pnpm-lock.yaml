@@ -554,7 +554,7 @@ importers:
   incubations/vanilla-extract-constrained:
     dependencies:
       '@vanilla-extract/vite-plugin':
-        specifier: 3.9.2
+        specifier: ^3.9.2
         version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
       constrained-css:
         specifier: workspace:*

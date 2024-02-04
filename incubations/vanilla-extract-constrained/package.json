@@ -24,7 +24,7 @@
     "constrained-css": "workspace:*"
   },
   "peerDependencies": {
-    "@vanilla-extract/vite-plugin": "3.9.2"
+    "@vanilla-extract/vite-plugin": "^3.9.2"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
