@@ -70,6 +70,5 @@ jobs:
         # We push in batch instead of per release script because we
         # are running release scripts in parallel which can cause conflicts
         run: |
-          git pull
           git push --tags
           git push
