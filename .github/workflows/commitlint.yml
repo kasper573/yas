@@ -23,9 +23,9 @@ jobs:
       - name: Lint all commits in push event
         if: github.event_name == 'push' && steps.merge.outputs.isMerge == 'false'
         env:
-          commitsAsJson: ${{ toJson(github.event.commits) }}
+          commitsJson: ${{ toJson(github.event.commits) }}
         run: |
-          commitCount=$(echo "$commitsAsJson" | jq length)
+          commitCount=$(echo "$commitsJson" | jq length)
           pnpm exec commitlint --from HEAD~$commitCount --to HEAD --verbose
 
       - name: Lint all commits in pull request
