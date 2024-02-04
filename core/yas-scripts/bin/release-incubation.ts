@@ -10,6 +10,8 @@ import { $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
 import { publicizePackageJson } from "../src/publicizePackageJson";
 
+const $$ = $({ stdio: "inherit" });
+
 async function tryReleaseIncubation({
   distFolder,
   preview = false,
@@ -17,7 +19,7 @@ async function tryReleaseIncubation({
   distFolder: string;
   preview?: boolean;
 }) {
-  const exitCode = await publicizePackageJson({
+  return publicizePackageJson({
     async operation(pkg) {
       const [localTarball] = await npmPack(pkg.contents.name);
       const [latestTarball, currentVersion] = await npmPack(
@@ -35,19 +37,21 @@ async function tryReleaseIncubation({
 
       console.log(`Changes detected`);
       console.log(result.error);
-
       console.log(
         `Updating from version ${pkg.contents.version} to ${nextVersion}`,
       );
 
       if (!preview) {
         pkg.update((pkg) => (pkg.version = nextVersion));
-
-        const tag = `${pkg.contents.name}@${nextVersion}`;
-        const msg = `chore(${pkg.contents.name}): bump package.json to ${nextVersion}`;
-
-        const $$ = $({ stdio: "inherit" });
         await $$`pnpm publish --no-git-checks`;
+        return [pkg.contents.name, nextVersion] as const;
+      }
+    },
+    async afterOperation(releaseInfo) {
+      if (releaseInfo) {
+        const [packageName, nextVersion] = releaseInfo;
+        const tag = `${packageName}@${nextVersion}`;
+        const msg = `chore(${packageName}): bump package.json to ${nextVersion}`;
         await $$`git add ./package.json`;
         await $$`git ${["commit", "-m", msg]}`;
         await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
@@ -56,12 +60,6 @@ async function tryReleaseIncubation({
     },
     distFolder,
   });
-
-  if (exitCode !== 0) {
-    return exitCode;
-  }
-
-  return 0;
 }
 
 async function npmPack(packageName: string, versionQuery?: string) {

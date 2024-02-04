@@ -6,12 +6,14 @@ import { createMutableResource } from "./createMutableResource";
  * Strips internal package details from package.json before running a command.
  * Restores package.json after the command is done, but keeps the new version intact.
  */
-export async function publicizePackageJson({
+export async function publicizePackageJson<OperationOutput>({
   operation,
+  afterOperation,
   distFolder,
   preview,
 }: {
-  operation: (pkg: MutableResource<PackageJson>) => Promise<void>;
+  operation: (pkg: MutableResource<PackageJson>) => Promise<OperationOutput>;
+  afterOperation?: (output: OperationOutput) => Promise<void>;
   distFolder: string;
   preview?: boolean;
 }) {
@@ -39,6 +41,7 @@ export async function publicizePackageJson({
     makePackageReleaseReady(pkg, relativeDistFolder),
   );
 
+  let operationOutput: { value: OperationOutput } | undefined;
   try {
     if (!ok) {
       console.error("Failed to make package.json release ready");
@@ -47,7 +50,7 @@ export async function publicizePackageJson({
 
     console.log("package.json has been made release ready");
 
-    await operation(pkg);
+    operationOutput = { value: await operation(pkg) };
     return 0;
   } catch (e) {
     if (e instanceof Error) {
@@ -68,6 +71,9 @@ export async function publicizePackageJson({
       }
     });
     console.log("package.json has been restored");
+    if (operationOutput) {
+      afterOperation?.(operationOutput.value);
+    }
   }
 }
 
