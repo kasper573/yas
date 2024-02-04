@@ -53,8 +53,8 @@ async function tryReleaseIncubation() {
   await $$`git add ./package.json`;
   await $$`git ${["commit", "-m", msg]}`;
   await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
+  await $$`git push origin ${tag}`;
   await $$`git push`;
-  console.log("Pushed changes to git");
 }
 
 async function npmPack(packageName: string, versionQuery?: string) {
