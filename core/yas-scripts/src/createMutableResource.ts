@@ -4,32 +4,29 @@ import { produce } from "immer";
 export function createMutableResource<T>(
   filePath: string,
   parse: (contents: string) => T,
-  format: (contents: T, isRestoring: boolean) => string,
+  format: (contents: T, operation: "update" | "restore") => string,
 ) {
   const original = load();
   let current = original;
 
-  function update<R>(mutator: (contents: T) => R) {
+  function mutate<R>(
+    mutator: (contents: T) => R,
+    operation: "update" | "restore",
+  ): R {
     let res = undefined as R;
     current = produce(current, (draft) => {
       res = mutator(draft as T);
     });
-    fs.writeFileSync(filePath, format(current, false));
+    fs.writeFileSync(filePath, format(current, operation), "utf-8");
     return res;
   }
 
-  function restore(mutator: (contents: T) => void) {
-    fs.writeFileSync(
-      filePath,
-      format(
-        produce(original, (draft) => {
-          mutator(draft as T);
-          // Discard output
-        }),
-        true,
-      ),
-      "utf-8",
-    );
+  function update<R>(mutator: (contents: T) => R): R {
+    return mutate(mutator, "update");
+  }
+
+  function restore<R>(mutator: (contents: T) => R): R {
+    return mutate(mutator, "restore");
   }
 
   function load() {

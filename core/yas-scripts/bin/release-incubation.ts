@@ -4,63 +4,56 @@ import path from "path";
 import fs from "fs/promises";
 import os from "os";
 import tar from "tar";
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
 import { $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
-import { makePackageJsonPublishable } from "../src/makePackageJsonPublishable";
+import {
+  createPackageResource,
+  makePackagePublishable,
+} from "../src/makePackagePublishable";
 
 const $$ = $({ stdio: "inherit" });
 
-async function tryReleaseIncubation({
-  distFolder,
-  preview = false,
-}: {
-  distFolder: string;
-  preview?: boolean;
-}) {
-  return makePackageJsonPublishable({
-    async operation(pkg) {
-      const [localTarball] = await npmPack(pkg.contents.name);
-      const [latestTarball, currentVersion] = await npmPack(
-        pkg.contents.name,
-        "latest",
-      );
+async function tryReleaseIncubation() {
+  const pkg = createPackageResource(process.cwd());
 
-      const result = await diffTarballs(localTarball, latestTarball);
-      if (result.isOk()) {
-        console.log("No changes detected. Skipping release.");
-        return;
-      }
+  const ok = pkg.update((pkg) => makePackagePublishable(pkg, "dist"));
+  if (!ok) {
+    throw new Error("Failed to make package.json release ready");
+  }
 
-      const nextVersion = bumpVersion(currentVersion);
+  const versionBeforeReleaseAttempt = pkg.contents.version;
+  try {
+    const [localTarball] = await npmPack(pkg.contents.name);
+    const [latestTarball, currentVersion] = await npmPack(
+      pkg.contents.name,
+      "latest",
+    );
 
-      console.log(`Changes detected`);
-      console.log(result.error);
-      console.log(
-        `Updating from version ${pkg.contents.version} to ${nextVersion}`,
-      );
+    const result = await diffTarballs(localTarball, latestTarball);
+    if (result.isOk()) {
+      console.log("No changes detected. Skipping release.");
+      return;
+    }
 
-      if (!preview) {
-        pkg.update((pkg) => (pkg.version = nextVersion));
-        await $$`pnpm publish --no-git-checks`;
-        return [pkg.contents.name, nextVersion] as const;
-      }
-    },
-    async afterOperation(releaseInfo) {
-      if (releaseInfo) {
-        const [packageName, nextVersion] = releaseInfo;
-        const tag = `${packageName}@${nextVersion}`;
-        const msg = `chore(${packageName}): bump package.json to ${nextVersion}`;
-        console.log(`Adding git commit and tag`);
-        await $$`git add ./package.json`;
-        await $$`git ${["commit", "-m", msg]}`;
-        await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
-        await $$`git push`;
-      }
-    },
-    distFolder,
-  });
+    console.log("Changes detected: ", result.error);
+    pkg.update((draft) => (draft.version = bumpVersion(currentVersion)));
+    await $$`pnpm publish --no-git-checks`;
+  } finally {
+    pkg.restore((draft) => (draft.version = pkg.contents.version));
+  }
+
+  if (pkg.contents.version === versionBeforeReleaseAttempt) {
+    console.log("Package version didn't change. Skipping git operations.");
+    return;
+  }
+
+  const { name, version } = pkg.contents;
+  const tag = `${name}@${version}`;
+  const msg = `chore(${name}): bump package.json to ${version}`;
+  await $$`git add ./package.json`;
+  await $$`git ${["commit", "-m", msg]}`;
+  await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
+  await $$`git push`;
 }
 
 async function npmPack(packageName: string, versionQuery?: string) {
@@ -117,19 +110,12 @@ async function unpackTarball(tarball: Buffer, outDir: string): Promise<void> {
   }
 }
 
-const count = 0;
+let seed = 0;
 function tempFilename() {
   return path.resolve(
     os.tmpdir(),
-    count + "_" + Math.random().toString(36).slice(2),
+    ++seed + "_" + Math.random().toString(36).slice(2),
   );
 }
 
-const args = yargs(hideBin(process.argv))
-  .options({
-    distFolder: { type: "string", alias: "d", demandOption: true },
-    preview: { type: "boolean", alias: "p" },
-  })
-  .parseSync();
-
-tryReleaseIncubation(args).then(process.exit);
+tryReleaseIncubation();

@@ -25,7 +25,7 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "release": "release-incubation -d dist"
+    "release": "release-incubation"
   },
   "peerDependencies": {
     "react": "18.2.0",
