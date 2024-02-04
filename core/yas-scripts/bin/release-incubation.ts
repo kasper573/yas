@@ -70,8 +70,6 @@ async function tryReleaseIncubation(distFolder = "dist") {
   await $$`git add ./package.json`;
   await $$`git ${["commit", "-m", msg]}`;
   await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
-  await $$`git push origin ${tag}`;
-  await $$`git push`;
 }
 
 async function npmPackageExists(packageName: string) {

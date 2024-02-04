@@ -66,3 +66,9 @@ jobs:
       - run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Update package.json files
+        # We push in batch instead of per release script because we
+        # are running release scripts in parallel which can cause conflicts
+        run: |
+          git push --tags
+          git push
