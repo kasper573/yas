@@ -42,7 +42,15 @@ async function tryReleaseIncubation({
 
       if (!preview) {
         pkg.update((pkg) => (pkg.version = nextVersion));
+
         await $(`pnpm publish --no-git-checks`, { stdio: "inherit" });
+
+        const tag = `${pkg.contents.name}@${nextVersion}`;
+
+        await $(`git add ${pkg.filePath}`, { stdio: "inherit" });
+        await $(`git commit -m "Bump to ${tag}"`, { stdio: "inherit" });
+        await $(`git tag -a "${tag}"`, { stdio: "inherit" });
+        await $(`git push`, { stdio: "inherit" });
       }
     },
     distFolder,
