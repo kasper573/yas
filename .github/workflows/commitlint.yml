@@ -26,7 +26,7 @@ jobs:
           commitsAsJson: ${{ toJson(github.event.commits) }}
         run: |
           commitCount=$(echo "$commitsAsJson" | jq length)
-          pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
+          pnpm exec commitlint --from HEAD~$commitCount --to HEAD --verbose
 
       - name: Lint all commits in pull request
         if: github.event_name == 'pull_request'
