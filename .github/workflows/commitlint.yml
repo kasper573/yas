@@ -22,7 +22,9 @@ jobs:
 
       - name: Lint all commits in push event
         if: github.event_name == 'push' && steps.merge.outputs.isMerge == 'false'
-        run: pnpm exec commitlint --from HEAD~${{ github.event.push.commits.length }} --to HEAD --verbose
+        run: |
+          echo ${{ github.event.push.commits }}
+          pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
 
       - name: Lint all commits in pull request
         if: github.event_name == 'pull_request'
