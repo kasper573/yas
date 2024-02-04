@@ -25,8 +25,7 @@ jobs:
         env:
           commitsAsJson: ${{ toJson(github.event.commits) }}
         run: |
-          commit_count=$(echo "$commitsAsJson" | jq length)
-          echo $commit_count
+          commitCount=$(echo "$commitsAsJson" | jq length)
           pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
 
       - name: Lint all commits in pull request
