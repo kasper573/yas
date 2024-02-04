@@ -2,6 +2,7 @@
 
 import path from "path";
 import fs from "fs/promises";
+import { existsSync as fileExists } from "fs";
 import os from "os";
 import tar from "tar";
 import { $ } from "execa";
@@ -13,10 +14,18 @@ import {
 
 const $$ = $({ stdio: "inherit" });
 
-async function tryReleaseIncubation() {
-  const pkg = createPackageResource(process.cwd());
+async function tryReleaseIncubation(distFolder = "dist") {
+  const packageFolder = process.cwd();
 
-  const ok = pkg.update((pkg) => makePackagePublishable(pkg, "dist"));
+  if (!fileExists(path.resolve(packageFolder, distFolder))) {
+    throw new Error(
+      `Package must be built before releasing. Dist folder not found: ${distFolder}`,
+    );
+  }
+
+  const pkg = createPackageResource(packageFolder);
+
+  const ok = pkg.update((pkg) => makePackagePublishable(pkg, distFolder));
   if (!ok) {
     throw new Error("Failed to make package.json release ready");
   }
