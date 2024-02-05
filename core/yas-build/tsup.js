@@ -33,15 +33,11 @@ function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
  * @returns {{internalPackages: string[], entry: { [bundleName: string]: string }}
  */
 function analyzePackage(projectRoot) {
-  const internalPackages = [];
   const packageJson = require(`${projectRoot}/package.json`);
-  const {
-    dependencies,
-    devDependencies,
-    peerDependencies,
-    exports = {},
-  } = packageJson;
 
+  // Derive internal packages from dependency fields
+  const internalPackages = [];
+  const { dependencies, devDependencies, peerDependencies } = packageJson;
   for (const deps of [dependencies, devDependencies, peerDependencies]) {
     for (const [packageName, packageVersion] of Object.entries(deps ?? {})) {
       if (
@@ -53,7 +49,9 @@ function analyzePackage(projectRoot) {
     }
   }
 
+  // Derive entry points from exports field.
   const entry = {};
+  const { exports = {} } = packageJson;
   for (const [exportKey, exportPaths] of Object.entries(exports)) {
     const bundleName =
       exportKey === "." ? "index" : exportKey.replace(/^\.\//, "");
@@ -62,8 +60,6 @@ function analyzePackage(projectRoot) {
       exportPaths.import ?? exportPaths.require,
     );
   }
-
-  console.log(JSON.stringify({ entry, internalPackages }, null, 2));
 
   return { internalPackages, entry };
 }
