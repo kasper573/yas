@@ -1,7 +1,7 @@
 import { addFunctionSerializer } from "@vanilla-extract/css/functionSerializer";
-import { createStyleResolver as createStyleResolverImpl } from "constrained-css";
-export type { ConstrainedStyle, Style, StyleResolver } from "constrained-css";
-export { all, multi } from "constrained-css";
+import { createStyleResolver as createStyleResolverImpl } from "./styleResolver";
+export type { ConstrainedStyle, Style, StyleResolver } from "./types";
+export { all, multi } from "./styleResolver";
 
 export const createStyleResolver: typeof createStyleResolverImpl = (
   definition,
@@ -9,7 +9,7 @@ export const createStyleResolver: typeof createStyleResolverImpl = (
   const resolver = createStyleResolverImpl(definition);
 
   addFunctionSerializer(resolver, {
-    importPath: "vanilla-extract-constrained/src/styleResolver",
+    importPath: "vanilla-extract-constrained/styleResolver",
     importName: "createStyleResolver",
     args: [definition] as unknown as Serializable,
   });
@@ -17,7 +17,7 @@ export const createStyleResolver: typeof createStyleResolverImpl = (
   for (const value of Object.values(definition.properties)) {
     if (typeof value === "function") {
       addFunctionSerializer(value, {
-        importPath: "vanilla-extract-constrained/src/functionEvaluator",
+        importPath: "vanilla-extract-constrained/functionEvaluator",
         importName: "functionEvaluator",
         args: [value.toString() as unknown as Serializable],
       });
