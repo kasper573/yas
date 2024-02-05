@@ -441,19 +441,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  incubations/constrained-css:
-    dependencies:
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/yas-result
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/yas-tsconfig
-      csstype:
-        specifier: ^3
-        version: 3.1.2
-
   incubations/esbuild-absolute-file-plugin:
     devDependencies:
       esbuild:
@@ -553,12 +540,12 @@ importers:
 
   incubations/vanilla-extract-constrained:
     dependencies:
+      '@vanilla-extract/css':
+        specifier: ^1.14.0
+        version: 1.14.0
       '@vanilla-extract/vite-plugin':
         specifier: ^3.9.2
         version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
-      constrained-css:
-        specifier: workspace:*
-        version: link:../constrained-css
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: 1.39.0
@@ -566,18 +553,21 @@ importers:
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
-      '@vanilla-extract/css':
-        specifier: 1.14.0
-        version: 1.14.0
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/yas-build
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/yas-result
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
+      csstype:
+        specifier: ^3
+        version: 3.1.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -587,16 +577,22 @@ importers:
 
   incubations/vanilla-extract-recipe-factory:
     dependencies:
-      '@vanilla-extract/recipes':
-        specifier: 0.5.1
-        version: 0.5.1(@vanilla-extract/css@1.14.0)
-      '@vanilla-extract/vite-plugin':
-        specifier: 3.9.2
-        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
-    devDependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: ^1.14.0
         version: 1.14.0
+      '@vanilla-extract/recipes':
+        specifier: ^0.5.1
+        version: 0.5.1(@vanilla-extract/css@1.14.0)
+    devDependencies:
+      '@vanilla-extract/vite-plugin':
+        specifier: ^3.9.2
+        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/yas-build
+      '@yas/scripts':
+        specifier: workspace:*
+        version: link:../../core/yas-scripts
       '@yas/test':
         specifier: workspace:*
         version: link:../../core/yas-test

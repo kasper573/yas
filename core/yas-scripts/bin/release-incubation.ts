@@ -7,6 +7,8 @@ import os from "os";
 import tar from "tar";
 import { $ } from "execa";
 import { err, ok, type Result } from "@yas/result";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import {
   createPackageResource,
   makePackagePublishable,
@@ -14,7 +16,7 @@ import {
 
 const $$ = $({ stdio: "inherit" });
 
-async function tryReleaseIncubation(distFolder = "dist") {
+async function tryReleaseIncubation({ distFolder, preview }: CLIArgs) {
   const packageFolder = process.cwd();
 
   if (!fileExists(path.resolve(packageFolder, distFolder))) {
@@ -28,6 +30,13 @@ async function tryReleaseIncubation(distFolder = "dist") {
   const ok = pkg.update((pkg) => makePackagePublishable(pkg, distFolder));
   if (!ok) {
     throw new Error("Failed to make package.json release ready");
+  }
+
+  if (preview) {
+    console.log(
+      "Prewiew mode. Dumping package.json:\n",
+      JSON.stringify(pkg.contents, null, 2),
+    );
   }
 
   const versionBeforeReleaseAttempt = pkg.contents.version;
@@ -54,7 +63,9 @@ async function tryReleaseIncubation(distFolder = "dist") {
     }
 
     pkg.update((draft) => (draft.version = nextVersion));
-    await $$`pnpm publish --no-git-checks`;
+    if (!preview) {
+      await $$`pnpm publish --no-git-checks`;
+    }
   } finally {
     pkg.restore((draft) => (draft.version = pkg.contents.version));
   }
@@ -67,9 +78,13 @@ async function tryReleaseIncubation(distFolder = "dist") {
   const { name, version } = pkg.contents;
   const tag = `${name}@${version}`;
   const msg = `chore(${name}): bump package.json to ${version}`;
-  await $$`git add ./package.json`;
-  await $$`git ${["commit", "-m", msg]}`;
-  await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
+  console.log(`Committing and tagging changes to package.json for ${tag}.`);
+
+  if (!preview) {
+    await $$`git add ./package.json`;
+    await $$`git ${["commit", "-m", msg]}`;
+    await $$`git ${["tag", "-a", tag, "-m", `Release ${tag}`]}`;
+  }
 }
 
 async function npmPackageExists(packageName: string) {
@@ -144,4 +159,18 @@ function tempFilename() {
   );
 }
 
-tryReleaseIncubation();
+type CLIArgs = typeof args;
+const args = yargs(hideBin(process.argv))
+  .option("preview", {
+    alias: "p",
+    type: "boolean",
+    default: false,
+  })
+  .option("distFolder", {
+    alias: "d",
+    type: "string",
+    default: "dist",
+  })
+  .parseSync();
+
+tryReleaseIncubation(args);

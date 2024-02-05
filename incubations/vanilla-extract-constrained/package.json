@@ -6,33 +6,34 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./src/styleResolver": {
-      "import": "./src/styleResolver.ts",
-      "require": "./src/styleResolver.ts"
+    "./styleResolver": {
+      "import": "./styleResolver.ts",
+      "require": "./styleResolver.ts"
     },
-    "./src/functionEvaluator": {
-      "import": "./src/functionEvaluator.ts",
-      "require": "./src/functionEvaluator.ts"
+    "./functionEvaluator": {
+      "import": "./functionEvaluator.ts",
+      "require": "./functionEvaluator.ts"
     }
   },
   "scripts": {
-    "build": "tsc --noEmit --project tsconfig.json",
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "release": "release-incubation",
     "test": "pnpm playwright test -c playwright-ct.config.js",
     "test:watch": "pnpm run test --ui"
   },
-  "dependencies": {
-    "constrained-css": "workspace:*"
-  },
   "peerDependencies": {
-    "@vanilla-extract/vite-plugin": "^3.9.2"
+    "@vanilla-extract/vite-plugin": "^3.9.2",
+    "@vanilla-extract/css": "^1.14.0"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.39.0",
     "@types/react": "^18.2.37",
-    "@vanilla-extract/css": "1.14.0",
     "@yas/build": "workspace:*",
+    "@yas/scripts": "workspace:*",
     "@yas/result": "workspace:*",
     "@yas/tsconfig": "workspace:*",
+    "csstype": "^3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

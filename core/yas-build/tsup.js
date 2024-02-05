@@ -1,3 +1,4 @@
+const path = require("path");
 const { defineConfig } = require("tsup");
 const { defineEnv } = require("./defineEnv");
 const { esbuildVanillaExtractPlugin } = require("./vanillaExtractPlugin");
@@ -6,12 +7,13 @@ const { esbuildVanillaExtractPlugin } = require("./vanillaExtractPlugin");
  * @param {string} projectRoot
  * @param {Partial<import("tsup").Options>} options
  */
-function createYasTsupConfig(projectRoot, options) {
+function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
+  const { internalPackages, entry } = analyzePackage(projectRoot);
   return defineConfig({
     format: ["cjs", "esm"],
     clean: true,
     dts: true,
-    noExternal: internalPackages(projectRoot),
+    noExternal: internalPackages,
     define: defineEnv(projectRoot),
     esbuildPlugins: [esbuildVanillaExtractPlugin()],
     esbuildOptions(options) {
@@ -21,29 +23,45 @@ function createYasTsupConfig(projectRoot, options) {
         "suspicious-define": "silent",
       };
     },
+    entry,
     ...options,
   });
 }
 
 /**
  * @param {string} projectRoot
- * @returns {string[]}
+ * @returns {{internalPackages: string[], entry: { [bundleName: string]: string }}
  */
-function internalPackages(projectRoot) {
-  const packageNames = [];
+function analyzePackage(projectRoot) {
   const packageJson = require(`${projectRoot}/package.json`);
+
+  // Derive internal packages from dependency fields
+  const internalPackages = [];
   const { dependencies, devDependencies, peerDependencies } = packageJson;
   for (const deps of [dependencies, devDependencies, peerDependencies]) {
     for (const [packageName, packageVersion] of Object.entries(deps ?? {})) {
       if (
         packageVersion.startsWith("workspace:") &&
-        !packageNames.includes(packageName)
+        !internalPackages.includes(packageName)
       ) {
-        packageNames.push(packageName);
+        internalPackages.push(packageName);
       }
     }
   }
-  return packageNames;
+
+  // Derive entry points from exports field.
+  const entry = {};
+  const { exports = {} } = packageJson;
+  for (const [exportKey, exportPaths] of Object.entries(exports)) {
+    const bundleName =
+      exportKey === "." ? "index" : exportKey.replace(/^\.\//, "");
+    entry[bundleName] = path.resolve(
+      projectRoot,
+      exportPaths.import ?? exportPaths.require,
+    );
+  }
+
+  return { internalPackages, entry };
 }
 
 module.exports = { createYasTsupConfig };
