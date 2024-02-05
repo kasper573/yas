@@ -7,7 +7,7 @@ const { esbuildVanillaExtractPlugin } = require("./vanillaExtractPlugin");
  * @param {string} projectRoot
  * @param {Partial<import("tsup").Options>} options
  */
-function createYasTsupConfig(projectRoot, options) {
+function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
   const { internalPackages, entry } = analyzePackage(projectRoot);
   return defineConfig({
     format: ["cjs", "esm"],

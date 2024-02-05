@@ -441,15 +441,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  incubations/constrained-css:
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/yas-tsconfig
-      csstype:
-        specifier: ^3
-        version: 3.1.2
-
   incubations/esbuild-absolute-file-plugin:
     devDependencies:
       esbuild:
@@ -555,9 +546,6 @@ importers:
       '@vanilla-extract/vite-plugin':
         specifier: ^3.9.2
         version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
-      constrained-css:
-        specifier: workspace:*
-        version: link:../constrained-css
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: 1.39.0
@@ -577,6 +565,9 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/yas-tsconfig
+      csstype:
+        specifier: ^3
+        version: 3.1.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
