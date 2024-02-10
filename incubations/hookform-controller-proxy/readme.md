@@ -2,7 +2,7 @@
 
 Syntax sugar for [react-hook-form](https://react-hook-form.com/) to make it easier to use with controlled components.
 
-[Code example](https://stackblitz.com/edit/hookform-controller-proxy?file=src%2FApp.tsx)
+[Code example](https://stackblitz.com/edit/hookform-controller-proxy)
 
 [API reference](https://tsdocs.dev/search/docs/hookform-controller-proxy)
 
