@@ -67,31 +67,33 @@ export type FieldControllerFactory<Value> = FieldControllerFactories<Value> & {
 };
 
 export interface FieldRenderer<Value> {
-  (props: FieldRendererProps<Value>): ReactElement;
+  (props: FieldPropsWithDerivedOptionality<Value>): ReactElement;
 }
 
-export type FieldRendererProps<Value> = [undefined] extends [Value]
-  ? OptionalFieldRendererProps<Exclude<Value, undefined>>
-  : RequiredFieldRendererProps<Value>;
+type FieldPropsWithDerivedOptionality<Value> = [undefined] extends [Value]
+  ? OptionalFieldProps<Exclude<Value, undefined>>
+  : RequiredFieldProps<Value>;
 
-export interface FieldRendererBaseProps {
-  onBlur?: () => unknown;
-  onFocus?: () => unknown;
-  error?: string;
+export type FieldProps<Value = unknown> =
+  | RequiredFieldProps<Value>
+  | OptionalFieldProps<Value>;
+
+export interface RequiredFieldProps<Value> extends BaseFieldProps {
+  value: Value;
+  onChange: (value: Value) => unknown;
+  required: true;
 }
 
-export interface OptionalFieldRendererProps<Value>
-  extends FieldRendererBaseProps {
+export interface OptionalFieldProps<Value> extends BaseFieldProps {
   value?: Value;
   onChange?: (value?: Value) => unknown;
   required?: false;
 }
 
-export interface RequiredFieldRendererProps<Value>
-  extends FieldRendererBaseProps {
-  value: Value;
-  onChange: (value: Value) => unknown;
-  required: true;
+export interface BaseFieldProps {
+  onBlur?: () => unknown;
+  onFocus?: () => unknown;
+  error?: string;
 }
 
 function valueAtPath(object: unknown, path: readonly string[]): unknown {

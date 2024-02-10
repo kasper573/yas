@@ -3,26 +3,28 @@ import type { AnyZodObject } from "@yas/validate";
 import { typeAtPath, z } from "@yas/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import type { FieldProps } from "../src";
 import { createControllerProxyFactory } from "../src";
 
 type Data = z.infer<typeof schema>;
 const schema = z.object({
-  name: z.string().refine((name) => name === "Correct", {
-    message: "Name must be Correct",
-  }),
+  name: z.string().optional(),
 });
 
 const createControllerProxy = createControllerProxyFactory(
   (schema: AnyZodObject, path) => !typeAtPath(schema, path)?.isOptional(),
 );
 
-export function TestForm() {
+export function FormWithOptionalField() {
   const [submittedValues, setSubmittedValues] = useState<Data>();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
+    defaultValues: {
+      name: "Whatever",
+    },
   });
 
   const control = createControllerProxy(form, schema);
@@ -30,23 +32,26 @@ export function TestForm() {
   return (
     <>
       <form onSubmit={form.handleSubmit(setSubmittedValues)}>
-        {control.name(({ value, onChange, error }) => (
-          <>
-            <label>
-              Name
-              <input
-                value={value}
-                onChange={(e) => onChange?.(e.target.value)}
-              />
-            </label>
-            {error !== undefined ? <p>Error: {error}</p> : null}
-          </>
+        {control.name((props) => (
+          <TextField {...props} />
         ))}
         <button type="submit">Submit</button>
       </form>
       {submittedValues !== undefined ? (
         <pre data-testid="form-values">{JSON.stringify(submittedValues)}</pre>
       ) : null}
+    </>
+  );
+}
+
+function TextField({ value, onChange, error }: FieldProps<string>) {
+  return (
+    <>
+      <label>
+        Name
+        <input value={value} onChange={(e) => onChange?.(e.target.value)} />
+      </label>
+      {error !== undefined ? <p>Error: {error}</p> : null}
     </>
   );
 }

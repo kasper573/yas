@@ -14,11 +14,7 @@ export function typeAtPath(
 
   if (type instanceof ZodObject) {
     const [first, ...rest] = path;
-    type = type.shape[first];
-    if (!rest.length) {
-      return type;
-    }
-    return typeAtPath(type, rest);
+    return typeAtPath(type.shape[first], rest);
   }
 
   if (type instanceof ZodIntersection) {
@@ -27,6 +23,5 @@ export function typeAtPath(
     );
   }
 
-  // Should never happen (if it happens there's a flaw in the implementation)
   throw new Error(`Unsupported zod type: ${type.constructor.name}`);
 }
