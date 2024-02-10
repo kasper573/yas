@@ -1,12 +1,11 @@
 import type { ReactNode } from "react";
 import type { ConstrainedStyleWithoutConditions } from "@yas/style";
 import type {
-  FieldRendererBaseProps,
-  OptionalFieldRendererProps,
-  RequiredFieldRendererProps,
+  OptionalFieldProps as OptionalFieldPropsImpl,
+  RequiredFieldProps as RequiredFieldPropsImpl,
 } from "hookform-controller-proxy";
 
-interface BaseFieldProps extends FieldRendererBaseProps {
+interface CustomFieldProps {
   isLoading?: boolean;
   label?: ReactNode;
   info?: ReactNode;
@@ -20,9 +19,9 @@ export type FieldProps<Value = unknown> =
   | OptionalFieldProps<Value>;
 
 export interface RequiredFieldProps<Value>
-  extends BaseFieldProps,
-    RequiredFieldRendererProps<Value> {}
+  extends RequiredFieldPropsImpl<Value>,
+    CustomFieldProps {}
 
 export interface OptionalFieldProps<Value>
-  extends BaseFieldProps,
-    OptionalFieldRendererProps<Value> {}
+  extends OptionalFieldPropsImpl<Value>,
+    CustomFieldProps {}
