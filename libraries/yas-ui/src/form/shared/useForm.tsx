@@ -4,7 +4,6 @@ import type { UseFormProps } from "react-hook-form";
 import { useForm as useFormImpl } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UseFormReturn as UseFormReturnImpl } from "react-hook-form";
-import type { FieldControllerFactories } from "hookform-controller-proxy";
 import { createControllerProxyFactory } from "hookform-controller-proxy";
 import { useEffect, useMemo } from "react";
 import { useLatest } from "@yas/hooks";
@@ -50,7 +49,7 @@ export function useFormChanges<Schema extends AnyZodObject>(
  */
 export function useFieldControllers<Schema extends AnyZodObject>(
   form: UseFormReturn<Schema>,
-): FieldControllerFactories<z.infer<Schema>> {
+) {
   return createControllerProxy(form, form.schema);
 }
 
