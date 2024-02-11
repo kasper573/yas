@@ -20,7 +20,8 @@
     "typecheck": "typecheck-all-workspaces",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "test": "turbo run test",
+    "test": "pnpm test:install-deps && turbo run test",
+    "test:install-deps": "pnpm exec playwright install --with-deps",
     "test:watch": "turbo run test:watch",
     "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=4096 eslint",
     "prepare": "husky"
