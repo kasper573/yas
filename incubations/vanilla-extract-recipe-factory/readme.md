@@ -11,7 +11,9 @@ Create your own [recipe function](https://vanilla-extract.style/documentation/pa
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 
 export const recipe = createRecipeFactory(yourStyleCompiler);
+```
 
+```ts
 // my-style.css.ts
 import { recipe } from "./design-system";
 
@@ -29,8 +31,11 @@ import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 import { sprinkles } from "./sprinkles.css.ts";
 
 export const recipe = createRecipeFactory(sprinkles);
+```
 
+```ts
 // my-style.css.ts
+import { recipe } from "./design-system";
 export const yourRecipe = recipe({
   base: {
     // sprinkles

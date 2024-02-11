@@ -64,8 +64,9 @@ type Transition = [
 Using this `resolveStyle` function you can now define new stricter versions of the vanilla extract primitives:
 
 ```typescript
+// design-system.ts
 import * as vanilla from "@vanilla-extract/css";
-import { resolveStyle } from "./ constrained.css.ts";
+import { resolveStyle } from "./constrained.css.ts";
 
 // The following functions behave like their vanilla extract counterparts,
 // but ensures only your constrained property values are accepted as input.
@@ -91,7 +92,7 @@ Use your new vanilla extract functions as usual, _but now constrained_:
 
 ```typescript
 // my-styles.css.ts
-import {style, globalStyle, keyframes} from "./constrained.css.ts"
+import { style, globalStyle, keyframes } from "./design-system"
 
 export foo = style({
   background: "invalid", // Errors, must be yellow or blue
@@ -116,6 +117,8 @@ const bar = globalStyle(...);
 const baz = keyframes(...);
 ```
 
+## Usage at runtime
+
 You can even use it to create constrained and enhanced inline styles:
 
 ```tsx
@@ -139,7 +142,7 @@ Since [@vanilla-extract/recipes](https://vanilla-extract.style/documentation/pac
 
 ```typescript
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
-import { resolveStyle } from "./ constrained.css.ts";
+import { resolveStyle } from "./constrained.css.ts";
 
 export const recipe = createRecipeFactory(resolveStyle);
 ```
