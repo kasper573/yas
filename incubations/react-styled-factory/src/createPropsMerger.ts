@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
-import { type SXMerger } from "./sxAdapter";
+import type { SXLike, SXMerger } from "./sxAdapter";
 import { merge } from "./merge";
 
-export function createPropsMerger<SX>(mergeSX: SXMerger<SX>) {
+export function createPropsMerger<SX extends SXLike>(mergeSX: SXMerger<SX>) {
   return function mergeElementProps<
     Left extends ElementPropsLike<SX>,
     Right extends ElementPropsLike<SX>,

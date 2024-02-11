@@ -11,8 +11,9 @@ import type { ElementPropsLike } from "./createPropsMerger";
 import { clsx, createPropsMerger } from "./createPropsMerger";
 import type { SXAdapterOptions } from "./sxAdapter";
 import { normalizeSXAdapterOptions } from "./sxAdapter";
+import type { SXLike } from "./sxAdapter";
 
-export function createStyledFactory<SX>(
+export function createStyledFactory<SX extends SXLike>(
   sxAdapterOptions?: SXAdapterOptions<SX>,
 ): StyledComponentFactory<SX> {
   const sxAdapter = normalizeSXAdapterOptions(sxAdapterOptions);
@@ -119,13 +120,13 @@ export function createStyledFactory<SX>(
 const emptyObject = Object.freeze({});
 
 type ClassName = string;
-type AbstractStyle<Variants extends VariantsLike, SX> =
+type AbstractStyle<Variants extends VariantsLike, SX extends SXLike> =
   | ClassName
   | ClassName[]
   | SX
   | VariantsCompiler<Variants>;
 
-interface StyledComponentFactory<SX> {
+interface StyledComponentFactory<SX extends SXLike> {
   <Implementation extends AnyImplementation, Variants extends VariantsLike>(
     implementation: Implementation,
     abstractStyle?: AbstractStyle<Variants, SX>,
@@ -135,13 +136,13 @@ interface StyledComponentFactory<SX> {
 type DefaultStyledComponentProps<
   Implementation extends AnyImplementation,
   Variants extends VariantsLike,
-  SX,
+  SX extends SXLike,
 > = Partial<StyledComponentProps<Implementation, Variants, SX>>;
 
 export interface StyledComponentConstructor<
   Implementation extends AnyImplementation,
   Variants extends VariantsLike,
-  SX,
+  SX extends SXLike,
 > {
   (props: StyledComponentProps<Implementation, Variants, SX>): ReactElement;
 }
@@ -149,7 +150,7 @@ export interface StyledComponentConstructor<
 interface StyledComponent<
   Implementation extends AnyImplementation,
   Variants extends VariantsLike,
-  SX,
+  SX extends SXLike,
 > extends StyledComponentConstructor<Implementation, Variants, SX> {
   as<NewImplementation extends AnyImplementation>(
     as: NewImplementation,
@@ -169,7 +170,7 @@ interface StyledComponent<
 export type StyledComponentProps<
   Implementation extends AnyImplementation,
   Variants extends VariantsLike,
-  SX,
+  SX extends SXLike,
 > =
   // We must strip plain indexes to ensure no variants resolve to empty object
   StripIndexes<Variants> &
@@ -181,7 +182,7 @@ export type StyledComponentProps<
 interface StyledComponentOptions<
   Implementation extends AnyImplementation,
   Variants extends VariantsLike,
-  SX,
+  SX extends SXLike,
 > {
   defaultProps?: DefaultStyledComponentProps<Implementation, Variants, SX>;
   forwardProps?: PropForwardTester<
@@ -192,7 +193,7 @@ interface StyledComponentOptions<
 type AnyStyledComponentProps = StyledComponentProps<
   AnyImplementation,
   VariantsLike,
-  unknown
+  SXLike
 >;
 
 export type AnyImplementation = ElementType;

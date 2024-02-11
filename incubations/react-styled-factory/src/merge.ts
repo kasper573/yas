@@ -1,4 +1,4 @@
-export function merge<T>(a?: T, b?: T): T | undefined {
+export function merge<T extends object>(a?: T, b?: T): T | undefined {
   if (a === b) {
     return a;
   }

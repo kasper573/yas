@@ -211,9 +211,11 @@ function testComponent(
   });
 
   it("sx className", () => {
-    const styled = createStyledFactory((className: string) => className);
+    const styled = createStyledFactory(
+      ({ className }: { className: string }) => className,
+    );
     const Component = styled(component);
-    const { container } = render(<Component sx="foo" />);
+    const { container } = render(<Component sx={{ className: "foo" }} />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { class: "foo" } }));
   });
 
