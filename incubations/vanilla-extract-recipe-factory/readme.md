@@ -6,13 +6,41 @@ Create your own [recipe function](https://vanilla-extract.style/documentation/pa
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 
-```tsx
+```ts
+// design-system.ts
 import { createRecipeFactory } from "vanilla-extract-recipe-factory";
 
-const createRecipe = createRecipeFactory(yourStyleCompiler);
+export const recipe = createRecipeFactory(yourStyleCompiler);
 
-export const yourRecipe = createRecipe({
+// my-style.css.ts
+import { recipe } from "./design-system";
+
+export const yourRecipe = recipe({
   // Accepts the same interface as regular recipes,
   // but with the style inputs supported by your compiler
+});
+```
+
+Designed (but not limited) to be used with [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/) or [vanilla-extract-constrained](https://www.npmjs.com/package/vanilla-extract-constrained):
+
+```ts
+// design-system.ts
+import { createRecipeFactory } from "vanilla-extract-recipe-factory";
+import { sprinkles } from "./sprinkles.css.ts";
+
+export const recipe = createRecipeFactory(sprinkles);
+
+// my-style.css.ts
+export const yourRecipe = recipe({
+  base: {
+    // sprinkles
+  },
+  variants: {
+    foo: {
+      bar: {
+        // sprinkles
+      },
+    },
+  },
 });
 ```
