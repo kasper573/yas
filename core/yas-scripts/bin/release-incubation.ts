@@ -40,11 +40,9 @@ async function tryReleaseIncubation({ distFolder, preview }: CLIArgs) {
         .relative(rootFolder, packageFolder)
         .replace(/\\/g, "/");
       pkg.repository = {
-        repository: {
-          type: "git",
-          url: `https://github.com/${process.env.GITHUB_REPOSITORY}`,
-          directory,
-        },
+        type: "git",
+        url: `https://github.com/${process.env.GITHUB_REPOSITORY}`,
+        directory,
       };
     });
   }
