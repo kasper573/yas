@@ -1,5 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
-import type { SXLike, SXMerger } from "./sxAdapter";
+import type { ElementPropsLike, SXLike, SXMerger } from "./types";
 import { merge } from "./merge";
 
 export function createPropsMerger<SX extends SXLike>(mergeSX: SXMerger<SX>) {
@@ -20,13 +19,6 @@ export function createPropsMerger<SX extends SXLike>(mergeSX: SXMerger<SX>) {
     };
   };
 }
-
-export type ElementPropsLike<SX> = {
-  className?: string;
-  style?: CSSProperties;
-  children?: ReactNode;
-  sx?: SX;
-};
 
 export function clsx(...classNames: Array<string | undefined>) {
   const defined = classNames.filter(Boolean);

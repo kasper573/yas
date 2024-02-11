@@ -1,3 +1,5 @@
+import type { PropForwardTester } from "./types";
+
 export function destructureVariantProps<
   Props extends Record<PropertyKey, unknown>,
   VariantNames extends PropertyKey[],
@@ -23,6 +25,3 @@ export function destructureVariantProps<
     forwardedProps as Omit<Props, VariantNames[number]>,
   ] as const;
 }
-
-export type PropForwardTester<PropName extends PropertyKey = PropertyKey> =
-  (info: { name: PropName; isVariant: boolean }) => boolean;
