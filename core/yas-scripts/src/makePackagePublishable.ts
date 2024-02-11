@@ -32,13 +32,19 @@ function bindPackageToDistFolder(pkg: PackageJson, distFolder: string) {
   pkg.main = `${distFolder}/index.js`;
   pkg.module = `${distFolder}/index.mjs`;
   pkg.types = `${distFolder}/index.d.ts`;
-  pkg.exports = {
-    ".": {
-      require: `./${distFolder}/index.js`,
-      import: `./${distFolder}/index.mjs`,
-      types: `./${distFolder}/index.d.ts`,
-    },
-  };
+  if (pkg.exports) {
+    for (const exportName of Object.keys(pkg.exports)) {
+      const filename = path.posix.join(
+        distFolder,
+        exportName === "." ? "index" : exportName,
+      );
+      pkg.exports[exportName] = {
+        require: `./${filename}.js`,
+        import: `./${filename}.mjs`,
+        types: `./${filename}.d.ts`,
+      };
+    }
+  }
   pkg.files = [distFolder, "package.json", "readme.md"];
 }
 
@@ -68,6 +74,7 @@ function handleInternalPackageDependencies(
 export interface PackageJson {
   name: string;
   version: string;
+  exports?: Record<string, string | Record<string, string>>;
   devDependencies?: Record<string, string>;
   dependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
