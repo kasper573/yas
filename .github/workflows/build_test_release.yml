@@ -5,11 +5,14 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
-matrix:
-  container: [ubuntu-latest, macos-latest, windows-latest]
+strategy: &strategy
+  matrix:
+    container: [ubuntu-latest, macos-latest, windows-latest]
 
 jobs:
   conventions:
+    strategy:
+      <<: *strategy
     runs-on: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +22,8 @@ jobs:
       - run: pnpm depcheck
 
   test:
+    strategy:
+      <<: *strategy
     runs-on: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +36,8 @@ jobs:
           path: "**/.playwright/**"
 
   typecheck:
+    strategy:
+      <<: *strategy
     runs-on: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +45,8 @@ jobs:
       - run: pnpm typecheck
 
   build:
+    strategy:
+      <<: *strategy
     runs-on: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
