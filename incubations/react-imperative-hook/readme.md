@@ -12,7 +12,7 @@ preferable to have an imperative and promise based interface, which is what this
 - Lightweight with zero runtime dependencies.
 - Written in TypeScript with proper generics in mind.
 
-### [Try it on StackBlitz](https://stackblitz.com/edit/react-imperative-hook-example?file=src%2FApp.tsx)
+### [Try it on StackBlitz](https://stackblitz.com/edit/react-imperative-hook)
 
 ### Install
 
