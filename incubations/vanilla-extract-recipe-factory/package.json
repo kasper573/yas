@@ -26,5 +26,5 @@
     "@yas/scripts": "workspace:*",
     "@yas/build": "workspace:*"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
