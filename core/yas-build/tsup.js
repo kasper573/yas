@@ -1,7 +1,6 @@
 const path = require("path");
 const { defineConfig } = require("tsup");
 const { defineEnv } = require("./defineEnv");
-const { esbuildVanillaExtractPlugin } = require("./vanillaExtractPlugin");
 
 /**
  * @param {string} projectRoot
@@ -15,7 +14,6 @@ function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
     dts: true,
     noExternal: internalPackages,
     define: defineEnv(projectRoot),
-    esbuildPlugins: [esbuildVanillaExtractPlugin()],
     esbuildOptions(options) {
       options.logOverride = {
         // We sometimes intentionally define NODE_ENV as undefined to allow the runtime to fall back to a default.

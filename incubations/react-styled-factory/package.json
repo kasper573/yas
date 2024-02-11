@@ -27,7 +27,6 @@
     "@yas/scripts": "workspace:*",
     "@types/react": "^18.2.37",
     "@vanilla-extract/recipes": "0.5.1",
-    "@vanilla-extract/vite-plugin": "3.9.2",
     "concurrently": "^8.2.1",
     "react": "^18.2.0"
   },

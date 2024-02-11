@@ -23,7 +23,6 @@
     "test:watch": "pnpm run test --ui"
   },
   "peerDependencies": {
-    "@vanilla-extract/vite-plugin": "^3.9.2",
     "@vanilla-extract/css": "^1.14.0"
   },
   "devDependencies": {

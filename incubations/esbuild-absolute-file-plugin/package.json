@@ -1,9 +1,0 @@
-{
-  "name": "esbuild-absolute-file-plugin",
-  "version": "0.0.0",
-  "main": "src/index.js",
-  "devDependencies": {
-    "esbuild": "^0.19.4",
-    "pkg-up": "^4.0.0"
-  }
-}
