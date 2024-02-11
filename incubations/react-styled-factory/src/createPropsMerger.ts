@@ -1,7 +1,7 @@
-import type { CSSProperties } from "react";
-import type { SXMerger } from "./sxAdapter";
+import type { ElementPropsLike, SXLike, SXMerger } from "./types";
+import { merge } from "./merge";
 
-export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
+export function createPropsMerger<SX extends SXLike>(mergeSX: SXMerger<SX>) {
   return function mergeElementProps<
     Left extends ElementPropsLike<SX>,
     Right extends ElementPropsLike<SX>,
@@ -14,17 +14,11 @@ export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
       ...a,
       ...b,
       className: clsx(a.className, b.className),
-      style: { ...a.style, ...b.style },
-      sx: sxMerger(a.sx, b.sx),
+      style: merge(a.style, b.style),
+      sx: mergeSX(a.sx, b.sx),
     };
   };
 }
-
-export type ElementPropsLike<SX> = {
-  className?: string;
-  style?: CSSProperties;
-  sx?: SX;
-};
 
 export function clsx(...classNames: Array<string | undefined>) {
   const defined = classNames.filter(Boolean);

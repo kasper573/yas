@@ -1,6 +1,7 @@
-import type { CSSProperties } from "react";
+import { merge } from "./merge";
+import type { SXAdapter, SXAdapterOptions, SXLike } from "./types";
 
-export function normalizeSXAdapterOptions<SX>(
+export function createSXAdapter<SX extends SXLike>(
   options?: SXAdapterOptions<SX>,
 ): SXAdapter<SX> {
   if (typeof options === "function") {
@@ -15,29 +16,7 @@ export function normalizeSXAdapterOptions<SX>(
   };
 }
 
-function defaultSXMerger<T>(a?: T, b?: T): T | undefined {
-  if (a === b) {
-    return a;
-  }
-  return a && b ? { ...a, ...b } : a ?? b;
-}
-
 const defaultSXAdapter = {
   compile: () => undefined,
-  merge: defaultSXMerger,
+  merge,
 };
-
-export type SXAdapterOptions<SX> = Partial<SXAdapter<SX>> | SXCompiler<SX>;
-
-export interface SXAdapter<SX> {
-  compile: SXCompiler<SX>;
-  merge: SXMerger<SX>;
-}
-
-export type SXCompiler<SX> = (
-  sx: SX,
-) => CSSProperties | CSSClassName | undefined;
-
-export type SXMerger<SX> = (a?: SX, b?: SX) => SX | undefined;
-
-export type CSSClassName = string;

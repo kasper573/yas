@@ -187,7 +187,16 @@ function testComponent(
     );
   });
 
-  it("sx", () => {
+  it("sx embedded", () => {
+    const styled = createStyledFactory((style: CSSProperties) => style);
+    const Component = styled(component, { color: "red" });
+    const { container } = render(<Component />);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { style: `color: red;` } }),
+    );
+  });
+
+  it("sx prop", () => {
     const styled = createStyledFactory((style: CSSProperties) => style);
     const Component = styled(component);
     const { container } = render(<Component sx={{ color: "red" }} />);
@@ -204,16 +213,18 @@ function testComponent(
     expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
-          style: `background: red; color: blue; border: white;`,
+          style: `color: blue; border: white; background: red;`,
         },
       }),
     );
   });
 
   it("sx className", () => {
-    const styled = createStyledFactory((className: string) => className);
+    const styled = createStyledFactory(
+      ({ className }: { className: string }) => className,
+    );
     const Component = styled(component);
-    const { container } = render(<Component sx="foo" />);
+    const { container } = render(<Component sx={{ className: "foo" }} />);
     expect(container.outerHTML).toEqual(toHtml({ attrs: { class: "foo" } }));
   });
 
@@ -317,9 +328,9 @@ function testComponent(
       toHtml({
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y foo`,
-          style: "background: red; color: blue;",
           "data-foo": "bar",
           role: "alert",
+          style: "color: blue; background: red;",
         },
         content: "Hello",
       }),

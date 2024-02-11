@@ -58,9 +58,26 @@ const Component = styled("div");
 // <div class="color-red padding-top-large"></div>
 ```
 
+(Optional) When using an sx compiler you can also specify the sx value as the default style:
+
+```tsx
+// styled.ts
+import { createStyledFactory } from "react-styled-factory";
+import { sprinkles } from "./styles.css.ts";
+
+export const styled = createStyledFactory(sprinkles);
+
+// Component.tsx
+import { styled } from "./styled";
+
+const Component = styled("div", { color: "primary", pt: "large" });
+
+<Component />; // <div class="color-red padding-top-large"></div>
+```
+
 ## Styling components
 
-Provide a class name compiler (i.e. [@vanilla-extract/recipes](https://vanilla-extract.style/documentation/packages/recipes/)) to automatically convert specific props to class names:
+Provide a variants compiler (i.e. [@vanilla-extract/recipes](https://vanilla-extract.style/documentation/packages/recipes/)) to automatically convert variant props to class names:
 
 ```tsx
 // styles.css.ts
@@ -96,7 +113,7 @@ const Component = styled("div", "my-css-class");
 <Component />; // <div class="my-css-class"></div>
 ```
 
-This integrates well with i.e. [@vanilla-extract/css](https://vanilla-extract.style/documentation/api/style/):
+Which integrates well with i.e. [@vanilla-extract/css](https://vanilla-extract.style/documentation/api/style/):
 
 ```tsx
 // styles.css.ts
