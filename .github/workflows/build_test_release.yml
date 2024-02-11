@@ -45,6 +45,13 @@ jobs:
       - uses: ./.github/workflows/composites/install/
       - run: pnpm --filter react-styled-factory test
 
+  special-test-on-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm --filter react-styled-factory test
+
   typecheck:
     runs-on: ubuntu-latest
     steps:
