@@ -32,6 +32,23 @@ async function tryReleaseIncubation({ distFolder, preview }: CLIArgs) {
     throw new Error("Failed to make package.json release ready");
   }
 
+  if (process.env.GITHUB_REPOSITORY) {
+    console.log("Automating repository field in package.json.");
+    pkg.update((pkg) => {
+      const rootFolder = path.resolve(__dirname, "..", "..", "..");
+      const directory = path
+        .relative(rootFolder, packageFolder)
+        .replace(/\\/g, "/");
+      pkg.repository = {
+        repository: {
+          type: "git",
+          url: `https://github.com/${process.env.GITHUB_REPOSITORY}`,
+          directory,
+        },
+      };
+    });
+  }
+
   if (preview) {
     console.log(
       "Prewiew mode. Dumping package.json:\n",
