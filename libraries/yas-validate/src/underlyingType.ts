@@ -1,7 +1,7 @@
 import type { ZodType } from "zod";
 import { ZodDefault, ZodEffects, ZodNullable, ZodOptional } from "zod";
 
-export function normalizeType(type: ZodType) {
+export function underlyingType(type: ZodType) {
   while (
     type instanceof ZodEffects ||
     type instanceof ZodOptional ||
