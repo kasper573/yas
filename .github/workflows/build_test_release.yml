@@ -31,6 +31,13 @@ jobs:
           name: playwright
           path: "**/.playwright/**"
 
+  special-test-on-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/composites/install/
+      - run: pnpm --filter react-styled-factory test
+
   typecheck:
     runs-on: ubuntu-latest
     steps:
