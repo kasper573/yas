@@ -1,16 +1,16 @@
 export function destructureVariantProps<
   Props extends Record<PropertyKey, unknown>,
-  Variants extends PropertyKey[],
+  VariantNames extends PropertyKey[],
 >(
   allProps: Props,
-  variants: Variants,
+  variantNames: VariantNames,
   shouldForwardProp: PropForwardTester<keyof Props> = ({ isVariant }) =>
     !isVariant,
 ) {
   const variantProps: Record<string, unknown> = {};
   const forwardedProps: Record<string, unknown> = {};
   for (const prop in allProps) {
-    const isVariant = variants.includes(prop);
+    const isVariant = variantNames.includes(prop);
     if (isVariant) {
       variantProps[prop] = allProps[prop];
     }
@@ -19,8 +19,8 @@ export function destructureVariantProps<
     }
   }
   return [
-    variantProps as Pick<Props, Variants[number]>,
-    forwardedProps as Omit<Props, Variants[number]>,
+    variantProps as Pick<Props, VariantNames[number]>,
+    forwardedProps as Omit<Props, VariantNames[number]>,
   ] as const;
 }
 

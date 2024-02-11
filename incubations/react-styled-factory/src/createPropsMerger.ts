@@ -1,7 +1,8 @@
-import type { CSSProperties } from "react";
-import type { SXMerger } from "./sxAdapter";
+import type { CSSProperties, ReactNode } from "react";
+import { type SXMerger } from "./sxAdapter";
+import { merge } from "./merge";
 
-export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
+export function createPropsMerger<SX>(mergeSX: SXMerger<SX>) {
   return function mergeElementProps<
     Left extends ElementPropsLike<SX>,
     Right extends ElementPropsLike<SX>,
@@ -14,8 +15,8 @@ export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
       ...a,
       ...b,
       className: clsx(a.className, b.className),
-      style: { ...a.style, ...b.style },
-      sx: sxMerger(a.sx, b.sx),
+      style: merge(a.style, b.style),
+      sx: mergeSX(a.sx, b.sx),
     };
   };
 }
@@ -23,6 +24,7 @@ export function createPropsMerger<SX>(sxMerger: SXMerger<SX>) {
 export type ElementPropsLike<SX> = {
   className?: string;
   style?: CSSProperties;
+  children?: ReactNode;
   sx?: SX;
 };
 

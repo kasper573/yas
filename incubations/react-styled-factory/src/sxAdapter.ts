@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { merge } from "./merge";
 
 export function normalizeSXAdapterOptions<SX>(
   options?: SXAdapterOptions<SX>,
@@ -15,16 +16,9 @@ export function normalizeSXAdapterOptions<SX>(
   };
 }
 
-function defaultSXMerger<T>(a?: T, b?: T): T | undefined {
-  if (a === b) {
-    return a;
-  }
-  return a && b ? { ...a, ...b } : a ?? b;
-}
-
 const defaultSXAdapter = {
   compile: () => undefined,
-  merge: defaultSXMerger,
+  merge,
 };
 
 export type SXAdapterOptions<SX> = Partial<SXAdapter<SX>> | SXCompiler<SX>;

@@ -18,16 +18,16 @@ export function createStyledFactory<SX>(
   const sxAdapter = normalizeSXAdapterOptions(sxAdapterOptions);
   const mergeElementProps = createPropsMerger(sxAdapter.merge);
 
-  return function createRecipeComponent<
+  return function createStyledComponent<
     Implementation extends AnyImplementation,
-    RecipeInput extends RecipeInputLike,
+    Variants extends VariantsLike,
   >(
     implementation: Implementation,
-    recipeOrClassNames?: string | string[] | RecipeFn<RecipeInput>,
-    options: RecipeComponentOptions<Implementation, RecipeInput, SX> = {},
-  ): RecipeComponent<Implementation, RecipeInput, SX> {
-    function RecipeComponentImpl(
-      inlineProps: AnyRecipeComponentProps,
+    abstractStyle?: AbstractStyle<Variants, SX>,
+    options: StyledComponentOptions<Implementation, Variants, SX> = {},
+  ): StyledComponent<Implementation, Variants, SX> {
+    function StyledComponentImpl(
+      inlineProps: AnyStyledComponentProps,
       ref: ForwardedRef<HTMLElement>,
     ) {
       const {
@@ -39,17 +39,10 @@ export function createStyledFactory<SX>(
         inlineProps as ElementPropsLike<SX>,
       );
 
-      const styleOrClassName = sxAdapter.compile(sx as SX);
-      const [recipeClassName, forwardedProps] = resolveRecipe(mergedProps);
-      const [sxStyle, sxClassName] =
-        typeof styleOrClassName === "string"
-          ? [undefined, styleOrClassName]
-          : [styleOrClassName, undefined];
-
-      const finalProps = [
-        { className: recipeClassName, style: sxStyle, ref },
-        { className: sxClassName },
-        forwardedProps,
+      const finalProps: ElementPropsLike<SX> = [
+        { ref } as ElementPropsLike<SX>,
+        resolveAbstractStyle(mergedProps),
+        compileSX(sx as SX),
       ].reduce(mergeElementProps);
 
       if (asChild) {
@@ -64,145 +57,151 @@ export function createStyledFactory<SX>(
       return createElement(implementation, finalProps);
     }
 
-    function resolveRecipe(
-      props: Record<string, unknown>,
-    ): [string | undefined, Record<string, unknown>] {
-      if (!recipeOrClassNames) {
-        return [undefined, props];
+    function compileSX(sx: SX): ElementPropsLike<SX> {
+      const classNameOrStyle = sxAdapter.compile(sx);
+      if (typeof classNameOrStyle === "string") {
+        return { className: classNameOrStyle };
+      } else if (classNameOrStyle) {
+        return { style: classNameOrStyle };
       }
-      if (typeof recipeOrClassNames === "string") {
-        return [recipeOrClassNames, props];
-      }
-      if (Array.isArray(recipeOrClassNames)) {
-        return [clsx(...recipeOrClassNames), props];
-      }
-
-      const [recipeInput, forwardedProps] = destructureVariantProps(
-        props,
-        recipeOrClassNames.variants(),
-        options.forwardProps as PropForwardTester,
-      );
-
-      const recipeClassName = recipeOrClassNames(recipeInput as RecipeInput);
-      return [recipeClassName, forwardedProps];
+      return emptyObject;
     }
 
-    const RecipeComponent = forwardRef(
-      RecipeComponentImpl,
-    ) as unknown as RecipeComponent<Implementation, RecipeInput, SX>;
+    function resolveAbstractStyle(
+      props: ElementPropsLike<SX>,
+    ): ElementPropsLike<SX> {
+      if (!abstractStyle) {
+        return props;
+      }
+      if (typeof abstractStyle === "string") {
+        return mergeElementProps({ className: abstractStyle }, props);
+      }
+      if (Array.isArray(abstractStyle)) {
+        return mergeElementProps({ className: clsx(...abstractStyle) }, props);
+      }
+      if (typeof abstractStyle === "function" && "variants" in abstractStyle) {
+        const [variants, forwardedProps] = destructureVariantProps(
+          props,
+          abstractStyle.variants(),
+          options.forwardProps as PropForwardTester,
+        );
 
-    Object.assign(RecipeComponent, {
-      displayName: `styled(${getElementTypeName(implementation)})`,
-    });
+        const className = abstractStyle(variants as Variants);
+        return mergeElementProps({ className }, forwardedProps);
+      }
 
-    RecipeComponent.as = (newImplementation) =>
-      createRecipeComponent(newImplementation, recipeOrClassNames, options);
+      return mergeElementProps(compileSX(abstractStyle), props);
+    }
 
-    RecipeComponent.attrs = (defaultProps) =>
-      createRecipeComponent(implementation, recipeOrClassNames, {
+    const StyledComponent = forwardRef(
+      StyledComponentImpl,
+    ) as unknown as StyledComponent<Implementation, Variants, SX>;
+
+    StyledComponent.as = (newImplementation) =>
+      createStyledComponent(newImplementation, abstractStyle, options);
+
+    StyledComponent.attrs = (defaultProps) =>
+      createStyledComponent(implementation, abstractStyle, {
         ...options,
         defaultProps: mergeElementProps(options.defaultProps, defaultProps),
       });
 
-    RecipeComponent.shouldForwardProp = (forwardProps) =>
-      createRecipeComponent(implementation, recipeOrClassNames, {
+    StyledComponent.shouldForwardProp = (forwardProps) =>
+      createStyledComponent(implementation, abstractStyle, {
         ...options,
         forwardProps,
       });
 
-    return RecipeComponent;
+    return StyledComponent;
   };
 }
 
 const emptyObject = Object.freeze({});
 
-function getElementTypeName(impl: ElementType): string {
-  if (typeof impl === "string") {
-    return impl;
-  }
-  return impl.displayName ?? impl.name;
-}
+type ClassName = string;
+type AbstractStyle<Variants extends VariantsLike, SX> =
+  | ClassName
+  | ClassName[]
+  | SX
+  | VariantsCompiler<Variants>;
 
 interface StyledComponentFactory<SX> {
-  <
-    Implementation extends AnyImplementation,
-    RecipeInput extends RecipeInputLike,
-  >(
+  <Implementation extends AnyImplementation, Variants extends VariantsLike>(
     implementation: Implementation,
-    recipeOrClassNames?: string | string[] | RecipeFn<RecipeInput>,
-  ): RecipeComponent<Implementation, RecipeInput, SX>;
+    abstractStyle?: AbstractStyle<Variants, SX>,
+  ): StyledComponent<Implementation, Variants, SX>;
 }
 
-type DefaultRecipeComponentProps<
+type DefaultStyledComponentProps<
   Implementation extends AnyImplementation,
-  RecipeInput extends RecipeInputLike,
+  Variants extends VariantsLike,
   SX,
-> = Partial<RecipeComponentProps<Implementation, RecipeInput, SX>>;
+> = Partial<StyledComponentProps<Implementation, Variants, SX>>;
 
-export interface RecipeComponentConstructor<
+export interface StyledComponentConstructor<
   Implementation extends AnyImplementation,
-  RecipeInput extends RecipeInputLike,
+  Variants extends VariantsLike,
   SX,
 > {
-  (props: RecipeComponentProps<Implementation, RecipeInput, SX>): ReactElement;
+  (props: StyledComponentProps<Implementation, Variants, SX>): ReactElement;
 }
 
-interface RecipeComponent<
+interface StyledComponent<
   Implementation extends AnyImplementation,
-  RecipeInput extends RecipeInputLike,
+  Variants extends VariantsLike,
   SX,
-> extends RecipeComponentConstructor<Implementation, RecipeInput, SX> {
+> extends StyledComponentConstructor<Implementation, Variants, SX> {
   as<NewImplementation extends AnyImplementation>(
     as: NewImplementation,
-  ): RecipeComponent<NewImplementation, RecipeInput, SX>;
+  ): StyledComponent<NewImplementation, Variants, SX>;
 
   attrs(
-    props: DefaultRecipeComponentProps<Implementation, RecipeInput, SX>,
-  ): RecipeComponent<Implementation, RecipeInput, SX>;
+    props: DefaultStyledComponentProps<Implementation, Variants, SX>,
+  ): StyledComponent<Implementation, Variants, SX>;
 
   shouldForwardProp(
     tester: PropForwardTester<
-      keyof RecipeComponentProps<Implementation, RecipeInput, SX>
+      keyof StyledComponentProps<Implementation, Variants, SX>
     >,
-  ): RecipeComponent<Implementation, RecipeInput, SX>;
+  ): StyledComponent<Implementation, Variants, SX>;
 }
 
-export type RecipeComponentProps<
+export type StyledComponentProps<
   Implementation extends AnyImplementation,
-  RecipeInput extends RecipeInputLike,
+  Variants extends VariantsLike,
   SX,
 > =
   // We must strip plain indexes to ensure no variants resolve to empty object
-  StripIndexes<RecipeInput> &
-    Omit<ComponentProps<Implementation>, keyof StripIndexes<RecipeInput>> & {
+  StripIndexes<Variants> &
+    Omit<ComponentProps<Implementation>, keyof StripIndexes<Variants>> & {
       sx?: SX;
       asChild?: boolean;
     };
 
-interface RecipeComponentOptions<
+interface StyledComponentOptions<
   Implementation extends AnyImplementation,
-  RecipeInput extends RecipeInputLike,
+  Variants extends VariantsLike,
   SX,
 > {
-  defaultProps?: DefaultRecipeComponentProps<Implementation, RecipeInput, SX>;
+  defaultProps?: DefaultStyledComponentProps<Implementation, Variants, SX>;
   forwardProps?: PropForwardTester<
-    keyof RecipeComponentProps<Implementation, RecipeInput, SX>
+    keyof StyledComponentProps<Implementation, Variants, SX>
   >;
 }
 
-type AnyRecipeComponentProps = RecipeComponentProps<
+type AnyStyledComponentProps = StyledComponentProps<
   AnyImplementation,
-  RecipeInputLike,
+  VariantsLike,
   unknown
 >;
 
 export type AnyImplementation = ElementType;
 
-export type RecipeInputLike = Record<string, unknown>;
+export type VariantsLike = Record<string, unknown>;
 
-export interface RecipeFn<Input extends RecipeInputLike> {
-  (input?: Input): string;
-  variants: () => Array<keyof Input>;
+export interface VariantsCompiler<Variants extends VariantsLike> {
+  (input?: Variants): ClassName;
+  variants: () => Array<keyof Variants>;
 }
 
 type StripIndexes<T> = {

@@ -204,7 +204,7 @@ function testComponent(
     expect(container.outerHTML).toEqual(
       toHtml({
         attrs: {
-          style: `background: red; color: blue; border: white;`,
+          style: `color: blue; border: white; background: red;`,
         },
       }),
     );
@@ -317,9 +317,9 @@ function testComponent(
       toHtml({
         attrs: {
           class: `${recipeClassName} baz_b foo_2 bar_y foo`,
-          style: "background: red; color: blue;",
           "data-foo": "bar",
           role: "alert",
+          style: "color: blue; background: red;",
         },
         content: "Hello",
       }),
