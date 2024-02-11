@@ -187,7 +187,16 @@ function testComponent(
     );
   });
 
-  it("sx", () => {
+  it("sx embedded", () => {
+    const styled = createStyledFactory((style: CSSProperties) => style);
+    const Component = styled(component, { color: "red" });
+    const { container } = render(<Component />);
+    expect(container.outerHTML).toEqual(
+      toHtml({ attrs: { style: `color: red;` } }),
+    );
+  });
+
+  it("sx prop", () => {
     const styled = createStyledFactory((style: CSSProperties) => style);
     const Component = styled(component);
     const { container } = render(<Component sx={{ color: "red" }} />);
