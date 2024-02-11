@@ -1,16 +1,16 @@
 # vanilla-extract-constrained
 
-A utility to enable enhancing the vanilla extract primitives with a constrained API.
+A utility for enhancing the vanilla extract primitives with a constrained API.
 
-Provides the same type safety and strictness of sprinkles (and with a similar API), but with the flexibility to apply it to all compatible vanilla extract primitives, and even outside of vanilla extract.
+Provides the same type safety and conventions of [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/) (and with a similar API), but with the flexibility to apply it to all compatible vanilla extract primitives, and even outside of vanilla extract.
 
 [Code example](https://stackblitz.com/edit/vanilla-extract-constrained)
 
-> Heads-up: vanilla-extract-constrained does not generate atomic CSS like sprinkles does, and instead generates potentially duplicated css across the css classes that gets generated. However, a lot of apps should be okay with this performance trade-off, and some likely even benefit from it, since this approach means you generate less verbose HTML due to the large amount of css class names that atomic css yields.
+> Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 
-> Heads up 2: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
+## Usage
 
-Here's how you define your constraints, very much like sprinkles:
+Here's how you define your constraints:
 
 ```typescript
 // constrained.css.ts
@@ -65,6 +65,7 @@ Using this `resolveStyle` function you can now define new stricter versions of t
 
 ```typescript
 import * as vanilla from "@vanilla-extract/css";
+import { resolveStyle } from "./ constrained.css.ts";
 
 // The following functions behave like their vanilla extract counterparts,
 // but ensures only your constrained property values are accepted as input.
@@ -131,3 +132,18 @@ import { resolveStyle } from "./constrained.css.ts";
 ```
 
 > Using vanilla-extract-constrained at runtime is opt-in. If you do, it will embed minimal javascript to your bundle to allow inline resolution of your constraints. However if you only use resolveStyle inside .css.ts files, no extra javascript gets bundled.
+
+## Constraining recipes
+
+Since [@vanilla-extract/recipes](https://vanilla-extract.style/documentation/packages/recipes/) isn't as straight forward to constrain as the other vanilla extract primitives out of the box, I've created another library to help with this: [vanilla-extract-recipe-factory](https://www.npmjs.com/package/vanilla-extract-recipe-factory). With it you can easily create a constrained recipe function:
+
+```typescript
+import { createRecipeFactory } from "vanilla-extract-recipe-factory";
+import { resolveStyle } from "./ constrained.css.ts";
+
+export const recipe = createRecipeFactory(resolveStyle);
+```
+
+## Notes on atomic CSS
+
+vanilla-extract-constrained does not generate atomic CSS like [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/) does, and instead generates potentially duplicated css across the css classes that gets generated. However, a lot of apps should be okay with this performance trade-off, and some likely even benefit from it, since this approach means you generate less verbose HTML due to the large amount of css class names that atomic css yields.
