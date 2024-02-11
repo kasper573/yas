@@ -2,7 +2,7 @@
 
 Abstract utility for creating typesafe styled [React](https://reactjs.org/) components without having to do the type and props wiring. Intended (but not limited) to be used together with a css compiler like [vanilla-extract](https://vanilla-extract.style).
 
-[Code example](https://stackblitz.com/edit/react-styled-factory)
+[Try it on StackBlitz](https://stackblitz.com/edit/react-styled-factory)
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 

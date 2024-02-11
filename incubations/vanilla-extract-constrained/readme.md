@@ -4,7 +4,7 @@ A utility for enhancing the vanilla extract primitives with a constrained API.
 
 Provides the same type safety and conventions of [@vanilla-extract/sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/) (and with a similar API), but with the flexibility to apply it to all compatible vanilla extract primitives, and even outside of vanilla extract.
 
-[Code example](https://stackblitz.com/edit/vanilla-extract-constrained)
+[Try it on StackBlitz](https://stackblitz.com/edit/vanilla-extract-constrained)
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 

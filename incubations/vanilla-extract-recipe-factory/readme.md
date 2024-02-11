@@ -2,7 +2,7 @@
 
 Create your own [recipe function](https://vanilla-extract.style/documentation/packages/recipes/), but control how styles are compiled.
 
-[Code example](https://stackblitz.com/edit/vanilla-extract-recipe-factory)
+[Try it on StackBlitz](https://stackblitz.com/edit/vanilla-extract-recipe-factory)
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 
