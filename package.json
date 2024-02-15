@@ -16,7 +16,8 @@
     "dev": "turbo run dev --concurrency 40",
     "lint": "pnpm eslint . --max-warnings=0",
     "lint:fix": "pnpm eslint . --fix",
-    "depcheck": "assert-workspace-hierarchy \"apps > integrations > libraries/core/incubations\" && assert-dependency-versions --pn react react-dom @types/react @types/react-dom",
+    "depcheck": "pnpm exec depcruise . && assert-dependency-versions --pn react react-dom @types/react @types/react-dom",
+    "architecture": "pnpm exec depcruise . --output-type archi | dot -Tsvg -o architecture.svg",
     "typecheck": "typecheck-all-workspaces",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@yas/scripts": "workspace:*",
     "cross-env": "7.0.3",
+    "dependency-cruiser": "16.2.0",
     "eslint-config-yas": "workspace:*",
     "eslint-plugin-yas": "workspace:*",
     "eslint": "^8.48.0",
