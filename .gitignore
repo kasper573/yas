@@ -22,6 +22,7 @@ test-results
 # misc
 .DS_Store
 *.pem
+architecture.svg
 
 # debug
 npm-debug.log*
