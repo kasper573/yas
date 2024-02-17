@@ -15,7 +15,7 @@ function createYasViteConfig(projectRoot, { analyze } = {}) {
       determineVisualizerPlugin(analyze),
     ].filter(Boolean),
 
-    // We use define to opt-out of vite env convention in favor of our own (see yas-env).
+    // We use define to opt-out of vite env convention in favor of our own (see @yas/env).
     envPrefix: "_SOMETHING_RIDICULOUS_TO_DISABLE_VITE_ENV_VARS",
     define: defineEnv(projectRoot),
   });
