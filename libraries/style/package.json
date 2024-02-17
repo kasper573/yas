@@ -11,10 +11,6 @@
     },
     "./themes/*": {
       "import": "./themes/*"
-    },
-    "./eslintOverrides": {
-      "import": "./eslintOverrides.js",
-      "require": "./eslintOverrides.js"
     }
   },
   "dependencies": {
