@@ -20,11 +20,11 @@ for (let i = 0; i < workspaces.length; i++) {
       name: `forbidden-dependencies-for-${workspace}`,
       comment: `${workspace} may not depend on ${higher.join(", ")}`,
       severity: "error",
-      from: { path: pathForWorkspaces([workspace]) },
+      from: { path: pathForWorkspace(workspace) },
       to: {
-        path: pathForWorkspaces(higher),
+        path: higher.map(pathForWorkspace),
         pathNot: mayStillDependOn
-          ? pathForWorkspaces(mayStillDependOn)
+          ? mayStillDependOn.map(pathForWorkspace)
           : undefined,
       },
     });
@@ -43,7 +43,7 @@ const config = {
       archi: {
         filters: {
           includeOnly: {
-            path: pathForWorkspaces(workspaces),
+            path: workspaces.map(pathForWorkspace),
           },
           exclude: {},
           focus: {},
@@ -56,11 +56,11 @@ const config = {
 };
 
 /**
- * @param {string[]} workspaces
+ * @param {string} workspace
  * @returns {string}
  */
-function pathForWorkspaces(workspaces) {
-  return `^(${workspaces.join("|")})/`;
+function pathForWorkspace(workspace) {
+  return `^${workspace}/`;
 }
 
 module.exports = config;
