@@ -16,8 +16,8 @@ A Typescript & React specific full stack monorepo template for large scale web d
 - Decouple your apps and packages.
 - Keep packages small and focused.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
-- Utilize shared configuration (e.g. [@yas/tsconfig](core/yas-tsconfig), [@yas/env](core/yas-env)).
-- Encapsulate packages (e.g. [@yas/style](libraries/yas-style), [@yas/validate](libraries/yas-validate)).
+- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env)).
+- Encapsulate packages (e.g. [@yas/style](libraries/style), [@yas/validate](libraries/validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 - Each non-trivial package should provide its own documentation.
 
@@ -50,7 +50,6 @@ The following scripts are only available in the root of the repository and will 
 
 Packages should follow these naming conventions:
 
-- Package folder names must have `yas-` prefix
 - package.json name must have `@yas/` prefix
 
 Exceptions apply:
