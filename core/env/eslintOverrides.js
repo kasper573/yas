@@ -10,7 +10,7 @@ const requireEnvFile = {
   files: [`apps/**/*${ext}`],
   excludedFiles: [...envFiles.map((file) => `**/${file}`), ...testFiles],
   rules: rulesForBanningEnvUsage(
-    `yas-env: Apps must only read from the environment inside their env file (${envFiles.join(
+    `@yas/env: Apps must only read from the environment inside their env file (${envFiles.join(
       ", ",
     )})`,
   ),
@@ -20,7 +20,7 @@ const disallowEnvEntirely = {
   files: ["{libraries,core}/**/*.{js,jsx,ts,tsx}"],
   excludedFiles: testFiles,
   rules: rulesForBanningEnvUsage(
-    "yas-env: Packages may not access environment variables at all and should instead rely on dependency injection.",
+    "@yas/env: Packages may not access environment variables at all and should instead rely on dependency injection.",
   ),
 };
 
@@ -46,7 +46,7 @@ function rulesForBanningEnvUsage(conventionMessage) {
       {
         selector: `MemberExpression[object.type="MetaProperty"][object.meta.name="import"][property.name="env"]`,
         message:
-          "yas-env: We do not use import.meta.env. Use process.env instead.",
+          "@yas/env: We do not use import.meta.env. Use process.env instead.",
       },
     ],
   };

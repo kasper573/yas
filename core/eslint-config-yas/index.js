@@ -168,7 +168,21 @@ module.exports = {
     },
 
     ...require("@yas/env/eslintOverrides"),
-    ...require("@yas/style/eslintOverrides"),
+
+    // Disallow use of non typescript css files
+    {
+      files: ["*.{ts,tsx,js,jsx}"],
+      rules: {
+        "yas/illegal-file-extensions": [
+          "error",
+          {
+            extensions: [".scss", ".css", ".sass", ".less"],
+            exceptions: ["node_modules"],
+            message: `Non-typesafe CSS is not allowed. Use @yas/style instead.`,
+          },
+        ],
+      },
+    },
 
     {
       files: ["*.ts", "*.tsx", "*.js", "*.jsx"],

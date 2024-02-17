@@ -16,7 +16,7 @@ importers:
         version: 18.6.0
       '@yas/scripts':
         specifier: workspace:*
-        version: link:core/yas-scripts
+        version: link:core/scripts
       cross-env:
         specifier: 7.0.3
         version: 7.0.3
@@ -49,10 +49,10 @@ importers:
         version: 10.44.1
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../../core/result
       '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-validate
+        version: link:../../core/validate
       express:
         specifier: 4.18.2
         version: 4.18.2
@@ -71,16 +71,16 @@ importers:
         version: 1.9.9
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/env':
         specifier: workspace:*
-        version: link:../../core/yas-env
+        version: link:../../core/env
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       cors:
         specifier: 2.8.5
         version: 2.8.5
@@ -101,13 +101,13 @@ importers:
         version: 0.1.0(@docusaurus/types@3.0.0-alpha.0)
       '@yas/style':
         specifier: workspace:*
-        version: link:../../libraries/yas-style
+        version: link:../../libraries/style
       '@yas/ui':
         specifier: workspace:*
-        version: link:../../libraries/yas-ui
+        version: link:../../libraries/ui
       '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-validate
+        version: link:../../core/validate
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -150,16 +150,16 @@ importers:
         version: 18.2.37
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/env':
         specifier: workspace:*
-        version: link:../../core/yas-env
+        version: link:../../core/env
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../../core/result
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       mini-css-extract-plugin:
         specifier: ^2.7.6
         version: 2.7.6(webpack@5.88.2)
@@ -174,28 +174,28 @@ importers:
         version: link:../../integrations/api-client
       '@yas/hooks':
         specifier: workspace:*
-        version: link:../../libraries/yas-hooks
+        version: link:../../libraries/hooks
       '@yas/icons':
         specifier: workspace:*
-        version: link:../../libraries/yas-icons
+        version: link:../../libraries/icons
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../../core/result
       '@yas/router':
         specifier: workspace:*
-        version: link:../../libraries/yas-router
+        version: link:../../libraries/router
       '@yas/style':
         specifier: workspace:*
-        version: link:../../libraries/yas-style
+        version: link:../../libraries/style
       '@yas/time':
         specifier: workspace:*
-        version: link:../../libraries/yas-time
+        version: link:../../libraries/time
       '@yas/ui':
         specifier: workspace:*
-        version: link:../../libraries/yas-ui
+        version: link:../../libraries/ui
       '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-validate
+        version: link:../../core/validate
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -214,22 +214,94 @@ importers:
         version: 18.2.15
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/env':
         specifier: workspace:*
-        version: link:../../core/yas-env
+        version: link:../../core/env
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       concurrently:
         specifier: ^8.0.1
         version: 8.2.1
       react-error-boundary:
         specifier: ^4.0.12
         version: 4.0.12(react@18.2.0)
+
+  core/build:
+    devDependencies:
+      '@vanilla-extract/esbuild-plugin':
+        specifier: 2.3.1
+        version: 2.3.1(@types/node@20.8.10)(esbuild@0.18.20)
+      '@vanilla-extract/vite-plugin':
+        specifier: 3.9.2
+        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
+      '@vanilla-extract/webpack-plugin':
+        specifier: 2.3.1
+        version: 2.3.1(@types/node@20.8.10)(webpack@5.88.2)
+      '@vitejs/plugin-react':
+        specifier: 4.0.1
+        version: 4.0.1(vite@4.5.2)
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../env
+      css-loader:
+        specifier: ^6.8.1
+        version: 6.8.1(webpack@5.88.2)
+      css-minimizer-webpack-plugin:
+        specifier: ^5.0.1
+        version: 5.0.1(esbuild@0.18.20)(webpack@5.88.2)
+      esbuild-absolute-file-plugin:
+        specifier: workspace:*
+        version: link:../../incubations/esbuild-absolute-file-plugin
+      file-loader:
+        specifier: ^6.2.0
+        version: 6.2.0(webpack@5.88.2)
+      rollup-plugin-visualizer:
+        specifier: 5.9.0
+        version: 5.9.0
+      style-loader:
+        specifier: ^3.3.3
+        version: 3.3.3(webpack@5.88.2)
+      tsup:
+        specifier: 7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+      vite:
+        specifier: 4.5.2
+        version: 4.5.2(@types/node@20.8.10)
+      vite-plugin-checker:
+        specifier: ^0.5.6
+        version: 0.5.6(eslint@8.50.0)(typescript@5.2.2)(vite@4.5.2)
+
+  core/env:
+    devDependencies:
+      '@types/dotenv-flow':
+        specifier: ^3.3.1
+        version: 3.3.1
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../test
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@yas/validate':
+        specifier: workspace:*
+        version: link:../validate
+      dotenv-expand:
+        specifier: ^10.0.0
+        version: 10.0.0
+      dotenv-flow:
+        specifier: ^3.3.0
+        version: 3.3.0
+      execa:
+        specifier: ^7.1.1
+        version: 7.2.0
+      tsx:
+        specifier: 4.6.1
+        version: 4.6.1
 
   core/eslint-config-yas:
     devDependencies:
@@ -241,10 +313,7 @@ importers:
         version: 6.7.3(eslint@8.50.0)(typescript@5.2.2)
       '@yas/env':
         specifier: workspace:*
-        version: link:../yas-env
-      '@yas/style':
-        specifier: workspace:*
-        version: link:../../libraries/yas-style
+        version: link:../env
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.50.0)
@@ -288,79 +357,17 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
 
-  core/yas-build:
+  core/result:
+    dependencies:
+      neverthrow:
+        specifier: 6.1.0
+        version: 6.1.0
     devDependencies:
-      '@vanilla-extract/esbuild-plugin':
-        specifier: 2.3.1
-        version: 2.3.1(@types/node@20.8.10)(esbuild@0.18.20)
-      '@vanilla-extract/vite-plugin':
-        specifier: 3.9.2
-        version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
-      '@vanilla-extract/webpack-plugin':
-        specifier: 2.3.1
-        version: 2.3.1(@types/node@20.8.10)(webpack@5.88.2)
-      '@vitejs/plugin-react':
-        specifier: 4.0.1
-        version: 4.0.1(vite@4.5.2)
-      '@yas/env':
-        specifier: workspace:*
-        version: link:../yas-env
-      css-loader:
-        specifier: ^6.8.1
-        version: 6.8.1(webpack@5.88.2)
-      css-minimizer-webpack-plugin:
-        specifier: ^5.0.1
-        version: 5.0.1(esbuild@0.18.20)(webpack@5.88.2)
-      esbuild-absolute-file-plugin:
-        specifier: workspace:*
-        version: link:../../incubations/esbuild-absolute-file-plugin
-      file-loader:
-        specifier: ^6.2.0
-        version: 6.2.0(webpack@5.88.2)
-      rollup-plugin-visualizer:
-        specifier: 5.9.0
-        version: 5.9.0
-      style-loader:
-        specifier: ^3.3.3
-        version: 3.3.3(webpack@5.88.2)
-      tsup:
-        specifier: 7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-      vite:
-        specifier: 4.5.2
-        version: 4.5.2(@types/node@20.8.10)
-      vite-plugin-checker:
-        specifier: ^0.5.6
-        version: 0.5.6(eslint@8.50.0)(typescript@5.2.2)(vite@4.5.2)
-
-  core/yas-env:
-    devDependencies:
-      '@types/dotenv-flow':
-        specifier: ^3.3.1
-        version: 3.3.1
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../yas-test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../yas-tsconfig
-      '@yas/validate':
-        specifier: workspace:*
-        version: link:../../libraries/yas-validate
-      dotenv-expand:
-        specifier: ^10.0.0
-        version: 10.0.0
-      dotenv-flow:
-        specifier: ^3.3.0
-        version: 3.3.0
-      execa:
-        specifier: ^7.1.1
-        version: 7.2.0
-      tsx:
-        specifier: 4.6.1
-        version: 4.6.1
+        version: link:../tsconfig
 
-  core/yas-scripts:
+  core/scripts:
     devDependencies:
       '@types/tar':
         specifier: 6.1.11
@@ -370,13 +377,13 @@ importers:
         version: 17.0.26
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../result
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../yas-tsconfig
+        version: link:../tsconfig
       '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-validate
+        version: link:../validate
       bottleneck:
         specifier: 2.19.5
         version: 2.19.5
@@ -405,7 +412,7 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
 
-  core/yas-test:
+  core/test:
     devDependencies:
       '@playwright/test':
         specifier: 1.39.0
@@ -427,7 +434,7 @@ importers:
         version: 4.1.0(vite@4.5.2)
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../yas-tsconfig
+        version: link:../tsconfig
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
@@ -435,7 +442,7 @@ importers:
         specifier: 0.34.3
         version: 0.34.3(jsdom@22.1.0)
 
-  core/yas-tsconfig:
+  core/tsconfig:
     dependencies:
       '@types/node':
         specifier: 20.8.10
@@ -443,6 +450,19 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+
+  core/validate:
+    dependencies:
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.3
+    devDependencies:
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../test
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
 
   incubations/esbuild-absolute-file-plugin:
     devDependencies:
@@ -470,16 +490,16 @@ importers:
         version: 18.2.37
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       '@yas/validate':
         specifier: workspace:*
-        version: link:../../libraries/yas-validate
+        version: link:../../core/validate
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -494,16 +514,16 @@ importers:
         version: 18.2.37
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -524,16 +544,16 @@ importers:
         version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       concurrently:
         specifier: ^8.2.1
         version: 8.2.1
@@ -558,16 +578,16 @@ importers:
         version: 18.2.37
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../../core/result
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       csstype:
         specifier: ^3
         version: 3.1.2
@@ -592,16 +612,16 @@ importers:
         version: 3.9.2(@types/node@20.8.10)(vite@4.5.2)
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
   integrations/api-client:
     dependencies:
@@ -619,7 +639,7 @@ importers:
         version: link:../../apps/api
       '@yas/result':
         specifier: workspace:*
-        version: link:../../libraries/yas-result
+        version: link:../../core/result
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -632,9 +652,9 @@ importers:
         version: 18.2.37
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
-  libraries/yas-hooks:
+  libraries/hooks:
     dependencies:
       react:
         specifier: ^18.2.0
@@ -648,9 +668,9 @@ importers:
         version: 18.2.37
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
-  libraries/yas-icons:
+  libraries/icons:
     dependencies:
       '@radix-ui/react-icons':
         specifier: 1.3.0
@@ -658,19 +678,9 @@ importers:
     devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
-  libraries/yas-result:
-    dependencies:
-      neverthrow:
-        specifier: 6.1.0
-        version: 6.1.0
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/yas-tsconfig
-
-  libraries/yas-router:
+  libraries/router:
     dependencies:
       '@tanstack/react-router':
         specifier: ^1.1.9
@@ -687,9 +697,9 @@ importers:
         version: 18.2.15
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
-  libraries/yas-style:
+  libraries/style:
     dependencies:
       '@vanilla-extract/css':
         specifier: 1.14.0
@@ -718,25 +728,25 @@ importers:
     devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       csstype:
         specifier: 3.1.2
         version: 3.1.2
 
-  libraries/yas-time:
+  libraries/time:
     dependencies:
       '@yas/result':
         specifier: workspace:*
-        version: link:../yas-result
+        version: link:../../core/result
       date-fns:
         specifier: 3.1.0
         version: 3.1.0
     devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
 
-  libraries/yas-ui:
+  libraries/ui:
     dependencies:
       '@hookform/resolvers':
         specifier: 3.3.4
@@ -749,19 +759,19 @@ importers:
         version: 2.0.0(@types/react-dom@18.2.15)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
       '@yas/hooks':
         specifier: workspace:*
-        version: link:../yas-hooks
+        version: link:../hooks
       '@yas/icons':
         specifier: workspace:*
-        version: link:../yas-icons
+        version: link:../icons
       '@yas/style':
         specifier: workspace:*
-        version: link:../yas-style
+        version: link:../style
       '@yas/time':
         specifier: workspace:*
-        version: link:../yas-time
+        version: link:../time
       '@yas/validate':
         specifier: workspace:*
-        version: link:../yas-validate
+        version: link:../../core/validate
       hookform-controller-proxy:
         specifier: workspace:*
         version: link:../../incubations/hookform-controller-proxy
@@ -813,16 +823,16 @@ importers:
         version: 18.2.15
       '@yas/build':
         specifier: workspace:*
-        version: link:../../core/yas-build
+        version: link:../../core/build
       '@yas/scripts':
         specifier: workspace:*
-        version: link:../../core/yas-scripts
+        version: link:../../core/scripts
       '@yas/test':
         specifier: workspace:*
-        version: link:../../core/yas-test
+        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
-        version: link:../../core/yas-tsconfig
+        version: link:../../core/tsconfig
       concurrently:
         specifier: 8.0.1
         version: 8.0.1
@@ -847,19 +857,6 @@ importers:
       wait-on:
         specifier: ^7.2.0
         version: 7.2.0
-
-  libraries/yas-validate:
-    dependencies:
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.3
-    devDependencies:
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/yas-test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/yas-tsconfig
 
 packages:
 
@@ -1022,14 +1019,6 @@ packages:
     hasBin: true
     dependencies:
       default-browser-id: 3.0.0
-    dev: true
-
-  /@babel/code-frame@7.22.13:
-    resolution: {integrity: sha512-XktuhWlJ5g+3TJXc5upd9Ks1HutSArik6jf2eAjYFyIOf4ej3RN+184cZbzDvbPnuTJIUhPKKJE3cIsYTiAT3w==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.22.20
-      chalk: 2.4.2
     dev: true
 
   /@babel/code-frame@7.23.5:
@@ -1390,15 +1379,6 @@ packages:
       '@babel/types': 7.23.5
     transitivePeerDependencies:
       - supports-color
-
-  /@babel/highlight@7.22.20:
-    resolution: {integrity: sha512-dkdMCN3py0+ksCgYmGG8jKeGA/8Tk+gJwSYYlFGxG5lmhfKNoAy004YpLxpS1W2J8m/EK2Ew+yOs9pVRwO89mg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-validator-identifier': 7.22.20
-      chalk: 2.4.2
-      js-tokens: 4.0.0
-    dev: true
 
   /@babel/highlight@7.23.4:
     resolution: {integrity: sha512-acGdbYSfp2WheJoJm/EBBBLh/ID8KDc64ISZ9DYtBmC8/Q204PZJLHyzeB5qMzJ5trcOkybd78M4x2KWsUq++A==}
@@ -3165,16 +3145,6 @@ packages:
       '@babel/core': 7.23.5
       '@babel/plugin-transform-react-jsx': 7.22.15(@babel/core@7.23.5)
 
-  /@babel/plugin-transform-react-jsx-self@7.22.5(@babel/core@7.23.0):
-    resolution: {integrity: sha512-nTh2ogNUtxbiSbxaT4Ds6aXnXEipHweN9YRgOX/oNXdf0cCrGn/+2LozFa3lnPV5D90MkjhgckCPBrsoSc1a7g==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/helper-plugin-utils': 7.22.5
-    dev: true
-
   /@babel/plugin-transform-react-jsx-self@7.22.5(@babel/core@7.23.5):
     resolution: {integrity: sha512-nTh2ogNUtxbiSbxaT4Ds6aXnXEipHweN9YRgOX/oNXdf0cCrGn/+2LozFa3lnPV5D90MkjhgckCPBrsoSc1a7g==}
     engines: {node: '>=6.9.0'}
@@ -3182,16 +3152,6 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.5
-      '@babel/helper-plugin-utils': 7.22.5
-    dev: true
-
-  /@babel/plugin-transform-react-jsx-source@7.22.5(@babel/core@7.23.0):
-    resolution: {integrity: sha512-yIiRO6yobeEIaI0RTbIr8iAK9FcBHLtZq0S89ZPjDLQXBA4xvghaKqI0etp/tF3htTM0sazJKKLz9oEiGRtu7w==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.23.0
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -3895,7 +3855,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.4.6(@babel/core@7.23.5)
       babel-plugin-polyfill-corejs3: 0.8.6(@babel/core@7.23.5)
       babel-plugin-polyfill-regenerator: 0.5.3(@babel/core@7.23.5)
-      core-js-compat: 3.33.0
+      core-js-compat: 3.33.3
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -4063,15 +4023,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  /@babel/types@7.23.0:
-    resolution: {integrity: sha512-0oIyUfKoI3mSqMvsxBdclDwxXKXAUA8v/apZbc+iSyARYou1o8ZGDxbUYyLFoW2arqS2jDGqJuZvv1d/io1axg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.23.4
-      '@babel/helper-validator-identifier': 7.22.20
-      to-fast-properties: 2.0.0
-    dev: true
 
   /@babel/types@7.23.5:
     resolution: {integrity: sha512-ON5kSOJwVO6xXVRTvOI0eOnWe7VdUcIpsovGo9U/Br4Ie4UVFQTboO2cYnDhAGU6Fp+UxSiT+pMft0SMHfuq6w==}
@@ -7481,17 +7432,6 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/channels@7.5.3:
-    resolution: {integrity: sha512-dhWuV2o2lmxH0RKuzND8jxYzvSQTSmpE13P0IT/k8+I1up/rSNYOBQJT6SalakcNWXFAMXguo/8E7ApmnKKcEw==}
-    dependencies:
-      '@storybook/client-logger': 7.5.3
-      '@storybook/core-events': 7.5.3
-      '@storybook/global': 5.0.0
-      qs: 6.11.2
-      telejson: 7.2.0
-      tiny-invariant: 1.3.1
-    dev: true
-
   /@storybook/channels@7.6.3:
     resolution: {integrity: sha512-o9J0TBbFon16tUlU5V6kJgzAlsloJcS1cTHWqh3VWczohbRm+X1PLNUihJ7Q8kBWXAuuJkgBu7RQH7Ib46WyYg==}
     dependencies:
@@ -7560,12 +7500,6 @@ packages:
     dependencies:
       core-js: 3.33.0
       global: 4.4.0
-    dev: true
-
-  /@storybook/client-logger@7.5.3:
-    resolution: {integrity: sha512-vUFYALypjix5FoJ5M/XUP6KmyTnQJNW1poHdW7WXUVSg+lBM6E5eAtjTm0hdxNNDH8KSrdy24nCLra5h0X0BWg==}
-    dependencies:
-      '@storybook/global': 5.0.0
     dev: true
 
   /@storybook/client-logger@7.6.3:
@@ -7643,37 +7577,6 @@ packages:
       '@storybook/preview-api': 7.6.3
     dev: true
 
-  /@storybook/core-common@7.5.3:
-    resolution: {integrity: sha512-WGMwjtVUxUzFwQz7Mgs0gLuNebIGNV55dCdZgurx2/y6QOkJ2v8D0b3iL+xKMV4B5Nwoc2DsM418Y+Hy3UQd+w==}
-    dependencies:
-      '@storybook/core-events': 7.5.3
-      '@storybook/node-logger': 7.5.3
-      '@storybook/types': 7.5.3
-      '@types/find-cache-dir': 3.2.1
-      '@types/node': 18.18.9
-      '@types/node-fetch': 2.6.6
-      '@types/pretty-hrtime': 1.0.1
-      chalk: 4.1.2
-      esbuild: 0.18.20
-      esbuild-register: 3.5.0(esbuild@0.18.20)
-      file-system-cache: 2.3.0
-      find-cache-dir: 3.3.2
-      find-up: 5.0.0
-      fs-extra: 11.1.1
-      glob: 10.3.10
-      handlebars: 4.7.8
-      lazy-universal-dotenv: 4.0.0
-      node-fetch: 2.7.0
-      picomatch: 2.3.1
-      pkg-dir: 5.0.0
-      pretty-hrtime: 1.0.3
-      resolve-from: 5.0.0
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: true
-
   /@storybook/core-common@7.6.3:
     resolution: {integrity: sha512-/ZE4BEyGwBHCQCOo681GyBKF4IqCiwVV/ZJCHTMTHFCPLJT2r+Qwv4tnI7xt1kwflOlbBlG6B6CvAqTjjVw/Ew==}
     dependencies:
@@ -7709,12 +7612,6 @@ packages:
     resolution: {integrity: sha512-qMZQwmvzpH5F2uwNUllTPg6eZXr2OaYZQRRN8VZJiuorZzDNdAFmiVWMWdkThwmyLEJuQKXxqCL8lMj/7PPM+g==}
     dependencies:
       core-js: 3.33.0
-    dev: true
-
-  /@storybook/core-events@7.5.3:
-    resolution: {integrity: sha512-DFOpyQ22JD5C1oeOFzL8wlqSWZzrqgDfDbUGP8xdO4wJu+FVTxnnWN6ZYLdTPB1u27DOhd7TzjQMfLDHLu7kbQ==}
-    dependencies:
-      ts-dedent: 2.2.0
     dev: true
 
   /@storybook/core-events@7.6.3:
@@ -7783,22 +7680,6 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/csf-tools@7.5.3:
-    resolution: {integrity: sha512-676C3ISn7FQJKjb3DBWXhjGN2OQEv4s71dx+5D0TlmswDCOOGS8dYFjP8wVx51+mAIE8CROAw7vLHLtVKU7SwQ==}
-    dependencies:
-      '@babel/generator': 7.23.5
-      '@babel/parser': 7.23.5
-      '@babel/traverse': 7.23.5
-      '@babel/types': 7.23.5
-      '@storybook/csf': 0.1.1
-      '@storybook/types': 7.5.3
-      fs-extra: 11.1.1
-      recast: 0.23.4
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@storybook/csf-tools@7.6.3:
     resolution: {integrity: sha512-Zi3pg2pg88/mvBKewkfWhFUR1J4uYpHI5fSjOE+J/FeZObX/DIE7r+wJxZ0UBGyrk0Wy7Jajlb2uSP56Y0i19w==}
     dependencies:
@@ -7825,12 +7706,6 @@ packages:
     resolution: {integrity: sha512-9OVvMVh3t9znYZwb0Svf/YQoxX2gVOeQTGe2bses2yj+a3+OJnCrUF3/hGv6Em7KujtOdL2LL+JnG49oMVGFgQ==}
     dependencies:
       lodash: 4.17.21
-    dev: true
-
-  /@storybook/csf@0.1.1:
-    resolution: {integrity: sha512-4hE3AlNVxR60Wc5KSC68ASYzUobjPqtSKyhV6G+ge0FIXU55N5nTY7dXGRZHQGDBPq+XqchMkIdlkHPRs8nTHg==}
-    dependencies:
-      type-fest: 2.19.0
     dev: true
 
   /@storybook/csf@0.1.2:
@@ -7912,35 +7787,12 @@ packages:
     resolution: {integrity: sha512-TXJJd5RAKakWx4BtpwvSNdgTDkKM6RkXU8GK34S/LhidQ5Pjz3wcnqb0TxEkfhK/ztbP8nKHqXFwLfa2CYkvQw==}
     dev: true
 
-  /@storybook/node-logger@7.5.3:
-    resolution: {integrity: sha512-7ZZDw/q3hakBj1FngsBjaHNIBguYAWojp7R1fFTvwkeunCi21EUzZjRBcqp10kB6BP3/NLX32bIQknsCWD76rQ==}
-    dev: true
-
   /@storybook/node-logger@7.6.3:
     resolution: {integrity: sha512-7yL0CMHuh1DhpUAoKCU0a53DvxBpkUom9SX5RaC1G2A9BK/B3XcHtDPAC0uyUwNCKLJMZo9QtmJspvxWjR0LtA==}
     dev: true
 
   /@storybook/postinstall@7.6.3:
     resolution: {integrity: sha512-WpgdpJpY6rionluxjFZLbKiSDjvQJ5cPgufjvBRuXTsnVOsH3JNRWnPdkQkJLT9uTUMoNcyBMxbjYkK3vU6wSg==}
-    dev: true
-
-  /@storybook/preview-api@7.5.3:
-    resolution: {integrity: sha512-LNmEf7oBRnZ1wG3bQ+P+TO29+NN5pSDJiAA6FabZBrtIVm+psc2lxBCDQvFYyAFzQSlt60toGKNW8+RfFNdR5Q==}
-    dependencies:
-      '@storybook/channels': 7.5.3
-      '@storybook/client-logger': 7.5.3
-      '@storybook/core-events': 7.5.3
-      '@storybook/csf': 0.1.1
-      '@storybook/global': 5.0.0
-      '@storybook/types': 7.5.3
-      '@types/qs': 6.9.8
-      dequal: 2.0.3
-      lodash: 4.17.21
-      memoizerific: 1.11.3
-      qs: 6.11.2
-      synchronous-promise: 2.0.17
-      ts-dedent: 2.2.0
-      util-deprecate: 1.0.2
     dev: true
 
   /@storybook/preview-api@7.6.3:
@@ -8096,15 +7948,15 @@ packages:
     engines: {node: ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     dependencies:
-      '@babel/core': 7.23.0
-      '@babel/generator': 7.23.0
+      '@babel/core': 7.23.5
+      '@babel/generator': 7.23.5
       '@babel/template': 7.22.15
-      '@babel/types': 7.23.0
+      '@babel/types': 7.23.5
       '@jest/types': 29.6.3
-      '@storybook/core-common': 7.5.3
-      '@storybook/csf': 0.1.1
-      '@storybook/csf-tools': 7.5.3
-      '@storybook/preview-api': 7.5.3
+      '@storybook/core-common': 7.6.3
+      '@storybook/csf': 0.1.2
+      '@storybook/csf-tools': 7.6.3
+      '@storybook/preview-api': 7.6.3
       '@swc/core': 1.3.91
       '@swc/jest': 0.2.29(@swc/core@1.3.91)
       can-bind-to-host: 1.1.2
@@ -8169,15 +8021,6 @@ packages:
       memoizerific: 1.11.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /@storybook/types@7.5.3:
-    resolution: {integrity: sha512-iu5W0Kdd6nysN5CPkY4GRl+0BpxRTdSfBIJak7mb6xCIHSB5t1tw4BOuqMQ5EgpikRY3MWJ4gY647QkWBX3MNQ==}
-    dependencies:
-      '@storybook/channels': 7.5.3
-      '@types/babel__core': 7.20.2
-      '@types/express': 4.17.21
-      file-system-cache: 2.3.0
     dev: true
 
   /@storybook/types@7.6.3:
@@ -8547,7 +8390,7 @@ packages:
     resolution: {integrity: sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==}
     engines: {node: '>=14'}
     dependencies:
-      '@babel/code-frame': 7.22.13
+      '@babel/code-frame': 7.23.5
       '@babel/runtime': 7.23.1
       '@types/aria-query': 5.0.2
       aria-query: 5.1.3
@@ -9452,35 +9295,8 @@ packages:
       esbuild:
         optional: true
     dependencies:
-      '@vanilla-extract/integration': 6.2.2(@types/node@20.8.10)
+      '@vanilla-extract/integration': 6.2.4(@types/node@20.8.10)
       esbuild: 0.18.20
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
-  /@vanilla-extract/integration@6.2.2(@types/node@20.8.10):
-    resolution: {integrity: sha512-gV3qPFjFap1+IrPeuFy+tEZOq7l7ifJf1ik/kluDWhPr1ffsFG9puq1/jjJ4rod1BIC79Q5ZWPNvBInHyxfCew==}
-    dependencies:
-      '@babel/core': 7.23.5
-      '@babel/plugin-syntax-typescript': 7.22.5(@babel/core@7.23.5)
-      '@vanilla-extract/babel-plugin-debug-ids': 1.0.3
-      '@vanilla-extract/css': 1.14.0
-      esbuild: 0.17.6
-      eval: 0.1.8
-      find-up: 5.0.0
-      javascript-stringify: 2.1.0
-      lodash: 4.17.21
-      mlly: 1.4.2
-      outdent: 0.8.0
-      vite: 4.5.2(@types/node@20.8.10)
-      vite-node: 0.28.5(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9554,7 +9370,7 @@ packages:
     peerDependencies:
       webpack: ^4.30.0 || ^5.20.2
     dependencies:
-      '@vanilla-extract/integration': 6.2.2(@types/node@20.8.10)
+      '@vanilla-extract/integration': 6.2.4(@types/node@20.8.10)
       chalk: 4.1.2
       debug: 4.3.4(supports-color@8.1.1)
       loader-utils: 2.0.4
@@ -9592,9 +9408,9 @@ packages:
     peerDependencies:
       vite: ^4.2.0
     dependencies:
-      '@babel/core': 7.23.0
-      '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.0)
-      '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.0)
+      '@babel/core': 7.23.5
+      '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.5)
+      '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.5)
       react-refresh: 0.14.0
       vite: 4.5.2(@types/node@20.8.10)
     transitivePeerDependencies:
@@ -9607,9 +9423,9 @@ packages:
     peerDependencies:
       vite: ^4.2.0
     dependencies:
-      '@babel/core': 7.23.0
-      '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.0)
-      '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.0)
+      '@babel/core': 7.23.5
+      '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.5)
+      '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.5)
       '@types/babel__core': 7.20.2
       react-refresh: 0.14.0
       vite: 4.5.2(@types/node@20.8.10)
@@ -9788,6 +9604,7 @@ packages:
 
   /abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
+    deprecated: Use your platform's native atob() and btoa() methods instead
     dev: true
 
   /accepts@1.3.8:
@@ -9869,7 +9686,6 @@ packages:
     resolution: {integrity: sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-    dev: true
 
   /address@1.2.2:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
@@ -12287,6 +12103,7 @@ packages:
   /domexception@4.0.0:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
+    deprecated: Use your platform's native DOMException instead
     dependencies:
       webidl-conversions: 7.0.0
     dev: true
@@ -12999,8 +12816,8 @@ packages:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2(acorn@8.10.0)
+      acorn: 8.11.3
+      acorn-jsx: 5.3.2(acorn@8.11.3)
       eslint-visitor-keys: 3.4.3
     dev: true
 
@@ -15733,11 +15550,11 @@ packages:
     dependencies:
       '@babel/core': 7.23.5
       '@babel/parser': 7.23.5
-      '@babel/plugin-transform-class-properties': 7.22.5(@babel/core@7.23.5)
-      '@babel/plugin-transform-modules-commonjs': 7.23.0(@babel/core@7.23.5)
-      '@babel/plugin-transform-nullish-coalescing-operator': 7.22.11(@babel/core@7.23.5)
-      '@babel/plugin-transform-optional-chaining': 7.23.0(@babel/core@7.23.5)
-      '@babel/plugin-transform-private-methods': 7.22.5(@babel/core@7.23.5)
+      '@babel/plugin-transform-class-properties': 7.23.3(@babel/core@7.23.5)
+      '@babel/plugin-transform-modules-commonjs': 7.23.3(@babel/core@7.23.5)
+      '@babel/plugin-transform-nullish-coalescing-operator': 7.23.4(@babel/core@7.23.5)
+      '@babel/plugin-transform-optional-chaining': 7.23.4(@babel/core@7.23.5)
+      '@babel/plugin-transform-private-methods': 7.23.3(@babel/core@7.23.5)
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
       '@babel/preset-flow': 7.22.15(@babel/core@7.23.5)
       '@babel/preset-typescript': 7.23.0(@babel/core@7.23.5)
@@ -16084,6 +15901,7 @@ packages:
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
       get-func-name: 2.0.2
     dev: true
@@ -17009,7 +16827,7 @@ packages:
   /mlly@1.4.2:
     resolution: {integrity: sha512-i/Ykufi2t1EZ6NaPLdfnZk2AX8cs0d+mTzVKuPfqPKPatxLApaBoxJQ9x1/uckXtrS/U5oisPMDkNs0yQTaBRg==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.3
       pathe: 1.1.1
       pkg-types: 1.0.3
       ufo: 1.3.1
@@ -20432,7 +20250,7 @@ packages:
   /strip-literal@1.3.0:
     resolution: {integrity: sha512-PugKzOsyXpArk0yWmUwqOZecSO0GH0bPoctLcqNDH9J04pVW3lflYE0ujElBGTloevcxF5MofAOZ7C5l2b+wLg==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.3
     dev: true
 
   /style-loader@3.3.3(webpack@5.88.2):
@@ -21414,7 +21232,7 @@ packages:
   /unplugin@1.5.0:
     resolution: {integrity: sha512-9ZdRwbh/4gcm1JTOkp9lAkIDrtOyOxgHmY7cjuwI8L/2RTikMcVG25GsZwNAgRuap3iDw2jeq7eoqtAsz5rW3A==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.3
       chokidar: 3.5.3
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.5.0
@@ -21774,7 +21592,7 @@ packages:
       vue-tsc:
         optional: true
     dependencies:
-      '@babel/code-frame': 7.22.13
+      '@babel/code-frame': 7.23.5
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -21869,8 +21687,8 @@ packages:
       '@vitest/snapshot': 0.34.3
       '@vitest/spy': 0.34.3
       '@vitest/utils': 0.34.3
-      acorn: 8.10.0
-      acorn-walk: 8.2.0
+      acorn: 8.11.3
+      acorn-walk: 8.3.2
       cac: 6.7.14
       chai: 4.3.10
       debug: 4.3.4(supports-color@8.1.1)

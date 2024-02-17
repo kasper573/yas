@@ -2,7 +2,7 @@ import * as path from "path";
 import { execaCommand } from "execa";
 import { describe, it, expect } from "@yas/test/vitest/node";
 
-describe("yas-env", () => {
+describe("@yas/env", () => {
   it("can load value via environment", async () => {
     const output = await testApp("env-string-min-10", { foo: "input-value" });
     expect(output).toContain("received:input-value");

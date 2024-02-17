@@ -12,7 +12,6 @@ coverage
 
 # build tools
 out/
-build
 dist
 storybook-static
 .cache/
