@@ -29,7 +29,9 @@ function generateForbiddenRules(workspaces) {
 const workspacesInLayerOrder = [
   "apps",
   "integrations",
-  ["libraries", "core", "incubations"],
+  "libraries",
+  "incubations",
+  "core",
 ].map((item) => (Array.isArray(item) ? item : [item]));
 
 /**
@@ -38,6 +40,7 @@ const workspacesInLayerOrder = [
 const config = {
   forbidden: generateForbiddenRules(workspacesInLayerOrder),
   options: {
+    tsPreCompilationDeps: true,
     exclude: ["node_modules", ".*/dist/.*", "^.*?.js"],
     reporterOptions: {
       archi: {
