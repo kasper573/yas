@@ -1,63 +1,66 @@
 // @ts-check
 
+// workspaces must be defined in layer order
+const workspaces = ["apps", "integrations", "libraries", "core", "incubations"];
+const workspacesMayStillDependOn = {
+  incubations: ["core"],
+};
+
 /**
- * @param {Array<string[]>} workspaces
+ * @type {import("dependency-cruiser").IForbiddenRuleType[]}
  */
-function generateForbiddenRules(workspaces) {
-  /**
-   * @type {import("dependency-cruiser").IForbiddenRuleType[]}
-   */
-  const rules = [];
+const forbidden = [];
 
-  for (let i = 0; i < workspaces.length; i++) {
-    const highers = workspaces[i];
-    const lowers = workspaces.slice(i + 1);
-    if (lowers.length) {
-      rules.push({
-        name: `layer`,
-        comment: `Packages must not depend on any package in a higher layer`,
-        severity: "error",
-        from: { path: lowers.map((lower) => `^${lower}/`) },
-        to: { path: highers.map((higher) => `${higher}/`) },
-      });
-    }
+for (let i = 0; i < workspaces.length; i++) {
+  const higher = workspaces.slice(0, i);
+  const workspace = workspaces[i];
+  if (higher.length) {
+    const mayStillDependOn = workspacesMayStillDependOn[workspace];
+    forbidden.push({
+      name: `forbidden-dependencies-for-${workspace}`,
+      comment: `${workspace} may not depend on ${higher.join(", ")}`,
+      severity: "error",
+      from: { path: pathForWorkspaces([workspace]) },
+      to: {
+        path: pathForWorkspaces(higher),
+        pathNot: mayStillDependOn
+          ? pathForWorkspaces(mayStillDependOn)
+          : undefined,
+      },
+    });
   }
-
-  return rules;
 }
-
-const workspacesInLayerOrder = [
-  "apps",
-  "integrations",
-  "libraries",
-  "incubations",
-  "core",
-].map((item) => (Array.isArray(item) ? item : [item]));
 
 /**
  * @type {import("dependency-cruiser").IConfiguration}
  */
 const config = {
-  forbidden: generateForbiddenRules(workspacesInLayerOrder),
+  forbidden,
   options: {
     tsPreCompilationDeps: true,
-    exclude: ["node_modules", ".*/dist/.*", "^.*?.js"],
+    exclude: ["node_modules", ".*/dist/.*"],
     reporterOptions: {
       archi: {
         filters: {
           includeOnly: {
-            path: workspacesInLayerOrder.flat(),
+            path: pathForWorkspaces(workspaces),
           },
           exclude: {},
           focus: {},
           reaches: {},
         },
-        collapsePattern: workspacesInLayerOrder
-          .flat()
-          .map((workspace) => `^${workspace}/.*?/`),
+        collapsePattern: workspaces.map((workspace) => `^${workspace}/.*?/`),
       },
     },
   },
 };
+
+/**
+ * @param {string[]} workspaces
+ * @returns {string}
+ */
+function pathForWorkspaces(workspaces) {
+  return `^(${workspaces.join("|")})/`;
+}
 
 module.exports = config;

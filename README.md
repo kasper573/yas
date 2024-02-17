@@ -79,12 +79,12 @@ Integrations with services (i.e. api clients).
 
 Building blocks for creating apps.
 
+#### [core](core)
+
+Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
+
 #### [incubations](incubations)
 
 Experimental packages. If they become stable, they will be extracted into their own repository.
 
 > If you fork this repo, you should strive not to make any changes to these packages. Ideally, once this repo is production ready, there will be no incubation packages at all.
-
-#### [core](core)
-
-Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
