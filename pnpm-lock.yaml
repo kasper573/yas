@@ -314,9 +314,6 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../env
-      '@yas/style':
-        specifier: workspace:*
-        version: link:../../libraries/style
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.50.0)

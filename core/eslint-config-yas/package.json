@@ -9,7 +9,6 @@
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "@yas/env": "workspace:*",
-    "@yas/style": "workspace:*",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
