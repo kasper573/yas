@@ -26,11 +26,11 @@
     "@playwright/experimental-ct-react": "1.39.0",
     "@hookform/resolvers": "^3",
     "@types/react": "^18.2.37",
-    "@yas/validate": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3"
   }
 }

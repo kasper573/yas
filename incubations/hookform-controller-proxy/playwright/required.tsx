@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import type { AnyZodObject } from "@yas/validate";
-import { typeAtPath, z } from "@yas/validate";
+import type { AnyZodObject } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import type { FieldProps } from "../src";
@@ -14,7 +14,7 @@ const schema = z.object({
 });
 
 const createControllerProxy = createControllerProxyFactory(
-  (schema: AnyZodObject, path) => !typeAtPath(schema, path)?.isOptional(),
+  (schema: AnyZodObject, [key]) => schema.shape[key]?.isOptional() === false,
 );
 
 export function FormWithRequiredField() {

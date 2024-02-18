@@ -497,15 +497,15 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
-      '@yas/validate':
-        specifier: workspace:*
-        version: link:../../core/validate
       react:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      zod:
+        specifier: ^3
+        version: 3.22.3
 
   incubations/react-imperative-hook:
     devDependencies:
@@ -22444,7 +22444,6 @@ packages:
 
   /zod@3.22.3:
     resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
-    dev: false
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
