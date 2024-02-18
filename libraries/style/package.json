@@ -11,6 +11,9 @@
     },
     "./themes/*": {
       "import": "./themes/*"
+    },
+    "./globals/*": {
+      "import": "./globals/*"
     }
   },
   "dependencies": {

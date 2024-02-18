@@ -1,5 +1,5 @@
 import { fontFamilies, durations, easings, fontSizes } from "../src/tokens";
-import type { TypographyStyle, themeContract } from "../src/variables";
+import type { TypographyStyle, themeTemplate } from "../src/variables";
 
 const regular = (size: number): TypographyStyle => ({
   fontFamily: fontFamilies.default.name,
@@ -17,7 +17,7 @@ const header = (size: number): TypographyStyle => ({
 });
 
 export const typography: Record<
-  keyof typeof themeContract.typography,
+  keyof typeof themeTemplate.typography,
   TypographyStyle
 > = {
   body: regular(fontSizes["#2"]),

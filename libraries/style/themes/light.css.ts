@@ -1,5 +1,5 @@
 import { createTheme } from "@vanilla-extract/css";
-import { themeContract } from "@yas/design-system";
 import { values } from "@yas/design-system/themes/light";
+import { variables } from "../src";
 
-export const light: string = createTheme(themeContract, values);
+export const light: string = createTheme(variables, values);

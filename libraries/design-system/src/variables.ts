@@ -18,7 +18,7 @@ const transition = {
   exit: null,
 };
 
-export type TypographyVariant = keyof typeof themeContract.typography;
+export type TypographyVariant = keyof typeof themeTemplate.typography;
 export type TypographyStyle = {
   [K in keyof typeof typographyStyle]: Extract<CSSProperties[K], CSSLikeValue>;
 };
@@ -33,7 +33,7 @@ const typographyStyle = {
   color: null,
 } satisfies Partial<Record<keyof CSSProperties, null>>;
 
-export const themeContract = {
+export const themeTemplate = {
   color: {
     // Contrast color sets
     surface: colorSetWithContrast,
@@ -66,16 +66,16 @@ export const themeContract = {
   },
 } as const;
 
-export type ThemeValues = ReplaceLeafs<typeof themeContract, CSSLikeValue>;
+export type ThemeValues = ReplaceLeafs<typeof themeTemplate, CSSLikeValue>;
 
 type CSSLikeValue = string;
-type Colors = typeof themeContract.color;
+type Colors = typeof themeTemplate.color;
 
 export type ColorSetName = {
   [K in keyof Colors]: Colors[K] extends null ? never : K;
 }[keyof Colors];
 
-export const colorSetNames = Object.entries(themeContract.color)
+export const colorSetNames = Object.entries(themeTemplate.color)
   .filter(([, value]) => value !== null)
   .map(([key]) => key) as ColorSetName[];
 

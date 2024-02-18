@@ -1,4 +1,4 @@
 import { createThemeContract } from "@vanilla-extract/css";
-import { themeContract } from "@yas/design-system";
+import { themeTemplate } from "@yas/design-system";
 
-export const variables = createThemeContract(themeContract);
+export const variables = createThemeContract(themeTemplate);
