@@ -1,7 +1,6 @@
 {
   "name": "@yas/style",
   "version": "0.0.0",
-  "sideEffects": false,
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -11,9 +10,6 @@
     },
     "./themes/*": {
       "import": "./themes/*"
-    },
-    "./globals/*": {
-      "import": "./globals/*"
     }
   },
   "dependencies": {

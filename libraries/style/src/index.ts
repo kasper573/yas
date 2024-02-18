@@ -14,3 +14,5 @@ export { breakpointQuery } from "./utils/breakpointQuery";
 export * from "./variables.css";
 export * from "./vanillaExtractConstrained";
 export * as unsafe from "./vanillaExtractUnsafe";
+
+import "./fonts.css";
