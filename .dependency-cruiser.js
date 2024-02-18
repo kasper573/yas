@@ -3,7 +3,7 @@
 // workspaces must be defined in layer order
 const workspaces = ["apps", "integrations", "libraries", "core", "incubations"];
 const workspacesMayStillDependOn = {
-  incubations: ["core"],
+  incubations: ["core/test", "core/build"],
 };
 
 /**
