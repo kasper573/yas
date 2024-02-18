@@ -3,6 +3,6 @@
   "extends": "./base.json",
   "compilerOptions": {
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "vite/client"]
   }
 }

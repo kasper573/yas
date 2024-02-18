@@ -23,6 +23,7 @@
     "@yas/hooks": "workspace:*",
     "@yas/validate": "workspace:*",
     "@yas/router": "workspace:*",
+    "@yas/design-system": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "2.10.3"

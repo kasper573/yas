@@ -1,18 +1,18 @@
-import { unsafe } from "@yas/style";
+import { tokens } from "@yas/design-system";
 import { Stack } from "../layout/Stack";
 import { Text } from "../components/Text";
 
 interface PaletteProps {
-  colorName?: keyof typeof unsafe.tokens.palette;
+  colorName?: keyof typeof tokens.palette;
 }
 
 export function Palette() {
   return (
     <Stack direction="row" align="center">
-      {Object.keys(unsafe.tokens.palette).map((colorName) => (
+      {Object.keys(tokens.palette).map((colorName) => (
         <Color
           key={colorName}
-          colorName={colorName as keyof typeof unsafe.tokens.palette}
+          colorName={colorName as keyof typeof tokens.palette}
         />
       ))}
     </Stack>
@@ -26,7 +26,7 @@ function Color({ colorName }: PaletteProps) {
   return (
     <Stack>
       <Text sx={{ textAlign: "center", p: "#2" }}>{colorName}</Text>
-      {Object.entries(unsafe.tokens.palette[colorName]).map(
+      {Object.entries(tokens.palette[colorName]).map(
         ([gradeName, gradeValue]) => (
           <Text
             key={gradeName}

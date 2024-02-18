@@ -1,8 +1,6 @@
-import type { createTheme } from "@vanilla-extract/css";
-import { createThemeContract } from "@vanilla-extract/css";
 import type { Properties as CSSProperties } from "csstype";
 
-export type ColorSet = Record<keyof typeof colorSet, string>;
+export type ColorSet = Record<keyof typeof colorSet, CSSLikeValue>;
 const colorSet = {
   main: null,
   light: null,
@@ -20,9 +18,9 @@ const transition = {
   exit: null,
 };
 
-export type TypographyVariant = keyof typeof vars.typography;
+export type TypographyVariant = keyof typeof themeContract.typography;
 export type TypographyStyle = {
-  [K in keyof typeof typographyStyle]: Extract<CSSProperties[K], string>;
+  [K in keyof typeof typographyStyle]: Extract<CSSProperties[K], CSSLikeValue>;
 };
 
 const typographyStyle = {
@@ -35,7 +33,7 @@ const typographyStyle = {
   color: null,
 } satisfies Partial<Record<keyof CSSProperties, null>>;
 
-export const vars = createThemeContract({
+export const themeContract = {
   color: {
     // Contrast color sets
     surface: colorSetWithContrast,
@@ -66,16 +64,21 @@ export const vars = createThemeContract({
     h5: typographyStyle,
     h6: typographyStyle,
   },
-});
+} as const;
 
-export type ThemeValues = Parameters<typeof createTheme<typeof vars>>[1];
+export type ThemeValues = ReplaceLeafs<typeof themeContract, CSSLikeValue>;
 
-type Colors = typeof vars.color;
+type CSSLikeValue = string;
+type Colors = typeof themeContract.color;
 
 export type ColorSetName = {
-  [K in keyof Colors]: Colors[K] extends string ? never : K;
+  [K in keyof Colors]: Colors[K] extends null ? never : K;
 }[keyof Colors];
 
-export const colorSetNames = Object.entries(vars.color)
-  .filter(([, value]) => typeof value !== "string")
+export const colorSetNames = Object.entries(themeContract.color)
+  .filter(([, value]) => value !== null)
   .map(([key]) => key) as ColorSetName[];
+
+type ReplaceLeafs<T, U> = T extends Record<string, unknown>
+  ? { [K in keyof T]: ReplaceLeafs<T[K], U> }
+  : U;

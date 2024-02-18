@@ -8,8 +8,8 @@ import type {
   StyleResolver,
 } from "vanilla-extract-constrained";
 import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
-import * as tokens from "./tokens";
-import { vars } from "./vars.css";
+import { tokens } from "@yas/design-system";
+import { variables } from "./variables.css";
 import { flattened } from "./utils/flattened";
 import { breakpointQuery } from "./utils/breakpointQuery";
 
@@ -19,7 +19,7 @@ const colors = {
   transparent: "transparent",
   inherit: "inherit",
   current: "currentColor",
-  ...flattened(vars.color),
+  ...flattened(variables.color),
 };
 
 export type ConstrainedStyle = Parameters<typeof resolveStyle>[0];
@@ -118,7 +118,7 @@ export const resolveStyle = createStyleResolver({
     overflowX: overflows,
     overflowY: overflows,
     textAlign: all(),
-    typography: multi(vars.typography),
+    typography: multi(variables.typography),
     fontSize: ["inherit", "100%"] as const,
     lineHeight: [1, "inherit", "100%"] as const,
     fontWeight: all(),
@@ -169,7 +169,7 @@ export const resolveStyle = createStyleResolver({
   },
 });
 
-const flattenedTransitions = flattened(vars.transitions);
+const flattenedTransitions = flattened(variables.transitions);
 
 /**
  * Define a transition css string by selecting among theme variable transition presets

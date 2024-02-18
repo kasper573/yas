@@ -1,17 +1,18 @@
-import { unsafe } from "@yas/style";
+import { variables } from "@yas/style";
 import type { ReactNode } from "react";
+import { colorSetNames, type ColorSetName } from "@yas/design-system";
 import { Stack } from "../layout/Stack";
 import { Text } from "../components/Text";
 import { Button } from "../components/Button";
 
 interface ColorSetsProps {
-  colorSetName?: unsafe.ColorSetName;
+  colorSetName?: ColorSetName;
 }
 
 export function ColorSets() {
   return (
     <Stack direction="row">
-      {unsafe.colorSetNames.map((colorSetName) => (
+      {colorSetNames.map((colorSetName) => (
         <ColorSet key={colorSetName} colorSetName={colorSetName} />
       ))}
     </Stack>
@@ -22,7 +23,7 @@ function ColorSet({ colorSetName }: ColorSetsProps) {
   if (!colorSetName) {
     return null;
   }
-  const colorSet = unsafe.vars.color[colorSetName];
+  const colorSet = variables.color[colorSetName];
   return (
     <Stack align="center">
       <Text sx={{ textAlign: "center", p: "#2" }}>{String(colorSetName)}</Text>

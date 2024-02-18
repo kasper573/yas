@@ -1,11 +1,11 @@
-import { breakpoints } from "../tokens";
+import { tokens } from "@yas/design-system";
 
 const practicallyInfinite = 1e4; // Can't use Infinity because it's not a valid CSS value
 
 /**
  * Convert breakpoints to media queries.
  */
-export const breakpointQuery = createBreakpointQueryUtils(breakpoints);
+export const breakpointQuery = createBreakpointQueryUtils(tokens.breakpoints);
 
 function createBreakpointQueryUtils<Name extends PropertyKey>(
   breakpoints: Record<Name, number>,

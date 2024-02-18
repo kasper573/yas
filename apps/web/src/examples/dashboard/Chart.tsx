@@ -1,7 +1,8 @@
-import { unsafe } from "@yas/style";
 import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import { Bounds } from "@yas/ui";
+import { variables } from "@yas/style";
+import { tokens } from "@yas/design-system";
 import { formatCurrency } from "./shared";
 
 export interface ChartProps {
@@ -37,8 +38,8 @@ export function Chart({ data }: ChartProps) {
   );
 }
 
-const { radii } = unsafe.tokens;
-const { typography, color } = unsafe.vars;
+const { radii } = tokens;
+const { typography, color } = variables;
 const barRadius = [radii["#1"], radii["#1"], 0, 0] satisfies BarProps["radius"];
 
 const textStyle = (name: keyof typeof typography) => ({

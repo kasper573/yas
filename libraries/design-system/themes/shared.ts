@@ -1,8 +1,8 @@
-import { fonts, durations, easings, fontSizes } from "../src/tokens";
-import type { TypographyStyle, vars } from "../src/vars.css";
+import { fontFamilies, durations, easings, fontSizes } from "../src/tokens";
+import type { TypographyStyle, themeContract } from "../src/variables";
 
 const regular = (size: number): TypographyStyle => ({
-  fontFamily: fonts.default,
+  fontFamily: fontFamilies.default.name,
   fontSize: `${size}px`,
   fontWeight: "normal",
   fontStyle: "normal",
@@ -16,22 +16,24 @@ const header = (size: number): TypographyStyle => ({
   fontWeight: "bold",
 });
 
-export const typography: Record<keyof typeof vars.typography, TypographyStyle> =
-  {
-    body: regular(fontSizes["#2"]),
-    body2: regular(fontSizes["#3"]),
-    caption: {
-      ...regular(fontSizes["#1"]),
-      color: "color-mix(in srgb, currentColor 75%, transparent)",
-    },
-    hero: header(fontSizes["#9"]),
-    h1: header(fontSizes["#6"]),
-    h2: header(fontSizes["#5"]),
-    h3: header(fontSizes["#4"]),
-    h4: header(fontSizes["#3"]),
-    h5: header(fontSizes["#2"]),
-    h6: header(fontSizes["#1"]),
-  };
+export const typography: Record<
+  keyof typeof themeContract.typography,
+  TypographyStyle
+> = {
+  body: regular(fontSizes["#2"]),
+  body2: regular(fontSizes["#3"]),
+  caption: {
+    ...regular(fontSizes["#1"]),
+    color: "color-mix(in srgb, currentColor 75%, transparent)",
+  },
+  hero: header(fontSizes["#9"]),
+  h1: header(fontSizes["#6"]),
+  h2: header(fontSizes["#5"]),
+  h3: header(fontSizes["#4"]),
+  h4: header(fontSizes["#3"]),
+  h5: header(fontSizes["#2"]),
+  h6: header(fontSizes["#1"]),
+};
 
 export const transitions = {
   emphasized: {

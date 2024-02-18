@@ -22,6 +22,7 @@ export * from "@vanilla-extract/dynamic";
 export * from "./utils/gridAreas";
 export { breakpointQuery } from "./utils/breakpointQuery";
 export * from "./utils/transformVar";
+export * from "./variables.css";
 
 // Constrained vanilla-extract functions
 export const style = (constrainedStyle: ConstrainedStyle, debugId?: string) =>

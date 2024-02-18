@@ -1,7 +1,7 @@
-import { roboto } from "./fonts/roboto/roboto.css";
+import { inter } from "./fonts/roboto";
 
-export const fonts = {
-  default: roboto,
+export const fontFamilies = {
+  default: inter,
 };
 
 export type Breakpoint = keyof typeof breakpoints;

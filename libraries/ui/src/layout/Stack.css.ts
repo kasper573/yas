@@ -1,7 +1,8 @@
-import { recipe, unsafe } from "@yas/style";
+import { recipe } from "@yas/style";
+import { tokens } from "@yas/design-system";
 
-type Space = keyof typeof unsafe.tokens.spaces;
-const spaces = Object.keys(unsafe.tokens.spaces) as Space[];
+type Space = keyof typeof tokens.spaces;
+const spaces = Object.keys(tokens.spaces) as Space[];
 
 export const stackRecipe = recipe({
   base: {

@@ -1,8 +1,9 @@
-import { recipe, unsafe } from "@yas/style";
+import type { TypographyVariant } from "@yas/design-system";
+import { recipe, variables } from "@yas/style";
 
 const typographyVariants = Object.keys(
-  unsafe.vars.typography,
-) as unsafe.TypographyVariant[];
+  variables.typography,
+) as TypographyVariant[];
 
 export const textRecipe = recipe({
   base: {
@@ -12,10 +13,7 @@ export const textRecipe = recipe({
   variants: {
     variant: Object.fromEntries(
       typographyVariants.map((typography) => [typography, { typography }]),
-    ) as Record<
-      unsafe.TypographyVariant,
-      { typography: unsafe.TypographyVariant }
-    >,
+    ) as Record<TypographyVariant, { typography: TypographyVariant }>,
     paragraph: {
       true: {
         marginBottom: "#2",
