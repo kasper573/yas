@@ -49,7 +49,12 @@ const config = {
         },
         filters: {
           includeOnly: { path: workspaces.map(wsPath) },
-          exclude: { path: ["core", "incubations"].map(wsPath) },
+          exclude: {
+            // Reason for hiding these:
+            // - incubations: about-to-be 3rd party packages, so not relevant to architecture.
+            // - core: used by almost every single package, so it's more distracting than informative to show these.
+            path: ["core", "incubations"].map(wsPath),
+          },
           focus: {},
           reaches: {},
         },
