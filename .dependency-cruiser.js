@@ -4,6 +4,7 @@
 const workspaces = ["apps", "integrations", "libraries", "core", "incubations"];
 const workspacesMayStillDependOn = {
   incubations: ["core/test", "core/build"],
+  core: ["libraries/validate", "libraries/result"],
 };
 
 /**
@@ -13,19 +14,19 @@ const forbidden = [];
 
 for (let i = 0; i < workspaces.length; i++) {
   const higher = workspaces.slice(0, i);
-  const workspace = workspaces[i];
+  const ws = workspaces[i];
   if (higher.length) {
-    const mayStillDependOn = workspacesMayStillDependOn[workspace];
+    const mayStillDependOn = workspacesMayStillDependOn[ws];
     forbidden.push({
-      name: `forbidden-dependencies-for-${workspace}`,
-      comment: `${workspace} may not depend on ${higher.join(", ")}`,
+      name: `forbidden-dependencies-for-${ws}`,
+      comment:
+        `${ws} may not depend on ${higher.join(", ")}` +
+        (mayStillDependOn ? ` (except ${mayStillDependOn.join(", ")})` : ""),
       severity: "error",
-      from: { path: pathForWorkspace(workspace) },
+      from: { path: wsPath(ws) },
       to: {
-        path: higher.map(pathForWorkspace),
-        pathNot: mayStillDependOn
-          ? mayStillDependOn.map(pathForWorkspace)
-          : undefined,
+        path: higher.map(wsPath),
+        pathNot: mayStillDependOn ? mayStillDependOn.map(wsPath) : undefined,
       },
     });
   }
@@ -47,14 +48,12 @@ const config = {
           },
         },
         filters: {
-          includeOnly: {
-            path: workspaces.map(pathForWorkspace),
-          },
-          exclude: {},
+          includeOnly: { path: workspaces.map(wsPath) },
+          exclude: { path: ["core", "incubations"].map(wsPath) },
           focus: {},
           reaches: {},
         },
-        collapsePattern: workspaces.map((workspace) => `^${workspace}/.*?/`),
+        collapsePattern: workspaces.map((ws) => `^${ws}/.*?/`),
       },
     },
   },
@@ -64,7 +63,7 @@ const config = {
  * @param {string} workspace
  * @returns {string}
  */
-function pathForWorkspace(workspace) {
+function wsPath(workspace) {
   return `^${workspace}/`;
 }
 
