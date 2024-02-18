@@ -45,6 +45,7 @@
     "@storybook/testing-library": "0.2.2",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@yas/design-system": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@yas/test": "workspace:*",

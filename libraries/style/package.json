@@ -1,7 +1,6 @@
 {
   "name": "@yas/style",
   "version": "0.0.0",
-  "sideEffects": false,
   "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -21,10 +20,11 @@
     "shallow-equal": "3.1.0",
     "vanilla-extract-constrained": "workspace:*",
     "vanilla-extract-recipe-factory": "workspace:*",
-    "react-styled-factory": "workspace:*"
+    "react-styled-factory": "workspace:*",
+    "@yas/design-system": "workspace:*"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
-    "csstype": "3.1.2"
+    "csstype": "^3"
   }
 }

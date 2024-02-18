@@ -1,9 +1,10 @@
-import { createVar, globalStyle, recipe, unsafe } from "@yas/style";
+import type { ColorSet, ColorSetName } from "@yas/design-system";
+import { colorSetNames } from "@yas/design-system";
+import { createVar, globalStyle, recipe, variables } from "@yas/style";
 
-const { colorSetNames, vars: themeVars } = unsafe;
 const nonSurfaceColorSetNames = colorSetNames.filter(
   (value) => value !== "surface",
-) as Exclude<unsafe.ColorSetName, "surface">[];
+) as Exclude<ColorSetName, "surface">[];
 
 export const iconSizes = {
   small: 24,
@@ -80,8 +81,8 @@ export const buttonRecipe = recipe({
     color: {
       "surface-contrast": {
         vars: assignColorVars(
-          themeVars.color.surface.contrast,
-          themeVars.color.surface.base,
+          variables.color.surface.contrast,
+          variables.color.surface.base,
         ),
       },
       ...(Object.fromEntries(
@@ -89,12 +90,12 @@ export const buttonRecipe = recipe({
           name,
           {
             vars: assignColorVars(
-              themeVars.color[name].base,
-              themeVars.color[name].contrast,
+              variables.color[name].base,
+              variables.color[name].contrast,
             ),
           },
         ]),
-      ) as Record<Exclude<unsafe.ColorSetName, "surface">, { vars: {} }>),
+      ) as Record<Exclude<ColorSetName, "surface">, { vars: {} }>),
     },
     variant: {
       text: {
@@ -153,7 +154,7 @@ export const buttonRecipe = recipe({
   },
 });
 
-function assignColorVars(base: unsafe.ColorSet, contrast: unsafe.ColorSet) {
+function assignColorVars(base: ColorSet, contrast: ColorSet) {
   return {
     [buttonVars.color.base.light]: base.light,
     [buttonVars.color.base.main]: base.main,
