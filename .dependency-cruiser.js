@@ -41,6 +41,11 @@ const config = {
     exclude: ["node_modules", ".*/dist/.*"],
     reporterOptions: {
       archi: {
+        theme: {
+          graph: {
+            ranksep: false,
+          },
+        },
         filters: {
           includeOnly: {
             path: workspaces.map(pathForWorkspace),
