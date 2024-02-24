@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -8,7 +9,6 @@ import {
   Text,
 } from "@yas/ui";
 import type { types } from "@yas/api-client";
-import { NavLink } from "../../components/NavLink";
 import { formatNumber } from "./shared";
 
 export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
@@ -16,7 +16,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
     <List compact>
       {data.map((sale, index) => (
         <ListItem asChild button key={index} sx={{ px: "#5" }}>
-          <NavLink
+          <Link
             to="/dashboard"
             search={(prev) => ({ ...prev, userId: sale.userId })}
           >
@@ -29,7 +29,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
                 {formatNumber(sale.amount, ["sign", "currency"])}
               </Text>
             </ListItemSecondaryContent>
-          </NavLink>
+          </Link>
         </ListItem>
       ))}
     </List>

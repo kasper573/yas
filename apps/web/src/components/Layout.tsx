@@ -2,6 +2,7 @@ import {
   CircularProgress,
   Container,
   Dock,
+  Link,
   Stack,
   TabItem,
   Tabs,
@@ -10,7 +11,6 @@ import { Outlet as RouterOutlet } from "@yas/router";
 import { Suspense } from "react";
 import { ModalOutlet } from "@yas/ui";
 import { layout } from "./Layout.css";
-import { NavLink } from "./NavLink";
 
 const mainLinks = [
   { to: "/", label: "Sandbox" },
@@ -24,7 +24,7 @@ export default function Layout() {
         <Tabs>
           {mainLinks.map(({ to, label }, index) => (
             <TabItem key={index} asChild>
-              <NavLink to={to}>{label}</NavLink>
+              <Link to={to}>{label}</Link>
             </TabItem>
           ))}
         </Tabs>

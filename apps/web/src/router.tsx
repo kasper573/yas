@@ -1,4 +1,4 @@
-import { Router, Route, RootRoute, NotFoundRoute } from "@yas/router";
+import { createRouter, createRoute, createRootRoute } from "@yas/router";
 import { z } from "@yas/validate";
 import { lazy } from "react";
 import { env } from "./env";
@@ -6,7 +6,7 @@ import { ErrorFallback } from "./components/ErrorFallback";
 
 const Layout = lazy(() => import("./components/Layout"));
 
-const rootRoute = new RootRoute({
+const rootRoute = createRootRoute({
   // The router dev tools is injected here since it has to be a child of the RouterProvider.
   // (Docs say it should be possible to place it ouside the provider, but there's a bug that prevents that)
   component: () => (
@@ -15,21 +15,22 @@ const rootRoute = new RootRoute({
       <RouterDevTools />
     </>
   ),
+  notFoundComponent: lazy(() => import("./components/NotFound")),
 });
 
-const indexRoute = new Route({
+const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: lazy(() => import("./examples/sandbox/Sandbox")),
 });
 
-const dashboardRoute = new Route({
+const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/dashboard",
   component: lazy(() => import("./examples/dashboard/Layout")),
 });
 
-const overviewRoute = new Route({
+const overviewRoute = createRoute({
   getParentRoute: () => dashboardRoute,
   path: "/",
   component: lazy(() => import("./examples/dashboard/Overview")),
@@ -42,19 +43,19 @@ const overviewRoute = new Route({
   }),
 });
 
-const customersRoutes = new Route({
+const customersRoutes = createRoute({
   getParentRoute: () => dashboardRoute,
   path: "customers",
   component: lazy(() => import("./examples/dashboard/Customers")),
 });
 
-const productsRoutes = new Route({
+const productsRoutes = createRoute({
   getParentRoute: () => dashboardRoute,
   path: "products",
   component: lazy(() => import("./examples/dashboard/Products")),
 });
 
-const settingsRoutes = new Route({
+const settingsRoutes = createRoute({
   getParentRoute: () => dashboardRoute,
   path: "settings",
   component: lazy(() => import("./examples/dashboard/Settings")),
@@ -70,22 +71,10 @@ const routeTree = rootRoute.addChildren([
   ]),
 ]);
 
-const notFoundRoute = new NotFoundRoute({
-  getParentRoute: () => rootRoute,
-  component: lazy(() => import("./components/NotFound")),
-});
-
-export const router = new Router({
+export const router = createRouter({
   routeTree,
   defaultErrorComponent: ErrorFallback,
-  notFoundRoute,
 });
-
-declare module "@yas/router" {
-  interface Register {
-    router: typeof router;
-  }
-}
 
 const RouterDevTools =
   env.mode === "production"

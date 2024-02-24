@@ -1,12 +1,7 @@
-import type { AnchorHTMLAttributes } from "react";
 import { styled } from "@yas/style";
+import { createLinkComponent } from "@yas/router";
 import { link } from "./Link.css";
 
-export const Link = styled(AnchorWithFallback, link);
+export const Linklike = styled("span", link);
 
-// Rendering anchor tags without href results in uncrawlable links, which is poor SEO.
-
-function AnchorWithFallback(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const Component = props.href ? "a" : "span";
-  return <Component {...props} />;
-}
+export const Link = createLinkComponent((component) => styled(component, link));
