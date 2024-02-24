@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./base.json",
   "compilerOptions": {
+    "esModuleInterop": false,
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM"],
     "module": "ESNext",
