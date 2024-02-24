@@ -81,12 +81,6 @@ export const router = new Router({
   notFoundRoute,
 });
 
-declare module "@yas/router" {
-  interface Register {
-    router: typeof router;
-  }
-}
-
 const RouterDevTools =
   env.mode === "production"
     ? () => null
