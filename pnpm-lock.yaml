@@ -765,6 +765,9 @@ importers:
       '@yas/icons':
         specifier: workspace:*
         version: link:../icons
+      '@yas/router':
+        specifier: workspace:*
+        version: link:../router
       '@yas/style':
         specifier: workspace:*
         version: link:../style

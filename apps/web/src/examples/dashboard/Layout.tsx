@@ -3,6 +3,7 @@ import {
   Avatar,
   CircularProgress,
   Divider,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -15,7 +16,6 @@ import { Suspense, useState } from "react";
 import { api, enabledWhenDefined } from "@yas/api-client";
 import { useDebounce } from "@yas/hooks";
 import { Outlet } from "@yas/router";
-import { NavLink } from "../../components/NavLink";
 import { Card } from "./shared";
 import { SearchForm } from "./SearchForm";
 
@@ -44,9 +44,9 @@ export default function Layout() {
         <Tabs variant="item-contained" sx={{ flex: 1 }}>
           {dashboardLinks.map(({ to, label }, index) => (
             <TabItem key={index} asChild>
-              <NavLink to={to} activeOptions={{ exact: true }}>
+              <Link to={to} activeOptions={{ exact: true }}>
                 {label}
-              </NavLink>
+              </Link>
             </TabItem>
           ))}
         </Tabs>
@@ -59,7 +59,7 @@ export default function Layout() {
             <List sx={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
                 <ListItem asChild button key={index} sx={{ px: "#5" }}>
-                  <NavLink
+                  <Link
                     to="/dashboard"
                     search={(prev) => ({ ...prev, userId: user.userId })}
                   >
@@ -70,7 +70,7 @@ export default function Layout() {
                       />
                     </ListItemIcon>
                     <ListItemText primary={user.name} secondary={user.email} />
-                  </NavLink>
+                  </Link>
                 </ListItem>
               ))}
               {searchResult.data.length === 0 && (
