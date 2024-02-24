@@ -1,7 +1,7 @@
 import { styled } from "@yas/style";
 import {
   DatePicker,
-  Link,
+  Linklike,
   Stack as StackImpl,
   TabItem,
   Tabs,
@@ -10,16 +10,17 @@ import {
 import { Suspense } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
 import { startOfToday } from "@yas/time";
-import { RouteApi, useSearchState } from "@yas/router";
+import { getRouteApi, useSearchState } from "@yas/router";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./OverviewContent";
 
 const secondaryNav = ["Overview", "Analytics", "Reports", "Notifications"];
 
-const route = new RouteApi({ id: "/dashboard/" });
+const routeApi = getRouteApi("/dashboard/");
 
 export default function Overview(): JSX.Element {
-  const [{ userId, date = startOfToday() }, setSearch] = useSearchState(route);
+  const [{ userId, date = startOfToday() }, setSearch] =
+    useSearchState(routeApi);
 
   const setDate = (date?: Date) => setSearch({ date }, { replace: true });
   const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
@@ -49,7 +50,7 @@ export default function Overview(): JSX.Element {
           <Tabs variant="contained" sx={{ flex: 1 }}>
             {secondaryNav.map((label, index) => (
               <TabItem asChild key={index} active={index === 0}>
-                <Link>{label}</Link>
+                <Linklike>{label}</Linklike>
               </TabItem>
             ))}
           </Tabs>

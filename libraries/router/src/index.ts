@@ -1,14 +1,13 @@
 export {
-  Router,
+  createRouter,
   RouterProvider,
-  Route,
-  RouteApi,
-  RootRoute,
-  NotFoundRoute,
+  createRoute,
+  getRouteApi,
+  createRootRoute,
   useRouterState,
   useBlocker,
   Outlet,
 } from "@tanstack/react-router";
-export type { Register } from "@tanstack/react-router";
+export type { Register, AnyRoute } from "@tanstack/react-router";
 export * from "./useSearchState";
 export * from "./createLinkComponent";
