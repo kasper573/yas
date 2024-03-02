@@ -14,4 +14,5 @@ export const {
   useInlineSpawner: useModals,
   usePredefinedSpawner: useModal,
   useSpawnSustainer: useModalSustainer,
+  Store: ModalStore,
 } = createImperative();

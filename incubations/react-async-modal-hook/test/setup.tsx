@@ -8,8 +8,8 @@ import {
   useModal,
   useModalSustainer,
   useModals,
+  ModalStore,
 } from "../src/index";
-import { ComponentStore } from "../src/ComponentStore";
 import type { AnyComponent } from "../src/utilityTypes";
 
 export type AbstractHookTestFactory<T extends AnyComponent> = (
@@ -34,7 +34,7 @@ export function defineAbstractHookTest<T extends AnyComponent>(
     }, render));
 }
 
-export function setupImperative(createStore = () => new ComponentStore()) {
+export function setupImperative(createStore = () => new ModalStore()) {
   function render(Content: ComponentType) {
     const store = createStore();
     return renderReact(
