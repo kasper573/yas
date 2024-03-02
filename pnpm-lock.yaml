@@ -114,12 +114,12 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      react-async-modal-hook:
+        specifier: workspace:*
+        version: link:../../incubations/react-async-modal-hook
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-imperative-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-imperative-hook
       react-query:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@18.2.0)(react@18.2.0)
@@ -487,7 +487,7 @@ importers:
         specifier: ^3
         version: 3.22.3
 
-  incubations/react-imperative-hook:
+  incubations/react-async-modal-hook:
     devDependencies:
       '@types/react':
         specifier: ^18.2.37
@@ -780,15 +780,15 @@ importers:
       hookform-controller-proxy:
         specifier: workspace:*
         version: link:../../incubations/hookform-controller-proxy
+      react-async-modal-hook:
+        specifier: workspace:*
+        version: link:../../incubations/react-async-modal-hook
       react-day-picker:
         specifier: 8.10.0
         version: 8.10.0(date-fns@3.1.0)(react@18.2.0)
       react-hook-form:
         specifier: 7.49.3
         version: 7.49.3(react@18.2.0)
-      react-imperative-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-imperative-hook
     devDependencies:
       '@storybook/addon-essentials':
         specifier: 7.6.3

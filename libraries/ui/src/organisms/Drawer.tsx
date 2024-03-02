@@ -1,4 +1,4 @@
-import type { ImperativeComponentProps } from "react-imperative-hook";
+import type { ImperativeComponentProps } from "react-async-modal-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
 import { Overlay } from "../components/Overlay";
@@ -34,7 +34,7 @@ export function Drawer<ResolutionValue>({
 }
 
 // The BaseDrawer represents the plain design,
-// while the Drawer is its integration with react-imperative-hook.
+// while the Drawer is its integration with react-async-modal-hook.
 
 const Clipper = styled("div", clipperRecipe);
 const DrawerPaper = styled("div", drawerRecipe);

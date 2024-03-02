@@ -1,4 +1,4 @@
-import { createImperative } from "react-imperative-hook";
+import { createImperative } from "react-async-modal-hook";
 
 export const {
   useSpawnSustainer: useModalSustainer,

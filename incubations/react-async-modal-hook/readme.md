@@ -1,4 +1,4 @@
-# react-imperative-hook
+# react-async-modal-hook
 
 The declarative nature of React is great for most use cases, but not always.
 When working with async UI flows like modals, toasts and drawers, it's often
@@ -12,11 +12,11 @@ preferable to have an imperative and promise based interface, which is what this
 - Lightweight with zero runtime dependencies.
 - Written in TypeScript with proper generics in mind.
 
-### [Try it on StackBlitz](https://stackblitz.com/edit/react-imperative-hook)
+### [Try it on StackBlitz](https://stackblitz.com/edit/react-async-modal-hook)
 
 ### Install
 
-    npm install react-imperative-hook
+    npm install react-async-modal-hook
 
 ### Usage
 
@@ -34,7 +34,7 @@ See the [Primitives](#primitives) section for more information on each primitive
 import {
   createImperative,
   ImperativeComponentProps,
-} from "react-imperative-hook";
+} from "react-async-modal-hook";
 
 // The default primitive names are abstract, so it's
 // recommended to give them a more concrete name for your use-case.
@@ -138,7 +138,7 @@ A React component that renders the currently spawned components.
 
 #### Context
 
-A React context that holds the store that manages all the state of react-imperative-hook.
+A React context that holds the store that manages all the state of react-async-modal-hook.
 Using this is optional. The context already contain a default store, and the hooks are
 using the store internally. Manual use of the context and store is only necessary
 if you want to extend the library with custom behavior.

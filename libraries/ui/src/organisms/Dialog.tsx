@@ -1,4 +1,4 @@
-import type { ImperativeComponentProps } from "react-imperative-hook";
+import type { ImperativeComponentProps } from "react-async-modal-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
 
@@ -42,7 +42,7 @@ export function Dialog<ResolutionValue>({
 }
 
 // The BaseDialog represents the plain design,
-// while the Dialog is its integration with react-imperative-hook.
+// while the Dialog is its integration with react-async-modal-hook.
 
 const DialogPaper = styled(Paper, dialogRecipe).attrs({
   role: "dialog",

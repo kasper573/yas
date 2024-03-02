@@ -15,7 +15,7 @@
  * @type {[Project]}
  */
 const projects = [
-  defineProjectByConvention("react-imperative-hook", {
+  defineProjectByConvention("react-async-modal-hook", {
     description:
       "React hook for improved DX with async UI flows like modals, toasts, drawers, etc.",
     imageUrl: "/img/steps.webp",

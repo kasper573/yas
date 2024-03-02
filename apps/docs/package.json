@@ -14,7 +14,7 @@
     "immer": "^10.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-imperative-hook": "workspace:*",
+    "react-async-modal-hook": "workspace:*",
     "react-query": "^3.39.3"
   },
   "devDependencies": {
