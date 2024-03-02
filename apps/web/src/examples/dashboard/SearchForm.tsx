@@ -5,7 +5,7 @@ import {
   PopoverContent,
   Paper,
   useForm,
-  useFieldControllers,
+  createControllerProxy,
   useFormChanges,
 } from "@yas/ui";
 import { z } from "@yas/validate";
@@ -23,7 +23,7 @@ export function SearchForm({
   children?: ReactNode;
 }) {
   const form = useForm(searchSchema);
-  const control = useFieldControllers(form);
+  const control = createControllerProxy(form.control);
   useFormChanges(form, ({ search }) => onChange?.(search));
   const clear = () => form.reset();
 
@@ -31,7 +31,7 @@ export function SearchForm({
     <form onSubmit={form.handleSubmit(() => {})}>
       <Popover open={value !== undefined}>
         <PopoverAnchor>
-          {control.search((props) => (
+          {control.search$((props) => (
             <TextField
               {...props}
               size="small"

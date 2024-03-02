@@ -1,10 +1,9 @@
 import { useForm } from "react-hook-form";
-import type { AnyZodObject } from "zod";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import type { FieldProps } from "../src";
-import { createControllerProxyFactory } from "../src";
+import { createControllerProxy } from "../src";
 
 type Data = z.infer<typeof schema>;
 const schema = z.object({
@@ -12,10 +11,6 @@ const schema = z.object({
     message: "Name must be Correct",
   }),
 });
-
-const createControllerProxy = createControllerProxyFactory(
-  (schema: AnyZodObject, [key]) => schema.shape[key]?.isOptional() === false,
-);
 
 export function FormWithRequiredField() {
   const [submittedValues, setSubmittedValues] = useState<Data>();
@@ -26,7 +21,7 @@ export function FormWithRequiredField() {
     reValidateMode: "onChange",
   });
 
-  const control = createControllerProxy(form, schema);
+  const control = createControllerProxy(form.control);
 
   return (
     <>

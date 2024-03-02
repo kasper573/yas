@@ -3,7 +3,7 @@ import type { AnyZodObject } from "@yas/validate";
 import { z } from "@yas/validate";
 import { useRef, useState } from "react";
 import type { UseFormReturn } from "./useForm";
-import { useForm, useFieldControllers, useFormChanges } from "./useForm";
+import { useForm, createControllerProxy, useFormChanges } from "./useForm";
 import type { FieldProps } from "./types";
 
 export default {
@@ -37,7 +37,7 @@ function UseFormControllersExample() {
     mode: "all",
   });
 
-  const control = useFieldControllers(form);
+  const control = createControllerProxy(form.control);
   function doSomething(values: Data) {
     alert(JSON.stringify(values, null, 2));
   }
@@ -47,7 +47,7 @@ function UseFormControllersExample() {
       onReset={() => form.reset()}
       onSubmit={form.handleSubmit(doSomething)}
     >
-      {control.foo((props) => (
+      {control.foo$((props) => (
         <TextField {...props} />
       ))}
 
@@ -76,14 +76,14 @@ function FormDataPreview<Schema extends AnyZodObject>({
 
 function UserForm({ value: user, onChange, error }: FieldProps<User>) {
   const form = useForm(userType, { defaultValues: user });
-  const control = useFieldControllers(form);
+  const control = createControllerProxy(form.control);
   useFormChanges(form, onChange);
   return (
     <>
-      {control.firstName((props) => (
+      {control.firstName$((props) => (
         <TextField {...props} />
       ))}
-      {control.lastName((props) => (
+      {control.lastName$((props) => (
         <TextField {...props} />
       ))}
       {error}
