@@ -22,7 +22,7 @@ preferable to have an imperative and promise based interface, which is what this
 
 #### 1. Define your imperative primitives
 
-Use the [createImperative](#createimperative) factory to define the primitives that you will be using.
+Use the [createImperative](#createimperative) function to define the primitives that you will be using.
 The factory is useful to be able to customize rendering, and it allows you to produce multiple instances,
 i.e. if you want separate rendering for modals and toasts.
 
