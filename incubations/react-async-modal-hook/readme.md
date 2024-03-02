@@ -2,7 +2,7 @@
 
 The declarative nature of React is great for most use cases, but not always.
 When working with async UI flows like modals, toasts and drawers, it's often
-preferable to have an imperative and promise based interface, which is what this library provides.
+preferable to have an and promise based interface, which is what this library provides.
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 
@@ -20,47 +20,15 @@ preferable to have an imperative and promise based interface, which is what this
 
 ### Usage
 
-#### 1. Define your imperative primitives
+#### 1. Create a compatible react component
 
-Use the [createImperative](#createimperative) function to define the primitives that you will be using.
-The factory is useful to be able to customize rendering, and it allows you to produce multiple instances,
-i.e. if you want separate rendering for modals and toasts.
-
-See the [Primitives](#primitives) section for more information on each primitive.
-
-```tsx
-// imperative.ts
-
-import {
-  createImperative,
-  ImperativeComponentProps,
-} from "react-async-modal-hook";
-
-// The default primitive names are abstract, so it's
-// recommended to give them a more concrete name for your use-case.
-const {
-  Outlet: ModalOutlet,
-  Context: ModalContext,
-  usePredefinedSpawner: useModal,
-  useInlineSpawner: useModals,
-  useSpawnSustainer: useModalSustainer,
-} = createImperative();
-
-// For TypeScript, use this type helper to define a props type
-// for components that should be compatible with the imperative hooks.
-// T is the type of the value the component resolves with.
-export type ModalProps<T = void> = ImperativeComponentProps<T>;
-```
-
-#### 2. Create a compatible react component
-
-Any component that accept `ImperativeComponentProps` is compatible with the hooks.
+Any component that accept `ModalProps` is compatible with the hooks.
 
 ```tsx
 // Prompt.tsx
 
 import { ReactNode, useState } from "react";
-import { ModalProps } from "./imperative";
+import { ModalProps } from "react-async-modal-hook";
 
 function Prompt({
   resolve,
@@ -77,13 +45,13 @@ function Prompt({
 }
 ```
 
-#### 3. Place the outlet at the root of your app
+#### 2. Place the outlet at the root of your app
 
 ```tsx
 // main.tsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ModalOutlet } from "./imperative";
+import { ModalOutlet } from "react-async-modal-hook";
 import { App } from "./App";
 
 createRoot(document.getElementById("root")).render(
@@ -94,12 +62,12 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-#### 4. Use the hooks in your app
+#### 3. Use the hooks in your app
 
 ```tsx
 // App.tsx
 
-import { useModal, useModals } from "./imperative";
+import { useModal, useModals } from "react-async-modal-hook";
 
 export function App() {
   const prompt = useModal(Prompt, { message: "Default message" });
@@ -128,29 +96,29 @@ export function App() {
 }
 ```
 
-### Primitives
+### API reference
 
 See [StackBlitz](#try-it-on-stackblitz) for examples for all primitives.
 
-#### Outlet
+#### ModalOutlet
 
 A React component that renders the currently spawned components.
 
-#### Context
+#### ModalContext
 
 A React context that holds the store that manages all the state of react-async-modal-hook.
 Using this is optional. The context already contain a default store, and the hooks are
 using the store internally. Manual use of the context and store is only necessary
 if you want to extend the library with custom behavior.
 
-#### usePredefinedSpawner
+#### useModal
 
 A hook that takes a component that you specify ahead of time and returns a function that will spawn the given component when called.
 
 - Useful when you want to spawn the same component often.
 - Allows you to specify default props ahead of time that when updated will propagate to any spawned components.
 
-#### useInlineSpawner
+#### useModals
 
 A hook that just returns a function that will spawn a component when called.
 The component is however specified inline when you call the function.
@@ -158,14 +126,9 @@ The component is however specified inline when you call the function.
 - This is useful when you want to spawn different components, or don't know what component to spawn until later.
 - Comes with the caveat that you cannot update default props once the component has been spawned
 
-#### useSpawnSustainer
+#### useModalSustainer
 
-A hook that is designed to be used from within a component you spawn with useInlineSpawner or usePredefinedSpawner.
+A hook that is designed to be used from within a component you spawn with useModal or useModals.
 Once used it will prevent the spawned component from being removed from the store, keeping it in the DOM.
 This is useful to allow animations to finish before removing the component.
 Once you no longer want to sustain the component, call the function returned from the hook.
-
-#### createImperative
-
-Produces the primitives in this list. Allows you to pass in a React component
-to customize how all spawned components should be rendered in the outlet.

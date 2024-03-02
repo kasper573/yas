@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { test, render as renderReact } from "@yas/test/vitest/react";
-import type { InstanceSpawnerFor } from "../src/createPredefinedSpawnerHook";
+import type { InstanceSpawnerFor } from "../src/useModal";
 import type { GeneralHookOptions } from "../src/constants";
 import {
   ModalOutlet,
@@ -20,7 +20,7 @@ export type AbstractHookTestFactory<T extends AnyComponent> = (
 export function defineAbstractHookTest<T extends AnyComponent>(
   component: T,
   defineTest: AbstractHookTestFactory<T>,
-  { render } = setupImperative(),
+  { render } = createTestAPI(),
 ) {
   test("useModal", () =>
     defineTest((options) => useModal(component, {}, options), render));
@@ -34,7 +34,7 @@ export function defineAbstractHookTest<T extends AnyComponent>(
     }, render));
 }
 
-export function setupImperative(createStore = () => new ModalStore()) {
+export function createTestAPI(createStore = () => new ModalStore()) {
   function render(Content: ComponentType) {
     const store = createStore();
     return renderReact(

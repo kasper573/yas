@@ -1,6 +1,6 @@
 {
   "name": "react-async-modal-hook",
-  "description": "React hook that provides an async imperative interface for spawning and resolving components",
+  "description": "React hook that provides an async interface for spawning and resolving components",
   "keywords": [
     "react",
     "async",

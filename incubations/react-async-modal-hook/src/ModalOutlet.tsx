@@ -1,4 +1,4 @@
-import type { Context, ComponentType } from "react";
+import type { ComponentType } from "react";
 import {
   createElement,
   useContext,
@@ -7,26 +7,25 @@ import {
 } from "react";
 import type {
   ComponentId,
-  ComponentStore,
-  ComponentStoreState,
+  ModalStoreState,
   InstanceEntry,
   InstanceId,
   ComponentEntry,
-} from "./ComponentStore";
+} from "./ModalStore";
+import { ModalContext } from "./ModalContext";
+import { DefaultOutletRenderer } from "./DefaultOutletRenderer";
 
-export interface ComponentOutletProps {
-  /**
-   * The context that holds the ComponentStore that contains the components that should be output.
-   */
-  context: Context<ComponentStore>;
+export interface ModalOutletProps {
   /**
    * The OutletRenderer to use. Defaults to defaultOutletRenderer.
    */
-  renderer: OutletRenderer;
+  renderer?: ModalOutletRenderer;
 }
 
-export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
-  const store = useContext(context);
+export function ModalOutlet({
+  renderer = DefaultOutletRenderer,
+}: ModalOutletProps) {
+  const store = useContext(ModalContext);
   const state = useSyncExternalStore(
     store.subscribe,
     () => store.state,
@@ -36,8 +35,8 @@ export function ComponentOutlet({ context, renderer }: ComponentOutletProps) {
   return createElement(renderer, { entries });
 }
 
-function collectEntries(components: ComponentStoreState) {
-  const entries: OutletEntry[] = [];
+function collectEntries(components: ModalStoreState) {
+  const entries: ModalOutletEntry[] = [];
   for (const componentId in components) {
     const { component, instances, defaultProps } = components[componentId];
     for (const instanceId in instances) {
@@ -56,7 +55,7 @@ function collectEntries(components: ComponentStoreState) {
 /**
  * Component and instance data aggregated for convenience to simplify OutletRenderer logic.
  */
-export interface OutletEntry
+export interface ModalOutletEntry
   extends InstanceEntry,
     Pick<ComponentEntry, "component" | "defaultProps"> {
   instanceId: InstanceId;
@@ -66,4 +65,6 @@ export interface OutletEntry
 /**
  * A React component that renders the currently registered components and instances in the ComponentStore.
  */
-export type OutletRenderer = ComponentType<{ entries: OutletEntry[] }>;
+export type ModalOutletRenderer = ComponentType<{
+  entries: ModalOutletEntry[];
+}>;

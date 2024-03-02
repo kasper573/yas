@@ -11,11 +11,11 @@ import {
 } from "@yas/test/vitest/react";
 import type { Deferred } from "../src/deferPromise";
 import type { GeneralHookOptions } from "../src/constants";
-import type { ImperativeComponentProps } from "../src/ComponentStore";
+import type { ModalProps } from "../src/index";
 import type { AnyComponent } from "../src/utilityTypes";
-import { ComponentStore } from "../src/ComponentStore";
+import { ModalStore } from "../src/index";
 import type { AbstractHookTestFactory } from "./setup";
-import { setupImperative, defineAbstractHookTest } from "./setup";
+import { createTestAPI, defineAbstractHookTest } from "./setup";
 
 describe("can display", () => {
   describe("built-in message", () =>
@@ -45,7 +45,7 @@ describe("can display", () => {
     }));
 
   test("predefined dialog with default message", async () => {
-    const api = setupImperative();
+    const api = createTestAPI();
     api.render(() => {
       const alert = api.useModal(Dialog, {
         message: "Default message",
@@ -58,7 +58,7 @@ describe("can display", () => {
   });
 
   test("updates of default props of a predefined dialog", async () => {
-    const api = setupImperative();
+    const api = createTestAPI();
     api.render(() => {
       const [message, setMessage] = useState("Default message");
       const alert = api.useModal(Dialog, { message });
@@ -97,8 +97,8 @@ describe("can display", () => {
 });
 
 test("can spawn an instance temporarily for a removed component", async () => {
-  const store = new ComponentStore();
-  const api = setupImperative(() => store);
+  const store = new ModalStore();
+  const api = createTestAPI(() => store);
 
   let spawn: () => void;
   function Source() {
@@ -128,7 +128,7 @@ test("can spawn an instance temporarily for a removed component", async () => {
 });
 
 describe("can open dialog, close it, and then unmount", () => {
-  const api = setupImperative();
+  const api = createTestAPI();
   return defineAbstractHookTest(
     Dialog,
     async (useHook, render) => {
@@ -222,7 +222,7 @@ describe("can resolve instance", () => {
     }));
 
   describe("delayed", () => {
-    const api = setupImperative();
+    const api = createTestAPI();
     let releaseSustain: Deferred<void>;
     function DialogWithDelay(props: ComponentProps<typeof Dialog>) {
       releaseSustain = api.useModalSustainer(props);
@@ -303,5 +303,3 @@ function Dialog({
     </div>
   );
 }
-
-type ModalProps<Output = void> = ImperativeComponentProps<Output>;

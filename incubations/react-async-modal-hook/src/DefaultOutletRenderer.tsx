@@ -1,6 +1,10 @@
-import type { OutletEntry } from "./ComponentOutlet";
+import type { ModalOutletEntry } from "./ModalOutlet";
 
-export function DefaultOutletRenderer({ entries }: { entries: OutletEntry[] }) {
+export function DefaultOutletRenderer({
+  entries,
+}: {
+  entries: ModalOutletEntry[];
+}) {
   return (
     <>
       {entries.map(
