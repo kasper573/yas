@@ -1,9 +1,14 @@
-import type { ComponentType, ReactNode } from "react";
+import type { ComponentType } from "react";
 import { test, render as renderReact } from "@yas/test/vitest/react";
-import { StrictMode, useMemo } from "react";
 import type { InstanceSpawnerFor } from "../src/createPredefinedSpawnerHook";
 import type { GeneralHookOptions } from "../src/constants";
-import { createImperative } from "../src/createImperative";
+import {
+  ModalOutlet,
+  ModalContext,
+  useModal,
+  useModalSustainer,
+  useModals,
+} from "../src/index";
 import { ComponentStore } from "../src/ComponentStore";
 import type { AnyComponent } from "../src/utilityTypes";
 
@@ -15,45 +20,37 @@ export type AbstractHookTestFactory<T extends AnyComponent> = (
 export function defineAbstractHookTest<T extends AnyComponent>(
   component: T,
   defineTest: AbstractHookTestFactory<T>,
-  { imp, render } = setupImperative(),
+  { render } = setupImperative(),
 ) {
-  test("usePredefinedSpawner", () =>
-    defineTest(
-      (options) => imp.usePredefinedSpawner(component, {}, options),
-      render,
-    ));
+  test("useModal", () =>
+    defineTest((options) => useModal(component, {}, options), render));
 
-  test("useInlineSpawner", () =>
+  test("useModals", () =>
     defineTest((options) => {
-      const spawnModal = imp.useInlineSpawner(options);
-      return (props) => {
+      const spawnModal = useModals(options);
+      return (props) =>
         // @ts-expect-error lazy avoidance of having to specify the correct generic argument for test convenience. It's okay to pass in empty object.
-        return spawnModal(component, props);
-      };
+        spawnModal(component, props);
     }, render));
 }
 
 export function setupImperative(createStore = () => new ComponentStore()) {
-  const imp = createImperative();
   function render(Content: ComponentType) {
+    const store = createStore();
     return renderReact(
-      <Wrapper>
+      <ModalContext.Provider value={store}>
         <Content />
-      </Wrapper>,
+        <ModalOutlet />
+      </ModalContext.Provider>,
     );
   }
 
-  function Wrapper({ children }: { children?: ReactNode }) {
-    const store = useMemo(createStore, []);
-    return (
-      <StrictMode>
-        <imp.Context.Provider value={store}>
-          {children}
-          <imp.Outlet />
-        </imp.Context.Provider>
-      </StrictMode>
-    );
-  }
-
-  return { imp, render };
+  return {
+    ModalOutlet,
+    ModalContext,
+    useModal,
+    useModals,
+    useModalSustainer,
+    render,
+  };
 }

@@ -1,5 +1,5 @@
-import type { ComponentProps, ComponentType, ReactNode } from "react";
-import { StrictMode, useState } from "react";
+import type { ComponentProps, ReactNode } from "react";
+import { useState } from "react";
 import {
   act,
   fireEvent as userEvent,
@@ -8,14 +8,12 @@ import {
   describe,
   test,
   expect,
-  render as renderReact,
 } from "@yas/test/vitest/react";
 import type { Deferred } from "../src/deferPromise";
 import type { GeneralHookOptions } from "../src/constants";
 import type { ImperativeComponentProps } from "../src/ComponentStore";
 import type { AnyComponent } from "../src/utilityTypes";
 import { ComponentStore } from "../src/ComponentStore";
-import { createImperative } from "../src";
 import type { AbstractHookTestFactory } from "./setup";
 import { setupImperative, defineAbstractHookTest } from "./setup";
 
@@ -47,9 +45,9 @@ describe("can display", () => {
     }));
 
   test("predefined dialog with default message", async () => {
-    const { render, imp } = setupImperative();
-    render(() => {
-      const alert = imp.usePredefinedSpawner(Dialog, {
+    const api = setupImperative();
+    api.render(() => {
+      const alert = api.useModal(Dialog, {
         message: "Default message",
       });
       return <button onClick={() => alert()}>Open dialog</button>;
@@ -60,10 +58,10 @@ describe("can display", () => {
   });
 
   test("updates of default props of a predefined dialog", async () => {
-    const { render, imp } = setupImperative();
-    render(() => {
+    const api = setupImperative();
+    api.render(() => {
       const [message, setMessage] = useState("Default message");
-      const alert = imp.usePredefinedSpawner(Dialog, { message });
+      const alert = api.useModal(Dialog, { message });
       return (
         <>
           <button onClick={() => alert()}>Open dialog</button>
@@ -100,15 +98,15 @@ describe("can display", () => {
 
 test("can spawn an instance temporarily for a removed component", async () => {
   const store = new ComponentStore();
-  const { render, imp } = setupImperative(() => store);
+  const api = setupImperative(() => store);
 
   let spawn: () => void;
   function Source() {
-    spawn = imp.usePredefinedSpawner(Dialog, {}, { removeOnUnmount: true });
+    spawn = api.useModal(Dialog, {}, { removeOnUnmount: true });
     return <button onClick={() => spawn()}>Spawn</button>;
   }
 
-  render(() => {
+  api.render(() => {
     const [mounted, setMounted] = useState(true);
     return (
       <>
@@ -130,7 +128,7 @@ test("can spawn an instance temporarily for a removed component", async () => {
 });
 
 describe("can open dialog, close it, and then unmount", () => {
-  const imp = createImperative();
+  const api = setupImperative();
   return defineAbstractHookTest(
     Dialog,
     async (useHook, render) => {
@@ -144,12 +142,7 @@ describe("can open dialog, close it, and then unmount", () => {
 
       function App() {
         const [page, setPage] = useState(1);
-        return (
-          <>
-            {page === 1 ? <Page1 gotoPage2={() => setPage(2)} /> : <Page2 />}
-            <imp.Outlet />
-          </>
-        );
+        return page === 1 ? <Page1 gotoPage2={() => setPage(2)} /> : <Page2 />;
       }
 
       function Page1({ gotoPage2 }: { gotoPage2: () => void }) {
@@ -166,15 +159,7 @@ describe("can open dialog, close it, and then unmount", () => {
         return <p>This is page 2</p>;
       }
     },
-    {
-      imp,
-      render: (Content: ComponentType) =>
-        renderReact(
-          <StrictMode>
-            <Content />
-          </StrictMode>,
-        ),
-    },
+    api,
   );
 });
 
@@ -237,10 +222,10 @@ describe("can resolve instance", () => {
     }));
 
   describe("delayed", () => {
-    const { imp, render } = setupImperative();
+    const api = setupImperative();
     let releaseSustain: Deferred<void>;
     function DialogWithDelay(props: ComponentProps<typeof Dialog>) {
-      releaseSustain = imp.useSpawnSustainer(props);
+      releaseSustain = api.useModalSustainer(props);
       return <Dialog {...props} />;
     }
     defineAbstractHookTest(
@@ -259,7 +244,7 @@ describe("can resolve instance", () => {
         });
         expect(screen.queryByRole("dialog")).toBeNull();
       },
-      { imp, render },
+      api,
     );
   });
 
