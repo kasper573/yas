@@ -1,67 +1,59 @@
 import type { ReactElement } from "react";
 import type {
-  UseFormReturn,
   FieldErrors,
   FieldError,
-  Path,
   FieldValues,
+  Control,
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 
-export function createControllerProxyFactory<Meta>(
-  /**
-   * Used to automatically determine the value of the `required` rule for the react-hook-form/Controller.
-   *
-   * Will be called for each field that is rendered by the proxy.
-   * The meta argument is any value you want, but is recommended to be i.e. the schema that was used to create the form.
-   * The path will be the path to the field that is being rendered.
-   * The function is expected to return a boolean indicating whether the field is required or not.
-   */
-  isRequired: (meta: Meta, path: readonly string[]) => boolean,
-) {
-  return function createControllerProxy<TFieldValues extends FieldValues>(
-    form: UseFormReturn<TFieldValues>,
-    meta: Meta,
-    path: readonly string[] = emptyPath,
-  ): FieldControllerFactories<TFieldValues> {
-    return new Proxy(
-      noop as unknown as FieldControllerFactories<TFieldValues>,
-      {
-        get(_, step) {
-          return createControllerProxy(form, meta, [...path, String(step)]);
-        },
-        apply(_1, _2, [render]: [FieldRenderer<unknown>]) {
-          const pathAsString = path.join(".") as Path<TFieldValues>;
-
-          return (
-            <Controller
-              control={form.control}
-              name={pathAsString}
-              render={({ field, formState: { errors } }) => {
-                const { onChange, onBlur, value } = field;
-                const required = isRequired(meta, path);
-                const error = flattenErrorMessages(
-                  valueAtPath(errors, path) as FieldErrors,
-                );
-                return render({
-                  value,
-                  onChange,
-                  onBlur,
-                  onFocus: () => form.setFocus(pathAsString),
-                  error,
-                  // unfortunate assert just to make typescript happy,
-                  // it works around some complicated generics not worth solving,
-                  // and the assertion has no real problems in practice.
-                  required: required as false,
-                });
-              }}
-            />
-          );
-        },
-      },
-    );
-  };
+export function createControllerProxy<TFieldValues extends FieldValues>(
+  control: Control<TFieldValues>,
+): FieldControllerFactories<TFieldValues> {
+  return createControllerProxyImpl(control, emptyPath);
 }
+
+function createControllerProxyImpl<TFieldValues extends FieldValues>(
+  control: Control<TFieldValues>,
+  path: readonly string[],
+): FieldControllerFactories<TFieldValues> {
+  return new Proxy(noop as unknown as FieldControllerFactories<TFieldValues>, {
+    get(_, step) {
+      return createControllerProxyImpl(control, [...path, String(step)]);
+    },
+    apply(_1, _2, [render]) {
+      const pathAsString = path.join(".");
+      const isOptional = pathAsString.endsWith(optionalIndicator);
+      const name = isOptional ? pathAsString.slice(0, -1) : pathAsString;
+
+      return (
+        <Controller<FieldValues>
+          control={control as Control<FieldValues>}
+          name={name}
+          render={({ field, formState: { errors } }) => {
+            const { onChange, onBlur, value } = field;
+            const error = flattenErrorMessages(
+              valueAtPath(errors, path) as FieldErrors,
+            );
+            return render({
+              value,
+              onChange,
+              onBlur,
+              error,
+              // unfortunate assert just to make typescript happy,
+              // it works around some complicated generics not worth solving,
+              // and the assertion has no real problems in practice.
+              required: !isOptional as false,
+            });
+          }}
+        />
+      );
+    },
+  });
+}
+
+const optionalIndicator = "$" as const;
+type WithOptionalIndicator<K> = `${K & string}${typeof optionalIndicator}`;
 
 /**
  * Props for the components you intend to use with the controller proxy.
@@ -121,17 +113,34 @@ const emptyPath: ReadonlyArray<string> = Object.freeze([]);
 const noop = () => {};
 
 type FieldControllerFactories<Values> = {
-  [K in keyof Values]-?: FieldControllerFactory<Values[K]>;
+  [K in OptionalKeys<Values> as WithOptionalIndicator<K>]-?: FieldControllerFactory<
+    Values[K],
+    OptionalFieldRenderer<Values[K]>
+  >;
+} & {
+  [K in RequiredKeys<Values>]-?: FieldControllerFactory<
+    Values[K],
+    RequiredFieldRenderer<Values[K]>
+  >;
 };
 
-type FieldControllerFactory<Value> = FieldControllerFactories<Value> & {
-  (render: FieldRenderer<Value>): ReactElement;
-};
+type FieldControllerFactory<Value, Renderer> =
+  FieldControllerFactories<Value> & {
+    (render: Renderer): ReactElement;
+  };
 
-interface FieldRenderer<Value> {
-  (props: FieldPropsWithDerivedOptionality<Value>): ReactElement;
+interface OptionalFieldRenderer<Value> {
+  (props: OptionalFieldProps<Exclude<Value, undefined>>): ReactElement;
 }
 
-type FieldPropsWithDerivedOptionality<Value> = [undefined] extends [Value]
-  ? OptionalFieldProps<Exclude<Value, undefined>>
-  : RequiredFieldProps<Value>;
+interface RequiredFieldRenderer<Value> {
+  (props: RequiredFieldProps<Value>): ReactElement;
+}
+
+type OptionalKeys<T> = {
+  [K in keyof T]-?: undefined extends T[K] ? K : never;
+}[keyof T];
+
+type RequiredKeys<T> = {
+  [K in keyof T]-?: undefined extends T[K] ? never : K;
+}[keyof T];
