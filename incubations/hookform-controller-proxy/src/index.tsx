@@ -37,6 +37,7 @@ function createControllerProxyImpl<TFieldValues extends FieldValues>(
             );
             return render({
               value,
+              name,
               onChange,
               onBlur,
               error,
@@ -88,6 +89,7 @@ export interface BaseFieldProps {
   onBlur?: () => unknown;
   onFocus?: () => unknown;
   error?: string;
+  name?: string;
 }
 
 function valueAtPath(object: unknown, path: readonly string[]): unknown {
