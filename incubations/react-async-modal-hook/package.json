@@ -3,13 +3,12 @@
   "description": "React hook that provides an imperative interface for spawning and resolving components",
   "keywords": [
     "react",
-    "hook",
-    "imperative",
     "async",
-    "component"
+    "modal",
+    "hook"
   ],
   "author": "Kasper573",
-  "version": "0.1.74",
+  "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "main": "./src/index.ts",
