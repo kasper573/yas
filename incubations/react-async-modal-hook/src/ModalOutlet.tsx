@@ -1,8 +1,12 @@
-import type { ReactNode } from "react";
-import { useContext, useSyncExternalStore } from "react";
+import {
+  Fragment,
+  createElement,
+  useContext,
+  useSyncExternalStore,
+} from "react";
 import { ModalContext } from "./ModalContext";
 
-export function ModalOutlet(): ReactNode {
+export function ModalOutlet(): JSX.Element {
   const store = useContext(ModalContext);
   const components = useSyncExternalStore(
     store.subscribe,
@@ -29,5 +33,5 @@ export function ModalOutlet(): ReactNode {
       );
     }
   }
-  return modals;
+  return createElement(Fragment, null, modals);
 }
