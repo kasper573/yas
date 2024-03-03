@@ -105,7 +105,7 @@ export class ModalStore {
               this.removeInstance(componentId, instanceId);
             }
           });
-          resolveSpawnCall(value);
+          resolveSpawnCall(value as Resolution);
         },
       };
     });
@@ -122,7 +122,7 @@ export class ModalStore {
 
 export type ModalStoreState = Record<ComponentId, ComponentEntry>;
 
-export interface ModalProps<ResolutionValue = any>
+export interface ModalProps<ResolutionValue = void>
   extends ResolvingComponentProps<ResolutionValue>,
     UseSpawnSustainerProps {
   state: InstanceState<ResolutionValue>;
@@ -140,7 +140,7 @@ export type UpsertComponentPayload = Pick<
 >;
 
 export interface ComponentEntry {
-  component: ComponentType<ModalProps>;
+  component: ComponentType<ModalProps<unknown>>;
   defaultProps?: Record<string, unknown>;
   instances: Record<InstanceId, InstanceEntry>;
   shouldBeRemovedWhenEmpty?: boolean;
@@ -149,7 +149,7 @@ export interface ComponentEntry {
 export type InstanceId = string;
 
 export interface InstanceEntry
-  extends Omit<ModalProps, keyof UseSpawnSustainerProps> {
+  extends Omit<ModalProps<unknown>, keyof UseSpawnSustainerProps> {
   props: InstanceProps;
 }
 
@@ -166,5 +166,5 @@ export type InstanceProps<
     ModalProps<ResolutionValue> & AdditionalComponentProps,
     keyof DefaultProps
   >,
-  keyof ModalProps
+  keyof ModalProps<unknown>
 >;
