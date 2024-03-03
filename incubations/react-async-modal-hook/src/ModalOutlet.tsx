@@ -1,70 +1,33 @@
-import type { ComponentType } from "react";
-import {
-  createElement,
-  useContext,
-  useMemo,
-  useSyncExternalStore,
-} from "react";
-import type {
-  ComponentId,
-  ModalStoreState,
-  InstanceEntry,
-  InstanceId,
-  ComponentEntry,
-} from "./ModalStore";
+import { useContext, useSyncExternalStore } from "react";
+
 import { ModalContext } from "./ModalContext";
-import { DefaultOutletRenderer } from "./DefaultOutletRenderer";
 
-export interface ModalOutletProps {
-  /**
-   * The OutletRenderer to use. Defaults to defaultOutletRenderer.
-   */
-  renderer?: ModalOutletRenderer;
-}
-
-export function ModalOutlet({
-  renderer = DefaultOutletRenderer,
-}: ModalOutletProps) {
+export function ModalOutlet() {
   const store = useContext(ModalContext);
-  const state = useSyncExternalStore(
+  const components = useSyncExternalStore(
     store.subscribe,
     () => store.state,
     () => store.state,
   );
-  const entries = useMemo(() => collectEntries(state), [state]);
-  return createElement(renderer, { entries });
-}
-
-function collectEntries(components: ModalStoreState) {
-  const entries: ModalOutletEntry[] = [];
+  const modals: JSX.Element[] = [];
   for (const componentId in components) {
-    const { component, instances, defaultProps } = components[componentId];
+    const {
+      component: Component,
+      instances,
+      defaultProps,
+    } = components[componentId];
     for (const instanceId in instances) {
-      entries.push({
-        instanceId,
-        componentId,
-        component,
-        defaultProps,
-        ...instances[instanceId],
-      });
+      const { props, ...rest } = instances[instanceId];
+      modals.push(
+        <Component
+          key={`${componentId}-${instanceId}`}
+          instanceId={instanceId}
+          {...defaultProps}
+          {...props}
+          {...rest}
+        />,
+      );
     }
   }
-  return entries;
+  return modals;
 }
-
-/**
- * Component and instance data aggregated for convenience to simplify OutletRenderer logic.
- */
-export interface ModalOutletEntry
-  extends InstanceEntry,
-    Pick<ComponentEntry, "component" | "defaultProps"> {
-  instanceId: InstanceId;
-  componentId: ComponentId;
-}
-
-/**
- * A React component that renders the currently registered components and instances in the ComponentStore.
- */
-export type ModalOutletRenderer = ComponentType<{
-  entries: ModalOutletEntry[];
-}>;
