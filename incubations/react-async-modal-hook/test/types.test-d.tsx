@@ -18,6 +18,28 @@ describe("useModal", () => {
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 
+  it(`defaults does not accept internal props`, async () => {
+    function Modal(props: ModalProps<string>) {
+      return null;
+    }
+
+    type DefaultProps = Parameters<typeof useModal<typeof Modal>>[1];
+    type T1 = keyof Extract<DefaultProps, Record<string, unknown>>;
+    expectTypeOf<T1>().not.toMatchTypeOf<keyof ModalProps<unknown>>();
+  });
+
+  it(`spawn function does not accept internal props`, async () => {
+    function Modal(props: ModalProps<string>) {
+      return null;
+    }
+
+    const spawn = useModal(Modal);
+
+    type SpawnProps = Parameters<typeof spawn>[0];
+    type T1 = keyof Extract<SpawnProps, Record<string, unknown>>;
+    expectTypeOf<T1>().not.toMatchTypeOf<keyof ModalProps<unknown>>();
+  });
+
   it(`custom props, no defaults, spawn function requires an argument`, () => {
     function Modal(props: ModalProps<string> & { custom: string }) {
       return null;
@@ -147,12 +169,25 @@ describe("useModals", () => {
     expectTypeOf(result).toEqualTypeOf<string>();
   });
 
+  it(`spawn function does not accept internal props`, async () => {
+    function Modal(props: ModalProps<string>) {
+      return null;
+    }
+
+    const spawn = useModals();
+
+    type SecondArgument = Parameters<typeof spawn<typeof Modal>>[1];
+    type T1 = Extract<SecondArgument, Record<string, unknown>>;
+    expectTypeOf<T1>().not.toMatchTypeOf<keyof ModalProps<unknown>>();
+  });
+
   it(`custom props, spawn function requires an argument`, () => {
     function Modal(props: ModalProps<string> & { custom: string }) {
       return null;
     }
 
     const spawn = useModals();
+
     type SpawnProps = Parameters<typeof spawn<typeof Modal>>[1];
 
     type T1 = Extract<SpawnProps, undefined>;
@@ -169,6 +204,7 @@ describe("useModals", () => {
     }
 
     const spawn = useModals();
+
     type SpawnProps = Parameters<typeof spawn<typeof Modal>>[1];
 
     type T1 = Extract<SpawnProps, CustomProps>;
