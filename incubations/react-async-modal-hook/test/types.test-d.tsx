@@ -1,4 +1,4 @@
-import { describe, it, expectTypeOf } from "@yas/test/vitest/react";
+import { it, expectTypeOf } from "@yas/test/vitest/react";
 import type { ModalProps } from "../src/index";
 import { useModal } from "../src/index";
 
@@ -7,7 +7,7 @@ import { useModal } from "../src/index";
 // - Extract returns never if it doesnt contain the type asked for, which makes it possible to test with toEqualTypeOf
 // - Extracting void yields void | undefined, so we need to exclude undefined
 
-it("spawn function return type is inferred from modal component props", () => {
+it(`spawn function return type is inferred from modal component props`, () => {
   function Modal(props: ModalProps<string>) {
     return null;
   }
@@ -22,131 +22,119 @@ it("spawn function return type is inferred from modal component props", () => {
   }
 });
 
-describe("when modal component has custom required props", () => {
-  describe("and the hook has no defaults", () => {
-    it("spawn function requires an argument", () => {
-      function Modal(props: ModalProps<string> & { custom: string }) {
-        return null;
-      }
+it(`custom props, no defaults, spawn function requires an argument`, () => {
+  function Modal(props: ModalProps<string> & { custom: string }) {
+    return null;
+  }
 
-      const spawn = useModal(Modal);
+  const spawn = useModal(Modal);
 
-      type SpawnProps = Parameters<typeof spawn>[0];
+  type SpawnProps = Parameters<typeof spawn>[0];
 
-      type T1 = Extract<SpawnProps, undefined>;
-      expectTypeOf<T1>().not.toEqualTypeOf<undefined>();
+  type T1 = Extract<SpawnProps, undefined>;
+  expectTypeOf<T1>().not.toEqualTypeOf<undefined>();
 
-      type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-      expectTypeOf<T2>().not.toEqualTypeOf<void>();
-    });
-
-    it("spawn function requires the custom prop to be provided", () => {
-      type CustomProps = { custom: string };
-      function Modal(props: ModalProps<string> & CustomProps) {
-        return null;
-      }
-
-      const spawn = useModal(Modal);
-
-      type SpawnProps = Parameters<typeof spawn>[0];
-
-      type T1 = Extract<SpawnProps, CustomProps>;
-      expectTypeOf<T1>().toMatchTypeOf<CustomProps>();
-    });
-  });
-
-  describe("and the hook has defaults", () => {
-    it("spawn function does not require an argument", () => {
-      function Modal(props: ModalProps<string> & { custom: string }) {
-        return null;
-      }
-
-      const spawn = useModal(Modal, { custom: "value" });
-
-      type SpawnProps = Parameters<typeof spawn>[0];
-
-      type T1 = Extract<SpawnProps, undefined>;
-      expectTypeOf<T1>().toEqualTypeOf<undefined>();
-
-      type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-      expectTypeOf<T2>().toEqualTypeOf<void>();
-    });
-
-    it("spawn function does not require the custom prop to be provided", () => {
-      function Modal(props: ModalProps<string> & { custom: string }) {
-        return null;
-      }
-
-      const spawn = useModal(Modal, { custom: "value" });
-
-      type SpawnProps = Parameters<typeof spawn>[0];
-
-      type T1 = Extract<SpawnProps, { custom?: string }>;
-      expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
-    });
-  });
+  type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
+  expectTypeOf<T2>().not.toEqualTypeOf<void>();
 });
 
-describe("when modal component has only custom optional props", () => {
-  describe("and the hook has no defaults", () => {
-    it("spawn function does not require an argument", () => {
-      function Modal(props: ModalProps<string> & { custom?: string }) {
-        return null;
-      }
+it(`custom props, no defaults, spawn function requires the custom prop to be provided`, () => {
+  type CustomProps = { custom: string };
+  function Modal(props: ModalProps<string> & CustomProps) {
+    return null;
+  }
 
-      const spawn = useModal(Modal);
+  const spawn = useModal(Modal);
 
-      type SpawnProps = Parameters<typeof spawn>[0];
+  type SpawnProps = Parameters<typeof spawn>[0];
 
-      type T1 = Extract<SpawnProps, undefined>;
-      expectTypeOf<T1>().toEqualTypeOf<undefined>();
+  type T1 = Extract<SpawnProps, CustomProps>;
+  expectTypeOf<T1>().toMatchTypeOf<CustomProps>();
+});
 
-      type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-      expectTypeOf<T2>().toEqualTypeOf<void>();
-    });
+it(`custom props, with defaults, spawn function does not require an argument`, () => {
+  function Modal(props: ModalProps<string> & { custom: string }) {
+    return null;
+  }
 
-    it("spawn function does not require the custom prop to be provided", () => {
-      function Modal(props: ModalProps<string> & { custom?: string }) {
-        return null;
-      }
+  const spawn = useModal(Modal, { custom: "value" });
 
-      const spawn = useModal(Modal);
+  type SpawnProps = Parameters<typeof spawn>[0];
 
-      type SpawnProps = Parameters<typeof spawn>[0];
+  type T1 = Extract<SpawnProps, undefined>;
+  expectTypeOf<T1>().toEqualTypeOf<undefined>();
 
-      type T1 = Extract<SpawnProps, { custom?: string }>;
-      expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
-    });
-  });
+  type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
+  expectTypeOf<T2>().toEqualTypeOf<void>();
+});
 
-  describe("and the hook has defaults", () => {
-    it("spawn function does not require an argument", () => {
-      function Modal(props: ModalProps<string> & { custom?: string }) {
-        return null;
-      }
+it(`custom props, with defaults, spawn function does not require the custom prop to be provided`, () => {
+  function Modal(props: ModalProps<string> & { custom: string }) {
+    return null;
+  }
 
-      const spawn = useModal(Modal, { custom: "value" });
+  const spawn = useModal(Modal, { custom: "value" });
 
-      type SpawnProps = Parameters<typeof spawn>[0];
+  type SpawnProps = Parameters<typeof spawn>[0];
 
-      type T1 = Extract<SpawnProps, undefined>;
-      expectTypeOf<T1>().toEqualTypeOf<undefined>();
+  type T1 = Extract<SpawnProps, { custom?: string }>;
+  expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
+});
 
-      type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-      expectTypeOf<T2>().toEqualTypeOf<void>();
-    });
+it(`optional props, no defaults, spawn function does not require an argument`, () => {
+  function Modal(props: ModalProps<string> & { custom?: string }) {
+    return null;
+  }
 
-    it("spawn function does not require the custom prop to be provided", () => {
-      function Modal(props: ModalProps<string> & { custom?: string }) {
-        return null;
-      }
+  const spawn = useModal(Modal);
 
-      const spawn = useModal(Modal, { custom: "value" });
+  type SpawnProps = Parameters<typeof spawn>[0];
 
-      type SpawnProps = Parameters<typeof spawn>[0];
+  type T1 = Extract<SpawnProps, undefined>;
+  expectTypeOf<T1>().toEqualTypeOf<undefined>();
 
-      type T1 = Extract<SpawnProps, { custom?: string }>;
-      expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
-    });
-  });
+  type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
+  expectTypeOf<T2>().toEqualTypeOf<void>();
+});
+
+it(`optional props, no defaults, spawn function does not require the custom prop to be provided`, () => {
+  function Modal(props: ModalProps<string> & { custom?: string }) {
+    return null;
+  }
+
+  const spawn = useModal(Modal);
+
+  type SpawnProps = Parameters<typeof spawn>[0];
+
+  type T1 = Extract<SpawnProps, { custom?: string }>;
+  expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
+});
+
+it(`optional props, with defaults, spawn function does not require an argument`, () => {
+  function Modal(props: ModalProps<string> & { custom?: string }) {
+    return null;
+  }
+
+  const spawn = useModal(Modal, { custom: "value" });
+
+  type SpawnProps = Parameters<typeof spawn>[0];
+
+  type T1 = Extract<SpawnProps, undefined>;
+  expectTypeOf<T1>().toEqualTypeOf<undefined>();
+
+  type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
+  expectTypeOf<T2>().toEqualTypeOf<void>();
+});
+
+it(`optional props, with defaults, spawn function does not require the custom prop to be provided`, () => {
+  function Modal(props: ModalProps<string> & { custom?: string }) {
+    return null;
+  }
+
+  const spawn = useModal(Modal, { custom: "value" });
+
+  type SpawnProps = Parameters<typeof spawn>[0];
+
+  type T1 = Extract<SpawnProps, { custom?: string }>;
+  expectTypeOf<T1>().toMatchTypeOf<{ custom?: string }>();
 });
