@@ -19,7 +19,7 @@ export interface DialogProps<ResolutionValue = void>
 
 export function Dialog<ResolutionValue>({
   instanceId,
-  state,
+  open: inputOpen,
   resolve,
   ...baseDialogProps
 }: DialogProps<ResolutionValue>) {
@@ -28,8 +28,8 @@ export function Dialog<ResolutionValue>({
 
   // Simple way to trigger css reflow.
   useLayoutEffect(() => {
-    requestAnimationFrame(() => setOpen(state.type !== "resolved"));
-  }, [state?.type]);
+    requestAnimationFrame(() => setOpen(inputOpen));
+  }, [inputOpen]);
 
   return (
     <BaseDialog

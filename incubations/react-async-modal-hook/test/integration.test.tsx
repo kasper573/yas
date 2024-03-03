@@ -286,7 +286,7 @@ describe("can resolve instance", () => {
 });
 
 function Dialog({
-  state,
+  open,
   message = "Built-in message",
   name,
   resolve,
@@ -297,7 +297,11 @@ function Dialog({
   resolution?: unknown;
 }) {
   return (
-    <div role="dialog" aria-label={name} className={state.type}>
+    <div
+      role="dialog"
+      aria-label={name}
+      className={open ? "resolved" : "pending"}
+    >
       <p>{message}</p>
       <button onClick={() => resolve(resolution)}>OK</button>
     </div>

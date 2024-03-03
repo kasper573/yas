@@ -31,12 +31,13 @@ import { ReactNode, useState } from "react";
 import { ModalProps } from "react-async-modal-hook";
 
 function Prompt({
+  open,
   resolve,
   message,
 }: ModalProps<string> & { message: ReactNode }) {
   const [input, setInput] = useState("");
   return (
-    <dialog open>
+    <dialog open={open}>
       <p>{message}</p>
       <input value={input} onChange={(e) => setInput(e.target.value)} />
       <button onClick={() => resolve(input)}>Submit</button>

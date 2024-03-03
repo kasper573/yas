@@ -90,12 +90,12 @@ export class ModalStore {
       }
 
       component.instances[instanceId] = {
-        state: { type: "pending" },
+        open: true,
         props,
         resolve: (value) => {
           this.store.mutate((components) => {
             const instance = components[componentId].instances[instanceId];
-            instance.state = { type: "resolved", value };
+            instance.open = false;
             const removeDelay = this.removeDelays.get(instanceId);
             if (removeDelay) {
               removeDelay.then(() =>
@@ -125,7 +125,7 @@ export type ModalStoreState = Record<ComponentId, ComponentEntry>;
 export interface ModalProps<ResolutionValue = void>
   extends ResolvingComponentProps<ResolutionValue>,
     UseSpawnSustainerProps {
-  state: InstanceState<ResolutionValue>;
+  open: boolean;
 }
 
 export interface ResolvingComponentProps<ResolutionValue> {
@@ -152,10 +152,6 @@ export interface InstanceEntry
   extends Omit<ModalProps<unknown>, keyof UseSpawnSustainerProps> {
   props: InstanceProps;
 }
-
-export type InstanceState<ResolutionValue = unknown> =
-  | { type: "pending" }
-  | { type: "resolved"; value: ResolutionValue };
 
 export type InstanceProps<
   ResolutionValue = unknown,

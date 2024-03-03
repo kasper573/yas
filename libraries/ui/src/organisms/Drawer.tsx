@@ -11,7 +11,7 @@ export interface DrawerProps<ResolutionValue = void>
 
 export function Drawer<ResolutionValue>({
   instanceId,
-  state,
+  open: inputOpen,
   resolve,
   ...baseDrawerProps
 }: DrawerProps<ResolutionValue>) {
@@ -20,8 +20,8 @@ export function Drawer<ResolutionValue>({
 
   // Simple way to trigger css reflow.
   useLayoutEffect(() => {
-    requestAnimationFrame(() => setOpen(state.type !== "resolved"));
-  }, [state?.type]);
+    requestAnimationFrame(() => setOpen(inputOpen));
+  }, [inputOpen]);
 
   return (
     <BaseDrawer
