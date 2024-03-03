@@ -30,8 +30,7 @@
     "release": "release-incubation"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "immer": "^10.0.2"
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
@@ -40,7 +39,6 @@
     "@yas/scripts": "workspace:*",
     "@types/react": "^18.2.37",
     "react": "^18.2.0",
-    "immer": "^10.0.2",
     "concurrently": "8.2.2"
   }
 }
