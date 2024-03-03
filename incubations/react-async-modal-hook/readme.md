@@ -101,31 +101,21 @@ export function App() {
 
 See [StackBlitz](#try-it-on-stackblitz) for examples for all primitives.
 
-#### ModalOutlet
-
-A React component that renders the currently spawned components.
-
-#### ModalContext
-
-A React context that holds the store that manages all the state of react-async-modal-hook.
-Using this is optional. The context already contain a default store, and the hooks are
-using the store internally. Manual use of the context and store is only necessary
-if you want to extend the library with custom behavior.
-
 #### useModal
 
-A hook that takes a component that you specify ahead of time and returns a function that will spawn the given component when called.
+`useModal` is a hook that requires you to specify a component ahead of time and returns a function that will spawn that component as a modal when called.
 
 - Useful when you want to spawn the same component often.
-- Allows you to specify default props ahead of time that when updated will propagate to any spawned components.
+- Allows you to specify default props ahead of time that when updated will propagate to any number of spawned components.
 
 #### useModals
 
-A hook that just returns a function that will spawn a component when called.
-The component is however specified inline when you call the function.
+`useModals` is basically identical to `useModal`, except that you do not specify a component ahead of time.
+It returns a function that also spawns a modal when called, but the difference being that you provide the component and its props later instead of ahead of time.
 
-- This is useful when you want to spawn different components, or don't know what component to spawn until later.
-- Comes with the caveat that you cannot update default props once the component has been spawned
+- This is useful when you want to spawn many different components and dont want to plug in the useModal once per component, or don't know what component to spawn until later.
+
+- Comes with the caveat that you cannot provide default props, which means you cannot update a modals props once it has been spawned. You'd have to close it and then respawn for new props to have any effect.
 
 #### useModalSustainer
 
@@ -133,3 +123,15 @@ A hook that is designed to be used from within a component you spawn with useMod
 Once used it will prevent the spawned component from being removed from the store, keeping it in the DOM.
 This is useful to allow animations to finish before removing the component.
 Once you no longer want to sustain the component, call the function returned from the hook.
+
+#### ModalOutlet
+
+A React component that renders the currently spawned components. Using this is recommended, and it's desiged to be placed at the root of your app. But if you want to customize how registered modals are rendered you can create your own outlet by creating a react component that uses the `ModalContext` and `ModalStore`.
+
+#### ModalStore
+
+A class that holds the state and actions for the library. It is used internally by the hooks, but can be used manually if you want to extend the library with custom behavior.
+
+#### ModalContext
+
+A React context that holds a reference to the ModalStore instance to use. You must define this for the hooks to work.
