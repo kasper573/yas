@@ -4,7 +4,7 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
 const { defineEnv } = require("./defineEnv");
-const {vanillaExtractPlugin} = require("@vanilla-extract/vite-plugin");
+const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
 
 function createYasViteConfig(projectRoot, { analyze, useReact = true } = {}) {
   return defineConfig({
