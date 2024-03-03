@@ -18,7 +18,7 @@ export function ModalOutlet<ExtraProps>({
     () => store.state,
   );
 
-  const modals: AnyModalElement<ExtraProps>[] = [];
+  const modals: ModalElement<ExtraProps>[] = [];
   for (const componentId in components) {
     const component = components[componentId];
     for (const instanceId in component.instances) {
@@ -40,16 +40,14 @@ export function ModalOutlet<ExtraProps>({
   return createElement(Fragment, null, map(modals));
 }
 
-type AnyModalElement<ExtraProps> = ReactElement<
+export type ModalElement<ExtraProps = {}> = ReactElement<
   ModalProps<unknown> & ExtraProps
 >;
 
 export interface ModalOutletProps<ExtraProps = {}> {
-  map?: (
-    elements: AnyModalElement<ExtraProps>[],
-  ) => AnyModalElement<ExtraProps>[];
+  map?: (elements: ModalElement<ExtraProps>[]) => ModalElement<ExtraProps>[];
 }
 
 export type ModalOutletMapper<ExtraProps = {}> = (
-  elements: AnyModalElement<ExtraProps>[],
-) => AnyModalElement<ExtraProps>[];
+  elements: ModalElement<ExtraProps>[],
+) => ModalElement<ExtraProps>[];
