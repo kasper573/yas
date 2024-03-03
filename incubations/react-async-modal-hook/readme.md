@@ -104,7 +104,7 @@ export function App() {
 
 ### API reference
 
-See [StackBlitz](#try-it-on-stackblitz) for examples for all primitives.
+See [StackBlitz](#try-it-on-stackblitz) for comprehensive examples of the API.
 
 #### useModal
 
