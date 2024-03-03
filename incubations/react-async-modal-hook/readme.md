@@ -1,16 +1,16 @@
 # react-async-modal-hook
 
 The declarative nature of React is great for most use cases, but not always.
-When working with async UI flows like modals, toasts and drawers, it's often
-preferable to have an and promise based interface, which is what this library provides.
+When working with async UI flows like dialogs, toasts and drawers, it's often
+preferable to have a promise based interface, which is what this library provides.
 
 > Heads up: This package does not follow semantic versioning. Changes of all types are released to the patch portion of the version string.
 
 ### Features
 
-- Designed for modals and toasts, but not limited to.
+- Designed for dialogs, toasts and drawers (but not limited to).
 - Lightweight with zero runtime dependencies.
-- Written in TypeScript with proper generics in mind.
+- Written in TypeScript with superb generics and inference in mind.
 
 ### [Try it on StackBlitz](https://stackblitz.com/edit/react-async-modal-hook)
 
@@ -69,6 +69,7 @@ createRoot(document.getElementById("root")).render(
 // App.tsx
 
 import { useModal, useModals } from "react-async-modal-hook";
+import { Prompt } from "./Prompt";
 
 export function App() {
   const prompt = useModal(Prompt, { message: "Default message" });
@@ -80,6 +81,7 @@ export function App() {
 
     // The function returns a promise that resolves when the `resolve` function
     // is called from within the component, and will resolve with the value that was passed.
+    // Typescript: The promise resolution type is inferred from the component props type (string in this case).
     const input = await promise;
 
     // You can override default props by providing specific props per spawn
@@ -87,6 +89,9 @@ export function App() {
       message: `This was your previous input: "${input}"`,
     });
 
+    // Typescript: Since `Prompt` has a custom prop `message` that is required,
+    // typescript will enforce that you provide it here, or as a default property in the `useModal` call.
+    // However, if it would have been optional, then it would be optional here as well.
     await showModal(Prompt, {
       message:
         "Use can use the inline spawner hook to specify a component later",
