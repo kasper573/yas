@@ -17,7 +17,9 @@ export function useForm<Schema extends AnyZodObject>(
   options?: Omit<UseFormProps<z.infer<Schema>>, "resolver">,
 ): UseFormReturn<Schema> {
   return useFormImpl({
-    resolver: (zodResolver as (s: unknown) => Resolver<z.infer<Schema>>)(schema),
+    resolver: (zodResolver as (s: unknown) => Resolver<z.infer<Schema>>)(
+      schema,
+    ),
     mode: "onSubmit",
     reValidateMode: "onBlur",
     ...options,

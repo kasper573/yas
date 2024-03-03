@@ -79,6 +79,7 @@ export const colorSetNames = Object.entries(themeTemplate.color)
   .filter(([, value]) => value !== null)
   .map(([key]) => key) as ColorSetName[];
 
-type ReplaceLeafs<T, U> = T extends Record<string, unknown>
-  ? { [K in keyof T]: ReplaceLeafs<T[K], U> }
-  : U;
+type ReplaceLeafs<T, U> =
+  T extends Record<string, unknown>
+    ? { [K in keyof T]: ReplaceLeafs<T[K], U> }
+    : U;

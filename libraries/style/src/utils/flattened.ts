@@ -32,12 +32,13 @@ export type Flattened<T> = {
     : never}`]: PathValue<T, K>;
 };
 
-type IsLeaf<O, K> = Extract<
-  Exclude<Path<O>, K>,
-  `${K & string}${typeof separator}${string}`
-> extends never
-  ? true
-  : false;
+type IsLeaf<O, K> =
+  Extract<
+    Exclude<Path<O>, K>,
+    `${K & string}${typeof separator}${string}`
+  > extends never
+    ? true
+    : false;
 
 type PathImpl<T, Key extends keyof T> = Key extends string
   ? T[Key] extends Record<string, unknown>
@@ -59,5 +60,5 @@ type PathValue<T, P extends Path<T>> = P extends `${infer Key}.${infer Rest}`
       : never
     : never
   : P extends keyof T
-  ? T[P]
-  : never;
+    ? T[P]
+    : never;
