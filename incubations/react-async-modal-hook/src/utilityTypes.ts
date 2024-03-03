@@ -14,13 +14,10 @@ export type PartialByKeys<T, K extends PropertyKey> = Merge<
   }
 >;
 
-export type ExtractRequired<T> = {
-  [K in keyof T as undefined extends T[K] ? never : K]-?: T[K];
-};
+export type RequiredKeys<T> = {
+  [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
+}[keyof T];
 
-export type MakeOptionalIfEmptyObject<T> = ExtractRequired<T> extends Record<
-  string,
-  never
->
-  ? void | undefined | T
-  : T;
+export type OptionalArgIfPartial<T> = RequiredKeys<T> extends never
+  ? [arg?: T]
+  : [arg: T];

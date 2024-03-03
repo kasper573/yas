@@ -5,7 +5,6 @@ import { useModal, useModals } from "../src/index";
 // Notes on weird type checking in this module:
 // - We use Extract to work around a limitation in vitest's expectTypeOf.
 // - Extract returns never if it doesnt contain the type asked for, which makes it possible to test with toEqualTypeOf
-// - Extracting void yields void | undefined, so we need to exclude undefined
 
 describe("useModal", () => {
   it(`spawn function return type is inferred from modal component props`, async () => {
@@ -81,9 +80,6 @@ describe("useModal", () => {
 
     type T1 = Extract<SpawnProps, undefined>;
     expectTypeOf<T1>().toEqualTypeOf<undefined>();
-
-    type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-    expectTypeOf<T2>().toEqualTypeOf<void>();
   });
 
   it(`custom props, with defaults, spawn function does not require the custom prop to be provided`, () => {
@@ -110,9 +106,6 @@ describe("useModal", () => {
 
     type T1 = Extract<SpawnProps, undefined>;
     expectTypeOf<T1>().toEqualTypeOf<undefined>();
-
-    type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-    expectTypeOf<T2>().toEqualTypeOf<void>();
   });
 
   it(`optional props, no defaults, spawn function does not require the custom prop to be provided`, () => {
@@ -139,9 +132,6 @@ describe("useModal", () => {
 
     type T1 = Extract<SpawnProps, undefined>;
     expectTypeOf<T1>().toEqualTypeOf<undefined>();
-
-    type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-    expectTypeOf<T2>().toEqualTypeOf<void>();
   });
 
   it(`optional props, with defaults, spawn function does not require the custom prop to be provided`, () => {
@@ -221,9 +211,6 @@ describe("useModals", () => {
 
     type T1 = Extract<SpawnProps, undefined>;
     expectTypeOf<T1>().toEqualTypeOf<undefined>();
-
-    type T2 = Exclude<Extract<SpawnProps, void>, undefined>;
-    expectTypeOf<T2>().toEqualTypeOf<void>();
   });
 
   it(`optional props, spawn function does not require the custom prop to be provided`, () => {

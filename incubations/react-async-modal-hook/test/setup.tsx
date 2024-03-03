@@ -28,7 +28,7 @@ export function defineAbstractHookTest<T extends AnyComponent>(
   test("useModals", () =>
     defineTest((options) => {
       const spawnModal = useModals(options);
-      return (props) =>
+      return (...[props]) =>
         // @ts-expect-error lazy avoidance of having to specify the correct generic argument for test convenience. It's okay to pass in empty object.
         spawnModal(component, props);
     }, render));

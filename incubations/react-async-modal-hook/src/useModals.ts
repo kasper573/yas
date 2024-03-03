@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { useContext, useEffect, useRef } from "react";
 import type { ModalProps, ResolvingComponentProps } from "./ModalStore";
-import type { AnyComponent } from "./utilityTypes";
+import type { AnyComponent, OptionalArgIfPartial } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ModalStore";
 import type { GeneralHookOptions } from "./constants";
 import { removeOnUnmountDefault } from "./constants";
@@ -41,11 +41,14 @@ export function useModals({
     >,
   >(
     component: Component,
-    props?: InstanceProps<ResolutionValue, AdditionalComponentProps>,
-    { componentId = store.nextId(), instanceId = store.nextId() } = {},
+    ...[props]: OptionalArgIfPartial<
+      InstanceProps<ResolutionValue, AdditionalComponentProps>
+    >
   ): Promise<ResolutionValue> {
+    const componentId = store.nextId();
+    const instanceId = store.nextId();
     componentIds.current.push(componentId);
     store.upsertComponent(componentId, { component });
-    return store.spawnInstance(componentId, instanceId, props);
+    return store.spawnInstance(componentId, instanceId, props ?? {});
   };
 }

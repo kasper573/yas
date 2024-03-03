@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { useContext, useEffect, useMemo, useRef } from "react";
 import type { ModalProps, ResolvingComponentProps } from "./ModalStore";
-import type { AnyComponent } from "./utilityTypes";
+import type { AnyComponent, OptionalArgIfPartial } from "./utilityTypes";
 import type { ComponentId, InstanceProps } from "./ModalStore";
 import type { GeneralHookOptions } from "./constants";
 import { removeOnUnmountDefault } from "./constants";
@@ -46,17 +46,18 @@ export function useModal<
   );
 
   return useMemo(
-    () => (props) => {
-      // Revive the component temporarily if attempting to spawn an instance for a removed component.
-      // This is useful when the spawning happens asynchronously after a component has been removed,
-      // which is common in async sequencing of components while react triggers a fast refresh.
-      if (!store.state[id]) {
-        const { component, defaultProps } = latest.current;
-        store.upsertComponent(id, { component, defaultProps });
-        store.markComponentsForRemoval([id]);
-      }
-      return store.spawnInstance(id, store.nextId(), props);
-    },
+    () =>
+      (...[props]) => {
+        // Revive the component temporarily if attempting to spawn an instance for a removed component.
+        // This is useful when the spawning happens asynchronously after a component has been removed,
+        // which is common in async sequencing of components while react triggers a fast refresh.
+        if (!store.state[id]) {
+          const { component, defaultProps } = latest.current;
+          store.upsertComponent(id, { component, defaultProps });
+          store.markComponentsForRemoval([id]);
+        }
+        return store.spawnInstance(id, store.nextId(), props ?? {});
+      },
     [store, id],
   );
 }
@@ -66,7 +67,9 @@ export type InstanceSpawner<
   AdditionalComponentProps,
   DefaultProps extends Partial<AdditionalComponentProps>,
 > = (
-  props: InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>,
+  ...args: OptionalArgIfPartial<
+    InstanceProps<ResolutionValue, AdditionalComponentProps, DefaultProps>
+  >
 ) => Promise<ResolutionValue>;
 
 export type InstanceSpawnerFor<

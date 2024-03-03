@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { MakeOptionalIfEmptyObject, PartialByKeys } from "./utilityTypes";
+import type { PartialByKeys } from "./utilityTypes";
 import { deferPromise } from "./deferPromise";
 import type { UseSpawnSustainerProps } from "./useModalSustainer";
 import { Store } from "./Store";
@@ -161,12 +161,10 @@ export type InstanceProps<
   ResolutionValue = unknown,
   AdditionalComponentProps = {},
   DefaultProps extends Partial<AdditionalComponentProps> = {},
-> = MakeOptionalIfEmptyObject<
-  Omit<
-    PartialByKeys<
-      ModalProps<ResolutionValue> & AdditionalComponentProps,
-      keyof DefaultProps
-    >,
-    keyof ModalProps
-  >
+> = Omit<
+  PartialByKeys<
+    ModalProps<ResolutionValue> & AdditionalComponentProps,
+    keyof DefaultProps
+  >,
+  keyof ModalProps
 >;
