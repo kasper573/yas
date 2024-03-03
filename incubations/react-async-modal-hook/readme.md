@@ -128,6 +128,8 @@ Once you no longer want to sustain the component, call the function returned fro
 
 A React component that renders the currently spawned components. Using this is recommended, and it's desiged to be placed at the root of your app. But if you want to customize how registered modals are rendered you can create your own outlet by creating a react component that uses the `ModalContext` and `ModalStore`.
 
+Comes with a convenience `map` property that allows you to filter and/or map the currently spawned modals before rendering them. Useful if you want to customize minor things without having to create your own custom outlet, i.e. use multiple outlets with selective contents per outlet.
+
 #### ModalStore
 
 A class that holds the state and actions for the library. It is used internally by the hooks, but can be used manually if you want to extend the library with custom behavior.

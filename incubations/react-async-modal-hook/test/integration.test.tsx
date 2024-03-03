@@ -75,26 +75,57 @@ describe("can display", () => {
     userEvent.click(screen.getByText("Update message"));
     await screen.findByText("Custom message");
   });
+});
 
-  describe("multiple in sequence", () =>
-    defineAbstractHookTest(Dialog, async (useHook, render) => {
+describe("can filter using ModalOutlet", () =>
+  defineAbstractHookTest(
+    Dialog,
+    async (useHook, render) => {
       let name: string;
       render(() => {
         const spawn = useHook();
         return <button onClick={() => spawn({ name })}>Open dialog</button>;
       });
 
-      async function openAndResolveDialog(newName: string) {
+      async function openDialog(newName: string) {
         name = newName;
         userEvent.click(screen.getByText("Open dialog"));
-        const dialog = await screen.findByRole("dialog", { name });
-        userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
       }
 
-      await openAndResolveDialog("first");
-      await openAndResolveDialog("second");
-    }));
-});
+      await openDialog("first");
+      await openDialog("second");
+
+      expect(screen.queryAllByRole("dialog").length).toBe(1);
+      const dialog = await screen.findByRole("dialog", { name: "second" });
+      userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
+    },
+    createTestAPI(
+      () => new ModalStore(),
+      (elements) =>
+        elements.filter(
+          (el) => (el.props as unknown as { name: string }).name === "second",
+        ),
+    ),
+  ));
+
+describe("multiple in sequence", () =>
+  defineAbstractHookTest(Dialog, async (useHook, render) => {
+    let name: string;
+    render(() => {
+      const spawn = useHook();
+      return <button onClick={() => spawn({ name })}>Open dialog</button>;
+    });
+
+    async function openAndResolveDialog(newName: string) {
+      name = newName;
+      userEvent.click(screen.getByText("Open dialog"));
+      const dialog = await screen.findByRole("dialog", { name });
+      userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
+    }
+
+    await openAndResolveDialog("first");
+    await openAndResolveDialog("second");
+  }));
 
 test("can spawn an instance temporarily for a removed component", async () => {
   const store = new ModalStore();

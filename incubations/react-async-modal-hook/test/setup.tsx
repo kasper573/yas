@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { test, render as renderReact } from "@yas/test/vitest/react";
 import type { InstanceSpawnerFor } from "../src/useModal";
 import type { GeneralHookOptions } from "../src/constants";
+import type { ModalOutletMapper } from "../src/index";
 import {
   ModalOutlet,
   ModalContext,
@@ -34,13 +35,16 @@ export function defineAbstractHookTest<T extends AnyComponent>(
     }, render));
 }
 
-export function createTestAPI(createStore = () => new ModalStore()) {
+export function createTestAPI(
+  createStore = () => new ModalStore(),
+  map?: ModalOutletMapper,
+) {
   function render(Content: ComponentType) {
     const store = createStore();
     return renderReact(
       <ModalContext.Provider value={store}>
         <Content />
-        <ModalOutlet />
+        <ModalOutlet map={map} />
       </ModalContext.Provider>,
     );
   }
