@@ -1,8 +1,8 @@
+import type { ReactNode } from "react";
 import { useContext, useSyncExternalStore } from "react";
-
 import { ModalContext } from "./ModalContext";
 
-export function ModalOutlet() {
+export function ModalOutlet(): ReactNode {
   const store = useContext(ModalContext);
   const components = useSyncExternalStore(
     store.subscribe,
