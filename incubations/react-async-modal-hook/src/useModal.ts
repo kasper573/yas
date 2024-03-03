@@ -13,7 +13,7 @@ export interface PredefinedSpawnerHookOptions extends GeneralHookOptions {
 
 export function useModal<
   Component extends AnyComponent,
-  DefaultProps extends Partial<ComponentProps<Component>>,
+  DefaultProps extends Partial<ComponentProps<Component>> = {},
 >(
   component: Component,
   defaultProps?: DefaultProps,
