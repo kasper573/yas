@@ -8,13 +8,13 @@
     "@vanilla-extract/webpack-plugin": "2.3.6",
     "@vitejs/plugin-react": "4.2.1",
     "@yas/env": "workspace:*",
-    "css-loader": "^6.10.0",
-    "css-minimizer-webpack-plugin": "^5.0.1",
-    "file-loader": "^6.2.0",
+    "css-loader": "6.10.0",
+    "css-minimizer-webpack-plugin": "6.0.0",
+    "file-loader": "6.2.0",
     "rollup-plugin-visualizer": "5.12.0",
-    "style-loader": "^3.3.4",
+    "style-loader": "3.3.4",
     "tsup": "8.0.2",
-    "vite": "5.1.4",
-    "vite-plugin-checker": "^0.6.4"
+    "vite": "5.1.1",
+    "vite-plugin-checker": "0.6.4"
   }
 }
