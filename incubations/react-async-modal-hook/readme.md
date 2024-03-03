@@ -113,7 +113,7 @@ See [StackBlitz](#try-it-on-stackblitz) for examples for all primitives.
 `useModals` is basically identical to `useModal`, except that you do not specify a component ahead of time.
 It returns a function that also spawns a modal when called, but the difference being that you provide the component and its props later instead of ahead of time.
 
-- This is useful when you want to spawn many different components and dont want to plug in the useModal once per component, or don't know what component to spawn until later.
+- This is useful when you want to spawn many different components and dont want to plug in the `useModal` hook once per component, or don't know which component to spawn until later.
 
 - Comes with the caveat that you cannot provide default props, which means you cannot update a modals props once it has been spawned. You'd have to close it and then respawn for new props to have any effect.
 
