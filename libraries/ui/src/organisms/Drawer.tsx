@@ -1,13 +1,13 @@
-import type { ImperativeComponentProps } from "react-async-modal-hook";
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
 import { Overlay } from "../components/Overlay";
+import type { ModalProps } from "../hooks/useModal";
 import { useModalSustainer } from "../hooks/useModal";
 import { clipperRecipe, drawerRecipe } from "./Drawer.css";
 
 export interface DrawerProps<ResolutionValue = void>
   extends Omit<ComponentProps<typeof BaseDrawer>, "open" | "onClickAway">,
-    ImperativeComponentProps<ResolutionValue | undefined> {}
+    ModalProps<ResolutionValue | undefined> {}
 
 export function Drawer<ResolutionValue>({
   instanceId,

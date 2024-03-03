@@ -1,15 +1,15 @@
 import type { ComponentType } from "react";
-import type { MakeOptionalIfEmptyObject, PartialByKeys } from "./utilityTypes";
+import type { PartialByKeys } from "./utilityTypes";
 import { deferPromise } from "./deferPromise";
-import type { UseSpawnSustainerProps } from "./createSpawnSustainerHook";
+import type { UseSpawnSustainerProps } from "./useModalSustainer";
 import { Store } from "./Store";
 
-export class ComponentStore {
+export class ModalStore {
   // Remove delays are not part of the observable Store since they have no reactive impact.
   // They are pulled from the map when instances resolve.
   private removeDelays = new Map<InstanceId, Promise<void>>();
 
-  constructor(private store = new Store<ComponentStoreState>({})) {
+  constructor(private store = new Store<ModalStoreState>({})) {
     this.subscribe = this.store.subscribe.bind(this.store);
   }
 
@@ -17,7 +17,7 @@ export class ComponentStore {
     return this.store.state;
   }
 
-  subscribe: Store<ComponentStoreState>["subscribe"];
+  subscribe: Store<ModalStoreState>["subscribe"];
 
   upsertComponent(id: ComponentId, entry: UpsertComponentPayload) {
     return this.store.mutate((components) => {
@@ -120,9 +120,9 @@ export class ComponentStore {
   }
 }
 
-export type ComponentStoreState = Record<ComponentId, ComponentEntry>;
+export type ModalStoreState = Record<ComponentId, ComponentEntry>;
 
-export interface ImperativeComponentProps<ResolutionValue = any>
+export interface ModalProps<ResolutionValue = any>
   extends ResolvingComponentProps<ResolutionValue>,
     UseSpawnSustainerProps {
   state: InstanceState<ResolutionValue>;
@@ -140,7 +140,7 @@ export type UpsertComponentPayload = Pick<
 >;
 
 export interface ComponentEntry {
-  component: ComponentType<ImperativeComponentProps>;
+  component: ComponentType<ModalProps>;
   defaultProps?: Record<string, unknown>;
   instances: Record<InstanceId, InstanceEntry>;
   shouldBeRemovedWhenEmpty?: boolean;
@@ -149,7 +149,7 @@ export interface ComponentEntry {
 export type InstanceId = string;
 
 export interface InstanceEntry
-  extends Omit<ImperativeComponentProps, keyof UseSpawnSustainerProps> {
+  extends Omit<ModalProps, keyof UseSpawnSustainerProps> {
   props: InstanceProps;
 }
 
@@ -161,12 +161,10 @@ export type InstanceProps<
   ResolutionValue = unknown,
   AdditionalComponentProps = {},
   DefaultProps extends Partial<AdditionalComponentProps> = {},
-> = MakeOptionalIfEmptyObject<
-  Omit<
-    PartialByKeys<
-      ImperativeComponentProps<ResolutionValue> & AdditionalComponentProps,
-      keyof DefaultProps
-    >,
-    keyof ImperativeComponentProps
-  >
+> = Omit<
+  PartialByKeys<
+    ModalProps<ResolutionValue> & AdditionalComponentProps,
+    keyof DefaultProps
+  >,
+  keyof ModalProps
 >;

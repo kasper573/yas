@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
+import { ModalContext, ModalStore } from "@yas/ui";
 import { env } from "./env";
 import { ErrorFallback } from "./components/ErrorFallback";
 import {
@@ -14,6 +15,7 @@ import { router } from "./router";
 const rootRef = { current: document.documentElement };
 
 export default function App() {
+  const modalStore = useMemo(() => new ModalStore(), []);
   const [theme, setTheme] = useState(getPreferredTheme);
   const apiClient = useMemo(
     () =>
@@ -27,15 +29,17 @@ export default function App() {
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>
-      <ApiClientProvider value={apiClient}>
-        <ThemeProvider theme={theme} setTheme={setTheme}>
-          <ThemeInjector target={rootRef} />
-          <RouterProvider
-            router={router}
-            defaultErrorComponent={ErrorFallback}
-          />
-        </ThemeProvider>
-      </ApiClientProvider>
+      <ModalContext.Provider value={modalStore}>
+        <ApiClientProvider value={apiClient}>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <ThemeInjector target={rootRef} />
+            <RouterProvider
+              router={router}
+              defaultErrorComponent={ErrorFallback}
+            />
+          </ThemeProvider>
+        </ApiClientProvider>
+      </ModalContext.Provider>
     </ErrorBoundary>
   );
 }
