@@ -37,7 +37,7 @@
     "@yas/test": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
-    "@types/react": "^18.2.37",
+    "@types/react": "^18.2.61",
     "react": "^18.2.0",
     "concurrently": "8.2.2"
   }

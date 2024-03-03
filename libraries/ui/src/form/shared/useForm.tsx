@@ -1,6 +1,6 @@
 import type { z } from "@yas/validate";
 import { type AnyZodObject } from "@yas/validate";
-import type { UseFormProps } from "react-hook-form";
+import type { Resolver, UseFormProps } from "react-hook-form";
 import { useForm as useFormImpl } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UseFormReturn as UseFormReturnImpl } from "react-hook-form";
@@ -17,7 +17,7 @@ export function useForm<Schema extends AnyZodObject>(
   options?: Omit<UseFormProps<z.infer<Schema>>, "resolver">,
 ): UseFormReturn<Schema> {
   return useFormImpl({
-    resolver: zodResolver(schema),
+    resolver: (zodResolver as (s: unknown) => Resolver<z.infer<Schema>>)(schema),
     mode: "onSubmit",
     reValidateMode: "onBlur",
     ...options,
