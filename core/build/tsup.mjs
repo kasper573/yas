@@ -1,6 +1,6 @@
 const path = require("path");
 const { defineConfig } = require("tsup");
-const { defineEnv } = require("./defineEnv");
+const { defineEnv } = require("./defineEnv.mjs");
 
 /**
  * @param {string} projectRoot

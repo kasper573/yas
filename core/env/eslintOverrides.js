@@ -1,6 +1,6 @@
 // @ts-check
 
-const envFiles = require("./validEnvFiles");
+const envFiles = require("./validEnvFiles.mjs");
 
 const ext = ".{js,jsx,ts,tsx}";
 
