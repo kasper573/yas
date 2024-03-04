@@ -12,8 +12,8 @@
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "release": "release-incubation",
-    "test": "vitest typecheck --run",
-    "test:watch": "vitest typecheck"
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest --typecheck"
   },
   "peerDependencies": {
     "@vanilla-extract/recipes": "^0.5.1",

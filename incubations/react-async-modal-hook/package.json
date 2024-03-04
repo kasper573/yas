@@ -23,10 +23,10 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "pnpm test:unit run && pnpm test:types --run",
+    "test": "pnpm test:unit run && pnpm test:types run",
     "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
     "test:unit": "vitest",
-    "test:types": "vitest typecheck",
+    "test:types": "vitest --typecheck",
     "release": "release-incubation"
   },
   "peerDependencies": {
