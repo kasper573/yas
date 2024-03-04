@@ -1,14 +1,25 @@
 // @ts-check
 
-const path = require("path");
-const fs = require("fs");
+import * as path from "path";
+import * as fs from "fs";
+import { fileURLToPath } from "url";
+
+const validEnvFiles = JSON.parse(
+  fs.readFileSync(
+    path.resolve(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "validEnvFiles.json",
+    ),
+    "utf-8",
+  ),
+);
 
 /**
  * @param {string} projectRoot
  * @returns {string | undefined}
  */
-function getEnvFile(projectRoot) {
-  for (const projectRelativeEnvFile of require("./validEnvFiles")) {
+export function getEnvFile(projectRoot) {
+  for (const projectRelativeEnvFile of validEnvFiles) {
     const filepath = path.resolve(projectRoot, projectRelativeEnvFile);
     if (fs.existsSync(filepath)) {
       return filepath;
@@ -21,7 +32,7 @@ function getEnvFile(projectRoot) {
  * @param {((key: string, value: unknown) => [string, unknown]) | undefined} transform
  * @returns {Record<string, unknown>}
  */
-function loadEnv(projectRoot, transform = (key, value) => [key, value]) {
+export function loadEnv(projectRoot, transform = (key, value) => [key, value]) {
   const { env } = process;
   /**
    * @type {Record<string, unknown>}
@@ -38,7 +49,7 @@ function loadEnv(projectRoot, transform = (key, value) => [key, value]) {
  * @param {string|undefined} envFile
  * @returns {string[]}
  */
-function getReferencesInEnvFile(envFile) {
+export function getReferencesInEnvFile(envFile) {
   if (!envFile) {
     return [];
   }
@@ -51,7 +62,7 @@ function getReferencesInEnvFile(envFile) {
  * @param {string|undefined} envFile
  * @returns {{valid: false, error: unknown}|{valid: true, module: unknown}|undefined}
  */
-function validateEnv(envFile) {
+export function validateEnv(envFile) {
   if (envFile) {
     try {
       // Import env file to validate the env var values.
@@ -64,5 +75,3 @@ function validateEnv(envFile) {
     }
   }
 }
-
-module.exports = { getEnvFile, loadEnv, getReferencesInEnvFile, validateEnv };

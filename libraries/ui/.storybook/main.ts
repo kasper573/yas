@@ -1,7 +1,7 @@
 import * as path from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { mergeConfig } from "vite";
-const { createYasViteConfig } = require("@yas/build/vite");
+const { createYasViteConfig } = require("@yas/build/vite.mjs");
 
 const config: StorybookConfig = {
   stories: ["../docs/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],

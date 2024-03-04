@@ -1,4 +1,3 @@
-import path from "path";
 import { defineConfig as defineConfigImpl, mergeConfig } from "vitest/config";
 
 /**
@@ -13,9 +12,6 @@ export function defineConfig(projectDir, options = {}) {
     test: {
       globals: false,
       include: ["**/test/**/*.test.{js,jsx,ts,tsx}"],
-      typecheck: {
-        //tsconfig: path.resolve(projectDir, "src/test/tsconfig.json"),
-      },
     },
   };
   return defineConfigImpl(mergeConfig(baseOptions, options));

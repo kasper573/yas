@@ -1,12 +1,15 @@
-const path = require("path");
-const react = require("@vitejs/plugin-react");
-const { visualizer } = require("rollup-plugin-visualizer");
-const { defineConfig } = require("vite");
-const { default: checker } = require("vite-plugin-checker");
-const { defineEnv } = require("./defineEnv");
-const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
+import * as path from "path";
+import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "vite";
+import { checker } from "vite-plugin-checker";
+import { defineEnv } from "./defineEnv.mjs";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
-function createYasViteConfig(projectRoot, { analyze, useReact = true } = {}) {
+export function createYasViteConfig(
+  projectRoot,
+  { analyze, useReact = true } = {},
+) {
   return defineConfig({
     plugins: [
       vanillaExtractPlugin(),
@@ -34,5 +37,3 @@ function determineVisualizerPlugin(template) {
     filename: "dist/bundle-analysis.html",
   });
 }
-
-module.exports = { createYasViteConfig };

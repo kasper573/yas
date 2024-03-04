@@ -4,7 +4,7 @@ import {
   devices,
 } from "@playwright/test";
 
-function defineConfig({
+export function defineConfig({
   baseURL,
   isCI,
   testAllProjects = isCI,
@@ -70,5 +70,3 @@ function projectForDevice(name) {
     use: { ...devices[name] },
   };
 }
-
-module.exports = { defineConfig };

@@ -1,12 +1,13 @@
-const path = require("path");
-const { defineConfig } = require("tsup");
-const { defineEnv } = require("./defineEnv");
+import * as path from "path";
+import * as fs from "fs";
+import { defineConfig } from "tsup";
+import { defineEnv } from "./defineEnv.mjs";
 
 /**
  * @param {string} projectRoot
  * @param {Partial<import("tsup").Options>} options
  */
-function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
+export function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
   const { internalPackages, entry } = analyzePackage(projectRoot);
   return defineConfig({
     format: ["cjs", "esm"],
@@ -31,7 +32,9 @@ function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
  * @returns {{internalPackages: string[], entry: { [bundleName: string]: string }}
  */
 function analyzePackage(projectRoot) {
-  const packageJson = require(`${projectRoot}/package.json`);
+  const packageJson = JSON.parse(
+    fs.readFileSync(`${projectRoot}/package.json`, "utf-8"),
+  );
 
   // Derive internal packages from dependency fields
   const internalPackages = [];
@@ -61,5 +64,3 @@ function analyzePackage(projectRoot) {
 
   return { internalPackages, entry };
 }
-
-module.exports = { createYasTsupConfig };

@@ -5,7 +5,7 @@ import { ZodError } from "@yas/validate";
 import dotEnvFlow from "dotenv-flow";
 import dotEnvExpand from "dotenv-expand";
 import { execaCommandSync } from "execa";
-import { getEnvFile, validateEnv } from "./utils";
+import { getEnvFile, validateEnv } from "./utils.mjs";
 
 main();
 

@@ -1,4 +1,4 @@
-import { createYasTsupConfig } from "@yas/build/tsup";
+import { createYasTsupConfig } from "@yas/build/tsup.mjs";
 
 export default createYasTsupConfig(process.cwd(), {
   outExtension: () => ({ js: `.js` }),

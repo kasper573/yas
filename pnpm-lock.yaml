@@ -238,13 +238,13 @@ importers:
     devDependencies:
       '@vanilla-extract/vite-plugin':
         specifier: 4.0.4
-        version: 4.0.4(@types/node@20.8.10)(vite@5.1.1)
+        version: 4.0.4(@types/node@20.8.10)(vite@5.1.4)
       '@vanilla-extract/webpack-plugin':
         specifier: 2.3.6
         version: 2.3.6(@types/node@20.8.10)(webpack@5.88.2)
       '@vitejs/plugin-react':
         specifier: 4.2.1
-        version: 4.2.1(vite@5.1.1)
+        version: 4.2.1(vite@5.1.4)
       '@yas/env':
         specifier: workspace:*
         version: link:../env
@@ -267,11 +267,11 @@ importers:
         specifier: 8.0.2
         version: 8.0.2(postcss@8.4.35)(typescript@5.2.2)
       vite:
-        specifier: 5.1.1
-        version: 5.1.1(@types/node@20.8.10)
+        specifier: 5.1.4
+        version: 5.1.4(@types/node@20.8.10)
       vite-plugin-checker:
         specifier: 0.6.4
-        version: 0.6.4(eslint@8.57.0)(typescript@5.2.2)(vite@5.1.1)
+        version: 0.6.4(eslint@8.57.0)(typescript@5.2.2)(vite@5.1.4)
 
   core/env:
     devDependencies:
@@ -308,9 +308,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.1.0
         version: 7.1.0(eslint@8.57.0)(typescript@5.2.2)
-      '@yas/env':
-        specifier: workspace:*
-        version: link:../env
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.0)
@@ -418,7 +415,7 @@ importers:
         version: 29.5.12
       '@vitejs/plugin-react':
         specifier: 4.2.1
-        version: 4.2.1(vite@5.1.1)
+        version: 4.2.1(vite@5.1.4)
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -449,7 +446,7 @@ importers:
         version: 3.3.4(react-hook-form@7.49.3)
       '@playwright/experimental-ct-react':
         specifier: 1.42.1
-        version: 1.42.1(@types/node@20.8.10)(vite@5.1.1)
+        version: 1.42.1(@types/node@20.8.10)(vite@5.1.4)
       '@types/react':
         specifier: ^18.2.61
         version: 18.2.61
@@ -525,7 +522,7 @@ importers:
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: 1.42.1
-        version: 1.42.1(@types/node@20.8.10)(vite@5.1.1)
+        version: 1.42.1(@types/node@20.8.10)(vite@5.1.4)
       '@types/react':
         specifier: ^18.2.61
         version: 18.2.61
@@ -5503,7 +5500,7 @@ packages:
     dependencies:
       playwright: 1.42.1
       playwright-core: 1.42.1
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -5514,13 +5511,13 @@ packages:
       - terser
     dev: true
 
-  /@playwright/experimental-ct-react@1.42.1(@types/node@20.8.10)(vite@5.1.1):
+  /@playwright/experimental-ct-react@1.42.1(@types/node@20.8.10)(vite@5.1.4):
     resolution: {integrity: sha512-/dxu7nkGOlZIx9MUGQPM5kiIGksYIBaaJKQuNmaJNV29V3VGI1p9yQqrvl1jFK/Hu7SC1LmFB8RlkrOgMiZKYg==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
       '@playwright/experimental-ct-core': 1.42.1(@types/node@20.8.10)
-      '@vitejs/plugin-react': 4.2.1(vite@5.1.1)
+      '@vitejs/plugin-react': 4.2.1(vite@5.1.4)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8765,7 +8762,7 @@ packages:
       lodash: 4.17.21
       mlly: 1.4.2
       outdent: 0.8.0
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
       vite-node: 1.3.1(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
@@ -8788,13 +8785,13 @@ packages:
     dependencies:
       '@vanilla-extract/css': 1.14.0
 
-  /@vanilla-extract/vite-plugin@4.0.4(@types/node@20.8.10)(vite@5.1.1):
+  /@vanilla-extract/vite-plugin@4.0.4(@types/node@20.8.10)(vite@5.1.4):
     resolution: {integrity: sha512-cfg4GK274xzwbVFh8YWvQXNnsCMemvMMwej7V93TTBP2O8qzyTgsx5VJuiAPov3oUU8JWGboaTs16Vnoe5bZ9w==}
     peerDependencies:
       vite: ^4.0.3 || ^5.0.0
     dependencies:
       '@vanilla-extract/integration': 7.1.1(@types/node@20.8.10)
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8843,7 +8840,7 @@ packages:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-react@4.2.1(vite@5.1.1):
+  /@vitejs/plugin-react@4.2.1(vite@5.1.4):
     resolution: {integrity: sha512-oojO9IDc4nCUUi8qIR11KoQm0XFFLIwsRBwHRR4d/88IWghn1y6ckz/bJ8GHDCsYEJee8mDzqtJxh15/cisJNQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -8854,7 +8851,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.24.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -20722,7 +20719,7 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -20734,7 +20731,7 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-checker@0.6.4(eslint@8.57.0)(typescript@5.2.2)(vite@5.1.1):
+  /vite-plugin-checker@0.6.4(eslint@8.57.0)(typescript@5.2.2)(vite@5.1.4):
     resolution: {integrity: sha512-2zKHH5oxr+ye43nReRbC2fny1nyARwhxdm0uNYp/ERy4YvU9iZpNOsueoi/luXw5gnpqRSvjcEPxXbS153O2wA==}
     engines: {node: '>=14.16'}
     peerDependencies:
@@ -20778,7 +20775,7 @@ packages:
       strip-ansi: 6.0.1
       tiny-invariant: 1.3.1
       typescript: 5.2.2
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
       vscode-languageclient: 7.0.0
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.11
@@ -20821,8 +20818,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.1.1(@types/node@20.8.10):
-    resolution: {integrity: sha512-wclpAgY3F1tR7t9LL5CcHC41YPkQIpKUGeIuT8MdNwNZr6OqOTLs7JX5vIHAtzqLWXts0T+GDrh9pN2arneKqg==}
+  /vite@5.1.4(@types/node@20.8.10):
+    resolution: {integrity: sha512-n+MPqzq+d9nMVTKyewqw6kSt+R3CkvF9QAKY8obiQn8g1fwTscKxyfaYnC632HtBXAQGc1Yjomphwn1dtwGAHg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -20901,7 +20898,7 @@ packages:
       strip-literal: 2.0.0
       tinybench: 2.5.1
       tinypool: 0.8.2
-      vite: 5.1.1(@types/node@20.8.10)
+      vite: 5.1.4(@types/node@20.8.10)
       vite-node: 1.3.1(@types/node@20.8.10)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:

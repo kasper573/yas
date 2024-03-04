@@ -1,6 +1,7 @@
 {
   "name": "@yas/web",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "yas-env vite build",
