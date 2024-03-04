@@ -1,4 +1,4 @@
-import { defineConfig } from "@yas/test/playwright/config";
+import { defineConfig } from "@yas/test/playwright/config.mjs";
 import { env } from "./src/env";
 
 const baseURL = "http://localhost:4173";

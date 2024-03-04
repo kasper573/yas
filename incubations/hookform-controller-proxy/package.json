@@ -14,7 +14,7 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "pnpm playwright test -c playwright-ct.config.js",
+    "test": "pnpm playwright test -c playwright-ct.config.mjs",
     "test:watch": "pnpm run test --ui",
     "release": "release-incubation"
   },

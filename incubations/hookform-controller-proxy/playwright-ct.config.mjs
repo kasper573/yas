@@ -1,5 +1,10 @@
+import * as path from "path";
+import { fileURLToPath } from "url";
 import { defineConfig, devices } from "@playwright/experimental-ct-react";
 import { createYasViteConfig } from "@yas/build/vite.mjs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   testDir: "./",
