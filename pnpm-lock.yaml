@@ -417,7 +417,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@vitejs/plugin-react':
-        specifier: ^4.2.1
+        specifier: 4.2.1
         version: 4.2.1(vite@5.1.1)
       '@yas/tsconfig':
         specifier: workspace:*
@@ -503,7 +503,7 @@ importers:
         version: 18.2.61
       '@vanilla-extract/recipes':
         specifier: 0.5.1
-        version: 0.5.1(@vanilla-extract/css@1.14.1)
+        version: 0.5.1(@vanilla-extract/css@1.14.0)
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/build
@@ -677,14 +677,14 @@ importers:
   libraries/style:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.1
-        version: 1.14.1
+        specifier: 1.14.0
+        version: 1.14.0
       '@vanilla-extract/dynamic':
         specifier: 2.1.0
         version: 2.1.0
       '@vanilla-extract/recipes':
         specifier: 0.5.1
-        version: 0.5.1(@vanilla-extract/css@1.14.1)
+        version: 0.5.1(@vanilla-extract/css@1.14.0)
       '@yas/design-system':
         specifier: workspace:*
         version: link:../design-system
@@ -2717,13 +2717,13 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-react-jsx-self@7.23.3(@babel/core@7.23.5):
+  /@babel/plugin-transform-react-jsx-self@7.23.3(@babel/core@7.24.0):
     resolution: {integrity: sha512-qXRvbeKDSfwnlJnanVRp0SfuWE5DQhwQr5xtLBzp56Wabyo+4CMosF6Kfp+eOD/4FYpql64XVJ2W0pVLlJZxOQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.23.5
+      '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -2737,13 +2737,13 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-react-jsx-source@7.23.3(@babel/core@7.23.5):
+  /@babel/plugin-transform-react-jsx-source@7.23.3(@babel/core@7.24.0):
     resolution: {integrity: sha512-91RS0MDnAWDNvGC6Wio5XYkyWI39FMFO+JK9+4AlgaTH+yWwVTsw7/sn6LK0lH7c5F+TFkpv/3LfCJ1Ydwof/g==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.23.5
+      '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -8027,8 +8027,8 @@ packages:
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
     dependencies:
-      '@babel/parser': 7.23.5
-      '@babel/types': 7.23.5
+      '@babel/parser': 7.24.0
+      '@babel/types': 7.24.0
       '@types/babel__generator': 7.6.5
       '@types/babel__template': 7.4.2
       '@types/babel__traverse': 7.20.2
@@ -8750,22 +8750,6 @@ packages:
       media-query-parser: 2.0.2
       modern-ahocorasick: 1.0.1
       outdent: 0.8.0
-    dev: false
-
-  /@vanilla-extract/css@1.14.1:
-    resolution: {integrity: sha512-V4JUuHNjZgl64NGfkDJePqizkNgiSpphODtZEs4cCPuxLAzwOUJYATGpejwimJr1n529kq4DEKWexW22LMBokw==}
-    dependencies:
-      '@emotion/hash': 0.9.1
-      '@vanilla-extract/private': 1.0.3
-      chalk: 4.1.2
-      css-what: 6.1.0
-      cssesc: 3.0.0
-      csstype: 3.1.3
-      deep-object-diff: 1.1.9
-      deepmerge: 4.3.1
-      media-query-parser: 2.0.2
-      modern-ahocorasick: 1.0.1
-      outdent: 0.8.0
 
   /@vanilla-extract/dynamic@2.1.0:
     resolution: {integrity: sha512-8zl0IgBYRtgD1h+56Zu13wHTiMTJSVEa4F7RWX9vTB/5Xe2KtjoiqApy/szHPVFA56c+ex6A4GpCQjT1bKXbYw==}
@@ -8779,7 +8763,7 @@ packages:
       '@babel/core': 7.24.0
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.24.0)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
-      '@vanilla-extract/css': 1.14.1
+      '@vanilla-extract/css': 1.14.0
       esbuild: 0.19.4
       eval: 0.1.8
       find-up: 5.0.0
@@ -8809,14 +8793,6 @@ packages:
       '@vanilla-extract/css': ^1.0.0
     dependencies:
       '@vanilla-extract/css': 1.14.0
-    dev: false
-
-  /@vanilla-extract/recipes@0.5.1(@vanilla-extract/css@1.14.1):
-    resolution: {integrity: sha512-7dCuBgPQQ/89siQ0w2lkfjgkmToPUUDzFlHf5DRmt9ykiiycfA52tmPJ2RI/mr7jXi7U/vEN2aGP9QJSXEpGlA==}
-    peerDependencies:
-      '@vanilla-extract/css': ^1.0.0
-    dependencies:
-      '@vanilla-extract/css': 1.14.1
 
   /@vanilla-extract/vite-plugin@4.0.4(@types/node@20.8.10)(vite@5.1.1):
     resolution: {integrity: sha512-cfg4GK274xzwbVFh8YWvQXNnsCMemvMMwej7V93TTBP2O8qzyTgsx5VJuiAPov3oUU8JWGboaTs16Vnoe5bZ9w==}
@@ -8879,9 +8855,9 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
     dependencies:
-      '@babel/core': 7.23.5
-      '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.23.5)
-      '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.5)
+      '@babel/core': 7.24.0
+      '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.24.0)
+      '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.24.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
       vite: 5.1.1(@types/node@20.8.10)
