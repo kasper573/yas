@@ -12,10 +12,8 @@
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "release": "release-incubation",
-    "test": "pnpm test:unit run && pnpm test:types run",
-    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
-    "test:unit": "vitest",
-    "test:types": "vitest --typecheck"
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest --typecheck"
   },
   "peerDependencies": {
     "react": "^18.2.0"
@@ -27,7 +25,6 @@
     "@yas/scripts": "workspace:*",
     "@types/react": "^18.2.61",
     "@vanilla-extract/recipes": "0.5.1",
-    "concurrently": "^8.2.2",
     "react": "^18.2.0"
   },
   "version": "0.0.9"

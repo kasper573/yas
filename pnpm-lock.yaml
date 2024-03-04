@@ -489,9 +489,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
-      concurrently:
-        specifier: 8.2.2
-        version: 8.2.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -516,9 +513,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
-      concurrently:
-        specifier: ^8.2.2
-        version: 8.2.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
