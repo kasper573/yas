@@ -4,12 +4,10 @@
     "build": {
       "dotEnv": [".env", ".env.local", ".env.development", ".env.production"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"],
-      "cache": false
+      "outputs": ["dist/**", "build/**"]
     },
     "release": {
-      "dependsOn": ["build"],
-      "cache": false
+      "dependsOn": ["build"]
     },
     "test": {
       "dependsOn": ["^test"]
