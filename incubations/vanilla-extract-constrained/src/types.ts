@@ -132,10 +132,10 @@ type ConstrainedPropertyValue<Definition extends PropertyDefinition<unknown>> =
   Definition extends (...args: infer Args) => infer R
     ? AllowPlainValueIfSingleArg<Args>
     : Definition extends readonly (infer DirectValue)[]
-    ? DirectValue
-    : Definition extends Record<infer AliasName, unknown>
-    ? AliasName
-    : never;
+      ? DirectValue
+      : Definition extends Record<infer AliasName, unknown>
+        ? AliasName
+        : never;
 
 type AllowPlainValueIfSingleArg<Args extends unknown[]> =
   IsOnlyFirstArgRequired<Args> extends true ? Args[0] | Args : Args;
@@ -147,8 +147,8 @@ type IsOnlyFirstArgRequired<Args extends unknown[]> = Args extends [
   ? First extends undefined
     ? false
     : CompactTuple<Rest>["length"] extends 0
-    ? true
-    : false
+      ? true
+      : false
   : false;
 
 type CompactTuple<T extends unknown[]> = T extends [infer First, ...infer Rest]

@@ -18,7 +18,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.39.0-jammy # Has to be same version as in package.json
+      image: mcr.microsoft.com/playwright:v1.42.1-jammy # Has to be same version as in package.json
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/

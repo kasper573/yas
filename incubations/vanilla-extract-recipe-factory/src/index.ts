@@ -65,9 +65,8 @@ export type StyleCompiler<Style, CompiledStyle extends CompiledStyleLike> = (
 
 export type CompiledStyleLike = string | string[] | ComplexStyleRule;
 
-export type RecipeVariants<T> = T extends RuntimeFn<infer Groups>
-  ? VariantSelection<Groups>
-  : never;
+export type RecipeVariants<T> =
+  T extends RuntimeFn<infer Groups> ? VariantSelection<Groups> : never;
 
 export interface RuntimeFn<Groups> {
   (options?: VariantSelection<Groups>): string;

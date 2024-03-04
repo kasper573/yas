@@ -23,9 +23,9 @@
     "react-hook-form": "^7"
   },
   "devDependencies": {
-    "@playwright/experimental-ct-react": "1.39.0",
+    "@playwright/experimental-ct-react": "1.42.1",
     "@hookform/resolvers": "^3",
-    "@types/react": "^18.2.37",
+    "@types/react": "^18.2.61",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@yas/tsconfig": "workspace:*",

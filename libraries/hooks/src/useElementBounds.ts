@@ -10,8 +10,8 @@ export function useElementBounds(
     if (!ref.current) {
       return;
     }
-    const observer = new ResizeObserver(
-      ([bounds]) => latestOnChange.current?.(bounds.contentRect),
+    const observer = new ResizeObserver(([bounds]) =>
+      latestOnChange.current?.(bounds.contentRect),
     );
     observer.observe(ref.current);
     return () => observer.disconnect();

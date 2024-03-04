@@ -23,10 +23,8 @@
   "scripts": {
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "pnpm test:unit run && pnpm test:types --run",
-    "test:watch": "concurrently -n unit,types \"pnpm test:unit\" \"pnpm test:types\"",
-    "test:unit": "vitest",
-    "test:types": "vitest typecheck",
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest --typecheck",
     "release": "release-incubation"
   },
   "peerDependencies": {
@@ -37,8 +35,7 @@
     "@yas/test": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
-    "@types/react": "^18.2.37",
-    "react": "^18.2.0",
-    "concurrently": "8.2.2"
+    "@types/react": "^18.2.61",
+    "react": "^18.2.0"
   }
 }

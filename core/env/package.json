@@ -11,13 +11,13 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "@types/dotenv-flow": "^3.3.1",
+    "@types/dotenv-flow": "^3.3.3",
     "@yas/tsconfig": "workspace:*",
     "@yas/validate": "workspace:*",
     "@yas/test": "workspace:*",
-    "dotenv-expand": "^10.0.0",
-    "dotenv-flow": "^3.3.0",
-    "execa": "^7.1.1",
-    "tsx": "4.6.1"
+    "dotenv-expand": "^11.0.6",
+    "dotenv-flow": "^4.1.0",
+    "execa": "^8.0.1",
+    "tsx": "4.7.1"
   }
 }

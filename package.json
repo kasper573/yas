@@ -16,7 +16,7 @@
     "dev": "turbo run dev --concurrency 40",
     "lint": "pnpm eslint . --max-warnings=0",
     "lint:fix": "pnpm eslint . --fix",
-    "depcheck": "pnpm exec depcruise . --output-type err-long && assert-dependency-versions --pn react react-dom @types/react @types/react-dom",
+    "depcheck": "pnpm exec depcruise . --output-type err-long && assert-dependency-versions --pn react react-dom @types/react @types/react-dom superjson",
     "architecture": "pnpm exec depcruise . --output-type archi | dot -Tsvg -o architecture.svg",
     "typecheck": "typecheck-all-workspaces",
     "format": "prettier --check .",
@@ -29,15 +29,15 @@
   "devDependencies": {
     "@yas/scripts": "workspace:*",
     "cross-env": "7.0.3",
-    "dependency-cruiser": "16.2.0",
+    "dependency-cruiser": "16.2.2",
     "eslint-config-yas": "workspace:*",
     "eslint-plugin-yas": "workspace:*",
-    "eslint": "^8.48.0",
-    "prettier": "^3.0.3",
-    "turbo": "1.11.3",
-    "husky": "9.0.6",
-    "@commitlint/cli": "18.6.0",
-    "@commitlint/config-conventional": "18.6.0"
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "turbo": "1.12.4",
+    "husky": "9.0.11",
+    "@commitlint/cli": "19.0.3",
+    "@commitlint/config-conventional": "19.0.3"
   },
   "engines": {
     "node": "20.10.0"

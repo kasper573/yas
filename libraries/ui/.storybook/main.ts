@@ -1,4 +1,7 @@
+import * as path from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from "vite";
+const { createYasViteConfig } = require("@yas/build/vite");
 
 const config: StorybookConfig = {
   stories: ["../docs/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -12,6 +15,13 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-vite",
     options: {},
+  },
+  viteFinal(storybookBuiltinViteConfig) {
+    const ourConfig = createYasViteConfig(path.resolve(__dirname, ".."), {
+      useReact: false,
+      analyze: false,
+    });
+    return mergeConfig(storybookBuiltinViteConfig, ourConfig);
   },
   docs: {
     autodocs: "tag",

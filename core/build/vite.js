@@ -4,13 +4,13 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const { defineConfig } = require("vite");
 const { default: checker } = require("vite-plugin-checker");
 const { defineEnv } = require("./defineEnv");
-const { viteVanillaExtractPlugin } = require("./vanillaExtractPlugin");
+const { vanillaExtractPlugin } = require("@vanilla-extract/vite-plugin");
 
-function createYasViteConfig(projectRoot, { analyze } = {}) {
+function createYasViteConfig(projectRoot, { analyze, useReact = true } = {}) {
   return defineConfig({
     plugins: [
-      viteVanillaExtractPlugin(),
-      react(),
+      vanillaExtractPlugin(),
+      useReact && react(),
       checker({ typescript: true }),
       determineVisualizerPlugin(analyze),
     ].filter(Boolean),
