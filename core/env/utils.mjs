@@ -2,7 +2,17 @@
 
 import * as path from "path";
 import * as fs from "fs";
-import validEnvFiles from "./validEnvFiles.json";
+import { fileURLToPath } from "url";
+
+const validEnvFiles = JSON.parse(
+  fs.readFileSync(
+    path.resolve(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "validEnvFiles.json",
+    ),
+    "utf-8",
+  ),
+);
 
 /**
  * @param {string} projectRoot
