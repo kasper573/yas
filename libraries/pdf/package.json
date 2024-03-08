@@ -1,0 +1,23 @@
+{
+  "name": "@yas/pdf",
+  "version": "0.0.0",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./src/index.tsx"
+    }
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@react-pdf/renderer": "3.3.8",
+    "@yas/design-system": "workspace:*",
+    "flattened": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "@react-pdf/types": "2.4.1",
+    "@yas/tsconfig": "workspace:*"
+  }
+}
