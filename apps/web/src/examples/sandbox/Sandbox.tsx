@@ -26,7 +26,6 @@ export default function Sandbox() {
   const [shouldPerformErrorQuery, setShouldPerformErrorQuery] = useState(false);
   const [shouldHaveRenderError, setShouldHaveRenderError] = useState(false);
   api.example.error.useQuery(undefined, {
-    suspense: true,
     enabled: shouldPerformErrorQuery,
   });
   const preferenceMediaQueryResults = useMediaQueries(
