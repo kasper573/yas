@@ -43,8 +43,7 @@ export function createApiClient(
   const queryClient = new QueryClient({ defaultOptions });
   const trpc = createTRPCReact<ApiRouter>();
   const trpcClient = trpc.createClient({
-    transformer,
-    links: [httpBatchLink({ url })],
+    links: [httpBatchLink({ url, transformer })],
   });
 
   return { queryClient, trpcClient, trpc };
