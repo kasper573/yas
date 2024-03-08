@@ -9,8 +9,8 @@ import type {
 } from "vanilla-extract-constrained";
 import { all, createStyleResolver, multi } from "vanilla-extract-constrained";
 import { tokens } from "@yas/design-system";
+import { flattened } from "flattened";
 import { variables } from "./variables.css";
-import { flattened } from "./utils/flattened";
 import { breakpointQuery } from "./utils/breakpointQuery";
 
 const overflows = ["visible", "hidden", "scroll", "auto"] as const;
