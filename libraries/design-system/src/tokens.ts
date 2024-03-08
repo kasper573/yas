@@ -1,4 +1,4 @@
-import { inter } from "./fonts/roboto";
+import { inter } from "./fonts/inter";
 
 export const fontFamilies = {
   default: inter,

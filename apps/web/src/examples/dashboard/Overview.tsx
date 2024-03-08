@@ -1,5 +1,6 @@
 import { styled } from "@yas/style";
 import {
+  Button,
   DatePicker,
   Linklike,
   Stack as StackImpl,
@@ -11,6 +12,8 @@ import { Suspense } from "react";
 import { api, enabledWhenDefined, type types } from "@yas/api-client";
 import { startOfToday } from "@yas/time";
 import { getRouteApi, useSearchState } from "@yas/router";
+import { DownloadIcon } from "@yas/icons";
+import { useFileIO } from "@yas/hooks";
 import { Title } from "./Title";
 import { DashboardContent, DashboardSkeleton } from "./OverviewContent";
 
@@ -22,6 +25,7 @@ export default function Overview(): JSX.Element {
   const [{ userId, date = startOfToday() }, setSearch] =
     useSearchState(routeApi);
 
+  const { save } = useFileIO();
   const setDate = (date?: Date) => setSearch({ date }, { replace: true });
   const setUserId = (userId?: types.example.UserId) => setSearch({ userId });
 
@@ -31,9 +35,16 @@ export default function Overview(): JSX.Element {
     ...enabledWhenDefined(userId),
   );
 
+  async function downloadPDF() {
+    const { pdf } = await import("@yas/pdf");
+    const { OverviewPDF } = await import("./OverviewPDF");
+    const blob = await pdf(<OverviewPDF />).toBlob();
+    save(new File([blob], "overview.pdf", { type: blob.type }));
+  }
+
   return (
     <>
-      <Stack direction="row" justify="spaceBetween">
+      <Stack direction="row" justify="spaceBetween" fullWidth>
         <Title
           showClearButton={!!selectedUser.data}
           onClear={clearSelectedUser}
@@ -41,7 +52,12 @@ export default function Overview(): JSX.Element {
           Dashboard
           {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
         </Title>
-        <DatePicker value={date} onChange={setDate} />
+        <Stack direction="row" gap="#2" style={{ flex: 0 }}>
+          <Button icon onClick={downloadPDF}>
+            <DownloadIcon />
+          </Button>
+          <DatePicker value={date} onChange={setDate} />
+        </Stack>
       </Stack>
       {selectedUser.error ? (
         <Text>Could not find user by id {userId}</Text>

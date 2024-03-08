@@ -21,7 +21,8 @@
     "vanilla-extract-constrained": "workspace:*",
     "vanilla-extract-recipe-factory": "workspace:*",
     "react-styled-factory": "workspace:*",
-    "@yas/design-system": "workspace:*"
+    "@yas/design-system": "workspace:*",
+    "flattened": "workspace:*"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",

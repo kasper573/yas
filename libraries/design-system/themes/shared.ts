@@ -6,7 +6,6 @@ const regular = (size: number): TypographyStyle => ({
   fontSize: `${size}px`,
   fontWeight: "normal",
   fontStyle: "normal",
-  letterSpacing: "normal",
   lineHeight: `1.5em`,
   color: "inherit",
 });

@@ -28,7 +28,6 @@ const typographyStyle = {
   fontSize: null,
   fontStyle: null,
   fontWeight: null,
-  letterSpacing: null,
   lineHeight: null,
   color: null,
 } satisfies Partial<Record<keyof CSSProperties, null>>;
