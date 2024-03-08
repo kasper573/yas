@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "@tanstack/react-query": "5.25.0",
+    "@yas/query": "workspace:*",
     "@trpc/client": "11.0.0-next-beta.316",
     "@trpc/react-query": "11.0.0-next-beta.316",
     "@yas/api": "workspace:*",

@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@tanstack/react-query": "5.25.0",
+    "@yas/query": "workspace:*",
     "@yas/hooks": "workspace:*",
     "react": "18.2.0",
     "gql.tada": "1.2.1",

@@ -6,7 +6,7 @@ import {
   useSuspenseQuery as useSuspenseQueryImpl,
   useMutation as useMutationImpl,
   QueryClientProvider,
-} from "@tanstack/react-query";
+} from "@yas/query";
 import { type AnyVariables, useClient as useURQLClient } from "urql";
 import { Provider as URQLProvider } from "urql";
 import type { ReactNode } from "react";

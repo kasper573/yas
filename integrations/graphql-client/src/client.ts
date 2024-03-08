@@ -1,5 +1,5 @@
-import type { QueryClientConfig } from "@tanstack/react-query";
-import { QueryClient } from "@tanstack/react-query";
+import type { QueryClientConfig } from "@yas/query";
+import { QueryClient } from "@yas/query";
 import { Client, cacheExchange, fetchExchange } from "urql";
 
 export type GraphQLClient = ReturnType<typeof createGraphQLClient>;

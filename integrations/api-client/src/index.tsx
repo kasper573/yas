@@ -1,6 +1,6 @@
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
-import type { QueryClientConfig } from "@tanstack/react-query";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { QueryClientConfig } from "@yas/query";
+import { QueryClient, QueryClientProvider } from "@yas/query";
 import type { PropsWithChildren } from "react";
 import transformer from "superjson";
 import type { ApiRouter } from "@yas/api";
