@@ -1,5 +1,9 @@
 import { useMemo, useState } from "react";
 import { createApiClient, ApiClientProvider } from "@yas/api-client";
+import {
+  GraphQLClientProvider,
+  createGraphQLClient,
+} from "@yas/graphql-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
 import { ModalContext, ModalStore } from "@yas/ui";
@@ -17,13 +21,15 @@ const rootRef = { current: document.documentElement };
 export default function App() {
   const modalStore = useMemo(() => new ModalStore(), []);
   const [theme, setTheme] = useState(getPreferredTheme);
+
   const apiClient = useMemo(
+    () => createApiClient(env.trpcServerUrl, queryClientOptions),
+    [],
+  );
+
+  const graphqlClient = useMemo(
     () =>
-      createApiClient(env.apiUrl, {
-        queries: {
-          retry: env.mode === "production",
-        },
-      }),
+      createGraphQLClient({ url: env.graphqlServerUrl, queryClientOptions }),
     [],
   );
 
@@ -31,15 +37,23 @@ export default function App() {
     <ErrorBoundary fallbackRender={ErrorFallback}>
       <ModalContext.Provider value={modalStore}>
         <ApiClientProvider value={apiClient}>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <ThemeInjector target={rootRef} />
-            <RouterProvider
-              router={router}
-              defaultErrorComponent={ErrorFallback}
-            />
-          </ThemeProvider>
+          <GraphQLClientProvider client={graphqlClient}>
+            <ThemeProvider theme={theme} setTheme={setTheme}>
+              <ThemeInjector target={rootRef} />
+              <RouterProvider
+                router={router}
+                defaultErrorComponent={ErrorFallback}
+              />
+            </ThemeProvider>
+          </GraphQLClientProvider>
         </ApiClientProvider>
       </ModalContext.Provider>
     </ErrorBoundary>
   );
 }
+
+const queryClientOptions = {
+  queries: {
+    retry: env.mode === "production",
+  },
+};

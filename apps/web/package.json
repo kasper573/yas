@@ -14,8 +14,8 @@
     "test:e2e": "yas-env playwright test"
   },
   "dependencies": {
-    "@tanstack/react-query": "^4",
     "@yas/api-client": "workspace:*",
+    "@yas/graphql-client": "workspace:*",
     "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",
     "@yas/time": "workspace:*",
