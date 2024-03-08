@@ -21,6 +21,7 @@
     "@yas/time": "workspace:*",
     "@yas/result": "workspace:*",
     "@yas/ui": "workspace:*",
+    "@yas/pdf": "workspace:*",
     "@yas/hooks": "workspace:*",
     "@yas/validate": "workspace:*",
     "@yas/router": "workspace:*",
