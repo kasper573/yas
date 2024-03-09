@@ -37,12 +37,15 @@ function testApi() {
   });
 
   test("can mutate", async ({ page }) => {
-    const getCount = async () =>
-      parseInt(await page.getByLabel(/count from server/i).inputValue(), 10);
-
     const initialCount = await getCount();
     await page.getByRole("button", { name: /increase count/i }).click();
     const changedCount = await getCount();
     expect(changedCount).toBeGreaterThan(initialCount);
+
+    async function getCount() {
+      const countElement = page.getByLabel(/count from server/i);
+      await expect(countElement).toHaveValue(/\d+/);
+      return parseInt(await countElement.inputValue(), 10);
+    }
   });
 }
