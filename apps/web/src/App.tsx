@@ -20,14 +20,14 @@ const rootRef = { current: document.documentElement };
 export default function App() {
   const modalStore = useMemo(() => new ModalStore(), []);
   const [theme, setTheme] = useState(getPreferredTheme);
-  const { queryClient, trpcClient, graphqlClient } = useMemo(createClients, []);
+  const clients = useMemo(createClients, []);
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>
       <ModalContext.Provider value={modalStore}>
-        <QueryClientProvider client={queryClient}>
-          <TrpcClientProvider value={trpcClient}>
-            <GraphQLClientContext.Provider value={graphqlClient}>
+        <QueryClientProvider client={clients.query}>
+          <TrpcClientProvider value={clients.trpc}>
+            <GraphQLClientContext.Provider value={clients.graphql}>
               <ThemeProvider theme={theme} setTheme={setTheme}>
                 <ThemeInjector target={rootRef} />
                 <RouterProvider
@@ -45,7 +45,7 @@ export default function App() {
 }
 
 function createClients() {
-  const queryClient: QueryClient = new QueryClient({
+  const query: QueryClient = new QueryClient({
     defaultOptions: {
       queries: {
         retry: env.mode === "production",
@@ -53,7 +53,7 @@ function createClients() {
       mutations: {
         onSettled(_, error) {
           if (!error) {
-            queryClient.invalidateQueries();
+            query.invalidateQueries();
           }
         },
       },
@@ -61,12 +61,9 @@ function createClients() {
   });
   const clientId = v4();
   const headers = () => ({ "client-id": clientId });
-  const trpcClient = createTrpcClient(env.trpcServerUrl, headers);
-  const graphqlClient = createGraphQLClient({
-    url: env.graphqlServerUrl,
-    headers,
-  });
-  return { queryClient, trpcClient, graphqlClient };
+  const trpc = createTrpcClient({ url: env.trpcServerUrl, headers });
+  const graphql = createGraphQLClient({ url: env.graphqlServerUrl, headers });
+  return { query, trpc, graphql };
 }
 
 // Avoid importing the devtools in production

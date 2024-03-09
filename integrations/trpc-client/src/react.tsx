@@ -49,10 +49,13 @@ export function TrpcClientProvider({
 }
 
 export type TrpcClient = ReturnType<typeof createTrpcClient>;
-export function createTrpcClient(
-  url: string,
-  headers: () => types.TrpcServerHeaders,
-) {
+export function createTrpcClient({
+  url,
+  headers,
+}: {
+  url: string;
+  headers: () => types.TrpcServerHeaders;
+}) {
   const react = createTRPCReact<ApiRouter>();
 
   const trpc = react.createClient({
