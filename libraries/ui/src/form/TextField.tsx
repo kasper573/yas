@@ -22,6 +22,7 @@ export type TextFieldBaseProps = Pick<
   Omit<RecipeVariants<typeof styles.control>, "onChange"> & {
     clearable?: boolean;
     type?: "text" | "number" | "password";
+    readOnly?: boolean;
     inputProps?: Omit<
       ComponentProps<typeof InputArea>,
       "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size" | "children"
@@ -43,6 +44,7 @@ export function TextField({
   required,
   size,
   clearable,
+  readOnly,
   ...rest
 }: TextFieldProps) {
   const id = useId();
@@ -76,6 +78,7 @@ export function TextField({
           type={type}
           autoComplete="off"
           required={required}
+          readOnly={readOnly}
           {...inputProps}
           className={clsx(styles.input({ fullWidth }), inputProps?.className)}
           onKeyDown={(e) => {
