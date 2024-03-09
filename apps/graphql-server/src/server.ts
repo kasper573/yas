@@ -1,6 +1,8 @@
-import { g, InferResolvers, buildSchema } from "garph";
-import { createYoga, YogaInitialContext } from "graphql-yoga";
 import { createServer as createHTTPServer } from "http";
+import type { InferResolvers } from "garph";
+import { g, buildSchema } from "garph";
+import type { YogaInitialContext } from "graphql-yoga";
+import { createYoga } from "graphql-yoga";
 
 export function createServer(graphqlEndpoint: string) {
   const queryType = g.type("Query", {
