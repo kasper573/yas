@@ -1,6 +1,6 @@
 # Yet Another Stack &middot; [![status](https://github.com/kasper573/yas/actions/workflows/build_test_release.yml/badge.svg)](https://github.com/kasper573/yas/actions)
 
-A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture.
+A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture without sacrificing developer experience.
 
 > Also serves as an [incubation](#incubations) repository for experimenting with new ideas and technologies.
 
