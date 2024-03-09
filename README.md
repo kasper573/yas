@@ -44,8 +44,8 @@ Here's a quick overview of the most notable tools and libraries used in this sta
 - Decouple your apps and packages.
 - Keep packages small and focused.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
-- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env)).
-- Encapsulate packages (e.g. [@yas/style](libraries/style), [@yas/validate](libraries/validate)).
+- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/env](core/test)).
+- Encapsulate packages (e.g. [@yas/style](libraries/style), [@yas/query](libraries/query), [@yas/validate](libraries/validate)).
 - Enforce conventions wherever possible (i.e. eslint, prettier, etc.).
 - Each non-trivial package should provide its own documentation.
 
