@@ -8,7 +8,7 @@ import {
 import type { types } from "@yas/api-client";
 import { api } from "@yas/api-client";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, formatNumber, formatCurrency } from "./shared";
+import { Card, formatNumber, formatCurrency } from "../shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./OverviewContent.css";
 import { Chart } from "./Chart";

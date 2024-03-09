@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import { Bounds } from "@yas/ui";
 import { variables } from "@yas/style";
 import { tokens } from "@yas/design-system";
-import { formatCurrency } from "./shared";
+import { formatCurrency } from "../shared";
 
 export interface ChartProps {
   data: { name: string; value: number }[];

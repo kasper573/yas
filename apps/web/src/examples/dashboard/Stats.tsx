@@ -1,6 +1,6 @@
 import { Stack, Text } from "@yas/ui";
 import type { ComponentProps, ReactNode } from "react";
-import { Card } from "./shared";
+import { Card } from "../shared";
 
 export function StatsCard({
   title,
