@@ -1,21 +1,27 @@
+// @ts-check
+
 import { defineConfig } from "@yas/test/playwright/config.mjs";
 import { env } from "./src/env";
 
-const baseURL = "http://localhost:4173";
+const webAppURL = "http://localhost:4173";
 export default defineConfig({
-  baseURL,
+  baseURL: webAppURL,
   isCI: env.CI,
   webServers: [
-    { command: "pnpm build && pnpm preview", url: baseURL },
+    { command: "pnpm build && pnpm preview", url: webAppURL },
     {
       command: "pnpm --filter @yas/trpc-server dev",
-      url: getApiHealthUrl(),
+      url: getTrpcHealthUrl(),
+    },
+    {
+      command: "pnpm --filter @yas/graphql-server dev",
+      url: env.graphqlServerUrl,
     },
   ],
 });
 
-function getApiHealthUrl() {
-  const url = new URL(env.apiUrl);
+function getTrpcHealthUrl() {
+  const url = new URL(env.trpcServerUrl);
   url.pathname = "/healthz";
   return url.toString();
 }
