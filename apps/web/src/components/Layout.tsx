@@ -15,6 +15,7 @@ import { layout } from "./Layout.css";
 const mainLinks = [
   { to: "/", label: "Sandbox" },
   { to: "/dashboard", label: "Dashboard" },
+  { to: "/api-tester", label: "Api Tester" },
 ] as const;
 
 export default function Layout() {
