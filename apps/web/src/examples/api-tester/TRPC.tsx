@@ -33,8 +33,11 @@ export default function TRPC() {
       <Button onClick={() => increase.mutate({ amount: increaseAmount })}>
         Increase count
       </Button>
-      <Button onClick={() => setShouldServerError(true)}>
-        Trigger server side error
+      <Button
+        onClick={() => setShouldServerError(true)}
+        disabled={shouldServerError}
+      >
+        Enable server side error
       </Button>
       <pre>
         {JSON.stringify({ responseData: { greeting, count } }, null, 2)}
