@@ -14,12 +14,8 @@ export function createExampleRouter() {
     }),
     hello: t.procedure
       .input(z.string())
-      .output(z.object({ message: z.string(), date: z.date() }))
-      .query(({ input }) => {
-        const message = `${input} world`;
-        const date = new Date();
-        return { message, date };
-      }),
+      .output(z.string())
+      .query(({ input }) => `${input} world`),
     count: t.procedure.output(z.number()).query(() => count),
     increaseCount: t.procedure
       .input(z.object({ amount: z.number() }))
