@@ -1,5 +1,5 @@
 {
-  "name": "@yas/api-client",
+  "name": "@yas/trpc-client",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -14,7 +14,7 @@
     "@yas/query": "workspace:*",
     "@trpc/client": "11.0.0-next-beta.316",
     "@trpc/react-query": "11.0.0-next-beta.316",
-    "@yas/api": "workspace:*",
+    "@yas/trpc-server": "workspace:*",
     "@yas/result": "workspace:*",
     "react": "^18.2.0",
     "superjson": "1.13.3"
@@ -26,7 +26,7 @@
   "depcheck": {
     "exceptions": {
       "allow": [
-        "@yas/api"
+        "@yas/trpc-server"
       ]
     }
   }

@@ -1,4 +1,4 @@
-import { api } from "@yas/api-client";
+import { api } from "@yas/trpc-client";
 
 import { useDebouncedValue } from "@yas/hooks";
 import { Button, NumberField, Text, TextField } from "@yas/ui";

@@ -9,7 +9,7 @@ import {
   Text,
 } from "@yas/ui";
 import { Suspense } from "react";
-import { api, enabledWhenDefined, type types } from "@yas/api-client";
+import { api, enabledWhenDefined, type types } from "@yas/trpc-client";
 import { startOfToday } from "@yas/time";
 import { getRouteApi, useSearchState } from "@yas/router";
 import { DownloadIcon } from "@yas/icons";

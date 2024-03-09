@@ -1,11 +1,11 @@
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import transformer from "superjson";
-import type { ApiRouter } from "@yas/api";
+import type { ApiRouter } from "@yas/trpc-server";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import { useQueryClient } from "@yas/query";
-export type { types } from "@yas/api";
+export type { types } from "@yas/trpc-server";
 
 /**
  * Convenience proxy for accessing the client interface

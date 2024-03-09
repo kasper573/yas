@@ -1,6 +1,8 @@
-# React client for @yas/graphql-server
+# GraphQL Client
 
-Combines [@yas/client](../../libraries/query) and [gql.tada](https://gql-tada.0no.co/) into a react client for the [graphql-server](../../apps/graphql-server) app.
+A [graphql](https://graphql.org/) client for the [graphql-server](../../apps/graphql-server) app.
+
+The react hooks require a [@yas/client](../../libraries/query) to be provided by a parent component.
 
 ## tsconfig.json
 

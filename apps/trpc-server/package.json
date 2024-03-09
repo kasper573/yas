@@ -1,5 +1,5 @@
 {
-  "name": "@yas/api",
+  "name": "@yas/trpc-server",
   "version": "0.0.0",
   "private": true,
   "types": "./src/package.ts",

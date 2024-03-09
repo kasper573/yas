@@ -8,7 +8,7 @@ export default defineConfig({
   webServers: [
     { command: "pnpm build && pnpm preview", url: baseURL },
     {
-      command: "pnpm --filter @yas/api dev",
+      command: "pnpm --filter @yas/trpc-server dev",
       url: getApiHealthUrl(),
     },
   ],

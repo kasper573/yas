@@ -14,7 +14,7 @@
     "test:e2e": "yas-env playwright test"
   },
   "dependencies": {
-    "@yas/api-client": "workspace:*",
+    "@yas/trpc-client": "workspace:*",
     "@yas/graphql-client": "workspace:*",
     "@yas/icons": "workspace:*",
     "@yas/style": "workspace:*",

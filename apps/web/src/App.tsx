@@ -1,5 +1,5 @@
 import { lazy, useMemo, useState } from "react";
-import { TrpcClientProvider, createTrpcClient } from "@yas/api-client";
+import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
