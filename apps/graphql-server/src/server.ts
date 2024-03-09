@@ -42,7 +42,7 @@ export function createServer(graphqlEndpoint: string) {
     { context: YogaInitialContext }
   > = {
     Query: {
-      greeting: (_, { name }) => (name?.trim() ? `Hello, ${name}` : ""),
+      greeting: (_, { name }) => (name?.trim() ? `Hello, ${name}!` : ""),
       count: () => count,
       error: () => {
         throw new Error("Manually triggered server side error");

@@ -20,8 +20,8 @@ export function createExampleRouter() {
     increaseCount: t.procedure
       .input(z.object({ amount: z.number() }))
       .output(z.number())
-      .mutation(() => {
-        count++;
+      .mutation(({ input: { amount } }) => {
+        count += amount;
         return count;
       }),
   });
