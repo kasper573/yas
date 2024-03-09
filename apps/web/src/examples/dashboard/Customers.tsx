@@ -1,4 +1,4 @@
-import { graphql, useQuery } from "@yas/graphql-client";
+import { graphql, useGraphQLQuery } from "@yas/graphql-client";
 import { useDebouncedValue } from "@yas/hooks";
 import { Text, TextField } from "@yas/ui";
 import { useState } from "react";
@@ -12,7 +12,10 @@ const query = graphql(`
 export default function Customers() {
   const [input, setInput] = useState("");
   const debouncedInput = useDebouncedValue(input, 300);
-  const { data } = useQuery({ query, variables: { input: debouncedInput } });
+  const { data } = useGraphQLQuery({
+    query,
+    variables: { input: debouncedInput },
+  });
   return (
     <>
       <Text>Customers</Text>

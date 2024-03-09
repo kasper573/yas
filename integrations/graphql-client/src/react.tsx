@@ -12,7 +12,7 @@ import { useMemo } from "react";
 
 export { Provider as GraphQLClientProvider } from "urql";
 
-export function useQuery<
+export function useGraphQLQuery<
   Data,
   Variables extends AnyVariables,
   Transformed = Data,
@@ -23,7 +23,7 @@ export function useQuery<
   return useQueryImpl(tanstackQueryProps(client, queryInput));
 }
 
-export function useQueries<
+export function useGraphQLQueries<
   Data,
   Variables extends AnyVariables,
   Transformed = Data,
@@ -54,7 +54,7 @@ export function useQueries<
   return { ...result, data };
 }
 
-export function useSuspenseQuery<
+export function useGraphQLSuspenseQuery<
   Data,
   Variables extends AnyVariables,
   Transformed = Data,
@@ -65,7 +65,7 @@ export function useSuspenseQuery<
   return useSuspenseQueryImpl(tanstackQueryProps(client, queryInput));
 }
 
-export function useSuspenseQueries<
+export function useGraphQLSuspenseQueries<
   Data,
   Variables extends AnyVariables,
   Transformed = Data,
@@ -94,7 +94,7 @@ export function useSuspenseQueries<
   return { ...result, data };
 }
 
-export function useMutation<Data, Variables extends AnyVariables>(
+export function useGraphQLMutation<Data, Variables extends AnyVariables>(
   query: DocumentInput<Data, Variables>,
 ) {
   const client = useURQLClient();
