@@ -5,7 +5,7 @@ import { createDashboardProcedure } from "./dashboard";
 import { createUsersRouter } from "./users";
 
 export function createExampleRouter() {
-  let count = 0;
+  const countsPerClient = new Map<string, number>();
   return t.router({
     users: createUsersRouter(),
     dashboard: createDashboardProcedure(),
@@ -16,13 +16,17 @@ export function createExampleRouter() {
       .input(z.string())
       .output(z.string())
       .query(({ input: name }) => (name.trim() ? `Hello, ${name}!` : "")),
-    count: t.procedure.output(z.number()).query(() => count),
+    count: t.procedure
+      .output(z.number())
+      .query(({ ctx }) => countsPerClient.get(ctx.clientId) ?? 0),
     increaseCount: t.procedure
       .input(z.object({ amount: z.number() }))
       .output(z.number())
-      .mutation(({ input: { amount } }) => {
-        count += amount;
-        return count;
+      .mutation(({ input: { amount }, ctx }) => {
+        let myCount = countsPerClient.get(ctx.clientId) ?? 0;
+        myCount += amount;
+        countsPerClient.set(ctx.clientId, myCount);
+        return myCount;
       }),
   });
 }

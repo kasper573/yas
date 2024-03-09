@@ -1,6 +1,7 @@
+import type { HTTPHeaders } from "@trpc/react-query";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import transformer from "superjson";
-import type { ApiRouter } from "@yas/trpc-server";
+import type { ApiRouter, types } from "@yas/trpc-server";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
@@ -48,10 +49,20 @@ export function TrpcClientProvider({
 }
 
 export type TrpcClient = ReturnType<typeof createTrpcClient>;
-export function createTrpcClient(url: string) {
+export function createTrpcClient(
+  url: string,
+  headers: () => types.TrpcServerHeaders,
+) {
   const react = createTRPCReact<ApiRouter>();
+
   const trpc = react.createClient({
-    links: [httpBatchLink({ url, transformer })],
+    links: [
+      httpBatchLink({
+        url,
+        transformer,
+        headers: () => headers() as unknown as HTTPHeaders,
+      }),
+    ],
   });
   return { react, trpc };
 }

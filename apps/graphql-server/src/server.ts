@@ -1,7 +1,6 @@
 import { createServer as createHTTPServer } from "http";
 import type { InferResolvers } from "garph";
 import { g, buildSchema } from "garph";
-import type { YogaInitialContext } from "graphql-yoga";
 import { createYoga } from "graphql-yoga";
 
 export type ClientTypes = ReturnType<typeof createClientTypes>;
@@ -30,23 +29,24 @@ function createClientTypes() {
   return { Query, Mutation };
 }
 
-function createResolvers(): InferResolvers<
-  ClientTypes,
-  { context: YogaInitialContext }
-> {
-  let count = 0;
+function createResolvers(): InferResolvers<ClientTypes, { context: Context }> {
+  const countsPerClient = new Map<string, number>();
   return {
     Query: {
       greeting: (_, { name }) => (name?.trim() ? `Hello, ${name}!` : ""),
-      count: () => count,
+      count: (_1, _2, ctx) => {
+        return countsPerClient.get(ctx.clientId) ?? 0;
+      },
       error: () => {
         throw new Error("Manually triggered server side error");
       },
     },
     Mutation: {
-      increaseCount: (_, args) => {
-        count += args.amount;
-        return count;
+      increaseCount: (_, { amount }, ctx) => {
+        let myCount = countsPerClient.get(ctx.clientId) ?? 0;
+        myCount += amount;
+        countsPerClient.set(ctx.clientId, myCount);
+        return myCount;
       },
     },
   };
@@ -58,6 +58,28 @@ export function createServer(graphqlEndpoint: string) {
   createClientTypes();
 
   const schema = buildSchema({ g, resolvers: createResolvers() });
-  const yoga = createYoga({ schema, graphqlEndpoint });
+  const yoga = createYoga({
+    schema,
+    graphqlEndpoint,
+    context: ({ request }) => createContext(request),
+  });
   return createHTTPServer(yoga);
+}
+
+type Context = ReturnType<typeof createContext>;
+function createContext(request: Request) {
+  const headers = getGraphQLServerHeaders(request);
+  return {
+    clientId: headers["client-id"],
+  };
+}
+
+export interface GraphQLServerHeaders {
+  "client-id": string;
+}
+
+function getGraphQLServerHeaders(request: Request) {
+  return Object.fromEntries(
+    request.headers.entries(),
+  ) as unknown as GraphQLServerHeaders;
 }

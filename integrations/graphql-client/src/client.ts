@@ -1,5 +1,6 @@
 import type { TadaDocumentNode } from "gql.tada";
 import { Client, fetchExchange } from "urql";
+import type { GraphQLServerHeaders } from "@yas/graphql-server";
 
 export type GraphQLDocumentNode<Data, Variables> = TadaDocumentNode<
   Data,
@@ -10,19 +11,18 @@ export type GraphQLClient = ReturnType<typeof createGraphQLClient>;
 
 export function createGraphQLClient({
   url,
-  token: getToken,
+  headers,
 }: {
   url: string;
-  token?: () => string | undefined;
+  headers: () => GraphQLServerHeaders;
 }) {
   return new Client({
     url,
     exchanges: [fetchExchange],
     fetchOptions: () => {
-      const token = getToken?.();
       return {
         method: "POST",
-        headers: { authorization: token ? `Bearer ${token}` : "" },
+        headers: headers() as unknown as HeadersInit,
         mode: "cors",
       };
     },

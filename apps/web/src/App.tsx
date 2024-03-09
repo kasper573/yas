@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { lazy, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
@@ -58,8 +59,13 @@ function createClients() {
       },
     },
   });
-  const trpcClient = createTrpcClient(env.trpcServerUrl);
-  const graphqlClient = createGraphQLClient({ url: env.graphqlServerUrl });
+  const clientId = v4();
+  const headers = () => ({ "client-id": clientId });
+  const trpcClient = createTrpcClient(env.trpcServerUrl, headers);
+  const graphqlClient = createGraphQLClient({
+    url: env.graphqlServerUrl,
+    headers,
+  });
   return { queryClient, trpcClient, graphqlClient };
 }
 

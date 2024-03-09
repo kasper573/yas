@@ -1,1 +1,1 @@
-export type { ClientTypes } from "./server";
+export type { ClientTypes, GraphQLServerHeaders } from "./server";
