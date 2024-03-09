@@ -69,7 +69,7 @@ export type FieldProps<Value = unknown> =
  */
 export interface RequiredFieldProps<Value> extends BaseFieldProps {
   value: Value;
-  onChange: (value: Value) => unknown;
+  onChange?: (value: Value) => unknown;
   required: true;
 }
 
