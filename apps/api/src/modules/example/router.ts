@@ -5,6 +5,7 @@ import { createDashboardProcedure } from "./dashboard";
 import { createUsersRouter } from "./users";
 
 export function createExampleRouter() {
+  let count = 0;
   return t.router({
     users: createUsersRouter(),
     dashboard: createDashboardProcedure(),
@@ -18,6 +19,14 @@ export function createExampleRouter() {
         const message = `${input} world`;
         const date = new Date();
         return { message, date };
+      }),
+    count: t.procedure.output(z.number()).query(() => count),
+    increaseCount: t.procedure
+      .input(z.object({ amount: z.number() }))
+      .output(z.number())
+      .mutation(() => {
+        count++;
+        return count;
       }),
   });
 }
