@@ -1,4 +1,3 @@
-import type { Locator } from "@yas/test/playwright/index.ts";
 import { test, expect } from "@yas/test/playwright/index.ts";
 
 test("can see the home page title", async ({ page }) => {
@@ -38,20 +37,9 @@ function testApi() {
   });
 
   test("can mutate", async ({ page }) => {
-    const count = () => page.getByLabel(/count from server/i);
-
-    await expect(count()).toHaveValue(/\d+/);
-    const initialCount = await valueOf(count());
-
+    const count = page.getByLabel(/count from server/i);
+    await expect(count).toHaveValue("0");
     await page.getByRole("button", { name: /increase count/i }).click();
-
-    await expect(count()).not.toHaveValue(initialCount.toString());
-    const changedCount = await valueOf(count());
-
-    expect(changedCount).toBeGreaterThan(initialCount);
-
-    async function valueOf(locator: Locator) {
-      return parseInt(await locator.inputValue(), 10);
-    }
+    await expect(count).toHaveValue("1");
   });
 }
