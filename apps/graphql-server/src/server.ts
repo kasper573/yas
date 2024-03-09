@@ -53,7 +53,7 @@ function createResolvers(): InferResolvers<ClientTypes, { context: Context }> {
 }
 
 export function createServer(graphqlEndpoint: string) {
-  // Garph implicitly registers the types in the runtime globally in the g object,
+  // Garph implicitly registers the types in the runtime globally when using the g object,
   // so we don't really need the return value here. The function only has it for type inference.
   createClientTypes();
 
