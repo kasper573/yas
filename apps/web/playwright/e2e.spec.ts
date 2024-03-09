@@ -30,13 +30,19 @@ test.describe("api tester", () => {
 
 function testApi() {
   test("can query", async ({ page }) => {
-    await page.getByPlaceholder(/type your name/i).fill("Playwright");
-    await expect(page.getByText("Hello, Playwright!")).toBeVisible();
+    await page.getByLabel(/enter your name/i).fill("Playwright");
+    await expect(page.getByLabel(/greeting from server/i)).toHaveValue(
+      "Hello, Playwright!",
+    );
   });
 
   test("can mutate", async ({ page }) => {
-    await page.getByLabel(/increase amount/i).fill("5");
+    const getCount = async () =>
+      parseInt(await page.getByLabel(/count from server/i).inputValue(), 10);
+
+    const initialCount = await getCount();
     await page.getByRole("button", { name: /increase count/i }).click();
-    await expect(page.getByText(`"count": 5`)).toBeVisible();
+    const changedCount = await getCount();
+    expect(changedCount).toBeGreaterThan(initialCount);
   });
 }
