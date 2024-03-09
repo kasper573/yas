@@ -23,7 +23,14 @@ export function defineConfig({
     ].filter(Boolean),
     fullyParallel: true,
     forbidOnly: isCI,
-    globalTimeout: 1000 * 60 * 30,
+    globalTimeout: 1000 * 60 * 10,
+    expect: {
+      // Sometimes the CI agent is slow when we have a large amount of test permutations,
+      // which can cause some runs to fail due to slow response times from our web or api servers.
+      // Raising the expect timeout in CI reduces flakiness at the expense of slightly longer CI runs
+      // (keep in mind that only a minimal number of permutations actually will utilize this longer timeout)
+      timeout: isCI ? 1000 * 30 : undefined,
+    },
     use: {
       baseURL,
       trace: "retain-on-failure",
