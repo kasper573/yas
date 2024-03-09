@@ -1,7 +1,7 @@
 import { api } from "@yas/trpc-client";
 
 import { useDebouncedValue } from "@yas/hooks";
-import { Button, NumberField, Stack, TextField } from "@yas/ui";
+import { Button, NumberField, TextField } from "@yas/ui";
 import { useState } from "react";
 
 export default function TRPC() {
@@ -16,28 +16,23 @@ export default function TRPC() {
 
   return (
     <>
-      <Stack direction="row" gap="#4">
-        <TextField
-          label="Enter your name"
-          value={name}
-          onChange={setName}
-          required
-        />
-        <TextField label="Greeting from server" value={greeting} readOnly />
-        <NumberField label="Count from server" value={count} readOnly />
-      </Stack>
-
-      <Stack direction="row" gap="#4" align="end">
-        <Button onClick={() => increase.mutate({ amount: 1 })}>
-          Increase count
-        </Button>
-        <Button
-          onClick={() => setShouldServerError(true)}
-          disabled={shouldServerError}
-        >
-          Enable server side error
-        </Button>
-      </Stack>
+      <TextField
+        label="Enter your name"
+        value={name}
+        onChange={setName}
+        required
+      />
+      <TextField label="Greeting from server" value={greeting} readOnly />
+      <NumberField label="Count from server" value={count} readOnly />
+      <Button onClick={() => increase.mutate({ amount: 1 })}>
+        Increase count
+      </Button>
+      <Button
+        onClick={() => setShouldServerError(true)}
+        disabled={shouldServerError}
+      >
+        Enable server side error
+      </Button>
     </>
   );
 }

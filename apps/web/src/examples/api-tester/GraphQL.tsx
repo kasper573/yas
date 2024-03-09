@@ -4,7 +4,7 @@ import {
   useGraphQLQuery,
 } from "@yas/graphql-client";
 import { useDebouncedValue } from "@yas/hooks";
-import { Button, NumberField, Stack, TextField } from "@yas/ui";
+import { Button, NumberField, TextField } from "@yas/ui";
 import { useState } from "react";
 
 const query = graphql(`
@@ -39,32 +39,23 @@ export default function GraphQL() {
 
   return (
     <>
-      <Stack direction="row" gap="#4">
-        <TextField
-          label="Enter your name"
-          value={name}
-          onChange={setName}
-          required
-        />
-        <TextField
-          label="Greeting from server"
-          value={data?.greeting}
-          readOnly
-        />
-        <NumberField label="Count from server" value={data?.count} readOnly />
-      </Stack>
-
-      <Stack direction="row" gap="#4" align="end">
-        <Button onClick={() => increase.mutate({ amount: 1 })}>
-          Increase count
-        </Button>
-        <Button
-          onClick={() => setShouldServerError(true)}
-          disabled={shouldServerError}
-        >
-          Enable server side error
-        </Button>
-      </Stack>
+      <TextField
+        label="Enter your name"
+        value={name}
+        onChange={setName}
+        required
+      />
+      <TextField label="Greeting from server" value={data?.greeting} readOnly />
+      <NumberField label="Count from server" value={data?.count} readOnly />
+      <Button onClick={() => increase.mutate({ amount: 1 })}>
+        Increase count
+      </Button>
+      <Button
+        onClick={() => setShouldServerError(true)}
+        disabled={shouldServerError}
+      >
+        Enable server side error
+      </Button>
     </>
   );
 }
