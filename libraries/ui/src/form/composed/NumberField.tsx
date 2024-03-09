@@ -1,7 +1,9 @@
 import type { FieldProps } from "../shared/types";
 import { TextField } from "../TextField";
 
-export type NumberFieldProps = FieldProps<number>;
+export type NumberFieldProps = FieldProps<number> & {
+  readOnly?: boolean;
+};
 
 export function NumberField({
   value,
