@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { lazy, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/api-client";
 import {
   GraphQLClientProvider,
@@ -36,6 +36,7 @@ export default function App() {
                   router={router}
                   defaultErrorComponent={ErrorFallback}
                 />
+                <QueryDevtools />
               </ThemeProvider>
             </GraphQLClientProvider>
           </TrpcClientProvider>
@@ -60,3 +61,13 @@ function createClients() {
   const graphqlClient = createGraphQLClient({ url: env.graphqlServerUrl });
   return { queryClient, trpcClient, graphqlClient };
 }
+
+// Avoid importing the devtools in production
+const QueryDevtools =
+  env.mode === "development"
+    ? lazy(() =>
+        import("@yas/query/devtools").then((mod) => ({
+          default: mod.QueryDevtools,
+        })),
+      )
+    : () => null;

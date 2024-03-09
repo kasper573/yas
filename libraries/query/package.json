@@ -9,10 +9,15 @@
     ".": {
       "import": "./src/index.ts",
       "require": "./src/index.ts"
+    },
+    "./devtools": {
+      "import": "./devtools.ts",
+      "require": "./devtools.ts"
     }
   },
   "dependencies": {
-    "@tanstack/react-query": "5.25.0"
+    "@tanstack/react-query": "5.25.0",
+    "@tanstack/react-query-devtools": "5.25.0"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*"
