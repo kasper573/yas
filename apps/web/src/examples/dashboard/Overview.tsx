@@ -31,7 +31,7 @@ export default function Overview(): JSX.Element {
 
   const clearSelectedUser = () => setUserId(undefined);
 
-  const selectedUser = api.example.users.get.useQuery(
+  const selectedUser = api.dashboard.users.get.useQuery(
     ...enabledWhenDefined(userId),
   );
 

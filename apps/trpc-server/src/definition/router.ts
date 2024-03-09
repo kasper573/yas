@@ -1,10 +1,12 @@
-import { createExampleRouter } from "../modules/example/router";
+import { createApiTesterRouter } from "../modules/apiTester";
+import { createDashboardRouter } from "../modules/dashboard/router";
 import { t } from "./trpc";
 
-export type ApiRouter = ReturnType<typeof createApiRouter>;
+export type TrpcRouter = ReturnType<typeof createTrpcRouter>;
 
-export function createApiRouter() {
+export function createTrpcRouter() {
   return t.router({
-    example: createExampleRouter(),
+    dashboard: createDashboardRouter(),
+    apiTester: createApiTesterRouter(),
   });
 }

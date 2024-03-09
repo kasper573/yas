@@ -1,14 +1,10 @@
 import { z } from "@yas/validate";
 import { err } from "@yas/result";
-import { t, trpcUnwrap } from "../../definition/trpc";
-import { createDashboardProcedure } from "./dashboard";
-import { createUsersRouter } from "./users";
+import { t, trpcUnwrap } from "../definition/trpc";
 
-export function createExampleRouter() {
+export function createApiTesterRouter() {
   const countsPerClient = new Map<string, number>();
   return t.router({
-    users: createUsersRouter(),
-    dashboard: createDashboardProcedure(),
     error: t.procedure.query(() => {
       trpcUnwrap(err("Manually triggered server side error"));
     }),

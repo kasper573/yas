@@ -30,7 +30,7 @@ export default function Layout() {
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const debouncedSearchInput = useDebounce(searchInput, 333);
 
-  const searchResult = api.example.users.list.useQuery(
+  const searchResult = api.dashboard.users.list.useQuery(
     ...enabledWhenDefined(debouncedSearchInput.value),
   );
 

@@ -9,10 +9,10 @@ export default function TRPC() {
   const [shouldServerError, setShouldServerError] = useState(false);
   const debouncedName = useDebouncedValue(name, 300);
 
-  const { data: greeting } = api.example.greeting.useQuery(debouncedName);
-  const increase = api.example.increaseCount.useMutation();
-  const { data: count } = api.example.count.useQuery();
-  api.example.error.useQuery(undefined, { enabled: shouldServerError });
+  const { data: greeting } = api.apiTester.greeting.useQuery(debouncedName);
+  const increase = api.apiTester.increaseCount.useMutation();
+  const { data: count } = api.apiTester.count.useQuery();
+  api.apiTester.error.useQuery(undefined, { enabled: shouldServerError });
 
   return (
     <>

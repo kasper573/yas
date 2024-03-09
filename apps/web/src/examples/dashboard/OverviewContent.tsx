@@ -18,7 +18,7 @@ export function DashboardContent({
 }: {
   filter: types.example.DashboardFilter;
 }) {
-  const [data] = api.example.dashboard.useSuspenseQuery(filter);
+  const [data] = api.dashboard.dashboard.useSuspenseQuery(filter);
   return (
     <div className={gridContainer}>
       <StatsCard

@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { env } from "../env";
 import { createContext } from "./context";
-import { createApiRouter } from "./router";
+import { createTrpcRouter } from "./router";
 
 morgan.token("url", urlFormatter);
 
@@ -15,7 +15,7 @@ export function createServer() {
   app.use(
     env.trpcPath,
     trpcExpress.createExpressMiddleware({
-      router: createApiRouter(),
+      router: createTrpcRouter(),
       createContext,
     }),
   );

@@ -3,7 +3,7 @@ import type { RecentSale } from "./types";
 import { dashboardFilterType, dashboardType } from "./types";
 import { createSeededRandom } from "./random";
 
-export function createDashboardProcedure() {
+export function createOverviewProcedure() {
   return t.procedure
     .input(dashboardFilterType)
     .output(dashboardType)
