@@ -1,3 +1,4 @@
+import type { Locator } from "@yas/test/playwright/index.ts";
 import { test, expect } from "@yas/test/playwright/index.ts";
 
 test("can see the home page title", async ({ page }) => {
@@ -37,15 +38,20 @@ function testApi() {
   });
 
   test("can mutate", async ({ page }) => {
-    const initialCount = await getCount();
+    const count = () => page.getByLabel(/count from server/i);
+
+    await expect(count()).not.toBeEmpty();
+    const initialCount = await valueOf(count());
+
     await page.getByRole("button", { name: /increase count/i }).click();
-    const changedCount = await getCount();
+
+    await expect(count()).not.toHaveValue(initialCount.toString());
+    const changedCount = await valueOf(count());
+
     expect(changedCount).toBeGreaterThan(initialCount);
 
-    async function getCount() {
-      const countElement = page.getByLabel(/count from server/i);
-      await expect(countElement).toHaveValue(/\d+/);
-      return parseInt(await countElement.inputValue(), 10);
+    async function valueOf(locator: Locator) {
+      return parseInt(await locator.inputValue(), 10);
     }
   });
 }
