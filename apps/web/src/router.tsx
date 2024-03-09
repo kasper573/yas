@@ -1,4 +1,9 @@
-import { createRouter, createRoute, createRootRoute } from "@yas/router";
+import {
+  createRouter,
+  createRoute,
+  createRootRoute,
+  Navigate,
+} from "@yas/router";
 import { z } from "@yas/validate";
 import { lazy } from "react";
 import { env } from "./env";
@@ -61,6 +66,24 @@ const settingsRoutes = createRoute({
   component: lazy(() => import("./examples/dashboard/Settings")),
 });
 
+const apiTesterRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "api-tester",
+  component: lazy(() => import("./examples/api-tester/Layout")),
+});
+
+const trpcRoute = createRoute({
+  getParentRoute: () => apiTesterRoute,
+  path: "trpc",
+  component: lazy(() => import("./examples/api-tester/TRPC")),
+});
+
+const graphqlRoute = createRoute({
+  getParentRoute: () => apiTesterRoute,
+  path: "graphql",
+  component: lazy(() => import("./examples/api-tester/GraphQL")),
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   dashboardRoute.addChildren([
@@ -68,6 +91,15 @@ const routeTree = rootRoute.addChildren([
     customersRoutes,
     productsRoutes,
     settingsRoutes,
+  ]),
+  apiTesterRoute.addChildren([
+    createRoute({
+      getParentRoute: () => apiTesterRoute,
+      path: "/",
+      component: () => <Navigate to="/api-tester/trpc" />,
+    }),
+    trpcRoute,
+    graphqlRoute,
   ]),
 ]);
 

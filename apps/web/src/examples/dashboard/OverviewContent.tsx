@@ -5,10 +5,10 @@ import {
   CardStackIcon,
   BarChartIcon,
 } from "@yas/icons";
-import type { types } from "@yas/api-client";
-import { api } from "@yas/api-client";
+import type { types } from "@yas/trpc-client";
+import { api } from "@yas/trpc-client";
+import { Card, formatNumber, formatCurrency } from "../shared";
 import { RecentSaleList } from "./RecentSaleList";
-import { Card, formatNumber, formatCurrency } from "./shared";
 import { StatsCard } from "./Stats";
 import { gridAreas, gridContainer } from "./OverviewContent.css";
 import { Chart } from "./Chart";

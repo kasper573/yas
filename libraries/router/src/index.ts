@@ -7,6 +7,7 @@ export {
   useRouterState,
   useBlocker,
   Outlet,
+  Navigate,
 } from "@tanstack/react-router";
 export type { Register, AnyRoute } from "@tanstack/react-router";
 export * from "./useSearchState";

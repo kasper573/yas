@@ -13,10 +13,10 @@ import {
   Tabs,
 } from "@yas/ui";
 import { Suspense, useState } from "react";
-import { api, enabledWhenDefined } from "@yas/api-client";
+import { api, enabledWhenDefined } from "@yas/trpc-client";
 import { useDebounce } from "@yas/hooks";
 import { Outlet } from "@yas/router";
-import { Card } from "./shared";
+import { Card } from "../shared";
 import { SearchForm } from "./SearchForm";
 
 const dashboardLinks = [

@@ -8,8 +8,8 @@ import {
   ListItemText,
   Text,
 } from "@yas/ui";
-import type { types } from "@yas/api-client";
-import { formatNumber } from "./shared";
+import type { types } from "@yas/trpc-client";
+import { formatNumber } from "../shared";
 
 export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
   return (

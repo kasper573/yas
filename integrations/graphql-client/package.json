@@ -1,0 +1,37 @@
+{
+  "name": "@yas/graphql-client",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./tsconfig.graphql.json": {
+      "import": "./tsconfig.graphql.json",
+      "require": "./tsconfig.graphql.json"
+    }
+  },
+  "dependencies": {
+    "@yas/query": "workspace:*",
+    "@yas/hooks": "workspace:*",
+    "react": "^18.2.0",
+    "gql.tada": "1.2.1",
+    "urql": "4.0.6"
+  },
+  "devDependencies": {
+    "@0no-co/graphqlsp": "1.4.1",
+    "@types/react": "^18.2.61",
+    "@yas/graphql-server": "workspace:*",
+    "@yas/tsconfig": "workspace:*"
+  },
+  "depcheck": {
+    "exceptions": {
+      "allow": [
+        "@yas/graphql-server"
+      ]
+    }
+  }
+}

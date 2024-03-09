@@ -1,8 +1,36 @@
 # Yet Another Stack &middot; [![status](https://github.com/kasper573/yas/actions/workflows/build_test_release.yml/badge.svg)](https://github.com/kasper573/yas/actions)
 
-A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture.
+A Typescript & React specific full stack monorepo template for large scale web development with heavy focus on type safety and strict architecture without sacrificing developer experience.
 
 > Also serves as an [incubation](#incubations) repository for experimenting with new ideas and technologies.
+
+## Stack
+
+Here's a quick overview of the most notable tools and libraries used in this stack. A lot of them are encapsulated in their own packages, so make sure you check out each package's documentation for more information.
+
+- Tools
+
+  - [pnpm](https://pnpm.io/) for package management.
+  - [turborepo](https://turbo.build/repo) for monorepo management.
+  - [Vite](https://vitejs.dev/) for bundling and development server.
+  - [Vitest](https://vitest.dev/) for unit testing.
+  - [Storybook](https://storybook.js.org/) for component development and testing
+  - [Playwright](https://playwright.dev/) for end-to-end testing.
+  - [ESLint](https://eslint.org/) for code linting.
+  - [Prettier](https://prettier.io/) for code formatting.
+
+- Notable libraries
+
+  - [Vanilla Extract](https://vanilla-extract.style/) for styling.
+  - [tRPC](https://trpc.io/) for API server and client.
+  - [GraphQL](https://graphql.org/) for API server and client.
+  - [Radix UI](https://www.radix-ui.com/) for component primitives.
+  - [Tanstack Query](https://tanstack.com/query) wrapper around both GraphQL & tRPC for a unified data fetching interface.
+  - [Tanstack Router](https://tanstack.com/router) for routing.
+  - [react-hook-form](https://react-hook-form.com/) for form state management.
+  - [zod](https://github.com/colinhacks/zod) for runtime type validation.
+  - [date-fns](https://date-fns.org/) for date manipulation.
+  - [react-pdf](https://react-pdf.org/) for PDF generation.
 
 ## Quick start
 
