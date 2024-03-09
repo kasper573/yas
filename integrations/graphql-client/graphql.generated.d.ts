@@ -24,7 +24,7 @@ export type introspection = {
         "name": "Query",
         "fields": [
           {
-            "name": "greet",
+            "name": "greeting",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -83,27 +83,6 @@ export type introspection = {
         "kind": "OBJECT",
         "name": "Mutation",
         "fields": [
-          {
-            "name": "greet",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "args": [
-              {
-                "name": "name",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
           {
             "name": "increaseCount",
             "type": {

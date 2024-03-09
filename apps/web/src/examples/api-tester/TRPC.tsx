@@ -5,12 +5,12 @@ import { Button, NumberField, Text, TextField } from "@yas/ui";
 import { useState } from "react";
 
 export default function TRPC() {
-  const [input, setInput] = useState("");
+  const [name, setName] = useState("");
   const [increaseAmount, setIncreaseAmount] = useState(1);
   const [shouldServerError, setShouldServerError] = useState(false);
-  const debouncedInput = useDebouncedValue(input, 300);
+  const debouncedName = useDebouncedValue(name, 300);
 
-  const { data: greeting } = api.example.hello.useQuery(debouncedInput);
+  const { data: greeting } = api.example.greeting.useQuery(debouncedName);
   const increase = api.example.increaseCount.useMutation();
   const { data: count } = api.example.count.useQuery();
   api.example.error.useQuery(undefined, { enabled: shouldServerError });
@@ -19,9 +19,10 @@ export default function TRPC() {
     <>
       <Text>Customers</Text>
       <TextField
-        label="send a greeting"
-        value={input}
-        onChange={setInput}
+        label="Get a greeting from the server"
+        inputProps={{ placeholder: "Type your name" }}
+        value={name}
+        onChange={setName}
         required
       />
       <NumberField
@@ -39,9 +40,7 @@ export default function TRPC() {
       >
         Enable server side error
       </Button>
-      <pre>
-        {JSON.stringify({ responseData: { greeting, count } }, null, 2)}
-      </pre>
+      <pre>{JSON.stringify({ greeting, count }, null, 2)}</pre>
     </>
   );
 }

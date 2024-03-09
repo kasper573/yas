@@ -8,8 +8,8 @@ import { Button, NumberField, Text, TextField } from "@yas/ui";
 import { useState } from "react";
 
 const query = graphql(`
-  query GraphQLTester($input: String!) {
-    greet(name: $input)
+  query GraphQLTester($name: String!) {
+    greeting(name: $name)
     count
   }
 `);
@@ -28,12 +28,12 @@ const increaseQuery = graphql(`
 
 export default function GraphQL() {
   const [shouldServerError, setShouldServerError] = useState(false);
-  const [input, setInput] = useState("");
+  const [name, setName] = useState("");
   const [increaseAmount, setIncreaseAmount] = useState(1);
-  const debouncedInput = useDebouncedValue(input, 300);
+  const debouncedName = useDebouncedValue(name, 300);
   const { data } = useGraphQLQuery({
     query,
-    variables: { input: debouncedInput },
+    variables: { name: debouncedName },
   });
   const increase = useGraphQLMutation(increaseQuery);
   useGraphQLQuery({ query: errorQuery, enabled: shouldServerError });
@@ -42,9 +42,10 @@ export default function GraphQL() {
     <>
       <Text>Customers</Text>
       <TextField
-        label="send a greeting"
-        value={input}
-        onChange={setInput}
+        label="Get a greeting from the server"
+        inputProps={{ placeholder: "Type your name" }}
+        value={name}
+        onChange={setName}
         required
       />
       <NumberField
@@ -62,7 +63,7 @@ export default function GraphQL() {
       >
         Enable server side error
       </Button>
-      <pre>{JSON.stringify({ responseData: data }, null, 2)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
   );
 }

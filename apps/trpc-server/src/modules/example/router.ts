@@ -12,10 +12,10 @@ export function createExampleRouter() {
     error: t.procedure.query(() => {
       trpcUnwrap(err("Manually triggered server side error"));
     }),
-    hello: t.procedure
+    greeting: t.procedure
       .input(z.string())
       .output(z.string())
-      .query(({ input }) => `${input} world`),
+      .query(({ input: name }) => (name.trim() ? `Hello, ${name}!` : "")),
     count: t.procedure.output(z.number()).query(() => count),
     increaseCount: t.procedure
       .input(z.object({ amount: z.number() }))
