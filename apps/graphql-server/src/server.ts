@@ -30,17 +30,12 @@ function createClientTypes() {
   return { Query, Mutation };
 }
 
-export function createServer(graphqlEndpoint: string) {
-  // Garph implicitly registers the types in the runtime globally in the g object,
-  // so we don't really need the return value here. The function only has it for type inference.
-  createClientTypes();
-
+function createResolvers(): InferResolvers<
+  ClientTypes,
+  { context: YogaInitialContext }
+> {
   let count = 0;
-
-  const resolvers: InferResolvers<
-    ClientTypes,
-    { context: YogaInitialContext }
-  > = {
+  return {
     Query: {
       greeting: (_, { name }) => (name?.trim() ? `Hello, ${name}!` : ""),
       count: () => count,
@@ -49,14 +44,20 @@ export function createServer(graphqlEndpoint: string) {
       },
     },
     Mutation: {
-      increaseCount: (parent, args, context, info) => {
+      increaseCount: (_, args) => {
         count += args.amount;
         return count;
       },
     },
   };
+}
 
-  const schema = buildSchema({ g, resolvers });
+export function createServer(graphqlEndpoint: string) {
+  // Garph implicitly registers the types in the runtime globally in the g object,
+  // so we don't really need the return value here. The function only has it for type inference.
+  createClientTypes();
+
+  const schema = buildSchema({ g, resolvers: createResolvers() });
   const yoga = createYoga({ schema, graphqlEndpoint });
   return createHTTPServer(yoga);
 }
