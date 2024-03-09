@@ -14,6 +14,12 @@ const query = graphql(`
   }
 `);
 
+const errorQuery = graphql(`
+  query ErrorQuery {
+    error
+  }
+`);
+
 const increaseQuery = graphql(`
   mutation IncreaseCount($amount: Int!) {
     increaseCount(amount: $amount)
@@ -21,6 +27,7 @@ const increaseQuery = graphql(`
 `);
 
 export default function GraphQL() {
+  const [shouldServerError, setShouldServerError] = useState(false);
   const [input, setInput] = useState("");
   const [increaseAmount, setIncreaseAmount] = useState(1);
   const debouncedInput = useDebouncedValue(input, 300);
@@ -29,6 +36,8 @@ export default function GraphQL() {
     variables: { input: debouncedInput },
   });
   const increase = useGraphQLMutation(increaseQuery);
+  useGraphQLQuery({ query: errorQuery, enabled: shouldServerError });
+
   return (
     <>
       <Text>Customers</Text>
@@ -46,6 +55,12 @@ export default function GraphQL() {
       />
       <Button onClick={() => increase.mutate({ amount: increaseAmount })}>
         Increase count
+      </Button>
+      <Button
+        onClick={() => setShouldServerError(true)}
+        disabled={shouldServerError}
+      >
+        Enable server side error
       </Button>
       <pre>{JSON.stringify({ responseData: data }, null, 2)}</pre>
     </>

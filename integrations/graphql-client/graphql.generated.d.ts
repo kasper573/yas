@@ -55,6 +55,18 @@ export type introspection = {
               }
             },
             "args": []
+          },
+          {
+            "name": "error",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []

@@ -13,6 +13,9 @@ export function createServer(graphqlEndpoint: string) {
       })
       .description("Greets a person"),
     count: g.int(),
+    error: g
+      .int()
+      .description("Query this field to manually trigger a server side error"),
   });
 
   const mutationType = g.type("Mutation", {
@@ -39,6 +42,9 @@ export function createServer(graphqlEndpoint: string) {
     Query: {
       greet: (parent, args, context, info) => `Hello, ${args.name}`,
       count: () => pocUnsafeMemory.count,
+      error: () => {
+        throw new Error("Manually triggered server side error");
+      },
     },
     Mutation: {
       increaseCount: (parent, args, context, info) => {
