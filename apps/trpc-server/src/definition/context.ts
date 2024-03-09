@@ -1,5 +1,5 @@
 import type * as trpcExpress from "@trpc/server/adapters/express";
-import { FakeUserRepository } from "../repositories/FakeUserRepository";
+import { FakeUserRepository } from "../modules/dashboard/FakeUserRepository";
 
 export function createContext({
   req,

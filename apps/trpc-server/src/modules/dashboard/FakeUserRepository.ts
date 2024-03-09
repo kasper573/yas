@@ -1,7 +1,7 @@
 import type { Result } from "@yas/result";
 import { err, ok } from "@yas/result";
-import type { User, UserId } from "../modules/dashboard/types";
-import { randomAvatarUrl } from "../modules/dashboard/random";
+import type { User, UserId } from "./types";
+import { randomAvatarUrl } from "./random";
 
 export class FakeUserRepository {
   private users = new Map<UserId, User>(

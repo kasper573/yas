@@ -1,5 +1,5 @@
 import { describe, it, expect } from "@yas/test/vitest/node";
-import { FakeUserRepository } from "../src/repositories/FakeUserRepository";
+import { FakeUserRepository } from "../src/modules/dashboard/FakeUserRepository";
 import { t } from "../src/definition/trpc";
 import { createApiTesterRouter } from "../src/modules/apiTester";
 
