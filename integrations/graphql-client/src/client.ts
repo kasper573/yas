@@ -1,5 +1,3 @@
-import type { QueryClientConfig } from "@yas/query";
-import { QueryClient } from "@yas/query";
 import { Client, cacheExchange, fetchExchange } from "urql";
 
 export type GraphQLClient = ReturnType<typeof createGraphQLClient>;
@@ -7,13 +5,11 @@ export type GraphQLClient = ReturnType<typeof createGraphQLClient>;
 export function createGraphQLClient({
   url,
   token: getToken,
-  queryClientOptions,
 }: {
   url: string;
   token?: () => string | undefined;
-  queryClientOptions?: QueryClientConfig["defaultOptions"];
 }) {
-  const urqlClient = new Client({
+  return new Client({
     url,
     exchanges: [cacheExchange, fetchExchange],
     fetchOptions: () => {
@@ -25,6 +21,4 @@ export function createGraphQLClient({
       };
     },
   });
-  const queryClient = new QueryClient({ defaultOptions: queryClientOptions });
-  return { urqlClient, queryClient };
 }

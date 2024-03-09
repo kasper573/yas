@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { createApiClient, ApiClientProvider } from "@yas/api-client";
+import { TrpcClientProvider, createTrpcClient } from "@yas/api-client";
 import {
   GraphQLClientProvider,
   createGraphQLClient,
@@ -7,6 +7,7 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
 import { ModalContext, ModalStore } from "@yas/ui";
+import { QueryClient, QueryClientProvider } from "@yas/query";
 import { env } from "./env";
 import { ErrorFallback } from "./components/ErrorFallback";
 import {
@@ -21,39 +22,41 @@ const rootRef = { current: document.documentElement };
 export default function App() {
   const modalStore = useMemo(() => new ModalStore(), []);
   const [theme, setTheme] = useState(getPreferredTheme);
-
-  const apiClient = useMemo(
-    () => createApiClient(env.trpcServerUrl, queryClientOptions),
-    [],
-  );
-
-  const graphqlClient = useMemo(
-    () =>
-      createGraphQLClient({ url: env.graphqlServerUrl, queryClientOptions }),
-    [],
-  );
+  const { queryClient, trpcClient, graphqlClient } = useMemo(createClients, []);
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>
       <ModalContext.Provider value={modalStore}>
-        <ApiClientProvider value={apiClient}>
-          <GraphQLClientProvider client={graphqlClient}>
-            <ThemeProvider theme={theme} setTheme={setTheme}>
-              <ThemeInjector target={rootRef} />
-              <RouterProvider
-                router={router}
-                defaultErrorComponent={ErrorFallback}
-              />
-            </ThemeProvider>
-          </GraphQLClientProvider>
-        </ApiClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <TrpcClientProvider value={trpcClient}>
+            <GraphQLClientProvider value={graphqlClient}>
+              <ThemeProvider theme={theme} setTheme={setTheme}>
+                <ThemeInjector target={rootRef} />
+                <RouterProvider
+                  router={router}
+                  defaultErrorComponent={ErrorFallback}
+                />
+              </ThemeProvider>
+            </GraphQLClientProvider>
+          </TrpcClientProvider>
+        </QueryClientProvider>
       </ModalContext.Provider>
     </ErrorBoundary>
   );
 }
 
-const queryClientOptions = {
-  queries: {
-    retry: env.mode === "production",
-  },
-};
+function createClients() {
+  const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: env.mode === "production",
+      },
+      mutations: {
+        onSuccess: () => queryClient.invalidateQueries(),
+      },
+    },
+  });
+  const trpcClient = createTrpcClient(env.trpcServerUrl);
+  const graphqlClient = createGraphQLClient({ url: env.graphqlServerUrl });
+  return { queryClient, trpcClient, graphqlClient };
+}

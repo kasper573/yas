@@ -5,27 +5,12 @@ import {
   useSuspenseQueries as useSuspenseQueriesImpl,
   useSuspenseQuery as useSuspenseQueryImpl,
   useMutation as useMutationImpl,
-  QueryClientProvider,
 } from "@yas/query";
 import { type AnyVariables, useClient as useURQLClient } from "urql";
-import { Provider as URQLProvider } from "urql";
-import type { ReactNode } from "react";
-import { useMemo } from "react";
-import type { GraphQLClient } from "./client";
 
-export function GraphQLClientProvider({
-  client,
-  children,
-}: {
-  client: GraphQLClient;
-  children?: ReactNode;
-}) {
-  return (
-    <QueryClientProvider client={client.queryClient}>
-      <URQLProvider value={client.urqlClient}>{children}</URQLProvider>
-    </QueryClientProvider>
-  );
-}
+import { useMemo } from "react";
+
+export { Provider as GraphQLClientProvider } from "urql";
 
 export function useQuery<
   Data,

@@ -206,6 +206,9 @@ importers:
       '@yas/pdf':
         specifier: workspace:*
         version: link:../../libraries/pdf
+      '@yas/query':
+        specifier: workspace:*
+        version: link:../../libraries/query
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/result
