@@ -57,7 +57,6 @@ The following scripts are available in the root of the repository and will run t
 - `build` Builds the app or package
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode
-- `architecture` Generates an architecture diagram.
 
 ### Script conventions
 
