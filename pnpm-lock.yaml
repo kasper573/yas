@@ -271,8 +271,8 @@ importers:
   core/build:
     devDependencies:
       '@vanilla-extract/vite-plugin':
-        specifier: 4.0.4
-        version: 4.0.4(@types/node@20.8.10)(vite@5.1.4)
+        specifier: 4.0.6
+        version: 4.0.6(@types/node@20.8.10)(vite@5.1.4)
       '@vanilla-extract/webpack-plugin':
         specifier: 2.3.6
         version: 2.3.6(@types/node@20.8.10)(webpack@5.88.2)
@@ -9180,8 +9180,8 @@ packages:
     dependencies:
       '@vanilla-extract/css': 1.14.0
 
-  /@vanilla-extract/vite-plugin@4.0.4(@types/node@20.8.10)(vite@5.1.4):
-    resolution: {integrity: sha512-cfg4GK274xzwbVFh8YWvQXNnsCMemvMMwej7V93TTBP2O8qzyTgsx5VJuiAPov3oUU8JWGboaTs16Vnoe5bZ9w==}
+  /@vanilla-extract/vite-plugin@4.0.6(@types/node@20.8.10)(vite@5.1.4):
+    resolution: {integrity: sha512-uT2AhzxEC8qdn7SFxD/MHF7pxyFMb2e7HY3+isyPDzkTyIdiA/ZXk7qwWhcigFMNCJ6YuyxFQJmiDhP9U9oOmg==}
     peerDependencies:
       vite: ^4.0.3 || ^5.0.0
     dependencies:
