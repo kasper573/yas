@@ -10,7 +10,8 @@ Here's a quick overview of the most notable tools and libraries used in this sta
 
 - Tools
 
-  - [pnpm](https://pnpm.io/) for package management
+  - [pnpm](https://pnpm.io/) for package management.
+  - [turborepo](https://turbo.build/repo) for monorepo management.
   - [Vite](https://vitejs.dev/) for bundling and development server.
   - [Vitest](https://vitest.dev/) for unit testing.
   - [Storybook](https://storybook.js.org/) for component development and testing
@@ -29,7 +30,7 @@ Here's a quick overview of the most notable tools and libraries used in this sta
   - [react-hook-form](https://react-hook-form.com/) for form state management.
   - [zod](https://github.com/colinhacks/zod) for runtime type validation.
   - [date-fns](https://date-fns.org/) for date manipulation.
-  - [React PDF](https://react-pdf.org/) for PDF generation.
+  - [react-pdf](https://react-pdf.org/) for PDF generation.
 
 ## Quick start
 
