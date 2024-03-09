@@ -646,9 +646,6 @@ importers:
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/result
-      '@yas/trpc-server':
-        specifier: workspace:*
-        version: link:../../apps/trpc-server
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -659,6 +656,9 @@ importers:
       '@types/react':
         specifier: ^18.2.61
         version: 18.2.61
+      '@yas/trpc-server':
+        specifier: workspace:*
+        version: link:../../apps/trpc-server
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
