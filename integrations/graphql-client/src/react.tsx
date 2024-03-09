@@ -177,9 +177,10 @@ function tanstackQueryProps<
     transform = unsafePassThrough,
     ...extra
   } = normalizeQueryInput(input);
+
   return {
     ...extra,
-    queryKey: [query, variables],
+    queryKey: ["graphql-client", query, variables],
     async queryFn() {
       const { data, error } = await client.query(query, variables).toPromise();
       if (error !== undefined) {
