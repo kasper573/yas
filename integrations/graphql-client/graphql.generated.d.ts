@@ -14,7 +14,9 @@ export type introspection = {
     "queryType": {
       "name": "Query"
     },
-    "mutationType": null,
+    "mutationType": {
+      "name": "Mutation"
+    },
     "subscriptionType": null,
     "types": [
       {
@@ -41,6 +43,18 @@ export type introspection = {
                 }
               }
             ]
+          },
+          {
+            "name": "count",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -48,6 +62,62 @@ export type introspection = {
       {
         "kind": "SCALAR",
         "name": "String"
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Int"
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Mutation",
+        "fields": [
+          {
+            "name": "greet",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "name",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "increaseCount",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "amount",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
       },
       {
         "kind": "SCALAR",
