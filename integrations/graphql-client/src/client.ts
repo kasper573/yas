@@ -1,4 +1,10 @@
-import { Client, cacheExchange, fetchExchange } from "urql";
+import type { TadaDocumentNode } from "gql.tada";
+import { Client, fetchExchange } from "urql";
+
+export type GraphQLDocumentNode<Data, Variables> = TadaDocumentNode<
+  Data,
+  Variables
+>;
 
 export type GraphQLClient = ReturnType<typeof createGraphQLClient>;
 
@@ -11,7 +17,7 @@ export function createGraphQLClient({
 }) {
   return new Client({
     url,
-    exchanges: [cacheExchange, fetchExchange],
+    exchanges: [fetchExchange],
     fetchOptions: () => {
       const token = getToken?.();
       return {

@@ -1,9 +1,6 @@
 import { lazy, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/api-client";
-import {
-  GraphQLClientProvider,
-  createGraphQLClient,
-} from "@yas/graphql-client";
+import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
 import { ModalContext, ModalStore } from "@yas/ui";
@@ -29,7 +26,7 @@ export default function App() {
       <ModalContext.Provider value={modalStore}>
         <QueryClientProvider client={queryClient}>
           <TrpcClientProvider value={trpcClient}>
-            <GraphQLClientProvider value={graphqlClient}>
+            <GraphQLClientContext.Provider value={graphqlClient}>
               <ThemeProvider theme={theme} setTheme={setTheme}>
                 <ThemeInjector target={rootRef} />
                 <RouterProvider
@@ -38,7 +35,7 @@ export default function App() {
                 />
                 <QueryDevtools />
               </ThemeProvider>
-            </GraphQLClientProvider>
+            </GraphQLClientContext.Provider>
           </TrpcClientProvider>
         </QueryClientProvider>
       </ModalContext.Provider>
@@ -53,7 +50,11 @@ function createClients() {
         retry: env.mode === "production",
       },
       mutations: {
-        onSuccess: () => queryClient.invalidateQueries(),
+        onSettled(_, error) {
+          if (!error) {
+            queryClient.invalidateQueries();
+          }
+        },
       },
     },
   });

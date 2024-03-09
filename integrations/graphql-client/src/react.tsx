@@ -1,45 +1,34 @@
-import type { Client, DocumentInput } from "urql";
 import {
-  useQuery as useQueryImpl,
-  useQueries as useQueriesImpl,
-  useSuspenseQueries as useSuspenseQueriesImpl,
-  useSuspenseQuery as useSuspenseQueryImpl,
-  useMutation as useMutationImpl,
+  useQuery,
+  useQueries,
+  useSuspenseQueries,
+  useSuspenseQuery,
+  useMutation,
 } from "@yas/query";
-import { type AnyVariables, useClient as useURQLClient } from "urql";
 
-import { useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
+import type { GraphQLClient, GraphQLDocumentNode } from "./client";
 
-export { Provider as GraphQLClientProvider } from "urql";
-
-export function useGraphQLQuery<
-  Data,
-  Variables extends AnyVariables,
-  Transformed = Data,
->(
+export function useGraphQLQuery<Data, Variables, Transformed = Data>(
   queryInput: QueryInput<Data, Variables, Transformed, { enabled?: boolean }>,
 ): QueryResultLike<Transformed | undefined> {
-  const client = useURQLClient();
-  return useQueryImpl(tanstackQueryProps(client, queryInput));
+  const client = useContext(GraphQLClientContext);
+  return useQuery(tanstackQueryProps(client, queryInput));
 }
 
-export function useGraphQLQueries<
-  Data,
-  Variables extends AnyVariables,
-  Transformed = Data,
->({
+export function useGraphQLQueries<Data, Variables, Transformed = Data>({
   query,
   variables: variablesList,
   enabled,
   transform = unsafePassThrough,
 }: {
-  query: DocumentInput<Data, Variables>;
+  query: GraphQLDocumentNode<Data, Variables>;
   variables: Variables[];
   enabled?: boolean;
   transform?: QueryResultTransformer<Data[], Transformed[]>;
 }): QueryResultLike<Transformed[]> {
-  const client = useURQLClient();
-  const result = useQueriesImpl({
+  const client = useContext(GraphQLClientContext);
+  const result = useQueries({
     combine,
     queries: variablesList.map((variables) =>
       tanstackQueryProps(client, { query, variables, enabled }),
@@ -54,32 +43,24 @@ export function useGraphQLQueries<
   return { ...result, data };
 }
 
-export function useGraphQLSuspenseQuery<
-  Data,
-  Variables extends AnyVariables,
-  Transformed = Data,
->(
+export function useGraphQLSuspenseQuery<Data, Variables, Transformed = Data>(
   queryInput: QueryInput<Data, Variables, Transformed, {}>,
 ): QueryResultLike<Transformed> {
-  const client = useURQLClient();
-  return useSuspenseQueryImpl(tanstackQueryProps(client, queryInput));
+  const client = useContext(GraphQLClientContext);
+  return useSuspenseQuery(tanstackQueryProps(client, queryInput));
 }
 
-export function useGraphQLSuspenseQueries<
-  Data,
-  Variables extends AnyVariables,
-  Transformed = Data,
->({
+export function useGraphQLSuspenseQueries<Data, Variables, Transformed = Data>({
   query,
   variables: variablesList,
   transform = unsafePassThrough,
 }: {
-  query: DocumentInput<Data, Variables>;
+  query: GraphQLDocumentNode<Data, Variables>;
   variables: Variables[];
   transform?: QueryResultTransformer<Data[], Transformed[]>;
 }): QueryResultLike<Transformed[]> {
-  const client = useURQLClient();
-  const result = useSuspenseQueriesImpl({
+  const client = useContext(GraphQLClientContext);
+  const result = useSuspenseQueries({
     combine,
     queries: variablesList.map((variables) =>
       tanstackQueryProps(client, { query, variables }),
@@ -94,17 +75,14 @@ export function useGraphQLSuspenseQueries<
   return { ...result, data };
 }
 
-export function useGraphQLMutation<Data, Variables extends AnyVariables>(
-  query: DocumentInput<Data, Variables>,
+export function useGraphQLMutation<Data, Variables>(
+  query: GraphQLDocumentNode<Data, Variables>,
 ) {
-  const client = useURQLClient();
-  return useMutationImpl({
+  const client = useContext(GraphQLClientContext);
+  return useMutation({
     async mutationFn(variables: Variables) {
-      const { data, error } = await client
-        .mutation(query, variables)
-        .toPromise();
-
-      if (error !== undefined) {
+      const { data, error } = await client.mutation(query, variables ?? {});
+      if (error) {
         throw error;
       }
       return data;
@@ -112,11 +90,6 @@ export function useGraphQLMutation<Data, Variables extends AnyVariables>(
   });
 }
 
-/**
- * A normalized query result type that is used by all hooks
- * (multi queries gets their results combined into a summarized result that still match this interface).
- * This is useful because query hooks become interchangeable and can be used in the same way.
- */
 export interface QueryResultLike<Data> {
   data: Data;
   error: Error | null;
@@ -165,12 +138,10 @@ function mergeErrors(a: Error, b: Error): Error {
   return new Error(`${a.message}\n${b.message}`);
 }
 
-function tanstackQueryProps<
-  Data,
-  Variables extends AnyVariables,
-  Transformed,
-  Extra,
->(client: Client, input: QueryInput<Data, Variables, Transformed, Extra>) {
+function tanstackQueryProps<Data, Variables, Transformed, Extra>(
+  client: GraphQLClient,
+  input: QueryInput<Data, Variables, Transformed, Extra>,
+) {
   const {
     query,
     variables,
@@ -182,8 +153,8 @@ function tanstackQueryProps<
     ...extra,
     queryKey: ["graphql-client", query, variables],
     async queryFn() {
-      const { data, error } = await client.query(query, variables).toPromise();
-      if (error !== undefined) {
+      const { data, error } = await client.query(query, variables ?? {});
+      if (error) {
         throw error;
       }
       return data !== undefined ? transform(data) : undefined;
@@ -194,14 +165,14 @@ function tanstackQueryProps<
 type QueryResultTransformer<Data, Transformed> = (data: Data) => Transformed;
 
 type NormalizedQueryInput<Data, Variables, Transformed, Extra> = Extra & {
-  query: DocumentInput<Data, Variables>;
+  query: GraphQLDocumentNode<Data, Variables>;
   variables?: Variables;
   transform?: QueryResultTransformer<Data, Transformed>;
 };
 
 type QueryInput<Data, Variables, Transformed, Extra> =
   | NormalizedQueryInput<Data, Variables, Transformed, Extra>
-  | DocumentInput<Data, void>;
+  | GraphQLDocumentNode<Data, void>;
 
 function normalizeQueryInput<Data, Variables, Transformed, Extra>(
   input: QueryInput<Data, Variables, Transformed, Extra>,
@@ -220,3 +191,13 @@ function unsafePassThrough<I, O>(value: I): O {
 }
 
 const useUnsafeMemo = useMemo;
+
+export const GraphQLClientContext = createContext<GraphQLClient>(
+  new Proxy({} as GraphQLClient, {
+    get() {
+      throw new Error(
+        "No GraphQLClient available. Did you forget to wrap your component in a GraphQLClientContext.Provider?",
+      );
+    },
+  }),
+);
