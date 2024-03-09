@@ -40,7 +40,7 @@ function testApi() {
   test("can mutate", async ({ page }) => {
     const count = () => page.getByLabel(/count from server/i);
 
-    await expect(count()).not.toBeEmpty();
+    await expect(count()).toHaveValue(/\d+/);
     const initialCount = await valueOf(count());
 
     await page.getByRole("button", { name: /increase count/i }).click();
