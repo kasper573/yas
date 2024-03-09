@@ -4,8 +4,10 @@ import { g, buildSchema } from "garph";
 import type { YogaInitialContext } from "graphql-yoga";
 import { createYoga } from "graphql-yoga";
 
-export function createServer(graphqlEndpoint: string) {
-  const queryType = g.type("Query", {
+export type ClientTypes = ReturnType<typeof createClientTypes>;
+
+function createClientTypes() {
+  const Query = g.type("Query", {
     greeting: g
       .string()
       .args({
@@ -18,17 +20,25 @@ export function createServer(graphqlEndpoint: string) {
       .description("Query this field to manually trigger a server side error"),
   });
 
-  const mutationType = g.type("Mutation", {
+  const Mutation = g.type("Mutation", {
     increaseCount: g
       .int()
       .args({ amount: g.int() })
       .description("Increases count by the given amount"),
   });
 
+  return { Query, Mutation };
+}
+
+export function createServer(graphqlEndpoint: string) {
+  // Garph implicitly registers the types in the runtime globally in the g object,
+  // so we don't really need the return value here. The function only has it for type inference.
+  createClientTypes();
+
   let count = 0;
 
   const resolvers: InferResolvers<
-    { Query: typeof queryType; Mutation: typeof mutationType },
+    ClientTypes,
     { context: YogaInitialContext }
   > = {
     Query: {
