@@ -9,7 +9,7 @@ module.exports = {
         path.resolve(__dirname, "src/form/composed"),
         path.resolve(__dirname, "src/form"),
         path.resolve(__dirname, "src/form/shared"),
-        path.resolve(__dirname, "src/organisms"),
+        path.resolve(__dirname, "src/molecules"),
         path.resolve(__dirname, "src/components"),
         path.resolve(__dirname, "src/layout"),
         path.resolve(__dirname, "src/hooks"),

@@ -3,7 +3,7 @@ import type { FormatPreset } from "@yas/time";
 import { format } from "@yas/time";
 import type { ButtonProps } from "../components/Button";
 import { Button } from "../components/Button";
-import { Calendar } from "../organisms/Calendar";
+import { Calendar } from "../molecules/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/Popover";
 import { Stack } from "../layout/Stack";
 import { Paper } from "../components/Paper";
