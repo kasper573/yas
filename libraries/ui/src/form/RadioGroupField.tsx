@@ -2,7 +2,6 @@ import { useId, type ReactNode } from "react";
 import { Cross2Icon } from "@yas/icons";
 import { Button } from "../components/Button";
 import { Stack } from "../layout/Stack";
-import { Void } from "../layout/Void";
 import {
   FormControl,
   FormControlError,
@@ -47,16 +46,14 @@ export function RadioGroupField<Value>({
       <Stack direction="row" align="center" gap="#2">
         <FormControlLabel htmlFor={fieldsetId}>{label}</FormControlLabel>
 
-        <Void>
-          <Button
-            icon
-            size="small"
-            onClick={() => tryEmitChangedValue?.(undefined)}
-            className={styles.clearButton({ visible: showClearButton })}
-          >
-            <Cross2Icon />
-          </Button>
-        </Void>
+        <Button
+          icon
+          size="small"
+          onClick={() => tryEmitChangedValue?.(undefined)}
+          className={styles.clearButton({ visible: showClearButton })}
+        >
+          <Cross2Icon />
+        </Button>
       </Stack>
 
       <Fieldset id={fieldsetId}>

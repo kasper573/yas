@@ -5,7 +5,6 @@ import { styled } from "@yas/style";
 import { Stack } from "../layout/Stack";
 import { Button } from "../components/Button";
 import { Text } from "../components/Text";
-import { Void } from "../layout/Void";
 import { separator } from "./Pagination.css";
 
 export interface PaginationProps
@@ -56,9 +55,7 @@ export function Pagination({
       {isLeftSeparatorVisible ? (
         <>
           <PageButton onClick={() => onChange(1)}>
-            <Void axis="both">
-              <Text variant="caption">1</Text>
-            </Void>
+            <Text variant="caption">1</Text>
           </PageButton>
           <Separator />
         </>
@@ -75,9 +72,7 @@ export function Pagination({
         <>
           <Separator />
           <PageButton onClick={() => onChange(totalPages)}>
-            <Void axis="both">
-              <Text variant="caption">{totalPages}</Text>
-            </Void>
+            <Text variant="caption">{totalPages}</Text>
           </PageButton>
         </>
       ) : null}
@@ -111,9 +106,7 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
           onClick={() => onChange(page)}
           disabled={page === currentPage}
         >
-          <Void axis="both">
-            <Text variant="caption">{page}</Text>
-          </Void>
+          <Text variant="caption">{page}</Text>
         </PageButton>
       </>
     );
@@ -126,6 +119,7 @@ const PageButton = styled(Button).attrs({
   icon: true,
   size: "small",
   variant: "text",
+  style: { textAlign: "center" },
 });
 
 const Separator = styled(Text, separator).attrs({ children: "..." });

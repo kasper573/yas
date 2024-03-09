@@ -6,7 +6,6 @@ export * from "./layout/Dock";
 export * from "./layout/Bounds";
 export * from "./layout/Stack";
 export * from "./layout/Container";
-export * from "./layout/Void";
 export * from "./components/Alert";
 export * from "./components/Button";
 export * from "./components/Text";
