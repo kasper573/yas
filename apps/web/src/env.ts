@@ -3,8 +3,8 @@ import { z, mode, truthy } from "@yas/validate";
 const schema = z.object({
   CI: truthy.default(false),
   mode: mode.default("development"),
-  trpcServerUrl: z.string().url(),
-  graphqlServerUrl: z.string().url(),
+  trpcServerUrl: z.string(),
+  graphqlServerUrl: z.string(),
 });
 
 export const env = schema.parse({
