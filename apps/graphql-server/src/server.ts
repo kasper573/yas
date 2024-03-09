@@ -2,6 +2,7 @@ import { createServer as createHTTPServer } from "http";
 import type { InferResolvers } from "garph";
 import { g, buildSchema } from "garph";
 import { createYoga } from "graphql-yoga";
+import { env } from "./env";
 
 export type ClientTypes = ReturnType<typeof createClientTypes>;
 
@@ -60,6 +61,7 @@ export function createServer(graphqlEndpoint: string) {
   const schema = buildSchema({ g, resolvers: createResolvers() });
   const yoga = createYoga({
     schema,
+    cors: corsSettingsForRequest,
     graphqlEndpoint,
     context: ({ request }) => createContext(request),
   });
@@ -82,4 +84,14 @@ function getGraphQLServerHeaders(request: Request) {
   return Object.fromEntries(
     request.headers.entries(),
   ) as unknown as GraphQLServerHeaders;
+}
+
+function corsSettingsForRequest(request: Request) {
+  const origin = request.headers.get("origin");
+
+  if (origin && env.corsOrigin.test(origin)) {
+    return { origin };
+  }
+
+  return { origin: "Access denied by CORS policy" };
 }

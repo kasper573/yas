@@ -2,6 +2,7 @@ import { z, numeric } from "@yas/validate";
 
 const schema = z.object({
   graphqlEndpoint: z.string().default("/"),
+  corsOrigin: z.string().transform((exp) => new RegExp(exp)),
   runtime: z.discriminatedUnion("type", [
     z.object({ type: z.literal("lambda") }),
     z.object({ type: z.literal("server"), port: numeric }),
@@ -10,6 +11,7 @@ const schema = z.object({
 
 export const env = schema.parse({
   graphqlEndpoint: process.env.GRAPHQL_ENDPOINT,
+  corsOrigin: process.env.CORS_ORIGIN_REGEX,
   runtime:
     process.env.SERVE_ON_PORT !== undefined
       ? { type: "server", port: process.env.SERVE_ON_PORT }
