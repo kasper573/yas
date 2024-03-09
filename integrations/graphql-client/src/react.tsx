@@ -7,6 +7,7 @@ import {
 } from "@yas/query";
 
 import { createContext, useContext, useMemo } from "react";
+import { createRequest } from "urql";
 import type { GraphQLClient, GraphQLDocumentNode } from "./client";
 
 export function useGraphQLQuery<Data, Variables, Transformed = Data>(
@@ -80,6 +81,7 @@ export function useGraphQLMutation<Data, Variables>(
 ) {
   const client = useContext(GraphQLClientContext);
   return useMutation({
+    meta: { query },
     async mutationFn(variables: Variables) {
       const { data, error } = await client.mutation(query, variables ?? {});
       if (error) {
@@ -148,10 +150,11 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     transform = unsafePassThrough,
     ...extra
   } = normalizeQueryInput(input);
-
+  const { key } = createRequest(query, variables ?? {});
   return {
     ...extra,
-    queryKey: ["graphql-client", query, variables],
+    meta: { query, variables },
+    queryKey: ["graphql-client", key],
     async queryFn() {
       const { data, error } = await client.query(query, variables ?? {});
       if (error) {
