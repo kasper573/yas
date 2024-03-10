@@ -100,7 +100,7 @@ Exceptions apply:
 
 ## Layered architecture
 
-Package workspace folders are used as categories that represent architectural layers imposing this rule:
+To promote low coupling and high cohesion, package workspace folders are used as categories that represent architectural layers imposing this rule:
 
 **Lower layers should not depend on higher layers**.
 
