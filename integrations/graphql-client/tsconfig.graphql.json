@@ -3,7 +3,7 @@
     "plugins": [
       {
         "name": "@0no-co/graphqlsp",
-        "schema": "http://localhost:1235/",
+        "schema": "../../apps/graphql-server/src/schema.generated.graphql",
         "trackFieldUsage": false
       }
     ]

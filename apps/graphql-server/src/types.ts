@@ -12,3 +12,10 @@ export interface Headers {
  * @gqlType
  */
 export type Query = unknown;
+
+/**
+ * @gqlType
+ */
+export type Mutation = unknown;
+
+export type { ID, Float, Int } from "grats";
