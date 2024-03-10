@@ -76,10 +76,10 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 
 ### A rant on enforcing conventions
 
-I am a firm believer that a convention that is not enforced quickly becomes nothing more but a suggestion.
-
 <details>
 <summary>Read the rant</summary>
+
+I am a firm believer that a convention that is not enforced quickly becomes nothing more but a suggestion.
 
 Abrasive as it may sound, but people are flawed: we're forgetful, inconsistent and biased.
 While the industry has adopted tools like `eslint` and `prettier` to enforce certain conventions with great success,
