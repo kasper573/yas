@@ -16,6 +16,7 @@ export * from "./components/Skeleton";
 export * from "./components/CircularProgress";
 export * from "./components/Link";
 export * from "./components/Tabs";
+export * from "./components/TreeView";
 export * from "./molecules/Dialog";
 export * from "./molecules/Drawer";
 export * from "./molecules/List";
