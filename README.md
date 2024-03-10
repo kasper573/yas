@@ -8,7 +8,7 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 1. Shows how to roll your own [framework agnostic design system](libraries/design-system), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
 
-2. Shows how organize and separate concerns among a multitude of packages in a monorepo, i.e. by enforcing a layered architecture using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser), and shows several examples on modularization: above mentioned design system, and both a GraphQL and tRPC server divided into separate server, client and UI packages.
+2. Shows how organize and separate concerns among a multitude of packages in a monorepo, i.e. by enforcing a [layered architecture](#layered-architecture) using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser), and shows several examples on modularization: above mentioned design system, and both a tRPC and GraphQL server divided into separate [server](apps/graphql-server), [client](integrations/graphql-client) and UI packages.
 
 3. Superb developer experience with fast and reliable tooling with respect our human limitations: The compiler and editor should do the heavy lifting, and while memorizing conventions is important, you should be allowed to forget and be reminded by the tools when you make a mistake, without any exceptions. The philosophy is that you should just clone this repository and start coding, and the tools will guide you to the right path.
 
@@ -69,10 +69,39 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 - Keep packages small and focused.
 - Decouple your packages.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
-- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/test](core/test)).
-- Encapsulate packages (e.g. [@yas/style](libraries/style), [@yas/query](libraries/query), [@yas/validate](libraries/validate)).
-- Enforce conventions (i.e. eslint, prettier, or [custom scripts](core/scripts)).
+- Utilize shared configuration (i.e. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/test](core/test)).
+- Encapsulate packages (i.e. [@yas/style](libraries/style), [@yas/query](libraries/query), [@yas/validate](libraries/validate)).
 - Each non-trivial package should provide its own documentation.
+- Enforce conventions: use i.e. eslint, prettier, or [custom scripts](core/scripts) (see rant blow).
+
+### A rant on enforcing conventions
+
+I am a firm believer that conventions that are not enforced quickly become nothing more but a suggestion.
+
+Abrasive as it may sound, but people are flawed: we're forgetful, inconsistent and biased.
+While the industry has adopted tools like `eslint` and `prettier` to enforce certain conventions with great success,
+there's still too many conventions being handled by "oh, we'll deal with that in code review",
+only to be forgotten, or done poorly, effectively becoming an aggravating waste of time and energy.
+
+Ways of how people can fail to follow conventions include (but are not limited to):
+
+- The convention wasn't documented.
+- The documentation was outdated.
+- People didn't read the documentation.
+- People forgot about the convention.
+- People didn't care about the convention.
+- People didn't understand the convention.
+- People didn't have time to enforce the convention.
+
+Here's my advice on how to reason about conventions:
+
+1. If your convention doesn't exist as an eslint rule: write one!
+2. If eslint is not applicable, use another linting tool, like `stylelint`, `markdownlint`, `dependency-cruiser`, etc.
+3. If there is no linting tool for your convention, write a [custom script](core/scripts)!
+4. If the convention simply cannot be automated, then try to change it into something that can be. Often you can make a compromise for the sake of consistency, but still provide similar value.
+5. If it truly is impossible to automate, at this point it's time to ask yourself how useful this convention really is. The inability to systematically enforce a software convention in of itself is often a sign that the convention is flawed. Not always, but it may very well be a red flag. You've got two options here:
+   - Change the system so that the convention is no longer needed.
+   - Drop the convention and acknowledge that it's a suggestion, not a rule.
 
 ## Root-level only scripts
 
