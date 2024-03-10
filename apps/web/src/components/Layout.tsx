@@ -16,6 +16,7 @@ const mainLinks = [
   { to: "/", label: "Sandbox" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/api-tester", label: "Api Tester" },
+  { to: "/tree", label: "Tree" },
 ] as const;
 
 export default function Layout() {
