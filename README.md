@@ -59,7 +59,7 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 - Keep packages small and focused.
 - Decouple your packages.
 - Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
-- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/env](core/test)).
+- Utilize shared configuration (e.g. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/test](core/test)).
 - Encapsulate packages (e.g. [@yas/style](libraries/style), [@yas/query](libraries/query), [@yas/validate](libraries/validate)).
 - Enforce conventions (i.e. eslint, prettier, or [custom scripts](core/scripts)).
 - Each non-trivial package should provide its own documentation.
