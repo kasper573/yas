@@ -6,6 +6,7 @@ import {
   useContext,
   type ReactElement,
   type ReactNode,
+  forwardRef,
 } from "react";
 import { useUncontrolledFallback } from "@yas/hooks";
 import * as styles from "./TreeView.css";
@@ -37,6 +38,43 @@ const contextDefaults: TreeViewContextValue = {
 
 const TreeViewContext = createContext<TreeViewContextValue>(contextDefaults);
 
+const TreeItemImpl = forwardRef<HTMLDivElement, TreeItemProps>(
+  function TreeItemImpl(
+    { icon, nodeId, label, children, ...listItemProps },
+    ref,
+  ) {
+    const {
+      expandedNodeIds,
+      defaultExpandIcon,
+      defaultCollapseIcon,
+      onExpandedChanged,
+    } = useContext(TreeViewContext);
+
+    const expanded = expandedNodeIds.includes(nodeId);
+    const defaultIcon = expanded ? defaultExpandIcon : defaultCollapseIcon;
+
+    function toggleExpanded() {
+      onExpandedChanged?.(
+        expanded
+          ? expandedNodeIds.filter((id) => id !== nodeId)
+          : [...expandedNodeIds, nodeId],
+      );
+    }
+
+    return (
+      <li {...listItemProps}>
+        <div className={styles.labelAndIcon} onClick={toggleExpanded} ref={ref}>
+          {icon ?? defaultIcon}
+          <span className={styles.label}>{label}</span>
+        </div>
+        {children ? (
+          <ul className={styles.list({ expanded })}>{children}</ul>
+        ) : null}
+      </li>
+    );
+  },
+);
+
 export const TreeItem = styled(TreeItemImpl, styles.listItem);
 
 interface TreeViewContextValue {
@@ -55,42 +93,4 @@ interface TreeItemProps extends HTMLAttributes<HTMLLIElement> {
   label: ReactNode;
   icon?: ReactNode;
   children?: TreeChildren;
-}
-
-function TreeItemImpl({
-  icon,
-  nodeId,
-  label,
-  children,
-  ...listItemProps
-}: TreeItemProps) {
-  const {
-    expandedNodeIds,
-    defaultExpandIcon,
-    defaultCollapseIcon,
-    onExpandedChanged,
-  } = useContext(TreeViewContext);
-
-  const expanded = expandedNodeIds.includes(nodeId);
-  const defaultIcon = expanded ? defaultExpandIcon : defaultCollapseIcon;
-
-  function toggleExpanded() {
-    onExpandedChanged?.(
-      expanded
-        ? expandedNodeIds.filter((id) => id !== nodeId)
-        : [...expandedNodeIds, nodeId],
-    );
-  }
-
-  return (
-    <li {...listItemProps}>
-      <div className={styles.labelAndIcon} onClick={toggleExpanded}>
-        {icon ?? defaultIcon}
-        <span className={styles.label}>{label}</span>
-      </div>
-      {children ? (
-        <ul className={styles.list({ expanded })}>{children}</ul>
-      ) : null}
-    </li>
-  );
 }
