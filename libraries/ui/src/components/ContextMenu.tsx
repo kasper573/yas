@@ -11,22 +11,18 @@ export const ContextMenuItem = styled(RadixContextMenu.Item);
 /**
  * Optional utility for enhancing an existing component as a context menu trigger.
  */
-export function withContextMenu<
-  TriggerProps extends TriggerLikeProps,
-  ContextMenuProps extends Record<string, unknown>,
->(
+export function withContextMenu<TriggerProps extends TriggerLikeProps>(
   Trigger: ComponentType<TriggerProps>,
-  deriveProps: (props: TriggerProps) => ContextMenuProps,
-  defaultContextMenu?: ComponentType<ContextMenuProps>,
+  defaultContextMenu?: ComponentType<TriggerProps>,
 ) {
   return function WithContextMenu(
     props: TriggerProps & {
-      contextMenu?: ComponentType<ContextMenuProps>;
+      contextMenu?: ComponentType<TriggerProps>;
     },
   ) {
     const menuComponent = props.contextMenu ?? defaultContextMenu;
     const menuElement = menuComponent
-      ? createElement(menuComponent, deriveProps(props))
+      ? createElement(menuComponent, props)
       : null;
 
     return (

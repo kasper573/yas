@@ -16,11 +16,7 @@ export default function TreePage() {
   );
 }
 
-const File = withContextMenu(
-  TreeItem,
-  ({ nodeId }) => ({ nodeId }),
-  FileContextMenu,
-);
+const File = withContextMenu(TreeItem, FileContextMenu);
 
 function FileContextMenu({ nodeId }: { nodeId: string | number }) {
   return <Paper>Menu for {nodeId}</Paper>;

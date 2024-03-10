@@ -1,7 +1,5 @@
 import type { Meta } from "@storybook/react";
-import type { ComponentProps, ComponentType } from "react";
-import { TreeItem, TreeView } from "./TreeView";
-import { Paper } from "./Paper";
+import type { ComponentType, HTMLAttributes } from "react";
 import {
   ContextMenuContent,
   ContextMenuItem,
@@ -20,11 +18,11 @@ export const Component = {
   render: createExample((props) => (
     <ContextMenuRoot>
       <ContextMenuTrigger asChild>
-        <TreeItem {...props} />
+        <MyTrigger {...props} />
       </ContextMenuTrigger>
       <ContextMenuPortal>
         <ContextMenuContent>
-          <FileContextMenu nodeId={props.nodeId} />
+          <FileContextMenu label={props.label} />
         </ContextMenuContent>
       </ContextMenuPortal>
     </ContextMenuRoot>
@@ -38,14 +36,15 @@ export const Component = {
   },
 };
 
+function MyTrigger({
+  label,
+  ...rest
+}: { label: string } & HTMLAttributes<HTMLLIElement>) {
+  return <li {...rest}>{label}</li>;
+}
+
 export const HOC = {
-  render: createExample(
-    withContextMenu(
-      TreeItem,
-      ({ nodeId }) => ({ nodeId }),
-      FileContextMenu,
-    ) as typeof TreeItem,
-  ),
+  render: createExample(withContextMenu(MyTrigger, FileContextMenu)),
   parameters: {
     docs: {
       description: {
@@ -57,29 +56,24 @@ export const HOC = {
   },
 };
 
-function createExample(File: ComponentType<ComponentProps<typeof TreeItem>>) {
+function createExample(Item: ComponentType<{ label: string }>) {
   return function ContextMenuExample() {
     return (
-      <TreeView>
-        <File nodeId="1" label="Applications">
-          <File nodeId="2" label="Calendar" />
-        </File>
-        <File nodeId="5" label="Documents">
-          <File nodeId="10" label="OSS" sx={{ color: "error.base.main" }} />
-          <File nodeId="6" label="@yas/ui">
-            <File nodeId="8" label="index.ts" />
-          </File>
-        </File>
-      </TreeView>
+      <ul>
+        <h1>Right click one of these:</h1>
+        <Item label="One" />
+        <Item label="Two" />
+        <Item label="Three" />
+      </ul>
     );
   };
 }
 
-function FileContextMenu({ nodeId }: { nodeId: string | number }) {
+function FileContextMenu({ label }: { label: string }) {
   return (
-    <Paper>
-      Menu for {nodeId}
+    <div style={{ background: "skyblue", color: "black", padding: 12 }}>
+      Menu for {label}
       <ContextMenuItem>Click me to make a selection</ContextMenuItem>
-    </Paper>
+    </div>
   );
 }
