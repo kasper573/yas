@@ -12,7 +12,9 @@
   "scripts": {
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env tsx watch src/entrypoint.ts"
+    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm dev:codegen\" \"pnpm dev:server",
+    "dev:server": "yas-env tsx watch src/entrypoint.ts",
+    "dev:codegen": "pnpm exec grats --watch"
   },
   "dependencies": {
     "@yas/validate": "workspace:*",
@@ -23,6 +25,8 @@
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "tsup": "8.0.2"
+    "tsup": "8.0.2",
+    "grats": "0.0.23",
+    "concurrently": "8.2.2"
   }
 }

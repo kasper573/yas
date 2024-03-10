@@ -155,6 +155,12 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
+      concurrently:
+        specifier: 8.2.2
+        version: 8.2.2
+      grats:
+        specifier: 0.0.23
+        version: 0.0.23
       tsup:
         specifier: 8.0.2
         version: 8.0.2(postcss@8.4.35)(typescript@5.2.2)
@@ -284,7 +290,7 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
       concurrently:
-        specifier: ^8.2.2
+        specifier: 8.2.2
         version: 8.2.2
       react-error-boundary:
         specifier: ^4.0.13
@@ -13698,7 +13704,16 @@ packages:
   /graphql@16.8.1:
     resolution: {integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
-    dev: false
+
+  /grats@0.0.23:
+    resolution: {integrity: sha512-LqkHsw7OXXWkDAumMZ2AhV/SnDkrYgIEMhYm29ndSGmgFOP3PBfAZXgWcKrwKEU4FkWQ3JfN9PtpddwPN4t/Ig==}
+    engines: {node: '>=16 <=21', pnpm: ^8}
+    hasBin: true
+    dependencies:
+      commander: 10.0.1
+      graphql: 16.8.1
+      typescript: 5.2.2
+    dev: true
 
   /gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
