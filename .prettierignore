@@ -3,4 +3,4 @@ dist
 pnpm-lock.yaml
 
 # Don't format generated code
-*.generated.d.ts
+*.generated.*

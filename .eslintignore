@@ -1,4 +1,4 @@
 !.storybook
 
 # Don't lint generated code
-*.generated.d.ts
+*.generated.*
