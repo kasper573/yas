@@ -14,7 +14,7 @@
     "build": "turbo run build",
     "release": "turbo run release --concurrency 1",
     "dev": "turbo run dev --concurrency 40",
-    "lint": "pnpm eslint . --max-warnings=0",
+    "lint": "pnpm eslint . --max-warnings=0 && pnpm -r lint",
     "lint:fix": "pnpm eslint . --fix",
     "depcheck": "pnpm exec depcruise . --output-type err-long && assert-dependency-versions --pn react react-dom @types/react @types/react-dom superjson",
     "architecture": "pnpm exec depcruise . --output-type archi | dot -Tsvg -o architecture.svg",

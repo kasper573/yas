@@ -13,10 +13,10 @@
   "scripts": {
     "build": "storybook build -o dist",
     "dev": "storybook dev -p 6006 --no-open",
-    "test": "concurrently -n \"component,unit,stories-exist\" \"pnpm test:components\" \"pnpm test:unit\" \"pnpm test:stories-exist\"",
+    "lint": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\"",
+    "test": "concurrently -n \"component,unit\" \"pnpm test:components\" \"pnpm test:unit\"",
     "test:components": "pnpm build && concurrently -k -s first -n \"http,test\" \"http-server dist --port 6006 --silent\" \"wait-on tcp:6006 && test-storybook\"",
-    "test:unit": "vitest run",
-    "test:stories-exist": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\""
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.0.0",
