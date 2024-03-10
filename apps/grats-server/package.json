@@ -2,17 +2,17 @@
   "name": "@yas/grats-server",
   "version": "0.0.0",
   "private": true,
-  "types": "./src/package.ts",
+  "types": "./src/types.ts",
   "exports": {
     ".": {
-      "import": "./src/package.ts",
-      "require": "./src/package.ts"
+      "import": "./src/types.ts",
+      "require": "./src/types.ts"
     }
   },
   "scripts": {
     "build": "tsx assertSchemaIsUpToDate.ts && pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch src/entrypoint.ts\"",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch --clear-screen=false src/entrypoint.ts\"",
     "codegen": "pnpm exec grats"
   },
   "dependencies": {
