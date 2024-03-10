@@ -100,11 +100,11 @@ Exceptions apply:
 
 ## Layered architecture
 
-Packages are grouped into categories that represent architectural layers imposing this rule:
+Package workspace folders are used as categories that represent architectural layers imposing this rule:
 
 **Lower layers should not depend on higher layers**.
 
-> This is enforced using `pnpm depcheck`
+> This is enforced using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser)
 
 These are the layers, from top to bottom:
 
