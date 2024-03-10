@@ -41,7 +41,9 @@ There's also a robust CI/CD pipeline set up for this repository, which includes:
 
 ### Deployment
 
-Deployment scripts are not included in this repository. This is to allow for flexibility in deployment strategies. However, this repository is dogfooding deployment compatibility by deploying all the apps in the `apps` directory to Vercel automatically every time code is pushed to the repository, both in branches and main, so if you use this repository as a template you can rest assured that it's possible to deploy out of the box to Vercel at the very least. But the template is designed to be agnostic to which hosting platform you use, so you should be able to deploy to any platform you want with minimal effort.
+This repository is designed to be agnostic to deployment strategy and hosting platform, so it contains no deployment scripts or major host specific details and instead relies on a deployable artifacts convention. Each app or package that aims to be deployed has a `build` script that will produce its depoyable artifact according to that particular app or package's framework, and expects you to configure the deployment process either yourself after forking this repository, or by using a pull based deployment platform like Vercel, Netlify, or AWS Amplify.
+
+To ensure deployment compatibility, this repository is dogfooding above mentioned process by deploying all the apps in the `apps` directory to Vercel on a pull based deployment model.
 
 ## Quick start
 
