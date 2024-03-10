@@ -10,11 +10,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm typecheck && yas-env tsup",
+    "build": "tsx assertSchemaIsUpToDate.ts && pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm dev:codegen\" \"pnpm dev:server",
-    "dev:server": "yas-env tsx watch src/entrypoint.ts",
-    "dev:codegen": "pnpm exec grats --watch"
+    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch src/entrypoint.ts\"",
+    "codegen": "pnpm exec grats"
   },
   "dependencies": {
     "@yas/validate": "workspace:*",
