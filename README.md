@@ -98,7 +98,7 @@ Exceptions apply:
 - Packages that must follow a 3rd party naming convention (i.e. `eslint-*`).
 - Incubation packages should be named whatever they plan to register as on npm.
 
-### Package layers
+## Layered architecture
 
 Packages are grouped into categories that represent architectural layers imposing this rule:
 
