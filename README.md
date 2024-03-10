@@ -4,33 +4,43 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 > Also serves as an [incubation](#incubations) repository for experimenting with new ideas and technologies.
 
+## Notable feature highlights
+
+1. Shows how to roll your own [framework agnostic design system](libraries/design-system), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
+
+2. Shows how organize and separate concerns among a multitude of packages in a monorepo, i.e. by enforcing a layered architecture using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser), and shows several examples on modularization: above mentioned design system, and both a GraphQL and tRPC server divided into separate server, client and UI packages.
+
+3. Superb developer experience with fast and reliable tooling with respect our human limitations: The compiler and editor should do the heavy lifting, and while memorizing conventions is important, you should be allowed to forget and be reminded by the tools when you make a mistake, without any exceptions. The philosophy is that you should just clone this repository and start coding, and the tools will guide you to the right path.
+
 ## Stack
 
 Here's a quick overview of the most notable tools and libraries used in this stack. A lot of them are encapsulated in their own packages, so make sure you check out each package's documentation for more information.
 
-- Tools
+### Tools
 
-  - [pnpm](https://pnpm.io/) for package management.
-  - [turborepo](https://turbo.build/repo) for monorepo management.
-  - [Vite](https://vitejs.dev/) for bundling and development server.
-  - [Vitest](https://vitest.dev/) for unit testing.
-  - [Storybook](https://storybook.js.org/) for component development and testing
-  - [Playwright](https://playwright.dev/) for end-to-end testing.
-  - [ESLint](https://eslint.org/) for code linting.
-  - [Prettier](https://prettier.io/) for code formatting.
+- [pnpm](https://pnpm.io/) for package management.
+- [turborepo](https://turbo.build/repo) for monorepo management.
+- [Vite](https://vitejs.dev/) for bundling and development server.
+- [Vitest](https://vitest.dev/) for unit testing.
+- [Storybook](https://storybook.js.org/) for component development and testing
+- [Playwright](https://playwright.dev/) for end-to-end testing.
+- [ESLint](https://eslint.org/) for code linting.
+- [Prettier](https://prettier.io/) for code formatting.
 
-- Notable libraries
+### Notable libraries
 
-  - [Vanilla Extract](https://vanilla-extract.style/) for styling.
-  - [tRPC](https://trpc.io/) for API server and client.
-  - [GraphQL](https://graphql.org/) for API server and client.
-  - [Radix UI](https://www.radix-ui.com/) for component primitives.
-  - [Tanstack Query](https://tanstack.com/query) wrapper around both GraphQL & tRPC for a unified data fetching interface.
-  - [Tanstack Router](https://tanstack.com/router) for routing.
-  - [react-hook-form](https://react-hook-form.com/) for form state management.
-  - [zod](https://github.com/colinhacks/zod) for runtime type validation.
-  - [date-fns](https://date-fns.org/) for date manipulation.
-  - [react-pdf](https://react-pdf.org/) for PDF generation.
+- [Vanilla Extract](https://vanilla-extract.style/) for styling.
+- [tRPC](https://trpc.io/) for API server and client.
+- [GraphQL](https://graphql.org/) for API server and client.
+- [Radix UI](https://www.radix-ui.com/) for component primitives.
+- [Tanstack Query](https://tanstack.com/query) wrapper around both GraphQL & tRPC for a unified data fetching interface.
+- [Tanstack Router](https://tanstack.com/router) for routing.
+- [react-hook-form](https://react-hook-form.com/) for form state management.
+- [zod](https://github.com/colinhacks/zod) for runtime type validation.
+- [date-fns](https://date-fns.org/) for date manipulation.
+- [react-pdf](https://react-pdf.org/) for PDF generation.
+
+### Pipeline
 
 There's also a robust CI/CD pipeline set up for this repository, which includes:
 
@@ -127,3 +137,5 @@ Low level tooling for building apps and libraries. Should mostly be out of your 
 #### [incubations](incubations)
 
 Experimental packages. If they become stable, they will be extracted into their own repository. Ideally, this folder should be empty.
+
+> Note: I am currently experimenting with some technologies of my own in this repository. The incubation packages that reside in the repository are not considered part of the template and may or may not be stable or production ready. These are my personal experiments, and while I believe in them, they may fail. If I decide to remove them, I will refactor the places they are used in the repository to use a 3rd party equivalent instead. Once my experiments are over, the template will only have a minor placeholder package in the incubations folder to continue demonstrating the concept, and will remove this note.
