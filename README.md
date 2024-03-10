@@ -64,31 +64,28 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 - Enforce conventions (i.e. eslint, prettier, or [custom scripts](core/scripts)).
 - Each non-trivial package should provide its own documentation.
 
-## Scripts
+## Root-level only scripts
 
-The following scripts are available in the root of the repository and will run the same script in each package.
-
-- `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
-- `build` Builds the app or package
-- `test` Runs the test runner in headless mode, once.
-- `test:watch` Starts the test runner in watch mode
-- `lint` Custom linting procedures for a package (eslint and prettier is done globally and is not necessary to define per package)
-- `release` Releases the package to npm
-
-### Script conventions
-
-- Each script should exit with a non-zero exit code if they fail.
-- Each package may implement these scripts differently, as long as they satisfy the given use case.
-- A package may opt out of these scripts, but you must not rename them. This is to ensure consistency across packages.
-
-### Global scripts
-
-The following scripts are only available in the root of the repository and will affect all packages.
+The following scripts are only available in the root of the repository but will apply to the entire codebase:
 
 - `lint` Checks for code style errors.
 - `lint:fix` Fixes code style errors (where possible)
 - `format` Formats code.
 - `format:fix` Formats code and fixes code style errors (where possible)
+
+## Package scripts
+
+These scripts are part of a convention. Individual packages may have their own scripts that are not listed here that may do other things, but these are the ones that are expected to be consistent across all packages. Packages may opt in to have the following scripts:
+
+- `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
+- `build` Builds the app or package into a deployable artifact according to the package's framework.
+- `test` Runs the test runner in headless mode, once.
+- `test:watch` Starts the test runner in watch mode for development.
+- `release` Releases the package to npm.
+
+**Each script must exit with a non-zero exit code if they fail.**
+
+The root package have these scripts defined as well and is configured to automatically run these scripts for all packages in the repository, which will be your primary way of interacting with these scripts, but you can also run them manually in a package if you need to.
 
 ## Packages
 
