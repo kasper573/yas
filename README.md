@@ -76,7 +76,10 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 
 ### A rant on enforcing conventions
 
-I am a firm believer that conventions that are not enforced quickly become nothing more but a suggestion.
+I am a firm believer that a convention that is not enforced quickly becomes nothing more but a suggestion.
+
+<details>
+<summary>Read the rant</summary>
 
 Abrasive as it may sound, but people are flawed: we're forgetful, inconsistent and biased.
 While the industry has adopted tools like `eslint` and `prettier` to enforce certain conventions with great success,
@@ -102,6 +105,8 @@ Here's my advice on how to reason about conventions:
 5. If it truly is impossible to automate, at this point it's time to ask yourself how useful this convention really is. The inability to systematically enforce a software convention in of itself is often a sign that the convention is flawed. Not always, but it may very well be a red flag. You've got two options here:
    - Change the system so that the convention is no longer needed.
    - Drop the convention and acknowledge that it's a suggestion, not a rule.
+
+</details>
 
 ## Root-level only scripts
 
