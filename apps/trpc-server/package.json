@@ -12,7 +12,7 @@
   "scripts": {
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env tsx watch src/entrypoint.ts",
+    "dev": "yas-env tsx watch src/entrypoint.ts --clear-screen=false",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -12,7 +12,7 @@
   "scripts": {
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env tsx watch src/entrypoint.ts"
+    "dev": "yas-env tsx watch --clear-screen=false src/entrypoint.ts"
   },
   "dependencies": {
     "graphql-yoga": "5.1.1",
