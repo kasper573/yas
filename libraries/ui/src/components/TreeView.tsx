@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@yas/icons";
 import { styled } from "@yas/style";
+import type { HTMLAttributes } from "react";
 import {
   createContext,
   useContext,
@@ -36,7 +37,7 @@ const contextDefaults: TreeViewContextValue = {
 
 const TreeViewContext = createContext<TreeViewContextValue>(contextDefaults);
 
-export const TreeItem = styled(TreeItemImpl);
+export const TreeItem = styled(TreeItemImpl, styles.listItem);
 
 interface TreeViewContextValue {
   defaultCollapseIcon: ReactNode;
@@ -49,14 +50,20 @@ type NodeId = string | number;
 
 type TreeChildren = ReactElement<TreeItemProps> | ReactElement<TreeItemProps>[];
 
-interface TreeItemProps {
+interface TreeItemProps extends HTMLAttributes<HTMLLIElement> {
   nodeId: NodeId;
   label: ReactNode;
   icon?: ReactNode;
   children?: TreeChildren;
 }
 
-function TreeItemImpl({ icon, nodeId, label, children }: TreeItemProps) {
+function TreeItemImpl({
+  icon,
+  nodeId,
+  label,
+  children,
+  ...listItemProps
+}: TreeItemProps) {
   const {
     expandedNodeIds,
     defaultExpandIcon,
@@ -76,7 +83,7 @@ function TreeItemImpl({ icon, nodeId, label, children }: TreeItemProps) {
   }
 
   return (
-    <li className={styles.listItem}>
+    <li {...listItemProps}>
       <div className={styles.labelAndIcon} onClick={toggleExpanded}>
         {icon ?? defaultIcon}
         <span className={styles.label}>{label}</span>
