@@ -40,7 +40,7 @@
     "@yas/env": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "^8.2.2",
+    "concurrently": "8.2.2",
     "react-error-boundary": "^4.0.13"
   }
 }
