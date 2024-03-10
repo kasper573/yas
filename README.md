@@ -102,7 +102,7 @@ Here's my advice on how to reason about conventions:
 2. If eslint is not applicable, use another linting tool, like `stylelint`, `markdownlint`, `dependency-cruiser`, etc.
 3. If there is no linting tool for your convention, write a [custom script](core/scripts)!
 4. If the convention simply cannot be automated, then try to change it into something that can be. Often you can make a compromise for the sake of consistency, but still provide similar value.
-5. If it truly is impossible to automate, at this point it's time to ask yourself how useful this convention really is. The inability to systematically enforce a software convention in of itself is often a sign that the convention is flawed. Not always, but it may very well be a red flag. You've got two options here:
+5. If it truly is impossible to automate, at this point it's time to ask yourself how useful this convention really is. The inability to systematically enforce a software convention in is of itself often a sign that the convention is flawed. Not always, but it may very well be a red flag. You've got two options here:
    - Change the system so that the convention is no longer needed.
    - Drop the convention and acknowledge that it's a suggestion, not a rule.
 
