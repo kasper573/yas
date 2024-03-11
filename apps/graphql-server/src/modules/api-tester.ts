@@ -1,4 +1,4 @@
-import type { Int, Mutation, Query } from "~/types";
+import type { Int, Mutation, Query } from "../types";
 
 let counter = 0;
 
