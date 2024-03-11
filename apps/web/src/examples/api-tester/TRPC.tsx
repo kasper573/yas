@@ -35,7 +35,7 @@ export default function TRPC() {
       <LoadingButton
         onClick={() => setShouldServerError(true)}
         disabled={shouldServerError}
-        isLoading={error.isLoading}
+        isLoading={error.isFetching}
       >
         Enable server side error
       </LoadingButton>
