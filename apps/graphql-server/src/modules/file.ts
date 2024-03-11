@@ -1,4 +1,4 @@
-import type { ID, Query } from "~/types";
+import type { ID, Query } from "../types";
 
 /** @gqlUnion */
 export type File = TextFile | Folder;
