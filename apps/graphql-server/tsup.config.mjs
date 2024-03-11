@@ -5,20 +5,17 @@ export default createYasTsupConfig(process.cwd(), {
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
   dts: false,
-  plugins: [
-    {
-      name: "path-transform",
-      resolveId(source, importer) {
-        if (source.includes("\\")) {
-          const transformedSource = source.replace(/\\/g, "/");
-          return this.resolve(transformedSource, importer, {
-            skipSelf: true,
-          }).then((resolved) => {
-            return resolved || null;
-          });
-        }
-        return null;
-      },
-    },
-  ],
+  plugins: [fixPathSeparatorPlugin()],
 });
+
+function fixPathSeparatorPlugin() {
+  return {
+    name: "fix-path-separator",
+    setup(build) {
+      build.onResolve({ filter: /.*/ }, (args) => {
+        const path = args.path.replace(/\\+/g, "/"); // Replace backslashes with forward slashes
+        return { path };
+      });
+    },
+  };
+}
