@@ -22,10 +22,13 @@ const gqlAfter = fs.readFileSync(graphqlSchema, "utf-8");
 fs.writeFileSync(tsSchema, tsBefore);
 fs.writeFileSync(graphqlSchema, gqlBefore);
 
-assertIdentical(tsSchema, tsBefore, tsAfter);
-assertIdentical(graphqlSchema, gqlBefore, gqlAfter);
+const isIdentical =
+  compare(tsSchema, tsBefore, tsAfter) &&
+  compare(graphqlSchema, gqlBefore, gqlAfter);
 
-function assertIdentical(file: string, a: string, b: string) {
+process.exit(isIdentical ? 0 : 1);
+
+function compare(file: string, a: string, b: string) {
   try {
     const f1 = tempFile(a);
     const f2 = tempFile(b);
@@ -33,6 +36,7 @@ function assertIdentical(file: string, a: string, b: string) {
     f1.release();
     f2.release();
     console.log(`✅  ${file} is up to date!`);
+    return true;
   } catch (_) {
     const e = _ as ExecaError;
     if (e.stderr) {
@@ -42,7 +46,7 @@ function assertIdentical(file: string, a: string, b: string) {
         `❌  ${file} out of date. Run codegen and commit changes.\n` + e.stdout,
       );
     }
-    process.exit(1);
+    return false;
   }
 }
 
