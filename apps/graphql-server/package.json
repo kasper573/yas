@@ -10,11 +10,11 @@
     }
   },
   "scripts": {
-    "build": "pnpm codegen:assert && pnpm typecheck && yas-env tsup",
+    "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch --clear-screen=false src/entrypoint.ts\"",
     "codegen": "pnpm exec grats",
-    "codegen:assert": "tsx assertCodegen.ts"
+    "lint": "tsx assertCodegen.ts"
   },
   "dependencies": {
     "@yas/validate": "workspace:*",
