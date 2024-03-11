@@ -40,12 +40,12 @@ function compare(file: string, a: string, b: string) {
     return true;
   } catch (_) {
     const e = _ as ExecaError;
-    if (e.stderr) {
-      console.log("Unexpected error:", e.stderr);
-    } else {
+    if (e.stdout) {
       console.log(
         `❌  ${file} out of date. Run codegen and commit changes.\n` + e.stdout,
       );
+    } else {
+      console.log("Unexpected error", e.stdout || e.message || String(e));
     }
     return false;
   }
