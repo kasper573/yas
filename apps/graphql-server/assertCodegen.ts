@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
 import type { ExecaError } from "execa";
-import { execaSync as $ } from "execa";
+import { execaSync, $ } from "execa";
 import tsConfig from "./tsconfig.json";
 
 // Asserts that the generated types and graphql schema are up to date
@@ -14,7 +14,7 @@ const {
 const tsBefore = fs.readFileSync(tsSchema, "utf-8");
 const gqlBefore = fs.readFileSync(graphqlSchema, "utf-8");
 
-$("pnpm codegen");
+$`pnpm codegen`;
 
 const tsAfter = fs.readFileSync(tsSchema, "utf-8");
 const gqlAfter = fs.readFileSync(graphqlSchema, "utf-8");
@@ -32,7 +32,7 @@ function compare(file: string, a: string, b: string) {
   try {
     const f1 = tempFile(a);
     const f2 = tempFile(b);
-    $("diff", ["-u", "--label", "A", f1.path, "--label", "B", f2.path]);
+    execaSync("diff", ["-u", "--label", "A", f1.path, "--label", "B", f2.path]);
     f1.release();
     f2.release();
     console.log(`✅  ${file} is up to date!`);
