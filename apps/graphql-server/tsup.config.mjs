@@ -7,16 +7,17 @@ export default createYasTsupConfig(process.cwd(), {
   dts: false,
   plugins: [
     {
-      name: "fix-import-paths",
-      setup(build) {
-        build.onResolve({ filter: /.*/ }, (args) => {
-          console.log("Resolving:", args.path);
-          if (args.path.includes("\\")) {
-            const newPath = args.path.replace(/\\/g, "/");
-            console.log("New Path:", newPath);
-            return { path: newPath };
-          }
-        });
+      name: "path-transform",
+      resolveId(source, importer) {
+        if (source.includes("\\")) {
+          const transformedSource = source.replace(/\\/g, "/");
+          return this.resolve(transformedSource, importer, {
+            skipSelf: true,
+          }).then((resolved) => {
+            return resolved || null;
+          });
+        }
+        return null;
       },
     },
   ],
