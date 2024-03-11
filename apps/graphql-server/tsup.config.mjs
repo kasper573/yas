@@ -5,4 +5,18 @@ export default createYasTsupConfig(process.cwd(), {
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
   dts: false,
+  plugins: [
+    {
+      name: "fix-import-paths",
+      setup(build) {
+        build.onResolve({ filter: /.*/ }, (args) => {
+          if (args.path.includes("\\")) {
+            return {
+              path: args.path.replace(/\\/g, "/"),
+            };
+          }
+        });
+      },
+    },
+  ],
 });
