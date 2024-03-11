@@ -11,9 +11,7 @@ export default function TRPC() {
   const greeting = api.apiTester.greeting.useQuery(debouncedName);
   const increase = api.apiTester.increaseCount.useMutation();
   const count = api.apiTester.count.useQuery();
-  const error = api.apiTester.error.useQuery(undefined, {
-    enabled: shouldServerError,
-  });
+  api.apiTester.error.useQuery(undefined, { enabled: shouldServerError });
 
   return (
     <>
@@ -34,7 +32,6 @@ export default function TRPC() {
       <LoadingButton
         onClick={() => setShouldServerError(true)}
         disabled={shouldServerError}
-        isLoading={error.isFetching}
       >
         Enable server side error
       </LoadingButton>

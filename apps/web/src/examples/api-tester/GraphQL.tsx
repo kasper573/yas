@@ -16,10 +16,7 @@ export default function GraphQL() {
     variables: { name: debouncedName },
   });
   const increase = useGraphQLMutation(increaseGQL);
-  const error = useGraphQLQuery({
-    query: errorGQL,
-    enabled: shouldServerError,
-  });
+  useGraphQLQuery({ query: errorGQL, enabled: shouldServerError });
 
   return (
     <>
@@ -39,7 +36,6 @@ export default function GraphQL() {
       </LoadingButton>
       <LoadingButton
         onClick={() => setShouldServerError(true)}
-        isLoading={error.isFetching}
         disabled={shouldServerError}
       >
         Enable server side error
