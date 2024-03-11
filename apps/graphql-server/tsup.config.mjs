@@ -10,10 +10,11 @@ export default createYasTsupConfig(process.cwd(), {
       name: "fix-import-paths",
       setup(build) {
         build.onResolve({ filter: /.*/ }, (args) => {
+          console.log("Resolving:", args.path);
           if (args.path.includes("\\")) {
-            return {
-              path: args.path.replace(/\\/g, "/"),
-            };
+            const newPath = args.path.replace(/\\/g, "/");
+            console.log("New Path:", newPath);
+            return { path: newPath };
           }
         });
       },
