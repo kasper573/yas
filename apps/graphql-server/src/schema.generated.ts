@@ -69,8 +69,8 @@ export function getSchema(): GraphQLSchema {
                 count: {
                     name: "count",
                     type: new GraphQLNonNull(GraphQLInt),
-                    resolve(source) {
-                        return queryCountResolver(source);
+                    resolve(source, args, context) {
+                        return queryCountResolver(source, args, context);
                     }
                 },
                 dir: {
@@ -122,8 +122,8 @@ export function getSchema(): GraphQLSchema {
                             type: new GraphQLNonNull(GraphQLInt)
                         }
                     },
-                    resolve(source, args) {
-                        return mutationIncreaseCountResolver(source, args);
+                    resolve(source, args, context) {
+                        return mutationIncreaseCountResolver(source, args, context);
                     }
                 }
             };
