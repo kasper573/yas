@@ -8,7 +8,6 @@ export default function TRPC() {
   const [name, setName] = useState("");
   const [shouldServerError, setShouldServerError] = useState(false);
   const debouncedName = useDebouncedValue(name, 300);
-
   const greeting = api.apiTester.greeting.useQuery(debouncedName);
   const increase = api.apiTester.increaseCount.useMutation();
   const count = api.apiTester.count.useQuery();
