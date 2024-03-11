@@ -14,7 +14,7 @@ const {
 const tsBefore = fs.readFileSync(tsSchema, "utf-8");
 const gqlBefore = fs.readFileSync(graphqlSchema, "utf-8");
 
-$`pnpm codegen`;
+$.sync`pnpm codegen`;
 
 const tsAfter = fs.readFileSync(tsSchema, "utf-8");
 const gqlAfter = fs.readFileSync(graphqlSchema, "utf-8");
