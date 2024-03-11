@@ -33,7 +33,15 @@ function compare(file: string, a: string, b: string) {
   try {
     const f1 = tempFile(normalizeImportPaths(a));
     const f2 = tempFile(normalizeImportPaths(b));
-    execaSync("diff", ["-u", "--label", "A", f1.path, "--label", "B", f2.path]);
+    execaSync("diff", [
+      "-u",
+      "--label",
+      "Schema in repo",
+      f1.path,
+      "--label",
+      "Schema after codegen",
+      f2.path,
+    ]);
     f1.release();
     f2.release();
     console.log(`✅  ${file} is up to date!`);
