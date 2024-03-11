@@ -22,12 +22,5 @@
     "@types/react": "^18.2.61",
     "@yas/tsconfig": "workspace:*",
     "@yas/trpc-server": "workspace:*"
-  },
-  "depcheck": {
-    "exceptions": {
-      "allow": [
-        "@yas/trpc-server"
-      ]
-    }
   }
 }

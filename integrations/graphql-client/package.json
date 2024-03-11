@@ -26,12 +26,5 @@
     "@types/react": "^18.2.61",
     "@yas/graphql-server": "workspace:*",
     "@yas/tsconfig": "workspace:*"
-  },
-  "depcheck": {
-    "exceptions": {
-      "allow": [
-        "@yas/graphql-server"
-      ]
-    }
   }
 }
