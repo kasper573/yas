@@ -1,5 +1,4 @@
 export {
-  QueryClient,
   QueryClientProvider,
   useSuspenseQuery,
   useSuspenseQueries,
@@ -9,4 +8,5 @@ export {
   useQueryClient,
 } from "@tanstack/react-query";
 
-export type { QueryClientConfig } from "@tanstack/react-query";
+export type { QueryClient, QueryClientConfig } from "@tanstack/react-query";
+export * from "./client";

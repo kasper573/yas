@@ -5,7 +5,7 @@ import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
 import { ModalContext, ModalStore } from "@yas/ui";
-import { QueryClient, QueryClientProvider } from "@yas/query";
+import { QueryClientProvider, createQueryClient } from "@yas/query";
 import { env } from "./env";
 import { ErrorFallback } from "./components/ErrorFallback";
 import {
@@ -45,22 +45,9 @@ export default function App() {
 }
 
 function createClients() {
-  const query: QueryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: env.mode === "production",
-      },
-      mutations: {
-        onSettled(_, error) {
-          if (!error) {
-            query.invalidateQueries();
-          }
-        },
-      },
-    },
-  });
   const clientId = v4();
   const headers = () => ({ "client-id": clientId });
+  const query = createQueryClient(env.mode);
   const trpc = createTrpcClient({ url: env.trpcServerUrl, headers });
   const graphql = createGraphQLClient({ url: env.graphqlServerUrl, headers });
   return { query, trpc, graphql };
