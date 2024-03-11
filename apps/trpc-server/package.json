@@ -12,7 +12,7 @@
   "scripts": {
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env tsnd src/entrypoint.ts",
+    "dev": "yas-env tsx watch src/entrypoint.ts --clear-screen=false",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -33,7 +33,6 @@
     "@yas/tsconfig": "workspace:*",
     "cors": "2.8.5",
     "morgan": "1.10.0",
-    "ts-node-dev": "2.0.0",
     "tsup": "8.0.2"
   }
 }

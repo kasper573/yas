@@ -2,27 +2,32 @@
   "name": "@yas/graphql-server",
   "version": "0.0.0",
   "private": true,
-  "types": "./src/package.ts",
+  "types": "./src/types.ts",
   "exports": {
     ".": {
-      "import": "./src/package.ts",
-      "require": "./src/package.ts"
+      "import": "./src/types.ts",
+      "require": "./src/types.ts"
     }
   },
   "scripts": {
     "build": "pnpm typecheck && yas-env tsup",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "dev": "yas-env tsx watch src/entrypoint.ts"
+    "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch --clear-screen=false src/entrypoint.ts\"",
+    "codegen": "pnpm exec grats",
+    "lint": "tsx assertCodegen.ts"
   },
   "dependencies": {
+    "@yas/validate": "workspace:*",
     "graphql-yoga": "5.1.1",
-    "garph": "0.6.8"
+    "graphql": "16.8.1"
   },
   "devDependencies": {
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
-    "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "@yas/validate": "workspace:*"
+    "tsup": "8.0.2",
+    "grats": "0.0.23",
+    "concurrently": "8.2.2",
+    "execa": "8.0.1"
   }
 }

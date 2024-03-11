@@ -1,6 +1,6 @@
 import type { TadaDocumentNode } from "gql.tada";
 import { Client, fetchExchange } from "urql";
-import type { GraphQLServerHeaders } from "@yas/graphql-server";
+import type { Headers } from "@yas/graphql-server";
 
 export type GraphQLDocumentNode<Data, Variables> = TadaDocumentNode<
   Data,
@@ -14,7 +14,7 @@ export function createGraphQLClient({
   headers,
 }: {
   url: string;
-  headers: () => GraphQLServerHeaders;
+  headers: () => Headers;
 }) {
   return new Client({
     url,
