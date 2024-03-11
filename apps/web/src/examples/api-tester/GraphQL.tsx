@@ -4,23 +4,23 @@ import {
   useGraphQLQuery,
 } from "@yas/graphql-client";
 import { useDebouncedValue } from "@yas/hooks";
-import { Button, NumberField, TextField } from "@yas/ui";
+import { LoadingButton, NumberField, TextField } from "@yas/ui";
 import { useState } from "react";
 
-const query = graphql(`
+const dataGQL = graphql(`
   query GraphQLTester($name: String!) {
     greeting(name: $name)
     count
   }
 `);
 
-const errorQuery = graphql(`
+const errorGQL = graphql(`
   query ErrorQuery {
     error
   }
 `);
 
-const increaseQuery = graphql(`
+const increaseGQL = graphql(`
   mutation IncreaseCount($amount: Int!) {
     increaseCount(amount: $amount)
   }
@@ -30,12 +30,15 @@ export default function GraphQL() {
   const [shouldServerError, setShouldServerError] = useState(false);
   const [name, setName] = useState("");
   const debouncedName = useDebouncedValue(name, 300);
-  const { data } = useGraphQLQuery({
-    query,
+  const query = useGraphQLQuery({
+    query: dataGQL,
     variables: { name: debouncedName },
   });
-  const increase = useGraphQLMutation(increaseQuery);
-  useGraphQLQuery({ query: errorQuery, enabled: shouldServerError });
+  const increase = useGraphQLMutation(increaseGQL);
+  const error = useGraphQLQuery({
+    query: errorGQL,
+    enabled: shouldServerError,
+  });
 
   return (
     <>
@@ -45,17 +48,29 @@ export default function GraphQL() {
         onChange={setName}
         required
       />
-      <TextField label="Greeting from server" value={data?.greeting} readOnly />
-      <NumberField label="Count from server" value={data?.count} readOnly />
-      <Button onClick={() => increase.mutate({ amount: 1 })}>
+      <TextField
+        label="Greeting from server"
+        value={query.data?.greeting}
+        readOnly
+      />
+      <NumberField
+        label="Count from server"
+        value={query.data?.count}
+        readOnly
+      />
+      <LoadingButton
+        isLoading={increase.isPending || query.isPending}
+        onClick={() => increase.mutate({ amount: 1 })}
+      >
         Increase count
-      </Button>
-      <Button
+      </LoadingButton>
+      <LoadingButton
         onClick={() => setShouldServerError(true)}
+        isLoading={error.isFetching}
         disabled={shouldServerError}
       >
         Enable server side error
-      </Button>
+      </LoadingButton>
     </>
   );
 }
