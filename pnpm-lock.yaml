@@ -133,6 +133,9 @@ importers:
       concurrently:
         specifier: 8.2.2
         version: 8.2.2
+      execa:
+        specifier: 8.0.1
+        version: 8.0.1
       grats:
         specifier: 0.0.23
         version: 0.0.23
