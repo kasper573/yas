@@ -10,6 +10,7 @@ export default function TRPC() {
   const debouncedName = useDebouncedValue(name, 300);
   const greeting = api.apiTester.greeting.useQuery(debouncedName);
   const increase = api.apiTester.increaseCount.useMutation();
+  const triggerMutationError = api.apiTester.mutationError.useMutation();
   const count = api.apiTester.count.useQuery();
   api.apiTester.error.useQuery(undefined, { enabled: shouldServerError });
 
@@ -28,6 +29,12 @@ export default function TRPC() {
         onClick={() => increase.mutate({ amount: 1 })}
       >
         Increase count
+      </LoadingButton>
+      <LoadingButton
+        isLoading={triggerMutationError.isPending}
+        onClick={() => triggerMutationError.mutate()}
+      >
+        Trigger server side mutation error
       </LoadingButton>
       <LoadingButton
         onClick={() => setShouldServerError(true)}
