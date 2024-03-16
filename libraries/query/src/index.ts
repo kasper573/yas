@@ -7,5 +7,11 @@ export {
   useMutation,
 } from "@tanstack/react-query";
 
-export type { QueryClient, QueryClientConfig } from "@tanstack/react-query";
+export type {
+  QueryClient,
+  QueryClientConfig,
+  UseQueryOptions,
+  UseMutationOptions,
+  UseMutationResult,
+} from "@tanstack/react-query";
 export * from "./client";

@@ -1,3 +1,4 @@
+import type { UseMutationOptions, UseMutationResult } from "@yas/query";
 import {
   useQuery,
   useQueries,
@@ -76,19 +77,27 @@ export function useGraphQLSuspenseQueries<Data, Variables, Transformed = Data>({
   return { ...result, data };
 }
 
-export function useGraphQLMutation<Data, Variables>(
+export function useGraphQLMutation<Data, Variables, TError, TContext>(
   query: GraphQLDocumentNode<Data, Variables>,
-) {
+  {
+    meta,
+    ...options
+  }: Omit<
+    UseMutationOptions<Data, TError, Variables, TContext>,
+    "mutationFn"
+  > = {},
+): UseMutationResult<Data, TError, Variables, TContext> {
   const client = useContext(GraphQLClientContext);
   return useMutation({
-    meta: { query },
+    meta: { query, ...meta },
     async mutationFn(variables: Variables) {
       const { data, error } = await client.mutation(query, variables ?? {});
       if (error) {
         throw error;
       }
-      return data;
+      return data as Data;
     },
+    ...options,
   });
 }
 
