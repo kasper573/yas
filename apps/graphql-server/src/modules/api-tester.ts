@@ -28,3 +28,8 @@ export function increaseCount(
   countsPerClient.set(clientId, count);
   return count;
 }
+
+/** @gqlField */
+export function mutationError(_: Mutation): Int {
+  throw new Error("This is a server side mutation error");
+}

@@ -16,6 +16,7 @@ export default function GraphQL() {
     variables: { name: debouncedName },
   });
   const increase = useGraphQLMutation(increaseGQL);
+  const triggerMutationError = useGraphQLMutation(mutationErrorGQL);
   useGraphQLQuery({ query: errorGQL, enabled: shouldServerError });
 
   return (
@@ -33,6 +34,12 @@ export default function GraphQL() {
         onClick={() => increase.mutate({ amount: 1 })}
       >
         Increase count
+      </LoadingButton>
+      <LoadingButton
+        isLoading={triggerMutationError.isPending}
+        onClick={() => triggerMutationError.mutate({})}
+      >
+        Trigger server side mutation error
       </LoadingButton>
       <LoadingButton
         onClick={() => setShouldServerError(true)}
@@ -60,5 +67,11 @@ const errorGQL = graphql(`
 const increaseGQL = graphql(`
   mutation IncreaseCount($amount: Int!) {
     increaseCount(amount: $amount)
+  }
+`);
+
+const mutationErrorGQL = graphql(`
+  mutation MutationError {
+    mutationError
   }
 `);

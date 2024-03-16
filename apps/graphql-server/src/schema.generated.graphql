@@ -10,6 +10,7 @@ type Folder {
 
 type Mutation {
   increaseCount(amount: Int!): Int!
+  mutationError: Int!
 }
 
 type Query {

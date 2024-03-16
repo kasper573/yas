@@ -5,6 +5,7 @@ import { dir as queryDirResolver } from "./modules\\file";
 import { error as queryErrorResolver } from "./modules\\api-tester";
 import { greeting as queryGreetingResolver } from "./modules\\api-tester";
 import { increaseCount as mutationIncreaseCountResolver } from "./modules\\api-tester";
+import { mutationError as mutationMutationErrorResolver } from "./modules\\api-tester";
 import { GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLList, GraphQLUnionType, GraphQLID, GraphQLString } from "graphql";
 export function getSchema(): GraphQLSchema {
     const FolderType: GraphQLObjectType = new GraphQLObjectType({
@@ -124,6 +125,13 @@ export function getSchema(): GraphQLSchema {
                     },
                     resolve(source, args, context) {
                         return mutationIncreaseCountResolver(source, args, context);
+                    }
+                },
+                mutationError: {
+                    name: "mutationError",
+                    type: new GraphQLNonNull(GraphQLInt),
+                    resolve(source) {
+                        return mutationMutationErrorResolver(source);
                     }
                 }
             };

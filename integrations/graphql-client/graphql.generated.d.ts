@@ -129,6 +129,18 @@ export type introspection = {
                 }
               }
             ]
+          },
+          {
+            "name": "mutationError",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []
