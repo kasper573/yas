@@ -221,9 +221,9 @@ importers:
       '@yas/pdf':
         specifier: workspace:*
         version: link:../../libraries/pdf
-      '@yas/query':
+      '@yas/query-client':
         specifier: workspace:*
-        version: link:../../libraries/query
+        version: link:../../integrations/query-client
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/result
@@ -636,9 +636,9 @@ importers:
       '@yas/hooks':
         specifier: workspace:*
         version: link:../../libraries/hooks
-      '@yas/query':
+      '@yas/query-client':
         specifier: workspace:*
-        version: link:../../libraries/query
+        version: link:../query-client
       gql.tada:
         specifier: 1.2.1
         version: 1.2.1(graphql@16.8.1)
@@ -665,6 +665,19 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
 
+  integrations/query-client:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 5.25.0
+        version: 5.25.0(react@18.2.0)
+      '@tanstack/react-query-devtools':
+        specifier: 5.25.0
+        version: 5.25.0(@tanstack/react-query@5.25.0)(react@18.2.0)
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/tsconfig
+
   integrations/trpc-client:
     dependencies:
       '@trpc/client':
@@ -673,9 +686,9 @@ importers:
       '@trpc/react-query':
         specifier: 11.0.0-next-beta.316
         version: 11.0.0-next-beta.316(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-next-beta.316)(@trpc/server@11.0.0-next-beta.316)(react-dom@18.2.0)(react@18.2.0)
-      '@yas/query':
+      '@yas/query-client':
         specifier: workspace:*
-        version: link:../../libraries/query
+        version: link:../query-client
       '@yas/result':
         specifier: workspace:*
         version: link:../../libraries/result
@@ -752,19 +765,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.19
         version: 18.2.19
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
-  libraries/query:
-    dependencies:
-      '@tanstack/react-query':
-        specifier: 5.25.0
-        version: 5.25.0(react@18.2.0)
-      '@tanstack/react-query-devtools':
-        specifier: 5.25.0
-        version: 5.25.0(@tanstack/react-query@5.25.0)(react@18.2.0)
-    devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig

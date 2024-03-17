@@ -2,7 +2,9 @@
 
 A [graphql](https://graphql.org/) client for the [graphql-server](../../apps/graphql-server) app.
 
-The react hooks require a [@yas/client](../../libraries/query) to be provided by a parent component.
+The react hooks require a [@yas/query-client](../query-client) to be provided by a parent component.
+
+> Uses [urql](https://commerce.nearform.com/open-source/urql/) under the hood
 
 ## tsconfig.json
 

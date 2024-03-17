@@ -9,7 +9,7 @@ import {
   QueryClientProvider,
   createQueryClient,
   useQueryClient,
-} from "@yas/query";
+} from "@yas/query-client";
 import { env } from "./env";
 import {
   ErrorDetails,
@@ -97,7 +97,7 @@ function pullFromSessionStorage(
 const QueryDevtools =
   env.mode === "development"
     ? lazy(() =>
-        import("@yas/query/devtools").then((mod) => ({
+        import("@yas/query-client/devtools").then((mod) => ({
           default: mod.QueryDevtools,
         })),
       )

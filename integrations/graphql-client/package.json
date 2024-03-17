@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@yas/query": "workspace:*",
+    "@yas/query-client": "workspace:*",
     "@yas/hooks": "workspace:*",
     "react": "^18.2.0",
     "gql.tada": "1.2.1",

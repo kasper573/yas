@@ -5,7 +5,7 @@ import type { ApiRouter, types } from "@yas/trpc-server";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
 import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
-import { useQueryClient } from "@yas/query";
+import { useQueryClient } from "@yas/query-client";
 export type { types } from "@yas/trpc-server";
 
 /**

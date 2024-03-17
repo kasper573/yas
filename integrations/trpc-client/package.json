@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "@yas/query": "workspace:*",
+    "@yas/query-client": "workspace:*",
     "@trpc/client": "11.0.0-next-beta.316",
     "@trpc/react-query": "11.0.0-next-beta.316",
     "@yas/result": "workspace:*",

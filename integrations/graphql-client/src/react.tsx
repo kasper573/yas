@@ -1,11 +1,11 @@
-import type { UseMutationOptions, UseMutationResult } from "@yas/query";
+import type { UseMutationOptions, UseMutationResult } from "@yas/query-client";
 import {
   useQuery,
   useQueries,
   useSuspenseQueries,
   useSuspenseQuery,
   useMutation,
-} from "@yas/query";
+} from "@yas/query-client";
 
 import { createContext, useContext, useMemo } from "react";
 import { createRequest } from "urql";
@@ -159,7 +159,7 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     query,
     variables,
     transform = unsafePassThrough,
-    manuallyHandleError,
+    throwOnError,
     ...extra
   } = normalizeQueryInput(input);
   const { key } = createRequest(query, variables ?? {});
@@ -167,7 +167,7 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     ...extra,
     meta: { query, variables },
     queryKey: ["graphql-client", key],
-    throwOnError: !manuallyHandleError,
+    throwOnError,
     async queryFn() {
       const { data, error } = await client
         .query(query, variables ?? {})
@@ -186,7 +186,7 @@ type NormalizedQueryInput<Data, Variables, Transformed, Extra> = Extra & {
   query: GraphQLDocumentNode<Data, Variables>;
   variables?: Variables;
   transform?: QueryResultTransformer<Data, Transformed>;
-  manuallyHandleError?: boolean;
+  throwOnError?: boolean;
 };
 
 type QueryInput<Data, Variables, Transformed, Extra> =
