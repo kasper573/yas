@@ -25,7 +25,8 @@
     "graphql-yoga": "5.1.1",
     "graphql": "16.8.1",
     "dataloader": "2.2.2",
-    "uuid": "9.0.1"
+    "uuid": "9.0.1",
+    "unique-names-generator": "4.7.1"
   },
   "devDependencies": {
     "@types/uuid": "9.0.8",
