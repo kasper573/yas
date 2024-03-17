@@ -1,5 +1,3 @@
-import type { Result } from "@yas/result";
-import { err, ok } from "@yas/result";
 import type { User, UserId } from "./types";
 import { randomAvatarUrl } from "./random";
 
@@ -8,12 +6,12 @@ export class FakeUserRepository {
     fixtures.map((user) => [user.userId, user]),
   );
 
-  async get(id: UserId): Promise<Result<User, string>> {
+  async get(id: UserId): Promise<User> {
     const user = this.users.get(id);
-    if (user) {
-      return ok(user);
+    if (!user) {
+      throw new Error(`User by id ${id} not found`);
     }
-    return err(`User by id ${id} not found`);
+    return user;
   }
 
   async search(filter: string, limit: number): Promise<User[]> {

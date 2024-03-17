@@ -205,7 +205,6 @@ module.exports = {
             "@yas/time": "date-fns",
             "@yas/hooks": "usehooks-ts",
             "@yas/icons": "@radix-ui/react-icons",
-            "@yas/result": "neverthrow",
             "@yas/validate": "zod",
           },
         ],

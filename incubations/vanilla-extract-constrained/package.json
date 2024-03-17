@@ -30,7 +30,6 @@
     "@types/react": "^18.2.61",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
-    "@yas/result": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "csstype": "^3",
     "react": "^18.2.0",

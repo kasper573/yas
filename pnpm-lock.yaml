@@ -99,9 +99,6 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../../core/env
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
@@ -160,9 +157,6 @@ importers:
       '@trpc/server':
         specifier: 11.0.0-next-beta.316
         version: 11.0.0-next-beta.316
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       '@yas/validate':
         specifier: workspace:*
         version: link:../../libraries/validate
@@ -224,9 +218,6 @@ importers:
       '@yas/query-client':
         specifier: workspace:*
         version: link:../../integrations/query-client
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       '@yas/router':
         specifier: workspace:*
         version: link:../../libraries/router
@@ -411,9 +402,6 @@ importers:
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.32
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -587,9 +575,6 @@ importers:
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/build
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       '@yas/scripts':
         specifier: workspace:*
         version: link:../../core/scripts
@@ -689,9 +674,6 @@ importers:
       '@yas/query-client':
         specifier: workspace:*
         version: link:../query-client
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../../libraries/result
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -769,16 +751,6 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
 
-  libraries/result:
-    dependencies:
-      neverthrow:
-        specifier: 6.1.0
-        version: 6.1.0
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
   libraries/router:
     dependencies:
       '@tanstack/react-router':
@@ -843,9 +815,6 @@ importers:
       '@yas/hooks':
         specifier: workspace:*
         version: link:../hooks
-      '@yas/result':
-        specifier: workspace:*
-        version: link:../result
       date-fns:
         specifier: 3.3.1
         version: 3.3.1
@@ -16855,10 +16824,6 @@ packages:
 
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
-
-  /neverthrow@6.1.0:
-    resolution: {integrity: sha512-xNbNjp/6M5vUV+mststgneJN9eJeJCDSYSBTaf3vxgvcKooP+8L0ATFpM8DGfmH7UWKJeoa24Qi33tBP9Ya3zA==}
-    dev: false
 
   /no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}

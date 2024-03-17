@@ -1,4 +1,4 @@
-import { t, trpcUnwrap } from "../../definition/trpc";
+import { t } from "../../definition/trpc";
 import type { RecentSale } from "./types";
 import { dashboardFilterType, dashboardType } from "./types";
 import { createSeededRandom } from "./random";
@@ -11,9 +11,7 @@ export function createOverviewProcedure() {
       const rand = createSeededRandom(userId + "_" + date.toISOString());
       const users = await ctx.userRepository.all();
       const selectedUser =
-        userId !== undefined
-          ? trpcUnwrap(await ctx.userRepository.get(userId))
-          : undefined;
+        userId !== undefined ? await ctx.userRepository.get(userId) : undefined;
 
       const recentSales = [1, 2, 3, 4, 5].map((): RecentSale => {
         const user =

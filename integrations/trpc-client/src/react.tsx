@@ -4,7 +4,6 @@ import transformer from "superjson";
 import type { ApiRouter, types } from "@yas/trpc-server";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
-import { err, unwrapUnsafe_useWithCaution } from "@yas/result";
 import { useQueryClient } from "@yas/query-client";
 export type { types } from "@yas/trpc-server";
 
@@ -22,13 +21,8 @@ export const api = new Proxy({} as TrpcClient["react"], {
 const TrpcReactContext = createContext<TrpcClient["react"]>(
   new Proxy({} as TrpcClient["react"], {
     get() {
-      // Using unsafe unwrap to panic early to clearly indicate that context is misconfigured
-      unwrapUnsafe_useWithCaution(
-        err(
-          new Error(
-            "You must wrap components using the trpc api with a TrpcProvider",
-          ),
-        ),
+      throw new Error(
+        "You must wrap components using the trpc api with a TrpcProvider",
       );
     },
   }),

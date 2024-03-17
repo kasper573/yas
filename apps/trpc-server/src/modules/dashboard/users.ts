@@ -1,6 +1,5 @@
 import { z } from "@yas/validate";
-import { TRPCError } from "@trpc/server";
-import { t, trpcUnwrap } from "../../definition/trpc";
+import { t } from "../../definition/trpc";
 import { userIdType, userType } from "./types";
 
 export function createUsersRouter() {
@@ -12,13 +11,6 @@ export function createUsersRouter() {
     get: t.procedure
       .input(userIdType)
       .output(userType)
-      .query(async ({ input, ctx }) => {
-        const result = await ctx.userRepository.get(input);
-        return trpcUnwrap(
-          result.mapErr(
-            (message) => new TRPCError({ code: "BAD_REQUEST", message }),
-          ),
-        );
-      }),
+      .query(({ input, ctx }) => ctx.userRepository.get(input)),
   });
 }

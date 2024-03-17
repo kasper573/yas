@@ -14,7 +14,6 @@
     "@types/tar": "6.1.11",
     "@yas/tsconfig": "workspace:*",
     "@yas/validate": "workspace:*",
-    "@yas/result": "workspace:*",
     "tsx": "4.7.1",
     "bottleneck": "2.19.5",
     "uniqolor": "1.1.1",
