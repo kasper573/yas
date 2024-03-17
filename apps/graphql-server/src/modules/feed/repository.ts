@@ -43,7 +43,6 @@ export function createFeedRepository(clientId: ID) {
       userId: ID;
       liked: boolean;
     }) {
-      console.log("setPostLiked", { postId, userId, liked });
       const existingLikeIndex = likesDB.findIndex(
         (like) => like.postId === postId && like.userId === userId,
       );
