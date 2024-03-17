@@ -157,6 +157,7 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     query,
     variables,
     transform = unsafePassThrough,
+    manuallyHandleError,
     ...extra
   } = normalizeQueryInput(input);
   const { key } = createRequest(query, variables ?? {});
@@ -164,6 +165,7 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     ...extra,
     meta: { query, variables },
     queryKey: ["graphql-client", key],
+    throwOnError: !manuallyHandleError,
     async queryFn() {
       const { data, error } = await client.query(query, variables ?? {});
       if (error) {
@@ -180,6 +182,7 @@ type NormalizedQueryInput<Data, Variables, Transformed, Extra> = Extra & {
   query: GraphQLDocumentNode<Data, Variables>;
   variables?: Variables;
   transform?: QueryResultTransformer<Data, Transformed>;
+  manuallyHandleError?: boolean;
 };
 
 type QueryInput<Data, Variables, Transformed, Extra> =
