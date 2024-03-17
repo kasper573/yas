@@ -8,6 +8,7 @@ import { feed as queryFeedResolver } from "./modules\\feed\\model";
 import { greeting as queryGreetingResolver } from "./modules\\api-tester";
 import { post as queryPostResolver } from "./modules\\feed\\model";
 import { user as queryUserResolver } from "./modules\\user\\model";
+import { createPost as mutationCreatePostResolver } from "./modules\\feed\\model";
 import { increaseCount as mutationIncreaseCountResolver } from "./modules\\api-tester";
 import { mutationError as mutationMutationErrorResolver } from "./modules\\api-tester";
 import { setPostLiked as mutationSetPostLikedResolver } from "./modules\\feed\\model";
@@ -143,6 +144,19 @@ export function getSchema(): GraphQLSchema {
         name: "Mutation",
         fields() {
             return {
+                createPost: {
+                    name: "createPost",
+                    type: new GraphQLNonNull(GraphQLID),
+                    args: {
+                        message: {
+                            name: "message",
+                            type: new GraphQLNonNull(GraphQLString)
+                        }
+                    },
+                    resolve(source, args, context) {
+                        return mutationCreatePostResolver(source, args, context);
+                    }
+                },
                 increaseCount: {
                     name: "increaseCount",
                     type: new GraphQLNonNull(GraphQLInt),

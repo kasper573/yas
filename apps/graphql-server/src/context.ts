@@ -10,8 +10,8 @@ export function createContext(request: Request): Context {
   return {
     clientId,
     repositories: {
-      user: createUserRepository(clientId),
-      feed: createFeedRepository(clientId),
+      user: createUserRepository(),
+      feed: createFeedRepository(),
     },
   };
 }

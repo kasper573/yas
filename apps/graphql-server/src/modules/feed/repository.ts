@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import DataLoader from "dataloader";
 
 import type { ID } from "../../types";
@@ -7,12 +8,9 @@ import type { Like, Post } from "./model";
 export type FeedRepository = ReturnType<typeof createFeedRepository>;
 
 const likesDB: Like[] = [];
+const postsDB: Post[] = [];
 
-export function createFeedRepository(clientId: ID) {
-  const postsDB: Post[] = [
-    { postId: "1", userId: clientId, message: "Hello, world!" },
-  ];
-
+export function createFeedRepository() {
   return {
     post: new DataLoader<ID, Post>(async (ids) =>
       postsDB.filter((post) => ids.includes(post.postId)),
@@ -34,6 +32,11 @@ export function createFeedRepository(clientId: ID) {
           ),
         ),
     ),
+    createPost({ userId, message }: { userId: ID; message: string }): ID {
+      const postId = uuid();
+      postsDB.push({ postId, userId, message });
+      return postId;
+    },
     setPostLiked({
       postId,
       userId,

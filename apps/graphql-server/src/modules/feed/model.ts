@@ -79,3 +79,15 @@ export function setPostLiked(
   });
   return 0;
 }
+
+/** @gqlField */
+export async function createPost(
+  _: Mutation,
+  { message }: { message: string },
+  { clientId, repositories }: Context,
+): Promise<ID> {
+  return repositories.feed.createPost({
+    userId: clientId,
+    message,
+  });
+}

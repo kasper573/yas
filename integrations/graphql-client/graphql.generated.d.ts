@@ -24,6 +24,30 @@ export type introspection = {
         "name": "Mutation",
         "fields": [
           {
+            "name": "createPost",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "message",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "increaseCount",
             "type": {
               "kind": "NON_NULL",
@@ -99,15 +123,19 @@ export type introspection = {
       },
       {
         "kind": "SCALAR",
+        "name": "ID"
+      },
+      {
+        "kind": "SCALAR",
+        "name": "String"
+      },
+      {
+        "kind": "SCALAR",
         "name": "Int"
       },
       {
         "kind": "SCALAR",
         "name": "Boolean"
-      },
-      {
-        "kind": "SCALAR",
-        "name": "ID"
       },
       {
         "kind": "OBJECT",
@@ -187,10 +215,6 @@ export type introspection = {
           }
         ],
         "interfaces": []
-      },
-      {
-        "kind": "SCALAR",
-        "name": "String"
       },
       {
         "kind": "OBJECT",
