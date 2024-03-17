@@ -8,7 +8,6 @@ import {
   createControllerProxy,
   useFormChanges,
 } from "@yas/ui";
-import { z } from "@yas/validate";
 import { type ReactNode } from "react";
 
 export function SearchForm({
@@ -22,7 +21,7 @@ export function SearchForm({
   isLoading?: boolean;
   children?: ReactNode;
 }) {
-  const form = useForm(searchSchema);
+  const form = useForm<{ search?: string }>();
   const control = createControllerProxy(form.control);
   useFormChanges(form, ({ search }) => onChange?.(search));
   const clear = () => form.reset();
@@ -54,5 +53,3 @@ export function SearchForm({
     </form>
   );
 }
-
-const searchSchema = z.object({ search: z.string().optional() });
