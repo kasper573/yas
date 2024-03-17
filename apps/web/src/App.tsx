@@ -72,12 +72,25 @@ function UnhandledMutationErrorDialogsBehavior() {
 }
 
 function createClients() {
-  const clientId = v4();
+  const clientId = pullFromSessionStorage("client-id", v4);
   const headers = () => ({ "client-id": clientId });
   const query = createQueryClient(env.mode);
   const trpc = createTrpcClient({ url: env.trpcServerUrl, headers });
   const graphql = createGraphQLClient({ url: env.graphqlServerUrl, headers });
   return { query, trpc, graphql };
+}
+
+function pullFromSessionStorage(
+  key: string,
+  createDefautValue: () => string,
+): string {
+  let value = sessionStorage.getItem(key);
+  if (value === null) {
+    value = createDefautValue();
+    sessionStorage.setItem(key, value);
+  }
+
+  return value;
 }
 
 // Avoid importing the devtools in production
