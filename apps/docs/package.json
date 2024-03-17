@@ -28,7 +28,6 @@
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "@yas/result": "workspace:*",
     "mini-css-extract-plugin": "^2.8.1"
   },
   "browserslist": {

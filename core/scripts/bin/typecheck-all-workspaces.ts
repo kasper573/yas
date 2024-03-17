@@ -6,8 +6,6 @@ import { execa } from "execa";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs";
 import Bottleneck from "bottleneck";
-import type { Result } from "@yas/result";
-import { ok, err } from "@yas/result";
 import { colorize } from "../src/colorize";
 
 const { include, exclude, maxConcurrent } = yargs(hideBin(process.argv))
@@ -39,15 +37,15 @@ Promise.all(
   tsProjects.map((project) => bottleneck.schedule(typecheckProject, project)),
 ).then((results) => {
   console.log(createSummary(results));
-  if (results.some(({ result }) => result.isErr())) {
+  if (results.some(({ result }) => !result.ok)) {
     process.exit(1);
   }
 });
 
 function createSummary(results: TypecheckResult[]): string {
   const sorted = results.toSorted((a, b) => {
-    if (a.result.isOk() !== b.result.isOk()) {
-      return a.result.isOk() ? -1 : 1;
+    if (a.result.ok !== b.result.ok) {
+      return a.result.ok ? -1 : 1;
     }
     const order = a.duration - b.duration;
     if (order !== 0) {
@@ -61,7 +59,7 @@ function createSummary(results: TypecheckResult[]): string {
   let summary = sorted
     .map((r) => {
       const { workspace, name } = r.project;
-      if (r.result.isOk()) {
+      if (r.result.ok) {
         return `✅  ${workspace}/${name} - ${durationString(r.duration)}`;
       } else {
         return `❌  ${colorize(workspace)}/${colorize(name)}\n${
@@ -83,7 +81,7 @@ function durationString(ms: number): string {
 type TypecheckResult = {
   project: TypescriptProject;
   duration: number;
-  result: Result<true, string>;
+  result: { ok: true } | { ok: false; error: string };
 };
 
 async function typecheckProject(
@@ -93,11 +91,11 @@ async function typecheckProject(
   try {
     await execa("tsc", ["--noEmit", "--pretty", "--project", project.tsconfig]);
     const duration = Date.now() - start;
-    return { project, duration, result: ok(true) };
+    return { project, duration, result: { ok: true } };
   } catch (e) {
     const duration = Date.now() - start;
     const errorMessage = e instanceof Error ? e.message : String(e);
-    return { project, duration, result: err(errorMessage) };
+    return { project, duration, result: { ok: false, error: errorMessage } };
   }
 }
 

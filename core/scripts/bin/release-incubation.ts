@@ -6,7 +6,6 @@ import { existsSync as fileExists } from "fs";
 import os from "os";
 import tar from "tar";
 import { $ } from "execa";
-import { err, ok, type Result } from "@yas/result";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import {
@@ -64,14 +63,14 @@ async function tryReleaseIncubation({ distFolder, preview }: CLIArgs) {
         "latest",
       );
 
-      const result = await diffTarballs(localTarball, latestTarball);
-      if (result.isOk()) {
+      const diff = await diffTarballs(localTarball, latestTarball);
+      if (diff === undefined) {
         console.log("No changes detected. Skipping release.");
         return;
       }
 
       nextVersion = bumpVersion(currentVersion);
-      console.log("Changes detected: ", result.error);
+      console.log("Changes detected: ", diff);
     } else {
       console.log("Package doesn't exist on npm. Publishing initial version.");
       nextVersion = "0.0.0";
@@ -127,10 +126,7 @@ async function npmPack(packageName: string, versionQuery?: string) {
   return [tarball, packageVersion] as const;
 }
 
-async function diffTarballs(
-  a: Buffer,
-  b: Buffer,
-): Promise<Result<void, string>> {
+async function diffTarballs(a: Buffer, b: Buffer): Promise<string | undefined> {
   const dirA = tempFilename();
   const dirB = tempFilename();
 
@@ -138,10 +134,10 @@ async function diffTarballs(
     await unpackTarball(a, dirA);
     await unpackTarball(b, dirB);
     await $`diff -r ${dirA} ${dirB}`;
-    return ok(void 0);
+    return;
   } catch (e) {
     if (e !== null && typeof e === "object" && "stdout" in e) {
-      return err(String(e.stdout));
+      return String(e.stdout);
     }
     throw e; // Unexpected error
   } finally {

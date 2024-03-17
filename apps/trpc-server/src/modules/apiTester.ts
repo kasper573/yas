@@ -1,15 +1,14 @@
 import { z } from "@yas/validate";
-import { err } from "@yas/result";
-import { t, trpcUnwrap } from "../definition/trpc";
+import { t } from "../definition/trpc";
 
 export function createApiTesterRouter() {
   const countsPerClient = new Map<string, number>();
   return t.router({
     error: t.procedure.query(() => {
-      trpcUnwrap(err("Manually triggered server side query error"));
+      throw new Error("Manually triggered server side query error");
     }),
-    mutationError: t.procedure.mutation(({ ctx }) => {
-      trpcUnwrap(err("Manually triggered server side mutation error"));
+    mutationError: t.procedure.mutation(() => {
+      throw new Error("Manually triggered server side mutation error");
     }),
     greeting: t.procedure
       .input(z.string())

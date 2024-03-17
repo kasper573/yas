@@ -15,7 +15,6 @@ import { useMediaQueries } from "@yas/hooks";
 import { useModal } from "@yas/ui";
 import { breakpointQuery } from "@yas/style";
 import { useState } from "react";
-import { unwrapUnsafe_useWithCaution, err } from "@yas/result";
 import { env } from "../../env";
 import { useTheme } from "../../ThemeProvider";
 import * as styles from "./sandbox.css";
@@ -32,7 +31,7 @@ export default function Sandbox() {
   const showDialog = useModal(TestDialog);
 
   if (shouldHaveRenderError) {
-    unwrapUnsafe_useWithCaution(err(new Error("React render error")));
+    throw new Error("React render error");
   }
 
   function triggerReactRenderError() {
@@ -40,7 +39,7 @@ export default function Sandbox() {
   }
 
   function triggerReactEventError() {
-    unwrapUnsafe_useWithCaution(err(new Error("React event error")));
+    throw new Error("React event error");
   }
 
   function triggerPromiseError() {
