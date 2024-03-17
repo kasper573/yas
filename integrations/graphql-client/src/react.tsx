@@ -162,11 +162,9 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     throwOnError,
     ...extra
   } = normalizeQueryInput(input);
-  const { key } = createRequest(query, variables ?? {});
   return {
     ...extra,
-    meta: { query, variables },
-    queryKey: ["graphql-client", key],
+    queryKey: createQueryKey(query, variables),
     throwOnError,
     async queryFn() {
       const { data, error } = await client
@@ -178,6 +176,31 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
       return data !== undefined ? transform(data) : undefined;
     },
   };
+}
+
+function createQueryKey<Data, Variables>(
+  query: GraphQLDocumentNode<Data, Variables>,
+  variables?: Variables,
+): unknown[] {
+  // The first parts of the query key is just for debugging purposes
+  const parts: unknown[] = ["graphql-client"];
+
+  for (const definition of query.definitions) {
+    if (definition.kind === "OperationDefinition" && definition.name?.value) {
+      parts.push(definition.name.value);
+    }
+  }
+
+  if (variables) {
+    parts.push(variables);
+  }
+
+  // The urql request key is the important bit that ensures we have a unique identifier
+  // of the request according to urql, instead of having to make that assertion manually.
+  const request = createRequest(query, variables ?? {});
+  parts.push(`urql-request-key-${request.key}`);
+
+  return parts;
 }
 
 type QueryResultTransformer<Data, Transformed> = (data: Data) => Transformed;
