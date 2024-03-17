@@ -1,5 +1,6 @@
-import type { Context, ID, Int, Mutation, Query, GqlDate } from "../../types";
+import type { ID, Int } from "grats";
 import type { User } from "../user/model";
+import type { Context, Mutation, Query, GqlDate } from "../../types";
 
 /** @gqlType */
 export interface Post {

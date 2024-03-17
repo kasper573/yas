@@ -1,6 +1,6 @@
 import DataLoader from "dataloader";
 import { uniqueNamesGenerator } from "unique-names-generator";
-import type { ID } from "../../types";
+import type { ID } from "grats";
 import type { User } from "./model";
 
 export type UserRepository = DataLoader<ID, User>;

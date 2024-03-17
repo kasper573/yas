@@ -3,12 +3,13 @@ import type { UserRepository } from "./modules/user/repository";
 import { createUserRepository } from "./modules/user/repository";
 import type { FeedRepository } from "./modules/feed/repository";
 import { createFeedRepository } from "./modules/feed/repository";
+import type { GraphQLServerHeaders } from "./types";
 
-export function createContext(request: Request): Context {
-  const headers = parseRequestHeaders(request);
-  const clientId = headers["client-id"];
+export function createContext(
+  headers: GraphQLServerHeaders,
+): GraphQLServerContext {
   return {
-    clientId,
+    clientId: headers["client-id"],
     repositories: {
       user: createUserRepository(),
       feed: createFeedRepository(),
@@ -16,18 +17,10 @@ export function createContext(request: Request): Context {
   };
 }
 
-function parseRequestHeaders(request: Request) {
-  return Object.fromEntries(request.headers.entries()) as unknown as Headers;
-}
-
-export type Context = {
+export interface GraphQLServerContext {
   clientId: ID;
   repositories: {
     user: UserRepository;
     feed: FeedRepository;
   };
-};
-
-export interface Headers {
-  "client-id": ID;
 }

@@ -1,7 +1,6 @@
 import { v4 as uuid } from "uuid";
 import DataLoader from "dataloader";
-
-import type { ID } from "../../types";
+import type { ID } from "grats";
 import type { User } from "../user/model";
 import type { Like, Post } from "./model";
 

@@ -1,4 +1,5 @@
-import type { Context, ID, Query } from "../../types";
+import type { ID } from "grats";
+import type { Query, Context } from "../../types";
 
 /** @gqlType */
 export interface User {
