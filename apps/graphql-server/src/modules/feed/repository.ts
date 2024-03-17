@@ -34,7 +34,7 @@ export function createFeedRepository() {
     ),
     createPost({ userId, message }: { userId: ID; message: string }): ID {
       const postId = uuid();
-      postsDB.push({ postId, userId, message });
+      postsDB.push({ postId, userId, message, date: new Date() });
       return postId;
     },
     setPostLiked({

@@ -12,8 +12,12 @@ import { createPost as mutationCreatePostResolver } from "./modules\\feed\\model
 import { increaseCount as mutationIncreaseCountResolver } from "./modules\\api-tester";
 import { mutationError as mutationMutationErrorResolver } from "./modules\\api-tester";
 import { setPostLiked as mutationSetPostLikedResolver } from "./modules\\feed\\model";
-import { GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLID } from "graphql";
+import { GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLList, GraphQLScalarType, GraphQLBoolean, GraphQLString, GraphQLID } from "graphql";
 export function getSchema(): GraphQLSchema {
+    const GqlDateType: GraphQLScalarType = new GraphQLScalarType({
+        description: "A date and time. Serialized as a Unix timestamp.",
+        name: "GqlDate"
+    });
     const UserType: GraphQLObjectType = new GraphQLObjectType({
         name: "User",
         fields() {
@@ -37,6 +41,10 @@ export function getSchema(): GraphQLSchema {
         name: "Post",
         fields() {
             return {
+                date: {
+                    name: "date",
+                    type: new GraphQLNonNull(GqlDateType)
+                },
                 isLikedByUser: {
                     name: "isLikedByUser",
                     type: new GraphQLNonNull(GraphQLBoolean),
@@ -200,6 +208,6 @@ export function getSchema(): GraphQLSchema {
     return new GraphQLSchema({
         query: QueryType,
         mutation: MutationType,
-        types: [MutationType, PostType, QueryType, UserType]
+        types: [GqlDateType, MutationType, PostType, QueryType, UserType]
     });
 }

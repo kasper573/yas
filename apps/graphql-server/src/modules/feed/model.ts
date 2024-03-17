@@ -1,4 +1,4 @@
-import type { Context, ID, Int, Mutation, Query } from "../../types";
+import type { Context, ID, Int, Mutation, Query, GqlDate } from "../../types";
 import type { User } from "../user/model";
 
 /** @gqlType */
@@ -11,6 +11,9 @@ export interface Post {
 
   /** @gqlField */
   message: string;
+
+  /** @gqlField */
+  date: GqlDate;
 }
 
 export interface Like {

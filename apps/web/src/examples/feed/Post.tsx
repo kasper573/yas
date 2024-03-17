@@ -11,7 +11,7 @@ import {
 } from "@yas/ui";
 
 export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
-  const { postId, message, likes, isLikedByUser, user } = readFragment(
+  const { postId, message, likes, isLikedByUser, user, date } = readFragment(
     postGQL,
     post,
   );
@@ -25,7 +25,12 @@ export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
       </ListItemIcon>
       <ListItemText
         primary={`${user.name}: ${message}`}
-        secondary={`${likes} likes`}
+        secondary={
+          <>
+            Posted on {date.toLocaleDateString()} at {date.toLocaleTimeString()}
+            , {likes} likes
+          </>
+        }
       />
       <ListItemSecondaryContent>
         <LoadingButton
@@ -42,6 +47,7 @@ export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
 
 export const postGQL = graphql(`
   fragment PostData on Post {
+    date
     postId
     message
     likes

@@ -20,6 +20,10 @@ export type introspection = {
     "subscriptionType": null,
     "types": [
       {
+        "kind": "SCALAR",
+        "name": "GqlDate"
+      },
+      {
         "kind": "OBJECT",
         "name": "Mutation",
         "fields": [
@@ -141,6 +145,18 @@ export type introspection = {
         "kind": "OBJECT",
         "name": "Post",
         "fields": [
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "GqlDate",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
           {
             "name": "isLikedByUser",
             "type": {

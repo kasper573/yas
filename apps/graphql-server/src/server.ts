@@ -3,10 +3,13 @@ import { createYoga } from "graphql-yoga";
 import { env } from "./env";
 import { getSchema } from "./schema.generated";
 import { createContext } from "./context";
+import { addScalarsToSchema } from "./scalars";
 
 export function createServer(graphqlEndpoint: string) {
+  const schema = getSchema();
+  addScalarsToSchema(schema);
   const yoga = createYoga({
-    schema: getSchema(),
+    schema,
     cors: corsSettingsForRequest,
     graphqlEndpoint,
     context: ({ request }) => createContext(request),

@@ -12,4 +12,5 @@ export type Mutation = unknown;
 
 export type { ID, Float, Int } from "grats";
 
+export type * from "./scalars";
 export type * from "./context";
