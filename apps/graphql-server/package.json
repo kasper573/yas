@@ -7,6 +7,10 @@
     ".": {
       "import": "./src/types.ts",
       "require": "./src/types.ts"
+    },
+    "./schema.generated.graphql": {
+      "import": "./schema.generated.graphql",
+      "require": "./schema.generated.graphql"
     }
   },
   "scripts": {

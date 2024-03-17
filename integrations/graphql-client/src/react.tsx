@@ -91,7 +91,9 @@ export function useGraphQLMutation<Data, Variables, TError, TContext>(
   return useMutation({
     meta: { query, ...meta },
     async mutationFn(variables: Variables) {
-      const { data, error } = await client.mutation(query, variables ?? {});
+      const { data, error } = await client
+        .mutation(query, variables ?? {})
+        .toPromise();
       if (error) {
         throw error;
       }
@@ -167,7 +169,9 @@ function tanstackQueryProps<Data, Variables, Transformed, Extra>(
     queryKey: ["graphql-client", key],
     throwOnError: !manuallyHandleError,
     async queryFn() {
-      const { data, error } = await client.query(query, variables ?? {});
+      const { data, error } = await client
+        .query(query, variables ?? {})
+        .toPromise();
       if (error) {
         throw error;
       }

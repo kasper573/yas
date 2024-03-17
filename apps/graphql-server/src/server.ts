@@ -1,7 +1,7 @@
 import { createServer as createHTTPServer } from "http";
 import { createYoga } from "graphql-yoga";
+import { getSchema } from "../schema.generated";
 import { env } from "./env";
-import { getSchema } from "./schema.generated";
 import { createContext } from "./context";
 import { addScalarsToSchema } from "./scalars";
 
