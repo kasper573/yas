@@ -12,6 +12,7 @@ export function createQueryClient(
   const client: QueryClientWithEvents = new QueryClientWithEvents(events, {
     defaultOptions: {
       queries: {
+        throwOnError: true,
         retry: mode === "production",
       },
       mutations: {
