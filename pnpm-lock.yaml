@@ -837,6 +837,9 @@ importers:
 
   libraries/time:
     dependencies:
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@yas/result':
         specifier: workspace:*
         version: link:../result

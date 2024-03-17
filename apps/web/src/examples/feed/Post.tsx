@@ -1,6 +1,7 @@
 import type { FragmentOf } from "@yas/graphql-client";
 import { graphql, readFragment, useGraphQLMutation } from "@yas/graphql-client";
 import { HeartFilledIcon, HeartIcon } from "@yas/icons";
+import { FormatDistance } from "@yas/time";
 import {
   ListItem,
   ListItemIcon,
@@ -27,8 +28,7 @@ export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
         primary={`${user.name}: ${message}`}
         secondary={
           <>
-            Posted on {date.toLocaleDateString()} at {date.toLocaleTimeString()}
-            , {likes} likes
+            Posted <FormatDistance date={date} />, {likes} likes
           </>
         }
       />

@@ -13,7 +13,7 @@ import {
 } from "@yas/ui";
 import { Post, postGQL } from "./Post";
 
-export default function FeedPage() {
+export default function Feed() {
   const { data } = useGraphQLQuery({ query: feedGQL });
   const form = useForm<{ message: string }>();
   const createPost = useGraphQLMutation(createPostGQL);

@@ -87,7 +87,7 @@ const graphqlRoute = createRoute({
 const feedRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "feed",
-  component: lazy(() => import("./examples/feed/FeedPage")),
+  component: lazy(() => import("./examples/feed/Feed")),
 });
 
 const routeTree = rootRoute.addChildren([
