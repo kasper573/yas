@@ -2,6 +2,7 @@
 type Mutation {
   increaseCount(amount: Int!): Int!
   mutationError: Int!
+  setPostLiked(liked: Boolean!, postId: ID!): Int!
 }
 
 type Post {
@@ -19,6 +20,7 @@ type Query {
   feed: [Post!]!
   greeting(name: String!): String!
   post(postId: ID!): Post!
+  user(userId: ID!): User!
 }
 
 type User {

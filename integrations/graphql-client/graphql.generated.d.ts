@@ -58,6 +58,41 @@ export type introspection = {
               }
             },
             "args": []
+          },
+          {
+            "name": "setPostLiked",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "liked",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              }
+            ]
           }
         ],
         "interfaces": []
@@ -65,6 +100,14 @@ export type introspection = {
       {
         "kind": "SCALAR",
         "name": "Int"
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Boolean"
+      },
+      {
+        "kind": "SCALAR",
+        "name": "ID"
       },
       {
         "kind": "OBJECT",
@@ -147,15 +190,7 @@ export type introspection = {
       },
       {
         "kind": "SCALAR",
-        "name": "Boolean"
-      },
-      {
-        "kind": "SCALAR",
         "name": "String"
-      },
-      {
-        "kind": "SCALAR",
-        "name": "ID"
       },
       {
         "kind": "OBJECT",
@@ -240,6 +275,30 @@ export type introspection = {
             "args": [
               {
                 "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "userId",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {

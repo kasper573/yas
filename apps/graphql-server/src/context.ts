@@ -1,11 +1,17 @@
-import { createUserLoader, type UserLoader } from "./modules/user";
+import type { ID } from "grats";
+import type { UserRepository } from "./modules/user/repository";
+import { createUserRepository } from "./modules/user/repository";
+import type { FeedRepository } from "./modules/feed/repository";
+import { createFeedRepository } from "./modules/feed/repository";
 
 export function createContext(request: Request): Context {
   const headers = parseRequestHeaders(request);
+  const clientId = headers["client-id"];
   return {
-    clientId: headers["client-id"],
-    loaders: {
-      user: createUserLoader(),
+    clientId,
+    repositories: {
+      user: createUserRepository(clientId),
+      feed: createFeedRepository(clientId),
     },
   };
 }
@@ -15,12 +21,13 @@ function parseRequestHeaders(request: Request) {
 }
 
 export type Context = {
-  clientId: string;
-  loaders: {
-    user: UserLoader;
+  clientId: ID;
+  repositories: {
+    user: UserRepository;
+    feed: FeedRepository;
   };
 };
 
 export interface Headers {
-  "client-id": string;
+  "client-id": ID;
 }

@@ -1,5 +1,5 @@
 import type { FragmentOf } from "@yas/graphql-client";
-import { graphql, readFragment } from "@yas/graphql-client";
+import { graphql, readFragment, useGraphQLMutation } from "@yas/graphql-client";
 import { HeartFilledIcon, HeartIcon } from "@yas/icons";
 import {
   ListItem,
@@ -11,7 +11,12 @@ import {
 } from "@yas/ui";
 
 export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
-  const { message, likes, isLikedByUser, user } = readFragment(postGQL, post);
+  const { postId, message, likes, isLikedByUser, user } = readFragment(
+    postGQL,
+    post,
+  );
+
+  const setLiked = useGraphQLMutation(setPostLikedGQL);
 
   return (
     <ListItem>
@@ -23,7 +28,11 @@ export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
         secondary={`${likes} likes`}
       />
       <ListItemSecondaryContent>
-        <LoadingButton icon>
+        <LoadingButton
+          icon
+          isLoading={setLiked.isPending}
+          onClick={() => setLiked.mutate({ postId, liked: !isLikedByUser })}
+        >
           {isLikedByUser ? <HeartFilledIcon /> : <HeartIcon />}
         </LoadingButton>
       </ListItemSecondaryContent>
@@ -42,5 +51,11 @@ export const postGQL = graphql(`
       name
       avatarUrl
     }
+  }
+`);
+
+export const setPostLikedGQL = graphql(`
+  mutation SetPostLiked($postId: ID!, $liked: Boolean!) {
+    setPostLiked(postId: $postId, liked: $liked)
   }
 `);
