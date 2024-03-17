@@ -65,9 +65,9 @@ export function feed(
 export function post(
   _: Query,
   { postId }: { postId: ID },
-  { clientId, repositories }: Context,
+  { repositories }: Context,
 ): Promise<Post> {
-  return repositories.feed.post.load(clientId);
+  return repositories.feed.post.load(postId);
 }
 
 /** @gqlField */
