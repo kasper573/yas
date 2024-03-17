@@ -1,17 +1,17 @@
 import { api } from "@yas/trpc-client";
 
 import { useDebouncedValue } from "@yas/hooks";
-import { Button, NumberField, TextField } from "@yas/ui";
+import { LoadingButton, NumberField, TextField } from "@yas/ui";
 import { useState } from "react";
 
 export default function TRPC() {
   const [name, setName] = useState("");
   const [shouldServerError, setShouldServerError] = useState(false);
   const debouncedName = useDebouncedValue(name, 300);
-
-  const { data: greeting } = api.apiTester.greeting.useQuery(debouncedName);
+  const greeting = api.apiTester.greeting.useQuery(debouncedName);
   const increase = api.apiTester.increaseCount.useMutation();
-  const { data: count } = api.apiTester.count.useQuery();
+  const triggerMutationError = api.apiTester.mutationError.useMutation();
+  const count = api.apiTester.count.useQuery();
   api.apiTester.error.useQuery(undefined, { enabled: shouldServerError });
 
   return (
@@ -22,17 +22,26 @@ export default function TRPC() {
         onChange={setName}
         required
       />
-      <TextField label="Greeting from server" value={greeting} readOnly />
-      <NumberField label="Count from server" value={count} readOnly />
-      <Button onClick={() => increase.mutate({ amount: 1 })}>
+      <TextField label="Greeting from server" value={greeting.data} readOnly />
+      <NumberField label="Count from server" value={count.data} readOnly />
+      <LoadingButton
+        isLoading={increase.isPending}
+        onClick={() => increase.mutate({ amount: 1 })}
+      >
         Increase count
-      </Button>
-      <Button
+      </LoadingButton>
+      <LoadingButton
+        isLoading={triggerMutationError.isPending}
+        onClick={() => triggerMutationError.mutate()}
+      >
+        Trigger server side mutation error
+      </LoadingButton>
+      <LoadingButton
         onClick={() => setShouldServerError(true)}
         disabled={shouldServerError}
       >
         Enable server side error
-      </Button>
+      </LoadingButton>
     </>
   );
 }

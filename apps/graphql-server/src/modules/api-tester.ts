@@ -1,4 +1,5 @@
-import type { Context, Int, Mutation, Query } from "../types";
+import type { Int } from "grats";
+import type { Context, Mutation, Query } from "../types";
 
 const countsPerClient = new Map<string, number>();
 
@@ -27,4 +28,9 @@ export function increaseCount(
   count += amount;
   countsPerClient.set(clientId, count);
   return count;
+}
+
+/** @gqlField */
+export function mutationError(_: Mutation): Int {
+  throw new Error("This is a server side mutation error");
 }

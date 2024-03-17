@@ -114,13 +114,25 @@ importers:
       '@yas/validate':
         specifier: workspace:*
         version: link:../../libraries/validate
+      dataloader:
+        specifier: 2.2.2
+        version: 2.2.2
       graphql:
         specifier: 16.8.1
         version: 16.8.1
       graphql-yoga:
         specifier: 5.1.1
         version: 5.1.1(graphql@16.8.1)
+      unique-names-generator:
+        specifier: 4.7.1
+        version: 4.7.1
+      uuid:
+        specifier: 9.0.1
+        version: 9.0.1
     devDependencies:
+      '@types/uuid':
+        specifier: 9.0.8
+        version: 9.0.8
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/build
@@ -618,6 +630,9 @@ importers:
 
   integrations/graphql-client:
     dependencies:
+      '@urql/introspection':
+        specifier: 1.0.3
+        version: 1.0.3(graphql@16.8.1)
       '@yas/hooks':
         specifier: workspace:*
         version: link:../../libraries/hooks
@@ -626,13 +641,16 @@ importers:
         version: link:../../libraries/query
       gql.tada:
         specifier: 1.2.1
-        version: 1.2.1
+        version: 1.2.1(graphql@16.8.1)
       react:
         specifier: ^18.2.0
         version: 18.2.0
       urql:
-        specifier: 4.0.6
-        version: 4.0.6(react@18.2.0)
+        specifier: ^3
+        version: 3.0.4(graphql@16.8.1)(react@18.2.0)
+      urql-custom-scalars-exchange:
+        specifier: 1.0.1
+        version: 1.0.1(@urql/core@3.2.2)(graphql@16.8.1)(wonka@6.3.4)
     devDependencies:
       '@0no-co/graphqlsp':
         specifier: 1.4.1
@@ -822,6 +840,9 @@ importers:
 
   libraries/time:
     dependencies:
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@yas/result':
         specifier: workspace:*
         version: link:../result
@@ -969,13 +990,15 @@ importers:
 
 packages:
 
-  /@0no-co/graphql.web@1.0.4:
+  /@0no-co/graphql.web@1.0.4(graphql@16.8.1):
     resolution: {integrity: sha512-W3ezhHGfO0MS1PtGloaTpg0PbaT8aZSmmaerL7idtU5F7oCI+uu25k+MsMS31BVFlp4aMkHSrNRxiD72IlK8TA==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     peerDependenciesMeta:
       graphql:
         optional: true
+    dependencies:
+      graphql: 16.8.1
     dev: false
 
   /@0no-co/graphqlsp@1.4.1:
@@ -9139,13 +9162,21 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@urql/core@4.3.0:
-    resolution: {integrity: sha512-wT+FeL8DG4x5o6RfHEnONNFVDM3616ouzATMYUClB6CB+iIu2mwfBKd7xSUxYOZmwtxna5/hDRQdMl3nbQZlnw==}
+  /@urql/core@3.2.2(graphql@16.8.1):
+    resolution: {integrity: sha512-i046Cz8cZ4xIzGMTyHZrbdgzcFMcKD7+yhCAH5FwWBRjcKrc+RjEOuR9X5AMuBvr8c6IAaE92xAqa4wmlGfWTQ==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@0no-co/graphql.web': 1.0.4
+      graphql: 16.8.1
       wonka: 6.3.4
-    transitivePeerDependencies:
-      - graphql
+    dev: false
+
+  /@urql/introspection@1.0.3(graphql@16.8.1):
+    resolution: {integrity: sha512-5zgnfUDV10c3qudqYvfZ/rOtWVB2QvqanmoDMttqpt+TCCPkSUZdb2qcLCEB6DL7ph8mQRTZhXI29J57nTnqKg==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.8.1
     dev: false
 
   /@vanilla-extract/babel-plugin-debug-ids@1.0.5:
@@ -11502,6 +11533,10 @@ packages:
       whatwg-url: 14.0.0
     dev: true
 
+  /dataloader@2.2.2:
+    resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
+    dev: false
+
   /date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
@@ -13614,10 +13649,10 @@ packages:
       responselike: 3.0.0
     dev: true
 
-  /gql.tada@1.2.1:
+  /gql.tada@1.2.1(graphql@16.8.1):
     resolution: {integrity: sha512-Nx8x3g9WLT23eu9aL/4TTFDBwm7CBGVd4F2Jp2H5oOjDpuWv12i1mTLKReQwn2V1ZP+jG8V0ATXzFQZt1pxSgw==}
     dependencies:
-      '@0no-co/graphql.web': 1.0.4
+      '@0no-co/graphql.web': 1.0.4(graphql@16.8.1)
     transitivePeerDependencies:
       - graphql
     dev: false
@@ -20887,6 +20922,11 @@ packages:
     resolution: {integrity: sha512-HUwezlXCwm5bzsEXW7AP7ybezH13uWENRgYT+3dOdhJPvpYucSqvIGckMiLn+Uy2j0NVf3fPp43uZ4aun3t4Ww==}
     dev: true
 
+  /unique-names-generator@4.7.1:
+    resolution: {integrity: sha512-lMx9dX+KRmG8sq6gulYYpKWZc9RlGsgBR6aoO8Qsm3qvkSJ+3rAymr+TnV8EDMrIrwuFJ4kruzMWM/OpYzPoow==}
+    engines: {node: '>=8'}
+    dev: false
+
   /unique-string@2.0.0:
     resolution: {integrity: sha512-uNaeirEPvpZWSgzwsPGtU2zVSTrn/8L5q/IexZmH0eH6SA73CmAA5U4GwORTxQAZs95TAXLNqeLoPPNO5gZfWg==}
     engines: {node: '>=8'}
@@ -21062,16 +21102,29 @@ packages:
     resolution: {integrity: sha512-H/A06tKD7sS1O1X2SshBVeA5FLycRpjqiBeqGKmBwBDBy28EnRjORxTNe269KSSr5un5qyWi1iL61wLxpd+ZOg==}
     dev: false
 
-  /urql@4.0.6(react@18.2.0):
-    resolution: {integrity: sha512-meXJ2puOd64uCGKh7Fse2R7gPa8+ZpBOoA62jN7CPXXUt7SVZSdeXWSpB3HvlfzLUkEqsWbvshwrgeWRYNNGaQ==}
+  /urql-custom-scalars-exchange@1.0.1(@urql/core@3.2.2)(graphql@16.8.1)(wonka@6.3.4):
+    resolution: {integrity: sha512-NSxUaw1ZWu72iJ/t4qy6hbm33HKthIglLl8JzHEtEQgE1ICxl5kXmzmZWL5ycxlNRgCOvU2nqzrplIhBo7q3UQ==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
+      '@urql/core': ^1.12.3 || ^2.0.0 || ^3.0.0
+      graphql: ^15.3.0 || ^16.0.0
+      wonka: ^4.0.14 || ^6.0.0
+    dependencies:
+      '@urql/core': 3.2.2(graphql@16.8.1)
+      graphql: 16.8.1
+      wonka: 6.3.4
+    dev: false
+
+  /urql@3.0.4(graphql@16.8.1)(react@18.2.0):
+    resolution: {integrity: sha512-okmQKQ9pF4t8O8iCC5gH9acqfFji5lkhW3nLBjx8WKDd2zZG7PXoUpUK19VQEMK87L6VFBOO/XZ52MMKFEI0AA==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       react: '>= 16.8.0'
     dependencies:
-      '@urql/core': 4.3.0
+      '@urql/core': 3.2.2(graphql@16.8.1)
+      graphql: 16.8.1
       react: 18.2.0
       wonka: 6.3.4
-    transitivePeerDependencies:
-      - graphql
     dev: false
 
   /use-callback-ref@1.3.0(@types/react@18.2.61)(react@18.2.0):

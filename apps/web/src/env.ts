@@ -5,6 +5,7 @@ const schema = z.object({
   mode: mode.default("development"),
   trpcServerUrl: z.string(),
   graphqlServerUrl: z.string(),
+  showErrorDetails: truthy.default(false),
 });
 
 export const env = schema.parse({
@@ -12,4 +13,5 @@ export const env = schema.parse({
   mode: process.env.NODE_ENV,
   trpcServerUrl: process.env.TRPC_SERVER_URL,
   graphqlServerUrl: process.env.GRAPHQL_SERVER_URL,
+  showErrorDetails: process.env.SHOW_ERROR_DETAILS,
 });

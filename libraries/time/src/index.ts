@@ -1,5 +1,6 @@
 import { createConstrainedFormatter } from "./constrainedFormatter";
 
+export * from "./FormatDistance";
 export * from "date-fns";
 
 const formatPresets = {

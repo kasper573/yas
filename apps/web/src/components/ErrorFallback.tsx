@@ -1,27 +1,59 @@
-import type { FallbackProps } from "react-error-boundary";
+import { env } from "../env";
 
 // Should have no runtime dependencies to be as resilient as possible
 
-export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+export function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error?: unknown;
+  resetErrorBoundary?: () => void;
+}) {
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>
-        <span role="img" aria-label="sad face">
-          😢
-        </span>{" "}
-        Oops, something went wrong!
+        <ErrorTitle />
       </h2>
-      <p>We are sorry for the inconvenience. Please try again later.</p>
-      <div style={styles.buttons}>
-        <button onClick={resetErrorBoundary}>Try again</button>
-        <a href="/">Back to home page</a>
-      </div>
-      <details style={styles.details}>
-        <summary style={styles.detailsSummary}>Error Details</summary>
-        <pre style={styles.detailsContent}>{error.stack ?? error.message}</pre>
-      </details>
+      <ErrorDetails error={error} />
+      {resetErrorBoundary ? (
+        <div style={styles.buttons}>
+          <button onClick={resetErrorBoundary}>Try again</button>
+        </div>
+      ) : null}
     </div>
   );
+}
+
+export function ErrorTitle() {
+  return (
+    <>
+      <span role="img" aria-label="sad face">
+        😢
+      </span>{" "}
+      Oops, something went wrong!
+    </>
+  );
+}
+
+export function ErrorDetails({ error }: { error: unknown }) {
+  return (
+    <>
+      <p>We are sorry for the inconvenience. Please try again later.</p>
+      {env.showErrorDetails ? (
+        <details style={styles.details}>
+          <summary style={styles.detailsSummary}>Error Details</summary>
+          <pre style={styles.detailsContent}>{errorToString(error)}</pre>
+        </details>
+      ) : null}
+    </>
+  );
+}
+
+function errorToString(error: unknown) {
+  if (error instanceof Error) {
+    return error.stack ?? error.message;
+  }
+  return String(error);
 }
 
 const border = "1px solid #ccc";

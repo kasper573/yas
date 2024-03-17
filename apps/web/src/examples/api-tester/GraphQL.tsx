@@ -4,38 +4,20 @@ import {
   useGraphQLQuery,
 } from "@yas/graphql-client";
 import { useDebouncedValue } from "@yas/hooks";
-import { Button, NumberField, TextField } from "@yas/ui";
+import { LoadingButton, NumberField, TextField } from "@yas/ui";
 import { useState } from "react";
-
-const query = graphql(`
-  query GraphQLTester($name: String!) {
-    greeting(name: $name)
-    count
-  }
-`);
-
-const errorQuery = graphql(`
-  query ErrorQuery {
-    error
-  }
-`);
-
-const increaseQuery = graphql(`
-  mutation IncreaseCount($amount: Int!) {
-    increaseCount(amount: $amount)
-  }
-`);
 
 export default function GraphQL() {
   const [shouldServerError, setShouldServerError] = useState(false);
   const [name, setName] = useState("");
   const debouncedName = useDebouncedValue(name, 300);
   const { data } = useGraphQLQuery({
-    query,
+    query: dataGQL,
     variables: { name: debouncedName },
   });
-  const increase = useGraphQLMutation(increaseQuery);
-  useGraphQLQuery({ query: errorQuery, enabled: shouldServerError });
+  const increase = useGraphQLMutation(increaseGQL);
+  const triggerMutationError = useGraphQLMutation(mutationErrorGQL);
+  useGraphQLQuery({ query: errorGQL, enabled: shouldServerError });
 
   return (
     <>
@@ -47,15 +29,49 @@ export default function GraphQL() {
       />
       <TextField label="Greeting from server" value={data?.greeting} readOnly />
       <NumberField label="Count from server" value={data?.count} readOnly />
-      <Button onClick={() => increase.mutate({ amount: 1 })}>
+      <LoadingButton
+        isLoading={increase.isPending}
+        onClick={() => increase.mutate({ amount: 1 })}
+      >
         Increase count
-      </Button>
-      <Button
+      </LoadingButton>
+      <LoadingButton
+        isLoading={triggerMutationError.isPending}
+        onClick={() => triggerMutationError.mutate({})}
+      >
+        Trigger server side mutation error
+      </LoadingButton>
+      <LoadingButton
         onClick={() => setShouldServerError(true)}
         disabled={shouldServerError}
       >
         Enable server side error
-      </Button>
+      </LoadingButton>
     </>
   );
 }
+
+const dataGQL = graphql(`
+  query GraphQLTester($name: String!) {
+    greeting(name: $name)
+    count
+  }
+`);
+
+const errorGQL = graphql(`
+  query ErrorQuery {
+    error
+  }
+`);
+
+const increaseGQL = graphql(`
+  mutation IncreaseCount($amount: Int!) {
+    increaseCount(amount: $amount)
+  }
+`);
+
+const mutationErrorGQL = graphql(`
+  mutation MutationError {
+    mutationError
+  }
+`);

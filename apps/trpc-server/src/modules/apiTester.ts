@@ -6,7 +6,10 @@ export function createApiTesterRouter() {
   const countsPerClient = new Map<string, number>();
   return t.router({
     error: t.procedure.query(() => {
-      trpcUnwrap(err("Manually triggered server side error"));
+      trpcUnwrap(err("Manually triggered server side query error"));
+    }),
+    mutationError: t.procedure.mutation(({ ctx }) => {
+      trpcUnwrap(err("Manually triggered server side mutation error"));
     }),
     greeting: t.procedure
       .input(z.string())

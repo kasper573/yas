@@ -7,6 +7,10 @@
     ".": {
       "import": "./src/types.ts",
       "require": "./src/types.ts"
+    },
+    "./schema.generated.graphql": {
+      "import": "./schema.generated.graphql",
+      "require": "./schema.generated.graphql"
     }
   },
   "scripts": {
@@ -19,9 +23,13 @@
   "dependencies": {
     "@yas/validate": "workspace:*",
     "graphql-yoga": "5.1.1",
-    "graphql": "16.8.1"
+    "graphql": "16.8.1",
+    "dataloader": "2.2.2",
+    "uuid": "9.0.1",
+    "unique-names-generator": "4.7.1"
   },
   "devDependencies": {
+    "@types/uuid": "9.0.8",
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",

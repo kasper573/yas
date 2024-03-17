@@ -23,6 +23,7 @@ export type TextFieldBaseProps = Pick<
     clearable?: boolean;
     type?: "text" | "number" | "password";
     readOnly?: boolean;
+    disabled?: boolean;
     inputProps?: Omit<
       ComponentProps<typeof InputArea>,
       "value" | "onChange" | "onFocus" | "onBlur" | "type" | "size" | "children"
@@ -44,6 +45,7 @@ export function TextField({
   required,
   size,
   clearable,
+  disabled,
   readOnly,
   ...rest
 }: TextFieldProps) {
@@ -79,6 +81,7 @@ export function TextField({
           autoComplete="off"
           required={required}
           readOnly={readOnly}
+          disabled={disabled}
           {...inputProps}
           className={clsx(styles.input({ fullWidth }), inputProps?.className)}
           onKeyDown={(e) => {

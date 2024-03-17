@@ -12,23 +12,23 @@ import { Suspense } from "react";
 import { ModalOutlet } from "@yas/ui";
 import { layout } from "./Layout.css";
 
-const mainLinks = [
-  { to: "/", label: "Sandbox" },
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/api-tester", label: "Api Tester" },
-  { to: "/tree", label: "Tree" },
-] as const;
-
 export default function Layout() {
   return (
     <div className={layout}>
       <ContainerStack>
         <Tabs>
-          {mainLinks.map(({ to, label }, index) => (
-            <TabItem key={index} asChild>
-              <Link to={to}>{label}</Link>
-            </TabItem>
-          ))}
+          <TabItem asChild>
+            <Link to="/">Sandbox</Link>
+          </TabItem>
+          <TabItem asChild>
+            <Link to="/dashboard">Dashboard</Link>
+          </TabItem>
+          <TabItem asChild>
+            <Link to="/api-tester">Api Tester</Link>
+          </TabItem>
+          <TabItem asChild>
+            <Link to="/feed">Feed</Link>
+          </TabItem>
         </Tabs>
         <Stack sx={{ flex: 1 }}>
           <Suspense

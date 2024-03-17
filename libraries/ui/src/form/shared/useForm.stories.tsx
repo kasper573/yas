@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { AnyZodObject } from "@yas/validate";
 import { z } from "@yas/validate";
 import { useRef, useState } from "react";
-import type { UseFormReturn } from "./useForm";
-import { useForm, createControllerProxy, useFormChanges } from "./useForm";
+import type { UseSchemaFormReturn } from "./useForm";
+import {
+  createControllerProxy,
+  useFormChanges,
+  useSchemaForm,
+} from "./useForm";
 import type { FieldProps } from "./types";
 
 export default {
@@ -29,7 +33,7 @@ function UseFormControllersExample() {
   const renderCountRef = useRef(0);
   renderCountRef.current++;
 
-  const form = useForm(schema, {
+  const form = useSchemaForm(schema, {
     defaultValues: {
       foo: "foo",
       user: { firstName: "first", lastName: "last" },
@@ -67,7 +71,7 @@ function UseFormControllersExample() {
 function FormDataPreview<Schema extends AnyZodObject>({
   form,
 }: {
-  form: UseFormReturn<Schema>;
+  form: UseSchemaFormReturn<Schema>;
 }) {
   const [data, setData] = useState(() => form.getValues());
   form.watch(() => setData(form.getValues()));
@@ -75,7 +79,7 @@ function FormDataPreview<Schema extends AnyZodObject>({
 }
 
 function UserForm({ value: user, onChange, error }: FieldProps<User>) {
-  const form = useForm(userType, { defaultValues: user });
+  const form = useSchemaForm(userType, { defaultValues: user });
   const control = createControllerProxy(form.control);
   useFormChanges(form, onChange);
   return (

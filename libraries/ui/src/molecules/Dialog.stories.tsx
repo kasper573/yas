@@ -1,14 +1,8 @@
 import { within, userEvent, waitFor } from "@storybook/testing-library";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentType } from "react";
-import { useMemo } from "react";
 import { styled } from "@yas/style";
-import {
-  ModalContext,
-  ModalOutlet,
-  ModalStore,
-  useModal,
-} from "../hooks/useModal";
+import { useModal } from "../hooks/useModal";
 import {
   Dialog as DialogImpl,
   DialogActions,
@@ -38,7 +32,7 @@ export const OpenBaseDialog: StoryObj = {
 };
 
 export const CanSpawnDialog: StoryObj = {
-  render: withModalContext(() => {
+  render: withFixedSize(() => {
     const showDialog = useModal(DialogImpl);
     return (
       <button
@@ -73,7 +67,7 @@ export const CanSpawnDialog: StoryObj = {
 };
 
 export const CanCloseSpawnedDialog: StoryObj = {
-  render: withModalContext(() => {
+  render: withFixedSize(() => {
     const showDialog = useModal(({ resolve, ...props }) => (
       <DialogImpl {...props}>
         <DialogTitle>DialogTitle</DialogTitle>
@@ -97,18 +91,12 @@ export const CanCloseSpawnedDialog: StoryObj = {
   },
 };
 
-function withModalContext<Props extends object>(
-  Component: ComponentType<Props>,
-) {
-  return function WithDialogContext(props: Props) {
-    const store = useMemo(() => new ModalStore(), []);
+function withFixedSize<Props extends object>(Component: ComponentType<Props>) {
+  return function Container(props: Props) {
     return (
-      <ModalContext.Provider value={store}>
-        <FixedSizeContainer>
-          <Component {...props} />
-          <ModalOutlet />
-        </FixedSizeContainer>
-      </ModalContext.Provider>
+      <FixedSizeContainer>
+        <Component {...props} />
+      </FixedSizeContainer>
     );
   };
 }

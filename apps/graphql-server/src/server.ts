@@ -1,15 +1,19 @@
 import { createServer as createHTTPServer } from "http";
 import { createYoga } from "graphql-yoga";
+import { getSchema } from "../schema.generated";
 import { env } from "./env";
-import { getSchema } from "./schema.generated";
-import type { Context, Headers } from "./types";
+import { createContext } from "./context";
+import { addScalarsToSchema } from "./scalars";
+import type { GraphQLServerHeaders } from "./types";
 
 export function createServer(graphqlEndpoint: string) {
+  const schema = getSchema();
+  addScalarsToSchema(schema);
   const yoga = createYoga({
-    schema: getSchema(),
+    schema,
     cors: corsSettingsForRequest,
     graphqlEndpoint,
-    context: ({ request }) => createContext(request),
+    context: ({ request }) => createContext(parseRequestHeaders(request)),
   });
   return createHTTPServer(yoga);
 }
@@ -24,13 +28,8 @@ function corsSettingsForRequest(request: Request) {
   return { origin: "Access denied by CORS policy" };
 }
 
-function createContext(request: Request): Context {
-  const headers = parseRequestHeaders(request);
-  return {
-    clientId: headers["client-id"],
-  };
-}
-
-function parseRequestHeaders(request: Request) {
-  return Object.fromEntries(request.headers.entries()) as unknown as Headers;
+function parseRequestHeaders(request: Request): GraphQLServerHeaders {
+  return Object.fromEntries(
+    request.headers.entries(),
+  ) as unknown as GraphQLServerHeaders;
 }

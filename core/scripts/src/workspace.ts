@@ -29,7 +29,6 @@ export function readPackage(packageDir: string) {
     dependencies: pkg.dependencies ?? {},
     peerDependencies: pkg.peerDependencies ?? {},
     devDependencies: pkg.devDependencies ?? {},
-    depcheck: pkg.depcheck,
     workspaceNames: pkg.workspaces.map((pattern) => pattern.replace("/*", "")),
   };
 }
@@ -40,15 +39,6 @@ const packageSchema = z.object({
   dependencies: z.record(z.string()).optional(),
   peerDependencies: z.record(z.string()).optional(),
   devDependencies: z.record(z.string()).optional(),
-  depcheck: z
-    .object({
-      exceptions: z
-        .object({
-          allow: z.array(z.string()).default([]),
-        })
-        .default({}),
-    })
-    .default({}),
 });
 
 function mapDirectories<T>(atPath: string, map: (name: string) => T): T[] {

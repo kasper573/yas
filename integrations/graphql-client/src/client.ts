@@ -1,6 +1,10 @@
 import type { TadaDocumentNode } from "gql.tada";
 import { Client, fetchExchange } from "urql";
-import type { Headers } from "@yas/graphql-server";
+import type { GraphQLServerHeaders } from "@yas/graphql-server";
+import scalarsExchange from "urql-custom-scalars-exchange";
+import { getIntrospectedSchema } from "@urql/introspection";
+import schemaGQLString from "@yas/graphql-server/schema.generated.graphql?raw";
+import { scalars } from "./scalars";
 
 export type GraphQLDocumentNode<Data, Variables> = TadaDocumentNode<
   Data,
@@ -14,17 +18,16 @@ export function createGraphQLClient({
   headers,
 }: {
   url: string;
-  headers: () => Headers;
+  headers: () => GraphQLServerHeaders;
 }) {
+  const schema = getIntrospectedSchema(schemaGQLString);
   return new Client({
     url,
-    exchanges: [fetchExchange],
-    fetchOptions: () => {
-      return {
-        method: "POST",
-        headers: headers() as unknown as HeadersInit,
-        mode: "cors",
-      };
-    },
+    exchanges: [scalarsExchange({ schema, scalars }), fetchExchange],
+    fetchOptions: () => ({
+      method: "POST",
+      headers: headers() as unknown as HeadersInit,
+      mode: "cors",
+    }),
   });
 }

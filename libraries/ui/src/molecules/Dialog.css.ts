@@ -15,7 +15,7 @@ export const dialogRecipe = recipe({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "90vw",
-    maxWidth: "450px",
+    maxWidth: "550px",
     maxHeight: "85vh",
     pointerEvents: "all",
   },

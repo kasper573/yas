@@ -1,13 +1,21 @@
 import { v4 } from "uuid";
-import { lazy, useMemo, useState } from "react";
+import { lazy, useEffect, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
 import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "@yas/router";
-import { ModalContext, ModalStore } from "@yas/ui";
-import { QueryClient, QueryClientProvider } from "@yas/query";
+import { AlertDialog, ModalContext, ModalStore, useModal } from "@yas/ui";
+import {
+  QueryClientProvider,
+  createQueryClient,
+  useQueryClient,
+} from "@yas/query";
 import { env } from "./env";
-import { ErrorFallback } from "./components/ErrorFallback";
+import {
+  ErrorDetails,
+  ErrorFallback,
+  ErrorTitle,
+} from "./components/ErrorFallback";
 import {
   getPreferredTheme,
   ThemeProvider,
@@ -23,7 +31,7 @@ export default function App() {
   const clients = useMemo(createClients, []);
 
   return (
-    <ErrorBoundary fallbackRender={ErrorFallback}>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <ModalContext.Provider value={modalStore}>
         <QueryClientProvider client={clients.query}>
           <TrpcClientProvider value={clients.trpc}>
@@ -35,6 +43,7 @@ export default function App() {
                   defaultErrorComponent={ErrorFallback}
                 />
                 <QueryDevtools />
+                <UnhandledMutationErrorDialogsBehavior />
               </ThemeProvider>
             </GraphQLClientContext.Provider>
           </TrpcClientProvider>
@@ -44,26 +53,44 @@ export default function App() {
   );
 }
 
+function UnhandledMutationErrorDialogsBehavior() {
+  const alert = useModal(AlertDialog);
+  const queryClient = useQueryClient();
+
+  useEffect(
+    () =>
+      queryClient.subscribe("unhandled-mutation-error", (error) => {
+        alert({
+          title: <ErrorTitle />,
+          message: <ErrorDetails error={error} />,
+        });
+      }),
+    [queryClient, alert],
+  );
+
+  return null;
+}
+
 function createClients() {
-  const query: QueryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: env.mode === "production",
-      },
-      mutations: {
-        onSettled(_, error) {
-          if (!error) {
-            query.invalidateQueries();
-          }
-        },
-      },
-    },
-  });
-  const clientId = v4();
+  const clientId = pullFromSessionStorage("client-id", v4);
   const headers = () => ({ "client-id": clientId });
+  const query = createQueryClient(env.mode);
   const trpc = createTrpcClient({ url: env.trpcServerUrl, headers });
   const graphql = createGraphQLClient({ url: env.graphqlServerUrl, headers });
   return { query, trpc, graphql };
+}
+
+function pullFromSessionStorage(
+  key: string,
+  createDefautValue: () => string,
+): string {
+  let value = sessionStorage.getItem(key);
+  if (value === null) {
+    value = createDefautValue();
+    sessionStorage.setItem(key, value);
+  }
+
+  return value;
 }
 
 // Avoid importing the devtools in production

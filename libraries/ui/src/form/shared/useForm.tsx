@@ -1,32 +1,43 @@
 import type { z } from "@yas/validate";
 import { type AnyZodObject } from "@yas/validate";
-import type { Resolver, UseFormProps } from "react-hook-form";
+import type { FieldValues, Resolver, UseFormProps } from "react-hook-form";
 import { useForm as useFormImpl } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { UseFormReturn as UseFormReturnImpl } from "react-hook-form";
+import type { UseFormReturn as UseFormReturn } from "react-hook-form";
 import { useEffect } from "react";
 import { useLatest } from "@yas/hooks";
 
 export { createControllerProxy } from "hookform-controller-proxy";
 
 /**
- * Zod specific react-hook-form/useForm
+ * react-hook-form/useForm encapsulation with project defaults
  */
-export function useForm<Schema extends AnyZodObject>(
-  schema: Schema,
-  options?: Omit<UseFormProps<z.infer<Schema>>, "resolver">,
-): UseFormReturn<Schema> {
+export function useForm<Values extends FieldValues>(
+  options?: UseFormProps<Values>,
+): UseFormReturn<Values> {
   return useFormImpl({
-    resolver: (zodResolver as (s: unknown) => Resolver<z.infer<Schema>>)(
-      schema,
-    ),
     mode: "onSubmit",
     reValidateMode: "onBlur",
     ...options,
   });
 }
 
-export type UseFormReturn<Schema extends AnyZodObject> = UseFormReturnImpl<
+/**
+ * Zod specific react-hook-form/useForm
+ */
+export function useSchemaForm<Schema extends AnyZodObject>(
+  schema: Schema,
+  options?: Omit<UseFormProps<z.infer<Schema>>, "resolver">,
+): UseSchemaFormReturn<Schema> {
+  return useForm({
+    resolver: (zodResolver as (s: unknown) => Resolver<z.infer<Schema>>)(
+      schema,
+    ),
+    ...options,
+  });
+}
+
+export type UseSchemaFormReturn<Schema extends AnyZodObject> = UseFormReturn<
   z.infer<Schema>
 >;
 
@@ -34,7 +45,7 @@ export type UseFormReturn<Schema extends AnyZodObject> = UseFormReturnImpl<
  * Subscribe to form changes
  */
 export function useFormChanges<Schema extends AnyZodObject>(
-  form: UseFormReturn<Schema>,
+  form: UseSchemaFormReturn<Schema>,
   onChange?: (values: z.infer<Schema>) => void,
 ) {
   const latestOnChange = useLatest(onChange);
