@@ -19,7 +19,8 @@
   "dependencies": {
     "@yas/validate": "workspace:*",
     "graphql-yoga": "5.1.1",
-    "graphql": "16.8.1"
+    "graphql": "16.8.1",
+    "dataloader": "2.2.2"
   },
   "devDependencies": {
     "@yas/build": "workspace:*",

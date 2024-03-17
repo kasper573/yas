@@ -84,10 +84,10 @@ const graphqlRoute = createRoute({
   component: lazy(() => import("./examples/api-tester/GraphQL")),
 });
 
-const treeRoute = createRoute({
+const feedRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "tree",
-  component: lazy(() => import("./examples/tree/TreePage")),
+  path: "feed",
+  component: lazy(() => import("./examples/feed/FeedPage")),
 });
 
 const routeTree = rootRoute.addChildren([
@@ -107,7 +107,7 @@ const routeTree = rootRoute.addChildren([
     trpcRoute,
     graphqlRoute,
   ]),
-  treeRoute,
+  feedRoute,
 ]);
 
 export const router = createRouter({

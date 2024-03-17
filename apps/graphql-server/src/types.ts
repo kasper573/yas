@@ -1,13 +1,5 @@
 // Common types used by all modules. Do not put business logic here.
 
-export type Context = {
-  clientId: string;
-};
-
-export interface Headers {
-  "client-id": string;
-}
-
 /**
  * @gqlType
  */
@@ -19,3 +11,5 @@ export type Query = unknown;
 export type Mutation = unknown;
 
 export type { ID, Float, Int } from "grats";
+
+export type * from "./context";

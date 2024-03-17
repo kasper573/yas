@@ -114,6 +114,9 @@ importers:
       '@yas/validate':
         specifier: workspace:*
         version: link:../../libraries/validate
+      dataloader:
+        specifier: 2.2.2
+        version: 2.2.2
       graphql:
         specifier: 16.8.1
         version: 16.8.1
@@ -11501,6 +11504,10 @@ packages:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
     dev: true
+
+  /dataloader@2.2.2:
+    resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
+    dev: false
 
   /date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
