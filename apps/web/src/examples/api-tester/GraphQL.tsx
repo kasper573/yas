@@ -15,7 +15,7 @@ export default function GraphQL() {
     query: dataGQL,
     variables: { name: debouncedName },
   });
-  const increase = useGraphQLMutation(increaseGQL);
+  const increase = useGraphQLMutation(increaseCountGQL);
   const triggerMutationError = useGraphQLMutation(mutationErrorGQL);
   useGraphQLQuery({ query: errorGQL, enabled: shouldServerError });
 
@@ -52,19 +52,19 @@ export default function GraphQL() {
 }
 
 const dataGQL = graphql(`
-  query GraphQLTester($name: String!) {
+  query Data($name: String!) {
     greeting(name: $name)
     count
   }
 `);
 
 const errorGQL = graphql(`
-  query ErrorQuery {
+  query Error {
     error
   }
 `);
 
-const increaseGQL = graphql(`
+const increaseCountGQL = graphql(`
   mutation IncreaseCount($amount: Int!) {
     increaseCount(amount: $amount)
   }
