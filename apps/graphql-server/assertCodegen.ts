@@ -4,7 +4,7 @@ import * as os from "os";
 import type { ExecaError } from "execa";
 import { execaSync, $ } from "execa";
 import tsConfig from "./tsconfig.json";
-import { normalizeImportPaths } from "./tsup.config.mjs";
+import { normalizeGeneratedSchema } from "./tsup.config.mjs";
 
 // Asserts that the generated types and graphql schema are up to date
 
@@ -31,8 +31,8 @@ process.exit(isIdentical ? 0 : 1);
 
 function compare(file: string, a: string, b: string) {
   try {
-    const f1 = tempFile(normalizeImportPaths(a));
-    const f2 = tempFile(normalizeImportPaths(b));
+    const f1 = tempFile(normalizeGeneratedSchema(a));
+    const f2 = tempFile(normalizeGeneratedSchema(b));
     execaSync("diff", [
       "-u",
       "--label",

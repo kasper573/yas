@@ -8,11 +8,11 @@ export default createYasTsupConfig(process.cwd(), {
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
   dts: false,
-  esbuildPlugins: [fixImportsInGeneratedSchema()],
+  esbuildPlugins: [pluginForNormalizeGeneratedSchema()],
 });
 
 // Temporary workaround until this is fixed: https://github.com/captbaritone/grats/issues/128
-function fixImportsInGeneratedSchema() {
+function pluginForNormalizeGeneratedSchema() {
   const schemaFile = path.resolve(__dirname, tsConfig.grats.tsSchema);
   return {
     name: "fix-imports-in-generated-schema",
@@ -27,19 +27,22 @@ function fixImportsInGeneratedSchema() {
           loader: "ts",
           contents: await fs
             .readFile(args.path, "utf8")
-            .then(normalizeImportPaths),
+            .then(normalizeGeneratedSchema),
         };
       });
     },
   };
 }
 
-/**
- * Replaces \\ with / in imports
- */
-export function normalizeImportPaths(code) {
-  return code.replaceAll(
+export function normalizeGeneratedSchema(code) {
+  // Replaces \\ with / in imports
+  code = code.replaceAll(
     /(from\s+['"])([^'"]+)(['"])/g,
     (_, p1, p2, p3) => `${p1}${p2.replaceAll(/\\+/g, "/")}${p3}`,
   );
+
+  // Ensures unix line endings
+  code = code.replace(/\r\n/g, "\n");
+
+  return code;
 }
