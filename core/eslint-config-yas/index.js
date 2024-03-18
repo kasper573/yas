@@ -58,6 +58,7 @@ module.exports = {
         // Disabling the type system is a bad ieda
         "yas/no-as-never": "error",
 
+        // Ensure that graphql operation names and their associated variables have a consistent naming convention
         "yas/graphql-variable-names": [
           "error",
           {
