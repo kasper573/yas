@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { Paper } from "./Paper";
 
 export default {
   component: Paper,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Paper>;
 
 export const Default: StoryObj<Meta<typeof Paper>> = {

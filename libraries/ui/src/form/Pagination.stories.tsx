@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { useState } from "react";
 import { Pagination } from "./Pagination";
 
 export default {
   component: Pagination,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Pagination>;
 
 export const Default: StoryObj<typeof Pagination> = {

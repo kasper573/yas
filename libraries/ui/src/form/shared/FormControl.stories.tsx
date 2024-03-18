@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import * as components from "./FormControl";
 
 export default {
   component: () => null,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const FormControlLabel: StoryObj<typeof components.FormControlLabel> = {

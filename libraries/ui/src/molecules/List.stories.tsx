@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { PersonIcon } from "@yas/icons";
 import {
   ListItem,
@@ -10,7 +10,6 @@ import {
 
 export default {
   component: List,
-  tags: ["autodocs"],
 } satisfies Meta<typeof List>;
 
 const range = [1, 2, 3];

@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { TreeItem, TreeView } from "./TreeView";
 
 export default {
   component: TreeView,
-  tags: ["autodocs"],
 } satisfies Meta<typeof TreeView>;
 
 export const Uncontrolled: StoryObj<Meta<typeof TreeView>> = {

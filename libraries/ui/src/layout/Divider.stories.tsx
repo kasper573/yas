@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { Divider } from "./Divider";
 
 const meta = {
   component: Divider,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Divider>;
 
 export default meta;

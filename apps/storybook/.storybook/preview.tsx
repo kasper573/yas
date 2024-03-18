@@ -29,14 +29,14 @@ const preview: Preview = {
       },
     }),
     (Story) => (
-      <WithModalContext>
+      <StorybookProviders>
         <Story />
-      </WithModalContext>
+      </StorybookProviders>
     ),
   ],
 };
 
-function WithModalContext({ children }: { children: ReactNode }) {
+function StorybookProviders({ children }: { children: ReactNode }) {
   const store = useMemo(() => new ModalStore(), []);
   return (
     <ModalContext.Provider value={store}>

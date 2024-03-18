@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { Dock } from "./Dock";
 
 const meta = {
   component: Dock,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Dock>;
 
 export default meta;

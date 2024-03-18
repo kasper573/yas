@@ -1,5 +1,5 @@
-import { within, userEvent, waitFor } from "@storybook/testing-library";
-import type { Meta, StoryObj } from "@storybook/react";
+import { within, userEvent, waitFor } from "@yas/storybook";
+import type { Meta, StoryObj } from "@yas/storybook";
 import type { ComponentType } from "react";
 import { styled } from "@yas/style";
 import { useModal } from "../hooks/useModal";
@@ -13,7 +13,6 @@ import {
 
 export default {
   component: () => null,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const OpenBaseDialog: StoryObj = {

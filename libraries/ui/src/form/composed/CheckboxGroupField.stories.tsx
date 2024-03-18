@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { withState } from "../shared/withState";
 import { CheckboxGroupField } from "./CheckboxGroupField";
 
 export default {
   component: CheckboxGroupField,
   decorators: [withState],
-  tags: ["autodocs"],
 } satisfies Meta<typeof CheckboxGroupField<number>>;
 
 export const Default: StoryObj<typeof CheckboxGroupField<number>> = {

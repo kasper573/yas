@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import type { ReactNode } from "react";
 import { Stack } from "./Stack";
 
 const meta = {
   component: Stack,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Stack>;
 
 export default meta;

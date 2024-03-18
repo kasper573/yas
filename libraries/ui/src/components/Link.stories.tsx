@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { RouterProvider, createRootRoute, createRouter } from "@yas/router";
 import type { ComponentProps } from "react";
 import { Link } from "./Link";
 
 export default {
   component: LinkWithProvider,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Link>;
 
 export const Default: StoryObj<Meta<typeof Link>> = {

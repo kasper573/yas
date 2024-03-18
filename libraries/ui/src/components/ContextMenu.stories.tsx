@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@yas/storybook";
 import type { ComponentType, HTMLAttributes } from "react";
 import {
   ContextMenuContent,
@@ -11,7 +11,6 @@ import {
 
 export default {
   component: () => null,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const Component = {

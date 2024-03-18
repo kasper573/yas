@@ -1,0 +1,8 @@
+{
+  "extends": "@yas/tsconfig/react.json",
+  "exclude": ["apps/docs", "node_modules", "**/dist/**"],
+  "compilerOptions": {
+    "allowJs": true,
+    "allowImportingTsExtensions": true
+  }
+}

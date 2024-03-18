@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { MultiSelectField } from "./MultiSelectField";
 import { withState } from "./shared/withState";
 
 export default {
   component: MultiSelectField,
   decorators: [withState],
-  tags: ["autodocs"],
 } satisfies Meta<typeof MultiSelectField<number>>;
 
 export const Default: StoryObj<typeof MultiSelectField<number>> = {

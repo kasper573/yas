@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { TextField } from "./TextField";
 import { withState } from "./shared/withState";
 
 export default {
   component: TextField,
   decorators: [withState],
-  tags: ["autodocs"],
 } satisfies Meta<typeof TextField>;
 
 export const Default: StoryObj<typeof TextField> = {

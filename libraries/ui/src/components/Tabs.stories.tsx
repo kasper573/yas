@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { TabItem, Tabs } from "./Tabs";
 
 export default {
   component: Tabs,
-  tags: ["autodocs"],
 } satisfies Meta<typeof Tabs>;
 
 export const Contained: StoryObj<Meta<typeof Tabs>> = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import type { AnyZodObject } from "@yas/validate";
 import { z } from "@yas/validate";
 import { useRef, useState } from "react";
@@ -12,7 +12,6 @@ import type { FieldProps } from "./types";
 
 export default {
   component: UseFormControllersExample,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const Default: StoryObj = {};

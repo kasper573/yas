@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { RadioGroupField } from "./RadioGroupField";
 import { withState } from "./shared/withState";
 
 export default {
   component: RadioGroupField,
   decorators: [withState],
-  tags: ["autodocs"],
 } satisfies Meta<typeof RadioGroupField<number>>;
 
 export const Default: StoryObj<typeof RadioGroupField<number>> = {

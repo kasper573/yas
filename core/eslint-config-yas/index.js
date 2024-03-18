@@ -107,11 +107,14 @@ module.exports = {
         "@typescript-eslint/no-restricted-imports": [
           "error",
           {
-            paths: getMonorepoAppNames().map((name) => ({
-              name,
-              message: "Only type definitions may be imported from apps.",
-              allowTypeImports: true,
-            })),
+            paths: getMonorepoAppNames()
+              // We make an exception for the storybook app to also act as an encapsulation for the utils stories need to import
+              .filter((name) => name !== "@yas/storybook")
+              .map((name) => ({
+                name,
+                message: "Only type definitions may be imported from apps.",
+                allowTypeImports: true,
+              })),
           },
         ],
 

@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { useState } from "react";
 import type { DateRange, RangeCalendarProps } from "./Calendar";
 import { Calendar } from "./Calendar";
 
 export default {
   component: () => null,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const Single: StoryObj = {

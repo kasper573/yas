@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { useState } from "react";
 import { LoadingButton } from "./LoadingButton";
 
 export default {
   component: LoadingButton,
-  tags: ["autodocs"],
 } satisfies Meta<typeof LoadingButton>;
 
 const range = [1, 2, 3];

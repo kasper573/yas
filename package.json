@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@yas/scripts": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
     "cross-env": "7.0.3",
     "dependency-cruiser": "16.2.2",
     "eslint-config-yas": "workspace:*",

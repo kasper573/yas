@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { InputArea, InputRoot, InputSlot } from "./Input";
 
 export default {
   component: InputShowcase,
-  tags: ["autodocs"],
 } satisfies Meta<typeof InputShowcase>;
 
 export const Default: StoryObj = {};

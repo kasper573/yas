@@ -1,10 +1,9 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@yas/storybook";
 import { withState } from "./withState";
 
 export default {
   component: InputField,
   decorators: [withState],
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const Default = {};

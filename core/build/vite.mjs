@@ -8,13 +8,13 @@ import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
 export function createYasViteConfig(
   projectRoot,
-  { analyze, useReact = true } = {},
+  { analyze, useReact = true, tsconfigPath } = {},
 ) {
   return defineConfig({
     plugins: [
       vanillaExtractPlugin(),
       useReact && react(),
-      checker({ typescript: true }),
+      checker({ typescript: { tsconfigPath } }),
       determineVisualizerPlugin(analyze),
     ].filter(Boolean),
 

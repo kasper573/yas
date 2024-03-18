@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { AlertDialog } from "./AlertDialog";
 
 export default {
   component: AlertDialog,
-  tags: ["autodocs"],
 } satisfies Meta<typeof AlertDialog>;
 
 export const Default: StoryObj<Meta<typeof AlertDialog>> = {

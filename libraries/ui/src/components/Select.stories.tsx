@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/storybook";
 import { ChevronDownIcon, ChevronUpIcon } from "@yas/icons";
 import {
   SelectTrigger,
@@ -17,7 +17,6 @@ import { SelectItem, SelectRoot } from "./Select";
 
 export default {
   component: SelectShowcase,
-  tags: ["autodocs"],
 } satisfies Meta<typeof SelectShowcase>;
 
 export const Default: StoryObj<typeof SelectShowcase> = {};
