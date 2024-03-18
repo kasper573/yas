@@ -58,6 +58,14 @@ module.exports = {
         // Disabling the type system is a bad ieda
         "yas/no-as-never": "error",
 
+        "yas/graphql-variable-names": [
+          "error",
+          {
+            variableNameCode: ((op) =>
+              `${op[0].toLowerCase()}${op.substring(1)}GQL`).toString(),
+          },
+        ],
+
         // It's okay to enable the type checker, but not to disable it
         "@typescript-eslint/ban-ts-comment": [
           "error",
