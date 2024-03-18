@@ -7,7 +7,10 @@ env:
 
 jobs:
   conventions:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
@@ -16,33 +19,30 @@ jobs:
       - run: pnpm depcheck
 
   test:
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.42.1-jammy # Has to be same version as in package.json
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
+      - run: pnpm exec playwright install --with-deps
       - run: pnpm test
-        env:
-          HOME: /root # Workaround required when using playwright image in ghactions. See https://github.com/microsoft/playwright/issues/6500#issuecomment-845919578
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright
           path: "**/.playwright/**"
 
-  typecheck:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/composites/install/
       - run: pnpm typecheck
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/composites/install/
       - run: pnpm build
         env:
           # We can only build for development in CI,
