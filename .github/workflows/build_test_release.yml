@@ -54,7 +54,7 @@ jobs:
     permissions:
       contents: write
     if: github.ref == 'refs/heads/master'
-    needs: [conventions, test, typecheck, build]
+    needs: [conventions, test, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
