@@ -45,6 +45,7 @@ const packageSchema = z.object({
   peerDependencies: z.record(z.string()).optional(),
   devDependencies: z.record(z.string()).optional(),
   scripts: z.record(z.string()).optional(),
+  exports: z.record(z.string(), z.unknown()).optional(),
 });
 
 function mapDirectories<T>(atPath: string, map: (name: string) => T): T[] {

@@ -87,4 +87,31 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
       }
     }
   }
+
+  if (pkg.exports) {
+    const exportVariantsAndExtensions = {
+      require: ".js",
+      import: ".mjs",
+      types: ".d.ts",
+    };
+
+    for (const [exportKey, exportPaths] of Object.entries(pkg.exports)) {
+      if (!exportPaths) {
+        yield `Expected exports["${exportKey}"] to be defined`;
+        continue;
+      }
+      for (const [variant, ext] of Object.entries(
+        exportVariantsAndExtensions,
+      )) {
+        const exportValue = (exportPaths as any)?.[variant];
+        if (!exportValue) {
+          yield `Expected exports["${exportKey}"].${variant} to be defined`;
+          continue;
+        }
+        if (!String(exportValue).endsWith(ext)) {
+          yield `Expected exports["${exportKey}"].${variant} to end with "${ext}" (found "${exportValue}")`;
+        }
+      }
+    }
+  }
 }
