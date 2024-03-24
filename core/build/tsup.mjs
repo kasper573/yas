@@ -63,17 +63,21 @@ async function deriveEntry(cwd) {
     await fs.promises.readFile(`${cwd}/package.json`, "utf-8"),
   );
 
-  const entry = {};
-  for (const key of Object.keys(packageJson.exports ?? {})) {
-    if (key === ".") {
-      const files = await glob("./src/index.*", { cwd });
-      if (files.length !== 1) {
-        throw new Error(
-          `Expected exactly one entry file in src/index.* but found ${files.length}`,
-        );
-      }
-      entry["index"] = files[0].replaceAll(/\\/g, "/");
-    } else {
+  const indexGlob = "./src/index.*";
+  const indexFiles = await glob(indexGlob, { cwd });
+  if (indexFiles.length !== 1) {
+    throw new Error(
+      `Expected exactly one file matching ${indexGlob} but found ${indexFiles.length}`,
+    );
+  }
+
+  const entry = {
+    index: indexFiles[0].replaceAll(/\\/g, "/"),
+  };
+
+  const { exports = {} } = packageJson;
+  for (const key of Object.keys(exports)) {
+    if (key !== ".") {
       const files = await glob(`./${path.posix.join("src", key)}`, { cwd });
       for (const file of files) {
         // Replace /* with matched file name
@@ -84,7 +88,44 @@ async function deriveEntry(cwd) {
         entry[entryName] = file.replaceAll(/\\/g, "/");
       }
     }
+
+    if (!isEqual(exports[key], exportFor(key))) {
+      throw new Error(
+        `Expected package.json exports["${key}"] equal ${JSON.stringify(
+          exportFor(key),
+          null,
+          2,
+        )}`,
+      );
+    }
+  }
+
+  const rootExport = exportFor(".");
+  const matches = [
+    ["main", "require"],
+    ["module", "import"],
+    ["types", "types"],
+  ];
+  for (const [packageField, exportField] of matches) {
+    if (packageJson[packageField] !== rootExport[exportField]) {
+      throw new Error(
+        `Expected package.json ${packageField} field to equal ${rootExport[exportField]} (found ${packageJson[packageField]})`,
+      );
+    }
   }
 
   return entry;
+}
+
+function exportFor(key, distFolder = "dist") {
+  const name = key === "." ? "index" : key;
+  return {
+    require: `./${path.posix.join(distFolder, name + ".js")}`,
+    import: `./${path.posix.join(distFolder, name + ".mjs")}`,
+    types: `./${path.posix.join(distFolder, name + ".d.ts")}`,
+  };
+}
+
+function isEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
 }

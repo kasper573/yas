@@ -1,6 +1,5 @@
 #!/usr/bin/env tsx
 
-import * as path from "path";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import type { Package } from "../src/workspace";
@@ -53,10 +52,6 @@ async function run({ packageNames, exclude }: typeof args): Promise<number> {
 
 function* packageConventionErrors(pkg: Package): Generator<string> {
   const expectations = {
-    main: "./dist/index.js",
-    module: "./dist/index.mjs",
-    types: "./dist/index.d.ts",
-    files: ["dist/**"],
     scripts: {
       build: /./,
       dev: /./,
@@ -67,13 +62,10 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
 
   // Should match the keys in the expections object
   const paths = [
-    ["main"],
-    ["module"],
-    ["types"],
-    ["scripts", "typecheck"],
-    ["scripts", "lint"],
     ["scripts", "build"],
     ["scripts", "dev"],
+    ["scripts", "typecheck"],
+    ["scripts", "lint"],
   ];
 
   for (const path of paths) {
@@ -95,39 +87,6 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
     } else {
       if (packageValue !== expectation) {
         yield `Expected ${path.join(".")} to equal "${expectation}" but found "${packageValue}"`;
-      }
-    }
-  }
-
-  if (pkg.exports) {
-    const exportVariantsAndExtensions = {
-      require: ".js",
-      import: ".mjs",
-      types: ".d.ts",
-    };
-
-    for (const [exportKey, exportPaths] of Object.entries(pkg.exports)) {
-      if (!exportPaths) {
-        yield `Expected exports["${exportKey}"] to be defined`;
-        continue;
-      }
-
-      for (const [variant, ext] of Object.entries(
-        exportVariantsAndExtensions,
-      )) {
-        const exportValue = (exportPaths as any)?.[variant];
-        if (!exportValue) {
-          yield `Expected exports["${exportKey}"].${variant} to be defined`;
-          continue;
-        }
-
-        const exportFile = exportKey == "." ? "index" : exportKey;
-        const expectedValue =
-          "./" + path.posix.normalize(`dist/${exportFile}${ext}`);
-
-        if (exportValue !== expectedValue) {
-          yield `Expected exports["${exportKey}"].${variant} to equal "${expectedValue}", found "${exportValue}"`;
-        }
       }
     }
   }
