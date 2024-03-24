@@ -8,7 +8,7 @@ export default createYasTsupConfig(process.cwd(), {
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
   dts: false,
-  esbuildPlugins: [fixImportsInGeneratedSchema()],
+  //esbuildPlugins: [fixImportsInGeneratedSchema()],
 });
 
 // Temporary workaround until this is fixed: https://github.com/captbaritone/grats/issues/128
