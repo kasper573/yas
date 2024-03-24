@@ -693,6 +693,9 @@ importers:
       '@types/react':
         specifier: ^18.2.61
         version: 18.2.61
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
       '@yas/trpc-server':
         specifier: workspace:*
         version: link:../../apps/trpc-server
