@@ -3,23 +3,36 @@
   "version": "0.0.0",
   "sideEffects": false,
   "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./devtools": {
-      "import": "./devtools.ts",
-      "require": "./devtools.ts"
+      "require": "./dist/devtools.js",
+      "import": "./dist/devtools.mjs",
+      "types": "./dist/devtools.d.ts"
     }
   },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "pnpm eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
-    "@tanstack/react-query": "5.25.0",
-    "@tanstack/react-query-devtools": "5.25.0"
+    "@tanstack/react-query": "5.28.6",
+    "@tanstack/react-query-devtools": "5.28.6"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*"
+    "@yas/tsconfig": "workspace:*",
+    "@yas/build": "workspace:*"
   }
 }
