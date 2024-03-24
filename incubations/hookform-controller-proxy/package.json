@@ -3,17 +3,17 @@
   "version": "0.0.15",
   "sideEffects": false,
   "license": "MIT",
-  "main": "./src/index.tsx",
-  "types": "./src/index.tsx",
-  "exports": {
-    ".": {
-      "import": "./src/index.tsx",
-      "require": "./src/index.tsx"
-    }
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "build": "pnpm typecheck && tsup",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "pnpm eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
     "test": "pnpm playwright test -c playwright-ct.config.mjs",
     "test:watch": "pnpm run test --ui",
     "release": "release-incubation"
