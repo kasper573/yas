@@ -101,15 +101,15 @@ async function deriveEntry(cwd) {
   }
 
   const rootExport = exportFor(".");
-  const matches = [
+  const rootFieldToExportField = [
     ["main", "require"],
     ["module", "import"],
     ["types", "types"],
   ];
-  for (const [packageField, exportField] of matches) {
-    if (packageJson[packageField] !== rootExport[exportField]) {
+  for (const [rootField, exportField] of rootFieldToExportField) {
+    if (packageJson[rootField] !== rootExport[exportField]) {
       throw new Error(
-        `Expected package.json ${packageField} field to equal ${rootExport[exportField]} (found ${packageJson[packageField]})`,
+        `Expected package.json ${rootField} field to equal ${rootExport[exportField]} (found ${packageJson[rootField]})`,
       );
     }
   }
