@@ -1,16 +1,16 @@
 {
   "name": "react-styled-factory",
-  "main": "src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
-    }
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "build": "pnpm typecheck && tsup",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "pnpm eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
     "release": "release-incubation",
     "test": "vitest run --typecheck",
     "test:watch": "vitest --typecheck"
