@@ -63,6 +63,7 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
     main: "./dist/index.js",
     module: "./dist/index.mjs",
     types: "./dist/index.d.ts",
+    files: ["dist/**"],
     scripts: {
       typecheck: /^tsc --noEmit/,
       lint: /^pnpm eslint . --max-warnings=0/,
