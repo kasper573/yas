@@ -113,8 +113,6 @@ Here's my workflow on how to turn a convention into something that can be automa
 
 The following scripts are only available in the root of the repository but will apply to the entire codebase:
 
-- `lint` Checks for code style errors.
-- `lint:fix` Fixes code style errors (where possible)
 - `format` Formats code.
 - `format:fix` Formats code and fixes code style errors (where possible)
 
@@ -124,8 +122,8 @@ These scripts are part of a convention. Individual packages may have their own s
 
 - `dev` Starts any and all tools required during development in watch mode (i.e. a development webserver, or code generators, etc.). If applicable, should display URL to app in terminal.
 - `build` Builds the app or package into a deployable artifact according to the package's framework.
+- `lint` Checks for code style errors.
 - `test` Runs the test runner in headless mode, once.
-- `test:watch` Starts the test runner in watch mode for development.
 - `release` Releases the package to npm.
 
 **Each script must exit with a non-zero exit code if they fail.**

@@ -12,11 +12,14 @@
     "test": {
       "dependsOn": ["^test"]
     },
-    "test:watch": {
-      "cache": false,
-      "persistent": true
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     }
