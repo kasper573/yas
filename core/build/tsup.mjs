@@ -1,4 +1,3 @@
-import * as path from "path";
 import * as fs from "fs";
 import { defineConfig } from "tsup";
 import { defineEnv } from "./defineEnv.mjs";
@@ -7,8 +6,12 @@ import { defineEnv } from "./defineEnv.mjs";
  * @param {Partial<import("tsup").Options>} options
  */
 export function createYasTsupConfig(options = {}) {
+  if (!options.entry) {
+    throw new Error("tsup entry must be manually defined");
+  }
+
   const projectRoot = process.cwd();
-  const { internalPackages, entry } = analyzePackage(projectRoot);
+  const internalPackages = deriveInternalPackages(projectRoot);
   return defineConfig({
     format: ["cjs", "esm"],
     clean: true,
@@ -22,16 +25,15 @@ export function createYasTsupConfig(options = {}) {
         "suspicious-define": "silent",
       };
     },
-    entry,
     ...options,
   });
 }
 
 /**
  * @param {string} projectRoot
- * @returns {{internalPackages: string[], entry: { [bundleName: string]: string }}
+ * @returns {string[]}
  */
-function analyzePackage(projectRoot) {
+function deriveInternalPackages(projectRoot) {
   const packageJson = JSON.parse(
     fs.readFileSync(`${projectRoot}/package.json`, "utf-8"),
   );
@@ -50,17 +52,5 @@ function analyzePackage(projectRoot) {
     }
   }
 
-  // Derive entry points from exports field.
-  const entry = {};
-  const { exports = {} } = packageJson;
-  for (const [exportKey, exportPaths] of Object.entries(exports)) {
-    const bundleName =
-      exportKey === "." ? "index" : exportKey.replace(/^\.\//, "");
-    entry[bundleName] = path.resolve(
-      projectRoot,
-      exportPaths.import ?? exportPaths.require,
-    );
-  }
-
-  return { internalPackages, entry };
+  return internalPackages;
 }
