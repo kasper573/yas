@@ -6,6 +6,7 @@
   "bin": {
     "release-incubation": "./bin/release-incubation.ts",
     "typecheck-all-workspaces": "./bin/typecheck-all-workspaces.ts",
+    "assert-package-json-convention": "./bin/assert-package-json-convention.ts",
     "assert-sibling-files": "./bin/assert-sibling-files.ts",
     "assert-dependency-versions": "./bin/assert-dependency-versions.ts"
   },

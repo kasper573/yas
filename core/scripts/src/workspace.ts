@@ -14,13 +14,14 @@ export function loadWorkspace(rootDir: string, name: string) {
   return { name, packages };
 }
 
+export type Package = ReturnType<typeof readPackage>;
 export function readPackage(packageDir: string) {
   const pkg = readJSONFile(
     path.join(packageDir, "package.json"),
     packageSchema,
   );
   return {
-    name: pkg.name,
+    ...pkg,
     uniqueDependencyNames: new Set([
       ...Object.keys(pkg.dependencies ?? {}),
       ...Object.keys(pkg.peerDependencies ?? {}),
@@ -34,11 +35,15 @@ export function readPackage(packageDir: string) {
 }
 
 const packageSchema = z.object({
+  main: z.string().optional(),
+  module: z.string().optional(),
+  types: z.string().optional(),
   name: z.string(),
   workspaces: z.string().array().default([]),
   dependencies: z.record(z.string()).optional(),
   peerDependencies: z.record(z.string()).optional(),
   devDependencies: z.record(z.string()).optional(),
+  scripts: z.record(z.string()).optional(),
 });
 
 function mapDirectories<T>(atPath: string, map: (name: string) => T): T[] {
