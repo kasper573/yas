@@ -1,5 +1,6 @@
 #!/usr/bin/env tsx
 
+import * as path from "path";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import type { Package } from "../src/workspace";
@@ -110,6 +111,7 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
         yield `Expected exports["${exportKey}"] to be defined`;
         continue;
       }
+
       for (const [variant, ext] of Object.entries(
         exportVariantsAndExtensions,
       )) {
@@ -118,8 +120,13 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
           yield `Expected exports["${exportKey}"].${variant} to be defined`;
           continue;
         }
-        if (!String(exportValue).endsWith(ext)) {
-          yield `Expected exports["${exportKey}"].${variant} to end with "${ext}" (found "${exportValue}")`;
+
+        const exportFile = exportKey == "." ? "index" : exportKey;
+        const expectedValue =
+          "./" + path.posix.normalize(`dist/${exportFile}${ext}`);
+
+        if (exportValue !== expectedValue) {
+          yield `Expected exports["${exportKey}"].${variant} to equal "${expectedValue}", found "${exportValue}"`;
         }
       }
     }
