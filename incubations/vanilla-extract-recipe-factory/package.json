@@ -10,7 +10,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "pnpm eslint . --max-warnings=0",
+    "lint": "eslint . --max-warnings=0",
     "test": "vitest run --typecheck",
     "test:watch": "vitest --typecheck",
     "release": "release-incubation"

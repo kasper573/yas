@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "pnpm eslint . --max-warnings=0",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "pnpm playwright test -c playwright-ct.config.mjs",
     "test:watch": "pnpm run test --ui",

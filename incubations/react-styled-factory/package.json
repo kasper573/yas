@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "pnpm eslint . --max-warnings=0",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "release": "release-incubation",
     "test": "vitest run --typecheck",

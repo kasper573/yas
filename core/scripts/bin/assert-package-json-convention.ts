@@ -56,7 +56,7 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
       build: /./,
       dev: /./,
       typecheck: /^tsc --noEmit/,
-      lint: /^pnpm eslint . --max-warnings=0/,
+      lint: /^eslint . --max-warnings=0/,
     },
   };
 
