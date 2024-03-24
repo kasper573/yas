@@ -38,8 +38,9 @@ function fixImportsInGeneratedSchema() {
  * Replaces \\ with / in imports
  */
 export function normalizeImportPaths(code) {
-  return code.replaceAll(
-    /(from\s+['"])([^'"]+)(['"])/g,
-    (_, p1, p2, p3) => `${p1}${p2.replaceAll(/\\+/g, "/")}${p3}`,
-  );
+  return code;
+  // return code.replaceAll(
+  //   /(from\s+['"])([^'"]+)(['"])/g,
+  //   (_, p1, p2, p3) => `${p1}${p2.replaceAll(/\\+/g, "/")}${p3}`,
+  // );
 }
