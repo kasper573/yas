@@ -4,10 +4,10 @@ import { defineConfig } from "tsup";
 import { defineEnv } from "./defineEnv.mjs";
 
 /**
- * @param {string} projectRoot
  * @param {Partial<import("tsup").Options>} options
  */
-export function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
+export function createYasTsupConfig(options = {}) {
+  const projectRoot = process.cwd();
   const { internalPackages, entry } = analyzePackage(projectRoot);
   return defineConfig({
     format: ["cjs", "esm"],

@@ -3,7 +3,7 @@ import * as path from "path";
 import { createYasTsupConfig } from "@yas/build/tsup.mjs";
 import tsConfig from "./tsconfig.json";
 
-export default createYasTsupConfig(process.cwd(), {
+export default createYasTsupConfig({
   outExtension: () => ({ js: `.js` }),
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
