@@ -477,6 +477,9 @@ importers:
 
   incubations/flattened:
     devDependencies:
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
