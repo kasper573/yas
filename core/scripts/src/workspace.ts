@@ -22,6 +22,7 @@ export function readPackage(packageDir: string) {
   );
   return {
     ...pkg,
+    dir: packageDir.replaceAll("\\", "/"),
     uniqueDependencyNames: new Set([
       ...Object.keys(pkg.dependencies ?? {}),
       ...Object.keys(pkg.peerDependencies ?? {}),

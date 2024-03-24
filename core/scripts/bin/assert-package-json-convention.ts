@@ -13,14 +13,19 @@ const args = yargs(hideBin(process.argv))
     packageNames: {
       type: "string",
       array: true,
-      alias: "pn",
+      alias: "p",
+    },
+    exclude: {
+      type: "string",
+      default: "core\\/",
+      alias: "e",
     },
   })
   .parseSync();
 
-run(args.packageNames).then(process.exit);
+run(args).then(process.exit);
 
-async function run(packageNames?: string[]): Promise<number> {
+async function run({ packageNames, exclude }: typeof args): Promise<number> {
   const errorCount = 0;
 
   for (const workspace of loadWorkspaces(process.cwd())) {
@@ -28,6 +33,10 @@ async function run(packageNames?: string[]): Promise<number> {
       if (packageNames && !packageNames.includes(pkg.name)) {
         continue;
       }
+      if (exclude && new RegExp(exclude).test(pkg.dir)) {
+        continue;
+      }
+
       const errors = Array.from(packageConventionErrors(pkg));
       if (errors.length) {
         console.error(
