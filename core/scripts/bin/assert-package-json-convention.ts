@@ -51,24 +51,29 @@ async function run({ packageNames, exclude }: typeof args): Promise<number> {
 }
 
 function* packageConventionErrors(pkg: Package): Generator<string> {
-  const paths = [
-    ["main"],
-    ["module"],
-    ["types"],
-    ["scripts", "typecheck"],
-    ["scripts", "lint"],
-  ];
-
   const expectations = {
     main: "./dist/index.js",
     module: "./dist/index.mjs",
     types: "./dist/index.d.ts",
     files: ["dist/**"],
     scripts: {
+      build: /./,
+      dev: /./,
       typecheck: /^tsc --noEmit/,
       lint: /^pnpm eslint . --max-warnings=0/,
     },
   };
+
+  // Should match the keys in the expections object
+  const paths = [
+    ["main"],
+    ["module"],
+    ["types"],
+    ["scripts", "typecheck"],
+    ["scripts", "lint"],
+    ["scripts", "build"],
+    ["scripts", "dev"],
+  ];
 
   for (const path of paths) {
     const packageValue = path.reduce((acc, key) => acc?.[key], pkg as any);
@@ -76,6 +81,11 @@ function* packageConventionErrors(pkg: Package): Generator<string> {
       (acc, key) => acc?.[key],
       expectations as any,
     );
+
+    if (packageValue === undefined) {
+      yield `Expected ${path.join(".")} to be defined`;
+      continue;
+    }
 
     if (expectation instanceof RegExp) {
       if (!expectation.test(packageValue)) {
