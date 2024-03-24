@@ -2,15 +2,29 @@
   "name": "@yas/style",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./themes/*": {
-      "import": "./themes/*"
+      "require": "./dist/themes/*.js",
+      "import": "./dist/themes/*.mjs",
+      "types": "./dist/themes/*.d.ts"
     }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "pnpm eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@vanilla-extract/css": "1.14.0",
@@ -26,6 +40,8 @@
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
-    "csstype": "^3"
+    "@yas/build": "workspace:*",
+    "csstype": "^3",
+    "tiny-glob": "0.2.9"
   }
 }

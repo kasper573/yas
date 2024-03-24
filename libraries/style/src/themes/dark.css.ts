@@ -1,5 +1,5 @@
 import { createTheme } from "@vanilla-extract/css";
 import { values } from "@yas/design-system/themes/dark";
-import { variables } from "../src";
+import { variables } from "..";
 
 export const dark: string = createTheme(variables, values);
