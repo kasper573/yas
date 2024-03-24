@@ -1,18 +1,16 @@
+import glob from "tiny-glob";
 import * as fs from "fs";
+import * as path from "path";
 import { defineConfig } from "tsup";
 import { defineEnv } from "./defineEnv.mjs";
 
 /**
  * @param {Partial<import("tsup").Options>} options
  */
-export function createYasTsupConfig(options = {}) {
-  if (!options.entry) {
-    throw new Error("tsup entry must be manually defined");
-  }
-
+export function createYasTsupConfig({ entry, ...rest } = {}) {
   const projectRoot = process.cwd();
   const internalPackages = deriveInternalPackages(projectRoot);
-  return defineConfig({
+  return defineConfig(async () => ({
     format: ["cjs", "esm"],
     clean: true,
     dts: true,
@@ -25,8 +23,9 @@ export function createYasTsupConfig(options = {}) {
         "suspicious-define": "silent",
       };
     },
-    ...options,
-  });
+    entry: entry ?? (await deriveEntry(projectRoot)),
+    ...rest,
+  }));
 }
 
 /**
@@ -53,4 +52,39 @@ function deriveInternalPackages(projectRoot) {
   }
 
   return internalPackages;
+}
+
+/**
+ * @param {string} cwd
+ * @returns {Promise<Record<string, string>>}
+ */
+async function deriveEntry(cwd) {
+  const packageJson = JSON.parse(
+    await fs.promises.readFile(`${cwd}/package.json`, "utf-8"),
+  );
+
+  const entry = {};
+  for (const key of Object.keys(packageJson.exports ?? {})) {
+    if (key === ".") {
+      const files = await glob("./src/index.*", { cwd });
+      if (files.length !== 1) {
+        throw new Error(
+          `Expected exactly one entry file in src/index.* but found ${files.length}`,
+        );
+      }
+      entry["index"] = files[0].replaceAll(/\\/g, "/");
+    } else {
+      const files = await glob(`./${path.posix.join("src", key)}`, { cwd });
+      for (const file of files) {
+        // Replace /* with matched file name
+        const entryName = key.replace(
+          /\/\*$/,
+          "/" + path.basename(file, path.extname(file)),
+        );
+        entry[entryName] = file.replaceAll(/\\/g, "/");
+      }
+    }
+  }
+
+  return entry;
 }

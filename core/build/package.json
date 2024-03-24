@@ -15,6 +15,7 @@
     "style-loader": "3.3.4",
     "tsup": "8.0.2",
     "vite": "5.1.4",
-    "vite-plugin-checker": "0.6.4"
+    "vite-plugin-checker": "0.6.4",
+    "tiny-glob": "0.2.9"
   }
 }
