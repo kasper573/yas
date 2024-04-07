@@ -46,19 +46,25 @@ function Prompt({
 }
 ```
 
-#### 2. Place the outlet at the root of your app
+#### 2. Update your react root
+
+You need to instantiate a `ModalStore`, provide it to the react tree, and place the `ModalOutlet` component in your app.
 
 ```tsx
 // main.tsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ModalOutlet } from "react-async-modal-hook";
+import { ModalOutlet, ModalStore, ModalContext } from "react-async-modal-hook";
 import { App } from "./App";
+
+const modalStore = new ModalStore();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-    <ModalOutlet />
+    <ModalContext.Provider value={modalStore}>
+      <App />
+      <ModalOutlet />
+    </ModalContext.Provider>
   </StrictMode>,
 );
 ```
