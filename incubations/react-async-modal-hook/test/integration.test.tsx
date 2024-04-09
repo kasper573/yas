@@ -8,6 +8,7 @@ import {
   describe,
   test,
   expect,
+  it,
 } from "@yas/test/vitest/react";
 import type { Deferred } from "../src/deferPromise";
 import type { GeneralHookOptions } from "../src/constants";
@@ -107,6 +108,24 @@ describe("can filter using ModalOutlet", () =>
         ),
     ),
   ));
+
+it("can spawn via store manually", async () => {
+  const store = new ModalStore();
+  const { render } = createTestAPI(() => store);
+
+  render(() => (
+    <button onClick={() => store.spawn(Dialog, { name: "Manual" })}>
+      Open dialog
+    </button>
+  ));
+
+  userEvent.click(screen.getByText("Open dialog"));
+
+  expect(screen.queryAllByRole("dialog").length).toBe(1);
+  const dialog = await screen.findByRole("dialog", { name: "Manual" });
+  userEvent.click(within(dialog).getByRole("button", { name: "OK" }));
+  expect(screen.queryAllByRole("dialog").length).toBe(0);
+});
 
 describe("multiple in sequence", () =>
   defineAbstractHookTest(Dialog, async (useHook, render) => {

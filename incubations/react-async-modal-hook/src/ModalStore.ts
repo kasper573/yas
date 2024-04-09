@@ -113,6 +113,27 @@ export class ModalStore {
     return resolveSpawnCall.promise;
   }
 
+  /**
+   * Convenience method for spawning modals outside of react.
+   * Registers a temporary component, spawns an instance, and removes the component after resolution.
+   * Use this sparingly, as the better practice is to use the react hook.
+   */
+  async spawn<Resolution, Props>(
+    component: ComponentType<Props & ModalProps<Resolution>>,
+    props: Props,
+  ): Promise<Resolution> {
+    const componentId = this.nextId();
+    this.upsertComponent(componentId, {
+      component: component as ComponentType<ModalProps<unknown>>,
+      defaultProps: {},
+    });
+    try {
+      return await this.spawnInstance(componentId, this.nextId(), props as {});
+    } finally {
+      this.removeComponents([componentId]);
+    }
+  }
+
   private _idCounter = 0;
 
   nextId<T extends string>() {
