@@ -34,7 +34,7 @@
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "tsup": "8.0.2",
-    "grats": "0.0.23",
+    "grats": "0.0.0-main-b0fafefe",
     "concurrently": "8.2.2",
     "execa": "8.0.1"
   }
