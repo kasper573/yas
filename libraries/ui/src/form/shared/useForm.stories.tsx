@@ -41,7 +41,7 @@ function UseFormControllersExample() {
     mode: "all",
   });
 
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
   function doSomething(values: Data) {
     alert(JSON.stringify(values, null, 2));
   }
@@ -80,7 +80,7 @@ function FormDataPreview<Schema extends AnyZodObject>({
 
 function UserForm({ value: user, onChange, error }: FieldProps<User>) {
   const form = useSchemaForm(userType, { defaultValues: user });
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
   useFormChanges(form, onChange);
   return (
     <>

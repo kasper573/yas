@@ -21,7 +21,7 @@ export default function Feed() {
     await createPost.mutateAsync(data);
     form.reset();
   });
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
 
   return (
     <>

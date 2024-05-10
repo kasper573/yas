@@ -23,7 +23,7 @@ interface User {
 
 export function FormExampleApp() {
   const form = useForm<MyFormData>();
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
 
   return (
     <form onSubmit={form.handleSubmit((data) => alert(JSON.stringify(data)))}>

@@ -22,7 +22,7 @@ export function SearchForm({
   children?: ReactNode;
 }) {
   const form = useForm<{ search?: string }>();
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
   useFormChanges(form, ({ search }) => onChange?.(search));
   const clear = () => form.reset();
 
