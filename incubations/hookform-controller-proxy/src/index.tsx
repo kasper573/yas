@@ -1,25 +1,26 @@
-import type { ReactElement } from "react";
-import type {
-  FieldErrors,
-  FieldError,
-  FieldValues,
-  Control,
+import { type ReactElement } from "react";
+import type { Path, PathValue } from "react-hook-form";
+import {
+  type FieldErrors,
+  type FieldError,
+  type FieldValues,
+  type UseFormReturn,
+  useFormState,
 } from "react-hook-form";
-import { Controller } from "react-hook-form";
 
 export function createControllerProxy<TFieldValues extends FieldValues>(
-  control: Control<TFieldValues>,
+  form: UseFormReturn<TFieldValues>,
 ): FieldControllerFactories<TFieldValues> {
-  return createControllerProxyImpl(control, emptyPath);
+  return createControllerProxyImpl(form, emptyPath);
 }
 
 function createControllerProxyImpl<TFieldValues extends FieldValues>(
-  control: Control<TFieldValues>,
+  form: UseFormReturn<TFieldValues>,
   path: readonly string[],
 ): FieldControllerFactories<TFieldValues> {
   return new Proxy(noop as unknown as FieldControllerFactories<TFieldValues>, {
     get(_, step) {
-      return createControllerProxyImpl(control, [...path, String(step)]);
+      return createControllerProxyImpl(form, [...path, String(step)]);
     },
     apply(_1, _2, [render]) {
       const pathAsString = path.join(".");
@@ -27,29 +28,54 @@ function createControllerProxyImpl<TFieldValues extends FieldValues>(
       const name = isOptional ? pathAsString.slice(0, -1) : pathAsString;
 
       return (
-        <Controller<FieldValues>
-          control={control as Control<FieldValues>}
-          name={name}
-          render={({ field, formState: { errors } }) => {
-            const { onChange, onBlur, value } = field;
-            const error = flattenErrorMessages(
-              valueAtPath(errors, path) as FieldErrors,
-            );
-            return render({
-              value,
-              name,
-              onChange,
-              onBlur,
-              error,
-              // unfortunate assert just to make typescript happy,
-              // it works around some complicated generics not worth solving,
-              // and the assertion has no real problems in practice.
-              required: !isOptional as false,
-            });
-          }}
+        <FieldController
+          form={form}
+          name={name as Path<TFieldValues>}
+          render={render}
+          required={!isOptional}
         />
       );
     },
+  });
+}
+
+/**
+ * Identical to react-hook-form's Controller component, with a few exceptions:
+ *
+ * - Subscribes to nested fields when the name is not referring to a leaf field.
+ * - Flattens nested errors to a single string.
+ */
+export function FieldController<
+  TFieldValues extends FieldValues,
+  Name extends Path<TFieldValues>,
+>({
+  form,
+  name,
+  render,
+  required,
+}: {
+  form: UseFormReturn<TFieldValues>;
+  name: Name;
+  render: FieldRenderer<PathValue<TFieldValues, Name>>;
+  required?: boolean;
+}) {
+  const { errors, isValid } = useFormState({ control: form.control, name });
+  const error = !isValid ? flattenErrors(errors) : undefined;
+  const value = form.watch(name);
+  const reg = form.control.register(name);
+
+  const onBlur = () => reg.onBlur({ type: "blur", target: { value, name } });
+
+  const onChange = (value?: PathValue<TFieldValues, Name>) =>
+    reg.onChange({ type: "change", target: { value, name } });
+
+  return render({
+    value,
+    name,
+    onChange,
+    onBlur,
+    error,
+    required,
   });
 }
 
@@ -99,16 +125,14 @@ function valueAtPath(object: unknown, path: readonly string[]): unknown {
   );
 }
 
-function flattenErrorMessages(
-  errors: FieldErrors | FieldError,
-): string | undefined {
+function flattenErrors(errors?: FieldErrors | FieldError): string | undefined {
   if (!errors) {
     return;
   }
   if ("message" in errors) {
     return (errors as FieldError).message;
   }
-  return Object.values(errors).map(flattenErrorMessages).join("\n");
+  return Object.values(errors).map(flattenErrors).join("\n");
 }
 
 const emptyPath: ReadonlyArray<string> = Object.freeze([]);
@@ -130,6 +154,14 @@ type FieldControllerFactory<Value, Renderer> =
   FieldControllerFactories<Value> & {
     (render: Renderer): ReactElement;
   };
+
+interface FieldRenderer<Value> {
+  (props: FieldProps<Value>): ReactElement;
+}
+
+interface RequiredFieldRenderer<Value> {
+  (props: RequiredFieldProps<Value>): ReactElement;
+}
 
 interface OptionalFieldRenderer<Value> {
   (props: OptionalFieldProps<Exclude<Value, undefined>>): ReactElement;

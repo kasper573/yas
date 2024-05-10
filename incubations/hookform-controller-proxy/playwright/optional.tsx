@@ -22,7 +22,7 @@ export function FormWithOptionalField() {
     },
   });
 
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
 
   return (
     <>

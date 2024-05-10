@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/experimental-ct-react";
 import { FormWithRequiredField } from "./required";
 import { FormWithOptionalField } from "./optional";
+import { ExternalValueSetter } from "./externalValueSetter";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
@@ -31,4 +32,20 @@ test("optional field can be cleared and not yield an error", async ({
   const component = await mount(<FormWithOptionalField />);
   await component.getByLabel("Name").clear();
   await expect(component.getByText("Error")).not.toBeVisible();
+});
+
+test("leaf field can react to external value change", async ({ mount }) => {
+  const component = await mount(<ExternalValueSetter value="hello world" />);
+  await component.getByRole("button").click();
+  await expect(component.getByTestId("leaf")).toContainText("hello world");
+});
+
+test("field can react to external value change of nested field", async ({
+  mount,
+}) => {
+  const component = await mount(<ExternalValueSetter value="hello world" />);
+  await component.getByRole("button").click();
+  await expect(component.getByTestId("root")).toContainText(
+    JSON.stringify({ bar: "hello world" }),
+  );
 });

@@ -21,7 +21,7 @@ export function FormWithRequiredField() {
     reValidateMode: "onChange",
   });
 
-  const control = createControllerProxy(form.control);
+  const control = createControllerProxy(form);
 
   return (
     <>
