@@ -7,7 +7,9 @@ import { createControllerProxy } from "../src";
 
 type Data = z.infer<typeof schema>;
 const schema = z.object({
-  name: z.string().optional(),
+  first: z.string().optional(),
+  middle: z.string().nullable(),
+  last: z.string().nullish(),
 });
 
 export function FormWithOptionalField() {
@@ -18,7 +20,9 @@ export function FormWithOptionalField() {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      name: "Whatever",
+      first: "Foo",
+      middle: "Bar",
+      last: "Baz",
     },
   });
 
@@ -27,7 +31,13 @@ export function FormWithOptionalField() {
   return (
     <>
       <form onSubmit={form.handleSubmit(setSubmittedValues)}>
-        {control.name$((props) => (
+        {control.first$((props) => (
+          <TextField {...props} />
+        ))}
+        {control.middle$((props) => (
+          <TextField {...props} />
+        ))}
+        {control.last$((props) => (
           <TextField {...props} />
         ))}
         <button type="submit">Submit</button>
@@ -39,11 +49,11 @@ export function FormWithOptionalField() {
   );
 }
 
-function TextField({ value, onChange, error }: FieldProps<string>) {
+function TextField({ name, value, onChange, error }: FieldProps<string>) {
   return (
     <>
       <label>
-        Name
+        {name}
         <input value={value} onChange={(e) => onChange?.(e.target.value)} />
       </label>
       {error !== undefined ? <p>Error: {error}</p> : null}

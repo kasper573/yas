@@ -103,8 +103,8 @@ export interface RequiredFieldProps<Value> extends BaseFieldProps {
  * Props for a field whose value is optional
  */
 export interface OptionalFieldProps<Value> extends BaseFieldProps {
-  value?: Value;
-  onChange?: (value?: Value) => unknown;
+  value?: Exclude<Value, null | undefined>;
+  onChange?: (value?: Exclude<Value, null | undefined>) => unknown;
   required?: false;
 }
 
@@ -116,13 +116,6 @@ export interface BaseFieldProps {
   onFocus?: () => unknown;
   error?: string;
   name?: string;
-}
-
-function valueAtPath(object: unknown, path: readonly string[]): unknown {
-  return path.reduce(
-    (acc, key) => (acc as Record<string, unknown>)?.[key],
-    object,
-  );
 }
 
 function flattenErrors(errors?: FieldErrors | FieldError): string | undefined {
@@ -172,9 +165,9 @@ interface RequiredFieldRenderer<Value> {
 }
 
 type OptionalKeys<T> = {
-  [K in keyof T]-?: undefined extends T[K] ? K : never;
+  [K in keyof T]-?: IsNullish<T[K]> extends true ? K : never;
 }[keyof T];
 
-type RequiredKeys<T> = {
-  [K in keyof T]-?: undefined extends T[K] ? never : K;
-}[keyof T];
+type IsNullish<T> = undefined extends T ? true : null extends T ? true : false;
+
+type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;

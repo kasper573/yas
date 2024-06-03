@@ -30,7 +30,9 @@ test("optional field can be cleared and not yield an error", async ({
   mount,
 }) => {
   const component = await mount(<FormWithOptionalField />);
-  await component.getByLabel("Name").clear();
+  await component.getByLabel("first").clear();
+  await component.getByLabel("last").clear();
+  await component.getByLabel("middle").clear();
   await expect(component.getByText("Error")).not.toBeVisible();
 });
 
