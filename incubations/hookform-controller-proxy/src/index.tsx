@@ -86,25 +86,27 @@ type WithOptionalIndicator<K> = `${K & string}${typeof optionalIndicator}`;
  * Props for the components you intend to use with the controller proxy.
  * Is a smart union that will automatically provide the correct optionality based on the `required` prop.
  */
-export type FieldProps<Value = unknown> =
-  | RequiredFieldProps<Value>
-  | OptionalFieldProps<Value>;
+export type FieldProps<InputValue = unknown, OutputValue = InputValue> =
+  | RequiredFieldProps<InputValue, OutputValue>
+  | OptionalFieldProps<InputValue, OutputValue>;
 
 /**
  * Props for a field whose value is required
  */
-export interface RequiredFieldProps<Value> extends BaseFieldProps {
-  value: Value;
-  onChange?: (value: Value) => unknown;
+export interface RequiredFieldProps<InputValue, OutputValue = InputValue>
+  extends BaseFieldProps {
+  value: InputValue;
+  onChange?: (value: OutputValue) => unknown;
   required: true;
 }
 
 /**
  * Props for a field whose value is optional
  */
-export interface OptionalFieldProps<Value> extends BaseFieldProps {
-  value?: Exclude<Value, null | undefined>;
-  onChange?: (value?: Exclude<Value, null | undefined>) => unknown;
+export interface OptionalFieldProps<InputValue, OutputValue = InputValue>
+  extends BaseFieldProps {
+  value?: InputValue;
+  onChange?: (value?: OutputValue) => unknown;
   required?: false;
 }
 

@@ -49,12 +49,20 @@ export function FormWithOptionalField() {
   );
 }
 
-function TextField({ name, value, onChange, error }: FieldProps<string>) {
+function TextField({
+  name,
+  value,
+  onChange,
+  error,
+}: FieldProps<string | null, string>) {
   return (
     <>
       <label>
         {name}
-        <input value={value} onChange={(e) => onChange?.(e.target.value)} />
+        <input
+          value={value ?? ""}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
       </label>
       {error !== undefined ? <p>Error: {error}</p> : null}
     </>
