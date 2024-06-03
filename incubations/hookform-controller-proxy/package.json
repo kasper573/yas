@@ -1,6 +1,6 @@
 {
   "name": "hookform-controller-proxy",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "sideEffects": false,
   "license": "MIT",
   "main": "./src/index.tsx",
