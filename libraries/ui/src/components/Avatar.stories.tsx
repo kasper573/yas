@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { PieChartIcon } from "@yas/icons";
 import exampleAvatarUrl from "../../assets/example-avatar.png";
 import { Avatar } from "./Avatar";

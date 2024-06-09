@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@yas/test/storybook";
 import type { ComponentType, HTMLAttributes } from "react";
 import {
   ContextMenuContent,

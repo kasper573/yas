@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { Popover, PopoverTrigger, PopoverContent } from "./Popover";
 
 export default {

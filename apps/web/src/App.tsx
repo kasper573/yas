@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { lazy, useEffect, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from "@yas/ui";
 import { RouterProvider } from "@yas/router";
 import { AlertDialog, ModalContext, ModalStore, useModal } from "@yas/ui";
 import {

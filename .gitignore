@@ -22,6 +22,7 @@ test-results
 .DS_Store
 *.pem
 architecture.svg
+sb-dist
 
 # debug
 npm-debug.log*

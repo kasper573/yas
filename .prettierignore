@@ -1,6 +1,7 @@
 dist
 .turbo
 pnpm-lock.yaml
+sb-dist
 
 # Don't format generated code
 *.generated.*

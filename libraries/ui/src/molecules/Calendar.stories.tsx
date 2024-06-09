@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { useState } from "react";
 import type { DateRange, RangeCalendarProps } from "./Calendar";
 import { Calendar } from "./Calendar";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { Cross1Icon } from "@yas/icons";
 import { Button } from "./Button";
 

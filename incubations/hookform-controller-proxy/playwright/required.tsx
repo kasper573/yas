@@ -7,7 +7,7 @@ import { createControllerProxy } from "../src";
 
 type Data = z.infer<typeof schema>;
 const schema = z.object({
-  name: z.string().refine((name) => name === "Correct", {
+  name: z.string().refine((name) => name === ("Correct" as string), {
     message: "Name must be Correct",
   }),
 });

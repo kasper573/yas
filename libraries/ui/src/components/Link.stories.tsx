@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { RouterProvider, createRootRoute, createRouter } from "@yas/router";
 import type { ComponentProps } from "react";
 import { Link } from "./Link";
