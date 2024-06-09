@@ -50,8 +50,8 @@ function UnhandledMutationErrorDialogsBehavior() {
 }
 
 const urls = {
-  trpc: import.meta.env.STORYBOOK_TRPC_URL,
-  graphql: import.meta.env.STORYBOOK_GRAPHQL_URL,
+  trpc: import.meta.env.STORYBOOK_TRPC_URL ?? "//trpc-url-missing",
+  graphql: import.meta.env.STORYBOOK_GRAPHQL_URL ?? "//graphql-url-missing",
 };
 
 function createClients() {
