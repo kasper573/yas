@@ -63,10 +63,10 @@ importers:
         specifier: ^10.0.3
         version: 10.1.1
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@docusaurus/core':
@@ -91,8 +91,11 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(@types/react@18.3.3)(react@18.3.1)
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
       '@yas/build':
         specifier: workspace:*
         version: link:../../core/build
@@ -182,10 +185,10 @@ importers:
         specifier: 0.18.2
         version: 0.18.2(@types/node@20.14.2)(prettier@3.3.1)
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.2.19
+        specifier: ^18.3.0
         version: 18.3.0
       '@yas/build':
         specifier: workspace:*
@@ -224,10 +227,10 @@ importers:
         specifier: 15.8.1
         version: 15.8.1
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       start-server-and-test:
         specifier: 2.0.3
@@ -321,10 +324,10 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/validate
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       recharts:
         specifier: 2.12.2
@@ -334,10 +337,10 @@ importers:
         version: 9.0.1
     devDependencies:
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.2.19
+        specifier: ^18.3.0
         version: 18.3.0
       '@types/uuid':
         specifier: 9.0.8
@@ -586,7 +589,7 @@ importers:
         specifier: 1.2.1
         version: 1.2.1(graphql@16.8.1)
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       urql:
         specifier: ^3
@@ -599,7 +602,7 @@ importers:
         specifier: 1.4.1
         version: 1.4.1
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@yas/graphql-server':
         specifier: workspace:*
@@ -633,14 +636,14 @@ importers:
         specifier: workspace:*
         version: link:../query-client
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       superjson:
         specifier: 1.13.3
         version: 1.13.3
     devDependencies:
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@yas/trpc-server':
         specifier: workspace:*
@@ -679,14 +682,14 @@ importers:
   libraries/hooks:
     dependencies:
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       usehooks-ts:
         specifier: 2.15.1
         version: 2.15.1(react@18.3.1)
     devDependencies:
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@yas/tsconfig':
         specifier: workspace:*
@@ -717,20 +720,20 @@ importers:
         specifier: workspace:*
         version: link:../../incubations/flattened
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@react-pdf/types':
         specifier: 2.4.1
         version: 2.4.1
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.2.19
+        specifier: ^18.3.0
         version: 18.3.0
       '@yas/test':
         specifier: workspace:*
@@ -749,10 +752,10 @@ importers:
         version: 1.18.3(csstype@3.1.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.2.19
+        specifier: ^18.3.0
         version: 18.3.0
       '@yas/test':
         specifier: workspace:*
@@ -857,10 +860,10 @@ importers:
         version: 7.49.3(react@18.3.1)
     devDependencies:
       '@types/react':
-        specifier: ^18.2.61
+        specifier: ^18.3.3
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.2.19
+        specifier: ^18.3.0
         version: 18.3.0
       '@yas/build':
         specifier: workspace:*
@@ -878,10 +881,10 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
 
   libraries/validate:

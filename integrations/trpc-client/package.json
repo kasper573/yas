@@ -14,11 +14,11 @@
     "@yas/query-client": "workspace:*",
     "@trpc/client": "11.0.0-next-beta.316",
     "@trpc/react-query": "11.0.0-next-beta.316",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "superjson": "1.13.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.61",
+    "@types/react": "^18.3.3",
     "@yas/tsconfig": "workspace:*",
     "@yas/trpc-server": "workspace:*"
   }
