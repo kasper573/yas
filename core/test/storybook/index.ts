@@ -5,5 +5,4 @@ export type {
   Preview,
   ReactRenderer,
 } from "@storybook/react";
-export * from "@storybook/jest";
-export * from "@storybook/testing-library";
+export * from "@storybook/test";
