@@ -1,4 +1,4 @@
-import { tokens } from "@yas/design-system";
+import { tokens } from "@yas/design-tokens";
 import { Stack } from "../layout/Stack";
 import { Text } from "../components/Text";
 

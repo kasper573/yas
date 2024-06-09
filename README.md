@@ -6,7 +6,7 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 ## Notable feature highlights
 
-1. Shows how to roll your own [framework agnostic design system](libraries/design-system), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
+1. Shows how to roll your own [framework agnostic design system](libraries/design-tokens), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
 
 2. Shows how organize and separate concerns among a multitude of packages in a monorepo, i.e. by enforcing a [layered architecture](#layered-architecture) using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser), and shows several examples on modularization: above mentioned design system, and both a tRPC and GraphQL server divided into separate [server](apps/graphql-server), [client](integrations/graphql-client) and UI packages.
 

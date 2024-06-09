@@ -1,6 +1,6 @@
 import { variables } from "@yas/style";
 import type { ReactNode } from "react";
-import { colorSetNames, type ColorSetName } from "@yas/design-system";
+import { colorSetNames, type ColorSetName } from "@yas/design-tokens";
 import { Stack } from "../layout/Stack";
 import { Text } from "../components/Text";
 import { Button } from "../components/Button";

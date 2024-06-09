@@ -1,14 +1,17 @@
+import { mapValues, tokens } from "@yas/design-tokens";
 import { globalFontFace } from "@vanilla-extract/css";
-import { tokens } from "@yas/design-system";
 
-// Since the design system is the single source of truth for font family names,
-// we must use globalFontFace since it's the only way to specify a font family name with VE
-for (const { fonts, name } of Object.values(tokens.fontFamilies)) {
-  for (const { fontStyle, fontWeight, src } of fonts) {
-    globalFontFace(name, {
-      src: `url(${src.woff2}) format('woff2')`,
+// This is a vanilla extract representation of the font tokens
+mapValues(tokens.fontFaces, (fonts, family) => {
+  for (const font of fonts) {
+    const { src: formats, fontStyle, fontWeight } = font;
+    globalFontFace(family, {
+      src: Object.entries(formats).map(
+        ([format, url]) => `url(${url}) format("${format}")`,
+      ),
       fontWeight,
       fontStyle,
+      fontDisplay: "swap",
     });
   }
-}
+});

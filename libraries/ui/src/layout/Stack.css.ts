@@ -1,5 +1,5 @@
 import { recipe } from "@yas/style";
-import { tokens } from "@yas/design-system";
+import { tokens } from "@yas/design-tokens";
 
 type Space = keyof typeof tokens.spaces;
 const spaces = Object.keys(tokens.spaces) as Space[];

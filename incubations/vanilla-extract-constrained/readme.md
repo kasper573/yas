@@ -64,7 +64,7 @@ type Transition = [
 Using this `resolveStyle` function you can now define new stricter versions of the vanilla extract primitives:
 
 ```typescript
-// design-system.ts
+// design-tokens.ts
 import * as vanilla from "@vanilla-extract/css";
 import { resolveStyle } from "./constrained.css.ts";
 
@@ -92,7 +92,7 @@ Use your new vanilla extract functions as usual, _but now constrained_:
 
 ```typescript
 // my-styles.css.ts
-import { style, globalStyle, keyframes } from "./design-system"
+import { style, globalStyle, keyframes } from "./design-tokens"
 
 export foo = style({
   background: "invalid", // Errors, must be yellow or blue

@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
-    "@yas/design-system": "workspace:*",
+    "@yas/design-tokens": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@yas/test": "workspace:*",
