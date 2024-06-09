@@ -16,8 +16,8 @@
     }
   },
   "dependencies": {
-    "@tanstack/react-router": "1.18.3",
-    "@tanstack/router-devtools": "1.18.3"
+    "@tanstack/react-router": "1.35.3",
+    "@tanstack/router-devtools": "1.35.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
