@@ -1,10 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local", ".env.development", ".env.production"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"]
+      "outputs": ["dist/**", "build/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env",
+        ".env.local",
+        ".env.test",
+        ".env.development",
+        ".env.production"
+      ]
     },
     "release": {
       "dependsOn": ["build"]
