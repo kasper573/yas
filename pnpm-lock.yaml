@@ -656,59 +656,6 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
 
-  incubations/vanilla-extract-constrained:
-    dependencies:
-      '@vanilla-extract/css':
-        specifier: 1.15.2
-        version: 1.15.2
-    devDependencies:
-      '@playwright/experimental-ct-react':
-        specifier: 1.42.1
-        version: 1.42.1(@types/node@20.8.10)(vite@5.2.13)
-      '@types/react':
-        specifier: ^18.2.61
-        version: 18.2.61
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/scripts
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-      csstype:
-        specifier: ^3
-        version: 3.1.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  incubations/vanilla-extract-recipe-factory:
-    dependencies:
-      '@vanilla-extract/css':
-        specifier: 1.15.2
-        version: 1.15.2
-      '@vanilla-extract/recipes':
-        specifier: 0.5.3
-        version: 0.5.3(@vanilla-extract/css@1.15.2)
-    devDependencies:
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/scripts
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
   integrations/graphql-client:
     dependencies:
       '@urql/introspection':
