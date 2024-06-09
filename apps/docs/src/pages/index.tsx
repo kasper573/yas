@@ -1,8 +1,5 @@
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import type { ComponentProps, ReactNode } from "react";
-import { projects } from "../../fixtures/projects";
 import * as styles from "./index.css";
 
 export default function Home() {
@@ -25,55 +22,15 @@ export default function Home() {
         <section>
           <div className="container">
             <div className="row">
-              {projects.map((project, index) => (
-                <Feature
-                  key={index}
-                  title={project.title}
-                  image={project.imageUrl}
-                  href={project.href}
-                >
-                  {project.description}
-                </Feature>
-              ))}
+              <h2>
+                These docs exists as a POC but also because docusaurus is
+                notoriously hellish to integrate with due to its wacky webpack
+                abstraction, so it is great for testing compatibility.
+              </h2>
             </div>
           </div>
         </section>
       </main>
     </Layout>
-  );
-}
-
-function Feature({
-  image,
-  title,
-  children,
-  href,
-}: {
-  image: string;
-  title: string;
-  children: ReactNode;
-  href: string;
-}) {
-  const linkContent = (
-    <>
-      <img
-        src={image}
-        className={styles.featureImage}
-        role="img"
-        width={200}
-        height={150}
-        alt={`${title} image`}
-      />
-
-      <h2>{title}</h2>
-    </>
-  ) as ComponentProps<typeof Link>["children"];
-  return (
-    <div className={styles.feature({ columns: projects.length })}>
-      <Link to={href} style={{ display: "block" }}>
-        {linkContent}
-      </Link>
-      <p>{children}</p>
-    </div>
   );
 }

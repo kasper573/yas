@@ -65,9 +65,6 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
-      react-async-modal-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-async-modal-hook
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
@@ -577,85 +574,6 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
 
-  incubations/hookform-controller-proxy:
-    dependencies:
-      react-hook-form:
-        specifier: ^7
-        version: 7.49.3(react@18.2.0)
-    devDependencies:
-      '@hookform/resolvers':
-        specifier: ^3
-        version: 3.3.4(react-hook-form@7.49.3)
-      '@playwright/experimental-ct-react':
-        specifier: 1.42.1
-        version: 1.42.1(@types/node@20.8.10)(vite@5.2.13)
-      '@types/react':
-        specifier: ^18.2.61
-        version: 18.2.61
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/scripts
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      zod:
-        specifier: ^3
-        version: 3.22.3
-
-  incubations/react-async-modal-hook:
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.61
-        version: 18.2.61
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/scripts
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-
-  incubations/react-styled-factory:
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.61
-        version: 18.2.61
-      '@vanilla-extract/recipes':
-        specifier: 0.5.3
-        version: 0.5.3(@vanilla-extract/css@1.15.2)
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/scripts':
-        specifier: workspace:*
-        version: link:../../core/scripts
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-
   integrations/graphql-client:
     dependencies:
       '@urql/introspection':
@@ -867,8 +785,8 @@ importers:
         specifier: workspace:*
         version: link:../../incubations/flattened
       react-styled-factory:
-        specifier: workspace:*
-        version: link:../../incubations/react-styled-factory
+        specifier: ^0.0.10
+        version: 0.0.10(react@18.2.0)
     devDependencies:
       '@yas/tsconfig':
         specifier: workspace:*
@@ -923,11 +841,11 @@ importers:
         specifier: workspace:*
         version: link:../validate
       hookform-controller-proxy:
-        specifier: workspace:*
-        version: link:../../incubations/hookform-controller-proxy
+        specifier: ^0.0.21
+        version: 0.0.21(react-hook-form@7.49.3)(react@18.2.0)
       react-async-modal-hook:
-        specifier: workspace:*
-        version: link:../../incubations/react-async-modal-hook
+        specifier: ^0.0.16
+        version: 0.0.16(react@18.2.0)
       react-day-picker:
         specifier: 8.10.0
         version: 8.10.0(date-fns@3.3.1)(react@18.2.0)
@@ -5681,6 +5599,7 @@ packages:
       react-hook-form: ^7.0.0
     dependencies:
       react-hook-form: 7.49.3(react@18.2.0)
+    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -6117,43 +6036,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@playwright/experimental-ct-core@1.42.1(@types/node@20.8.10):
-    resolution: {integrity: sha512-wBS6pzgJwRuK0MwgiooamLW0prQLgT0RAhxooeMyqU97VbDI5aYuuynlxobJDDymU4HcOKARg2rG8h6jX7ShrA==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dependencies:
-      playwright: 1.42.1
-      playwright-core: 1.42.1
-      vite: 5.2.13(@types/node@20.8.10)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - terser
-    dev: true
-
-  /@playwright/experimental-ct-react@1.42.1(@types/node@20.8.10)(vite@5.2.13):
-    resolution: {integrity: sha512-/dxu7nkGOlZIx9MUGQPM5kiIGksYIBaaJKQuNmaJNV29V3VGI1p9yQqrvl1jFK/Hu7SC1LmFB8RlkrOgMiZKYg==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dependencies:
-      '@playwright/experimental-ct-core': 1.42.1(@types/node@20.8.10)
-      '@vitejs/plugin-react': 4.3.0(vite@5.2.13)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - vite
-    dev: true
 
   /@playwright/test@1.42.1:
     resolution: {integrity: sha512-Gq9rmS54mjBL/7/MvBaNOBwbfnh7beHvS6oS4srqXFcQHpQCV1+c8JXWE8VLPyRDhgS3H8x8A7hztqI9VnwrAQ==}
@@ -9698,6 +9580,7 @@ packages:
       '@vanilla-extract/css': ^1.0.0
     dependencies:
       '@vanilla-extract/css': 1.15.2
+    dev: false
 
   /@vanilla-extract/sprinkles@1.6.2(@vanilla-extract/css@1.15.2):
     resolution: {integrity: sha512-SZdrxzpAFIpRImqY/N54wODYyn6swuz+Lerd7Y1ZX5/148e6J9smpsfBf/iQpmGo17OS9b+AdYBOn7OF9cn/vA==}
@@ -14467,6 +14350,16 @@ packages:
       parse-passwd: 1.0.0
     dev: true
 
+  /hookform-controller-proxy@0.0.21(react-hook-form@7.49.3)(react@18.2.0):
+    resolution: {integrity: sha512-WqYkXkEyJSMqw4aBey0JPK3hXfrCYaYvOCZuvDMFjsOMkhk//CHqQUzzK/LkCttCKQEFUKZXKahW0hXmgYbRRg==}
+    peerDependencies:
+      react: ^18.2.0
+      react-hook-form: ^7
+    dependencies:
+      react: 18.2.0
+      react-hook-form: 7.49.3(react@18.2.0)
+    dev: false
+
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
@@ -19008,6 +18901,14 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
+  /react-async-modal-hook@0.0.16(react@18.2.0):
+    resolution: {integrity: sha512-wXl4k2NCbYSF7pvXR7V+Q8wmakPxAKSVBldnoS/16KLkJMpTh/HAXONiJJkNSCzPJgaItR8fV4gM1ZLi3ptpxA==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-colorful@5.6.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw==}
     peerDependencies:
@@ -19155,6 +19056,7 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.2.0
+    dev: false
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -19306,6 +19208,14 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.6.2
+
+  /react-styled-factory@0.0.10(react@18.2.0):
+    resolution: {integrity: sha512-5bOugTrKIi/vUgVxdsTyyoqOROPoJuZ3sEppq2iNh5Ug+Wdl/RkfkhdqoTlgw3CsDrU4qmwfoP3e21fzoN4ldQ==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
@@ -22686,10 +22596,6 @@ packages:
   /yoga-layout@2.0.1:
     resolution: {integrity: sha512-tT/oChyDXelLo2A+UVnlW9GU7CsvFMaEnd9kVFsaiCQonFAXd3xrHhkLYu+suwwosrAEQ746xBU+HvYtm1Zs2Q==}
     dev: false
-
-  /zod@3.22.3:
-    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
-    dev: true
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
