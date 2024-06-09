@@ -1,4 +1,4 @@
-import { AlertDialog, ModalContext, ModalStore, useModal } from "@yas/ui";
+import { AlertDialog, BaseDialog, CircularProgress, ModalContext, ModalOutlet, ModalStore, Stack, useModal } from "@yas/ui";
 import {
   QueryClientProvider,
   createQueryClient,
@@ -6,7 +6,7 @@ import {
 } from "@yas/query-client";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
-import { lazy, useEffect, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo } from "react";
 
 export function StorybookProviders({
   children,
@@ -21,13 +21,38 @@ export function StorybookProviders({
       <QueryClientProvider client={clients.query}>
         <TrpcClientProvider value={clients.trpc}>
           <GraphQLClientContext.Provider value={clients.graphql}>
-            {children}
+            <Suspense fallback={<ContentSuspenseFallback />}>
+              {children}
+            </Suspense>
+            <Suspense fallback={<ModalSuspenseFallback />}>
+              <ModalOutlet />
+            </Suspense>
             <QueryDevtools />
             <UnhandledMutationErrorDialogsBehavior />
           </GraphQLClientContext.Provider>
         </TrpcClientProvider>
       </QueryClientProvider>
     </ModalContext.Provider>
+  ); 
+}
+
+function ContentSuspenseFallback() {
+  return (
+    <Stack direction="row" gap="m">
+      <CircularProgress/>
+      Story is suspending without a fallback UI...
+    </Stack>
+  );
+}
+
+function ModalSuspenseFallback() {
+  return (
+    <BaseDialog>
+      <Stack direction="row" gap="m">
+        <CircularProgress/>
+        Modal in story is suspending without a fallback UI...
+      </Stack>
+    </BaseDialog>
   );
 }
 
