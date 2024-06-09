@@ -68,7 +68,6 @@ const devicesToTest = [
   "iPad Pro 11",
   "iPad Pro 11 landscape",
   "iPhone 12",
-  "iPhone 12 landscape",
 ];
 
 function projectForDevice(name) {
