@@ -20,10 +20,8 @@ type SetSearchParams<R extends AnyRoute> = (
  * Like useState, but for search params of a specific route.
  */
 export function useSearchState<
-  Api extends RouteApi<RouteIds<RegisteredRouter['routeTree']>>
->(
-  route: Api,
-): [SearchParams<RouteFrom<Api>>, SetSearchParams<RouteFrom<Api>>] {
+  Api extends RouteApi<RouteIds<RegisteredRouter["routeTree"]>>,
+>(route: Api): [SearchParams<RouteFrom<Api>>, SetSearchParams<RouteFrom<Api>>] {
   const navigate = useNavigate();
   const search: SearchParams<RouteFrom<Api>> = route.useSearch();
   const setSearch: SetSearchParams<RouteFrom<Api>> = useCallback(
@@ -36,7 +34,8 @@ export function useSearchState<
     [navigate, route.id, search],
   );
 
-  return [search, setSearch]; 
+  return [search, setSearch];
 }
 
-type RouteFrom<T> = T extends RouteApi<infer _1, infer _2, infer Route> ? Route : never;
+type RouteFrom<T> =
+  T extends RouteApi<infer _1, infer _2, infer Route> ? Route : never;
