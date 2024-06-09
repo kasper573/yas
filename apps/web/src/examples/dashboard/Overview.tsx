@@ -53,7 +53,7 @@ export default function Overview(): JSX.Element {
           {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
         </Title>
         <Stack direction="row" gap="m" style={{ flex: 0 }}>
-          <Button round onClick={downloadPDF}>
+          <Button round onClick={downloadPDF} sx={{ mr: "l" }}>
             <DownloadIcon />
           </Button>
           <DatePicker value={date} onChange={setDate} />

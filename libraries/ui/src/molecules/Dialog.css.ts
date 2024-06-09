@@ -37,7 +37,7 @@ export const dialogRecipe = recipe({
   },
 });
 
-const commonPadding = "l" as const;
+const commonPadding = "xl" as const;
 
 export const dialogTitle = atoms({
   m: commonPadding,

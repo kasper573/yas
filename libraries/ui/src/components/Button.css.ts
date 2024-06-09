@@ -101,19 +101,27 @@ export const buttonRecipe = recipe({
       ],
       outline: [
         atoms({
-          color: "secondary.face",
+          color: {
+            default: "surface.face",
+            hover: "secondary.face",
+            active: "secondary.face",
+          },
           backgroundColor: {
             default: "transparent",
             focus: "secondary.hover",
             hover: "secondary.base",
-            active: "secondary.hover",
+            active: "secondary.active",
           },
         }),
         borderStyle(),
       ],
       text: [
         atoms({
-          color: "secondary.face",
+          color: {
+            default: "surface.face",
+            hover: "secondary.face",
+            active: "secondary.face",
+          },
           backgroundColor: {
             default: "transparent",
             focus: "transparent",

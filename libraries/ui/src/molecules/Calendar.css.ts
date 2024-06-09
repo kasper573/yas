@@ -29,6 +29,7 @@ export const caption = atoms({
   position: "relative",
   justifyContent: "center",
   alignItems: "center",
+  height: "xl",
   mb: "m",
 });
 
@@ -85,6 +86,7 @@ export const day = style([
     height: "l",
     width: "l",
     backgroundColor: "transparent",
+    color: "inherit",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
