@@ -1,4 +1,5 @@
 import { inter } from "./fonts/inter";
+import type * as shared from "./shared";
 import type { FontFaceDefinition } from "./fonts/convention";
 
 /**
@@ -6,8 +7,8 @@ import type { FontFaceDefinition } from "./fonts/convention";
  */
 
 export const fontFaces = {
-  inter,
-} satisfies Record<string, FontFaceDefinition[]>;
+  Inter: inter,
+} satisfies Record<ValuesOf<typeof shared.text.family>, FontFaceDefinition[]>;
 
 export const size = {
   xs: 12,
@@ -102,3 +103,5 @@ export const borders = {
   normal: { width: 2, type: "solid" },
   thick: { width: 3, type: "solid" },
 } as const;
+
+type ValuesOf<T> = T[keyof T];
