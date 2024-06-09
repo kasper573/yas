@@ -23,7 +23,7 @@
     "test:watch": "pnpm run test --ui"
   },
   "peerDependencies": {
-    "@vanilla-extract/css": "^1.14.0"
+    "@vanilla-extract/css": "1.15.2"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "1.42.1",

@@ -19,8 +19,7 @@
     "@vanilla-extract/sprinkles": "1.6.2",
     "@vanilla-extract/dynamic": "2.1.1",
     "clsx": "^1.2.1",
-    "shallow-equal": "3.1.0",
-    "react-styled-factory": "0.0.9",
+    "react-styled-factory": "workspace:*",
     "flattened": "workspace:*"
   },
   "devDependencies": {
