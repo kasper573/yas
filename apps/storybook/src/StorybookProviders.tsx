@@ -1,4 +1,13 @@
-import { AlertDialog, BaseDialog, CircularProgress, ModalContext, ModalOutlet, ModalStore, Stack, useModal } from "@yas/ui";
+import {
+  AlertDialog,
+  BaseDialog,
+  CircularProgress,
+  ModalContext,
+  ModalOutlet,
+  ModalStore,
+  Stack,
+  useModal,
+} from "@yas/ui";
 import {
   QueryClientProvider,
   createQueryClient,
@@ -33,13 +42,13 @@ export function StorybookProviders({
         </TrpcClientProvider>
       </QueryClientProvider>
     </ModalContext.Provider>
-  ); 
+  );
 }
 
 function ContentSuspenseFallback() {
   return (
     <Stack direction="row" gap="m">
-      <CircularProgress/>
+      <CircularProgress />
       Story is suspending without a fallback UI...
     </Stack>
   );
@@ -49,7 +58,7 @@ function ModalSuspenseFallback() {
   return (
     <BaseDialog>
       <Stack direction="row" gap="m">
-        <CircularProgress/>
+        <CircularProgress />
         Modal in story is suspending without a fallback UI...
       </Stack>
     </BaseDialog>
