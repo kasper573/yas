@@ -17,7 +17,7 @@ const links = [
 
 export default function Layout() {
   return (
-    <Card sx={{ p: 0 }}>
+    <Card style={{ padding: 0 }}>
       <Stack direction="row" align="center" sx={{ my: "l", px: "xl" }}>
         <Tabs intent="item-contained" sx={{ flex: 1 }}>
           {links.map(({ to, label }, index) => (
@@ -41,4 +41,4 @@ export default function Layout() {
   );
 }
 
-const Stack = styled(StackImpl).attrs({ gap: "l" });
+const Stack = styled(StackImpl).attrs({ gap: "xl" });
