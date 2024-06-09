@@ -25,7 +25,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
             </ListItemIcon>
             <ListItemText primary={sale.name} secondary={sale.email} />
             <ListItemSecondaryContent>
-              <Text intent="h3">
+              <Text intent="h3" inline>
                 {formatNumber(sale.amount, ["sign", "currency"])}
               </Text>
             </ListItemSecondaryContent>
