@@ -44,7 +44,7 @@ export default function Overview(): JSX.Element {
 
   return (
     <>
-      <Stack direction="row" justify="spaceBetween" fullWidth>
+      <Stack direction="row" align="center" justify="spaceBetween" fullWidth>
         <Title
           showClearButton={!!selectedUser.data}
           onClear={clearSelectedUser}
