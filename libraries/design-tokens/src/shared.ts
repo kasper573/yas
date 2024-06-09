@@ -111,7 +111,7 @@ export const text = {
   },
 };
 export type Space = typeof space;
-export const space = { xs: 1, s: 2, m: 4, l: 8, xl: 12 };
+export const space = { xs: 1, s: 2, m: 4, l: 8, xl: 16, "2xl": 24, "3xl": 40 };
 export type Radius = typeof radius;
 export const radius = { s: 2, m: 4, circle: 9999, l: 8 };
 export type Typography = typeof typography;
