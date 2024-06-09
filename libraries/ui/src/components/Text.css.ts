@@ -17,7 +17,7 @@ export const textRecipe = recipe({
      * Disables the intent specific line height. Commonly used for single line text.
      */
     compact: {
-      true: [atoms({ whiteSpace: "nowrap" }), { lineHeight: "1em" }],
+      true: { lineHeight: "1em" },
     },
     overflow: {
       visible: {},
@@ -25,7 +25,7 @@ export const textRecipe = recipe({
       ellipsis: atoms({ textOverflow: "ellipsis", overflow: "hidden" }),
     },
     inline: {
-      true: atoms({ display: "inline" }),
+      true: atoms({ display: "inline", whiteSpace: "nowrap" }),
       false: atoms({ display: "block" }),
     },
   },
