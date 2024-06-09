@@ -1,5 +1,3 @@
-import { registerDesignTokenFontsWithReactPDF } from "./utils/registerFonts";
-
 // Some of the react-pdf API can be used as-is
 export {
   renderToBuffer,
@@ -25,5 +23,3 @@ export * from "./components/custom/Divider";
 export type * from "./utils/resolvePDFStyle";
 export * from "./utils/createComponent";
 export * from "./utils/resolveVariantStyle";
-
-registerDesignTokenFontsWithReactPDF();
