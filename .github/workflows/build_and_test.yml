@@ -1,4 +1,4 @@
-name: Build, Test and Release
+name: Build and Test
 on: [push]
 
 env:
@@ -46,26 +46,3 @@ jobs:
           # since production settings and builds are handled externally (e.g. by Vercel).
           # This CI job is only for sanity testing the build process in the CI.
           NODE_ENV: development
-
-  release:
-    permissions:
-      contents: write
-    if: github.ref == 'refs/heads/master'
-    needs: [conventions, test, typecheck, build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/composites/install/
-      - name: Tell git who the CI user is
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-      - run: pnpm release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Update package.json files
-        # We push in batch instead of per release script because we
-        # are running release scripts in parallel which can cause conflicts
-        run: |
-          git push --tags
-          git push

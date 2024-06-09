@@ -14,9 +14,6 @@
         ".env.production"
       ]
     },
-    "release": {
-      "dependsOn": ["build"]
-    },
     "test": {
       "dependsOn": ["^test"]
     },

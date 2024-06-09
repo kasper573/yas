@@ -12,7 +12,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "release": "turbo run release --concurrency 1",
     "dev": "turbo run dev --concurrency 40",
     "lint": "pnpm eslint . --max-warnings=0 && pnpm -r lint",
     "lint:fix": "pnpm eslint . --fix",
