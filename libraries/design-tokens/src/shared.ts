@@ -123,12 +123,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["1"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["1"];
@@ -149,12 +149,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["2"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["2"];
@@ -175,12 +175,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["2"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["2"];
@@ -201,12 +201,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["3"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["3"];
@@ -227,12 +227,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return radius.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["8"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["8"];
@@ -253,12 +253,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["7"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["7"];
@@ -279,12 +279,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["6"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["6"];
@@ -305,12 +305,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["5"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["5"];
@@ -331,12 +331,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["4"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["4"];
@@ -357,12 +357,12 @@ export const typography = {
     hanging_list: false,
     hanging_punctuation: false,
     list_spacing: 0,
-    paragraph_spacing: 0,
+    get paragraph_spacing() {
+      return space.l;
+    },
     paragraph_indent: 0,
     leading_trim: "NONE" as const,
-    get line_height() {
-      return text.size["3"];
-    },
+    line_height: { unit: "AUTO" as const },
     text_decoration: "NONE" as const,
     get font_size() {
       return text.size["3"];
