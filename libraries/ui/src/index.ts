@@ -37,4 +37,4 @@ export * from "./form/TextField";
 export * from "./form/composed/CheckboxGroupField";
 export * from "./form/composed/NumberField";
 export * from "./devtools/ExampleImage";
-export * from "react-error-boundary";
+export * from "./devtools/ErrorBoundary";
