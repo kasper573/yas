@@ -1,23 +1,28 @@
-import { atoms, style } from "@yas/style";
+import { atoms, recipe, style, theme } from "@yas/style";
 
-export const link = style([
-  atoms({
+export const linkRecipe = recipe({
+  base: atoms({
     typography: "body",
     textDecoration: "none",
     cursor: "pointer",
   }),
-  {
-    selectors: {
-      "&:hover": {
-        textDecoration: "underline",
-      },
-      "&:active, &:-webkit-any-link": {
-        color: "inherit",
-      },
+  variants: {
+    color: {
+      inherit: anchorColorStyle("inherit"),
+      primary: anchorColorStyle(theme.color.primary.base),
     },
   },
-]);
-
-export const h2 = atoms({
-  typography: "h2",
+  defaultVariants: {
+    color: "primary",
+  },
 });
+
+function anchorColorStyle(color: string) {
+  return style({
+    color,
+    selectors: {
+      "&:active": { color },
+      "&:-webkit-any-link": { color },
+    },
+  });
+}

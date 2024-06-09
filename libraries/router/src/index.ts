@@ -12,3 +12,4 @@ export {
 export type { Register, AnyRoute } from "@tanstack/react-router";
 export * from "./useSearchState";
 export * from "./createLinkComponent";
+export * from "./NavLink";

@@ -2,7 +2,7 @@ import { styled } from "@yas/style";
 import {
   Button,
   DatePicker,
-  Linklike,
+  Link,
   Stack as StackImpl,
   TabItem,
   Tabs,
@@ -66,7 +66,7 @@ export default function Overview(): JSX.Element {
           <Tabs intent="contained" sx={{ flex: 1 }}>
             {secondaryNav.map((label, index) => (
               <TabItem asChild key={index} active={index === 0}>
-                <Linklike>{label}</Linklike>
+                <Link>{label}</Link>
               </TabItem>
             ))}
           </Tabs>

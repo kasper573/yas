@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@yas/ui";
 import type { types } from "@yas/trpc-client";
+import { NavLink } from "@yas/router";
 import { formatNumber } from "../shared";
 
 export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
@@ -16,7 +16,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
     <List compact>
       {data.map((sale, index) => (
         <ListItem asChild button key={index} sx={{ px: "l" }}>
-          <Link
+          <NavLink
             to="/dashboard"
             search={(prev) => ({ ...prev, userId: sale.userId })}
           >
@@ -29,7 +29,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
                 {formatNumber(sale.amount, ["sign", "currency"])}
               </Text>
             </ListItemSecondaryContent>
-          </Link>
+          </NavLink>
         </ListItem>
       ))}
     </List>

@@ -2,13 +2,12 @@ import { styled } from "@yas/style";
 import {
   CircularProgress,
   Divider,
-  Link,
   Stack as StackImpl,
   TabItem,
   Tabs,
 } from "@yas/ui";
 import { Suspense } from "react";
-import { Outlet } from "@yas/router";
+import { NavLink, Outlet } from "@yas/router";
 import { Card } from "../shared";
 
 const links = [
@@ -23,9 +22,9 @@ export default function Layout() {
         <Tabs intent="item-contained" sx={{ flex: 1 }}>
           {links.map(({ to, label }, index) => (
             <TabItem key={index} asChild>
-              <Link to={to} activeOptions={{ exact: true }}>
+              <NavLink to={to} activeOptions={{ exact: true }}>
                 {label}
-              </Link>
+              </NavLink>
             </TabItem>
           ))}
         </Tabs>

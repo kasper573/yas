@@ -2,6 +2,7 @@ import {
   AlertDialog,
   BaseDialog,
   CircularProgress,
+  linkRecipe,
   ModalContext,
   ModalOutlet,
   ModalStore,
@@ -14,6 +15,7 @@ import {
   useQueryClient,
 } from "@yas/query-client";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
+import { NavLinkContext } from "@yas/router";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
 import { lazy, Suspense, useEffect, useMemo } from "react";
 
@@ -30,12 +32,14 @@ export function StorybookProviders({
       <QueryClientProvider client={clients.query}>
         <TrpcClientProvider value={clients.trpc}>
           <GraphQLClientContext.Provider value={clients.graphql}>
-            <Suspense fallback={<ContentSuspenseFallback />}>
-              {children}
-            </Suspense>
-            <Suspense fallback={<ModalSuspenseFallback />}>
-              <ModalOutlet />
-            </Suspense>
+            <NavLinkContext.Provider value={{ className: linkRecipe() }}>
+              <Suspense fallback={<ContentSuspenseFallback />}>
+                {children}
+              </Suspense>
+              <Suspense fallback={<ModalSuspenseFallback />}>
+                <ModalOutlet />
+              </Suspense>
+            </NavLinkContext.Provider>
             <QueryDevtools />
             <UnhandledMutationErrorDialogsBehavior />
           </GraphQLClientContext.Provider>

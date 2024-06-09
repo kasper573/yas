@@ -2,8 +2,8 @@ import { v4 } from "uuid";
 import { lazy, useEffect, useMemo, useState } from "react";
 import { TrpcClientProvider, createTrpcClient } from "@yas/trpc-client";
 import { GraphQLClientContext, createGraphQLClient } from "@yas/graphql-client";
-import { ErrorBoundary } from "@yas/ui";
-import { RouterProvider } from "@yas/router";
+import { ErrorBoundary, linkRecipe } from "@yas/ui";
+import { RouterProvider, NavLinkContext } from "@yas/router";
 import { AlertDialog, ModalContext, ModalStore, useModal } from "@yas/ui";
 import {
   QueryClientProvider,
@@ -38,10 +38,12 @@ export default function App() {
             <GraphQLClientContext.Provider value={clients.graphql}>
               <ThemeProvider theme={theme} setTheme={setTheme}>
                 <ThemeInjector target={rootRef} />
-                <RouterProvider
-                  router={router}
-                  defaultErrorComponent={ErrorFallback}
-                />
+                <NavLinkContext.Provider value={{ className: linkRecipe() }}>
+                  <RouterProvider
+                    router={router}
+                    defaultErrorComponent={ErrorFallback}
+                  />
+                </NavLinkContext.Provider>
                 <QueryDevtools />
                 <UnhandledMutationErrorDialogsBehavior />
               </ThemeProvider>
