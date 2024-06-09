@@ -39,7 +39,16 @@ export const buttonRecipe = recipe({
       ],
     },
     round: {
-      true: atoms({ borderRadius: "circle" }),
+      true: [
+        atoms({ borderRadius: "circle" }),
+        {
+          width: heightVar,
+          boxSizing: "border-box",
+          vars: {
+            [horizontalPaddingVar]: `${tokens.space.l}px`,
+          },
+        },
+      ],
       false: atoms({ borderRadius: "m" }),
     },
     intent: {
