@@ -5,14 +5,6 @@ import { RouterProvider, createRootRoute, createRouter } from "./index";
 export default {
   component: NavLink,
   tags: ["autodocs"],
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "A `@tanstack/react-router Link` that looks like a `@yas/ui Link`. Cannot be used without a router.",
-      },
-    },
-  },
 } satisfies Meta;
 
 export const Default: StoryObj<Meta<typeof NavLink>> = {
