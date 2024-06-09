@@ -2,10 +2,10 @@ import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import { createContext, type ComponentProps, useContext } from "react";
 
 /**
- * Identical to `@tanstack/react-router Link`, but can be given a class name via context.
+ * Identical to `@tanstack/react-router` Link, but can be given a class name via context.
  *
- * You can use this to apply the @yas/ui Link style to all NavLinks.
- * We use this approach so that @yas/router can be decoupled from @yas/ui.
+ * You can use this to apply the `@yas/ui` Link style to all NavLinks.
+ * We use this approach so that `@yas/router` can be decoupled from `@yas/ui`.
  */
 export const NavLink = NavLinkImpl as typeof TanstackRouterLink;
 
