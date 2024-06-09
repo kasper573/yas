@@ -47,7 +47,6 @@ There's also a robust CI/CD pipeline set up for this repository, which includes:
 - Conventional commits
 - Code quality checks
 - Build and test automation with artifacts
-- Automated releases to npm
 
 ### Deployment
 
@@ -126,7 +125,6 @@ These scripts are part of a convention. Individual packages may have their own s
 - `build` Builds the app or package into a deployable artifact according to the package's framework.
 - `test` Runs the test runner in headless mode, once.
 - `test:watch` Starts the test runner in watch mode for development.
-- `release` Releases the package to npm.
 
 **Each script must exit with a non-zero exit code if they fail.**
 
