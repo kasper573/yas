@@ -17,7 +17,7 @@ import type {
  *   transition: createTransition(["opacity", "standard.enter"])
  * })
  */
-export function createTransition<const Transitions extends Transition[]>(
+export function cssForTransition<const Transitions extends Transition[]>(
   ...transitions: Transitions
 ) {
   return transitions
@@ -43,7 +43,7 @@ export function createTransition<const Transitions extends Transition[]>(
  *   animation: createAnimation([enter, "long1", "emphasized", { count: 1 }]),
  * })
  */
-export function createAnimation<Animations extends Animation[]>(
+export function cssForAnimation<Animations extends Animation[]>(
   ...animations: Animations
 ) {
   return animations

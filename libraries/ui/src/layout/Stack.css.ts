@@ -1,26 +1,17 @@
-import { recipe } from "@yas/style";
-import { tokens } from "@yas/design-tokens";
-
-type Space = keyof typeof tokens.spaces;
-const spaces = Object.keys(tokens.spaces) as Space[];
+import { atoms, recipe } from "@yas/style";
+import { mapValues, tokens } from "@yas/design-tokens";
 
 export const stackRecipe = recipe({
-  base: {
+  base: atoms({
     boxSizing: "border-box",
-  },
+  }),
   variants: {
     inline: {
-      true: {
-        display: "inline-flex",
-      },
-      false: {
-        display: "flex",
-      },
+      true: atoms({ display: "inline-flex" }),
+      false: atoms({ display: "flex" }),
     },
     fullWidth: {
-      true: {
-        width: "100%",
-      },
+      true: atoms({ width: "100%" }),
     },
     direction: {
       row: {},
@@ -31,26 +22,20 @@ export const stackRecipe = recipe({
       false: {},
     },
     align: {
-      start: { alignItems: "start" },
-      center: { alignItems: "center" },
-      end: { alignItems: "end" },
-      stretch: { alignItems: "stretch" },
+      start: atoms({ alignItems: "start" }),
+      center: atoms({ alignItems: "center" }),
+      end: atoms({ alignItems: "end" }),
+      stretch: atoms({ alignItems: "stretch" }),
     },
     justify: {
-      start: { justifyContent: "start" },
-      center: { justifyContent: "center" },
-      end: { justifyContent: "end" },
-      spaceBetween: { justifyContent: "space-between" },
+      start: atoms({ justifyContent: "start" }),
+      center: atoms({ justifyContent: "center" }),
+      end: atoms({ justifyContent: "end" }),
+      spaceBetween: atoms({ justifyContent: "space-between" }),
     },
-    gap: Object.fromEntries(
-      spaces.map((space) => [space, { gap: space }]),
-    ) as Record<Space, { gap: Space }>,
-    columnGap: Object.fromEntries(
-      spaces.map((space) => [space, { columnGap: space }]),
-    ) as Record<Space, { columnGap: Space }>,
-    rowGap: Object.fromEntries(
-      spaces.map((space) => [space, { rowGap: space }]),
-    ) as Record<Space, { rowGap: Space }>,
+    gap: mapValues(tokens.space, (gap) => ({ gap })),
+    columnGap: mapValues(tokens.space, (columnGap) => ({ columnGap })),
+    rowGap: mapValues(tokens.space, (rowGap) => ({ rowGap })),
   },
   compoundVariants: [
     {

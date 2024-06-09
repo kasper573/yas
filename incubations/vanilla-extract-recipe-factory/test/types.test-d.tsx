@@ -49,7 +49,7 @@ it("supports rich set of variants and defaultVariants", () => {
           background: "b",
         },
       },
-      variant: {
+      intent: {
         contained: {
           borderRadius: 123,
         },
@@ -64,7 +64,7 @@ it("supports rich set of variants and defaultVariants", () => {
     },
     defaultVariants: {
       size: "small",
-      variant: "outlined",
+      intent: "outlined",
       color: "primary",
       disabled: false,
     },

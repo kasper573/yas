@@ -1,7 +1,7 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe, theme } from "@yas/style";
 
 export const tabs = recipe({
-  base: {
+  base: atoms({
     m: 0,
     p: 0,
     display: "flex",
@@ -9,39 +9,41 @@ export const tabs = recipe({
     listStyle: "none",
     maxWidth: "100%",
     boxSizing: "border-box",
-
-    // TODO replace with ScrollArea
     overflowX: "auto",
-  },
+  }),
   variants: {
-    variant: {
+    intent: {
       "item-contained": {},
       "text-highlight": {},
-      contained: {
-        borderRadius: "#3",
-        padding: "#1",
-        background: "info.base.main",
-      },
+      contained: atoms({
+        borderRadius: "l",
+        padding: "s",
+        backgroundColor: "info.base",
+      }),
     },
   },
   defaultVariants: {
-    variant: "item-contained",
+    intent: "item-contained",
   },
 });
 
-const variantClasses = tabs.classNames.variants.variant;
+const variantClasses = tabs.classNames.variants.intent;
 
 export const item = recipe({
-  base: {
-    borderRadius: "#3",
-    transition: [[["background", "color"], "standard.beginAndEndOnScreen"]],
-    cursor: "pointer",
-    px: "#3",
-    py: "#1",
-    selectors: activeStyleSelectors(
-      (prefix) => `${prefix}[data-status="active"]`, // Tanstack router Link integration
-    ),
-  },
+  base: [
+    atoms({
+      borderRadius: "l",
+      transition: "appearance.standard.beginAndEndOnScreen",
+      cursor: "pointer",
+      px: "l",
+      py: "s",
+    }),
+    {
+      selectors: activeStyleSelectors(
+        (prefix) => `${prefix}[data-status="active"]`, // Tanstack router Link integration
+      ),
+    },
+  ],
   variants: {
     active: {
       true: {
@@ -56,12 +58,12 @@ function activeStyleSelectors(
 ) {
   return {
     [transformSelector(`${variantClasses["item-contained"]} &`)]: {
-      background: "info.base.main",
-      color: "info.contrast.main",
+      background: theme.color.info.base,
+      color: theme.color.info.face,
     },
     [transformSelector(`${variantClasses["contained"]} &`)]: {
-      background: "info.contrast.main",
-      color: "info.base.main",
+      background: theme.color.info.face,
+      color: theme.color.info.base,
     },
     [transformSelector(`${variantClasses["text-highlight"]} &`)]: {
       fontWeight: "bold",

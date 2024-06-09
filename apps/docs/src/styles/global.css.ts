@@ -1,6 +1,6 @@
-import { unsafe } from "@yas/style";
+import { globalStyle } from "@yas/style";
 
-unsafe.globalStyle(":root", {
+globalStyle(":root", {
   vars: {
     "--ifm-color-primary": "#296aa3",
     "--ifm-color-primary-dark": "#255f93",
@@ -16,7 +16,7 @@ unsafe.globalStyle(":root", {
   },
 });
 
-unsafe.globalStyle(":root[data-theme='dark']", {
+globalStyle(":root[data-theme='dark']", {
   vars: {
     "--ifm-color-primary": "#9aabfe",
     "--ifm-color-primary-dark": "#7289fe",
@@ -33,20 +33,20 @@ unsafe.globalStyle(":root[data-theme='dark']", {
   },
 });
 
-unsafe.globalStyle("html", {
+globalStyle("html", {
   background: "var(--ifm-background-gradient)",
   backgroundRepeat: "no-repeat",
   backgroundAttachment: "fixed",
 });
 
-unsafe.globalStyle(".footer", {
+globalStyle(".footer", {
   background: "transparent",
 });
 
-unsafe.globalStyle(`[data-theme="light"] pre.shiki.nord`, {
+globalStyle(`[data-theme="light"] pre.shiki.nord`, {
   display: "none",
 });
 
-unsafe.globalStyle(`[data-theme="dark"] pre.shiki.min-light`, {
+globalStyle(`[data-theme="dark"] pre.shiki.min-light`, {
   display: "none",
 });

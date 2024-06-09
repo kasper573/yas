@@ -7,10 +7,10 @@ import { Overlay } from "../components/Overlay";
 import type { ModalProps } from "../hooks/useModal";
 import { useModalSustainer } from "../hooks/useModal";
 import {
-  dialogActionsRecipe,
-  dialogContentRecipe,
+  dialogActions,
+  dialogContent,
   dialogRecipe,
-  dialogTitleRecipe,
+  dialogTitle,
 } from "./Dialog.css";
 
 export interface DialogProps<ResolutionValue = void>
@@ -48,11 +48,11 @@ const DialogPaper = styled(Paper, dialogRecipe).attrs({
   role: "dialog",
 });
 
-export const DialogTitle = styled(Text, dialogTitleRecipe).attrs({
-  variant: "h2",
+export const DialogTitle = styled(Text, dialogTitle).attrs({
+  intent: "h2",
 });
-export const DialogContent = styled("div", dialogContentRecipe);
-export const DialogActions = styled("div", dialogActionsRecipe);
+export const DialogContent = styled("div", dialogContent);
+export const DialogActions = styled("div", dialogActions);
 
 export function BaseDialog({
   open,

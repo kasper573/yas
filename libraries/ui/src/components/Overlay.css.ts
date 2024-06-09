@@ -1,24 +1,24 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const overlayRecipe = recipe({
-  base: {
-    backgroundColor: "dimmer",
+  base: atoms({
+    backgroundColor: "tint",
     position: "absolute",
     inset: 0,
     opacity: 0,
-  },
+  }),
   variants: {
     open: {
-      true: {
+      true: atoms({
         opacity: 1,
         pointerEvents: "auto",
-        transition: [["opacity", "standard.enter"]],
-      },
-      false: {
+        transition: "appearance.standard.enter",
+      }),
+      false: atoms({
         opacity: 0,
         pointerEvents: "none",
-        transition: [["opacity", "standard.exit"]],
-      },
+        transition: "appearance.standard.enter",
+      }),
     },
   },
 });

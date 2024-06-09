@@ -1,38 +1,54 @@
-import { createGrid, globalStyle, style } from "@yas/style";
+import {
+  GridAreas,
+  atoms,
+  breakpointQuery,
+  globalStyle,
+  style,
+} from "@yas/style";
 
-const grid = createGrid(
+const grid = new GridAreas([
   "totalRevenue",
   "subscriptions",
   "sales",
   "activeNow",
   "chart",
   "recentSales",
-);
+]);
 
-export const gridContainer = style({
-  display: "grid",
-  width: "100%",
-  gap: "#4",
-  gridAutoColumns: "1fr",
-  gridAutoRows: "fit-content(1fr)",
-  gridTemplateAreas: {
-    "small-display": grid.template(),
-    "medium-display": grid.template([
-      ["totalRevenue", "subscriptions"],
-      ["sales", "activeNow"],
-      ["chart", "chart"],
-      ["recentSales", "recentSales"],
-    ]),
-    "large-display": grid.template([
-      ["totalRevenue", "subscriptions", "sales", "activeNow"],
-      ["chart", "chart", "recentSales", "recentSales"],
-    ]),
+export const gridContainer = style([
+  atoms({
+    display: "grid",
+    width: "100%",
+    gap: "l",
+  }),
+  {
+    gridAutoColumns: "1fr",
+    gridAutoRows: "fit-content(1fr)",
+    "@media": {
+      [breakpointQuery.down("s")]: {
+        gridTemplateAreas: grid.template(),
+      },
+      [breakpointQuery.between("s", "m")]: {
+        gridTemplateAreas: grid.template([
+          ["totalRevenue", "subscriptions"],
+          ["sales", "activeNow"],
+          ["chart", "chart"],
+          ["recentSales", "recentSales"],
+        ]),
+      },
+      [breakpointQuery.up("m")]: {
+        gridTemplateAreas: grid.template([
+          ["totalRevenue", "subscriptions", "sales", "activeNow"],
+          ["chart", "chart", "recentSales", "recentSales"],
+        ]),
+      },
+    },
   },
-});
+]);
 
-export const gridAreas = grid.classNames;
+export const gridAreas = grid.createClassNames();
 
-for (const className of Object.values(grid.classNames)) {
+for (const className of Object.values(gridAreas)) {
   globalStyle(className, {
     boxSizing: "border-box",
   });

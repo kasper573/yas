@@ -1,39 +1,39 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const dockRecipe = recipe({
-  base: {
+  base: atoms({
     position: "absolute",
-  },
+  }),
   variants: {
     position: {
-      top: {
+      top: atoms({
         top: 0,
         left: 0,
         right: 0,
-      },
-      bottom: {
+      }),
+      bottom: atoms({
         bottom: 0,
         left: 0,
         right: 0,
-      },
-      left: {
+      }),
+      left: atoms({
         top: 0,
         left: 0,
         bottom: 0,
-      },
-      right: {
+      }),
+      right: atoms({
         top: 0,
         right: 0,
         bottom: 0,
-      },
-      inset: {
+      }),
+      inset: atoms({
         inset: 0,
-      },
-      center: {
+      }),
+      center: atoms({
         top: "50%",
         left: "50%",
-        transform: "translate(-50%, -50%)",
-      },
+        transform: "center",
+      }),
     },
   },
   defaultVariants: {

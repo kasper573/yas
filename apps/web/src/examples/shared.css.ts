@@ -1,7 +1,7 @@
-import { style } from "@yas/style";
+import { atoms } from "@yas/style";
 
-export const card = style({
-  p: "#5",
+export const card = atoms({
+  p: "l",
   width: "100%",
   display: "flex",
   flexDirection: "column",

@@ -1,58 +1,56 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe, style } from "@yas/style";
 
 export const dialogRecipe = recipe({
-  base: {
-    // Reset
-    border: "inherit",
-    color: "inherit",
-    padding: "inherit",
-    margin: 0,
-    display: "block",
+  base: style([
+    atoms({
+      // Reset
+      border: "inherit",
+      color: "inherit",
+      padding: "inherit",
+      margin: 0,
+      display: "block",
 
-    // Custom
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "90vw",
-    maxWidth: "550px",
-    maxHeight: "85vh",
-    pointerEvents: "all",
-  },
+      // Custom
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "center",
+      pointerEvents: "all",
+    }),
+    {
+      width: "90vw",
+      maxWidth: "550px",
+      maxHeight: "85vh",
+    },
+  ]),
   variants: {
     open: {
-      true: {
+      true: atoms({
         opacity: 1,
-        transition: [["opacity", "standard.enter"]],
-      },
-      false: {
+        transition: "appearance.standard.enter",
+      }),
+      false: atoms({
         opacity: 0,
-        transition: [["opacity", "standard.exit"]],
-      },
+        transition: "appearance.standard.exit",
+      }),
     },
   },
 });
 
-const commonPadding = "#4" as const;
+const commonPadding = "l" as const;
 
-export const dialogTitleRecipe = recipe({
-  base: {
-    m: commonPadding,
-  },
+export const dialogTitle = atoms({
+  m: commonPadding,
 });
 
-export const dialogContentRecipe = recipe({
-  base: {
-    px: commonPadding,
-  },
+export const dialogContent = atoms({
+  px: commonPadding,
 });
 
-export const dialogActionsRecipe = recipe({
-  base: {
-    padding: commonPadding,
-    gap: commonPadding,
-    display: "grid",
-    gridAutoFlow: "column",
-    justifyContent: "end",
-  },
+export const dialogActions = atoms({
+  padding: commonPadding,
+  gap: commonPadding,
+  display: "grid",
+  gridAutoFlow: "column",
+  justifyContent: "end",
 });

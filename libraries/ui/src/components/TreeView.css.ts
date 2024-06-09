@@ -1,36 +1,34 @@
-import { recipe, style } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const list = recipe({
-  base: {
+  base: atoms({
     all: "unset",
     display: "flex",
     flexDirection: "column",
-    pl: "#4",
-  },
+    pl: "xl",
+  }),
   variants: {
     expanded: {
       true: {},
-      false: {
-        display: "none",
-      },
+      false: atoms({ display: "none" }),
     },
   },
 });
 
-export const listItem = style({
+export const listItem = atoms({
   all: "unset",
   display: "flex",
   flexDirection: "column",
 });
 
-export const labelAndIcon = style({
+export const labelAndIcon = atoms({
   cursor: "pointer",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-  gap: "#1",
+  gap: "s",
 });
 
-export const label = style({
+export const label = atoms({
   typography: "body",
 });

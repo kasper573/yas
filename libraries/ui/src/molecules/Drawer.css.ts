@@ -1,6 +1,6 @@
-import { recipe, style } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
-export const clipperRecipe = style({
+export const clipperRecipe = atoms({
   position: "absolute",
   inset: 0,
   pointerEvents: "none",
@@ -10,7 +10,7 @@ export const clipperRecipe = style({
 const offset = "calc(100% + 5px)";
 
 export const drawerRecipe = recipe({
-  base: {
+  base: atoms({
     // Reset
     border: "inherit",
     color: "inherit",
@@ -20,42 +20,52 @@ export const drawerRecipe = recipe({
 
     // Custom
     position: "absolute",
-    background: "surface.base.light",
+    backgroundColor: "surface.base",
     pointerEvents: "all",
-  },
+  }),
   variants: {
     position: {
-      left: {
-        inset: 0,
-        right: "auto",
-        transform: `translate(calc(-1 * ${offset}), 0)`,
-      },
-      right: {
-        inset: 0,
-        left: "auto",
-        transform: `translate(${offset}, 0)`,
-      },
-      top: {
-        inset: 0,
-        bottom: "auto",
-        transform: `translate(0, calc(-1 * ${offset}))`,
-      },
-      bottom: {
-        inset: 0,
-        top: "auto",
-        transform: `translate(0, ${offset})`,
-      },
+      left: [
+        atoms({
+          inset: 0,
+          right: "auto",
+        }),
+        { transform: `translate(calc(-1 * ${offset}), 0)` },
+      ],
+      right: [
+        atoms({
+          inset: 0,
+          left: "auto",
+        }),
+        { transform: `translate(${offset}, 0)` },
+      ],
+      top: [
+        atoms({
+          inset: 0,
+          bottom: "auto",
+        }),
+        { transform: `translate(0, calc(-1 * ${offset}))` },
+      ],
+      bottom: [
+        atoms({
+          inset: 0,
+          top: "auto",
+        }),
+        { transform: `translate(0, ${offset})` },
+      ],
     },
     open: {
-      true: {
-        transition: [[["transform", "box-shadow"], "standard.enter"]],
-        transform: "translate(0, 0)",
-        boxShadow: "#1",
-      },
-      false: {
-        transition: [[["transform", "box-shadow"], "standard.exit"]],
+      true: [
+        atoms({
+          transition: "transform.standard.enter",
+          boxShadow: "thin",
+        }),
+        { transform: "translate(0, 0)" },
+      ],
+      false: atoms({
+        transition: "transform.standard.exit",
         boxShadow: "none",
-      },
+      }),
     },
   },
   defaultVariants: {

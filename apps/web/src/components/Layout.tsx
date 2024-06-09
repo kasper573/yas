@@ -48,6 +48,6 @@ export default function Layout() {
 }
 
 const ContainerStack = Container.as(Stack).attrs({
-  gap: "#3",
-  sx: { flex: 1, p: "#5" },
+  gap: "l",
+  sx: { flex: 1, p: "xl" },
 });

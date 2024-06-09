@@ -1,18 +1,18 @@
-import { globalStyle, recipe, style } from "@yas/style";
+import { atoms, globalStyle, recipe } from "@yas/style";
 
 export const list = recipe({
-  base: {
+  base: atoms({
     width: "100%",
     m: 0,
     p: 0,
     listStyle: "none",
     display: "flex",
     flexDirection: "column",
-  },
+  }),
   variants: {
     compact: {
-      true: { gap: 1 },
-      false: { gap: "#2", py: "#2" },
+      true: atoms({ gap: "xs" }),
+      false: atoms({ gap: "m", py: "m" }),
     },
   },
   defaultVariants: {
@@ -21,31 +21,31 @@ export const list = recipe({
 });
 
 export const item = recipe({
-  base: {
+  base: atoms({
     display: "flex",
     flexDirection: "row",
-    gap: "#3",
+    gap: "l",
     alignItems: "center",
-    py: "#2",
-    px: "#3",
-    transition: [[["background", "color"], "standard.enter"]],
+    py: "m",
+    px: "l",
+    transition: "appearance.standard.enter",
     width: "100%",
     boxSizing: "border-box",
-  },
+  }),
   variants: {
     button: {
-      true: {
+      true: atoms({
         cursor: "pointer",
-        background: { hover: "info.base.light", active: "highlight" },
-        color: { hover: "info.contrast.main", active: "surface.contrast.main" },
-      },
+        backgroundColor: { hover: "info.hover", active: "info.active" },
+        color: { hover: "info.face", active: "surface.face" },
+      }),
     },
   },
 });
 
-const itemContentHeight = 40;
+const itemContentHeight = "xl" as const;
 
-export const icon = style({
+export const icon = atoms({
   height: itemContentHeight,
   width: itemContentHeight,
   minWidth: itemContentHeight,
@@ -58,18 +58,18 @@ globalStyle(`${icon} > *`, {
   width: "100%",
 });
 
-export const text = style({
+export const text = atoms({
   overflow: "hidden",
 });
 
-export const textEllipsis = style({
+export const textEllipsis = atoms({
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
   overflow: "hidden",
   maxWidth: "100%",
 });
 
-export const secondaryContent = style({
+export const secondaryContent = atoms({
   flex: 1,
   ml: "auto",
 });

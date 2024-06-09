@@ -1,9 +1,8 @@
-import type { ConstrainedStyle } from "@yas/style";
-import { globalStyle, style } from "@yas/style";
+import { globalStyle, style, theme } from "@yas/style";
 
-const surfaceStyle: ConstrainedStyle = {
-  background: "surface.base.main",
-  color: "surface.contrast.main",
+const surfaceStyle = {
+  background: theme.color.surface.base,
+  color: theme.color.surface.face,
 };
 
 export const pageContainer = style(surfaceStyle);

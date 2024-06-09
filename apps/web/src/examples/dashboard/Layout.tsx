@@ -40,8 +40,8 @@ export default function Layout() {
 
   return (
     <Card sx={{ p: 0 }}>
-      <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
-        <Tabs variant="item-contained" sx={{ flex: 1 }}>
+      <Stack direction="row" align="center" sx={{ my: "l", px: "xl" }}>
+        <Tabs intent="item-contained" sx={{ flex: 1 }}>
           {dashboardLinks.map(({ to, label }, index) => (
             <TabItem key={index} asChild>
               <Link to={to} activeOptions={{ exact: true }}>
@@ -56,9 +56,9 @@ export default function Layout() {
           isLoading={isSearching}
         >
           {searchResult.data ? (
-            <List sx={{ minWidth: 200 }}>
+            <List style={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
-                <ListItem asChild button key={index} sx={{ px: "#5" }}>
+                <ListItem asChild button key={index} sx={{ px: "xl" }}>
                   <Link
                     to="/dashboard"
                     search={(prev) => ({ ...prev, userId: user.userId })}
@@ -74,7 +74,7 @@ export default function Layout() {
                 </ListItem>
               ))}
               {searchResult.data.length === 0 && (
-                <ListItem sx={{ px: "#5" }}>
+                <ListItem sx={{ px: "xl" }}>
                   <ListItemText
                     primary={`No users found matching "${debouncedSearchInput.value}"`}
                   />
@@ -85,7 +85,7 @@ export default function Layout() {
         </SearchForm>
       </Stack>
       <Divider margin={false} />
-      <Stack sx={{ flex: 1, p: "#5" }}>
+      <Stack sx={{ flex: 1, p: "xl" }}>
         <Suspense
           fallback={<CircularProgress size="large" sx={{ margin: "auto" }} />}
         >
@@ -96,4 +96,4 @@ export default function Layout() {
   );
 }
 
-const Stack = styled(StackImpl).attrs({ gap: "#4" });
+const Stack = styled(StackImpl).attrs({ gap: "l" });

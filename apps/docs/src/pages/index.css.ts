@@ -1,14 +1,14 @@
-import { style, unsafe } from "@yas/style";
+import { atoms, recipe, style } from "@yas/style";
 
-export const hero = style({
+export const hero = atoms({
   px: 0,
-  py: "#10",
+  py: "xl",
   textAlign: "center",
 });
 
-export const title = style({ typography: "hero" });
+export const title = atoms({ typography: "h1" });
 
-export const titleWord = unsafe.style({
+export const titleWord = style({
   display: "inline-block",
   selectors: {
     "&::first-letter": {
@@ -20,18 +20,16 @@ export const titleWord = unsafe.style({
   },
 });
 
-export const tagline = style({
+export const tagline = atoms({
   typography: "h2",
   margin: 0,
 });
 
 export const features = style({});
 
-const featureBase = style({
-  p: "#5",
-});
+const featureBase = atoms({ p: "xl" });
 
-export const feature = unsafe.recipe({
+export const feature = recipe({
   base: ["col", "text--center", featureBase],
   variants: {
     columns: {
@@ -45,12 +43,12 @@ export const feature = unsafe.recipe({
   },
 });
 
-export const featureImage = style({
+export const featureImage = atoms({
   objectFit: "contain",
-  mb: "#2",
+  mb: "m",
 });
 
-export const container = unsafe.style({
+export const container = style({
   "@media": {
     "screen and (max-width: 996px)": {
       [`.${hero}`]: {

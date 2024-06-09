@@ -1,33 +1,27 @@
-import { recipe, style } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const root = recipe({
-  base: {
+  base: atoms({
     display: "inline-flex",
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
-    border: "standard",
-    borderRadius: "#2",
-    backgroundColor: "surface.base.light",
+    border: "thin",
+    borderRadius: "m",
+    backgroundColor: "surface.base",
     outline: { focus: "none" },
-    boxShadow: { focus: "#1" },
+    boxShadow: { focus: "thin" },
     borderColor: {
-      focus: "primary.base.main",
+      focus: "primary.base",
     },
-  },
+  }),
   variants: {
     error: {
-      true: {
-        borderColor: "error.base.main",
-      },
+      true: atoms({ borderColor: "error.base" }),
     },
     size: {
-      small: {
-        p: "#1.5",
-      },
-      medium: {
-        p: "#2",
-      },
+      small: atoms({ p: "s" }),
+      medium: atoms({ p: "m" }),
     },
   },
   defaultVariants: {
@@ -35,14 +29,14 @@ export const root = recipe({
   },
 });
 
-export const input = style({
+export const input = atoms({
   all: "unset",
   typography: "body",
-  color: "surface.contrast.main",
+  color: "surface.face",
   flex: 1,
-  px: "#1",
+  px: "s",
 });
 
-export const slot = style({
+export const slot = atoms({
   display: "flex",
 });

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
-import { Icon } from "@yas/icons";
+import { CheckIcon } from "@yas/icons";
 import { Button } from "./Button";
 
 export default {
@@ -15,7 +15,7 @@ export const WithLeftIcon: StoryObj<Meta<typeof Button>> = {
   args: {
     children: (
       <>
-        <Icon name="check" />
+        <CheckIcon />
         Click me
       </>
     ),
@@ -27,7 +27,7 @@ export const WithRightIcon: StoryObj<Meta<typeof Button>> = {
     children: (
       <>
         Click me
-        <Icon name="check" />
+        <CheckIcon />
       </>
     ),
   },

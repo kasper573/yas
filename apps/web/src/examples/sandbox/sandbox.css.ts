@@ -1,17 +1,17 @@
-import { style } from "@yas/style";
+import { atoms, style } from "@yas/style";
 import projectImageUrl from "./image.jpg";
 
-export const container = style({
-  transition: [["background", "standard.enter"]],
-  background: {
-    default: "info.base.main",
-    hover: "success.base.main",
+export const container = atoms({
+  transition: "appearance.standard.enter",
+  backgroundColor: {
+    default: "info.base",
+    hover: "success.base",
   },
   color: {
-    default: "info.contrast.main",
-    hover: "success.contrast.main",
+    default: "info.face",
+    hover: "success.face",
   },
-  padding: "#4",
+  padding: "l",
   typography: "body",
 });
 

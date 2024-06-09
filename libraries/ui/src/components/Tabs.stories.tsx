@@ -8,21 +8,21 @@ export default {
 
 export const Contained: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "contained" as const,
+    intent: "contained" as const,
     children: <TabItems />,
   },
 };
 
 export const ItemContained: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "item-contained" as const,
+    intent: "item-contained" as const,
     children: <TabItems />,
   },
 };
 
 export const TextHighlight: StoryObj<Meta<typeof Tabs>> = {
   args: {
-    variant: "text-highlight" as const,
+    intent: "text-highlight" as const,
     children: <TabItems />,
   },
 };

@@ -1,28 +1,19 @@
-import { globalStyle, recipe } from "@yas/style";
+import { atoms, globalStyle, recipe } from "@yas/style";
 
 export const avatar = recipe({
-  base: {
-    backgroundColor: "surface.base.dark",
-    borderRadius: "50%",
+  base: atoms({
+    backgroundColor: "surface.active",
+    borderRadius: "circle",
     overflow: "hidden",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
+  }),
   variants: {
     size: {
-      small: {
-        width: 16,
-        height: 16,
-      },
-      medium: {
-        width: 24,
-        height: 24,
-      },
-      large: {
-        width: 32,
-        height: 32,
-      },
+      small: atoms({ width: "s", height: "s" }),
+      medium: atoms({ width: "m", height: "m" }),
+      large: atoms({ width: "l", height: "l" }),
     },
   },
   defaultVariants: {

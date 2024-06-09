@@ -1,20 +1,19 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const paperRecipe = recipe({
-  base: {
-    borderRadius: "#2",
-  },
+  base: atoms({
+    borderRadius: "m",
+  }),
   variants: {
     elevation: {
-      0: {
-        background: "surface.base.main",
-        boxShadow: "none",
-        border: "standard",
-      },
-      1: {
-        background: "surface.base.light",
-        boxShadow: "#1",
-      },
+      0: atoms({
+        backgroundColor: "surface.base",
+        border: "thin",
+      }),
+      1: atoms({
+        backgroundColor: "surface.base",
+        boxShadow: "thin",
+      }),
     },
   },
   defaultVariants: {

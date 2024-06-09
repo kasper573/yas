@@ -1,7 +1,7 @@
 import type { BarProps } from "recharts";
 import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import { Bounds } from "@yas/ui";
-import { variables } from "@yas/style";
+import { theme } from "@yas/style";
 import { tokens } from "@yas/design-tokens";
 import { formatCurrency } from "../shared";
 
@@ -27,20 +27,16 @@ export function Chart({ data }: ChartProps) {
             tickLine={false}
             tickFormatter={formatCurrency}
           />
-          <Bar
-            dataKey="value"
-            fill={color.primary.base.main}
-            radius={barRadius}
-          />
+          <Bar dataKey="value" fill={color.primary.base} radius={barRadius} />
         </BarChart>
       )}
     </Bounds>
   );
 }
 
-const { radii } = tokens;
-const { typography, color } = variables;
-const barRadius = [radii["#1"], radii["#1"], 0, 0] satisfies BarProps["radius"];
+const { radius, typography } = tokens;
+const { color } = theme;
+const barRadius = [radius["s"], radius["s"], 0, 0] satisfies BarProps["radius"];
 
 const textStyle = (name: keyof typeof typography) => ({
   ...typography[name],

@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    sx: { width: "150px", height: "150px" },
+    style: { width: "150px", height: "150px" },
     children: (
       <>
         <ExampleItem>One</ExampleItem>

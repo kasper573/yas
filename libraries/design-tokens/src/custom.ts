@@ -9,7 +9,14 @@ export const fontFaces = {
   inter,
 } satisfies Record<string, FontFaceDefinition[]>;
 
-export const size = {} satisfies Record<string, number>;
+export const size = {
+  xs: 12,
+  s: 16,
+  m: 24,
+  l: 32,
+  xl: 48,
+  "2xl": 64,
+} satisfies Record<string, number>;
 
 export type Breakpoint = keyof typeof breakpoints;
 export const breakpoints = {

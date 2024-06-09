@@ -4,7 +4,7 @@ import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
 import { keysOf, mapValues, toRecord, tokens } from "@yas/design-tokens";
 import { theme } from "./theme.css";
 import type { TransitionPreset } from "./utils/animation";
-import { createTransition, transitionPresets } from "./utils/animation";
+import { cssForTransition, transitionPresets } from "./utils/animation";
 import { cssForTypography } from "./utils/cssForTypography";
 import { cssForShadow } from "./utils/cssForShadow";
 import { cssForBorder } from "./utils/cssForBorder";
@@ -32,7 +32,7 @@ const colors = {
 };
 
 const spacing = {
-  "0": 0,
+  0: 0,
   ...tokens.space,
   ...cssDefaults,
 };
@@ -44,6 +44,8 @@ const radius = {
 
 const sizes = {
   ...tokens.size,
+  0: 0,
+  1: 1,
   "25%": "25%",
   "50%": "50%",
   "75%": "75%",
@@ -69,6 +71,12 @@ const typography = mapValues(tokens.typography, (_, k) => cssForTypography(k));
 const borders = {
   none: "none",
   ...mapValues(tokens.borders, (_, k) => cssForBorder(k)),
+  ...cssDefaults,
+};
+
+const transform = {
+  none: "none",
+  center: "translate(-50%, -50%)",
   ...cssDefaults,
 };
 
@@ -107,7 +115,7 @@ const commonTransitions = Object.fromEntries(
   Object.entries(commonTransitionGroups).flatMap(([group, propertyNames]) => {
     return transitionPresets.map((preset) => [
       `${group}.${preset}`,
-      createTransition([propertyNames, preset]),
+      cssForTransition([propertyNames, preset]),
     ]);
   }),
 ) as {
@@ -149,18 +157,16 @@ const unconditionalProperties = defineProperties({
     gap: spacing,
     rowGap: spacing,
     columnGap: spacing,
+
+    // Text
+    typography,
+
+    // Transform
     left: sizes,
     top: sizes,
     right: sizes,
     bottom: sizes,
     inset: sizes,
-
-    // Text
-    typography,
-    textShadow: shadows,
-
-    // Boxes
-    boxShadow: shadows,
     overflowX: overflows,
     overflowY: overflows,
     width: sizes,
@@ -169,6 +175,7 @@ const unconditionalProperties = defineProperties({
     minHeight: sizes,
     maxWidth: sizes,
     maxHeight: sizes,
+    transform,
 
     // Regular / non-design token css properties
     fontFamily: ["inherit", "initial"] as const,
@@ -176,7 +183,6 @@ const unconditionalProperties = defineProperties({
     fontStyle: ["inherit", "normal", "italic"] as const,
     fontSize: ["inherit", "100%"] as const,
     lineHeight: [1, "inherit", "100%"] as const,
-    outline: ["none", "inherit"] as const,
     position: ["static", "relative", "absolute", "fixed", "sticky"] as const,
     userSelect: ["none", "auto"] as const,
     pointerEvents: ["none", "auto", "all"] as const,
@@ -229,6 +235,11 @@ const unconditionalProperties = defineProperties({
     flexWrap: ["nowrap", "wrap", "wrap-reverse"] as const,
     flexDirection: ["row", "row-reverse", "column", "column-reverse"] as const,
     flex: flexes,
+    gridAutoFlow: [
+      "column",
+      "row",
+      "dense",
+    ] satisfies Array<Property.GridAutoFlow>,
     opacity: [0, 0.25, 0.4, 0.5, 0.6, 0.75, 1] as const,
     textOverflow: ["ellipsis", "clip"] as const,
     whiteSpace: ["normal", "nowrap", "pre", "pre-wrap", "pre-line"] as const,
@@ -274,6 +285,9 @@ const conditionalProperties = defineProperties({
     borderColor: colors,
     color: colors,
     backgroundColor: colors,
+    outline: ["none", "inherit"] as const,
+    textShadow: shadows,
+    boxShadow: shadows,
   },
 });
 

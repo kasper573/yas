@@ -18,7 +18,6 @@ export const buttonRecipe = recipe({
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: "s",
       userSelect: "none",
     }),
     {
@@ -38,6 +37,10 @@ export const buttonRecipe = recipe({
           },
         },
       ],
+    },
+    round: {
+      true: atoms({ borderRadius: "circle" }),
+      false: atoms({ borderRadius: "s" }),
     },
     intent: {
       primary: [

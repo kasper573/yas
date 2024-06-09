@@ -15,7 +15,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
   return (
     <List compact>
       {data.map((sale, index) => (
-        <ListItem asChild button key={index} sx={{ px: "#5" }}>
+        <ListItem asChild button key={index} sx={{ px: "l" }}>
           <Link
             to="/dashboard"
             search={(prev) => ({ ...prev, userId: sale.userId })}
@@ -25,7 +25,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
             </ListItemIcon>
             <ListItemText primary={sale.name} secondary={sale.email} />
             <ListItemSecondaryContent>
-              <Text variant="h3">
+              <Text intent="h3">
                 {formatNumber(sale.amount, ["sign", "currency"])}
               </Text>
             </ListItemSecondaryContent>

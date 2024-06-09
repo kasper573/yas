@@ -58,16 +58,16 @@ export function DashboardContent({
         icon={<BarChartIcon />}
         className={gridAreas.activeNow}
       />
-      <Card sx={{ gap: "#4" }} className={gridAreas.chart}>
+      <Card sx={{ gap: "m" }} className={gridAreas.chart}>
         <div>
-          <Text variant="h5">Overview</Text>
+          <Text intent="h5">Overview</Text>
           <Text>&nbsp;</Text>
         </div>
         <Chart data={data.revenueOverTime} />
       </Card>
-      <Card sx={{ gap: "#4", px: 0 }} className={gridAreas.recentSales}>
-        <Box sx={{ px: "#5" }}>
-          <Text variant="h5">Recent Sales</Text>
+      <Card sx={{ gap: "m", px: 0 }} className={gridAreas.recentSales}>
+        <Box sx={{ px: "l" }}>
+          <Text intent="h5">Recent Sales</Text>
           <Text>{data.yourSalesThisMonth.toFixed(0)} sales this month.</Text>
         </Box>
         <RecentSaleList data={data.recentSales} />

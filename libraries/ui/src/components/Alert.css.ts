@@ -1,28 +1,28 @@
-import { recipe } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const alertRecipe = recipe({
-  base: {
-    padding: "#2",
-    borderRadius: "#1",
-  },
+  base: atoms({
+    padding: "l",
+    borderRadius: "s",
+  }),
   variants: {
     severity: {
-      success: {
-        background: "success.base.main",
-        color: "success.contrast.main",
-      },
-      info: {
-        background: "info.base.main",
-        color: "info.contrast.main",
-      },
-      warning: {
-        background: "warning.base.main",
-        color: "warning.contrast.main",
-      },
-      error: {
-        background: "error.base.main",
-        color: "error.contrast.main",
-      },
+      success: atoms({
+        backgroundColor: "success.base",
+        color: "success.face",
+      }),
+      info: atoms({
+        backgroundColor: "info.base",
+        color: "info.face",
+      }),
+      warning: atoms({
+        backgroundColor: "warning.base",
+        color: "warning.face",
+      }),
+      error: atoms({
+        backgroundColor: "error.base",
+        color: "error.face",
+      }),
     },
   },
   defaultVariants: {
