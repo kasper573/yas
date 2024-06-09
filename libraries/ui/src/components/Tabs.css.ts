@@ -19,6 +19,7 @@ export const tabs = recipe({
         borderRadius: "l",
         padding: "s",
         backgroundColor: "info.base",
+        color: "info.face",
       }),
     },
   },
