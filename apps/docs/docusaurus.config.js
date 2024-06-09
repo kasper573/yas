@@ -10,7 +10,6 @@ const pathToAppRelativeToRoot = __dirname
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Yet Another Stack",
-  tagline: "A collection of React and Typescript libraries",
   favicon: "img/favicon.ico",
   url: env.docsUrl,
   baseUrl: "/",

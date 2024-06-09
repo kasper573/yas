@@ -1,5 +1,6 @@
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
+import { Text } from "@yas/ui";
 import * as styles from "./index.css";
 
 export default function Home() {
@@ -16,19 +17,21 @@ export default function Home() {
             </span>
           ))}
         </h1>
-        <h2 className={styles.tagline}>{tagline}</h2>
       </header>
       <main>
-        <section>
-          <div className="container">
-            <div className="row">
-              <h2>
-                These docs exists as a POC but also because docusaurus is
-                notoriously hellish to integrate with due to its wacky webpack
-                abstraction, so it is great for testing compatibility.
-              </h2>
-            </div>
-          </div>
+        <section className={styles.content}>
+          <Text intent="h5" margin>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
+            corrupti hic molestiae doloremque aspernatur laboriosam veniam minus
+            aut officiis, voluptatem fugit fugiat neque fuga, laudantium vero.
+            Quae, dolore. Quae, exercitationem.
+          </Text>
+          <Text intent="h5">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
+            corrupti hic molestiae doloremque aspernatur laboriosam veniam minus
+            aut officiis, voluptatem fugit fugiat neque fuga, laudantium vero.
+            Quae, dolore. Quae, exercitationem.
+          </Text>
         </section>
       </main>
     </Layout>
