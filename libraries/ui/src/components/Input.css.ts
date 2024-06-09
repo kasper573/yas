@@ -20,8 +20,8 @@ export const root = recipe({
       true: atoms({ borderColor: "error.base" }),
     },
     size: {
-      small: atoms({ p: "s" }),
-      medium: atoms({ p: "m" }),
+      small: atoms({ p: "m" }),
+      medium: atoms({ p: "l" }),
     },
   },
   defaultVariants: {
@@ -34,7 +34,7 @@ export const input = atoms({
   typography: "body",
   color: "surface.face",
   flex: 1,
-  px: "s",
+  px: "m",
 });
 
 export const slot = atoms({

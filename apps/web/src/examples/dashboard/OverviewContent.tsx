@@ -66,8 +66,10 @@ export function DashboardContent({
         <Chart data={data.revenueOverTime} />
       </Card>
       <Card sx={{ gap: "m", px: 0 }} className={gridAreas.recentSales}>
-        <Box sx={{ px: "l" }}>
-          <Text intent="h5">Recent Sales</Text>
+        <Box sx={{ px: "l", mb: "l" }}>
+          <Text intent="h5" sx={{ mb: "l" }}>
+            Recent Sales
+          </Text>
           <Text>{data.yourSalesThisMonth.toFixed(0)} sales this month.</Text>
         </Box>
         <RecentSaleList data={data.recentSales} />

@@ -45,7 +45,7 @@ const radius = {
 const sizes = {
   ...tokens.size,
   0: 0,
-  1: 1,
+  1: "1px",
   "25%": "25%",
   "50%": "50%",
   "75%": "75%",
@@ -182,7 +182,7 @@ const unconditionalProperties = defineProperties({
     fontWeight: ["inherit", "normal", "bold"] as const,
     fontStyle: ["inherit", "normal", "italic"] as const,
     fontSize: ["inherit", "100%"] as const,
-    lineHeight: [1, "inherit", "100%"] as const,
+    lineHeight: ["1em", "inherit", "100%"] as const,
     position: ["static", "relative", "absolute", "fixed", "sticky"] as const,
     userSelect: ["none", "auto"] as const,
     pointerEvents: ["none", "auto", "all"] as const,

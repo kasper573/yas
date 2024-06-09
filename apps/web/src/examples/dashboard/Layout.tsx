@@ -39,7 +39,7 @@ export default function Layout() {
     (debouncedSearchInput.isDebouncing || searchResult.isFetching);
 
   return (
-    <Card sx={{ p: 0 }}>
+    <Card style={{ padding: 0 }}>
       <Stack direction="row" align="center" sx={{ my: "l", px: "xl" }}>
         <Tabs intent="item-contained" sx={{ flex: 1 }}>
           {dashboardLinks.map(({ to, label }, index) => (

@@ -40,7 +40,7 @@ export const buttonRecipe = recipe({
     },
     round: {
       true: atoms({ borderRadius: "circle" }),
-      false: atoms({ borderRadius: "s" }),
+      false: atoms({ borderRadius: "m" }),
     },
     intent: {
       primary: [
@@ -148,6 +148,7 @@ export const buttonRecipe = recipe({
     intent: "primary",
     disabled: false,
     fullWidth: false,
+    round: false,
   },
 });
 

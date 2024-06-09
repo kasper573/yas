@@ -4,7 +4,6 @@ import type { Properties } from "csstype";
 export function cssForTypography(name: keyof tokens.Typography) {
   const v = tokens.typography[name];
   return compact({
-    margin: 0,
     fontFamily: v.font_family,
     fontSize: px(v.font_size),
     lineHeight: px(v.line_height),

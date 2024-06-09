@@ -2,7 +2,8 @@ import { atoms, recipe } from "@yas/style";
 
 export const paperRecipe = recipe({
   base: atoms({
-    borderRadius: "m",
+    borderRadius: "l",
+    boxSizing: "border-box",
   }),
   variants: {
     elevation: {

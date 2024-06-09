@@ -36,7 +36,7 @@ export const item = recipe({
       transition: "appearance.standard.beginAndEndOnScreen",
       cursor: "pointer",
       px: "l",
-      py: "s",
+      py: "l",
     }),
     {
       selectors: activeStyleSelectors(

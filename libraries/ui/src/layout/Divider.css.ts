@@ -3,7 +3,7 @@ import { atoms, recipe } from "@yas/style";
 export const dividerRecipe = recipe({
   base: atoms({
     height: 1,
-    backgroundColor: "tint",
+    backgroundColor: "surface.face",
     width: "100%",
     boxSizing: "border-box",
     border: "none",

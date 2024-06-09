@@ -48,12 +48,6 @@ export const gridContainer = style([
 
 export const gridAreas = grid.createClassNames();
 
-for (const className of Object.values(gridAreas)) {
-  globalStyle(className, {
-    boxSizing: "border-box",
-  });
-}
-
 // grid row height doesn't work properly in safari, so we need to ensure minimum heights
 globalStyle(gridAreas.totalRevenue, { minHeight: 138.5 });
 globalStyle(gridAreas.subscriptions, { minHeight: 138.5 });

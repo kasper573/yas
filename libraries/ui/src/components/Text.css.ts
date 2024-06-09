@@ -2,6 +2,10 @@ import { recipe, atoms, cssForParagraphSpacing } from "@yas/style";
 import { keysOf, mapValues, tokens } from "@yas/design-tokens";
 
 export const textRecipe = recipe({
+  base: atoms({
+    all: "unset",
+    display: "block",
+  }),
   variants: {
     intent: mapValues(tokens.typography, (_, typography) =>
       atoms({ typography }),
@@ -10,7 +14,7 @@ export const textRecipe = recipe({
      * Enables the intent specific margin. Commonly used for paragraph spacing.
      */
     margin: {
-      false: { margin: 0 },
+      true: {},
     },
     /**
      * Disables the intent specific line height. Commonly used for single line text.
@@ -32,7 +36,7 @@ export const textRecipe = recipe({
   },
   compoundVariants: [
     ...keysOf(tokens.typography).map((intent) => ({
-      variants: { paragraph: true, intent },
+      variants: { margin: true, intent },
       style: cssForParagraphSpacing(intent),
     })),
   ],

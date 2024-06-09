@@ -13,7 +13,7 @@ export function Title({
 }) {
   return (
     <Stack direction="row" gap="l" align="center">
-      <Text intent="h1" sx={{ lineHeight: 1 }}>
+      <Text intent="h1" inline>
         {children}
       </Text>
       {showClearButton ? (
