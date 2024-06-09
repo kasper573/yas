@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "yas-env vite build",
+    "build:test": "cross-env NODE_ENV=test yas-env vite build",
     "dev": "yas-env vite --host 0.0.0.0 --port 3002 --clearScreen false",
     "preview": "yas-env vite preview",
     "test": "pnpm test:unit && pnpm test:e2e",
@@ -39,6 +40,7 @@
     "@yas/env": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "8.2.2"
+    "concurrently": "8.2.2",
+    "cross-env": "7.0.3"
   }
 }

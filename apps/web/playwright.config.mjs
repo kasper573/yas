@@ -8,7 +8,10 @@ export default defineConfig({
   baseURL: webAppURL,
   isCI: env.CI,
   webServers: [
-    { command: "pnpm build && pnpm preview", url: webAppURL },
+    {
+      command: "pnpm build:test && pnpm preview",
+      url: webAppURL,
+    },
     {
       command: "pnpm --filter @yas/trpc-server dev",
       url: getTrpcHealthUrl(),

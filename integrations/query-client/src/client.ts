@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 export function createQueryClient(
-  mode: "production" | "development",
+  mode: "production" | "development" | "test",
 ): QueryClient {
   const events = new EventTarget();
 

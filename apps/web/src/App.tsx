@@ -31,7 +31,10 @@ export default function App() {
   const clients = useMemo(createClients, []);
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <ErrorBoundary
+      enabled={env.useErrorBoundary}
+      FallbackComponent={ErrorFallback}
+    >
       <ModalContext.Provider value={modalStore}>
         <QueryClientProvider client={clients.query}>
           <TrpcClientProvider value={clients.trpc}>
