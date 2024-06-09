@@ -19,7 +19,10 @@ export type TextFieldBaseProps = Pick<
   FormControlProps,
   "sx" | "style" | "className"
 > &
-  Omit<RecipeVariants<typeof styles.control>, "onChange"> & {
+  Omit<
+    Exclude<RecipeVariants<typeof styles.control>, undefined>,
+    "onChange"
+  > & {
     clearable?: boolean;
     type?: "text" | "number" | "password";
     readOnly?: boolean;
@@ -96,8 +99,8 @@ export function TextField({
             <CircularProgress className={styles.loadingSpinner} />
           ) : (
             <Button
-              icon
-              variant="text"
+              round
+              intent="text"
               onClick={tryClearValue}
               className={styles.clearButton({
                 visible: clearable && !isEmpty,

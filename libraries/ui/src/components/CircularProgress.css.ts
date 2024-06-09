@@ -1,4 +1,4 @@
-import { keyframes, recipe } from "@yas/style";
+import { atoms, cssForAnimation, keyframes, recipe, theme } from "@yas/style";
 
 const spin = keyframes({
   "0%": { transform: "rotate(0deg)" },
@@ -6,29 +6,31 @@ const spin = keyframes({
 });
 
 export const circularProgressRecipe = recipe({
-  base: {
-    display: "inline-block",
-    animation: [[spin, "extraLong4", "linear"]],
-    fill: "primary.base.main",
-  },
+  base: [
+    atoms({ display: "inline-block" }),
+    {
+      animation: cssForAnimation([spin, "extraLong4", "linear"]),
+      fill: theme.color.primary.base,
+    },
+  ],
   variants: {
     size: {
-      tiny: {
-        width: 16,
-        height: 16,
-      },
-      small: {
-        width: 24,
-        height: 24,
-      },
-      medium: {
-        width: 32,
-        height: 32,
-      },
-      large: {
-        width: 48,
-        height: 48,
-      },
+      tiny: atoms({
+        width: "s",
+        height: "s",
+      }),
+      small: atoms({
+        width: "m",
+        height: "m",
+      }),
+      medium: atoms({
+        width: "l",
+        height: "l",
+      }),
+      large: atoms({
+        width: "xl",
+        height: "xl",
+      }),
     },
   },
   defaultVariants: {

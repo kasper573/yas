@@ -1,7 +1,6 @@
-import { style } from "@yas/style";
-import { iconSizes } from "../components/Button.css";
+import { atoms } from "@yas/style";
 
-export const separator = style({
-  width: iconSizes.small,
+export const separator = atoms({
+  width: "m",
   textAlign: "center",
 });

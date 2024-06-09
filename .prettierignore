@@ -1,6 +1,9 @@
 dist
 .turbo
 pnpm-lock.yaml
+sb-dist
+build
+.docusaurus
 
 # Don't format generated code
 *.generated.*

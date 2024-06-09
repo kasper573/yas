@@ -37,11 +37,11 @@ export const ListItemText = styled(
 );
 
 export const ListItemPrimaryText = styled(Text, textEllipsis).attrs({
-  variant: "h5",
+  intent: "h5",
 });
 
 export const ListItemSecondaryText = styled(Text, textEllipsis).attrs({
-  variant: "caption",
+  intent: "caption",
 });
 
 export const ListItemSecondaryContent = styled("div", secondaryContent);

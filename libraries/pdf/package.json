@@ -3,21 +3,31 @@
   "version": "0.0.0",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./src/index.tsx"
+    },
+    "./devtools/*": {
+      "import": "./devtools/*"
     }
   },
   "license": "UNLICENSED",
   "dependencies": {
     "@react-pdf/renderer": "3.3.8",
-    "@yas/design-system": "workspace:*",
+    "@react-pdf/layout": "3.11.5",
+    "@yas/design-tokens": "workspace:*",
     "flattened": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@react-pdf/types": "2.4.1",
-    "@yas/tsconfig": "workspace:*"
+    "@yas/tsconfig": "workspace:*",
+    "@yas/test": "workspace:*"
   }
 }

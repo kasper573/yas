@@ -2,7 +2,7 @@ import { styled } from "@yas/style";
 import {
   Button,
   DatePicker,
-  Linklike,
+  Link,
   Stack as StackImpl,
   TabItem,
   Tabs,
@@ -52,8 +52,8 @@ export default function Overview(): JSX.Element {
           Dashboard
           {selectedUser.data ? ` for ${selectedUser.data.name}` : undefined}
         </Title>
-        <Stack direction="row" gap="#2" style={{ flex: 0 }}>
-          <Button icon onClick={downloadPDF}>
+        <Stack direction="row" gap="m" style={{ flex: 0 }}>
+          <Button round onClick={downloadPDF} sx={{ mr: "l" }}>
             <DownloadIcon />
           </Button>
           <DatePicker value={date} onChange={setDate} />
@@ -63,10 +63,10 @@ export default function Overview(): JSX.Element {
         <Text>Could not find user by id {userId}</Text>
       ) : (
         <>
-          <Tabs variant="contained" sx={{ flex: 1 }}>
+          <Tabs intent="contained" sx={{ flex: 1 }}>
             {secondaryNav.map((label, index) => (
               <TabItem asChild key={index} active={index === 0}>
-                <Linklike>{label}</Linklike>
+                <Link>{label}</Link>
               </TabItem>
             ))}
           </Tabs>
@@ -79,4 +79,4 @@ export default function Overview(): JSX.Element {
   );
 }
 
-const Stack = styled(StackImpl).attrs({ gap: "#4" });
+const Stack = styled(StackImpl).attrs({ gap: "l" });

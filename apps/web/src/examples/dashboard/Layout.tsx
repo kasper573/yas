@@ -3,7 +3,6 @@ import {
   Avatar,
   CircularProgress,
   Divider,
-  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -15,7 +14,7 @@ import {
 import { Suspense, useState } from "react";
 import { api, enabledWhenDefined } from "@yas/trpc-client";
 import { useDebounce } from "@yas/hooks";
-import { Outlet } from "@yas/router";
+import { NavLink, Outlet } from "@yas/router";
 import { Card } from "../shared";
 import { SearchForm } from "./SearchForm";
 
@@ -39,14 +38,14 @@ export default function Layout() {
     (debouncedSearchInput.isDebouncing || searchResult.isFetching);
 
   return (
-    <Card sx={{ p: 0 }}>
-      <Stack direction="row" align="center" sx={{ my: "#3", px: "#5" }}>
-        <Tabs variant="item-contained" sx={{ flex: 1 }}>
+    <Card style={{ padding: 0 }}>
+      <Stack direction="row" align="center" sx={{ my: "l", px: "xl" }}>
+        <Tabs intent="item-contained" sx={{ flex: 1 }}>
           {dashboardLinks.map(({ to, label }, index) => (
             <TabItem key={index} asChild>
-              <Link to={to} activeOptions={{ exact: true }}>
+              <NavLink to={to} activeOptions={{ exact: true }}>
                 {label}
-              </Link>
+              </NavLink>
             </TabItem>
           ))}
         </Tabs>
@@ -56,10 +55,10 @@ export default function Layout() {
           isLoading={isSearching}
         >
           {searchResult.data ? (
-            <List sx={{ minWidth: 200 }}>
+            <List style={{ minWidth: 200 }}>
               {searchResult.data.map((user, index) => (
-                <ListItem asChild button key={index} sx={{ px: "#5" }}>
-                  <Link
+                <ListItem asChild button key={index} sx={{ px: "xl" }}>
+                  <NavLink
                     to="/dashboard"
                     search={(prev) => ({ ...prev, userId: user.userId })}
                   >
@@ -70,11 +69,11 @@ export default function Layout() {
                       />
                     </ListItemIcon>
                     <ListItemText primary={user.name} secondary={user.email} />
-                  </Link>
+                  </NavLink>
                 </ListItem>
               ))}
               {searchResult.data.length === 0 && (
-                <ListItem sx={{ px: "#5" }}>
+                <ListItem sx={{ px: "xl" }}>
                   <ListItemText
                     primary={`No users found matching "${debouncedSearchInput.value}"`}
                   />
@@ -85,7 +84,7 @@ export default function Layout() {
         </SearchForm>
       </Stack>
       <Divider margin={false} />
-      <Stack sx={{ flex: 1, p: "#5" }}>
+      <Stack sx={{ flex: 1, p: "xl" }}>
         <Suspense
           fallback={<CircularProgress size="large" sx={{ margin: "auto" }} />}
         >
@@ -96,4 +95,4 @@ export default function Layout() {
   );
 }
 
-const Stack = styled(StackImpl).attrs({ gap: "#4" });
+const Stack = styled(StackImpl).attrs({ gap: "l" });

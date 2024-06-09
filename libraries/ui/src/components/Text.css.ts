@@ -1,43 +1,44 @@
-import type { TypographyVariant } from "@yas/design-system";
-import { recipe, variables } from "@yas/style";
-
-const typographyVariants = Object.keys(
-  variables.typography,
-) as TypographyVariant[];
+import { recipe, atoms, cssForParagraphSpacing } from "@yas/style";
+import { keysOf, mapValues, tokens } from "@yas/design-tokens";
 
 export const textRecipe = recipe({
-  base: {
-    color: "inherit",
-    display: "block",
-  },
+  base: atoms({ all: "unset" }),
   variants: {
-    variant: Object.fromEntries(
-      typographyVariants.map((typography) => [typography, { typography }]),
-    ) as Record<TypographyVariant, { typography: TypographyVariant }>,
-    paragraph: {
-      true: {
-        marginBottom: "#2",
-      },
-      false: {},
+    intent: mapValues(tokens.typography, (_, typography) =>
+      atoms({ typography }),
+    ),
+    /**
+     * Enables the intent specific margin. Commonly used for paragraph spacing.
+     */
+    margin: {
+      true: {},
     },
-    noWrap: {
-      true: {
-        whiteSpace: "nowrap",
-      },
+    /**
+     * Disables the intent specific line height. Commonly used for single line text.
+     */
+    compact: {
+      true: [atoms({ whiteSpace: "nowrap" }), { lineHeight: "1em" }],
+    },
+    overflow: {
+      visible: {},
+      clip: atoms({ textOverflow: "clip", overflow: "hidden" }),
+      ellipsis: atoms({ textOverflow: "ellipsis", overflow: "hidden" }),
+    },
+    inline: {
+      true: atoms({ display: "inline" }),
+      false: atoms({ display: "block" }),
     },
   },
   compoundVariants: [
-    {
-      variants: {
-        variant: "caption",
-        paragraph: false,
-      },
-      style: {
-        display: "inline",
-      },
-    },
+    ...keysOf(tokens.typography).map((intent) => ({
+      variants: { margin: true, intent },
+      style: cssForParagraphSpacing(intent),
+    })),
   ],
   defaultVariants: {
-    variant: "body",
+    intent: "body",
+    inline: false,
+    margin: false,
+    compact: false,
   },
 });

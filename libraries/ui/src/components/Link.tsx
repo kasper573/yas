@@ -1,7 +1,6 @@
 import { styled } from "@yas/style";
-import { createLinkComponent } from "@yas/router";
-import { link } from "./Link.css";
+import { linkRecipe } from "./Link.css";
 
-export const Linklike = styled("span", link);
+export const Link = styled("a", linkRecipe);
 
-export const Link = createLinkComponent((component) => styled(component, link));
+export { linkRecipe };

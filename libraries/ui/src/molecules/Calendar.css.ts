@@ -1,102 +1,112 @@
-import { recipe, style } from "@yas/style";
+import { atoms, breakpointQuery, recipe, style, theme } from "@yas/style";
+import { tokens } from "@yas/design-tokens";
 import { buttonRecipe } from "../components/Button.css";
 
-const borderRadius = "#2" as const;
+const borderRadius = "m" as const;
 
-export const base = style({
-  padding: "#3",
+export const base = atoms({
+  padding: "l",
   display: "inline-block",
 });
 
-export const months = style({
-  display: "flex",
-  flexDirection: {
-    default: "row",
-    "small-display": "column",
+export const months = style([
+  atoms({
+    display: "flex",
+    flexDirection: "row",
+    gap: "l",
+  }),
+  {
+    "@media": {
+      [breakpointQuery.down("s")]: {
+        flexDirection: "column",
+      },
+    },
   },
-  gap: "#3",
-});
+]);
 
-export const caption = style({
+export const caption = atoms({
   display: "flex",
   position: "relative",
   justifyContent: "center",
   alignItems: "center",
-  mb: "#2",
+  height: "xl",
+  mb: "m",
 });
 
-export const caption_label = style({
+export const caption_label = atoms({
   typography: "body2",
 });
 
-export const nav = style({
+export const nav = atoms({
   display: "flex",
   alignItems: "center",
-  columnGap: "#1",
+  columnGap: "s",
 });
 
 export const nav_button = buttonRecipe({
-  icon: true,
-  color: "surface-contrast",
-  variant: "text",
-  shape: "rounded",
-  size: "medium",
+  round: true,
+  intent: "surface",
 });
 
-export const nav_button_previous = style({
-  position: "absolute",
-  left: 6,
-});
+export const nav_button_previous = style([
+  atoms({ position: "absolute" }),
+  { left: 6 },
+]);
 
-export const nav_button_next = style({
-  position: "absolute",
-  right: 6,
-});
+export const nav_button_next = style([
+  atoms({ position: "absolute" }),
+  { right: 6 },
+]);
 
-export const table = style({
+export const table = atoms({
   width: "100%",
   borderCollapse: "collapse",
 });
 
-export const head_row = style({
+export const head_row = atoms({
   display: "flex",
 });
 
-export const head_cell = style({
+export const head_cell = atoms({
   typography: "body",
   flex: 1,
 });
 
-export const row = style({
+export const row = atoms({
   display: "flex",
   width: "100%",
-  mt: "#1",
+  mt: "s",
 });
 
-export const day = style({
-  border: "none",
-  typography: "body",
-  cursor: "pointer",
-  height: 32,
-  width: 32,
-  background: "transparent",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transition: [[["background-color", "color", "opacity"], "standard.enter"]],
-  padding: 0,
-  borderRadius,
-  selectors: {
-    [`&:hover:not([aria-selected])`]: {
-      background: "info.base.light",
-      color: "info.contrast.main",
+export const day = style([
+  atoms({
+    border: "none",
+    typography: "body",
+    cursor: "pointer",
+    height: "l",
+    width: "l",
+    backgroundColor: "transparent",
+    color: "inherit",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "appearance.standard.enter",
+    padding: 0,
+    borderRadius,
+  }),
+  {
+    selectors: {
+      [`&:hover:not([aria-selected])`]: {
+        background: theme.color.info.base,
+        color: theme.color.info.face,
+      },
     },
   },
-});
+]);
 
 const selectedDayColors = {
-  background: "primary.base.main",
-  color: "primary.contrast.main",
+  background: theme.color.primary.base,
+  color: theme.color.primary.face,
 } as const;
 
 export const day_range_start = style(selectedDayColors);
@@ -105,15 +115,13 @@ export const day_range_middle = style({});
 
 export const day_range_end = style(selectedDayColors);
 
-export const day_selected = style({
-  opacity: 1,
-});
+export const day_selected = style({ opacity: 1 });
 
 export const day_today = style({
   fontWeight: "bold",
   selectors: {
     [`&:not([aria-selected]), &${day_range_middle}`]: {
-      color: "primary.base.main",
+      color: theme.color.primary.base,
     },
   },
 });
@@ -122,42 +130,49 @@ export const day_outside = style({});
 
 export const day_disabled = style({});
 
-export const day_hidden = style({
-  visibility: "hidden",
-});
+export const day_hidden = style([
+  {},
+  atoms({
+    visibility: "hidden",
+  }),
+]);
 
 export const cell = recipe({
-  base: {
-    flex: 1,
-    position: "relative",
-    padding: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    typography: "caption",
-    borderRadius,
-    overflow: "hidden",
-    transition: [[["background-color", "color"], "standard.enter"]],
-    selectors: {
-      [`&:has(>${day_outside}), &:has(>${day_disabled})`]: {
-        opacity: 0.5,
+  base: [
+    atoms({
+      flex: 1,
+      position: "relative",
+      padding: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      typography: "caption",
+      borderRadius,
+      overflow: "hidden",
+      transition: "appearance.standard.enter",
+    }),
+    {
+      selectors: {
+        [`&:has(>${day_outside}), &:has(>${day_disabled})`]: {
+          opacity: 0.5,
+        },
       },
     },
-  },
+  ],
   variants: {
     range: {
       true: {
         selectors: {
           [`&:has(>${day_selected})`]: {
-            background: "info.base.light",
-            color: "info.contrast.main",
+            background: theme.color.info.base,
+            color: theme.color.info.face,
             borderRadius: 0,
           },
           [`&:has(>${day_range_start}), &:first-child`]: {
-            borderLeftRadius: borderRadius,
+            borderLeftRadius: tokens.radius[borderRadius],
           },
           [`&:has(>${day_range_end}), &:last-child`]: {
-            borderRightRadius: borderRadius,
+            borderRightRadius: tokens.radius[borderRadius],
           },
         },
       },

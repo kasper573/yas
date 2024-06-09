@@ -1,5 +1,5 @@
-import { within, userEvent, waitFor } from "@storybook/testing-library";
-import type { Meta, StoryObj } from "@storybook/react";
+import { within, userEvent, waitFor } from "@yas/test/storybook";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import type { ComponentType } from "react";
 import { styled } from "@yas/style";
 import { useModal } from "../hooks/useModal";

@@ -1,17 +1,15 @@
-import { recipe } from "@yas/style";
+import { atoms } from "@yas/style";
 
-export const checkboxRecipe = recipe({
-  base: {
-    border: "standard",
-    borderRadius: "#1",
-    backgroundColor: "surface.base.main",
-    width: "20px",
-    height: "20px",
-    outline: { focus: "none" },
-    boxShadow: { focus: "#1" },
-    borderColor: {
-      default: "divider",
-      focus: "primary.base.main",
-    },
+export const checkbox = atoms({
+  border: "thin",
+  borderRadius: "s",
+  backgroundColor: "surface.base",
+  width: "s",
+  height: "s",
+  outline: { focus: "none" },
+  boxShadow: { focus: "thin" },
+  borderColor: {
+    default: "tint",
+    focus: "primary.base",
   },
 });

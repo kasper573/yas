@@ -1,171 +1,171 @@
-import type { ColorSet, ColorSetName } from "@yas/design-system";
-import { colorSetNames } from "@yas/design-system";
-import { createVar, globalStyle, recipe, variables } from "@yas/style";
+import { tokens } from "@yas/design-tokens";
+import { recipe, atoms, theme, createVar } from "@yas/style";
 
-const nonSurfaceColorSetNames = colorSetNames.filter(
-  (value) => value !== "surface",
-) as Exclude<ColorSetName, "surface">[];
-
-export const iconSizes = {
-  small: 24,
-  medium: 28,
-  large: 32,
-};
-
-const buttonVars = {
-  iconSize: createVar("iconSize"),
-  color: {
-    base: {
-      light: createVar("base.light"),
-      main: createVar("base.main"),
-      dark: createVar("base.dark"),
-    },
-    contrast: {
-      light: createVar("contrast.light"),
-      main: createVar("contrast.main"),
-      dark: createVar("contrast.dark"),
-    },
-  },
-};
+const heightVar = createVar("buttonHeight");
+const horizontalPaddingVar = createVar("buttonPaddingX");
 
 export const buttonRecipe = recipe({
-  base: {
-    margin: 0,
-    width: "auto",
-    overflow: "visible",
-    textAlign: "inherit",
-    transition: [
-      [["background-color", "color", "border-color"], "standard.enter"],
-    ],
-    border: "standard",
-    cursor: "pointer",
-  },
+  base: [
+    atoms({
+      all: "unset",
+      gap: "l",
+      overflow: "visible",
+      textAlign: "inherit",
+      cursor: "pointer",
+      whiteSpace: "nowrap",
+      transition: "appearance.standard.enter",
+      display: "inline-flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      userSelect: "none",
+    }),
+    {
+      height: heightVar,
+      paddingLeft: horizontalPaddingVar,
+      paddingRight: horizontalPaddingVar,
+    },
+  ],
   variants: {
     size: {
-      small: {
-        vars: { [buttonVars.iconSize]: `${iconSizes.small}px` },
-        typography: "caption",
-        px: "#2",
-        py: "#1",
-      },
-      medium: {
-        vars: { [buttonVars.iconSize]: `${iconSizes.medium}px` },
-        typography: "body",
-        px: "#3",
-        py: "#1",
-      },
-      large: {
-        vars: { [buttonVars.iconSize]: `${iconSizes.large}px` },
-        typography: "body2",
-        px: "#3",
-        py: "#1",
-      },
-    },
-    icon: {
-      true: {
-        display: "inline-flex",
-        padding: "#1",
-        alignItems: "center",
-        justifyContent: "center",
-        textTransform: "uppercase",
-        boxSizing: "border-box",
-        fontSize: "100%",
-        overflow: "hidden",
-        minWidth: buttonVars.iconSize,
-        minHeight: buttonVars.iconSize,
-        maxWidth: buttonVars.iconSize,
-        maxHeight: buttonVars.iconSize,
-      },
-      false: {},
-    },
-    color: {
-      "surface-contrast": {
-        vars: assignColorVars(
-          variables.color.surface.contrast,
-          variables.color.surface.base,
-        ),
-      },
-      ...(Object.fromEntries(
-        nonSurfaceColorSetNames.map((name) => [
-          name,
-          {
-            vars: assignColorVars(
-              variables.color[name].base,
-              variables.color[name].contrast,
-            ),
+      medium: [
+        atoms({ typography: "label" }),
+        {
+          vars: {
+            [heightVar]: "40px",
+            [horizontalPaddingVar]: `${tokens.space.xl}px`,
           },
-        ]),
-      ) as Record<Exclude<ColorSetName, "surface">, { vars: {} }>),
+        },
+      ],
     },
-    variant: {
-      text: {
-        color: buttonVars.color.base.main,
-        background: {
-          default: `transparent`,
-          hover: buttonVars.color.contrast.light,
-          active: buttonVars.color.contrast.main,
-        },
-        borderColor: "transparent",
-      },
-      contained: {
-        background: {
-          default: buttonVars.color.base.light,
-          hover: buttonVars.color.base.main,
-          active: buttonVars.color.base.dark,
-        },
-        color: buttonVars.color.contrast.light,
-        borderColor: buttonVars.color.contrast.light,
-      },
-      outlined: {
-        background: {
-          default: buttonVars.color.contrast.light,
-          hover: buttonVars.color.contrast.main,
-          active: buttonVars.color.contrast.dark,
-        },
-        color: buttonVars.color.base.main,
-        borderColor: buttonVars.color.base.main,
-      },
+    round: {
+      true: atoms({ borderRadius: "circle" }),
+      false: atoms({ borderRadius: "m" }),
     },
-    shape: {
-      circular: {
-        borderRadius: "50%",
-      },
-      rounded: {
-        borderRadius: "#2",
-      },
+    intent: {
+      primary: [
+        atoms({
+          backgroundColor: {
+            default: "primary.base",
+            hover: "primary.hover",
+            active: "primary.active",
+          },
+          color: "primary.face",
+        }),
+        {
+          selectors: {
+            "&:focus-visible": borderStyle(),
+          },
+        },
+      ],
+      destructive: [
+        atoms({
+          backgroundColor: {
+            default: "error.base",
+            hover: "error.hover",
+            active: "error.active",
+          },
+          color: "error.face",
+        }),
+        {
+          selectors: {
+            "&:focus-visible": borderStyle(),
+          },
+        },
+      ],
+      secondary: [
+        atoms({
+          backgroundColor: {
+            default: "secondary.base",
+            hover: "secondary.hover",
+            active: "secondary.active",
+          },
+          color: "secondary.face",
+        }),
+        {
+          selectors: {
+            "&:focus-visible": borderStyle(),
+          },
+        },
+      ],
+      surface: [
+        atoms({
+          color: "surface.face",
+          backgroundColor: {
+            default: "surface.base",
+            hover: "surface.hover",
+            active: "surface.active",
+          },
+        }),
+        borderStyle(theme.color.surface.face_subtle),
+      ],
+      outline: [
+        atoms({
+          color: {
+            default: "surface.face",
+            hover: "secondary.face",
+            active: "secondary.face",
+          },
+          backgroundColor: {
+            default: "transparent",
+            focus: "secondary.hover",
+            hover: "secondary.base",
+            active: "secondary.active",
+          },
+        }),
+        borderStyle(),
+      ],
+      text: [
+        atoms({
+          color: {
+            default: "surface.face",
+            hover: "secondary.face",
+            active: "secondary.face",
+          },
+          backgroundColor: {
+            default: "transparent",
+            focus: "transparent",
+            hover: "secondary.hover",
+            active: "secondary.active",
+          },
+        }),
+        {
+          selectors: {
+            "&:focus-visible": borderStyle(),
+          },
+        },
+      ],
     },
     disabled: {
-      true: {
+      true: atoms({
         pointerEvents: "none",
-        background: "info.base.dark",
-        color: "highlight",
-        borderColor: "surface.base.dark",
-      },
-      false: {},
+        opacity: 0.4,
+      }),
+    },
+    fullWidth: {
+      true: atoms({
+        width: "100%",
+      }),
+      false: atoms({
+        width: "min-content",
+      }),
     },
   },
   defaultVariants: {
     size: "medium",
-    variant: "contained",
-    color: "primary",
-    shape: "rounded",
+    intent: "primary",
     disabled: false,
-    icon: false,
+    fullWidth: false,
+    round: false,
   },
 });
 
-function assignColorVars(base: ColorSet, contrast: ColorSet) {
+function borderStyle(color = theme.color.primary.base) {
   return {
-    [buttonVars.color.base.light]: base.light,
-    [buttonVars.color.base.main]: base.main,
-    [buttonVars.color.base.dark]: base.dark,
-    [buttonVars.color.contrast.light]: contrast.light,
-    [buttonVars.color.contrast.main]: contrast.main,
-    [buttonVars.color.contrast.dark]: contrast.dark,
+    border: `1px solid ${tokens.color.white["87"]}`,
+    outline: `1px solid ${color}`,
+    height: `calc(${heightVar} - 2px)`,
+    paddingLeft: `calc(${horizontalPaddingVar} - 1px)`,
+    paddingRight: `calc(${horizontalPaddingVar} - 1px)`,
   };
 }
-
-globalStyle(`${buttonRecipe.classNames.variants.icon.true} > *`, {
-  width: "100%",
-  height: "100%",
-});

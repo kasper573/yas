@@ -5,21 +5,24 @@ import { Text } from "../../components/Text";
 export type FormControlProps = ComponentProps<typeof FormControl>;
 export const FormControl = styled("div");
 
-export type FormControlLabelProps = ComponentProps<typeof TextLabel> & {
+export type FormControlLabelProps = ComponentProps<typeof Text> & {
   htmlFor?: string;
 };
 
 export function FormControlLabel({
   children,
+  htmlFor,
   ...props
 }: FormControlLabelProps) {
   if (children === null || children === undefined) {
     return null;
   }
-  return <TextLabel {...props}>{children}</TextLabel>;
+  return (
+    <Text asChild {...props}>
+      <label htmlFor={htmlFor}>{children}</label>
+    </Text>
+  );
 }
-
-const TextLabel = Text.as("label");
 
 export type FormControlErrorProps = { error?: string };
 export function FormControlError({ error }: FormControlErrorProps) {
@@ -27,7 +30,7 @@ export function FormControlError({ error }: FormControlErrorProps) {
     return null;
   }
   return (
-    <Text variant="caption" sx={{ color: "error.base.main", px: "#1" }}>
+    <Text intent="caption" sx={{ color: "error.base", px: "s" }}>
       {error}
     </Text>
   );

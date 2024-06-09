@@ -1,0 +1,40 @@
+{
+  "name": "@yas/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "storybook build -o sb-dist",
+    "preview": "http-server sb-dist --port 6006 --silent",
+    "dev": "storybook dev -p 6006 --no-open",
+    "test": "storybook build -o sb-dist && start-server-and-test \"pnpm preview\" http://127.0.0.1:6006 test-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "8.1.6",
+    "@storybook/addon-interactions": "8.1.6",
+    "@storybook/addon-links": "8.1.6",
+    "@storybook/addon-themes": "8.1.6",
+    "@storybook/blocks": "8.1.6",
+    "@storybook/test": "8.1.6",
+    "@storybook/react": "8.1.6",
+    "@storybook/react-vite": "8.1.6",
+    "@storybook/test-runner": "0.18.2",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "@yas/build": "workspace:*",
+    "@yas/style": "workspace:*",
+    "@yas/ui": "workspace:*",
+    "@yas/test": "workspace:*",
+    "@yas/router": "workspace:*",
+    "@yas/validate": "workspace:*",
+    "@yas/tsconfig": "workspace:*",
+    "@yas/query-client": "workspace:*",
+    "@yas/trpc-client": "workspace:*",
+    "@yas/graphql-client": "workspace:*",
+    "prop-types": "15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "8.1.6",
+    "start-server-and-test": "2.0.3",
+    "http-server": "14.1.1"
+  }
+}

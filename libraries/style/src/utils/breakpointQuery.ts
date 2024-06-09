@@ -1,9 +1,20 @@
-import { tokens } from "@yas/design-system";
+import { tokens } from "@yas/design-tokens";
 
 const practicallyInfinite = 1e4; // Can't use Infinity because it's not a valid CSS value
 
 /**
  * Convert breakpoints to media queries.
+ *
+ * Usage:
+ * import {style} from "@yas/style";
+ *
+ * const myStyle = style({
+ *  "@media": {
+ *    [breakpointQuery.down("small-display")]: {
+ *      color: "red",
+ *    },
+ *   }
+ * })
  */
 export const breakpointQuery = createBreakpointQueryUtils(tokens.breakpoints);
 

@@ -1,7 +1,7 @@
 {
   "name": "@yas/style",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -13,19 +13,17 @@
     }
   },
   "dependencies": {
-    "@vanilla-extract/css": "1.14.0",
-    "@vanilla-extract/recipes": "0.5.1",
-    "@vanilla-extract/dynamic": "2.1.0",
-    "clsx": "^2.1.0",
-    "shallow-equal": "3.1.0",
-    "vanilla-extract-constrained": "workspace:*",
-    "vanilla-extract-recipe-factory": "workspace:*",
-    "react-styled-factory": "workspace:*",
-    "@yas/design-system": "workspace:*",
+    "@yas/design-tokens": "workspace:*",
+    "@vanilla-extract/css": "1.15.2",
+    "@vanilla-extract/recipes": "0.5.3",
+    "@vanilla-extract/sprinkles": "1.6.2",
+    "@vanilla-extract/dynamic": "2.1.1",
+    "clsx": "^1.2.1",
+    "react-styled-factory": "^0.0.10",
     "flattened": "workspace:*"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*",
-    "csstype": "^3"
+    "csstype": "3.1.2"
   }
 }

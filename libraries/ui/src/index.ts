@@ -36,4 +36,5 @@ export * from "./form/SingleSelectField";
 export * from "./form/TextField";
 export * from "./form/composed/CheckboxGroupField";
 export * from "./form/composed/NumberField";
-export * from "./debug/ExampleImage";
+export * from "./devtools/ExampleImage";
+export * from "react-error-boundary";

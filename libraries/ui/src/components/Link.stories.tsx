@@ -1,22 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { RouterProvider, createRootRoute, createRouter } from "@yas/router";
-import type { ComponentProps } from "react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { Link } from "./Link";
+import { Button } from "./Button";
 
 export default {
-  component: LinkWithProvider,
+  component: Link,
   tags: ["autodocs"],
-} satisfies Meta<typeof Link>;
+} satisfies Meta;
 
 export const Default: StoryObj<Meta<typeof Link>> = {
-  args: { children: "Click me" },
+  args: {
+    children: "I am a regular hyperlink",
+    href: "http://www.google.com",
+  },
 };
 
-function LinkWithProvider(props: ComponentProps<typeof Link>) {
-  const testRouter = createRouter({
-    routeTree: createRootRoute({
-      notFoundComponent: () => <Link {...props} />,
-    }),
-  });
-  return <RouterProvider router={testRouter} />;
-}
+export const ButtonAsLink: StoryObj<Meta<typeof Link>> = {
+  render(props) {
+    return (
+      <Button intent="text" asChild>
+        <Link {...props} />
+      </Button>
+    );
+  },
+  args: {
+    children: "I am a text button as a link",
+    href: "http://www.google.com",
+  },
+};

@@ -44,7 +44,7 @@ export function Pagination({
   }
 
   return (
-    <Stack direction="row" align="center" gap="#1" {...rest}>
+    <Stack direction="row" align="center" gap="s" {...rest}>
       <PageButton
         onClick={() => onChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -55,7 +55,7 @@ export function Pagination({
       {isLeftSeparatorVisible ? (
         <>
           <PageButton onClick={() => onChange(1)}>
-            <Text variant="caption">1</Text>
+            <Text intent="caption">1</Text>
           </PageButton>
           <Separator />
         </>
@@ -72,7 +72,7 @@ export function Pagination({
         <>
           <Separator />
           <PageButton onClick={() => onChange(totalPages)}>
-            <Text variant="caption">{totalPages}</Text>
+            <Text intent="caption">{totalPages}</Text>
           </PageButton>
         </>
       ) : null}
@@ -106,7 +106,7 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
           onClick={() => onChange(page)}
           disabled={page === currentPage}
         >
-          <Text variant="caption">{page}</Text>
+          <Text intent="caption">{page}</Text>
         </PageButton>
       </>
     );
@@ -116,9 +116,8 @@ function PageButtons({ from, to, currentPage, onChange }: PageButtonsProps) {
 }
 
 const PageButton = styled(Button).attrs({
-  icon: true,
-  size: "small",
-  variant: "text",
+  round: true,
+  intent: "text",
   style: { textAlign: "center" },
 });
 

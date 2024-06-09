@@ -7,7 +7,7 @@ import {
   FormControlError,
   FormControlLabel,
 } from "./shared/FormControl";
-import { checkboxRecipe } from "./CheckboxField.css";
+import { checkbox } from "./CheckboxField.css";
 
 export type CheckboxLabelSide = "left" | "right";
 
@@ -45,9 +45,9 @@ export function CheckboxField({
 const FormControlStack = FormControl.as(Stack).attrs({
   direction: "row",
   align: "center",
-  gap: "#1",
+  gap: "s",
 });
 
-const Checkbox = styled("input", checkboxRecipe).attrs({
+const Checkbox = styled("input", checkbox).attrs({
   type: "checkbox",
 });

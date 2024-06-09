@@ -12,18 +12,12 @@ export function Title({
   onClear?: () => void;
 }) {
   return (
-    <Stack direction="row" gap="#3" align="center">
-      <Text variant="h1" sx={{ lineHeight: 1 }}>
+    <Stack direction="row" gap="l" align="center">
+      <Text intent="h1" compact>
         {children}
       </Text>
       {showClearButton ? (
-        <Button
-          icon
-          shape="rounded"
-          color="surface-contrast"
-          variant="outlined"
-          onClick={onClear}
-        >
+        <Button round intent="outline" onClick={onClear}>
           <Cross1Icon />
         </Button>
       ) : null}

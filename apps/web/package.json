@@ -25,7 +25,7 @@
     "@yas/validate": "workspace:*",
     "@yas/query-client": "workspace:*",
     "@yas/router": "workspace:*",
-    "@yas/design-system": "workspace:*",
+    "@yas/design-tokens": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "2.12.2",
@@ -39,7 +39,6 @@
     "@yas/env": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "8.2.2",
-    "react-error-boundary": "^4.0.13"
+    "concurrently": "8.2.2"
   }
 }

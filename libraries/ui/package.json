@@ -11,12 +11,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "storybook build -o dist",
-    "dev": "storybook dev -p 6006 --no-open",
     "lint": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\"",
-    "test": "concurrently -n \"component,unit\" \"pnpm test:components\" \"pnpm test:unit\"",
-    "test:components": "pnpm build && concurrently -k -s first -n \"http,test\" \"http-server dist --port 6006 --silent\" \"wait-on tcp:6006 && test-storybook\"",
-    "test:unit": "vitest run"
+    "test": "vitest run"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.0.0",
@@ -31,34 +27,19 @@
     "@hookform/resolvers": "3.3.4",
     "react-day-picker": "8.10.0",
     "react-hook-form": "7.49.3",
-    "react-async-modal-hook": "workspace:*",
-    "hookform-controller-proxy": "workspace:*"
+    "react-async-modal-hook": "^0.0.16",
+    "react-error-boundary": "4.0.13",
+    "hookform-controller-proxy": "^0.0.21"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "7.6.17",
-    "@storybook/addon-interactions": "7.6.17",
-    "@storybook/addon-links": "7.6.17",
-    "@storybook/addon-themes": "7.6.17",
-    "@storybook/blocks": "7.6.17",
-    "@storybook/jest": "0.2.3",
-    "@storybook/react": "7.6.17",
-    "@storybook/react-vite": "7.6.17",
-    "@storybook/test-runner": "0.16.0",
-    "@storybook/testing-library": "0.2.2",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
-    "@yas/design-system": "workspace:*",
+    "@yas/design-tokens": "workspace:*",
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "concurrently": "8.2.2",
-    "http-server": "^14.1.1",
-    "prop-types": "15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "storybook": "7.6.17",
-    "storybook-addon-variants": "^0.2.0",
-    "wait-on": "^7.2.0"
+    "react-dom": "^18.2.0"
   }
 }

@@ -48,8 +48,8 @@ export default function Sandbox() {
 
   return (
     <>
-      <Text variant="h1">Yet Another Stack</Text>
-      <Text paragraph>Mode: {env.mode}</Text>
+      <Text intent="h1">Yet Another Stack</Text>
+      <Text margin>Mode: {env.mode}</Text>
       <Text>Theme: {theme}</Text>
 
       <Text sx={{ whiteSpace: "pre-wrap" }}>
@@ -58,7 +58,7 @@ export default function Sandbox() {
         breakpoint: {breakpointName}
       </Text>
 
-      <Stack direction="row" gap="#2" sx={{ mt: "#2" }}>
+      <Stack direction="row" gap="m" sx={{ mt: "m" }}>
         <Button onClick={toggleTheme}>Toggle theme</Button>
         <Button onClick={() => showDialog()}>Show dialog</Button>
         <Button onClick={triggerReactRenderError}>
@@ -72,25 +72,25 @@ export default function Sandbox() {
 
       <div className={styles.container}>Testing vanilla-extract css</div>
 
-      <Stack direction="row" gap="#2">
+      <Stack direction="row" gap="m">
         <Box
           sx={{
-            p: "#7",
-            background: "secondary.base.main",
-            color: "secondary.contrast.main",
+            p: "l",
+            backgroundColor: "secondary.base",
+            color: "secondary.face",
             typography: "body",
           }}
         >
           Testing sx prop
         </Box>
 
-        <Box className={styles.projectImage} sx={{ p: "#2" }}>
+        <Box className={styles.projectImage} sx={{ p: "m" }}>
           <Alert severity="info">
             <Text>Image from apps/web</Text>
           </Alert>
         </Box>
 
-        <ExampleImage sx={{ p: "#2" }}>
+        <ExampleImage sx={{ p: "m" }}>
           <Alert severity="info">
             <Text>Image from @yas/ui</Text>
           </Alert>

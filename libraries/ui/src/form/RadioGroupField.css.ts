@@ -1,19 +1,25 @@
-import { recipe, style } from "@yas/style";
+import { atoms, recipe } from "@yas/style";
 
 export const clearButton = recipe({
   variants: {
     visible: {
-      true: { opacity: 1, transition: [["opacity", "emphasized.enter"]] },
-      false: { opacity: 0, transition: [["opacity", "standard.exit"]] },
+      true: atoms({
+        opacity: 1,
+        transition: "appearance.emphasized.enter",
+      }),
+      false: atoms({
+        opacity: 0,
+        transition: "appearance.standard.exit",
+      }),
     },
   },
 });
 
-export const fieldset = style({
+export const fieldset = atoms({
   padding: 0,
   border: "none",
 });
 
-export const radio = style({
+export const radio = atoms({
   margin: 0,
 });

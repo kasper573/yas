@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ConstrainedStyleWithoutConditions } from "@yas/style";
+import type { Atoms } from "@yas/style";
 import type {
   OptionalFieldProps as OptionalFieldPropsImpl,
   RequiredFieldProps as RequiredFieldPropsImpl,
@@ -11,7 +11,7 @@ interface CustomFieldProps {
   info?: ReactNode;
   size?: "small" | "medium";
   metrics?: Record<PropertyKey, number>;
-  sx?: ConstrainedStyleWithoutConditions;
+  sx?: Atoms;
 }
 
 export type FieldProps<Value = unknown> =

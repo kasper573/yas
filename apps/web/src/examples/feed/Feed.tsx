@@ -25,7 +25,7 @@ export default function Feed() {
 
   return (
     <>
-      <Stack asChild direction="row" gap="#2" align="center">
+      <Stack asChild direction="row" gap="m" align="center">
         <form onSubmit={onSubmit}>
           {control.message((props) => (
             <TextField

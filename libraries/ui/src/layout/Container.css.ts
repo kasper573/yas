@@ -1,6 +1,6 @@
-import { breakpointQuery, unsafe } from "@yas/style";
+import { breakpointQuery, style } from "@yas/style";
 
-export const container = unsafe.style({
+export const container = style({
   margin: "auto",
   width: "100%",
   boxSizing: "border-box",

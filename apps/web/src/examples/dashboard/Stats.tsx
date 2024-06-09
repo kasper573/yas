@@ -20,17 +20,17 @@ export function StatsCard({
         direction="row"
         align="center"
         justify="spaceBetween"
-        sx={{ flex: 1 }}
+        sx={{ mb: "xl" }}
       >
-        <Text variant="h5" noWrap>
+        <Text intent="h5" compact>
           {title}
         </Text>
         {icon}
       </Stack>
-      <Text variant="h1" noWrap>
+      <Text intent="h2" compact sx={{ flex: 1 }}>
         {amount}
       </Text>
-      <Text variant="caption" noWrap>
+      <Text intent="caption" compact>
         {description}
       </Text>
     </Card>

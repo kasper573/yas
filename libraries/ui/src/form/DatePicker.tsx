@@ -11,7 +11,7 @@ import type { FieldProps } from "./shared/types";
 import { datePickerText } from "./DatePicker.css";
 
 export type DatePickerProps = FieldProps<Date> &
-  Pick<ButtonProps, "variant" | "color"> & {
+  Pick<ButtonProps, "intent" | "style" | "className"> & {
     format?: FormatPreset;
   };
 
@@ -25,8 +25,10 @@ export function DatePicker({
   label,
   metrics,
   format: formatPreset = "long-date",
-  variant = "outlined",
-  color = "surface-contrast",
+  intent = "outline",
+  sx,
+  style,
+  className,
   ...rest
 }: DatePickerProps) {
   function tryEmitChangedDate(date?: Date) {
@@ -41,10 +43,10 @@ export function DatePicker({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant={variant} color={color} {...rest}>
+        <Button {...{ sx, style, className, intent }}>
           <Stack
             direction="row"
-            gap="#2"
+            gap="m"
             align="center"
             className={datePickerText}
           >

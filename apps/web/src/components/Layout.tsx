@@ -2,12 +2,11 @@ import {
   CircularProgress,
   Container,
   Dock,
-  Link,
   Stack,
   TabItem,
   Tabs,
 } from "@yas/ui";
-import { Outlet as RouterOutlet } from "@yas/router";
+import { NavLink, Outlet as RouterOutlet } from "@yas/router";
 import { Suspense } from "react";
 import { ModalOutlet } from "@yas/ui";
 import { layout } from "./Layout.css";
@@ -18,16 +17,16 @@ export default function Layout() {
       <ContainerStack>
         <Tabs>
           <TabItem asChild>
-            <Link to="/">Sandbox</Link>
+            <NavLink to="/">Sandbox</NavLink>
           </TabItem>
           <TabItem asChild>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </TabItem>
           <TabItem asChild>
-            <Link to="/api-tester">Api Tester</Link>
+            <NavLink to="/api-tester">Api Tester</NavLink>
           </TabItem>
           <TabItem asChild>
-            <Link to="/feed">Feed</Link>
+            <NavLink to="/feed">Feed</NavLink>
           </TabItem>
         </Tabs>
         <Stack sx={{ flex: 1 }}>
@@ -48,6 +47,6 @@ export default function Layout() {
 }
 
 const ContainerStack = Container.as(Stack).attrs({
-  gap: "#3",
-  sx: { flex: 1, p: "#5" },
+  gap: "l",
+  sx: { flex: 1, p: "xl" },
 });

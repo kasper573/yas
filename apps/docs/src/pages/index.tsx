@@ -1,8 +1,6 @@
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import type { ComponentProps, ReactNode } from "react";
-import { projects } from "../../fixtures/projects";
+import { Text } from "@yas/ui";
 import * as styles from "./index.css";
 
 export default function Home() {
@@ -19,61 +17,23 @@ export default function Home() {
             </span>
           ))}
         </h1>
-        <h2 className={styles.tagline}>{tagline}</h2>
       </header>
       <main>
-        <section>
-          <div className="container">
-            <div className="row">
-              {projects.map((project, index) => (
-                <Feature
-                  key={index}
-                  title={project.title}
-                  image={project.imageUrl}
-                  href={project.href}
-                >
-                  {project.description}
-                </Feature>
-              ))}
-            </div>
-          </div>
+        <section className={styles.content}>
+          <Text intent="h5" margin>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
+            corrupti hic molestiae doloremque aspernatur laboriosam veniam minus
+            aut officiis, voluptatem fugit fugiat neque fuga, laudantium vero.
+            Quae, dolore. Quae, exercitationem.
+          </Text>
+          <Text intent="h5">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
+            corrupti hic molestiae doloremque aspernatur laboriosam veniam minus
+            aut officiis, voluptatem fugit fugiat neque fuga, laudantium vero.
+            Quae, dolore. Quae, exercitationem.
+          </Text>
         </section>
       </main>
     </Layout>
-  );
-}
-
-function Feature({
-  image,
-  title,
-  children,
-  href,
-}: {
-  image: string;
-  title: string;
-  children: ReactNode;
-  href: string;
-}) {
-  const linkContent = (
-    <>
-      <img
-        src={image}
-        className={styles.featureImage}
-        role="img"
-        width={200}
-        height={150}
-        alt={`${title} image`}
-      />
-
-      <h2>{title}</h2>
-    </>
-  ) as ComponentProps<typeof Link>["children"];
-  return (
-    <div className={styles.feature({ columns: projects.length })}>
-      <Link to={href} style={{ display: "block" }}>
-        {linkContent}
-      </Link>
-      <p>{children}</p>
-    </div>
   );
 }

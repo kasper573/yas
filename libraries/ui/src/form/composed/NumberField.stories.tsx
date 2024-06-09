@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@yas/test/storybook";
 import { withState } from "../shared/withState";
 import { NumberField } from "./NumberField";
 

@@ -1,6 +1,6 @@
-import { style } from "@yas/style";
+import { atoms } from "@yas/style";
 
-export const datePickerText = style({
+export const datePickerText = atoms({
   whiteSpace: "nowrap",
-  minHeight: 21,
+  minHeight: "m",
 });

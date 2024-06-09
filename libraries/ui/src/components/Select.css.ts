@@ -1,113 +1,113 @@
-import { globalStyle, recipe, style } from "@yas/style";
+import { atoms, globalStyle, recipe } from "@yas/style";
 
-export const trigger = style({
+export const trigger = atoms({
   all: "unset",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  borderRadius: "#1",
+  borderRadius: "s",
   py: 0,
-  px: "#4",
+  px: "l",
   typography: "caption",
-  height: "35px",
-  gap: "#1",
-  backgroundColor: "surface.base.light",
-  color: "surface.contrast.main",
-  boxShadow: "#1",
+  height: "l",
+  gap: "s",
+  backgroundColor: "surface.hover",
+  color: "surface.face",
+  boxShadow: "thin",
 });
 
-export const triggerHover = style({
-  backgroundColor: "surface.base.main",
+export const triggerHover = atoms({
+  backgroundColor: "surface.base",
 });
 
-export const triggerFocus = style({
+export const triggerFocus = atoms({
   borderColor: {
-    default: "divider",
-    focus: "primary.base.main",
+    default: "tint",
+    focus: "primary.base",
   },
 });
 
-export const triggerPlaceholder = style({
-  color: "primary.base.dark",
+export const triggerPlaceholder = atoms({
+  color: "primary.active",
 });
 
-export const triggerIcon = style({
-  color: "primary.base.light",
+export const triggerIcon = atoms({
+  color: "primary.hover",
 });
 
-export const label = style({
-  pb: "#1",
-  px: "#4",
+export const label = atoms({
+  pb: "s",
+  px: "l",
   typography: "h4",
-  color: "surface.contrast.main",
+  color: "surface.face",
 });
 
-export const labelRealCSSS = style({
-  pb: "#1",
-  px: "#4",
+export const labelRealCSSS = atoms({
+  pb: "s",
+  px: "l",
   typography: "h4",
-  color: "surface.contrast.main",
+  color: "surface.face",
 });
 
-export const content = style({
+export const content = atoms({
   typography: "body",
   overflow: "hidden",
-  backgroundColor: "surface.base.light",
-  borderRadius: "#2",
-  boxShadow: "#1",
+  backgroundColor: "surface.base",
+  borderRadius: "m",
+  boxShadow: "thin",
 });
 
-export const viewport = style({
-  padding: "#1",
+export const viewport = atoms({
+  padding: "s",
 });
 
-export const item = style({
+export const item = atoms({
   all: "unset",
   typography: "body",
   color: {
-    default: "surface.contrast.main",
-    hoverOrFocus: "primary.contrast.main",
+    default: "surface.face",
+    hover: "primary.face",
+    focus: "primary.face",
   },
-  background: {
-    hoverOrFocus: "primary.base.light",
+  backgroundColor: {
+    hover: "primary.hover",
+    focus: "primary.hover",
   },
-  borderRadius: "#1",
+  borderRadius: "s",
   display: "flex",
   alignItems: "center",
-  height: "25px",
+  height: "m",
   py: 0,
-  pl: "#5",
-  pr: "#6",
+  px: "xl",
   position: "relative",
   userSelect: "none",
 });
 
-export const itemDisabled = style({
-  color: "info.base.dark",
+export const itemDisabled = atoms({
+  opacity: 0.5,
+  color: "info.base",
   pointerEvents: "none",
 });
 
-export const itemHighlighted = style({
+export const itemHighlighted = atoms({
   outline: "none",
-  backgroundColor: "primary.base.light",
-  color: "primary.contrast.main",
+  backgroundColor: "primary.hover",
+  color: "primary.face",
 });
 
 export const itemSelectedIndicator = recipe({
-  base: {
+  base: atoms({
     position: "absolute",
-    left: "0",
-    width: "25px",
+    left: 0,
+    width: "m",
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
     opacity: 0,
-  },
+  }),
   variants: {
     selected: {
-      true: {
-        opacity: 1,
-      },
+      true: atoms({ opacity: 1 }),
     },
   },
 });
@@ -118,12 +118,12 @@ globalStyle(
   { opacity: 1 },
 );
 
-export const scrollButton = style({
+export const scrollButton = atoms({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "25px",
-  backgroundColor: "surface.base.light",
-  color: "surface.contrast.main",
+  height: "m",
+  backgroundColor: "surface.hover",
+  color: "surface.face",
   cursor: "default",
 });

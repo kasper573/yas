@@ -1,6 +1,5 @@
 const path = require("path");
 const { configureDocusaurusWebpackConfig } = require("@yas/build/webpack");
-const { projects } = require("./fixtures/projects");
 const { env } = require("./src/env");
 
 const rootDir = path.resolve(__dirname, "..", "..");
@@ -11,7 +10,6 @@ const pathToAppRelativeToRoot = __dirname
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Yet Another Stack",
-  tagline: "A collection of React and Typescript libraries",
   favicon: "img/favicon.ico",
   url: env.docsUrl,
   baseUrl: "/",
@@ -42,7 +40,6 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./fixtures/sidebars.js"),
           editUrl: env.git.sourceUrl(pathToAppRelativeToRoot),
         },
         pages: {
@@ -69,14 +66,6 @@ const config = {
           height: 32,
         },
         items: [
-          ...projects
-            .filter((p) => p.sidebar)
-            .map(({ sidebar: [sidebarId], title }) => ({
-              type: "docSidebar",
-              sidebarId,
-              position: "left",
-              label: title,
-            })),
           {
             href: env.git.projectUrl,
             label: "GitHub",

@@ -6,7 +6,7 @@ A Typescript & React specific full stack monorepo template for large scale web d
 
 ## Notable feature highlights
 
-1. Shows how to roll your own [framework agnostic design system](libraries/design-system), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
+1. Shows how to roll your own [framework agnostic design system](libraries/design-tokens), with separate platform integrations like a [web based ui component library](libraries/ui) or a [PDF renderer](libraries/pdf), both based on the same design system but not limited by each others concerns. This is an extensible pattern that be continued to i.e. implement consistent design system bindings for react-native, webgl, email rendering, or anything really.
 
 2. Shows how organize and separate concerns among a multitude of packages in a monorepo, i.e. by enforcing a [layered architecture](#layered-architecture) using [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser), and shows several examples on modularization: above mentioned design system, and both a tRPC and GraphQL server divided into separate [server](apps/graphql-server), [client](integrations/graphql-client) and UI packages.
 
@@ -173,4 +173,4 @@ Low level tooling for building apps and libraries. Should mostly be out of your 
 
 Experimental packages. If they become stable, they will be extracted into their own repository. Ideally, this folder should be empty.
 
-> Note: I am currently experimenting with some technologies of my own in this repository. The incubation packages that reside in the repository are not considered part of the template and may or may not be stable or production ready. These are my personal experiments, and while I believe in them, they may fail. If I decide to remove them, I will refactor the places they are used in the repository to use a 3rd party equivalent instead. Once my experiments are over, the template will only have a minor placeholder package in the incubations folder to continue demonstrating the concept, and will remove this note.
+> Note: I may be experimenting with some technologies of my own in this repository. The incubation packages that reside in the repository are not considered part of the template and may or may not be stable or production ready. These are my personal experiments, and while I believe in them, they may fail. If I decide to remove them, I will refactor the places they are used in the repository to use a 3rd party equivalent instead.

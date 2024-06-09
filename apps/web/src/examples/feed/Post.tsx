@@ -34,7 +34,7 @@ export function Post({ post }: { post: FragmentOf<typeof postGQL> }) {
       />
       <ListItemSecondaryContent>
         <LoadingButton
-          icon
+          round
           isLoading={setLiked.isPending}
           onClick={() => setLiked.mutate({ postId, liked: !isLikedByUser })}
         >
