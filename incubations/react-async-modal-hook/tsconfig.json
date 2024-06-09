@@ -1,4 +1,0 @@
-{
-  "extends": "@yas/tsconfig/react.json",
-  "exclude": ["test"]
-}
