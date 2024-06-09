@@ -11,6 +11,7 @@ export type FormControlLabelProps = ComponentProps<typeof Text> & {
 
 export function FormControlLabel({
   children,
+  htmlFor,
   ...props
 }: FormControlLabelProps) {
   if (children === null || children === undefined) {
@@ -18,7 +19,7 @@ export function FormControlLabel({
   }
   return (
     <Text asChild {...props}>
-      <label>{children}</label>
+      <label htmlFor={htmlFor}>{children}</label>
     </Text>
   );
 }
