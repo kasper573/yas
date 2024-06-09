@@ -15,7 +15,7 @@ export function RecentSaleList({ data }: { data: types.example.RecentSale[] }) {
   return (
     <List compact>
       {data.map((sale, index) => (
-        <ListItem asChild button key={index} sx={{ px: "l" }}>
+        <ListItem asChild button key={index} sx={{ px: "xl" }}>
           <NavLink
             to="/dashboard"
             search={(prev) => ({ ...prev, userId: sale.userId })}
