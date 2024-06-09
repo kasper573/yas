@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@yas/style";
+import { globalStyle, style, theme } from "@yas/style";
 
 export const layout = style({
   display: "flex",
@@ -7,8 +7,8 @@ export const layout = style({
 });
 
 globalStyle(":root", {
-  background: "surface.base.main",
-  color: "surface.contrast.main",
+  background: theme.color.surface.base,
+  color: theme.color.surface.face,
 });
 
 globalStyle(":root, body, #root", {
