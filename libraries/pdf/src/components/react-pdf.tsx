@@ -9,11 +9,8 @@ export const Document = styled(ReactPDF.Document);
 export const Page = styled(ReactPDF.Page, {
   sx: {
     typography: "body",
-  },
-  style: {
-    backgroundColor: "surface.base.main",
-    color: "surface.contrast.main",
-    fontFamily: "default",
+    backgroundColor: "surface.base",
+    color: "surface.face",
   },
 });
 export const View = styled(ReactPDF.View);
