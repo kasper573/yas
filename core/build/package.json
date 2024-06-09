@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "@vanilla-extract/vite-plugin": "4.0.6",
-    "@vanilla-extract/webpack-plugin": "2.3.6",
+    "@vanilla-extract/vite-plugin": "4.0.10",
+    "@vanilla-extract/webpack-plugin": "2.3.9",
     "@vitejs/plugin-react": "4.3.0",
     "@yas/env": "workspace:*",
     "css-loader": "6.10.0",

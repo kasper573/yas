@@ -24,7 +24,7 @@
     "@yas/build": "workspace:*",
     "@yas/scripts": "workspace:*",
     "@types/react": "^18.2.61",
-    "@vanilla-extract/recipes": "0.5.1",
+    "@vanilla-extract/recipes": "^0.5",
     "react": "^18.2.0"
   },
   "version": "0.0.9"
