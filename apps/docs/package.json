@@ -13,8 +13,8 @@
     "@yas/ui": "workspace:*",
     "@yas/validate": "workspace:*",
     "immer": "^10.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@docusaurus/core": "3.1.1",
@@ -24,7 +24,8 @@
     "@docusaurus/types": "3.1.1",
     "@mdx-js/mdx": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
-    "@types/react": "^18.2.61",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",

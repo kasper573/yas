@@ -20,12 +20,12 @@
     "flattened": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@react-pdf/types": "2.4.1",
     "@yas/tsconfig": "workspace:*",
     "@yas/test": "workspace:*"

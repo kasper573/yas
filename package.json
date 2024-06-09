@@ -36,11 +36,11 @@
     "eslint-config-yas": "workspace:*",
     "eslint-plugin-yas": "workspace:*",
     "husky": "9.0.11",
-    "prettier": "^3.2.5",
-    "turbo": "1.13.0"
+    "prettier": "3.3.1",
+    "turbo": "2.0.3"
   },
   "engines": {
     "node": "20.10.0"
   },
-  "packageManager": "pnpm@9.0.4"
+  "packageManager": "pnpm@9.2.0+sha256.94fab213df221c55b6956b14a2264c21c6203cca9f0b3b95ff2fe9b84b120390"
 }
