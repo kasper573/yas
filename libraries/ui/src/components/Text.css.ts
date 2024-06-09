@@ -2,10 +2,7 @@ import { recipe, atoms, cssForParagraphSpacing } from "@yas/style";
 import { keysOf, mapValues, tokens } from "@yas/design-tokens";
 
 export const textRecipe = recipe({
-  base: atoms({
-    all: "unset",
-    display: "block",
-  }),
+  base: atoms({ all: "unset" }),
   variants: {
     intent: mapValues(tokens.typography, (_, typography) =>
       atoms({ typography }),
@@ -19,19 +16,17 @@ export const textRecipe = recipe({
     /**
      * Disables the intent specific line height. Commonly used for single line text.
      */
-    inline: {
+    compact: {
       true: [atoms({ whiteSpace: "nowrap" }), { lineHeight: "1em" }],
-    },
-    /**
-     * Render the text with white space preserved. Commonly used to display simple pre-formatted text.
-     */
-    preWrap: {
-      true: atoms({ whiteSpace: "pre-wrap" }),
     },
     overflow: {
       visible: {},
       clip: atoms({ textOverflow: "clip", overflow: "hidden" }),
       ellipsis: atoms({ textOverflow: "ellipsis", overflow: "hidden" }),
+    },
+    inline: {
+      true: atoms({ display: "inline" }),
+      false: atoms({ display: "block" }),
     },
   },
   compoundVariants: [
@@ -42,6 +37,8 @@ export const textRecipe = recipe({
   ],
   defaultVariants: {
     intent: "body",
+    inline: false,
     margin: false,
+    compact: false,
   },
 });

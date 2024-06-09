@@ -13,7 +13,7 @@ export function Title({
 }) {
   return (
     <Stack direction="row" gap="l" align="center">
-      <Text intent="h1" inline>
+      <Text intent="h1" compact>
         {children}
       </Text>
       {showClearButton ? (

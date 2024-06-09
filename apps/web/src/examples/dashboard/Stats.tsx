@@ -22,15 +22,15 @@ export function StatsCard({
         justify="spaceBetween"
         sx={{ mb: "xl" }}
       >
-        <Text intent="h5" inline>
+        <Text intent="h5" compact>
           {title}
         </Text>
         {icon}
       </Stack>
-      <Text intent="h2" inline sx={{ flex: 1 }}>
+      <Text intent="h2" compact sx={{ flex: 1 }}>
         {amount}
       </Text>
-      <Text intent="caption" inline>
+      <Text intent="caption" compact>
         {description}
       </Text>
     </Card>
