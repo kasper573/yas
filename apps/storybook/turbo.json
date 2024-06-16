@@ -2,10 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
-    "build": {
-      // Disabling cache for storybook because storybook loads stories from all packages,
-      // and there is no explicit dependency tree for turbo to derive cache keys from.
-      "cache": false
-    }
+    // Disabling cache for storybook because storybook loads stories from all packages,
+    // and there is no explicit dependency tree for turbo to derive cache keys from.
+    "build": { "cache": false },
+    "test": { "cache": false }
   }
 }
