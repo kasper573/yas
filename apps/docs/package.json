@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yas-env docusaurus start --no-open --port 3000",
-    "build": "yas-env tsc --noEmit && docusaurus build"
+    "build": "yas-env tsc --noEmit && docusaurus build --out-dir dist"
   },
   "dependencies": {
     "@gracefullight/docusaurus-plugin-vercel-analytics": "^1.0.1",
