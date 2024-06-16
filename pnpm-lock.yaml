@@ -151,9 +151,6 @@ importers:
       grats:
         specifier: 0.0.0-main-b0fafefe
         version: 0.0.0-main-b0fafefe
-      tsup:
-        specifier: 8.0.2
-        version: 8.0.2(@swc/core@1.5.7)(postcss@8.4.38)(typescript@5.4.5)
 
   apps/storybook:
     devDependencies:
@@ -281,9 +278,6 @@ importers:
       morgan:
         specifier: 1.10.0
         version: 1.10.0
-      tsup:
-        specifier: 8.0.2
-        version: 8.0.2(@swc/core@1.5.7)(postcss@8.4.38)(typescript@5.4.5)
 
   apps/web:
     dependencies:
@@ -652,6 +646,25 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
 
+  libraries/bar:
+    devDependencies:
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/tsconfig
+
+  libraries/baz:
+    dependencies:
+      '@yas/foo':
+        specifier: workspace:*
+        version: link:../foo
+    devDependencies:
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/tsconfig
+
   libraries/design-tokens:
     devDependencies:
       '@types/yargs':
@@ -678,6 +691,19 @@ importers:
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
+
+  libraries/foo:
+    dependencies:
+      '@yas/bar':
+        specifier: workspace:*
+        version: link:../bar
+    devDependencies:
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/tsconfig
 
   libraries/hooks:
     dependencies:
@@ -10049,25 +10075,6 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
-  tsup@8.0.2:
-    resolution: {integrity: sha512-NY8xtQXdH7hDUAZwcQdY/Vzlw9johQsaqf7iwZ6g1DOUlFYQ5/AtVAjTvihhEyeRlGo4dLRVHtrRaL35M1daqQ==}
-    engines: {node: '>=18'}
-    hasBin: true
-    peerDependencies:
-      '@microsoft/api-extractor': ^7.36.0
-      '@swc/core': ^1
-      postcss: ^8.4.12
-      typescript: '>=4.5.0'
-    peerDependenciesMeta:
-      '@microsoft/api-extractor':
-        optional: true
-      '@swc/core':
-        optional: true
-      postcss:
-        optional: true
-      typescript:
-        optional: true
-
   tsup@8.1.0:
     resolution: {integrity: sha512-UFdfCAXukax+U6KzeTNO2kAARHcWxmKsnvSPXUcfA1D+kU05XDccCrkffCQpFaWDsZfV0jMyTsxU39VfCp6EOg==}
     engines: {node: '>=18'}
@@ -16346,11 +16353,6 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-
-  bundle-require@4.2.1(esbuild@0.19.12):
-    dependencies:
-      esbuild: 0.19.12
-      load-tsconfig: 0.2.5
 
   bundle-require@4.2.1(esbuild@0.21.4):
     dependencies:
@@ -22925,30 +22927,6 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.6.3: {}
-
-  tsup@8.0.2(@swc/core@1.5.7)(postcss@8.4.38)(typescript@5.4.5):
-    dependencies:
-      bundle-require: 4.2.1(esbuild@0.19.12)
-      cac: 6.7.14
-      chokidar: 3.6.0
-      debug: 4.3.5
-      esbuild: 0.19.12
-      execa: 5.1.1
-      globby: 11.1.0
-      joycon: 3.1.1
-      postcss-load-config: 4.0.2(postcss@8.4.38)
-      resolve-from: 5.0.0
-      rollup: 4.18.0
-      source-map: 0.8.0-beta.0
-      sucrase: 3.35.0
-      tree-kill: 1.2.2
-    optionalDependencies:
-      '@swc/core': 1.5.7
-      postcss: 8.4.38
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
 
   tsup@8.1.0(@swc/core@1.5.7)(postcss@8.4.38)(typescript@5.4.5):
     dependencies:
