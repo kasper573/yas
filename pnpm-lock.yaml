@@ -102,9 +102,6 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../../core/env
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/test
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
