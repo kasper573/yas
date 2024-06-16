@@ -59,8 +59,8 @@ export default function Sandbox() {
         breakpoint: {breakpointName}
       </Text>
 
-      <Stack gap="m">
-        <Stack direction="row" gap="m" sx={{ mt: "m" }}>
+      <Stack gap="l">
+        <Stack direction="row" gap="l" sx={{ mt: "l" }}>
           <Button onClick={toggleTheme}>
             {theme === "light" ? <MoonIcon /> : <SunIcon />}
             Toggle theme
@@ -77,7 +77,7 @@ export default function Sandbox() {
 
         <div className={styles.container}>Testing vanilla-extract css</div>
 
-        <Stack direction="row" gap="m">
+        <Stack direction="row" gap="l">
           <Box
             sx={{
               p: "l",
@@ -89,13 +89,13 @@ export default function Sandbox() {
             Testing sx prop
           </Box>
 
-          <Box className={styles.projectImage} sx={{ p: "m" }}>
+          <Box className={styles.projectImage} sx={{ p: "l" }}>
             <Alert severity="info">
               <Text>Image from apps/web</Text>
             </Alert>
           </Box>
 
-          <ExampleImage sx={{ p: "m" }}>
+          <ExampleImage sx={{ p: "l" }}>
             <Alert severity="info">
               <Text>Image from @yas/ui</Text>
             </Alert>
