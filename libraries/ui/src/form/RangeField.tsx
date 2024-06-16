@@ -1,11 +1,7 @@
 import { useId } from "react";
 import { Stack } from "../layout/Stack";
-import {
-  FormControl,
-  FormControlLabel,
-  FormControlError,
-} from "./shared/FormControl";
-import type { FieldProps } from "./shared/types";
+import { FormControl, FormControlLabel, FormControlError } from "./FormControl";
+import type { FieldProps } from "./types";
 
 export type Range = [number, number];
 

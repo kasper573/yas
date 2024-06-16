@@ -7,7 +7,7 @@ import { Calendar } from "../molecules/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/Popover";
 import { Stack } from "../layout/Stack";
 import { Paper } from "../components/Paper";
-import type { FieldProps } from "./shared/types";
+import type { FieldProps } from "./types";
 import { datePickerText } from "./DatePicker.css";
 
 export type DatePickerProps = FieldProps<Date> &

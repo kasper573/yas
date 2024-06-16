@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
-import { withState } from "../shared/withState";
+import { withState } from "../hooks/withState";
 import { NumberField } from "./NumberField";
 
 export default {

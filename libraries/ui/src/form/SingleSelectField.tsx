@@ -13,12 +13,8 @@ import {
   SelectValue,
   SelectTriggerIcon,
 } from "../components/Select";
-import type { FieldProps } from "./shared/types";
-import {
-  FormControl,
-  FormControlLabel,
-  FormControlError,
-} from "./shared/FormControl";
+import type { FieldProps } from "./types";
+import { FormControl, FormControlLabel, FormControlError } from "./FormControl";
 
 export type SingleSelectOption<Value> = {
   value: Value;

@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@yas/test/storybook";
 import type { AnyZodObject } from "@yas/validate";
 import { z } from "@yas/validate";
 import { useRef, useState } from "react";
+import type { FieldProps } from "../form/types";
 import type { UseSchemaFormReturn } from "./useForm";
 import {
   createControllerProxy,
   useFormChanges,
   useSchemaForm,
 } from "./useForm";
-import type { FieldProps } from "./types";
 
 export default {
   component: UseFormControllersExample,

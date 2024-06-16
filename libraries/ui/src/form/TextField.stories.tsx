@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
 import { TextField } from "./TextField";
-import { withState } from "./shared/withState";
+import { withState } from "../hooks/withState";
 
 export default {
   component: TextField,
