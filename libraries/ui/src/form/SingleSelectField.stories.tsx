@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
-import { SingleSelectField } from "./SingleSelectField";
 import { withState } from "../hooks/withState";
+import { SingleSelectField } from "./SingleSelectField";
 
 export default {
   component: SingleSelectField,

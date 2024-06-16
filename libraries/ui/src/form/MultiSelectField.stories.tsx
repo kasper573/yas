@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
-import { MultiSelectField } from "./MultiSelectField";
 import { withState } from "../hooks/withState";
+import { MultiSelectField } from "./MultiSelectField";
 
 export default {
   component: MultiSelectField,
