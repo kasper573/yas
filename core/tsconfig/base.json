@@ -18,8 +18,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "noEmit": true,
-    "outDir": "notReallyUsedButHasToBeHereToSatsifyVSCode"
+    "noEmit": true
   },
   "exclude": ["node_modules"]
 }
