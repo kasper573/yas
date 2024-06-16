@@ -15,6 +15,7 @@ import { useMediaQueries } from "@yas/hooks";
 import { useModal } from "@yas/ui";
 import { breakpointQuery } from "@yas/style";
 import { useState } from "react";
+import { MoonIcon, SunIcon } from "@yas/icons";
 import { env } from "../../env";
 import { useTheme } from "../../ThemeProvider";
 import * as styles from "./sandbox.css";
@@ -59,7 +60,10 @@ export default function Sandbox() {
       </Text>
 
       <Stack direction="row" gap="m" sx={{ mt: "m" }}>
-        <Button onClick={toggleTheme}>Toggle theme</Button>
+        <Button onClick={toggleTheme}>
+          {theme === "light" ? <MoonIcon /> : <SunIcon />}
+          Toggle theme
+        </Button>
         <Button onClick={() => showDialog()}>Show dialog</Button>
         <Button onClick={triggerReactRenderError}>
           Trigger react render error

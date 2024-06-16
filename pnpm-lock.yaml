@@ -646,25 +646,6 @@ importers:
         specifier: workspace:*
         version: link:../../core/tsconfig
 
-  libraries/bar:
-    devDependencies:
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
-  libraries/baz:
-    dependencies:
-      '@yas/foo':
-        specifier: workspace:*
-        version: link:../foo
-    devDependencies:
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
   libraries/design-tokens:
     devDependencies:
       '@types/yargs':
@@ -692,19 +673,6 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
 
-  libraries/foo:
-    dependencies:
-      '@yas/bar':
-        specifier: workspace:*
-        version: link:../bar
-    devDependencies:
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
   libraries/hooks:
     dependencies:
       react:
@@ -727,6 +695,9 @@ importers:
         specifier: 1.3.0
         version: 1.3.0(react@18.3.1)
     devDependencies:
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
