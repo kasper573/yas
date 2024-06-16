@@ -18,6 +18,8 @@ storybook-static
 test-results
 *.timestamp*
 **/undefined/**
+.docusaurus
+.cache-loader
 
 # misc
 .DS_Store
