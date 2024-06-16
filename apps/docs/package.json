@@ -28,6 +28,7 @@
     "@types/react-dom": "^18.3.0",
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
+    "@yas/icons": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "mini-css-extract-plugin": "^2.8.1"
   },

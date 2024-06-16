@@ -102,6 +102,9 @@ importers:
       '@yas/env':
         specifier: workspace:*
         version: link:../../core/env
+      '@yas/icons':
+        specifier: workspace:*
+        version: link:../../libraries/icons
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
