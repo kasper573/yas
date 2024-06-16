@@ -31,7 +31,6 @@
     "@yas/test": "workspace:*",
     "@yas/tsconfig": "workspace:*",
     "cors": "2.8.5",
-    "morgan": "1.10.0",
-    "tsup": "8.0.2"
+    "morgan": "1.10.0"
   }
 }
