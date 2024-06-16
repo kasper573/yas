@@ -1,6 +1,6 @@
-import { createYasTsupConfig } from "@yas/build/tsup.mjs";
+import { defineConfig } from "@yas/build/tsup.mjs";
 
-export default createYasTsupConfig(process.cwd(), {
+export default defineConfig({
   outExtension: () => ({ js: `.js` }),
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
