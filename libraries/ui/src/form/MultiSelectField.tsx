@@ -12,12 +12,8 @@ import {
   SelectScrollDownButton,
 } from "../components/Select";
 import { SelectRoot } from "../components/Select";
-import type { RequiredFieldProps } from "./shared/types";
-import {
-  FormControl,
-  FormControlLabel,
-  FormControlError,
-} from "./shared/FormControl";
+import type { RequiredFieldProps } from "./types";
+import { FormControl, FormControlLabel, FormControlError } from "./FormControl";
 
 export interface MultiSelectOption<Value> {
   value: Value;

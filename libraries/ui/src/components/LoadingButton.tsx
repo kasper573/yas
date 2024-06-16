@@ -1,6 +1,6 @@
 import { useState, type ComponentProps, type MouseEvent } from "react";
-import { Button } from "../components/Button";
-import { CircularProgress } from "../components/CircularProgress";
+import { Button } from "./Button";
+import { CircularProgress } from "./CircularProgress";
 
 export function LoadingButton({
   children,

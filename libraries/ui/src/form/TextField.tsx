@@ -6,13 +6,13 @@ import { Cross1Icon } from "@yas/icons";
 import { InputArea, InputRoot, InputSlot } from "../components/Input";
 import { Button } from "../components/Button";
 import { CircularProgress } from "../components/CircularProgress";
-import type { FieldProps } from "./shared/types";
+import type { FieldProps } from "./types";
 import {
   FormControl,
   FormControlError,
   FormControlLabel,
   type FormControlProps,
-} from "./shared/FormControl";
+} from "./FormControl";
 import * as styles from "./TextField.css";
 
 export type TextFieldBaseProps = Pick<

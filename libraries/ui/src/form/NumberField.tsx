@@ -1,5 +1,5 @@
-import type { FieldProps } from "../shared/types";
-import { TextField } from "../TextField";
+import type { FieldProps } from "./types";
+import { TextField } from "./TextField";
 
 export type NumberFieldProps = FieldProps<number> & {
   readOnly?: boolean;

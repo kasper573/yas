@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   type DialogProps,
-} from "../molecules/Dialog";
+} from "../components/Dialog";
 import { Button } from "../components/Button";
 
 export interface AlertDialogProps extends Omit<DialogProps, "title"> {

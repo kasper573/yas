@@ -1,7 +1,7 @@
 import type { Decorator } from "@yas/test/storybook";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import type { FieldProps } from "./types";
+import type { FieldProps } from "../form/types";
 
 /**
  * Augments a component's story with stateful value and onChange properties.

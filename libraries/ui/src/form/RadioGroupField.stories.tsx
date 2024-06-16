@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@yas/test/storybook";
+import { withState } from "../hooks/withState";
 import { RadioGroupField } from "./RadioGroupField";
-import { withState } from "./shared/withState";
 
 export default {
   component: RadioGroupField,

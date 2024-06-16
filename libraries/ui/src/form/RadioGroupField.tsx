@@ -2,12 +2,8 @@ import { useId, type ReactNode } from "react";
 import { Cross2Icon } from "@yas/icons";
 import { Button } from "../components/Button";
 import { Stack } from "../layout/Stack";
-import {
-  FormControl,
-  FormControlError,
-  FormControlLabel,
-} from "./shared/FormControl";
-import type { FieldProps } from "./shared/types";
+import { FormControl, FormControlError, FormControlLabel } from "./FormControl";
+import type { FieldProps } from "./types";
 import * as styles from "./RadioGroupField.css";
 
 export interface RadioGroupOption<Value> {

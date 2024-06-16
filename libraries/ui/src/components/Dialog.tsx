@@ -1,11 +1,11 @@
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
 
-import { Paper } from "../components/Paper";
-import { Text } from "../components/Text";
-import { Overlay } from "../components/Overlay";
 import type { ModalProps } from "../hooks/useModal";
 import { useModalSustainer } from "../hooks/useModal";
+import { Paper } from "./Paper";
+import { Text } from "./Text";
+import { Overlay } from "./Overlay";
 import {
   dialogActions,
   dialogContent,
