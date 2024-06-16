@@ -5,6 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**"],
+      "env": ["*"],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env",
