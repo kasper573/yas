@@ -3,7 +3,7 @@ import * as path from "path";
 import { defineConfig } from "@yas/build/tsup.mjs";
 import tsConfig from "./tsconfig.json";
 
-export default defineConfig({
+export default defineConfig(__dirname, {
   outExtension: () => ({ js: `.js` }),
   format: "esm",
   entry: { index: "src/entrypoint.ts" },
