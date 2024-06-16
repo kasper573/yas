@@ -1,7 +1,7 @@
 import { styled } from "@yas/style";
 import type { ComponentProps, ReactNode } from "react";
 import { Stack } from "../layout/Stack";
-import { Text } from "../components/Text";
+import { Text } from "./Text";
 import {
   list,
   item,

@@ -1,8 +1,8 @@
 import { useLayoutEffect, type ComponentProps, useState } from "react";
 import { styled } from "@yas/style";
-import { Overlay } from "../components/Overlay";
 import type { ModalProps } from "../hooks/useModal";
 import { useModalSustainer } from "../hooks/useModal";
+import { Overlay } from "./Overlay";
 import { clipperRecipe, drawerRecipe } from "./Drawer.css";
 
 export interface DrawerProps<ResolutionValue = void>

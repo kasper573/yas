@@ -1,6 +1,6 @@
 import { atoms, breakpointQuery, recipe, style, theme } from "@yas/style";
 import { tokens } from "@yas/design-tokens";
-import { buttonRecipe } from "../components/Button.css";
+import { buttonRecipe } from "./Button.css";
 
 const borderRadius = "m" as const;
 
