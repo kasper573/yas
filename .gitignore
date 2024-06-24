@@ -46,3 +46,12 @@ package-lock.json
 
 # turbo
 .turbo
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
