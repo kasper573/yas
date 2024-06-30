@@ -10,15 +10,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch"
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "dependencies": {
     "date-fns": "3.3.1",
     "@yas/hooks": "workspace:*"
   },
   "devDependencies": {
-    "@yas/tsconfig": "workspace:*",
-    "@yas/build": "workspace:*"
+    "@yas/tsconfig": "workspace:*"
   }
 }

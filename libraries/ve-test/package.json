@@ -20,7 +20,6 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@yas/tsconfig": "workspace:*",
-    "@yas/build": "workspace:*"
+    "@yas/tsconfig": "workspace:*"
   }
 }
