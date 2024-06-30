@@ -4,6 +4,7 @@
     "@yas/graphql-client/tsconfig.graphql.json"
   ],
   "compilerOptions": {
+    "noEmit": true,
     "allowImportingTsExtensions": true
   }
 }
