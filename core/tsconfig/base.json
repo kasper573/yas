@@ -3,8 +3,8 @@
   "compilerOptions": {
     "allowJs": false,
     "composite": false,
-    "declaration": false,
-    "declarationMap": false,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -18,7 +18,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "noEmit": true
+    "noEmit": false,
+    "outDir": "${configDir}dist"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "${configDir}dist"]
 }

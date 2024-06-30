@@ -16,6 +16,7 @@ import { useModal } from "@yas/ui";
 import { breakpointQuery } from "@yas/style";
 import { useState } from "react";
 import { MoonIcon, SunIcon } from "@yas/icons";
+import { Embedded, Lazy } from "@yas/ve-test";
 import { env } from "../../env";
 import { useTheme } from "../../ThemeProvider";
 import * as styles from "./sandbox.css";
@@ -52,6 +53,9 @@ export default function Sandbox() {
       <Text intent="h1">Yet Another Stack</Text>
       <Text margin>Mode: {env.mode}</Text>
       <Text>Theme: {theme}</Text>
+
+      <Lazy>Lazy</Lazy>
+      <Embedded>Embedded</Embedded>
 
       <Text sx={{ whiteSpace: "pre-wrap" }}>
         useMediaQueries: {JSON.stringify(preferenceMediaQueryResults, null, 2)}
