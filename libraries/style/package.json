@@ -2,15 +2,22 @@
   "name": "@yas/style",
   "version": "0.0.0",
   "license": "UNLICENSED",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./themes/*": {
-      "import": "./themes/*"
+      "import": "./dist/themes/*.js",
+      "types": "./dist/themes/*.d.ts"
     }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "dependencies": {
     "@yas/design-tokens": "workspace:*",
