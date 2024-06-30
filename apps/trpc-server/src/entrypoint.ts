@@ -3,7 +3,6 @@ import { env } from "./env";
 
 switch (env.runtime.type) {
   case "lambda":
-    console.log("Exporting lambda handler");
     module.exports = createServer();
     break;
   case "server":
