@@ -21,8 +21,6 @@ export function createServer(graphqlEndpoint: string) {
 function corsSettingsForRequest(request: Request) {
   const origin = request.headers.get("origin");
 
-  console.log("corsSettingsForRequest", origin);
-
   if (origin && env.corsOrigin.test(origin)) {
     return { origin };
   }
