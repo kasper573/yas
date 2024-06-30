@@ -27,7 +27,6 @@
     "@yas/query-client": "workspace:*",
     "@yas/router": "workspace:*",
     "@yas/design-tokens": "workspace:*",
-    "@yas/ve-test": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recharts": "2.13.0-alpha.1",
