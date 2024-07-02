@@ -6,6 +6,6 @@
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM"],
     "module": "ESNext",
-    "types": ["@yas/tsconfig/assets.d.ts"]
+    "types": ["vite/client"]
   }
 }
