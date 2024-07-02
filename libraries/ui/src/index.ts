@@ -36,5 +36,4 @@ export * from "./form/SingleSelectField";
 export * from "./form/TextField";
 export * from "./form/CheckboxGroupField";
 export * from "./form/NumberField";
-export * from "./devtools/ExampleImage";
 export * from "./devtools/ErrorBoundary";

@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  ExampleImage,
   Stack,
   Text,
 } from "@yas/ui";
@@ -94,12 +93,6 @@ export default function Sandbox() {
               <Text>Image from apps/web</Text>
             </Alert>
           </Box>
-
-          <ExampleImage sx={{ p: "l" }}>
-            <Alert severity="info">
-              <Text>Image from @yas/ui</Text>
-            </Alert>
-          </ExampleImage>
         </Stack>
       </Stack>
     </>
