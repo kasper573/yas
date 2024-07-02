@@ -1,1 +1,6 @@
-{ "extends": "@yas/tsconfig/node.json" }
+{
+  "extends": "@yas/tsconfig/node.json",
+  "compilerOptions": {
+    "types": ["@types/node", "@yas/tsconfig/assets.d.ts"]
+  }
+}
