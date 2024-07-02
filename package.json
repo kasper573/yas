@@ -11,7 +11,9 @@
     "core/*"
   ],
   "scripts": {
-    "clean": "find . -type d -path \"./*/dist\" -not -path \"*/node_modules/*\" -prune -exec rm -r {} +",
+    "clean": "pnpm clean:dist && pnpm clean:cache",
+    "clean:dist": "find . -type d -path \"./*/dist\" -not -path \"*/node_modules/*\" -prune -exec rm -r {} +",
+    "clean:cache": "find . -type d -path \"./*/.cache\" -not -path \"*/node_modules/*\" -prune -exec rm -r {} +",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "pnpm eslint . --max-warnings=0 && pnpm -r lint",
