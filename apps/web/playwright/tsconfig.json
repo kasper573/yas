@@ -1,6 +1,7 @@
 {
   "extends": "@yas/tsconfig/node.json",
   "compilerOptions": {
+    "rootDir": "..",
     "noEmit": true,
     "allowImportingTsExtensions": true
   }

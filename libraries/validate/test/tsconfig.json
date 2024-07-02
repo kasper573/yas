@@ -1,7 +1,7 @@
 {
   "extends": "@yas/tsconfig/node.json",
   "compilerOptions": {
-    "composite": false,
-    "rootDir": ".."
+    "rootDir": "..",
+    "composite": false
   }
 }
