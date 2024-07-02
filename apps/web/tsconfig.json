@@ -3,8 +3,5 @@
     "@yas/tsconfig/react.json",
     "@yas/graphql-client/tsconfig.graphql.json"
   ],
-  "compilerOptions": {
-    "noEmit": true,
-    "allowImportingTsExtensions": true
-  }
+  "include": ["src"]
 }

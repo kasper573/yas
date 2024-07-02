@@ -1,0 +1,7 @@
+{
+  "extends": "@yas/tsconfig/node.json",
+  "include": [".", "../src"],
+  "compilerOptions": {
+    "composite": false
+  }
+}
