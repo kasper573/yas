@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "dev": "pnpm build --watch"
+    "dev": "tsc --build --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@radix-ui/react-icons": "1.3.0"

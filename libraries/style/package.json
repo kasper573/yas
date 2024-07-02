@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "tsc --build",
-    "dev": "pnpm build --watch"
+    "dev": "tsc --build --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@yas/design-tokens": "workspace:*",

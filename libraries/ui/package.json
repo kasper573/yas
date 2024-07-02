@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "dev": "pnpm build --watch",
+    "dev": "tsc --build --watch --preserveWatchOutput",
     "lint": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\"",
     "test": "vitest run"
   },

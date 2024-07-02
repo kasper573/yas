@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "dev": "pnpm build --watch"
+    "dev": "tsc --build --watch --preserveWatchOutput"
   },
   "dependencies": {
     "date-fns": "3.3.1",
