@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false",
+    "dev": "vite --host 0.0.0.0 --port 3003 --clearScreen false",
     "preview": "vite preview"
   },
   "dependencies": {
