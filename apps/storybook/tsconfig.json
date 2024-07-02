@@ -1,4 +1,7 @@
 {
   "extends": "@yas/tsconfig/react.json",
-  "include": ["src/**/*", ".storybook/**/*"]
+  "include": ["src/**/*", ".storybook/**/*"],
+  "compilerOptions": {
+    "rootDir": "."
+  }
 }

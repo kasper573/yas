@@ -1,6 +1,7 @@
 {
   "extends": "@yas/tsconfig/react.json",
   "compilerOptions": {
+    "rootDir": ".",
     "allowJs": true,
     "types": [
       "node",
