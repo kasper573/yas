@@ -26,8 +26,7 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "eslint": "cross-env NODE_OPTIONS=--max_old_space_size=8000 eslint",
-    "prepare": "husky",
-    "postinstall": "pnpm build"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "19.0.3",
