@@ -1,12 +1,23 @@
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import { Text } from "@yas/ui";
+import { AlertDialog, Button, Stack, Text, useModal } from "@yas/ui";
+import { BellIcon } from "@yas/icons";
+import { Providers } from "../Providers";
 import * as styles from "./index.css";
 
-export default function Home() {
+export default function HomeWrapper() {
+  return (
+    <Providers>
+      <Home />
+    </Providers>
+  );
+}
+
+function Home() {
   const {
     siteConfig: { title, tagline },
   } = useDocusaurusContext();
+  const alert = useModal(AlertDialog);
   return (
     <Layout wrapperClassName={styles.container} description={tagline}>
       <header className={styles.hero}>
@@ -18,6 +29,7 @@ export default function Home() {
           ))}
         </h1>
       </header>
+
       <main>
         <section className={styles.content}>
           <Text intent="h5" margin>
@@ -33,6 +45,20 @@ export default function Home() {
             Quae, dolore. Quae, exercitationem.
           </Text>
         </section>
+
+        <Stack direction="row">
+          <Button
+            sx={{ margin: "auto" }}
+            onClick={() =>
+              alert({
+                title: "Hello World",
+                message: "This is a cool alert dialog",
+              })
+            }
+          >
+            <BellIcon /> Hello World
+          </Button>
+        </Stack>
       </main>
     </Layout>
   );

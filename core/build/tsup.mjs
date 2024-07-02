@@ -1,19 +1,17 @@
-import * as path from "path";
 import * as fs from "fs";
-import { defineConfig } from "tsup";
+import * as path from "path";
+import { defineConfig as defineTsupConfig } from "tsup";
 import { defineEnv } from "./defineEnv.mjs";
 
 /**
  * @param {string} projectRoot
- * @param {Partial<import("tsup").Options>} options
+ * @param {import("tsup").Options} options
  */
-export function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
-  const { internalPackages, entry } = analyzePackage(projectRoot);
-  return defineConfig({
+export function defineConfig(projectRoot, options) {
+  return defineTsupConfig({
     format: ["cjs", "esm"],
     clean: true,
     dts: true,
-    noExternal: internalPackages,
     define: defineEnv(projectRoot),
     esbuildOptions(options) {
       options.logOverride = {
@@ -22,21 +20,20 @@ export function createYasTsupConfig(projectRoot = process.cwd(), options = {}) {
         "suspicious-define": "silent",
       };
     },
-    entry,
     ...options,
   });
 }
 
 /**
  * @param {string} projectRoot
- * @returns {{internalPackages: string[], entry: { [bundleName: string]: string }}
+ * @returns {string[]}
  */
-function analyzePackage(projectRoot) {
-  const packageJson = JSON.parse(
-    fs.readFileSync(`${projectRoot}/package.json`, "utf-8"),
+export function inferInternalPackages(projectRoot) {
+  const packageJsonString = fs.readFileSync(
+    path.resolve(projectRoot, "package.json"),
+    "utf-8",
   );
-
-  // Derive internal packages from dependency fields
+  const packageJson = JSON.parse(packageJsonString);
   const internalPackages = [];
   const { dependencies, devDependencies, peerDependencies } = packageJson;
   for (const deps of [dependencies, devDependencies, peerDependencies]) {
@@ -49,18 +46,5 @@ function analyzePackage(projectRoot) {
       }
     }
   }
-
-  // Derive entry points from exports field.
-  const entry = {};
-  const { exports = {} } = packageJson;
-  for (const [exportKey, exportPaths] of Object.entries(exports)) {
-    const bundleName =
-      exportKey === "." ? "index" : exportKey.replace(/^\.\//, "");
-    entry[bundleName] = path.resolve(
-      projectRoot,
-      exportPaths.import ?? exportPaths.require,
-    );
-  }
-
-  return { internalPackages, entry };
+  return internalPackages;
 }

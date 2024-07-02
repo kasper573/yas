@@ -28,13 +28,6 @@ jobs:
           name: playwright
           path: "**/.playwright/**"
 
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/composites/install/
-      - run: pnpm typecheck
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +39,4 @@ jobs:
           # since production settings and builds are handled externally (e.g. by Vercel).
           # This CI job is only for sanity testing the build process in the CI.
           NODE_ENV: development
+      - run: pnpm typecheck

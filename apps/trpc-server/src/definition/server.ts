@@ -1,5 +1,5 @@
 import * as trpcExpress from "@trpc/server/adapters/express";
-import express from "express";
+import express, { type Express } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { env } from "../env";
@@ -8,8 +8,8 @@ import { createTrpcRouter } from "./router";
 
 morgan.token("url", urlFormatter);
 
-export function createServer() {
-  const app = express();
+export function createServer(): Express {
+  const app: Express = express();
   app.use(morgan(env.logFormat));
   app.use(cors({ origin: env.corsOrigin }));
   app.use(

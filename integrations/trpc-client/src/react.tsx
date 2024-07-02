@@ -1,4 +1,4 @@
-import type { HTTPHeaders } from "@trpc/react-query";
+import type { CreateTRPCReact, HTTPHeaders } from "@trpc/react-query";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import transformer from "superjson";
 import type { ApiRouter, types } from "@yas/trpc-server";
@@ -11,7 +11,7 @@ export type { types } from "@yas/trpc-server";
  * Convenience proxy for accessing the client interface
  * of the API without having to call useContext first.
  */
-export const api = new Proxy({} as TrpcClient["react"], {
+export const api: TrpcClient["react"] = new Proxy({} as TrpcClient["react"], {
   get: function useApi(_, key) {
     const trpc = useContext(TrpcReactContext);
     return trpc[key as keyof TrpcClient["react"]];
@@ -42,14 +42,18 @@ export function TrpcClientProvider({
   );
 }
 
-export type TrpcClient = ReturnType<typeof createTrpcClient>;
+export interface TrpcClient {
+  react: CreateTRPCReact<ApiRouter, unknown>;
+  trpc: ReturnType<CreateTRPCReact<ApiRouter, unknown>["createClient"]>;
+}
+
 export function createTrpcClient({
   url,
   headers,
 }: {
   url: string;
   headers: () => types.TrpcServerHeaders;
-}) {
+}): TrpcClient {
   const react = createTRPCReact<ApiRouter>();
 
   const trpc = react.createClient({
