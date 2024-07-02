@@ -124,7 +124,7 @@ const typeCheckers = {
 } satisfies Record<string, (project: TypescriptProject) => void>;
 
 async function typecheckWithTSC(project: TypescriptProject) {
-  const args: string[] = ["--build", project.tsconfig, "--pretty", "--dry"];
+  const args: string[] = ["--build", project.tsconfig, "--pretty"];
   if (force) {
     args.push("--force");
   }
