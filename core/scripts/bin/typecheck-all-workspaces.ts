@@ -8,7 +8,7 @@ import yargs from "yargs";
 import Bottleneck from "bottleneck";
 import { colorize } from "../src/colorize";
 
-const { include, exclude, maxConcurrent } = yargs(hideBin(process.argv))
+const { include, exclude, maxConcurrent, force } = yargs(hideBin(process.argv))
   .usage(`Runs tsc --noEmit on all workspaces that has a tsconfig. `)
   .option("maxConcurrent", {
     type: "number",
@@ -22,6 +22,12 @@ const { include, exclude, maxConcurrent } = yargs(hideBin(process.argv))
   .option("exclude", {
     type: "array",
     description: "Skip checking these packages",
+    default: ["tsconfig"],
+  })
+  .option("force", {
+    type: "boolean",
+    description: "Add --force flag to tsc",
+    default: false,
   })
   .parseSync();
 
@@ -89,7 +95,12 @@ async function typecheckProject(
 ): Promise<TypecheckResult> {
   const start = Date.now();
   try {
-    await execa("tsc", ["--noEmit", "--pretty", "--project", project.tsconfig]);
+    const args: string[] = ["--build", project.tsconfig, "--pretty"];
+    if (force) {
+      args.push("--force");
+    }
+
+    await execa("tsc", args);
     const duration = Date.now() - start;
     return { project, duration, result: { ok: true } };
   } catch (e) {
