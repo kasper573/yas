@@ -7,7 +7,7 @@ import {
 export function defineConfig({
   baseURL,
   isCI,
-  testAllProjects = isCI,
+  testAllProjects = true,
   webServers = [],
 }) {
   /**

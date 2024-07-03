@@ -1,5 +1,5 @@
 {
-  "name": "@yas/web",
+  "name": "@yas/dashboard",
   "version": "0.0.0",
   "type": "module",
   "private": true,

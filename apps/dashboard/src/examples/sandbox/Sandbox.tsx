@@ -90,7 +90,7 @@ export default function Sandbox() {
 
           <Box className={styles.projectImage} sx={{ p: "l" }}>
             <Alert severity="info">
-              <Text>Image from apps/web</Text>
+              <Text>Image from apps/dashboard</Text>
             </Alert>
           </Box>
         </Stack>
