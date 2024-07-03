@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch --preserveWatchOutput",
-    "lint": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\"",
+    "lint": "pnpm assert-storybook-convention -c src -s src/ui",
     "test": "vitest run"
   },
   "dependencies": {

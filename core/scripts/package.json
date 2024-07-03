@@ -5,7 +5,7 @@
   "license": "MIT",
   "bin": {
     "typecheck-all-workspaces": "./bin/typecheck-all-workspaces.ts",
-    "assert-sibling-files": "./bin/assert-sibling-files.ts",
+    "assert-storybook-convention": "./bin/assert-storybook-convention.ts",
     "assert-dependency-versions": "./bin/assert-dependency-versions.ts"
   },
   "devDependencies": {
