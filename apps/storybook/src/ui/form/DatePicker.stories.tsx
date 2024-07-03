@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DatePicker } from "@yas/ui";
-import { withState } from "./withState";
+import { withState } from "../withState";
 
 export default {
   component: DatePicker,
