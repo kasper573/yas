@@ -1,6 +1,0 @@
-{
-  "extends": "@yas/tsconfig/node.json",
-  "compilerOptions": {
-    "rootDir": "."
-  }
-}
