@@ -1,7 +1,12 @@
 // @ts-check
 
 import { defineConfig } from "@yas/test/playwright/config.mjs";
-import { env } from "./src/env";
+import { require } from "tsx/cjs/api";
+
+/**
+ * @type {import("./src/env")}
+ */
+const { env } = require("./src/env", import.meta.url);
 
 const webAppURL = "http://localhost:4173";
 export default defineConfig({
