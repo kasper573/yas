@@ -252,34 +252,6 @@ importers:
         specifier: 8.1.6
         version: 8.1.6(@babel/preset-env@7.24.7(@babel/core@7.24.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  apps/tiny:
-    dependencies:
-      '@yas/style':
-        specifier: workspace:*
-        version: link:../../libraries/style
-      '@yas/ui':
-        specifier: workspace:*
-        version: link:../../libraries/ui
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.0
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-
   apps/trpc-server:
     dependencies:
       '@trpc/server':
