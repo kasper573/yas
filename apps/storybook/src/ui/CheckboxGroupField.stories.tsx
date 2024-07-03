@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { withState } from "./withState";
 import { CheckboxGroupField } from "@yas/ui";
+import { withState } from "./withState";
 
 export default {
   component: CheckboxGroupField,
