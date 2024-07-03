@@ -530,9 +530,6 @@ importers:
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
-      '@yas/validate':
-        specifier: workspace:*
-        version: link:../../libraries/validate
       bottleneck:
         specifier: 2.19.5
         version: 2.19.5

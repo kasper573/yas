@@ -1,7 +1,5 @@
 import * as path from "path";
 import * as fs from "fs";
-import type { ZodType } from "@yas/validate";
-import { z } from "@yas/validate";
 
 export function loadWorkspaces(rootDir: string) {
   const { workspaceNames } = readPackage(rootDir);
@@ -14,11 +12,8 @@ export function loadWorkspace(rootDir: string, name: string) {
   return { name, packages };
 }
 
-export function readPackage(packageDir: string) {
-  const pkg = readJSONFile(
-    path.join(packageDir, "package.json"),
-    packageSchema,
-  );
+export function readPackage(packageDir: string): TransformedPackage {
+  const pkg = readJSONFile<PackageJSON>(path.join(packageDir, "package.json"));
   return {
     name: pkg.name,
     uniqueDependencyNames: new Set([
@@ -29,17 +24,27 @@ export function readPackage(packageDir: string) {
     dependencies: pkg.dependencies ?? {},
     peerDependencies: pkg.peerDependencies ?? {},
     devDependencies: pkg.devDependencies ?? {},
-    workspaceNames: pkg.workspaces.map((pattern) => pattern.replace("/*", "")),
+    workspaceNames:
+      pkg.workspaces?.map((pattern) => pattern.replace("/*", "")) ?? [],
   };
 }
 
-const packageSchema = z.object({
-  name: z.string(),
-  workspaces: z.string().array().default([]),
-  dependencies: z.record(z.string()).optional(),
-  peerDependencies: z.record(z.string()).optional(),
-  devDependencies: z.record(z.string()).optional(),
-});
+interface TransformedPackage extends Dependencies {
+  name: string;
+  uniqueDependencyNames: Set<string>;
+  workspaceNames: string[];
+}
+
+interface Dependencies {
+  dependencies: Record<string, string>;
+  peerDependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+}
+
+interface PackageJSON extends Partial<Dependencies> {
+  name: string;
+  workspaces?: string[];
+}
 
 function mapDirectories<T>(atPath: string, map: (name: string) => T): T[] {
   return fs
@@ -52,9 +57,6 @@ function mapDirectories<T>(atPath: string, map: (name: string) => T): T[] {
     }, [] as T[]);
 }
 
-function readJSONFile<T extends ZodType>(
-  filename: string,
-  schema: T,
-): z.infer<T> {
-  return schema.parse(JSON.parse(fs.readFileSync(filename, "utf-8")));
+function readJSONFile<T>(filename: string): T {
+  return JSON.parse(fs.readFileSync(filename, "utf-8"));
 }
