@@ -42,6 +42,88 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
 
+  apps/dashboard:
+    dependencies:
+      '@yas/design-tokens':
+        specifier: workspace:*
+        version: link:../../libraries/design-tokens
+      '@yas/graphql-client':
+        specifier: workspace:*
+        version: link:../../integrations/graphql-client
+      '@yas/hooks':
+        specifier: workspace:*
+        version: link:../../libraries/hooks
+      '@yas/icons':
+        specifier: workspace:*
+        version: link:../../libraries/icons
+      '@yas/pdf':
+        specifier: workspace:*
+        version: link:../../libraries/pdf
+      '@yas/query-client':
+        specifier: workspace:*
+        version: link:../../integrations/query-client
+      '@yas/router':
+        specifier: workspace:*
+        version: link:../../libraries/router
+      '@yas/style':
+        specifier: workspace:*
+        version: link:../../libraries/style
+      '@yas/time':
+        specifier: workspace:*
+        version: link:../../libraries/time
+      '@yas/trpc-client':
+        specifier: workspace:*
+        version: link:../../integrations/trpc-client
+      '@yas/ui':
+        specifier: workspace:*
+        version: link:../../libraries/ui
+      '@yas/validate':
+        specifier: workspace:*
+        version: link:../../libraries/validate
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-styled-factory:
+        specifier: ^0.0.10
+        version: 0.0.10(react@18.3.1)
+      recharts:
+        specifier: 2.13.0-alpha.1
+        version: 2.13.0-alpha.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      uuid:
+        specifier: 9.0.1
+        version: 9.0.1
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      '@types/uuid':
+        specifier: 9.0.8
+        version: 9.0.8
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
+      '@yas/env':
+        specifier: workspace:*
+        version: link:../../core/env
+      '@yas/test':
+        specifier: workspace:*
+        version: link:../../core/test
+      '@yas/tsconfig':
+        specifier: workspace:*
+        version: link:../../core/tsconfig
+      concurrently:
+        specifier: 8.2.2
+        version: 8.2.2
+      cross-env:
+        specifier: 7.0.3
+        version: 7.0.3
+
   apps/docs:
     dependencies:
       '@gracefullight/docusaurus-plugin-vercel-analytics':
@@ -294,88 +376,6 @@ importers:
       morgan:
         specifier: 1.10.0
         version: 1.10.0
-
-  apps/web:
-    dependencies:
-      '@yas/design-tokens':
-        specifier: workspace:*
-        version: link:../../libraries/design-tokens
-      '@yas/graphql-client':
-        specifier: workspace:*
-        version: link:../../integrations/graphql-client
-      '@yas/hooks':
-        specifier: workspace:*
-        version: link:../../libraries/hooks
-      '@yas/icons':
-        specifier: workspace:*
-        version: link:../../libraries/icons
-      '@yas/pdf':
-        specifier: workspace:*
-        version: link:../../libraries/pdf
-      '@yas/query-client':
-        specifier: workspace:*
-        version: link:../../integrations/query-client
-      '@yas/router':
-        specifier: workspace:*
-        version: link:../../libraries/router
-      '@yas/style':
-        specifier: workspace:*
-        version: link:../../libraries/style
-      '@yas/time':
-        specifier: workspace:*
-        version: link:../../libraries/time
-      '@yas/trpc-client':
-        specifier: workspace:*
-        version: link:../../integrations/trpc-client
-      '@yas/ui':
-        specifier: workspace:*
-        version: link:../../libraries/ui
-      '@yas/validate':
-        specifier: workspace:*
-        version: link:../../libraries/validate
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-      react-styled-factory:
-        specifier: ^0.0.10
-        version: 0.0.10(react@18.3.1)
-      recharts:
-        specifier: 2.13.0-alpha.1
-        version: 2.13.0-alpha.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      uuid:
-        specifier: 9.0.1
-        version: 9.0.1
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.0
-      '@types/uuid':
-        specifier: 9.0.8
-        version: 9.0.8
-      '@yas/build':
-        specifier: workspace:*
-        version: link:../../core/build
-      '@yas/env':
-        specifier: workspace:*
-        version: link:../../core/env
-      '@yas/test':
-        specifier: workspace:*
-        version: link:../../core/test
-      '@yas/tsconfig':
-        specifier: workspace:*
-        version: link:../../core/tsconfig
-      concurrently:
-        specifier: 8.2.2
-        version: 8.2.2
-      cross-env:
-        specifier: 7.0.3
-        version: 7.0.3
 
   core/build:
     devDependencies:
