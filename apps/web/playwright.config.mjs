@@ -4,6 +4,7 @@ import { defineConfig } from "@yas/test/playwright/config.mjs";
 import { require } from "tsx/cjs/api";
 
 /**
+ * Playwright cannot load ESM modules for some reason, wo we need to use tsx to load it.
  * @type {import("./src/env")}
  */
 const { env } = require("./src/env", import.meta.url);
