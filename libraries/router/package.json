@@ -5,12 +5,10 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./devtools": {
-      "require": "./dist/devtools.js",
       "import": "./dist/devtools.js",
       "types": "./dist/devtools.d.ts"
     }
