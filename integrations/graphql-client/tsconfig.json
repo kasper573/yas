@@ -1,6 +1,7 @@
 {
   "extends": [
     "@yas/tsconfig/react.json",
+    "@yas/tsconfig/tsc.json",
     "./tsconfig.graphql-internal-for-package.json"
   ]
 }

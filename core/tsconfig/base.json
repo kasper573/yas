@@ -2,10 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowJs": false,
-    "composite": true,
-    "incremental": true,
-    "declaration": true,
-    "declarationMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -19,10 +15,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "noEmit": false,
-    "outDir": "${configDir}dist",
-    "rootDir": "${configDir}src",
-    "tsBuildInfoFile": "${configDir}.cache/.tsbuildinfo"
+    "noEmit": true
   },
   "exclude": ["node_modules", "${configDir}dist", "${configDir}.cache"]
 }

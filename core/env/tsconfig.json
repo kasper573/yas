@@ -2,7 +2,6 @@
   "extends": "@yas/tsconfig/node.json",
   "compilerOptions": {
     "allowJs": true,
-    "module": "ESNext",
-    "rootDir": "."
+    "module": "ESNext"
   }
 }
