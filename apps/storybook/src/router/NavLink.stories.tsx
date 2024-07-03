@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { NavLink } from "./NavLink";
-import { RouterProvider, createRootRoute, createRouter } from "./index";
+import {
+  NavLink,
+  RouterProvider,
+  createRootRoute,
+  createRouter,
+} from "@yas/router";
 
 export default {
   component: NavLink,
