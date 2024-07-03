@@ -19,11 +19,14 @@
       "dependsOn": ["^build", "^test"]
     },
     "test:watch": {
+      // The only reason this task is specifying the build task as a dependency is to
+      // avoid race conditions for first time runs when first cloning the repo.
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "dev": {
-      // The only reason the dev task is specifying the build task as a dependency is to
+      // The only reason this task is specifying the build task as a dependency is to
       // avoid race conditions for first time runs when first cloning the repo.
       "dependsOn": ["^build"],
       "cache": false,
