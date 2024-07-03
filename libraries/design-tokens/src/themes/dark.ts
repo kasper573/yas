@@ -1,6 +1,6 @@
 // This file is generated. Do not modify manually.
 
-import * as __shared__ from "../src/shared";
+import * as __shared__ from "../shared";
 export type Color = typeof color;
 export const color = {
   primary: {

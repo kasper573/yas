@@ -9,7 +9,7 @@ generate({
   sharedOutputPath: path.resolve(__dirname, "../src/shared.ts"),
   parseTokenName: (name) => name.split("/"),
   themeOutputPath: (themeName) =>
-    path.resolve(__dirname, "../themes", `${snakeCase(themeName)}.ts`),
+    path.resolve(__dirname, "../src/themes", `${snakeCase(themeName)}.ts`),
   codeHeader: "// This file is generated. Do not modify manually.\n\n",
   exitWithNonZeroOnError: true,
   transformers: {

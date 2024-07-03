@@ -1,6 +1,1 @@
-{
-  "extends": "@yas/tsconfig/node.json",
-  "compilerOptions": {
-    "rootDir": "."
-  }
-}
+{ "extends": "@yas/tsconfig/node.json", "include": ["src"] }
