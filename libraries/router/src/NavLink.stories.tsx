@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@yas/test/storybook";
+import type { Meta, StoryObj } from "@storybook/react";
 import { NavLink } from "./NavLink";
 import { RouterProvider, createRootRoute, createRouter } from "./index";
 
 export default {
   component: NavLink,
-  tags: ["autodocs"],
 } satisfies Meta;
 
 export const Default: StoryObj<Meta<typeof NavLink>> = {

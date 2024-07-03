@@ -23,3 +23,4 @@ export * from "./components/custom/Divider";
 export type * from "./utils/resolvePDFStyle";
 export * from "./utils/createComponent";
 export * from "./utils/resolveVariantStyle";
+export type * from "./atoms";

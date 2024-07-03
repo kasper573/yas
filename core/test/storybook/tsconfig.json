@@ -1,6 +1,0 @@
-{
-  "extends": "@yas/tsconfig/react.json",
-  "compilerOptions": {
-    "rootDir": "."
-  }
-}

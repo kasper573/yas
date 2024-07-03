@@ -26,7 +26,6 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@react-pdf/types": "2.4.1",
-    "@yas/tsconfig": "workspace:*",
-    "@yas/test": "workspace:*"
+    "@yas/tsconfig": "workspace:*"
   }
 }
