@@ -1,13 +1,8 @@
 import { z, numeric } from "@yas/validate";
 
-const canNeverHappen = "^(?=a)b";
-
 const schema = z.object({
   graphqlEndpoint: z.string().default("/"),
-  corsOrigin: z
-    .string()
-    .default(canNeverHappen)
-    .transform((exp) => new RegExp(exp)),
+  corsOrigin: z.string().transform((exp) => new RegExp(exp)),
   runtime: z.discriminatedUnion("type", [
     z.object({ type: z.literal("lambda") }),
     z.object({ type: z.literal("server"), port: numeric }),
