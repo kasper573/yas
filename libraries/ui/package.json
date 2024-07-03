@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch --preserveWatchOutput",
-    "lint": "pnpm assert-storybook-convention -c src -s src/ui",
+    "lint": "pnpm assert-storybook-convention",
     "test": "vitest run"
   },
   "dependencies": {

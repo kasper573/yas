@@ -6,7 +6,6 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 const storySuffix = ".stories";
-const storybookDir = path.resolve(__dirname, "../../../apps/storybook");
 
 async function run(componentsDir: string, storiesDir: string): Promise<number> {
   const componentFiles = await glob("**/*.tsx", { cwd: componentsDir });
@@ -55,6 +54,14 @@ async function run(componentsDir: string, storiesDir: string): Promise<number> {
   }
 }
 
+function withoutExtension(filePath: string): string {
+  return path.join(
+    path.dirname(filePath),
+    path.basename(filePath, path.extname(filePath)),
+  );
+}
+
+const storybookDir = path.resolve(__dirname, "../../../apps/storybook");
 const { componentsDir, storiesDir } = yargs(hideBin(process.argv))
   .usage(
     "Makes sure all react components in the package has a corresponding story defined in the storybook app",
@@ -63,13 +70,13 @@ const { componentsDir, storiesDir } = yargs(hideBin(process.argv))
     componentsDir: {
       alias: "c",
       type: "string",
-      default: process.cwd(),
+      default: path.resolve(process.cwd(), "src"),
       description: "Directory where the components are located",
     },
     storiesDir: {
       alias: "s",
       type: "string",
-      default: storybookDir,
+      default: path.resolve(storybookDir, "src", path.basename(process.cwd())),
       description: "Directory where the stories are located",
     },
   })
@@ -81,10 +88,3 @@ run(
     ? storiesDir
     : path.resolve(storybookDir, storiesDir),
 ).then(process.exit);
-
-function withoutExtension(filePath: string): string {
-  return path.join(
-    path.dirname(filePath),
-    path.basename(filePath, path.extname(filePath)),
-  );
-}
