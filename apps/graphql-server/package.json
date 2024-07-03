@@ -14,8 +14,7 @@
     }
   },
   "scripts": {
-    "build": "pnpm typecheck && yas-env tsup",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "build": "yas-env tsup",
     "dev": "concurrently -k -p \"[{name}]\" -n \"codegen,server\" -c \"yellow.bold,cyan.bold\" \"pnpm codegen --watch\" \"yas-env tsx watch --clear-screen=false src/entrypoint.ts\"",
     "codegen": "pnpm exec grats",
     "lint": "tsx assertCodegen.ts"
@@ -33,7 +32,6 @@
     "@yas/build": "workspace:*",
     "@yas/env": "workspace:*",
     "@yas/tsconfig": "workspace:*",
-    "tsup": "8.0.2",
     "grats": "0.0.0-main-b0fafefe",
     "concurrently": "8.2.2",
     "execa": "8.0.1"

@@ -2,24 +2,20 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowJs": false,
-    "composite": false,
-    "declaration": false,
-    "declarationMap": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "noEmit": true,
-    "outDir": "notReallyUsedButHasToBeHereToSatsifyVSCode"
+    "noEmit": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "${configDir}dist", "${configDir}.cache"]
 }

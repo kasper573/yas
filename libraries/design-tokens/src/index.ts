@@ -1,4 +1,4 @@
-import * as lightTheme from "../themes/light";
+import * as lightTheme from "./themes/light";
 
 export * as tokens from "./tokens";
 

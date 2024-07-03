@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "composite": true,
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "${configDir}dist",
+    "rootDir": "${configDir}src",
+    "tsBuildInfoFile": "${configDir}.cache/.tsbuildinfo",
+    "noEmit": false
+  },
+  "include": ["${configDir}src"]
+}

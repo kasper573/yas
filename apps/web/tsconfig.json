@@ -1,9 +1,7 @@
 {
   "extends": [
     "@yas/tsconfig/react.json",
+    "@yas/tsconfig/tsc.json",
     "@yas/graphql-client/tsconfig.graphql.json"
-  ],
-  "compilerOptions": {
-    "allowImportingTsExtensions": true
-  }
+  ]
 }

@@ -17,7 +17,6 @@
     "@yas/test": "workspace:*",
     "dotenv-expand": "^11.0.6",
     "dotenv-flow": "^4.1.0",
-    "execa": "^8.0.1",
-    "tsx": "4.7.1"
+    "execa": "^8.0.1"
   }
 }

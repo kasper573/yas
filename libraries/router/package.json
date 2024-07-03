@@ -3,17 +3,22 @@
   "version": "0.0.0",
   "sideEffects": false,
   "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./devtools": {
-      "import": "./devtools.ts",
-      "require": "./devtools.ts"
+      "import": "./dist/devtools.js",
+      "types": "./dist/devtools.d.ts"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@tanstack/react-router": "1.35.3",
@@ -22,7 +27,6 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@yas/tsconfig": "workspace:*",
-    "@yas/test": "workspace:*"
+    "@yas/tsconfig": "workspace:*"
   }
 }

@@ -8,7 +8,8 @@ import {
 } from "../components/Dialog";
 import { Button } from "../components/Button";
 
-export interface AlertDialogProps extends Omit<DialogProps, "title"> {
+export interface AlertDialogProps
+  extends Omit<DialogProps, "title" | "children"> {
   title: ReactNode;
   message: ReactNode;
 }

@@ -67,7 +67,7 @@ To ensure deployment compatibility, this repository is dogfooding above mentione
 - The repository root is reserved for global configuration files. Use workspaces for everything else.
 - Keep packages small and focused.
 - Decouple your packages.
-- Prefer [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
+- Each package should be prebuilt with `tsc` (Exceptions can be made, see [layered archiveture](#layered-architecture) below)
 - Utilize shared configuration (i.e. [@yas/tsconfig](core/tsconfig), [@yas/env](core/env), [@yas/test](core/test)).
 - Encapsulate packages (i.e. [@yas/style](libraries/style), [@yas/query-client](integrations/query-client), [@yas/validate](libraries/validate)).
 - Each non-trivial package should provide its own documentation.
@@ -155,6 +155,8 @@ These are the layers, from top to bottom:
 
 Deployables (`build` script must output deployable artifacts, preferably using some standard)
 
+> Since apps may use any framework, they will have their own build/dev scripts, so you don't have to use `tsc` for apps.
+
 #### [integrations](libraries)
 
 Integrations with services (i.e. api clients).
@@ -166,6 +168,8 @@ Building blocks for creating apps.
 #### [core](core)
 
 Low level tooling for building apps and libraries. Should mostly be out of your way and not something you interact with directly.
+
+> Most of core packages are shared configs and developer tooling and provide little to no runtime code. These packages may therefore skip prebuilding with `tsc`, since that is a performance optimization primarily intended for runtime code.
 
 #### [incubations](incubations)
 

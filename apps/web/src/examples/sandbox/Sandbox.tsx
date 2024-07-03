@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  ExampleImage,
   Stack,
   Text,
 } from "@yas/ui";
@@ -15,6 +14,7 @@ import { useMediaQueries } from "@yas/hooks";
 import { useModal } from "@yas/ui";
 import { breakpointQuery } from "@yas/style";
 import { useState } from "react";
+import { MoonIcon, SunIcon } from "@yas/icons";
 import { env } from "../../env";
 import { useTheme } from "../../ThemeProvider";
 import * as styles from "./sandbox.css";
@@ -58,43 +58,42 @@ export default function Sandbox() {
         breakpoint: {breakpointName}
       </Text>
 
-      <Stack direction="row" gap="m" sx={{ mt: "m" }}>
-        <Button onClick={toggleTheme}>Toggle theme</Button>
-        <Button onClick={() => showDialog()}>Show dialog</Button>
-        <Button onClick={triggerReactRenderError}>
-          Trigger react render error
-        </Button>
-        <Button onClick={triggerReactEventError}>
-          Trigger react event error
-        </Button>
-        <Button onClick={triggerPromiseError}>Trigger promise error</Button>
-      </Stack>
+      <Stack gap="l">
+        <Stack direction="row" gap="l" sx={{ mt: "l" }}>
+          <Button onClick={toggleTheme}>
+            {theme === "light" ? <MoonIcon /> : <SunIcon />}
+            Toggle theme
+          </Button>
+          <Button onClick={() => showDialog()}>Show dialog</Button>
+          <Button onClick={triggerReactRenderError}>
+            Trigger react render error
+          </Button>
+          <Button onClick={triggerReactEventError}>
+            Trigger react event error
+          </Button>
+          <Button onClick={triggerPromiseError}>Trigger promise error</Button>
+        </Stack>
 
-      <div className={styles.container}>Testing vanilla-extract css</div>
+        <div className={styles.container}>Testing vanilla-extract css</div>
 
-      <Stack direction="row" gap="m">
-        <Box
-          sx={{
-            p: "l",
-            backgroundColor: "secondary.base",
-            color: "secondary.face",
-            typography: "body",
-          }}
-        >
-          Testing sx prop
-        </Box>
+        <Stack direction="row" gap="l">
+          <Box
+            sx={{
+              p: "l",
+              backgroundColor: "secondary.base",
+              color: "secondary.face",
+              typography: "body",
+            }}
+          >
+            Testing sx prop
+          </Box>
 
-        <Box className={styles.projectImage} sx={{ p: "m" }}>
-          <Alert severity="info">
-            <Text>Image from apps/web</Text>
-          </Alert>
-        </Box>
-
-        <ExampleImage sx={{ p: "m" }}>
-          <Alert severity="info">
-            <Text>Image from @yas/ui</Text>
-          </Alert>
-        </ExampleImage>
+          <Box className={styles.projectImage} sx={{ p: "l" }}>
+            <Alert severity="info">
+              <Text>Image from apps/web</Text>
+            </Alert>
+          </Box>
+        </Stack>
       </Stack>
     </>
   );

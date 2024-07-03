@@ -1,17 +1,22 @@
 {
   "name": "@yas/ui",
   "version": "0.0.0",
+  "license": "MIT",
   "sideEffects": false,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "lint": "pnpm assert-sibling-files --suffix \".stories\" --pattern \"src/**/*.tsx\"",
+    "build": "tsc --build",
+    "dev": "tsc --build --watch --preserveWatchOutput",
+    "lint": "pnpm assert-storybook-convention",
     "test": "vitest run"
   },
   "dependencies": {
@@ -29,6 +34,7 @@
     "react-hook-form": "7.49.3",
     "react-async-modal-hook": "^0.0.16",
     "react-error-boundary": "4.0.13",
+    "react-styled-factory": "^0.0.10",
     "hookform-controller-proxy": "^0.0.21"
   },
   "devDependencies": {

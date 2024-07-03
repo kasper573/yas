@@ -11,8 +11,9 @@
     "core/*"
   ],
   "scripts": {
+    "clean": "find . -type d \\( -path \"./*/dist\" -o -path \"./*/.cache\" -o -path \"./*/.turbo\" \\) -not -path \"*/node_modules/*\" -prune -exec rm -r {} +",
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --concurrency 20",
     "lint": "pnpm eslint . --max-warnings=0 && pnpm -r lint",
     "lint:fix": "pnpm eslint . --fix",
     "depcheck": "pnpm exec depcruise . --output-type err-long && assert-dependency-versions --pn react react-dom @types/react @types/react-dom superjson",

@@ -2,12 +2,19 @@
   "name": "flattened",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch --preserveWatchOutput"
   },
   "devDependencies": {
     "@yas/tsconfig": "workspace:*"

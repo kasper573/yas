@@ -1,15 +1,20 @@
 {
   "name": "@yas/pdf",
   "version": "0.0.0",
-  "main": "./src/index.tsx",
-  "types": "./src/index.tsx",
   "exports": {
     ".": {
-      "import": "./src/index.tsx"
-    },
-    "./devtools/*": {
-      "import": "./devtools/*"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch --preserveWatchOutput",
+    "lint": "pnpm assert-storybook-convention -c src/components/custom"
   },
   "license": "UNLICENSED",
   "dependencies": {
@@ -27,6 +32,6 @@
     "@types/react-dom": "^18.3.0",
     "@react-pdf/types": "2.4.1",
     "@yas/tsconfig": "workspace:*",
-    "@yas/test": "workspace:*"
+    "@yas/scripts": "workspace:*"
   }
 }
