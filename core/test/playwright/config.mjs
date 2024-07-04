@@ -18,7 +18,7 @@ export function defineConfig({
     outputDir: artifactsDir,
     snapshotDir,
     reporter: [
-      ["html", { outputFolder: reportDir }],
+      ["html", { outputFolder: reportDir, open: "never" }],
       isCI && ["github"],
     ].filter(Boolean),
     fullyParallel: true,
