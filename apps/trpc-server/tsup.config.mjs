@@ -1,4 +1,5 @@
-import { defineConfig, inferInternalPackages } from "@yas/build/tsup.mjs";
+import { defineConfig } from "@yas/build/tsup.mjs";
+import { inferInternalPackages } from "@yas/build/utils.mjs";
 
 export default defineConfig(__dirname, {
   outExtension: () => ({ js: `.js` }),
