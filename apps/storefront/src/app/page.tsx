@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@yas/ui";
 import * as styles from "./page.css";
 
 export default function Home() {
@@ -37,6 +38,13 @@ export default function Home() {
           height={37}
           priority
         />
+
+        <Button
+          sx={{ position: "absolute" }}
+          style={{ transform: "translateY(200%)" }}
+        >
+          I am a @yas/ui Button!
+        </Button>
       </div>
 
       <div className={styles.grid}>

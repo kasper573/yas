@@ -8,7 +8,8 @@ export function defineConfig(projectDir) {
   /** @type {import('next').NextConfig} */
   const nextConfig = {
     experimental: {
-      optimizePackageImports: inferInternalPackages(projectDir),
+      // Must optimize package imports for packages with barrel files
+      optimizePackageImports: ["@yas/ui"],
     },
   };
 
