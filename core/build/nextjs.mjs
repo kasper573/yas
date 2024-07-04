@@ -11,12 +11,15 @@ export function defineConfig(projectDir) {
       // Must optimize package imports for packages with barrel files
       optimizePackageImports: ["@yas/ui"],
     },
+    outputFileTracing: false, // Added as a hacky workaround of a nextjs prod build error due to the font asset/resource rule added below
     webpack: (config, options) => {
       // NextJS doesn't support font files out of the box
+
       config.module.rules.push({
         test: /\.(ttf|woff2?)$/,
         type: "asset/resource",
       });
+
       return config;
     },
   };
