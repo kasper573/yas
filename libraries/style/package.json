@@ -13,6 +13,10 @@
     "./themes/*": {
       "import": "./dist/themes/*.js",
       "types": "./dist/themes/*.d.ts"
+    },
+    "./fonts.css": {
+      "import": "./dist/fonts.css.js",
+      "types": "./dist/fonts.css.d.ts"
     }
   },
   "scripts": {

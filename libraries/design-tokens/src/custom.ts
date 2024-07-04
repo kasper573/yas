@@ -1,14 +1,6 @@
-import { inter } from "./fonts/inter";
-import type * as shared from "./shared";
-import type { FontFaceDefinition } from "./internal";
-
 /**
  * This module implements tokens that do not exist in figma or that cannot be automatically generated.
  */
-
-export const fontFaces = {
-  Inter: inter,
-} satisfies Record<ValuesOf<typeof shared.text.family>, FontFaceDefinition[]>;
 
 export const size = {
   xs: 12,
@@ -103,5 +95,3 @@ export const borders = {
   normal: { width: 2, type: "solid" },
   thick: { width: 3, type: "solid" },
 } as const;
-
-type ValuesOf<T> = T[keyof T];

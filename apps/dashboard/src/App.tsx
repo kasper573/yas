@@ -22,6 +22,7 @@ import {
   ThemeInjector,
 } from "./ThemeProvider";
 import { router } from "./router";
+import "@yas/style/fonts.css";
 
 const rootRef = { current: document.documentElement };
 

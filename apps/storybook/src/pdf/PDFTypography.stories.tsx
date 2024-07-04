@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { keysOf, mapValues, tokens } from "@yas/design-tokens";
+import { fontFaces } from "@yas/design-tokens/assets";
 import type { ReactNode } from "react";
 import { Fragment, createElement } from "react";
 import { View, Text } from "@yas/pdf";
@@ -30,7 +31,7 @@ export const FontFaces: StoryObj = {
     return (
       <View sx={{ textAlign: "center" }}>
         {Object.values(
-          mapValues(tokens.fontFaces, (faces, fontFamily) => (
+          mapValues(fontFaces, (faces, fontFamily) => (
             <Fragment key={fontFamily}>
               {faces.map(({ fontStyle, fontWeight }) => (
                 <Text
@@ -57,7 +58,7 @@ export const NestedFontFaces: StoryObj = {
     return (
       <View sx={{ textAlign: "center" }}>
         {Object.values(
-          mapValues(tokens.fontFaces, (faces, fontFamily) => (
+          mapValues(fontFaces, (faces, fontFamily) => (
             <Text key={fontFamily} style={{ fontFamily }}>
               {faces.reduce(
                 (content, { fontStyle, fontWeight }) => (
