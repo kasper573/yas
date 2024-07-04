@@ -10,6 +10,7 @@ export const tabs = recipe({
     maxWidth: "100%",
     boxSizing: "border-box",
     overflowX: "auto",
+    gap: "l",
   }),
   variants: {
     intent: {
