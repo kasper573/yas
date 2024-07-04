@@ -5,15 +5,19 @@ test("can see the home page title", async ({ page }) => {
   await expect(page.getByText(/yet another stack/i)).toBeVisible();
 });
 
+// Unfortunately the navigation tabs seem to require force clicks on iPhone 12.
+// Without force clicks the tests fail because the tabs end up overlapping each
+// other somehow and taking pointer events (without being actually visually overlapping).
+
 test.describe("api tester", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Api Tester" }).click();
+    await page.getByRole("link", { name: "Api Tester" }).click({ force: true });
   });
 
   test.describe("trpc", () => {
     test.beforeEach(async ({ page }) => {
-      await page.getByRole("link", { name: "TRPC" }).click();
+      await page.getByRole("link", { name: "TRPC" }).click({ force: true });
     });
 
     testApi();
@@ -21,7 +25,7 @@ test.describe("api tester", () => {
 
   test.describe("graphql", () => {
     test.beforeEach(async ({ page }) => {
-      await page.getByRole("link", { name: "GraphQL" }).click();
+      await page.getByRole("link", { name: "GraphQL" }).click({ force: true });
     });
 
     testApi();
