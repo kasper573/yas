@@ -67,7 +67,11 @@ const devicesToTest = [
   "Desktop Edge",
   "iPad Pro 11",
   "iPad Pro 11 landscape",
-  "iPhone 12",
+  "Pixel 7",
+  // Cannot reliably rest webkit mobile devices due to https://github.com/microsoft/playwright/issues/21784
+  // "iPhone 13",
+  // Test suite currently does not support mobile landscape mode because the test code isn't responsive
+  // "iPhone 13 landscape",
 ];
 
 function projectForDevice(name) {
