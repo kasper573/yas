@@ -138,8 +138,8 @@ Packages should follow these naming conventions:
 
 Exceptions apply:
 
-- Packages that must follow a 3rd party naming convention (i.e. `eslint-*`).
 - Incubation packages should be named whatever they plan to register as on npm.
+- Packages that must follow a 3rd party naming convention (i.e. `eslint-*`).
 
 ## Layered architecture
 
