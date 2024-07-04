@@ -1,0 +1,10 @@
+{
+  "extends": "@yas/tsconfig/react.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "incremental": true,
+    "esModuleInterop": true,
+    "jsx": "preserve"
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+}
