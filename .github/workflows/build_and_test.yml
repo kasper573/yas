@@ -1,9 +1,9 @@
 name: Build and Test
 on: [push]
 
-#env:
-#TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-#TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
   conventions:
