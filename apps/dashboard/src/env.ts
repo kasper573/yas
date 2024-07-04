@@ -3,8 +3,10 @@ import { z, mode, truthy } from "@yas/validate";
 const schema = z.object({
   CI: truthy.default(false),
   mode: mode.default("development"),
-  trpcServerUrl: z.string(),
-  graphqlServerUrl: z.string(),
+  trpcServerUrl: z.string().default("http://localhost/trpc-server-url-missing"),
+  graphqlServerUrl: z
+    .string()
+    .default("http://localhost/graphql-server-url-missing"),
   showErrorDetails: truthy.default(false),
   useErrorBoundary: truthy.default(true),
 });

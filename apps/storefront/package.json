@@ -1,0 +1,23 @@
+{
+  "name": "@yas/storefront",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --no-lint",
+    "preview": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "14.2.4",
+    "@yas/style": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@yas/tsconfig": "workspace:*",
+    "@yas/build": "workspace:*"
+  }
+}

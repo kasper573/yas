@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "yas-env docusaurus start --no-open --port 3000",
+    "dev": "yas-env docusaurus start --no-open --port 3001",
     "build": "yas-env tsc --noEmit && docusaurus build --out-dir dist"
   },
   "dependencies": {

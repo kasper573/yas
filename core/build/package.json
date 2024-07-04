@@ -6,6 +6,7 @@
   "devDependencies": {
     "@vanilla-extract/vite-plugin": "4.0.10",
     "@vanilla-extract/webpack-plugin": "2.3.9",
+    "@vanilla-extract/next-plugin": "2.4.3",
     "@vitejs/plugin-react": "4.3.0",
     "@yas/env": "workspace:*",
     "css-loader": "6.10.0",

@@ -11,6 +11,10 @@
     "./themes/*": {
       "import": "./dist/themes/*.js",
       "types": "./dist/themes/*.d.ts"
+    },
+    "./assets": {
+      "import": "./dist/assets/index.js",
+      "types": "./dist/assets/index.d.ts"
     }
   },
   "files": [

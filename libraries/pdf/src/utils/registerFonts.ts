@@ -1,8 +1,9 @@
 import { Font } from "@react-pdf/renderer";
-import { mapValues, tokens } from "@yas/design-tokens";
+import { mapValues } from "@yas/design-tokens";
+import { fontFaces } from "@yas/design-tokens/assets";
 
 export function registerDesignTokenFontsWithReactPDF() {
-  mapValues(tokens.fontFaces, (fonts, family) => {
+  mapValues(fontFaces, (fonts, family) => {
     Font.register({
       family,
       fonts: fonts.map(({ src, ...rest }) => ({

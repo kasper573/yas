@@ -1,8 +1,9 @@
-import { mapValues, tokens } from "@yas/design-tokens";
+import { mapValues } from "@yas/design-tokens";
+import { fontFaces } from "@yas/design-tokens/assets";
 import { globalFontFace } from "@vanilla-extract/css";
 
 // This is a vanilla extract representation of the font tokens
-mapValues(tokens.fontFaces, (fonts, family) => {
+mapValues(fontFaces, (fonts, family) => {
   for (const font of fonts) {
     const { src: formats, fontStyle, fontWeight } = font;
     globalFontFace(family, {

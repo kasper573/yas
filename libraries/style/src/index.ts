@@ -22,9 +22,3 @@ export * from "./styled";
 // if you pass in a set of values that matches the contract, but has excess values.
 // We are okay with having excess values that are being ignored.
 export { assignVars };
-
-// Side effects
-// TODO this should be moved to a separate file and added to the exports
-// property of package.json and then imported explicitly by package consumers
-// Then we can enable the sideEffects: false property in package.json
-import "./fonts.css";

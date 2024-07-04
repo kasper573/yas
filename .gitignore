@@ -20,6 +20,8 @@ test-results
 **/undefined/**
 .docusaurus
 .cache-loader
+.next
+*.tsbuildinfo
 
 # misc
 .DS_Store

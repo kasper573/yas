@@ -37,8 +37,8 @@ jobs:
       - uses: ./.github/workflows/composites/install/
       - run: pnpm build
         env:
-          # We can only build for development in CI,
-          # since production settings and builds are handled externally (e.g. by Vercel).
-          # This CI job is only for sanity testing the build process in the CI.
-          NODE_ENV: development
+          NODE_ENV: production
+          # No additional application specific environment variables should be provided here or in the CI.
+          # Application environment variables should be provided by the external deployment build system.
+          # (Providing no environment variables here also ensures that all apps support being built with zero config)
       - run: pnpm typecheck
