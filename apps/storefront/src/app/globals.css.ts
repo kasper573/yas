@@ -1,3 +1,4 @@
+import "@yas/style/fonts.css";
 import { globalStyle } from "@yas/style";
 
 globalStyle(":root", {
