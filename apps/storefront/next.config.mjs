@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import nextConfig from "@yas/build/nextjs.mjs";
 
 export default nextConfig;

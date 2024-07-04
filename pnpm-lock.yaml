@@ -239,9 +239,12 @@ importers:
 
   apps/storefront:
     dependencies:
+      '@yas/style':
+        specifier: workspace:*
+        version: link:../../libraries/style
       next:
         specifier: 14.2.4
-        version: 14.2.4(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 14.2.4(@babel/core@7.24.7)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -255,6 +258,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      '@yas/build':
+        specifier: workspace:*
+        version: link:../../core/build
       '@yas/tsconfig':
         specifier: workspace:*
         version: link:../../core/tsconfig
@@ -401,6 +407,9 @@ importers:
 
   core/build:
     devDependencies:
+      '@vanilla-extract/next-plugin':
+        specifier: 2.4.3
+        version: 2.4.3(@types/node@20.14.2)(next@14.2.4(@babel/core@7.24.7)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.31.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.21.4))
       '@vanilla-extract/vite-plugin':
         specifier: 4.0.10
         version: 4.0.10(@types/node@20.14.2)(terser@5.31.1)(vite@5.2.13(@types/node@20.14.2)(terser@5.31.1))
@@ -4310,11 +4319,22 @@ packages:
   '@vanilla-extract/css@1.15.2':
     resolution: {integrity: sha512-Bi61iCAtojCuqvV+FYaF5i69vBjuMQJpHPdpgKYyQvx+e2Hp79V0ELglyYOdcyg9Wh0k0MFwgCDipVd7EloTXQ==}
 
+  '@vanilla-extract/css@1.15.3':
+    resolution: {integrity: sha512-mxoskDAxdQAspbkmQRxBvolUi1u1jnyy9WZGm+GeH8V2wwhEvndzl1QoK7w8JfA0WFevTxbev5d+i+xACZlPhA==}
+
   '@vanilla-extract/dynamic@2.1.1':
     resolution: {integrity: sha512-iqf736036ujEIKsIq28UsBEMaLC2vR2DhwKyrG3NDb/fRy9qL9FKl1TqTtBV4daU30Uh3saeik4vRzN8bzQMbw==}
 
   '@vanilla-extract/integration@7.1.5':
     resolution: {integrity: sha512-UwwafgdaqDhF2n6ZvX6akNvSot1iiiCss/c+r6ofjnaJSzrI/3WUYhy7qX7NZsWdmG2omcajuPlqFZdo0pwzLA==}
+
+  '@vanilla-extract/integration@7.1.7':
+    resolution: {integrity: sha512-xKwrCtmiBq6QzRNj+IOg5cAMRQRXkFnnvcE374MROJPnVvDX0d+lrIQapFGt64F0H8Gjk4kVl4slvCiV3ECQ4w==}
+
+  '@vanilla-extract/next-plugin@2.4.3':
+    resolution: {integrity: sha512-PI/T6eFynyVQdbUhlh9BuggjtmrcKd6uADvDi+bknYL8u//oNUOaAF/KUvepiMEHAcUgxEfDlS4Id/IdP9Agpw==}
+    peerDependencies:
+      next: '>=12.1.7'
 
   '@vanilla-extract/private@1.0.5':
     resolution: {integrity: sha512-6YXeOEKYTA3UV+RC8DeAjFk+/okoNz/h88R+McnzA2zpaVqTR/Ep+vszkWYlGBcMNO7vEkqbq5nT/JMMvhi+tw==}
@@ -4333,6 +4353,11 @@ packages:
     resolution: {integrity: sha512-bjX5ioQeBTKuV/MOweeSCrGU5m7z4a76yf8J/r4gC5MGJrEvYu0YHaQIiiL7o2wlFSc929JUEUO1ahnVXUET6A==}
     peerDependencies:
       vite: ^4.0.3 || ^5.0.0
+
+  '@vanilla-extract/webpack-plugin@2.3.11':
+    resolution: {integrity: sha512-DHHYZ3yT84FmDCgnIcgeB7gA3XtNbiHfk2/e3ugoWutKSakW6+zz0qVPV+HX7YVv9o+dlrFe0I17bCBkNaOYlA==}
+    peerDependencies:
+      webpack: ^4.30.0 || ^5.20.2
 
   '@vanilla-extract/webpack-plugin@2.3.9':
     resolution: {integrity: sha512-8tMS8Dfq3+bVhM604mTsB4IjP3nWbI43eW0nMRgTqlwltZfT6qvRlWfhK8Z/ukskWwhTTm3Ttf88PjcGZzcDRg==}
@@ -15823,6 +15848,22 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
+  '@vanilla-extract/css@1.15.3':
+    dependencies:
+      '@emotion/hash': 0.9.1
+      '@vanilla-extract/private': 1.0.5
+      css-what: 6.1.0
+      cssesc: 3.0.0
+      csstype: 3.1.2
+      dedent: 1.5.3
+      deep-object-diff: 1.1.9
+      deepmerge: 4.3.1
+      media-query-parser: 2.0.2
+      modern-ahocorasick: 1.0.1
+      picocolors: 1.0.1
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
   '@vanilla-extract/dynamic@2.1.1':
     dependencies:
       '@vanilla-extract/private': 1.0.5
@@ -15852,6 +15893,47 @@ snapshots:
       - supports-color
       - terser
 
+  '@vanilla-extract/integration@7.1.7(@types/node@20.14.2)(terser@5.31.1)':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@babel/plugin-syntax-typescript': 7.24.7(@babel/core@7.24.7)
+      '@vanilla-extract/babel-plugin-debug-ids': 1.0.6
+      '@vanilla-extract/css': 1.15.3
+      dedent: 1.5.3
+      esbuild: 0.21.5
+      eval: 0.1.8
+      find-up: 5.0.0
+      javascript-stringify: 2.1.0
+      mlly: 1.7.1
+      vite: 5.2.13(@types/node@20.14.2)(terser@5.31.1)
+      vite-node: 1.6.0(@types/node@20.14.2)(terser@5.31.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+
+  '@vanilla-extract/next-plugin@2.4.3(@types/node@20.14.2)(next@14.2.4(@babel/core@7.24.7)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.31.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.21.4))':
+    dependencies:
+      '@vanilla-extract/webpack-plugin': 2.3.11(@types/node@20.14.2)(terser@5.31.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.21.4))
+      next: 14.2.4(@babel/core@7.24.7)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - webpack
+
   '@vanilla-extract/private@1.0.5': {}
 
   '@vanilla-extract/recipes@0.5.3(@vanilla-extract/css@1.15.2)':
@@ -15866,6 +15948,24 @@ snapshots:
     dependencies:
       '@vanilla-extract/integration': 7.1.5(@types/node@20.14.2)(terser@5.31.1)
       vite: 5.2.13(@types/node@20.14.2)(terser@5.31.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - babel-plugin-macros
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+
+  '@vanilla-extract/webpack-plugin@2.3.11(@types/node@20.14.2)(terser@5.31.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.21.4))':
+    dependencies:
+      '@vanilla-extract/integration': 7.1.7(@types/node@20.14.2)(terser@5.31.1)
+      debug: 4.3.5
+      loader-utils: 2.0.4
+      picocolors: 1.0.1
+      webpack: 5.91.0(@swc/core@1.5.7)(esbuild@0.21.4)
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -20913,7 +21013,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@14.2.4(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@14.2.4(@babel/core@7.24.7)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 14.2.4
       '@swc/helpers': 0.5.5
@@ -20923,7 +21023,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.24.7)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.4
       '@next/swc-darwin-x64': 14.2.4
@@ -22977,10 +23077,12 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.3
 
-  styled-jsx@5.1.1(react@18.3.1):
+  styled-jsx@5.1.1(@babel/core@7.24.7)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
       react: 18.3.1
+    optionalDependencies:
+      '@babel/core': 7.24.7
 
   stylehacks@5.1.1(postcss@8.4.38):
     dependencies:
