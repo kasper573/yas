@@ -26,7 +26,9 @@ jobs:
         if: always()
         with:
           name: playwright
-          path: "**/.playwright/**"
+          path: |
+            **/.playwright/**
+            !node_modules/**
 
   build:
     runs-on: ubuntu-latest
