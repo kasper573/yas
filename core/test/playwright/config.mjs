@@ -43,7 +43,7 @@ export function defineConfig({
       : [projectForDevice(devicesToTest[0])],
 
     webServer: webServers.map((server) => ({
-      reuseExistingServer: !isCI,
+      reuseExistingServer: true,
       ...server,
     })),
   };
