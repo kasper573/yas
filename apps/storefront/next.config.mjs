@@ -1,3 +1,3 @@
-import nextConfig from "@yas/build/nextjs.mjs";
+import { defineConfig } from "@yas/build/nextjs.mjs";
 
-export default nextConfig;
+export default defineConfig(new URL(".", import.meta.url).pathname);

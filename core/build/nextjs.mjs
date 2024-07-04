@@ -1,8 +1,18 @@
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
+import { inferInternalPackages } from "./utils.mjs";
 
-const withVanillaExtract = createVanillaExtractPlugin();
+/**
+ * @param {string} projectDir
+ */
+export function defineConfig(projectDir) {
+  /** @type {import('next').NextConfig} */
+  const nextConfig = {
+    experimental: {
+      optimizePackageImports: inferInternalPackages(projectDir),
+    },
+  };
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+  const withVanillaExtract = createVanillaExtractPlugin();
 
-export default withVanillaExtract(nextConfig);
+  return withVanillaExtract(nextConfig);
+}
