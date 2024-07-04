@@ -11,6 +11,14 @@ export function defineConfig(projectDir) {
       // Must optimize package imports for packages with barrel files
       optimizePackageImports: ["@yas/ui"],
     },
+    webpack: (config, options) => {
+      // NextJS doesn't support font files out of the box
+      config.module.rules.push({
+        test: /\.(ttf|woff2?)$/,
+        type: "asset/resource",
+      });
+      return config;
+    },
   };
 
   const withVanillaExtract = createVanillaExtractPlugin();
