@@ -21,7 +21,7 @@ test-results
 .docusaurus
 .cache-loader
 .next
-.tsbuildinfo
+*.tsbuildinfo
 
 # misc
 .DS_Store
